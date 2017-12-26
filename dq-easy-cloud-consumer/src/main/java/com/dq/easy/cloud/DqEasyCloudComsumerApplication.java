@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @AutoConfigureDataJpa
-@PropertySource("classpath:application-server.properties")
+@PropertySource("classpath:application-consumer.properties")
 public class DqEasyCloudComsumerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DqEasyCloudComsumerApplication.class, args);
