@@ -2,7 +2,7 @@ model模块解析
 ===================
 
 ### basic
-    * entity
+* entity
 ### cache
 ### common
 ### config
