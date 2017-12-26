@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>dq-easy-cloud-eureka-server</artifactId>
+	<name>dq-easy-cloud-eureka-server</name>
+	<description>dq-easy-cloud-eureka-server</description>
+	
+	<dependencies>
+		<!--增加eureka-server的依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+		</dependency>
+		<!-- spring-security加密启动类 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+	</dependencies>
+</project>
