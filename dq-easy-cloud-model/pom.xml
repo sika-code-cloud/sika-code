@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>dq-easy-cloud-model</artifactId>
+	
+	<packaging>jar</packaging>
+	<name>dq-easy-cloud-model</name>
+	<description>dq-easy-cloud-model</description>
+	
+	<parent>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<properties>
+		<!-- alibaba.fastjson依赖 -->
+		<fastjson.version>1.2.39</fastjson.version>
+		<!-- druid依赖 -->
+		<druid.version>1.1.6</druid.version>
+		<!-- commons-lang依赖 -->
+		<commons.lang.version>2.6</commons.lang.version>
+		<!-- 版本依赖管理 end -->
+	</properties>
+	<dependencies>
+		<!-- spring框架相关依赖 bigen -->
+		<!-- spring-boot-start-x依赖 begin -->
+		<!-- spring-boot-starter-jdbc 模块 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-jpa 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-redis 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!-- spring-boot-start-x依赖 end -->
+		<!-- solr依赖 -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-solr</artifactId>
+		</dependency>
+		<!-- spring框架相关依赖 end -->
+
+		<!-- 非spring项目的第三方依赖 begin -->
+		<!-- fastjson依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<!-- mysql连接依赖 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
+		<!-- 非spring项目的第三方依赖 end -->
+	</dependencies>
+</project>
