@@ -6,3 +6,5 @@ model项目解析
 ### common模块
 ### config模块
 ### jdbc模块
+###  solr模块
+###  strategy模块
