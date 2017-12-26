@@ -17,7 +17,7 @@ import com.dq.easy.cloud.model.strategy.keygenerate.vo.SnowflakeIdWorker;
 /**
  * 
  * @ClassName : KeyGeneratSnowflakeldWorlker 
- * @Description : 主键生成策略---SnowflakeldWorlker
+ * @Description : 支持数据库分片的主键生成策略---SnowflakeldWorlker
  * @author daiqi
  * @date 2017年12月4日 下午12:57:51 
  *
