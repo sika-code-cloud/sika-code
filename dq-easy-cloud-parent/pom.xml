@@ -24,6 +24,7 @@
 		<module>../dq-easy-cloud-consumer</module>
 		<module>../dq-easy-cloud-config-server</module>
 		<module>../dq-easy-cloud-config-client</module>
+		<module>../dq-easy-cloud-eureka-server</module>
 	</modules>
 
 
@@ -31,7 +32,7 @@
 	<properties>
 		<!--设置字符编码及java版本 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 
 		<!-- 版本依赖管理 begin -->
 		<!-- easy所有版本依赖 -->
