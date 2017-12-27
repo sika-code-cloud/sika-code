@@ -5,7 +5,7 @@
 
 	<groupId>dq.easy.cloud</groupId>
 	<artifactId>dq-easy-cloud-parent</artifactId>
-	<version>${dq.easy.cloud.version}</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>dq-easy-cloud-parent</name>
@@ -14,8 +14,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
-		<relativePath></relativePath> <!-- lookup parent from repository -->
+		<version>1.5.8.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<!-- 子模块 -->
 	<modules>
@@ -38,7 +38,9 @@
 		<!-- easy所有版本依赖 -->
 		<!-- spring-cloud版本 -->
 		<dq.easy.cloud.version>1.0.0</dq.easy.cloud.version>
-		<spring.cloud.version>Dalston.SR4</spring.cloud.version>
+		<spring.cloud.version>Edgware.RELEASE</spring.cloud.version>
+		
+		<skipTests>true</skipTests>
 	</properties>
 	<!-- 项目依赖 -->
 	<dependencies>
@@ -88,7 +90,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
 		<!-- spring-cloud-start-x依赖 end -->
 		<!-- spring框架相关依赖 end -->
 	</dependencies>

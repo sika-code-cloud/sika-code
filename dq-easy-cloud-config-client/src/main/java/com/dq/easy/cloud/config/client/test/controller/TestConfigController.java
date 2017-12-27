@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestConfigController {
 	@Value("${from}")
 	private String from;
+	@Value("${spring.datasource.url}")
+	private String url;
 	
 	@RequestMapping("/findFrom")
 	public Map<String,Object> findFrom(){
 		Map<String,Object> retMap = new HashMap<String, Object>();
 		retMap.put("from", from);
+		retMap.put("url", url);
 		return retMap;
 	}
 }

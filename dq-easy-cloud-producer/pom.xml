@@ -6,7 +6,8 @@
 	<parent>
 		<groupId>dq.easy.cloud</groupId>
 		<artifactId>dq-easy-cloud-parent</artifactId>
-		<version>1.0.0</version>
+		<version>${dq.easy.cloud.version}</version>
+		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>dq.easy.cloud.producer</artifactId>
 	<name>dq-easy-cloud-producer</name>

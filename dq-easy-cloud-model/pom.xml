@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<artifactId>dq-easy-cloud-model</artifactId>
@@ -12,7 +13,8 @@
 	<parent>
 		<groupId>dq.easy.cloud</groupId>
 		<artifactId>dq-easy-cloud-parent</artifactId>
-		<version>1.0.0</version>
+		<version>${dq.easy.cloud.version}</version>
+		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
 	</parent>
 	
 	<properties>
@@ -20,8 +22,6 @@
 		<fastjson.version>1.2.39</fastjson.version>
 		<!-- druid依赖 -->
 		<druid.version>1.1.6</druid.version>
-		<!-- commons-lang依赖 -->
-		<commons.lang.version>2.6</commons.lang.version>
 		<!-- 版本依赖管理 end -->
 	</properties>
 	<dependencies>
@@ -42,12 +42,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<!-- spring-boot-starter-data-solr依赖 -->
+		<!-- 先注释solr 因为Base64类冲突=原因未知 -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-solr</artifactId>
+		</dependency> -->
 		<!-- spring-boot-start-x依赖 end -->
-		<!-- solr依赖 -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-solr</artifactId>
-		</dependency>
 		<!-- spring框架相关依赖 end -->
 
 		<!-- 非spring项目的第三方依赖 begin -->
@@ -66,12 +67,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons.lang.version}</version>
 		</dependency>
 		<!-- 非spring项目的第三方依赖 end -->
 	</dependencies>
