@@ -43,7 +43,7 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<!-- spring-boot-starter-data-solr依赖 -->
-		<!-- 先注释solr 因为Base64类冲突=原因未知 -->
+		<!-- 先注释solr 因为会导致eureka的client找不到Base64=原因未知 -->
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-solr</artifactId>
