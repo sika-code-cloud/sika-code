@@ -6,15 +6,15 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 /**
  * 
- * @ClassName : MovieAtomApplication 
- * @Description : 电影原子服务启动类 
+ * @ClassName : UserComposeApplication 
+ * @Description : 用户组合服务启动类 
  * @author daiqi
- * @date 2017年12月28日 下午2:15:26 
+ * @date 2017年12月28日 下午2:40:59 
  *
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class MovieAtomApplication {
+public class UserComposeApplication {
 
 }

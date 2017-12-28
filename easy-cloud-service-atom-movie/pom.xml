@@ -1,13 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>dq.easy.cloud</groupId>
-    <artifactId>dq-easy-cloud-parent</artifactId>
-    <version>1.0.0</version>
-  </parent>
-  <groupId>easy.cloud.service.atom</groupId>
-  <artifactId>easy-cloud-service-atom-movie</artifactId>
-  <version>1.0.0</version>
-  <name>easy-cloud-service-atom-movie</name>
-  <description>easy-cloud-service-atom-movie</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../dq-easy-cloud-service-parent/pom.xml</relativePath>
+	</parent>
+	<groupId>easy.cloud.service.atom</groupId>
+	<artifactId>easy-cloud-service-atom-movie</artifactId>
+	<name>easy-cloud-service-atom-movie</name>
+	<description>easy-cloud-service-atom-movie</description>
 </project>
