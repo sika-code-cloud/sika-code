@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>dq.easy.cloud</groupId>
-		<artifactId>dq-easy-cloud-parent</artifactId>
+		<artifactId>dq-easy-cloud-service-parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../dq-easy-cloud-service-parent/pom.xml</relativePath>
 	</parent>

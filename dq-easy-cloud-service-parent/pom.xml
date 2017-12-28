@@ -5,6 +5,7 @@
 		<groupId>dq.easy.cloud</groupId>
 		<artifactId>dq-easy-cloud-parent</artifactId>
 		<version>1.0.0</version>
+		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>dq-easy-cloud-service-parent</artifactId>
 	<packaging>pom</packaging>
