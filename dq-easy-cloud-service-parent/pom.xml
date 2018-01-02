@@ -7,10 +7,11 @@
 		<version>1.0.0</version>
 		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>dq-easy-cloud-service-parent</artifactId>
+	<groupId>easy.cloud.service</groupId>
+	<artifactId>easy-cloud-service-parent</artifactId>
 	<packaging>pom</packaging>
-	<name>dq-easy-cloud-service-parent</name>
-	<description>dq-easy-cloud-service-parent</description>
+	<name>easy-cloud-service-parent</name>
+	<description>easy-cloud-service-parent</description>
 	<!-- 子模块 -->
 	<modules>
 		<module>../easy-cloud-service-atom-user</module>
@@ -23,6 +24,12 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-feign</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>dq.easy.cloud</groupId>
+			<artifactId>dq-easy-cloud-model</artifactId>
+			<version>${dq.easy.cloud.version}</version>
 		</dependency>
 	</dependencies>
 </project>

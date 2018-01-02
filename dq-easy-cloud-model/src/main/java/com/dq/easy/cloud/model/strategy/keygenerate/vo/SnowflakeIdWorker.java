@@ -139,10 +139,10 @@ public class SnowflakeIdWorker {
     public static void main(String[] args) {
         SnowflakeIdWorker idWorker = SnowflakeIdWorker.singleInstance(0, 0);
         long beginTimestamp = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
-            idWorker.nextId();
-//            System.out.println(Long.toBinaryString(id));
-//            System.out.println(id);
+        for (int i = 0; i < 10; i++) {
+           long id = idWorker.nextId();
+            System.out.println(Long.toBinaryString(id));
+            System.out.println(id);
 //            System.out.println(Long.valueOf(id).toString().length());
         }
         long endTimestamp = System.currentTimeMillis();
