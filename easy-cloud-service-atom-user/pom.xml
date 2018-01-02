@@ -13,8 +13,9 @@
 	<description>easy-cloud-service-atom-user</description>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jta-narayana</artifactId>
+			<groupId>easy.cloud.service.model</groupId>
+			<artifactId>easy-cloud-service-model</artifactId>
+			<version>${dq.easy.cloud.version}</version>
 		</dependency>
 	</dependencies>
 </project>

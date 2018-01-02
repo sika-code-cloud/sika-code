@@ -1,4 +1,4 @@
-package com.dq.easy.cloud;
+package com.easy.cloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,17 +7,17 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 /**
  * 
- * @ClassName : UserComposeApplication
- * @Description : 用户组合服务启动类
+ * @ClassName : MovieAtomApplication 
+ * @Description : 电影原子服务启动类 
  * @author daiqi
- * @date 2017年12月28日 下午2:40:59
+ * @date 2017年12月28日 下午2:15:26 
  *
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class UserComposeApplication {
+public class MovieAtomApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(UserComposeApplication.class, args);
+		SpringApplication.run(MovieAtomApplication.class, args);
 	}
 }
