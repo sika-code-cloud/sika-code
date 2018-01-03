@@ -5,8 +5,8 @@ import javax.persistence.Table;
 
 import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
 
-@Entity
-@Table(name="test_user")
+//@Entity
+//@Table(name="test_user")
 public class UserEntity extends DqBaseEntity{
 	private String userName;
 	private String password;

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 
-@Repository
+//@Repository
 public class UserRepository extends DqBaseRepository{
 	
 }

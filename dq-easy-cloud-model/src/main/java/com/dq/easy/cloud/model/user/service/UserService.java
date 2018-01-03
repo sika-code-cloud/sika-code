@@ -10,7 +10,7 @@ import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 import com.dq.easy.cloud.model.user.repository.UserRepository;
 
-@Service
+//@Service
 public class UserService {
 	@Resource
 	private UserRepository userRepository;

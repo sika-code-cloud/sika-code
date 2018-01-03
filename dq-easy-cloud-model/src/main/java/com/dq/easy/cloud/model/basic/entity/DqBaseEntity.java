@@ -17,6 +17,10 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+
 /**
  * 
  * @ClassName : DqBaseEntity 
@@ -47,6 +51,21 @@ public class DqBaseEntity {
 	private Integer isDeleted;
 	@PrePersist
 	public void basePrePersist(){
+		if(DqBaseUtils.isNull(createBy)){
+			this.createBy = -1L;
+		}
+		if(DqBaseUtils.isNull(updateBy)){
+			this.updateBy = -1L;
+		}
+		if(DqBaseUtils.isNull(createDate)){
+			this.createDate = DqDateUtils.getCurrentDate();
+		}
+		if(DqBaseUtils.isNull(updateDate)){
+			this.updateDate = DqDateUtils.getCurrentDate();
+		}
+		if(DqBaseUtils.isNull(isDeleted)){
+			this.isDeleted = 0;
+		}
 	}
 	public Long getId() {
 		return id;

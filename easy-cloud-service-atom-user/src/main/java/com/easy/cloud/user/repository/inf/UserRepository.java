@@ -1,7 +1,8 @@
 package com.easy.cloud.user.repository.inf;
 
-import com.easy.cloud.user.vo.UserVo;
+import com.easy.cloud.user.entity.UserEntity;
 
 public interface UserRepository {
-	UserVo findUserById(Long id);
+	UserEntity saveUserInfo(UserEntity userEntity);
+	UserEntity findUserById(Long id);
 }
