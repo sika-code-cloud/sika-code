@@ -8,13 +8,13 @@ import com.dq.easy.cloud.model.jdbc.constant.DqJdbcConstant;
 
 /**
  * 所有dataSource的基类
- * @ClassName : DqDataSourceVo 
- * @Description : dataSource基础vo 
+ * @ClassName : DqDataSourceBO 
+ * @Description : dataSource基逻辑对象 
  * @author daiqi
  * @date 2017年12月6日 上午10:09:58 
  *
  */
-public abstract class DqDataSourceVo {
+public abstract class DqDataSourceBO {
 	
 //	数据源对象
 	protected static DataSource dataSource;
@@ -38,10 +38,10 @@ public abstract class DqDataSourceVo {
 	protected Boolean poolPreparedStatements;
 	
 	
-	protected DqDataSourceVo() {
+	protected DqDataSourceBO() {
 		initDataSource();
 	}
-	protected DqDataSourceVo(Environment environment) {
+	protected DqDataSourceBO(Environment environment) {
 		this.environment = environment;
 		initDataSource();
 	}
@@ -136,59 +136,59 @@ public abstract class DqDataSourceVo {
 	}
 	
 	
-	public DqDataSourceVo buidInitialSize(Integer initialSize) {
+	public DqDataSourceBO buidInitialSize(Integer initialSize) {
 		this.initialSize = initialSize;
 		return this;
 	}
 
-	public DqDataSourceVo buildMaxActive(Integer maxActive) {
+	public DqDataSourceBO buildMaxActive(Integer maxActive) {
 		this.maxActive = maxActive;
 		return this;
 	}
 
-	public DqDataSourceVo buildMinIdle(Integer minIdle) {
+	public DqDataSourceBO buildMinIdle(Integer minIdle) {
 		this.minIdle = minIdle;
 		return this;
 	}
 
-	public DqDataSourceVo buildMaxWait(Integer maxWait) {
+	public DqDataSourceBO buildMaxWait(Integer maxWait) {
 		this.maxWait = maxWait;
 		return this;
 	}
 
-	public DqDataSourceVo buildValidationQuery(String validationQuery) {
+	public DqDataSourceBO buildValidationQuery(String validationQuery) {
 		this.validationQuery = validationQuery;
 		return this;
 	}
 
-	public DqDataSourceVo buildTestOnBorrow(Boolean testOnBorrow) {
+	public DqDataSourceBO buildTestOnBorrow(Boolean testOnBorrow) {
 		this.testOnBorrow = testOnBorrow;
 		return this;
 	}
 
-	public DqDataSourceVo buildTestWhileIdle(Boolean testWhileIdle) {
+	public DqDataSourceBO buildTestWhileIdle(Boolean testWhileIdle) {
 		this.testWhileIdle = testWhileIdle;
 		return this;
 	}
 
-	public DqDataSourceVo buildPoolPreparedStatements(Boolean poolPreparedStatements) {
+	public DqDataSourceBO buildPoolPreparedStatements(Boolean poolPreparedStatements) {
 		this.poolPreparedStatements = poolPreparedStatements;
 		return this;
 	}
 
-	public DqDataSourceVo buildUrl(String url){
+	public DqDataSourceBO buildUrl(String url){
 		this.url = url;
 		return this;
 	}
-	public DqDataSourceVo buildUsername(String username){
+	public DqDataSourceBO buildUsername(String username){
 		this.username = username;
 		return this;
 	}
-	public DqDataSourceVo buildPassword(String password){
+	public DqDataSourceBO buildPassword(String password){
 		this.password = password;
 		return this;
 	}
-	public DqDataSourceVo buildDriverClassName(String driverClassName){
+	public DqDataSourceBO buildDriverClassName(String driverClassName){
 		this.driverClassName = driverClassName;
 		return this;
 	}

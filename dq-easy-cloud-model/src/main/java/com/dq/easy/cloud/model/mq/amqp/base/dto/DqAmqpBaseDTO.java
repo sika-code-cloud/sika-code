@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.mq.amqp.base.vo;
+package com.dq.easy.cloud.model.mq.amqp.base.dto;
 
 import java.util.List;
 
@@ -7,11 +7,11 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
 
 /**
- * amqp的基础Vo
+ * amqp的消息 数据传输对象
  * @author daiqi
  *
  */
-public class DqAmqpBaseVo {
+public class DqAmqpBaseDTO {
 	/**消息发送到队列的名称*/
 	private String queueName;
 	/**发送的消息*/
@@ -19,7 +19,7 @@ public class DqAmqpBaseVo {
 	/**交换机名称*/
 	private String exchange;
 	
-	public DqAmqpBaseVo() {
+	public DqAmqpBaseDTO() {
 		super();
 	}
 	/**
@@ -27,7 +27,7 @@ public class DqAmqpBaseVo {
 	 * @param dqAmqpQueueNameEnum
 	 * @param msg
 	 */
-	public DqAmqpBaseVo(DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
+	public DqAmqpBaseDTO(DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
 		buildQueueName(dqAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
 	}
 	
@@ -36,7 +36,7 @@ public class DqAmqpBaseVo {
 	 * @param dqAmqpQueueNameEnum
 	 * @param msg
 	 */
-	public DqAmqpBaseVo(String exchange, DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
+	public DqAmqpBaseDTO(String exchange, DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
 		buildExchange(exchange).buildQueueName(dqAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
 	}
 	
@@ -70,7 +70,7 @@ public class DqAmqpBaseVo {
 	 * @author daiqi
 	 * @date 2017年12月20日 下午4:30:08
 	 */
-	public DqAmqpBaseVo buildMsg(Object msg){
+	public DqAmqpBaseDTO buildMsg(Object msg){
 		this.msg = DqJSONUtils.parseObject(msg, String.class);
 		return this;
 	}
@@ -86,7 +86,7 @@ public class DqAmqpBaseVo {
 	 * @author daiqi
 	 * @date 2017年12月21日 下午5:51:55
 	 */
-	public DqAmqpBaseVo buildExchange(String exchange){
+	public DqAmqpBaseDTO buildExchange(String exchange){
 		this.exchange = exchange;
 		return this;
 	}
@@ -99,7 +99,7 @@ public class DqAmqpBaseVo {
 	 * @author daiqi
 	 * @date 2017年12月20日 下午4:29:53
 	 */
-	public DqAmqpBaseVo buildQueueName(String queueName){
+	public DqAmqpBaseDTO buildQueueName(String queueName){
 		this.queueName = queueName;
 		return this;
 	}

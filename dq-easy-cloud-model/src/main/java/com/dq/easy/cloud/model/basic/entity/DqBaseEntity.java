@@ -1,6 +1,8 @@
 package com.dq.easy.cloud.model.basic.entity;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -19,12 +21,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 /**
  * 
- * @ClassName : DqBaseEntity 
- * @Description : 所有持久化实体的基础类 
+ * @ClassName : DqBaseDO 
+ * @Description : 所有持久化实体的基础类 --阿里规范手册建议实用DO为后缀--但是若包已do后缀结尾将报错--因此使用entity作为后缀
  * @author daiqi
  * @date 2017年12月4日 下午12:47:39 
  *

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.mq.amqp.base.vo.DqAmqpBaseVo;
+import com.dq.easy.cloud.model.mq.amqp.base.dto.DqAmqpBaseDTO;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class DqAmqpTemplateHandler {
 		DqAmqpTemplateHandler.rabbitTemplate = rabbitTemplate;
 	}
 
-	public static void send(DqAmqpBaseVo baseVo){
+	public static void send(DqAmqpBaseDTO baseVo){
 		if(DqBaseUtils.isNull(baseVo)){
 			return ;
 		}

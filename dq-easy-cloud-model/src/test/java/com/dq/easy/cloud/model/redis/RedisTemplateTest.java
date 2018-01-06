@@ -16,14 +16,14 @@ import com.dq.easy.cloud.DqEasyCloudModelApplication;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.cache.redis.handler.DqRedisTemplateHandler;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.strategy.keygenerate.vo.SnowflakeIdWorker;
+import com.dq.easy.cloud.model.strategy.keygenerate.bo.SnowflakeIdWorkerBO;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DqEasyCloudModelApplication.class) // 指定spring-boot的启动类
 public class RedisTemplateTest {
-	private SnowflakeIdWorker snowflakeIdWorker= SnowflakeIdWorker.singleInstance(0, 0);
+	private SnowflakeIdWorkerBO snowflakeIdWorker= SnowflakeIdWorkerBO.singleInstance(0, 0);
 	
 	@Test
 	public void testSet(){

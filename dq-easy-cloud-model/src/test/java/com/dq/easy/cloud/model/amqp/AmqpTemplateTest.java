@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dq.easy.cloud.DqEasyCloudModelApplication;
-import com.dq.easy.cloud.model.mq.amqp.base.vo.DqAmqpBaseVo;
+import com.dq.easy.cloud.model.mq.amqp.base.dto.DqAmqpBaseDTO;
 import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
 import com.dq.easy.cloud.model.mq.amqp.handler.DqAmqpTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
@@ -16,7 +16,7 @@ import com.dq.easy.cloud.model.user.entity.UserEntity;
 public class AmqpTemplateTest {
 	@Test
 	public void testSend(){
-		DqAmqpBaseVo baseVo = new DqAmqpBaseVo(DqAmqpQueueNameEnum.QUEUE_NAME_TEST, new UserEntity("usernem","rewa",12));
+		DqAmqpBaseDTO baseVo = new DqAmqpBaseDTO(DqAmqpQueueNameEnum.QUEUE_NAME_TEST, new UserEntity("usernem","rewa",12));
 		DqAmqpTemplateHandler.send(baseVo);
 	}
 }

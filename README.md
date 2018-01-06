@@ -27,7 +27,10 @@
 >>> service：服务层，类名以Service为结尾(UserService)，处理原子业务逻辑。<br/>
 >>> repository：数据访问层，类名以Repository结尾(UserRepository)，提供访问数据库的相关操作。<br/>
 >>> entity：持久化对象，类名以Entity结尾(UserEntity)，继承DqBaseEntity。不建议在持久化对象进行数据处理，持久化对象不应该包含任何与数据库无关的属性和方法。<br/>
->>> vo：逻辑对象，类名以Vo结尾(UserVo)，用作对外的vo对象。也称作业务逻辑对象。可以通过继承持久化对象拥有持久化对象的相关属性。<br/>
+>>> vo：视图对象，类名以VO结尾(UserVO)，用作对外的vo对象。也称作视图对象。可以通过继承持久化对象拥有持久化对象的相关属性。<br/>
+>>> dto：数据传输对象，类名以DTO结尾(UserDTO)，用作数据传输的对象。<br/>
+>>> bo：业务逻辑对象，类名以BO结尾(UserVO)，封装相关业务逻辑，保证其对象的高内聚<br/>
+>>> query：查询条件对象，类名以Query结尾(UserQuery)，封装相关查询条件的对象<br/>
 >>> constant：常量类，类名以Constant结尾(UserConstant)。<br/>
 >>> utils：工具类，类名以Utils结尾(UserUtils)。<br/>
 

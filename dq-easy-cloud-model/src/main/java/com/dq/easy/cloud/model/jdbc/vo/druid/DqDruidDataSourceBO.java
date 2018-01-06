@@ -5,17 +5,17 @@ import javax.sql.DataSource;
 import org.springframework.core.env.Environment;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.dq.easy.cloud.model.jdbc.vo.DqDataSourceVo;
+import com.dq.easy.cloud.model.jdbc.vo.DqDataSourceBO;
 
 /**
  * 
- * @ClassName : DqDruidDataSourceVo 
- * @Description : druid的数据配置信息Vo
+ * @ClassName : DqDruidDataSourceBO 
+ * @Description : druid的数据配置信息BO
  * @author daiqi
  * @date 2017年12月6日 上午10:09:13 
  *
  */
-public class DqDruidDataSourceVo extends DqDataSourceVo{
+public class DqDruidDataSourceBO extends DqDataSourceBO{
 	
 	private DruidDataSource druidDataSource;
 	
@@ -30,8 +30,8 @@ public class DqDruidDataSourceVo extends DqDataSourceVo{
 	 * @author daiqi
 	 * @date 2017年12月6日 上午11:29:52
 	 */
-	public static DqDruidDataSourceVo newInstance(){
-		return new DqDruidDataSourceVo();
+	public static DqDruidDataSourceBO newInstance(){
+		return new DqDruidDataSourceBO();
 	}
 	/**
 	 * 
@@ -45,32 +45,29 @@ public class DqDruidDataSourceVo extends DqDataSourceVo{
 	 * @author daiqi
 	 * @date 2017年12月6日 下午3:54:56
 	 */
-	public static DqDruidDataSourceVo newInstance(Environment environment){
-		return new DqDruidDataSourceVo(environment);
+	private static DqDruidDataSourceBO newInstance(Environment environment){
+		return new DqDruidDataSourceBO(environment);
 	}
-	
 	
 	/**
 	 * 
-	 * <p>获取单例数据源</p>
+	 * <p>读取配置文件获取单例的数据源</p>
 	 *
-	 * <pre>
-	 * </pre>
+	 * <pre></pre>
 	 *
-	 * @return
-	 * @author daiqi
-	 * @date 2017年12月6日 下午1:13:07
+	 * @param environment : 传入读取配置文件的对象
+	 * @return DataSource
+	 *
+	 * author daiqi
+	 * 创建时间  2018年1月6日 下午3:45:58
 	 */
-	public static DataSource getSingleDataSource(){
-		return newInstance().getDataSource();
-	}
 	public static DataSource getSingleDataSource(Environment environment){
 		return newInstance(environment).getDataSource();
 	}
-	private DqDruidDataSourceVo(Environment environment) {
+	private DqDruidDataSourceBO(Environment environment) {
 		super(environment);
 	}
-	private DqDruidDataSourceVo() {
+	private DqDruidDataSourceBO() {
 		super();
 	}
 	@Override

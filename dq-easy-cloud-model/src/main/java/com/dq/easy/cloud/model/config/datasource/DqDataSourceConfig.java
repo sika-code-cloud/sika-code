@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.dq.easy.cloud.model.jdbc.vo.druid.DqDruidDataSourceVo;
+import com.dq.easy.cloud.model.jdbc.vo.druid.DqDruidDataSourceBO;
 /**
  * 
  * @ClassName : DataSourceConfig 
@@ -23,6 +23,6 @@ public class DqDataSourceConfig {
 
 	@Bean
 	public DataSource dataSource() {
-		return DqDruidDataSourceVo.getSingleDataSource(environment);
+		return DqDruidDataSourceBO.getSingleDataSource(environment);
 	}
 }

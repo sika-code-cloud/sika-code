@@ -3,7 +3,7 @@ package com.dq.easy.cloud.model.basic.vo;
 import java.util.Date;
 
 /**
- * 基础逻辑Vo
+ * 基础视图对象Vo
  * @author daiqi
  *
  */
