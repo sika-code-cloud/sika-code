@@ -9,5 +9,5 @@ package com.dq.easy.cloud.model.common.response.utils;
  *
  */
 public class DqResponseUtils {
-
+	
 }

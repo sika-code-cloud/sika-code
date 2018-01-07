@@ -1,4 +1,4 @@
-package com.easy.cloud.user.vo;
+package com.easy.cloud.user.base.vo;
 
 import com.dq.easy.cloud.model.basic.vo.DqBaseVo;
 

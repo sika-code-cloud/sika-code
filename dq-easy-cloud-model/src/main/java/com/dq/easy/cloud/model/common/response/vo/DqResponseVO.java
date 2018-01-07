@@ -5,6 +5,9 @@ import com.dq.easy.cloud.model.common.response.common.DqResponseEnum;
 
 /**
  * 基础响应视图对象
+ * <p>code和msg建议使用枚举类来进行赋值，相关业务逻辑的响应枚举类可以参考DqResponseEnum</p>
+ * <p>使用该方法若只是需要对象通过调用newInstance来创建实例</p>
+ * <p>若需要生成json字符串，请使用toString方法生成</p>
  * @author daiqi
  * 创建日期 2018年1月6日 下午11:23:29
  */
@@ -69,14 +72,14 @@ public class DqResponseVO {
 	}
 	/**
 	 * 
-	 * <p></p>
+	 * <p>将响应对象直接转变成json字符串</p>
 	 *
 	 * <pre></pre>
 	 *
-	 * @param code
-	 * @param msg
-	 * @param info
-	 * @return
+	 * @param code : String : 响应码
+	 * @param msg : String : 响应信息
+	 * @param info : Object : 封装的响应对象
+	 * @return 转化为json字符串的DqResponseVO对象
 	 *
 	 * author daiqi
 	 * 创建时间  2018年1月7日 上午3:20:01
@@ -84,9 +87,23 @@ public class DqResponseVO {
 	public static String toString(String code, String msg, Object info){
 		return newInstance(code, msg, info).toString();
 	}
+	
+	/**
+	 * 
+	 * <p>将响应对象直接转变成json字符串</p>
+	 *
+	 * <pre></pre>
+	 *
+	 * @param info
+	 * @return
+	 *
+	 * author daiqi
+	 * 创建时间  2018年1月7日 下午12:18:44
+	 */
 	public static String toString(Object info){
 		return newInstance(info).toString();
 	}
+	
 	@Override
 	public String toString() {
 		return DqJSONUtils.parseObject(this, String.class);

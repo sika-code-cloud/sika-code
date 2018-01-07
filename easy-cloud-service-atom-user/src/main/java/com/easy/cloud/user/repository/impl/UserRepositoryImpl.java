@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
-import com.easy.cloud.user.entity.UserEntity;
+import com.easy.cloud.user.base.entity.UserEntity;
 import com.easy.cloud.user.repository.inf.UserRepository;
 
 @Repository(value="userRepository")

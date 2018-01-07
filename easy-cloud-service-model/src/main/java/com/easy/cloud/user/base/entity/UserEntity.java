@@ -1,26 +1,27 @@
-package com.easy.cloud.user.entity;
+package com.easy.cloud.user.base.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
+import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 
 @Entity
 @Table(name = "easy_user_info")
 public class UserEntity extends DqBaseEntity{
 	private String userName;
 	private String password;
-	private int status;
+	private Integer sex;
 	
 	
 	public UserEntity() {
 		super();
 	}
-	public UserEntity(String userName, String password, int status) {
+	public UserEntity(String userName, String password, int sex) {
 		super();
 		this.userName = userName;
 		this.password = password;
-		this.status = status;
+		this.sex = sex;
 	}
 	public String getUserName() {
 		return userName;
@@ -34,17 +35,15 @@ public class UserEntity extends DqBaseEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getStatus() {
-		return status;
+	
+	public Integer getSex() {
+		return sex;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setSex(Integer sex) {
+		this.sex = sex;
 	}
 	@Override
 	public String toString() {
-		return "UserEntity [getUserName()=" + getUserName() + ", getPassword()=" + getPassword() + ", getStatus()="
-				+ getStatus() + ", getId()=" + getId() + ", getCreateDate()=" + getCreateDate() + ", getUpdateDate()="
-				+ getUpdateDate() + ", getVersion()=" + getVersion() + ", getCreateBy()=" + getCreateBy()
-				+ ", getUpdateBy()=" + getUpdateBy() + "]";
+		return DqJSONUtils.parseObject(this, String.class);
 	}
 }
