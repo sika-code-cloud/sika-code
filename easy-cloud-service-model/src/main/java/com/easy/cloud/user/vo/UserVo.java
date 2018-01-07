@@ -5,7 +5,7 @@ import com.dq.easy.cloud.model.basic.vo.DqBaseVo;
 public class UserVo extends DqBaseVo{
 	private String userName;
 	private String password;
-	private int status;
+	private Integer status;
 	
 	public String getUserName() {
 		return userName;
@@ -19,10 +19,11 @@ public class UserVo extends DqBaseVo{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	@Override

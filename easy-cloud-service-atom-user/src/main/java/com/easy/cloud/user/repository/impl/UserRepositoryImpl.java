@@ -6,7 +6,6 @@ import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.easy.cloud.user.entity.UserEntity;
 import com.easy.cloud.user.repository.inf.UserRepository;
-import com.easy.cloud.user.vo.UserVo;
 
 @Repository(value="userRepository")
 public class UserRepositoryImpl extends DqBaseRepository implements UserRepository{

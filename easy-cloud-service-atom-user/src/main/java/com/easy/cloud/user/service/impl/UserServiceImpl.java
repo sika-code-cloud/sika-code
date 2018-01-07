@@ -1,14 +1,13 @@
 package com.easy.cloud.user.service.impl;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.easy.cloud.user.entity.UserEntity;
 import com.easy.cloud.user.repository.inf.UserRepository;
 import com.easy.cloud.user.service.inf.UserService;
-import com.easy.cloud.user.vo.UserVo;
 
 @Service(value="userService")
 public class UserServiceImpl implements UserService {
