@@ -1,4 +1,4 @@
- package com.easy.cloud.user.service.inf;
+ package com.easy.cloud.user.base.service.inf;
 
 import com.easy.cloud.user.base.entity.UserEntity;
 

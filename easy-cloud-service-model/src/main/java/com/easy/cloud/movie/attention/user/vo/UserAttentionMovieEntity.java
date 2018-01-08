@@ -1,4 +1,4 @@
-package com.easy.cloud.user.attention.movie.entity;
+package com.easy.cloud.movie.attention.user.vo;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

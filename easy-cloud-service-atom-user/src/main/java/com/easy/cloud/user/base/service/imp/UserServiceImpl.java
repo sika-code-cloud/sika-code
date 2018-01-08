@@ -1,4 +1,4 @@
-package com.easy.cloud.user.service.impl;
+package com.easy.cloud.user.base.service.imp;
 
 import javax.annotation.Resource;
 
@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.repository.inf.UserRepository;
-import com.easy.cloud.user.service.inf.UserService;
+import com.easy.cloud.user.base.repository.inf.UserRepository;
+import com.easy.cloud.user.base.service.inf.UserService;
 
 @Service(value="userService")
 public class UserServiceImpl implements UserService {

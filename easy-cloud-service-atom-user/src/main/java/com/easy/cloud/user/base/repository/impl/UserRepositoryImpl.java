@@ -1,11 +1,11 @@
-package com.easy.cloud.user.repository.impl;
+package com.easy.cloud.user.base.repository.impl;
 
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.repository.inf.UserRepository;
+import com.easy.cloud.user.base.repository.inf.UserRepository;
 
 @Repository(value="userRepository")
 public class UserRepositoryImpl extends DqBaseRepository implements UserRepository{

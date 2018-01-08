@@ -1,4 +1,4 @@
-package com.easy.cloud.user.repository.inf;
+package com.easy.cloud.user.base.repository.inf;
 
 import com.easy.cloud.user.base.entity.UserEntity;
 
