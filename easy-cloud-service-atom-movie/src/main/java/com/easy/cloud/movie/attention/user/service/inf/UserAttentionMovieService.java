@@ -5,6 +5,6 @@ package com.easy.cloud.movie.attention.user.service.inf;
  * @author daiqi
  * @date 2018年1月8日 下午12:48:03
  */
-public interface UserAttentionMovieServiceInf {
+public interface UserAttentionMovieService {
 
 }

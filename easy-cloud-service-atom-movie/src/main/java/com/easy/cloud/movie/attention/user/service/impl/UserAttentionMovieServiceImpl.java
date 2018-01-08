@@ -1,7 +1,7 @@
 package com.easy.cloud.movie.attention.user.service.impl;
 
 import org.springframework.stereotype.Service;
-import com.easy.cloud.movie.attention.user.service.inf.UserAttentionMovieServiceInf;
+import com.easy.cloud.movie.attention.user.service.inf.UserAttentionMovieService;
 
 /**
  * 用户关注电影服务实现类
@@ -9,6 +9,6 @@ import com.easy.cloud.movie.attention.user.service.inf.UserAttentionMovieService
  * @date 2018年1月8日 下午12:49:23
  */
 @Service
-public class UserAttentionMovieServiceImpl implements UserAttentionMovieServiceInf{
+public class UserAttentionMovieServiceImpl implements UserAttentionMovieService{
 
 }

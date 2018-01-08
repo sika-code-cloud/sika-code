@@ -5,6 +5,6 @@ package com.easy.cloud.movie.actor.repository.inf;
  * @author daiqi
  * @date 2018年1月8日 下午4:41:03
  */
-public interface MovieActorRepositoryInf {
+public interface MovieActorRepository {
 
 }

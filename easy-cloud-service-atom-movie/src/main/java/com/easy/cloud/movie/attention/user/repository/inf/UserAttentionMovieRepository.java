@@ -5,6 +5,6 @@ package com.easy.cloud.movie.attention.user.repository.inf;
  * @author daiqi
  * @date 2018年1月8日 下午12:46:15
  */
-public interface UserAttentionMovieRepositoryInf {
+public interface UserAttentionMovieRepository {
 
 }

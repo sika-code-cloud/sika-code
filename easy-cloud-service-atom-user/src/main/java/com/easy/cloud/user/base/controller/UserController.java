@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.dq.easy.cloud.model.common.response.vo.DqResponseVO;
 import com.easy.cloud.user.base.entity.UserEntity;
 import com.easy.cloud.user.base.service.inf.UserService;
@@ -27,5 +26,4 @@ public class UserController{
 	public String saveUserInfo(@RequestBody UserEntity userEntity){
 		return DqResponseVO.toString(userService.saveUserInfo(userEntity));
 	}
-
 }

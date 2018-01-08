@@ -2,7 +2,11 @@
 
 import com.easy.cloud.user.base.entity.UserEntity;
 
-
+/**
+ * 用户服务接口
+ * @author daiqi
+ * @date 2018年1月8日 下午5:31:42
+ */
 public interface UserService {
 	/**
 	 * 
