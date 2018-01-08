@@ -5,6 +5,8 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+
 /**
  * 以org.apache.commons包为基础封装的String操作类
  * @ClassName : DqStringUtils 
@@ -19,6 +21,8 @@ public class DqStringUtils {
      * The empty String <code>""</code>.
      */
     public static final String EMPTY = "";
+    /** 初始化相关String容器的容量--512 */
+    private static final int INIT_CAPACITY = 512;
 	
 	/**
 	 * 将首字母大写
@@ -540,6 +544,43 @@ public class DqStringUtils {
 		return StringUtils.lowerCase(str);
 	}
 	
+	/**
+	 * 
+	 * <p>创建默认capacity的StringBuilder对象</p>
+	 *
+	 * <pre></pre>
+	 *
+	 * @return
+	 *
+	 * author daiqi
+	 * 创建时间  2018年1月8日 下午6:06:21
+	 */
+	public static StringBuilder newStringBuilderDefault(){
+		return newStringBuilder(INIT_CAPACITY);
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 创建带有初始化容器长度的StringBuilder对象
+	 * </p>
+	 * <p>
+	 * 若initCapacity为null或者initCapacity <= 将实用默认的INIT_CAPACITY
+	 * </p>
+	 * <pre></pre>
+	 *
+	 * @param initCapacity : Integer : StringBuilder的初始化长度
+	 * @return StringBuilder
+	 *
+	 * author daiqi
+	 * 创建时间  2018年1月8日 下午6:04:33
+	 */
+	public static StringBuilder newStringBuilder(final Integer initCapacity){
+		if(DqBaseUtils.isNull(initCapacity) || initCapacity <= 0){
+			return new StringBuilder(INIT_CAPACITY);
+		}
+		return new StringBuilder(initCapacity);
+	}
 	/**
 	 * 从str中移除remove字符串
      * <p>Removes all occurrences of a substring from within the source string.</p>

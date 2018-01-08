@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.easy.cloud.user.base.dto.UserDTO;
 import com.easy.cloud.user.base.entity.UserEntity;
+import com.easy.cloud.user.base.query.UserQuery;
 import com.easy.cloud.user.base.repository.inf.UserRepository;
 import com.easy.cloud.user.base.service.inf.UserService;
 
@@ -27,5 +29,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return userRepository.saveUserInfo(userEntity);
 	}
+
+	@Override
+	public UserDTO findUserByEmailAndPassword(UserQuery userQuery) {
+		return userRepository.findUserByEmailAndPassword(userQuery);
+	}
+
+	@Override
+	public UserDTO findUserByPhoneNumberAndPassword(UserQuery userQuery) {
+		return userRepository.findUserByPhoneNumberAndPassword(userQuery);
+	}
+	
 	
 }

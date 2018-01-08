@@ -1,6 +1,8 @@
  package com.easy.cloud.user.base.service.inf;
 
+import com.easy.cloud.user.base.dto.UserDTO;
 import com.easy.cloud.user.base.entity.UserEntity;
+import com.easy.cloud.user.base.query.UserQuery;
 
 /**
  * 用户服务接口
@@ -21,6 +23,10 @@ public interface UserService {
 	 * 创建时间  2018年1月3日 下午10:26:24
 	 */
 	UserEntity findUserById(Long id);
+	
+	UserDTO findUserByEmailAndPassword(UserQuery userQuery);
+	
+	UserDTO findUserByPhoneNumberAndPassword(UserQuery userQuery);
 	
 	UserEntity saveUserInfo(UserEntity userEntity);
 }

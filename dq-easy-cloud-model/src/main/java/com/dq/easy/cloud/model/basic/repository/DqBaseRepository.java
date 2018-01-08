@@ -2,6 +2,9 @@ package com.dq.easy.cloud.model.basic.repository;
 
 
 import org.springframework.stereotype.Repository;
+
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 
 /**
@@ -14,6 +17,8 @@ import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
  */
 @Repository
 public class DqBaseRepository {
+	/** 原点字符串*/
+	protected static final String ORIGIN_STR = ".";
 	
 	/**
      * 
@@ -79,8 +84,34 @@ public class DqBaseRepository {
      * @author daiqi
      * @date 2017年12月6日 下午5:31:34
      */
-    public static <T> T findOne(Class<T> clazz, Long id){
+    public <T> T findOne(Class<T> clazz, Long id){
     	return DqJdbcTemplateHandler.findOne(clazz, id);
     }
 	
+    /**
+     * 
+     * <p>获取基础返回结果的sql语句</p>
+     *
+     * <pre></pre>
+     *
+     * @return
+     *
+     * author daiqi
+     * 创建时间  2018年1月8日 下午8:17:12
+     */
+    public String getBaseResultSql(Class<?> entityClazz){
+    	String tableName = DqBaseUtils.getTableNameByEntityClass(entityClazz);
+    	
+    	StringBuilder sql = DqStringUtils.getDefaultStringBuilder();
+    	String commonPrefix = DqStringUtils.getDefaultStringBuilder().append(",").append(tableName).append(ORIGIN_STR).toString(); 
+    	sql.append(tableName).append(ORIGIN_STR).append("id");
+    	sql.append(commonPrefix).append("create_by createBy");
+    	sql.append(commonPrefix).append("update_by updateBy");
+    	sql.append(commonPrefix).append("create_date createDate");
+    	sql.append(commonPrefix).append("update_date updateDate");
+    	sql.append(commonPrefix).append("update_date updateDate");
+    	sql.append(commonPrefix).append("version version");
+    	sql.append(commonPrefix).append("is_deleted isDeleted");
+		return sql.toString();
+    }
 }

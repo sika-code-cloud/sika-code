@@ -3,9 +3,12 @@ package com.dq.easy.cloud.model.basic.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Table;
+
 import com.alibaba.fastjson.JSONObject;
 import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 
 /**
@@ -91,5 +94,32 @@ public class DqBaseUtils {
 		}
 //		将targetObjMap转换为目标类的对象
 		return DqJSONUtils.parseObject(targetObjMap, clazz);
+	}
+	/**
+	 * 
+	 * <p>根据实体类的Class获取其对应的tableName</p>
+	 *
+	 * <pre></pre>
+	 *
+	 * @param clazz
+	 * @return
+	 *
+	 * author daiqi
+	 * 创建时间  2018年1月8日 下午7:47:40
+	 */
+	public static String getTableNameByEntityClass(final Class<?> entityClazz){
+		if(isNull(entityClazz)){
+			throw new RuntimeException("entityClazz is null");
+		}
+//		获取javax.persistence.Table注解
+		Table tableAnnotation = entityClazz.getAnnotation(Table.class);
+		if(isNull(tableAnnotation)){
+			throw new RuntimeException("实体类没有javax.persistence.Table注解");
+		}
+		String tableName = tableAnnotation.name();
+		if(DqStringUtils.isEmpty(tableName)){
+			throw new RuntimeException("javax.persistence.Table注解name属性为空");
+		}
+		return tableName;
 	}
 }
