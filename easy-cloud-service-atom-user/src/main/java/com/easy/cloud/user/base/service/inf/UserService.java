@@ -1,5 +1,6 @@
  package com.easy.cloud.user.base.service.inf;
 
+import com.dq.easy.cloud.model.basic.dto.DqBaseServiceResult;
 import com.easy.cloud.user.base.dto.UserDTO;
 import com.easy.cloud.user.base.entity.UserEntity;
 import com.easy.cloud.user.base.query.UserQuery;
@@ -29,4 +30,15 @@ public interface UserService {
 	UserDTO findUserByPhoneNumberAndPassword(UserQuery userQuery);
 	
 	UserEntity saveUserInfo(UserEntity userEntity);
+	
+	/**
+	 * <p>
+	 * 保存用户信息
+	 * </p>
+	 * @param userDTO
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月2日 下午4:56:31
+	 */
+	DqBaseServiceResult saveUser(UserDTO userDTO);
 }

@@ -50,6 +50,8 @@ public class DqBaseEntity {
 	private Long updateBy;
 //	删除标志
 	private Integer isDeleted;
+//	备注
+	private String remark;
 	@PrePersist
 	public void basePrePersist(){
 		if(DqBaseUtils.isNull(createBy)){
@@ -121,6 +123,11 @@ public class DqBaseEntity {
 	public void setIsDeleted(Integer isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	
 }
