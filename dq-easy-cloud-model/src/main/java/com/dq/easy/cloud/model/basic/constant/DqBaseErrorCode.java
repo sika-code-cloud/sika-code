@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
  * </p>
  *
  * <pre>
- * 所有的服务错误代码应该继承该常量类
+ * 1、所有的服务错误代码应该继承该常量类
+ * 2、各个子类的静态块中往ERROR_CODE_AND_MSG_MAP中添加错误说明信息
+ * 3、每个子类添加@Component注解。这样就能加载类从而使得子类的错误说明信息能加载到ERROR_CODE_AND_MSG_MAP容器中
  * </pre>
  *
  * @author daiqi
@@ -30,6 +32,7 @@ public class DqBaseErrorCode {
 	public static final String RUNTIME_EXCEPTION = "A000003";
 	/** 错误代码和消息容器 */
 	protected static final Map<String, String> ERROR_CODE_AND_MSG_MAP = new HashMap<>();
+	
 	static{
 		ERROR_CODE_AND_MSG_MAP.put(SUCCESS, "成功");
 		ERROR_CODE_AND_MSG_MAP.put(SYS_ERROR, "系统错误");

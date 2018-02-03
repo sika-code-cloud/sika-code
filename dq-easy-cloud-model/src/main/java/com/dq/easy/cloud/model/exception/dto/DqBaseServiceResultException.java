@@ -2,8 +2,7 @@ package com.dq.easy.cloud.model.exception.dto;
 
 import java.util.Date;
 
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 
 /**
  * 
@@ -25,10 +24,7 @@ public class DqBaseServiceResultException {
 	}
 	
 	public String getTimestampStr(){
-		if(DqBaseUtils.isNull(timstamp)){
-			return null;
-		}
-		return null;
+		return DqDateFormatUtils.format(timstamp, DqDateFormatUtils.FORMAT_NORMAL);
 	}
 	
 	public Date getTimstamp() {
