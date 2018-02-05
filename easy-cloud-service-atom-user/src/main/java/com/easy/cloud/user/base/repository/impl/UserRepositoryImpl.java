@@ -9,9 +9,9 @@ import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
-import com.easy.cloud.user.base.dto.UserDTO;
-import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.base.query.UserQuery;
+import com.easy.cloud.user.base.pojo.dto.UserDTO;
+import com.easy.cloud.user.base.pojo.entity.UserEntity;
+import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.base.repository.inf.UserRepository;
 
 @Repository(value="userRepository")

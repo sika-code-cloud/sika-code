@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
+import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;

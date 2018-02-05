@@ -1,8 +1,8 @@
 package com.easy.cloud.user.base.repository.inf;
 
-import com.easy.cloud.user.base.dto.UserDTO;
-import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.base.query.UserQuery;
+import com.easy.cloud.user.base.pojo.dto.UserDTO;
+import com.easy.cloud.user.base.pojo.entity.UserEntity;
+import com.easy.cloud.user.base.pojo.query.UserQuery;
 
 public interface UserRepository {
 	UserEntity saveUserInfo(UserEntity userEntity);

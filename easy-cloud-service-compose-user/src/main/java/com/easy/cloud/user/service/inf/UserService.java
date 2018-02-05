@@ -1,14 +1,52 @@
 package com.easy.cloud.user.service.inf;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.easy.cloud.user.base.pojo.dto.UserDTO;
+import com.easy.cloud.user.base.pojo.query.UserQuery;
 
-import com.dq.easy.cloud.model.basic.dto.DqBaseServiceResult;
-import com.easy.cloud.user.base.dto.UserDTO;
-
-@FeignClient("EASY-CLOUD-SERVICE-ATOM-USER")
+/**
+ * 
+ * <p>
+ * 用户服务接口类
+ * </p>
+ *
+ * @author daiqi
+ * 创建时间    2018年2月5日 下午7:38:09
+ */
 public interface UserService {
-	@RequestMapping("user/saveUserInfo")
-    DqBaseServiceResult saveUser(@RequestBody UserDTO userDTO);
+	/**
+	 * <p>
+	 * 用户注册接口
+	 * </p>
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     userName : zhangsan : 用户名 : 是
+	 *     password : 123456 : 密码 : 是
+	 *     email : dq@163.com : 邮箱 : 是
+	 * </pre>
+	 * @param userDTO : UserDTO : 用户数据传输对象
+	 * @return DqBaseServiceResult
+	 * @author daiqi
+	 * 创建时间    2018年2月5日 下午7:39:10
+	 */
+	DqBaseServiceResult register(UserDTO userDTO);
+	
+	/**
+	 * 
+	 * <p>
+	 * 用户登录
+	 * </p>
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     userName : zhangsan : 用户名 : 是
+	 *     password : 123456 : 密码 : 是
+	 * </pre>
+	 * @param userQuery
+	 * @return DqBaseServiceResult
+	 * @author daiqi
+	 * 创建时间    2018年2月5日 下午7:49:51
+	 */
+	DqBaseServiceResult login(UserQuery userQuery);
 }

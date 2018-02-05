@@ -1,27 +1,12 @@
-package com.dq.easy.cloud.model.user.entity;
+package com.easy.cloud.user.base.pojo.vo;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.dq.easy.cloud.model.basic.pojo.vo.DqBaseVo;
 
-import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
-
-//@Entity
-//@Table(name="test_user")
-public class UserEntity extends DqBaseEntity{
+public class UserVo extends DqBaseVo{
 	private String userName;
 	private String password;
-	private int status;
+	private Integer status;
 	
-	
-	public UserEntity() {
-		super();
-	}
-	public UserEntity(String userName, String password, int status) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.status = status;
-	}
 	public String getUserName() {
 		return userName;
 	}
@@ -34,10 +19,11 @@ public class UserEntity extends DqBaseEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	@Override
@@ -47,6 +33,4 @@ public class UserEntity extends DqBaseEntity{
 				+ getUpdateDate() + ", getVersion()=" + getVersion() + ", getCreateBy()=" + getCreateBy()
 				+ ", getUpdateBy()=" + getUpdateBy() + "]";
 	}
-	
-	
 }

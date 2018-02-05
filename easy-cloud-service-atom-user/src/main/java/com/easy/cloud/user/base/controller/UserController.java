@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
-import com.dq.easy.cloud.model.basic.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.response.vo.DqResponseVO;
-import com.easy.cloud.user.base.dto.UserDTO;
-import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.base.query.UserQuery;
+import com.easy.cloud.user.base.pojo.dto.UserDTO;
+import com.easy.cloud.user.base.pojo.entity.UserEntity;
+import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.base.service.inf.UserService;
 
 @RestController

@@ -5,14 +5,15 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dq.easy.cloud.model.basic.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.easy.cloud.user.base.constant.UserErrorCode;
-import com.easy.cloud.user.base.dto.UserDTO;
-import com.easy.cloud.user.base.entity.UserEntity;
-import com.easy.cloud.user.base.query.UserQuery;
+import com.easy.cloud.user.base.pojo.dto.UserDTO;
+import com.easy.cloud.user.base.pojo.entity.UserEntity;
+import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.base.repository.inf.UserRepository;
 import com.easy.cloud.user.base.service.inf.UserService;
 
@@ -64,5 +65,43 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
 		return dqBaseServiceResult.buildResult(userEntity);
 	}
+
+	@Override
+	public DqBaseServiceResult register(UserDTO userDTO) {
+		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
+		if(DqBaseUtils.isNull(userDTO)){
+			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_CANT_NULL);
+		}
+		if(DqStringUtils.isEmpty(userDTO.getUserName())){
+			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_NAME_CANT_EMPTY);
+		}
+		if(DqStringUtils.isEmpty(userDTO.getPassword())){
+			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_PASSWOR_CANT_EMPTY);
+		}
+		if(DqStringUtils.isEmpty(userDTO.getEmail())){
+			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_EMAIL_CANT_EMPTY);
+		}
+		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
+		return dqBaseServiceResult.buildResult(userEntity);
+	}
+
+	@Override
+	public DqBaseServiceResult findUserByEmail(UserQuery userQuery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DqBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DqBaseServiceResult loginByEmailAndPassword(UserQuery userQuery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }

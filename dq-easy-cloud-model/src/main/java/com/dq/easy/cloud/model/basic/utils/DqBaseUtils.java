@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.persistence.Table;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
+import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 

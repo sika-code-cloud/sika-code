@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
-import com.dq.easy.cloud.model.basic.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;

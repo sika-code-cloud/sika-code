@@ -11,7 +11,7 @@ import org.hibernate.id.Configurable;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
-import com.dq.easy.cloud.model.basic.entity.DqBaseEntity;
+import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
 import com.dq.easy.cloud.model.strategy.keygenerate.bo.SnowflakeIdWorkerBO;
 
 /**
