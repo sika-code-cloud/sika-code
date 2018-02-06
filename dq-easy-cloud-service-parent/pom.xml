@@ -14,6 +14,7 @@
 	<description>easy-cloud-service-parent</description>
 	<!-- 子模块 -->
 	<modules>
+		<module>../easy-cloud-service-model</module>
 		<module>../easy-cloud-service-atom-user</module>
 		<module>../easy-cloud-service-atom-movie</module>
 		<module>../easy-cloud-service-compose-user</module>
@@ -21,15 +22,12 @@
 	
 	
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-feign</artifactId>
-		</dependency>
 		
 		<dependency>
 			<groupId>dq.easy.cloud</groupId>
 			<artifactId>dq-easy-cloud-model</artifactId>
 			<version>${dq.easy.cloud.version}</version>
 		</dependency>
+		
 	</dependencies>
 </project>

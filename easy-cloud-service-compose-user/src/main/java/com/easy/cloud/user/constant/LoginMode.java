@@ -1,7 +1,6 @@
 package com.easy.cloud.user.constant;
 
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant;
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 
 /**
  * 

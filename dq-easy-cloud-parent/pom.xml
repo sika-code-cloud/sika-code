@@ -71,6 +71,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
+		<!-- spring-cloud-starter-feign申明式调用 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+		</dependency>
 		<!-- spring-cloud-starter-ribbon负载均衡 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

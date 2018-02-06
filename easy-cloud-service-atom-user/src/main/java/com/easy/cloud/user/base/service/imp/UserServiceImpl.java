@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public DqBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

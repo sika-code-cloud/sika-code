@@ -11,9 +11,10 @@
 	<artifactId>easy-cloud-service-atom-user</artifactId>
 	<name>easy-cloud-atom-service-user</name>
 	<description>easy-cloud-service-atom-user</description>
+	
 	<dependencies>
 		<dependency>
-			<groupId>easy.cloud.service.model</groupId>
+			<groupId>easy.cloud.service</groupId>
 			<artifactId>easy-cloud-service-model</artifactId>
 			<version>${dq.easy.cloud.version}</version>
 		</dependency>
