@@ -1,5 +1,6 @@
 package com.dq.easy.cloud.model.basic.utils;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,4 +123,34 @@ public class DqBaseUtils {
 		}
 		return tableName;
 	}
+	/**  
+     * <p>
+     * 判断某常量值是否存在常量类中
+     * </p>
+     * @author daiqi
+     * @date 2018/1/26 11:58
+     * @param [constantValue]  
+     * @return java.lang.Boolean  
+     */  
+    public static boolean isExistConstantValue(Class<?> constantClazz, Object constantValue){
+        if(isNull(constantClazz) || isNull(constantValue)){
+            return false;
+        }
+        Field[] fields = constantClazz.getFields();
+        try {
+            for(Field field : fields){
+                Object fieldValue = field.get(field.getName());
+                if(isNull(fieldValue)){
+                    continue;
+                }
+                if(fieldValue.equals(constantValue)){
+                    return true;
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 }

@@ -2,7 +2,7 @@ package com.easy.cloud.user.service.inf;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
-import com.easy.cloud.user.base.pojo.query.UserQuery;
+import com.easy.cloud.user.pojo.query.UserComposeQuery;
 
 /**
  * 
@@ -43,10 +43,10 @@ public interface UserService {
 	 *     userName : zhangsan : 用户名 : 是
 	 *     password : 123456 : 密码 : 是
 	 * </pre>
-	 * @param userQuery
+	 * @param userComposeQuery
 	 * @return DqBaseServiceResult
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午7:49:51
 	 */
-	DqBaseServiceResult login(UserQuery userQuery);
+	DqBaseServiceResult login(UserComposeQuery userComposeQuery);
 }
