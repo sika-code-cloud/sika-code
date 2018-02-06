@@ -1,4 +1,4 @@
-package com.easy.cloud.user.controller;
+package com.easy.cloud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +33,7 @@ public class UserController extends DqBaseController{
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午7:44:23
 	 */
-	@RequestMapping("register")
+	@RequestMapping("/register")
 	public DqBaseServiceResult register(@RequestBody UserDTO userDTO){
 		return userService.register(userDTO);
 	}
@@ -53,6 +53,7 @@ public class UserController extends DqBaseController{
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午7:20:12
 	 */
+	@RequestMapping("/login")
 	public DqBaseServiceResult login(@RequestBody UserQuery userQuery){
 		return userService.login(userQuery);
 	}

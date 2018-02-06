@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public DqBaseServiceResult register(UserDTO userDTO) {
 		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
 		if(DqBaseUtils.isNull(userDTO)){
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public DqBaseServiceResult findUserByEmail(UserQuery userQuery) {
+	public DqBaseServiceResult findByEmail(UserQuery userQuery) {
 		// TODO Auto-generated method stub
 		return null;
 	}

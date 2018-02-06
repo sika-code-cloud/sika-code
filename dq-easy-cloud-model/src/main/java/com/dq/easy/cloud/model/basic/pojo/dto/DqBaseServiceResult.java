@@ -20,7 +20,7 @@ public class DqBaseServiceResult{
 	private String errorCode; // 错误代码
 	private String errorMsg; // 错误信息
 	private Object result; // 返回结果
-	private DqBaseServiceResultException serviceResultException;
+	private DqBaseServiceResultException serviceResultException; // 服务异常结果
 
 	public static DqBaseServiceResult newInstance(){
 		return new DqBaseServiceResult();

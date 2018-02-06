@@ -11,4 +11,12 @@
 	<artifactId>easy-cloud-service-atom-movie</artifactId>
 	<name>easy-cloud-service-atom-movie</name>
 	<description>easy-cloud-service-atom-movie</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>easy.cloud.service.model</groupId>
+			<artifactId>easy-cloud-service-model</artifactId>
+			<version>${dq.easy.cloud.version}</version>
+		</dependency>
+	</dependencies>
 </project>

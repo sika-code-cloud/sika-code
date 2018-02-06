@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.easy.cloud.base.constant.ServiceName;
+import com.easy.cloud.base.constant.UserServiceName;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
+import com.easy.cloud.user.client.constant.UserServiceReqMapping;
 
 /**
  * 
@@ -22,12 +23,15 @@ import com.easy.cloud.user.base.pojo.query.UserQuery;
  * @author daiqi
  * 创建时间    2018年2月5日 下午7:25:10
  */
-@FeignClient(ServiceName.SERVICE_NAME_ATOM_USER)
+@FeignClient(UserServiceName.SERVICE_NAME_ATOM_USER)
 public interface UserClient {
 	
-	@RequestMapping("user/register")
+	@RequestMapping(UserServiceReqMapping.REGISTER)
     DqBaseServiceResult register(@RequestBody UserDTO userDTO);
 	
-	@RequestMapping("user/login")
-	DqBaseServiceResult login(@RequestBody UserQuery userQuery);
+	@RequestMapping(UserServiceReqMapping.LOGIN_BY_USERNAME_AND_PASSWORD)
+	DqBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery);
+	
+	@RequestMapping(UserServiceReqMapping.LOGIN_BY_EMAIL_AND_PASSWORD)
+	DqBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery);
 }

@@ -1,4 +1,4 @@
-package com.easy.cloud.user.base.controller;
+package com.easy.cloud.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.model.common.response.vo.DqResponseVO;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
@@ -27,10 +26,9 @@ public class UserController extends DqBaseController{
 		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 	
-	@RequestMapping("saveUserInfo")
-	public DqBaseServiceResult saveUserInfo(@RequestBody UserDTO userDTO){
-		System.out.println("rewrew");
-		return userService.saveUser(userDTO);
+	@RequestMapping("register")
+	public DqBaseServiceResult register(@RequestBody UserDTO userDTO){
+		return userService.register(userDTO);
 	}
 	
 	@RequestMapping("findUserByPhoneNumberAndPassword")

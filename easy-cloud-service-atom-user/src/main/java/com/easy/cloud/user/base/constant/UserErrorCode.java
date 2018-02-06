@@ -38,7 +38,7 @@ public class UserErrorCode extends DqBaseErrorCode{
 		ERROR_CODE_AND_MSG_MAP.put(USER_CANT_NULL, "用户对象不能为空");
 		ERROR_CODE_AND_MSG_MAP.put(USER_NAME_CANT_EMPTY, "用户名不能为空");
 		ERROR_CODE_AND_MSG_MAP.put(USER_PASSWOR_CANT_EMPTY, "用户密码不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(USER_EMAIL_CANT_EMPTY, "用户密码不能为空");
+		ERROR_CODE_AND_MSG_MAP.put(USER_EMAIL_CANT_EMPTY, "用户邮箱不能为空");
 	}
 }
 

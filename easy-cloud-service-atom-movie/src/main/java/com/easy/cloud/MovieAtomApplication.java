@@ -6,6 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.easy.cloud.base.constant.EasyCloudComponentScan;
+
 /**
  * 
  * @ClassName : MovieAtomApplication 
@@ -17,7 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(basePackages={"com.dq.easy.cloud","com.easy.cloud"})
+@ComponentScan(basePackages={EasyCloudComponentScan.COM_DQ_EASY_CLOUD, EasyCloudComponentScan.COM_EASY_CLOUD})
 public class MovieAtomApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MovieAtomApplication.class, args);

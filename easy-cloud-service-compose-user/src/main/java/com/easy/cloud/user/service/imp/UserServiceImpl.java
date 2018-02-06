@@ -1,6 +1,7 @@
 package com.easy.cloud.user.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
@@ -21,6 +22,7 @@ import com.easy.cloud.user.service.inf.UserService;
  * @author daiqi
  * 创建时间    2018年2月5日 下午7:40:00
  */
+@Service
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserClient userClient;
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public DqBaseServiceResult login(UserQuery userQuery) {
-		return userClient.login(userQuery);
+		return userClient.loginByUserNameAndPassword(userQuery);
 	}
 
 }

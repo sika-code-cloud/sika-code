@@ -78,7 +78,7 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午8:49:30
 	 */
-	DqBaseServiceResult findUserByEmail(UserQuery userQuery);
+	DqBaseServiceResult findByEmail(UserQuery userQuery);
 	
 	/**
 	 * <p>
