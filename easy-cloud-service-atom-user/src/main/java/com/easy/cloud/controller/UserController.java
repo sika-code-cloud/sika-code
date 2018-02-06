@@ -40,4 +40,14 @@ public class UserController extends DqBaseController{
 	public DqBaseServiceResult findUserByEmailAndPassword(@RequestBody UserQuery userQuery){
 		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByEmailAndPassword(userQuery));
 	}
+	
+	@RequestMapping("loginByPhoneNumberAndPassword")
+	public DqBaseServiceResult loginUserByPhoneNumberAndPassword(@RequestBody UserQuery userQuery){
+		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByPhoneNumberAndPassword(userQuery));
+	}
+	
+	@RequestMapping("loginByEmailAndPassword")
+	public DqBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery){
+		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByEmailAndPassword(userQuery));
+	}
 }

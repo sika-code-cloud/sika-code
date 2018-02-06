@@ -1,4 +1,4 @@
-package com.easy.cloud.movie.base.controller;
+package com.easy.cloud.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
