@@ -35,4 +35,22 @@ public interface UserRepository {
 	 * 创建时间  2018年1月8日 下午7:03:21
 	 */
 	UserDTO findUserByEmailAndPassword(UserQuery userQuery);
+	
+	/**
+	 * 
+	 * <p>
+	 *  根据查询对象获取用户信息
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param userQuery : UserQuery : 用户查询对象
+	 * @return UserEntity : 用户实体类
+	 * @author daiqi
+	 * 创建时间    2018年2月7日 下午4:10:38
+	 */
+	UserEntity findUserByQuery(UserQuery userQuery);
 }

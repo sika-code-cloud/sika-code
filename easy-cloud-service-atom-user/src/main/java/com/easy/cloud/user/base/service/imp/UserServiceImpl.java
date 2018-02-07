@@ -88,21 +88,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public DqBaseServiceResult findByEmail(UserQuery userQuery) {
-		// TODO Auto-generated method stub
-		return null;
+		UserQuery userQueryOfFilter = new UserQuery();
+		userQueryOfFilter.setEmail(userQuery.getEmail());
+		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
+		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 
 	@Override
 	public DqBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery) {
-		// TODO Auto-generated method stub
+		UserQuery userQueryOfFilter = new UserQuery();
+		userQueryOfFilter.setUserName(userQuery.getUserName());
+		userQueryOfFilter.setPassword(userQuery.getPassword());
+		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
+		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
 		
-		return null;
 	}
 
 	@Override
 	public DqBaseServiceResult loginByEmailAndPassword(UserQuery userQuery) {
-		// TODO Auto-generated method stub
-		return null;
+		UserQuery userQueryOfFilter = new UserQuery();
+		userQueryOfFilter.setEmail(userQuery.getEmail());
+		userQueryOfFilter.setPassword(userQuery.getPassword());
+		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
+		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 	
 	

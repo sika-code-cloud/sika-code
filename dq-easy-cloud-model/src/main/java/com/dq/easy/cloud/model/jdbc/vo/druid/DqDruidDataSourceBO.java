@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.core.env.Environment;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.jdbc.vo.DqDataSourceBO;
 
 /**
@@ -79,6 +80,9 @@ public class DqDruidDataSourceBO extends DqDataSourceBO{
 	@Override
 	protected void initDataSourceLinkInfo() {
 		super.initDataSourceLinkInfo();
+		if(DqBaseUtils.isNull(this.druidDataSource)){
+			return ;
+		}
 		
 		this.druidDataSource.setUrl(url);
 		this.druidDataSource.setUsername(username);
@@ -89,7 +93,9 @@ public class DqDruidDataSourceBO extends DqDataSourceBO{
 	@Override
 	protected void initDataSourceParamsInfo() {
 		super.initDataSourceParamsInfo();
-		
+		if(DqBaseUtils.isNull(this.druidDataSource)){
+			return ;
+		}
 		this.druidDataSource.setInitialSize(initialSize);
 		this.druidDataSource.setMaxActive(maxActive);
 		this.druidDataSource.setMinIdle(minIdle);

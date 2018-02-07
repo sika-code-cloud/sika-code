@@ -31,23 +31,17 @@ public class UserController extends DqBaseController{
 		return userService.register(userDTO);
 	}
 	
-	@RequestMapping("findUserByPhoneNumberAndPassword")
+	@RequestMapping("findByEmail")
 	public DqBaseServiceResult findUserByPhoneNumberAndPassword(@RequestBody UserQuery userQuery){
-		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByPhoneNumberAndPassword(userQuery));
+		return DqBaseServiceResult.newInstanceOfSucResult(userService.findByEmail(userQuery));
 	}
-	
-	@RequestMapping("findUserByEmailAndPassword")
-	public DqBaseServiceResult findUserByEmailAndPassword(@RequestBody UserQuery userQuery){
-		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByEmailAndPassword(userQuery));
-	}
-	
-	@RequestMapping("loginByPhoneNumberAndPassword")
-	public DqBaseServiceResult loginUserByPhoneNumberAndPassword(@RequestBody UserQuery userQuery){
-		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByPhoneNumberAndPassword(userQuery));
-	}
-	
 	@RequestMapping("loginByEmailAndPassword")
 	public DqBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery){
-		return DqBaseServiceResult.newInstanceOfSucResult(userService.findUserByEmailAndPassword(userQuery));
+		return userService.loginByEmailAndPassword(userQuery);
+	}
+	
+	@RequestMapping("loginByUserNameAndPassword")
+	public DqBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery){
+		return userService.loginByUserNameAndPassword(userQuery);
 	}
 }

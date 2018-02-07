@@ -146,13 +146,7 @@ public class DqJdbcTemplateHandler {
 		if(DqStringUtils.isEmpty(sql)){
 			return retList; 
 		}
-		try {
-	        retList = jdbcTemplate.query(sql, list.toArray(), new BeanPropertyRowMapper<T>(clazz));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return retList;
-		}
-		return retList;
+		return jdbcTemplate.query(sql, list.toArray(), new BeanPropertyRowMapper<T>(clazz));
 	}
 	
     /**

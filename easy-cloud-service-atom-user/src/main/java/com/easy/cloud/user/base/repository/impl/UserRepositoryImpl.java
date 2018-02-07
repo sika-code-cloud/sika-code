@@ -36,7 +36,7 @@ public class UserRepositoryImpl extends DqBaseRepository implements UserReposito
 	 * author daiqi
 	 * 创建时间  2018年1月8日 下午8:01:36
 	 */
-	private UserDTO findUserByCodition(UserQuery userQuery){
+	public UserEntity findUserByQuery(UserQuery userQuery){
 		StringBuilder sql = DqStringUtils.newStringBuilderDefault();
 		List<Object> params = new ArrayList<>();
 //		实体对应的表名
@@ -72,19 +72,20 @@ public class UserRepositoryImpl extends DqBaseRepository implements UserReposito
 			sql.append(commonConditionPrefix).append("phone_number = ?");
 			params.add(userQuery.getPhoneNumber());
 		}
-		sql.append(" limi 1");
-		return DqJdbcTemplateHandler.findTObj(sql, params, UserDTO.class);
+		sql.append(" limit 1");
+		return DqJdbcTemplateHandler.findTObj(sql, params, UserEntity.class);
 	}
 	
 	@Override
 	public UserDTO findUserByPhoneNumberAndPassword(UserQuery userQuery) {
-		return findUserByCodition(userQuery);
+		return null;
 	}
 
 	@Override
 	public UserDTO findUserByEmailAndPassword(UserQuery userQuery) {
-		return findUserByCodition(userQuery);
+		return null;
 	}
+	
 	
 	
 }

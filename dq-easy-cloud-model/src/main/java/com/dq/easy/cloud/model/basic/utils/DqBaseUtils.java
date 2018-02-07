@@ -123,6 +123,43 @@ public class DqBaseUtils {
 		}
 		return tableName;
 	}
+	/**
+	 * <p>
+	 * 比较两个对象是否相等、若为原始类型与包装类型比较则将原始类型放第二个参数
+	 * </p>
+	 *
+	 * @param obj1
+	 * @param obj2
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月7日 下午7:52:56
+	 */
+	public static boolean equals(Object obj1, Object obj2){
+		if(isNull(obj1) || isNull(obj2)){
+			return false;
+		}
+		if(obj1.equals(obj2)){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 比较两个对象是否不相等、若为原始类型与包装类型比较则将原始类型放第二个参数
+	 * </p>
+	 *
+	 * @param obj1
+	 * @param obj2
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月7日 下午7:52:56
+	 */
+	public static boolean notEquals(Object obj1, Object obj2){
+		return !equals(obj1, obj2);
+	}
+	
 	/**  
      * <p>
      * 判断某常量值是否存在常量类中

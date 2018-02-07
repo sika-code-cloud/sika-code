@@ -1,11 +1,8 @@
 package com.dq.easy.cloud.model.common.log.utils;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.user.entity.UserEntity;
 
 /**
  * 
@@ -16,7 +13,6 @@ import com.dq.easy.cloud.model.user.entity.UserEntity;
  *
  */
 public class DqLogUtils {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DqLogUtils.class);
 	/**
 	 * <p>
 	 * debug级别的统一格式日志
@@ -30,9 +26,9 @@ public class DqLogUtils {
 	public static void debug(String logTitle, Object logDetail, Logger logger){
 		logger = filterLogger(logger);
 		logger.debug("\r");
-		logger.debug("------------------start_logger:"+logTitle+":start_logger------------------");
+		logger.debug("******************   start_logger:"+logTitle+":start_logger   ******************");
 		logger.debug(DqJSONUtils.parseObject(logDetail, String.class));
-		logger.debug("---------------------end_logger:"+logTitle+":end_logger--------------------");
+		logger.debug("*********************   end_logger:"+logTitle+":end_logger   ********************");
 		logger.debug("\r\n");
 	}
 	
@@ -49,9 +45,9 @@ public class DqLogUtils {
 	public static void info(String logTitle, Object logDetail, Logger logger){
 		logger = filterLogger(logger);
 		logger.info("\r");
-		logger.info("------------------start_logger:"+logTitle+":start_logger------------------");
+		logger.info("******************   start_logger:"+logTitle+":start_logger   ******************");
 		logger.info(DqJSONUtils.parseObject(logDetail, String.class));
-		logger.info("---------------------end_logger:"+logTitle+":end_logger--------------------");
+		logger.info("*********************   end_logger:"+logTitle+":end_logger   ********************");
 		logger.info("\r\n");
 	}
 	
@@ -68,9 +64,9 @@ public class DqLogUtils {
 	public static void warn(String logTitle, Object logDetail, Logger logger){
 		logger = filterLogger(logger);
 		logger.warn("\r");
-		logger.warn("------------------start_logger:"+logTitle+":start_logger------------------");
+		logger.warn("******************   start_logger:"+logTitle+":start_logger   ******************");
 		logger.warn(DqJSONUtils.parseObject(logDetail, String.class));
-		logger.warn("---------------------end_logger:"+logTitle+":end_logger--------------------");
+		logger.warn("*********************   end_logger:"+logTitle+":end_logger   ********************");
 		logger.warn("\r\n");
 	}
 	
@@ -87,9 +83,9 @@ public class DqLogUtils {
 	public static void error(String logTitle, Object logDetail, Logger logger){
 		logger = filterLogger(logger);
 		logger.error("\r");
-		logger.error("------------------start_logger:"+logTitle+":start_logger------------------");
+		logger.error("******************   start_logger:"+logTitle+":start_logger   ******************");
 		logger.error(DqJSONUtils.parseObject(logDetail, String.class));
-		logger.error("---------------------end_logger:"+logTitle+":end_logger--------------------");
+		logger.error("*********************   end_logger:"+logTitle+":end_logger   ********************");
 		logger.error("\r\n");
 	}
 	

@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.core.env.Environment;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.jdbc.constant.DqJdbcConstant;
 
 /**
@@ -28,14 +29,14 @@ public abstract class DqDataSourceBO {
 	protected String driverClassName;
 	
 //	连接池的参数信息
-	protected Integer initialSize;
-	protected Integer maxActive;
-	protected Integer minIdle;
-	protected Integer maxWait;
+	protected Integer initialSize = 10;
+	protected Integer maxActive = 100;
+	protected Integer minIdle = 2;
+	protected Integer maxWait = 10;
 	protected String validationQuery;
-	protected Boolean testOnBorrow;
-	protected Boolean testWhileIdle;
-	protected Boolean poolPreparedStatements;
+	protected Boolean testOnBorrow = false;
+	protected Boolean testWhileIdle = true;
+	protected Boolean poolPreparedStatements = true;
 	
 	
 	protected DqDataSourceBO() {
@@ -137,22 +138,30 @@ public abstract class DqDataSourceBO {
 	
 	
 	public DqDataSourceBO buidInitialSize(Integer initialSize) {
-		this.initialSize = initialSize;
+		if(DqBaseUtils.isNotNull(initialSize)){
+			this.initialSize = initialSize;
+		}
 		return this;
 	}
 
 	public DqDataSourceBO buildMaxActive(Integer maxActive) {
-		this.maxActive = maxActive;
+		if(DqBaseUtils.isNotNull(maxActive)){
+			this.maxActive = maxActive;
+		}
 		return this;
 	}
 
 	public DqDataSourceBO buildMinIdle(Integer minIdle) {
-		this.minIdle = minIdle;
+		if(DqBaseUtils.isNotNull(minIdle)){
+			this.minIdle = minIdle;
+		}
 		return this;
 	}
 
 	public DqDataSourceBO buildMaxWait(Integer maxWait) {
-		this.maxWait = maxWait;
+		if(DqBaseUtils.isNotNull(maxWait)){
+			this.maxWait = maxWait;
+		}
 		return this;
 	}
 
@@ -162,17 +171,23 @@ public abstract class DqDataSourceBO {
 	}
 
 	public DqDataSourceBO buildTestOnBorrow(Boolean testOnBorrow) {
-		this.testOnBorrow = testOnBorrow;
+		if(DqBaseUtils.isNotNull(testOnBorrow)){
+			this.testOnBorrow = testOnBorrow;
+		}
 		return this;
 	}
 
 	public DqDataSourceBO buildTestWhileIdle(Boolean testWhileIdle) {
-		this.testWhileIdle = testWhileIdle;
+		if(DqBaseUtils.isNotNull(testWhileIdle)){
+			this.testWhileIdle = testWhileIdle;
+		}
 		return this;
 	}
 
 	public DqDataSourceBO buildPoolPreparedStatements(Boolean poolPreparedStatements) {
-		this.poolPreparedStatements = poolPreparedStatements;
+		if(DqBaseUtils.isNotNull(poolPreparedStatements)){
+			this.poolPreparedStatements = poolPreparedStatements;
+		}
 		return this;
 	}
 

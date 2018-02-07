@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.common.log.annotation.DqLogOpen;
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
-import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.pojo.query.UserComposeQuery;
 import com.easy.cloud.user.service.inf.UserService;
 
 @RestController
 @RequestMapping("user")
+@DqLogOpen(dqLogType = DqLogType.CONTROLLER)
 public class UserController extends DqBaseController{
 	@Autowired
 	private UserService userService;
