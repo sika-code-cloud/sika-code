@@ -34,31 +34,6 @@ public class DqLogDTO {
 		return new DqLogDTO();
 	}
 	
-	public DqLogDTO buildInputDatas(Map<String, Object> inputDatas){
-		this.inputDatas = inputDatas;
-		return this;
-	}
-	
-	public DqLogDTO buildOutData(Map<String, Object> outData){
-		this.outData = outData;
-		return this;
-	}
-	
-	public DqLogDTO buildTargetMethodName(String targetMethodName){
-		this.targetMethodName = targetMethodName;
-		return this;
-	}
-	
-	public DqLogDTO buildTargetClassName(String targetClassName){
-		this.targetClassName = targetClassName;
-		return this;
-	}
-	
-	public DqLogDTO buildRequestPath(String requestPath){
-		this.requestPath = requestPath;
-		return this;
-	}
-	
 	public Map<String, Object> getInputDatas() {
 		return inputDatas;
 	}

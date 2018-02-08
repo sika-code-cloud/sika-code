@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 
 /**
@@ -35,7 +36,7 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	/** 目标的参数类型列表 */
 	protected Class<?> [] parameterTypes; 
 	/** 日志传输对象 */
-	protected DqLogDTO dqlogDTO;
+	protected DqLogDTO dqLogDTO;
 
 	@Override
 	public void handle(ProceedingJoinPoint proceedingJoinPoint) {
@@ -68,9 +69,8 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	}
 	
 	private void initDqLogDTOData(){
-		dqlogDTO = DqLogDTO.newInstance();
-		Map<String, Object> inputDatas = new HashMap<>();
-		dqlogDTO.buildInputDatas(inputDatas);
+		DqLogBO dqLogBO = DqLogBO.newInstantce(DqLogDTO.newInstance());
+		dqLogBO.buildInputDatas(parameterTypes, targetArgs);
 	}
 	/** 初始化其他数据 */
 	private void initOtherData(){

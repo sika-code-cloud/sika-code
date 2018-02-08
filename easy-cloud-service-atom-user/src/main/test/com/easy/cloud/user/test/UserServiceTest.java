@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.easy.cloud.UserAtomApplication;
-import com.easy.cloud.user.base.entity.UserEntity;
+import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.service.inf.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
