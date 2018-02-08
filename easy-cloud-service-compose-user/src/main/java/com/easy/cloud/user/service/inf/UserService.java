@@ -49,4 +49,6 @@ public interface UserService {
 	 * 创建时间    2018年2月5日 下午7:49:51
 	 */
 	DqBaseServiceResult login(UserComposeQuery userComposeQuery);
+	
+	DqBaseServiceResult login(UserComposeQuery userComposeQuery, String userName);
 }

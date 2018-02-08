@@ -58,6 +58,7 @@ public class UserController extends DqBaseController{
 	 */
 	@RequestMapping("/login")
 	public DqBaseServiceResult login(@RequestBody UserComposeQuery userComposeQuery){
-		return userService.login(userComposeQuery);
+//		return userService.login(userComposeQuery);
+		return userService.login(userComposeQuery, userComposeQuery.getUserName());
 	}
 }

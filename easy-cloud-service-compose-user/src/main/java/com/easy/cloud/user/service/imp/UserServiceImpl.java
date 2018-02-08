@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.log.annotation.DqLogOpen;
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
@@ -28,6 +30,7 @@ import com.easy.cloud.user.service.inf.UserService;
  * 创建时间    2018年2月5日 下午7:40:00
  */
 @Service
+@DqLogOpen(dqLogType = DqLogType.SERVICE)
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserClient userClient;
@@ -65,6 +68,12 @@ public class UserServiceImpl implements UserService{
 			dqBaseServiceResult = userClient.loginByUserNameAndPassword(userComposeQuery);
 		}
 		return dqBaseServiceResult;
+	}
+
+	
+	@Override
+	public DqBaseServiceResult login(UserComposeQuery userComposeQuery, String userName) {
+		return login(userComposeQuery);
 	}
 
 }
