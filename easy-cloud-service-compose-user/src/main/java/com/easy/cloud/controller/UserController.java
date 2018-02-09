@@ -1,5 +1,7 @@
 package com.easy.cloud.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.model.common.log.annotation.DqLogOpen;
+import com.dq.easy.cloud.model.common.log.annotation.DqLog;
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.pojo.query.UserComposeQuery;
@@ -15,8 +18,9 @@ import com.easy.cloud.user.service.inf.UserService;
 
 @RestController
 @RequestMapping("user")
-@DqLogOpen(dqLogType = DqLogType.CONTROLLER)
+@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogType = DqLogType.CONTROLLER)
 public class UserController extends DqBaseController{
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class) ;
 	@Autowired
 	private UserService userService;
 	

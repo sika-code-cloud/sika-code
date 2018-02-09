@@ -21,4 +21,17 @@ public class DqDateUtils {
 		return new Date();
 	}
 	
+	/**
+	 * 
+	 * <p>
+	 * 获取当前时间戳的毫秒数
+	 * </p>
+	 *
+	 * @return long
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 上午10:26:30
+	 */
+	public static long getCurrentTimeMillis(){
+		return System.currentTimeMillis();
+	}
 }

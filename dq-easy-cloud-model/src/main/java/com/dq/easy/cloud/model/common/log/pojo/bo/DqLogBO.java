@@ -1,9 +1,24 @@
 package com.dq.easy.cloud.model.common.log.pojo.bo;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.dq.easy.cloud.model.common.array.DqArrayUtils;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+
+import ch.qos.logback.classic.Logger;
 
 /**
  * 
@@ -18,67 +33,153 @@ import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
  *  使用示例：
  * </pre>
  *
- * @author daiqi
- * 创建时间    2018年2月8日 上午10:22:06
+ * @author daiqi 创建时间 2018年2月8日 上午10:22:06
  */
 public class DqLogBO {
 	private DqLogDTO dqLogDTO;
-	
-	private static DqLogBO newInstance(){
+	private DqLog dqLog;
+
+	private static DqLogBO newInstance() {
 		return new DqLogBO();
 	}
-	public static DqLogBO newInstantce(DqLogDTO dqLogDTO){
+
+	public static DqLogBO newInstantce(DqLogDTO dqLogDTO) {
 		return newInstance().buildDqLogDTO(dqLogDTO);
 	}
-	public DqLogBO buildDqLogDTO(DqLogDTO dqLogDTO){
+
+	public DqLogBO buildDqLogDTO(DqLogDTO dqLogDTO) {
 		this.dqLogDTO = dqLogDTO;
 		return this;
 	}
 	
-	public DqLogBO buildInputDatas(Class<?> [] parameterTypes, Object [] targetArgs){
-		if (DqArrayUtils.isEmpty(parameterTypes)){
-			return this;
-		}
-		int parameterTypesLength = parameterTypes.length;
-//		获取目标参数
-		Object [] targetArgsByTypes = new Object[parameterTypesLength];
-		DqArrayUtils.putToTargetArray(targetArgs, targetArgsByTypes);
-		Map<String, Object> inputDatas = new HashMap<>();
-		for (int i = 0 ; i < parameterTypesLength ; ++ i){
-			Class<?> typeClazz = parameterTypes[i];
-			Object targetArg = targetArgsByTypes[i];
-			inputDatas.put(typeClazz.getName(), targetArg);
-		}
+	public DqLogBO buildDqLog(DqLog dqLog) {
+		this.dqLog = dqLog;
+		return this;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 构建日志数据
+	 * </p>
+	 *
+	 * @param pjp
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 上午11:14:51
+	 */
+	public DqLogBO buildDqLogData(ProceedingJoinPoint pjp){
+		Signature signature = pjp.getSignature();
+		MethodSignature methodSignature = (MethodSignature) signature;
+		Method targetMethod = methodSignature.getMethod();
+		Class<?> targetClass = pjp.getTarget().getClass();
 		
-		buildInputDatas(inputDatas);
-		return this;
-	}
-	public DqLogBO buildInputDatas(Map<String, Object> inputDatas){
-		this.dqLogDTO.setInputDatas(inputDatas);
-		return this;
-	}
-	
-	public DqLogBO buildOutData(Map<String, Object> outData){
-		this.dqLogDTO.setOutData(outData);
+		this.buildTargetClassName(targetClass.getName()).buildTargetMethodName(targetMethod.getName());
+		this.buildTargetParameterTypes(targetMethod.getParameterTypes()).buildTargetParameterValues(pjp.getArgs());
+		this.buildTargetReturnType(targetMethod.getReturnType()).buildLogger(targetClass);
+		this.buildRequestPath();
+		
 		return this;
 	}
 	
-	public DqLogBO buildTargetMethodName(String targetMethodName){
+	/** 根据目标class构建日志记录对象 */
+	private DqLogBO buildLogger(Class<?> targetClass){
+		Field [] fields = targetClass.getDeclaredFields();
+		try {
+			for(Field field : fields){
+				field.setAccessible(true);
+				if(!Modifier.isStatic(field.getModifiers())) {
+					continue;
+				}
+	            Object object = field.get(targetClass);
+				if(DqBaseUtils.isNotNull(object) && object instanceof Logger){
+					this.buildLogger((Logger) object);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	/**
+	 * 
+	 * <p>
+	 * 构建请求路径
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 下午4:46:14
+	 */
+	private DqLogBO buildRequestPath(){
+		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+        HttpServletRequest request = sra.getRequest();
+
+        String requestPath = request.getServletPath().toString();
+        if (DqStringUtils.isEmpty(requestPath)){
+        	requestPath = request.getPathInfo();
+        }
+        if (DqStringUtils.isEmpty(requestPath)){
+        	requestPath = request.getRequestURI();
+        }
+        return buildRequestPath(requestPath);
+	}
+	public DqLogBO buildTargetParameterValues(Object[] targetParameterValues) {
+		this.dqLogDTO.setTargetParameterValues(targetParameterValues);
+		return this;
+	}
+
+	public DqLogBO buildTargetParameterTypes(Class<?>[] targetParameterTypes) {
+		this.dqLogDTO.setTargetParameterTypes(targetParameterTypes);
+		return this;
+	}
+
+	public DqLogBO buildTargetMethodName(String targetMethodName) {
 		this.dqLogDTO.setTargetMethodName(targetMethodName);
 		return this;
 	}
-	
-	public DqLogBO buildTargetClassName(String targetClassName){
+
+	public DqLogBO buildTargetClassName(String targetClassName) {
 		this.dqLogDTO.setTargetClassName(targetClassName);
 		return this;
 	}
-	
-	public DqLogBO buildRequestPath(String requestPath){
+
+	public DqLogBO buildRequestPath(String requestPath) {
 		this.dqLogDTO.setRequestPath(requestPath);
 		return this;
 	}
+
+	public DqLogBO buildBeginTimeMillis(Long beginTimeMillis) {
+		this.dqLogDTO.setBeginTimeMillis(beginTimeMillis);
+		return this;
+	}
+
+	public DqLogBO buildEndTimeMillis(Long endTimeMillis) {
+		this.dqLogDTO.setEndTimeMillis(endTimeMillis);
+		return this;
+	}
+
+	public DqLogBO buildTargetReturnType(Class<?> targetReturnType) {
+		this.dqLogDTO.setTargetReturnType(targetReturnType);
+		return this;
+	}
+
+	public DqLogBO buildTargetReturnValue(Object targetReturnValue) {
+		this.dqLogDTO.setTargetReturnValue(targetReturnValue);
+		return this;
+	}
+	
+	public DqLogBO buildLogger(Logger logger) {
+		this.dqLogDTO.setLogger(logger);
+		return this;
+	}
+	
 	public DqLogDTO getDqLogDTO() {
 		return dqLogDTO;
 	}
-	
+	public DqLog getDqLog() {
+		return dqLog;
+	}
 }

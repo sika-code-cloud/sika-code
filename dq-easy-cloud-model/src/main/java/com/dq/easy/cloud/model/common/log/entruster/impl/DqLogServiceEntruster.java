@@ -1,7 +1,5 @@
 package com.dq.easy.cloud.model.common.log.entruster.impl;
 
-import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractEntruster;
-
 /**
  * 
  * <p>
@@ -11,7 +9,7 @@ import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractEntruster;
  * @author daiqi
  * 创建时间    2018年2月8日 上午9:59:01
  */
-public class DqLogServiceEntruster extends DqLogAbstractEntruster{
+public class DqLogServiceEntruster extends DqLogBaseEntruster{
 
 
 }
