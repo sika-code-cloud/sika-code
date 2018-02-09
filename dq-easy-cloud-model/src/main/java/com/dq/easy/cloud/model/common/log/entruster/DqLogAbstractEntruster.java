@@ -56,8 +56,8 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	/** 日志模板类 */
 	protected final void logTemplate() {
 		
-		LOG.info("\r");
-		LOG.info("==============================================   start_logger:请求日志记录:start_logger    ==============================================");
+		targetLogger.info("\r");
+		targetLogger.info("==============================================   start_logger:请求日志记录:start_logger    ==============================================");
 		logDataExtraPre();
 		DqLogUtils.logByLogLevel(dqLogLevel, "请求的类名", dqLogDTO.getTargetClassName(), targetLogger);
 		DqLogUtils.logByLogLevel(dqLogLevel, "请求的方法名称", dqLogDTO.getTargetMethodName(), targetLogger);
@@ -67,8 +67,8 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		DqLogUtils.logByLogLevel(dqLogLevel, "返回参数值", dqLogDTO.getTargetReturnValue(), targetLogger);
 		DqLogUtils.logByLogLevel(dqLogLevel, "方法运行时间", (dqLogDTO.getExecutTimeMinllis()) +"ms", targetLogger);
 		logDataExtraAfter();
-		LOG.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
-		LOG.info("\r\n");
+		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
+		targetLogger.info("\r\n");
 	}
 
 	/**

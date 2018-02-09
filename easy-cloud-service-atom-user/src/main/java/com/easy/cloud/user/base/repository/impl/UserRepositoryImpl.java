@@ -42,7 +42,7 @@ public class UserRepositoryImpl extends DqBaseRepository implements UserReposito
 //		实体对应的表名
 		String entityTableName = DqBaseUtils.getTableNameByEntityClass(UserEntity.class);
 //		公共条件前缀
-		String commonConditionPrefix = DqStringUtils.getDefaultStringBuilder().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
+		String commonConditionPrefix = DqStringUtils.newStringBuilderDefault().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
 		
 		sql.append("select ");
 		sql.append(getBaseResultSql(UserEntity.class));

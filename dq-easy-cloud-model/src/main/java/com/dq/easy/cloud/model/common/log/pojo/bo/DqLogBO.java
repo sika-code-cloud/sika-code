@@ -77,11 +77,29 @@ public class DqLogBO {
 		this.buildTargetClassName(targetClass.getName()).buildTargetMethodName(targetMethod.getName());
 		this.buildTargetParameterTypes(targetMethod.getParameterTypes()).buildTargetParameterValues(pjp.getArgs());
 		this.buildTargetReturnType(targetMethod.getReturnType()).buildLogger(targetClass);
-		this.buildRequestPath();
+		this.buildRequestPath().buildDqLog(targetClass, targetMethod);
 		
 		return this;
 	}
-	
+	/**
+	 * 
+	 * <p>
+	 * 根据切点获取日志注解
+	 * </p>
+	 *
+	 * @param joinPoint
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 下午7:36:32
+	 */
+	private void buildDqLog(Class<?> targetClass, Method targetMethod){
+		DqLog dqLog = targetMethod.getAnnotation(DqLog.class);
+		if (DqBaseUtils.isNotNull(dqLog)){
+			buildDqLog(dqLog);
+		}else{
+			buildDqLog(targetClass.getAnnotation(DqLog.class));
+		}
+	}
 	/** 根据目标class构建日志记录对象 */
 	private DqLogBO buildLogger(Class<?> targetClass){
 		Field [] fields = targetClass.getDeclaredFields();

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
@@ -32,8 +34,8 @@ import com.easy.cloud.user.service.inf.UserService;
  * 创建时间    2018年2月5日 下午7:40:00
  */
 @Service
-@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogType = DqLogType.SERVICE , dqLogEntrusterClass = DqLogServiceEntruster.class)
-public class UserServiceImpl implements UserService{
+
+public class UserServiceImpl extends DqBaseService implements UserService{
 	@Autowired
 	private UserClient userClient;
 	

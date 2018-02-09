@@ -4,6 +4,10 @@ package com.dq.easy.cloud.model.basic.repository;
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.log.annotation.DqLog;
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 
@@ -16,6 +20,7 @@ import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
  *
  */
 @Repository
+@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogEntrusterClass = DqLogRepositoryEntruster.class, dqLogType = DqLogType.REPOSITORY)
 public class DqBaseRepository {
 	/** 原点字符串*/
 	protected static final String ORIGIN_STR = ".";
@@ -102,8 +107,8 @@ public class DqBaseRepository {
     public String getBaseResultSql(Class<?> entityClazz){
     	String tableName = DqBaseUtils.getTableNameByEntityClass(entityClazz);
     	
-    	StringBuilder sql = DqStringUtils.getDefaultStringBuilder();
-    	String commonPrefix = DqStringUtils.getDefaultStringBuilder().append(",").append(tableName).append(ORIGIN_STR).toString(); 
+    	StringBuilder sql = DqStringUtils.newStringBuilderDefault();
+    	String commonPrefix = DqStringUtils.newStringBuilderDefault().append(",").append(tableName).append(ORIGIN_STR).toString(); 
     	sql.append(tableName).append(ORIGIN_STR).append("id");
     	sql.append(commonPrefix).append("create_by createBy");
     	sql.append(commonPrefix).append("update_by updateBy");

@@ -1,10 +1,5 @@
 package com.dq.easy.cloud.model.common.log.entruster.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractEntruster;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 

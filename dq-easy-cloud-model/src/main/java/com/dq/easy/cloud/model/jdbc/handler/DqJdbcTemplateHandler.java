@@ -166,7 +166,7 @@ public class DqJdbcTemplateHandler {
      */
     public static <T> List<T> findTList(StringBuilder sqlBuilder, List<Object> list, Class<T> clazz){
     	if(DqBaseUtils.isNull(sqlBuilder)){
-    		sqlBuilder = DqStringUtils.getDefaultStringBuilder();
+    		sqlBuilder = DqStringUtils.newStringBuilderDefault();
     	}
     	return findTList(sqlBuilder.toString(), list, clazz);
     }

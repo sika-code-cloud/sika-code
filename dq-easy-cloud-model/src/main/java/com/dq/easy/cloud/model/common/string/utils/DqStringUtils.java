@@ -21,6 +21,8 @@ public class DqStringUtils {
      * The empty String <code>""</code>.
      */
     public static final String EMPTY = "";
+    /** 分割符---英文冒号---:*/
+    public static final String SPLIT_COLON = ":";
     /** 初始化相关String容器的容量--512 */
     private static final int INIT_CAPACITY = 512;
 	
@@ -266,21 +268,6 @@ public class DqStringUtils {
      */
 	public static boolean equalsIgnoreCase(String str1, String str2){
 		return StringUtils.equalsIgnoreCase(str1, str2);
-	}
-	
-	/**
-	 * <p>获取默认的StringBuilderd对象</p>
-	 *
-	 * <pre>
-	 * DqStringUtils.getDefaultStringBuilder() = new StringBuilder(512) 
-	 * </pre>
-	 *
-	 * @return <code>StringBuilder(512)</code>
-	 * @author daiqi
-	 * @date 2017年12月5日 下午8:08:37
-	 */
-	public static StringBuilder getDefaultStringBuilder(){
-		return new StringBuilder(512);
 	}
 	
 	/**

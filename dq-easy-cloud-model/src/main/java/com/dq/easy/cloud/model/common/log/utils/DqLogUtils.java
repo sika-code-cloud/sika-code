@@ -1,8 +1,13 @@
 package com.dq.easy.cloud.model.common.log.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.array.DqArrayUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
@@ -13,6 +18,7 @@ import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruste
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
 import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 /**
  * 
@@ -23,8 +29,33 @@ import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
  *
  */
 public class DqLogUtils {
+	
 	/**
 	 * 
+	 * <p>
+	 * 获取日志开关的key
+	 * </p>
+	 *
+	 * @param className
+	 * @param methodName
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 下午5:58:48
+	 */
+	public static String getLogSwitchKey(String ... keys) {
+		if (DqArrayUtils.isEmpty(keys)){
+			return null;
+		}
+		StringBuilder keyBuilder = DqStringUtils.newStringBuilderDefault();
+		
+		for(String key : keys){
+			keyBuilder.append(DqStringUtils.SPLIT_COLON).append(key);
+		}
+		String keyStr = keyBuilder.toString();
+		return DqStringUtils.substring(keyStr, DqStringUtils.indexOf(keyStr, DqStringUtils.SPLIT_COLON));
+	}
+	
+	/**
 	 * <p>
 	 * 根据日志类型和委托类class获取日志处理委托类，设定委托处理类优先级最高
 	 * </p>

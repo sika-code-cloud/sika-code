@@ -13,11 +13,11 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
+import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
 import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
-import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
 
 /**
  * 
@@ -42,7 +42,8 @@ public class DqLogAspect {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Pointcut("@within(com.dq.easy.cloud.model.common.log.annotation.DqLog)")
-	public void dqLogOpenPointcut() {
+	public void dqLogPointcut() {
+		
 	}
 
 	/**
@@ -50,8 +51,8 @@ public class DqLogAspect {
 	 * 
 	 * @param joinPoint
 	 */
-	@Around("dqLogOpenPointcut()")
-	public Object dqLogOpenAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+	@Around("dqLogPointcut()")
+	public Object dqLogAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		return doLogLogic(proceedingJoinPoint);
 	}
 
@@ -74,17 +75,23 @@ public class DqLogAspect {
 			throw e;
 		} finally {
 			long endTimeMillis = DqDateUtils.getCurrentTimeMillis();
-			DqLog dqLog = joinPoint.getTarget().getClass().getAnnotation(DqLog.class);
-			if (DqBaseUtils.isNotNull(dqLog) && DqBaseUtils.isNotNull(dqLog.dqLogEntrusterClass())) {
-				// 构建日志逻辑对象
-				DqLogBO dqLogBO = DqLogBO.newInstantce(DqLogDTO.newInstance(beginTimeMillis, endTimeMillis));
-				dqLogBO.buildDqLog(dqLog).buildDqLogData(joinPoint);
-				dqLogBO.buildTargetReturnValue(targetReturnValue);
-				// 获取日志委托处理类
-				DqLogEntruster dqLogEntruster = DqLogUtils.getDqLogEntruster(dqLog);
-				dqLogEntruster.handle(dqLogBO);
+//			构建日志逻辑对象
+			DqLogBO dqLogBO = DqLogBO.newInstantce(DqLogDTO.newInstance(beginTimeMillis, endTimeMillis));
+			dqLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
+//			获取日志注解
+			DqLog dqLog = dqLogBO.getDqLog();
+			if (DqBaseUtils.isNull(dqLog) || DqBaseUtils.isNull(dqLog.dqLogEntrusterClass())){
+				return targetReturnValue;
+			}
+//			获取log数据传输对象
+			DqLogDTO dqLogDTO = dqLogBO.getDqLogDTO();
+			if (DqLogConfig.getLogSwitch(dqLog.dqLogOpenFlag(), dqLogDTO.getTargetClassName(), dqLogDTO.getTargetMethodName())) {
+//				根据注解获取Log委托处理对象执行日志处理
+				DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 			}
 		}
 		return targetReturnValue;
 	}
+	
+	
 }
