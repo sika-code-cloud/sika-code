@@ -1,15 +1,12 @@
 package com.dq.easy.cloud.model.common.log.utils;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
-
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.array.DqArrayUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
+import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
@@ -53,6 +50,40 @@ public class DqLogUtils {
 		}
 		String keyStr = keyBuilder.toString();
 		return DqStringUtils.substring(keyStr, DqStringUtils.indexOf(keyStr, DqStringUtils.SPLIT_COLON));
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 获取日志开关
+	 * </p>
+	 *
+	 * @param dqLogOpenFlag : Boolean : 注解的开关标志
+	 * @param switchKey : String : 开关的key
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 下午6:05:15
+	 */
+	public static boolean getLogSwitch(boolean dqLogOpenFlag, String className, String methodName){
+//		类名为空直接返回true
+		if (DqStringUtils.isEmpty(className)){
+			return true;
+		}
+//		根据类名和方法名获取开关的key
+		String switchKey = DqLogUtils.getLogSwitchKey(className, methodName);
+		if (DqStringUtils.isEmpty(switchKey)){
+			return true;
+		}
+		Boolean switchFlag = DqLogConfig.getSwitchConfig().get(switchKey);
+//		若config中标志不为空直接返回
+		if (DqBaseUtils.isNotNull(switchFlag)){
+			return switchFlag;
+		}
+//		根据类名获取开关key
+		switchKey = DqLogUtils.getLogSwitchKey(className);
+//		获取对类的日志开关
+		switchFlag = DqLogConfig.getSwitchConfig().get(switchKey);
+		return switchFlag == null ? dqLogOpenFlag : switchFlag;
 	}
 	
 	/**

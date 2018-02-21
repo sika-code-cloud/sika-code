@@ -11,5 +11,15 @@ package com.dq.easy.cloud.model.common.log.entruster.impl;
  */
 public class DqLogServiceEntruster extends DqLogBaseEntruster{
 
+	@Override
+	protected void logDataExtraPre() {
+		super.log("这是Service层的日志", "这是Service层的日志");
+	}
+
+	@Override
+	protected void logDataExtraAfter() {
+		super.log("这是Service层的日志", "这是Service层的日志");
+	}
+
 
 }

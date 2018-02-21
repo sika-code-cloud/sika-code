@@ -16,7 +16,7 @@ import com.easy.cloud.user.service.inf.UserService;
 @RestController
 @RequestMapping("user")
 public class UserController extends DqBaseController{
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class) ;
+	private Logger LOG = LoggerFactory.getLogger(this.getClass()) ;
 	@Autowired
 	private UserService userService;
 	

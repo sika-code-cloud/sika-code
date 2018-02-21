@@ -2,17 +2,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>easy.cloud.service</groupId>
-		<artifactId>easy-cloud-service-parent</artifactId>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../easy-cloud-service-parent/pom.xml</relativePath>
+		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
 	</parent>
+
 	<groupId>easy.cloud.service.compose</groupId>
 	<artifactId>easy-cloud-service-compose-user</artifactId>
 	<name>easy-cloud-service-compose-user</name>
 	<description>easy-cloud-service-compose-user</description>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>dq.easy.cloud</groupId>
+			<artifactId>dq-easy-cloud-model</artifactId>
+			<version>${dq.easy.cloud.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>easy.cloud.service</groupId>
 			<artifactId>easy-cloud-service-model</artifactId>

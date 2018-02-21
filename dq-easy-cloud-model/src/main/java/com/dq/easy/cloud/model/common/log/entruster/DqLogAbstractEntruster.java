@@ -1,15 +1,6 @@
 package com.dq.easy.cloud.model.common.log.entruster;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
@@ -59,13 +50,13 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		targetLogger.info("\r");
 		targetLogger.info("==============================================   start_logger:请求日志记录:start_logger    ==============================================");
 		logDataExtraPre();
-		DqLogUtils.logByLogLevel(dqLogLevel, "请求的类名", dqLogDTO.getTargetClassName(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "请求的方法名称", dqLogDTO.getTargetMethodName(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "请求参数类型", dqLogDTO.getTargetParameterTypes(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "请求参数值", dqLogDTO.getTargetParameterValues(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "返回参数类型", dqLogDTO.getTargetReturnType(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "返回参数值", dqLogDTO.getTargetReturnValue(), targetLogger);
-		DqLogUtils.logByLogLevel(dqLogLevel, "方法运行时间", (dqLogDTO.getExecutTimeMinllis()) +"ms", targetLogger);
+		log("请求的类名", dqLogDTO.getTargetClassName());
+		log("请求的方法名称", dqLogDTO.getTargetMethodName());
+		log("请求参数类型", dqLogDTO.getTargetParameterTypes());
+		log("请求参数值", dqLogDTO.getTargetParameterValues());
+		log("返回参数类型", dqLogDTO.getTargetReturnType());
+		log("返回参数值", dqLogDTO.getTargetReturnValue());
+		log("方法运行时间", (dqLogDTO.getExecutTimeMinllis()) +"ms");
 		logDataExtraAfter();
 		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
 		targetLogger.info("\r\n");
@@ -101,6 +92,22 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	 */
 	protected void logDataExtraAfter() {
 		
+	}
+	
+	/**
+	 * 
+	 * <p>记录日志</p>
+	 *
+	 * <pre>所有子类记录日志通过调用该方法进行日志记录</pre>
+	 *
+	 * @param logTitle : String : 日志主题
+	 * @param logDetailInfo : Object : 日志详情信息
+	 *
+	 * author daiqi
+	 * 创建时间  2018年2月21日 下午4:41:46
+	 */
+	protected final void log(String logTitle, Object logDetailInfo) {
+		DqLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger);
 	}
 
 	/** 初始化数据 */

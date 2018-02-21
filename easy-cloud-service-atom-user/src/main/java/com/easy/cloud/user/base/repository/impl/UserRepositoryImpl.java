@@ -3,6 +3,8 @@ package com.easy.cloud.user.base.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
@@ -17,6 +19,7 @@ import com.easy.cloud.user.base.repository.inf.UserRepository;
 @Repository(value="userRepository")
 public class UserRepositoryImpl extends DqBaseRepository implements UserRepository{
 
+	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public UserEntity findUserById(Long id) {
 		return DqJdbcTemplateHandler.findOne(UserEntity.class, id);

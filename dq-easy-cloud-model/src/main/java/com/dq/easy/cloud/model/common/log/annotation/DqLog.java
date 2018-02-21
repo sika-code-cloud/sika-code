@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
 
 /**

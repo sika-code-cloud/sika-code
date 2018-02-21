@@ -75,7 +75,7 @@ public class DqLogAspect {
 			throw e;
 		} finally {
 			long endTimeMillis = DqDateUtils.getCurrentTimeMillis();
-//			构建日志逻辑对象
+//			构建日志逻辑对象--设置日志数据
 			DqLogBO dqLogBO = DqLogBO.newInstantce(DqLogDTO.newInstance(beginTimeMillis, endTimeMillis));
 			dqLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
 //			获取日志注解
@@ -85,7 +85,8 @@ public class DqLogAspect {
 			}
 //			获取log数据传输对象
 			DqLogDTO dqLogDTO = dqLogBO.getDqLogDTO();
-			if (DqLogConfig.getLogSwitch(dqLog.dqLogOpenFlag(), dqLogDTO.getTargetClassName(), dqLogDTO.getTargetMethodName())) {
+//			获取日志开关
+			if (DqLogUtils.getLogSwitch(dqLog.dqLogOpenFlag(), dqLogDTO.getTargetClassName(), dqLogDTO.getTargetMethodName())) {
 //				根据注解获取Log委托处理对象执行日志处理
 				DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 			}

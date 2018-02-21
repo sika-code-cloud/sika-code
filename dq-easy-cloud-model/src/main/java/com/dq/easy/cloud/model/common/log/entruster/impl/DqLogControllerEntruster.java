@@ -15,12 +15,12 @@ public class DqLogControllerEntruster extends DqLogBaseEntruster{
 
 	@Override
 	protected void logDataExtraPre() {
-		DqLogUtils.logByLogLevel(dqLog.dqLogLevel(), "这是控制层的日志哦", "啦啦啦啦这是控制层的日志哦之前啦", targetLogger);
+		super.log("这是控制层的日志哦", "啦啦啦啦这是控制层的日志哦之前啦");
 	}
 
 	@Override
 	protected void logDataExtraAfter() {
-		DqLogUtils.logByLogLevel(dqLog.dqLogLevel(), "请求路径", dqLogDTO.getRequestPath(), targetLogger);
+		super.log("请求路径", dqLogDTO.getRequestPath());
 	}
 
 

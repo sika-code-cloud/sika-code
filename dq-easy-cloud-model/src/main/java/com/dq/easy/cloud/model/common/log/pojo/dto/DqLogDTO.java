@@ -40,7 +40,7 @@ public class DqLogDTO {
 	private Long endTimeMillis;
 	/** 方法执行时间毫秒数 */
 	private Long executTimeMinllis;
-	/** 日志记录对象 */
+	/** 日志记录对象 -- 该对象来源于目标class中的Logger属性*/
 	private Logger logger;
 
 	public DqLogDTO() {

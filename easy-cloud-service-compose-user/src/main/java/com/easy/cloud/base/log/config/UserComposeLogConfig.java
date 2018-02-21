@@ -23,10 +23,10 @@ import com.easy.cloud.controller.UserController;
  * 创建时间    2018年2月9日 下午8:01:52
  */
 @Component
-public class baseLogConfig extends DqLogConfig{
+public class UserComposeLogConfig extends DqLogConfig{
 
 	static{
-		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getLogSwitchKey(UserController.class.getName()), false);
-		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getLogSwitchKey(UserController.class.getName(), "login"), false);
+		setLogSwitchFlag(false, UserController.class.getName());
+		setLogSwitchFlag(false, UserController.class.getName(), "login");
 	}
 }

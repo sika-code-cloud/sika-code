@@ -102,16 +102,21 @@ public class DqLogBO {
 	}
 	/** 根据目标class构建日志记录对象 */
 	private DqLogBO buildLogger(Class<?> targetClass){
+		if(DqBaseUtils.isNull(targetClass)){
+			return this;
+		}
 		Field [] fields = targetClass.getDeclaredFields();
 		try {
 			for(Field field : fields){
 				field.setAccessible(true);
-				if(!Modifier.isStatic(field.getModifiers())) {
-					continue;
+				Object fieldValue = null;
+				if(Modifier.isStatic(field.getModifiers())) {
+					fieldValue = field.get(targetClass);
+				}else{
+					fieldValue = field.get(targetClass.newInstance());
 				}
-	            Object object = field.get(targetClass);
-				if(DqBaseUtils.isNotNull(object) && object instanceof Logger){
-					this.buildLogger((Logger) object);
+				if(DqBaseUtils.isNotNull(fieldValue) && fieldValue instanceof Logger){
+					this.buildLogger((Logger) fieldValue);
 					break;
 				}
 			}

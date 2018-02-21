@@ -20,7 +20,7 @@ import com.easy.cloud.base.constant.EasyCloudComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients
 @ComponentScan(basePackages={EasyCloudComponentScan.COM_DQ_EASY_CLOUD, EasyCloudComponentScan.COM_EASY_CLOUD})
-public class UserComposeApplication {
+public class UserComposeApplication { 
 	public static void main(String[] args) {
 		SpringApplication.run(UserComposeApplication.class, args);
 	}

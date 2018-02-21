@@ -37,16 +37,5 @@ public class DqLogBaseEntruster extends DqLogAbstractEntruster{
 	protected void doLogMq() {
 		
 	}
-
-	
-	@Override
-	protected void logDataExtraPre() {
-		DqLogUtils.logByLogLevel(dqLog.dqLogLevel(), "这是额外的日志之前啦", "啦啦啦啦日志之前啦", targetLogger);
-	}
-
-	@Override
-	protected void logDataExtraAfter() {
-		DqLogUtils.logByLogLevel(dqLog.dqLogLevel(), "这是额外的日志之后啦", "啦啦啦啦日志之后啦", targetLogger);
-	}
 	
 }
