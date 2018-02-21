@@ -14,6 +14,7 @@ import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
+import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
@@ -28,7 +29,6 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 public class DqLogUtils {
 	
 	/**
-	 * 
 	 * <p>
 	 * 获取日志开关的key
 	 * </p>
@@ -39,7 +39,7 @@ public class DqLogUtils {
 	 * @author daiqi
 	 * 创建时间    2018年2月9日 下午5:58:48
 	 */
-	public static String getLogSwitchKey(String ... keys) {
+	public static String getSwitchKey(String ... keys) {
 		if (DqArrayUtils.isEmpty(keys)){
 			return null;
 		}
@@ -53,37 +53,77 @@ public class DqLogUtils {
 	}
 	
 	/**
-	 * 
 	 * <p>
 	 * 获取日志开关
 	 * </p>
 	 *
-	 * @param dqLogOpenFlag : Boolean : 注解的开关标志
-	 * @param switchKey : String : 开关的key
+	 * @param dqLog : DqLog : 日志注解
+	 * @param dqLogDTO : DqLogDTO : 日志传输对象
 	 * @return
 	 * @author daiqi
 	 * 创建时间    2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogSwitch(boolean dqLogOpenFlag, String className, String methodName){
+	public static boolean getLogSwitch(DqLog dqLog, DqLogDTO dqLogDTO){
+		boolean dqLogSwitch = dqLog.dqLogSwitch();
+		String className = dqLogDTO.getTargetClassName();
+		String methodName = dqLogDTO.getTargetMethodName();
+		
 //		类名为空直接返回true
 		if (DqStringUtils.isEmpty(className)){
 			return true;
 		}
 //		根据类名和方法名获取开关的key
-		String switchKey = DqLogUtils.getLogSwitchKey(className, methodName);
+		String switchKey = DqLogUtils.getSwitchKey(className, methodName);
 		if (DqStringUtils.isEmpty(switchKey)){
 			return true;
 		}
-		Boolean switchFlag = DqLogConfig.getSwitchConfig().get(switchKey);
+		Boolean switchFlag = DqLogConfig.getLogSwitchConfig().get(switchKey);
 //		若config中标志不为空直接返回
 		if (DqBaseUtils.isNotNull(switchFlag)){
 			return switchFlag;
 		}
 //		根据类名获取开关key
-		switchKey = DqLogUtils.getLogSwitchKey(className);
+		switchKey = DqLogUtils.getSwitchKey(className);
 //		获取对类的日志开关
-		switchFlag = DqLogConfig.getSwitchConfig().get(switchKey);
-		return switchFlag == null ? dqLogOpenFlag : switchFlag;
+		switchFlag = DqLogConfig.getLogSwitchConfig().get(switchKey);
+		return switchFlag == null ? dqLogSwitch : switchFlag;
+	}
+	
+	/**
+	 * <p>
+	 * 获取日志分析开关
+	 * </p>
+	 *
+	 * @param dqLog : DqLog : 日志注解
+	 * @param dqLogDTO : DqLogDTO : 日志传输对象
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月9日 下午6:05:15
+	 */
+	public static boolean getLogAnalysisSwitch(DqLog dqLog, DqLogDTO dqLogDTO){
+		boolean dqMethodAnalysisSwitch = dqLog.dqLogAnalysisSwitch();
+		String className = dqLogDTO.getTargetClassName();
+		String methodName = dqLogDTO.getTargetMethodName();
+		
+//		类名为空直接返回true
+		if (DqStringUtils.isEmpty(className)){
+			return true;
+		}
+//		根据类名和方法名获取开关的key
+		String switchKey = DqLogUtils.getSwitchKey(className, methodName);
+		if (DqStringUtils.isEmpty(switchKey)){
+			return true;
+		}
+		Boolean switchFlag = DqLogConfig.getLogAnalysisSwitchConfig().get(switchKey);
+//		若config中标志不为空直接返回
+		if (DqBaseUtils.isNotNull(switchFlag)){
+			return switchFlag;
+		}
+//		根据类名获取开关key
+		switchKey = DqLogUtils.getSwitchKey(className);
+//		获取对类的日志开关
+		switchFlag = DqLogConfig.getLogAnalysisSwitchConfig().get(switchKey);
+		return switchFlag == null ? dqMethodAnalysisSwitch : switchFlag;
 	}
 	
 	/**
@@ -121,6 +161,7 @@ public class DqLogUtils {
 		}
 		return DqReflectionUtils.newInstance(DqLogBaseEntruster.class);
 	}
+	
 	/**
 	 * <p>
 	 * 根据日志级别记录日志

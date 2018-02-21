@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.model.common.log.entruster.impl;
 
 import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractEntruster;
-import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 
 /**
  * 
@@ -35,6 +34,11 @@ public class DqLogBaseEntruster extends DqLogAbstractEntruster{
 
 	@Override
 	protected void doLogMq() {
+		
+	}
+
+	@Override
+	protected void doLogAnalysis() {
 		
 	}
 	

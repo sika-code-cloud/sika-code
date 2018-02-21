@@ -13,6 +13,10 @@ import com.easy.cloud.controller.UserController;
 @Component
 public class UserAtomLogConfig extends DqLogConfig{
 	static{
+//		日志开关设置
 		setLogSwitchFlag(false, UserController.class.getName());
+		
+//		方法分析开关设置
+		setLogAnalysisSwitchFlag(false, UserController.class.getName());
 	}
 }

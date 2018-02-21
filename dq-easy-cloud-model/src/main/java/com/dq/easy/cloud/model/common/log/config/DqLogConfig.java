@@ -25,18 +25,29 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
  */
 @Component
 public class DqLogConfig {
-	private static final Map<String, Boolean> DQ_LOG_SWITCH_CONFIG = new HashMap<>();
-	
+	/** 日志开关配置容器 */
+	private static Map<String, Boolean> DQ_LOG_SWITCH_CONFIG = new HashMap<>();
+	/** 方法分析开关配置容器 */
+	private static Map<String, Boolean> DQ_LOG_ANALYSIS_SWITCH_CONFIG = new HashMap<>();
 	static {
 		
 	}
 	
 	/** 设置日志开关标志*/
 	public static void setLogSwitchFlag(boolean switchFlag, String ... switchKeys){
-		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getLogSwitchKey(switchKeys), switchFlag);
+		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getSwitchKey(switchKeys), switchFlag);
 	}
 	
-	public static Map<String, Boolean> getSwitchConfig(){
+	public static Map<String, Boolean> getLogSwitchConfig(){
 		return DQ_LOG_SWITCH_CONFIG;
+	}
+	
+	/** 设置方法分析开关标志*/
+	public static void setLogAnalysisSwitchFlag(boolean switchFlag, String ... switchKeys){
+		DQ_LOG_ANALYSIS_SWITCH_CONFIG.put(DqLogUtils.getSwitchKey(switchKeys), switchFlag);
+	}
+	
+	public static Map<String, Boolean> getLogAnalysisSwitchConfig(){
+		return DQ_LOG_ANALYSIS_SWITCH_CONFIG;
 	}
 }

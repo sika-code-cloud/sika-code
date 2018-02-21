@@ -85,11 +85,8 @@ public class DqLogAspect {
 			}
 //			获取log数据传输对象
 			DqLogDTO dqLogDTO = dqLogBO.getDqLogDTO();
-//			获取日志开关
-			if (DqLogUtils.getLogSwitch(dqLog.dqLogOpenFlag(), dqLogDTO.getTargetClassName(), dqLogDTO.getTargetMethodName())) {
-//				根据注解获取Log委托处理对象执行日志处理
-				DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
-			}
+//			根据注解获取Log委托处理对象执行日志处理
+			DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 		}
 		return targetReturnValue;
 	}

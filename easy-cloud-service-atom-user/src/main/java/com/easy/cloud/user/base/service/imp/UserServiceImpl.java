@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
@@ -20,7 +21,7 @@ import com.easy.cloud.user.base.repository.inf.UserRepository;
 import com.easy.cloud.user.base.service.inf.UserService;
 
 @Service(value="userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends DqBaseService implements UserService {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Resource
 	private UserRepository userRepository;

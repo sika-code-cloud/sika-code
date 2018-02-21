@@ -37,6 +37,9 @@ public @interface DqLog {
 	/** 日志记录类型 详情@Link DqLogConstant.DqLogType */
 	int dqLogType() default DqLogType.OTHER;
 	
-	/** 开启日志标志---false则关闭记录日志 */
-	boolean dqLogOpenFlag() default true;
+	/** 日志开关---false则关闭日志记录---默认打开 */
+	boolean dqLogSwitch() default true;
+	
+	/** 日志分析开关--false则关闭日志分析---默认为打开 */
+	boolean dqLogAnalysisSwitch() default true;
 }

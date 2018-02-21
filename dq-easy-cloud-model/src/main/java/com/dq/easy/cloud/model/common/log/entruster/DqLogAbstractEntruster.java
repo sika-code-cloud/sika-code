@@ -40,8 +40,17 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	public void handle(DqLogBO dqLogBO) {
 		// 1：数据初始化
 		init(dqLogBO);
-		// 2：执行日志处理
-		doHandle();
+//		获取日志开关
+		if (DqLogUtils.getLogSwitch(dqLog, dqLogDTO)){
+//			2：执行日志处理
+			doLogHandle();
+		}
+//		获取日志分析开关
+		if (DqLogUtils.getLogAnalysisSwitch(dqLog, dqLogDTO)){
+//			执行方法分析处理
+			doLogAnalysis();
+		}
+
 	}
 
 	/** 日志模板类 */
@@ -133,8 +142,8 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 
 	}
 
-	/** 执行业务逻辑 */
-	private void doHandle() {
+	/** 执行日志处理业务逻辑 */
+	private void doLogHandle() {
 		int dqLogMode = dqLog.dqLogMode();
 		if (DqLogMode.isConsole(dqLogMode)) {
 			doLogConsole();
@@ -143,9 +152,11 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		} else if (DqLogMode.isDatabase(dqLogMode)) {
 			doLogDataBase();
 		} else if (DqLogMode.isMq(dqLogMode)) {
-			doLogDataBase();
+			doLogMq();
 		}
 	}
+	/** 执行日志分析业务逻辑 */
+	protected abstract void doLogAnalysis();
 
 	/** 日志记录方式---控制台 */
 	protected abstract void doLogConsole();
