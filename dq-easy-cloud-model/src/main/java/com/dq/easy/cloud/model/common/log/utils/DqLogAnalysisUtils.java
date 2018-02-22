@@ -2,6 +2,11 @@ package com.dq.easy.cloud.model.common.log.utils;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.array.DqArrayUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
@@ -10,6 +15,7 @@ import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogAnalysisCo
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogAnalysisDTO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+import com.dq.easy.cloud.model.common.properties.utils.DqPropertiesUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 /**
@@ -29,6 +35,7 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
  * 创建时间    2018年2月22日 下午12:59:12
  */
 public class DqLogAnalysisUtils {
+	private static Logger LOG = LoggerFactory.getLogger(DqLogAnalysisUtils.class);
 	/**
 	 * <p>
 	 * 获取日志分析开关
@@ -49,7 +56,7 @@ public class DqLogAnalysisUtils {
 			return true;
 		}
 		// 根据类名和方法名获取开关的key
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName);
+		String switchKey = DqLogUtils.getLogKey(className, methodName);
 		if (DqStringUtils.isEmpty(switchKey)) {
 			return true;
 		}
@@ -59,7 +66,7 @@ public class DqLogAnalysisUtils {
 			return switchFlag;
 		}
 		// 根据类名获取开关key
-		switchKey = DqLogUtils.getSwitchKey(className);
+		switchKey = DqLogUtils.getLogKey(className);
 		// 获取对类的日志开关
 		switchFlag = DqLogConfig.getLogAnalysisSwitchConfig().get(switchKey);
 		return switchFlag == null ? dqMethodAnalysisSwitch : switchFlag;
@@ -86,11 +93,7 @@ public class DqLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static DqLogAnalysisDTO getDqLogAnalysisDTOFromContainer(Map<String, DqLogAnalysisDTO> containerMap,DqLogDTO dqLogDTO) {
-		String className = dqLogDTO.getTargetClassName();
-		String methodName = dqLogDTO.getTargetMethodName();
-		String parameterTypes = DqArrayUtils.getClassArrayStr(dqLogDTO.getTargetParameterTypes());
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName, parameterTypes);
-		return containerMap.get(switchKey);
+		return containerMap.get(getLogKeyOfDqLogAnalysis(dqLogDTO));
 	}
 	
 	/**
@@ -114,14 +117,12 @@ public class DqLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static DqLogAnalysisDTO getDqLogAnalysisDTOFromRedis(DqLogDTO dqLogDTO) {
-		String className = dqLogDTO.getTargetClassName();
-		String methodName = dqLogDTO.getTargetMethodName();
-		String parameterTypes = DqArrayUtils.getClassArrayStr(dqLogDTO.getTargetParameterTypes());
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName, parameterTypes);
+		String switchKey = getLogKeyOfDqLogAnalysis(dqLogDTO);
 //		从redis中获取日志分析数据传输对象
 		// TODO 从redis中获取日志分析数据传输对象
 		return null;
 	}
+	
 	/**
 	 * 
 	 * <p>
@@ -143,11 +144,7 @@ public class DqLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static void setDqLogAnalysisDTOToContainer(Map<String, DqLogAnalysisDTO> dqLogAnalysisDTOContainer, DqLogAnalysisDTO dqLogAnalysisDTO) {
-		DqLogDTO dqLogDTO = dqLogAnalysisDTO.getDqLogDTO();
-		String className = dqLogDTO.getTargetClassName();
-		String methodName = dqLogDTO.getTargetMethodName();
-		String parameterTypes = DqArrayUtils.getClassArrayStr(dqLogDTO.getTargetParameterTypes());
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName, parameterTypes);
+		String switchKey = getLogKeyOfDqLogAnalysis(dqLogAnalysisDTO.getDqLogDTO());
 		dqLogAnalysisDTOContainer.put(switchKey, dqLogAnalysisDTO);
 	}
 	
@@ -172,13 +169,18 @@ public class DqLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static void setDqLogAnalysisDTOToRedis(DqLogAnalysisDTO dqLogAnalysisDTO) {
-		DqLogDTO dqLogDTO = dqLogAnalysisDTO.getDqLogDTO();
+		getLogKeyOfDqLogAnalysis(dqLogAnalysisDTO.getDqLogDTO());
+//		设置日志分析数据传输对象到redis中
+		// TODO 设置日志分析数据传输对象到redis中
+	}
+	
+	/** 获取日志分析的key */
+	private static String getLogKeyOfDqLogAnalysis(DqLogDTO dqLogDTO) {
+		String applicationName = DqPropertiesUtils.getStringValue(DqBaseConstant.APPLICATION_NAME_KEY);
 		String className = dqLogDTO.getTargetClassName();
 		String methodName = dqLogDTO.getTargetMethodName();
 		String parameterTypes = DqArrayUtils.getClassArrayStr(dqLogDTO.getTargetParameterTypes());
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName, parameterTypes);
-//		设置日志分析数据传输对象到redis中
-		// TODO 设置日志分析数据传输对象到redis中
+		return DqLogUtils.getLogKey(applicationName, className, methodName, parameterTypes);
 	}
 	
 	/**

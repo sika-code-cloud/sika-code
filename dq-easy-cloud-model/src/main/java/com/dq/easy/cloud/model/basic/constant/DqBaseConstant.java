@@ -24,6 +24,9 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
  * @author daiqi 创建时间 2018年2月6日 下午1:46:21
  */
 public class DqBaseConstant {
+	
+	/** 应用名称的key */
+	public static final String APPLICATION_NAME_KEY = "spring.application.name";
 	/**
 	 * 
 	 * <p>

@@ -34,7 +34,7 @@ public class DqLogConfig{
 	
 	/** 设置日志开关标志*/
 	public static void setLogSwitchFlag(boolean switchFlag, String ... switchKeys){
-		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getSwitchKey(switchKeys), switchFlag);
+		DQ_LOG_SWITCH_CONFIG.put(DqLogUtils.getLogKey(switchKeys), switchFlag);
 	}
 	
 	public static Map<String, Boolean> getLogSwitchConfig(){
@@ -43,7 +43,7 @@ public class DqLogConfig{
 	
 	/** 设置方法分析开关标志*/
 	public static void setLogAnalysisSwitchFlag(boolean switchFlag, String ... switchKeys){
-		DQ_LOG_ANALYSIS_SWITCH_CONFIG.put(DqLogUtils.getSwitchKey(switchKeys), switchFlag);
+		DQ_LOG_ANALYSIS_SWITCH_CONFIG.put(DqLogUtils.getLogKey(switchKeys), switchFlag);
 	}
 	
 	public static Map<String, Boolean> getLogAnalysisSwitchConfig(){

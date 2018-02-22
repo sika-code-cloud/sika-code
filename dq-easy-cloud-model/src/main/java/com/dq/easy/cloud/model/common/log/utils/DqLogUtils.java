@@ -30,7 +30,7 @@ public class DqLogUtils {
 
 	/**
 	 * <p>
-	 * 获取日志开关的key
+	 * 获取日志的key
 	 * </p>
 	 *
 	 * @param className
@@ -38,7 +38,7 @@ public class DqLogUtils {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午5:58:48
 	 */
-	public static String getSwitchKey(String... keys) {
+	public static String getLogKey(String... keys) {
 		if (DqArrayUtils.isEmpty(keys)) {
 			return null;
 		}
@@ -76,7 +76,7 @@ public class DqLogUtils {
 			return true;
 		}
 		// 根据类名和方法名获取开关的key
-		String switchKey = DqLogUtils.getSwitchKey(className, methodName);
+		String switchKey = DqLogUtils.getLogKey(className, methodName);
 		if (DqStringUtils.isEmpty(switchKey)) {
 			return true;
 		}
@@ -86,7 +86,7 @@ public class DqLogUtils {
 			return switchFlag;
 		}
 		// 根据类名获取开关key
-		switchKey = DqLogUtils.getSwitchKey(className);
+		switchKey = DqLogUtils.getLogKey(className);
 		// 获取对类的日志开关
 		switchFlag = DqLogConfig.getLogSwitchConfig().get(switchKey);
 		return switchFlag == null ? dqLogSwitch : switchFlag;
