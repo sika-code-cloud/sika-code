@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.model.common.log.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -11,10 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
-import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
-import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
@@ -83,8 +79,6 @@ public class DqLogAspect {
 			if (DqBaseUtils.isNull(dqLog) || DqBaseUtils.isNull(dqLog.dqLogEntrusterClass())){
 				return targetReturnValue;
 			}
-//			获取log数据传输对象
-			DqLogDTO dqLogDTO = dqLogBO.getDqLogDTO();
 //			根据注解获取Log委托处理对象执行日志处理
 			DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 		}

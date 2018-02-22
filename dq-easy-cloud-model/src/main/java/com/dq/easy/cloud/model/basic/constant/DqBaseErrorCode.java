@@ -22,37 +22,51 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DqBaseErrorCode {
-	/** 成功---A000000 */
-	public static final String SUCCESS = "A000000";
-	/** 异常---系统错误---A000001 */
-	public static final String SYS_ERROR = "A000001";
-	/** 异常---系统异常---A000002 */
-	public static final String SYS_EXCEPTION = "A000002";
-	/** 异常---运行时异常---A000003 */
-	public static final String RUNTIME_EXCEPTION = "A000003";
-	/** 异常---查询对象不能为空---A000004 */
-	public static final String QUERY_OBJ_CANT_NULL = "A000004";
-	/** 异常---持久化对象不能为空---A000005 */
-	public static final String ENTITY_OBJ_CANT_NULL = "A000005";
-	/** 异常---数据传输对象不能为空---A000006 */
-	public static final String DTO_OBJ_CANT_NULL = "A000006";
-	/** 异常---业务逻辑对象不能为空---A000007 */
-	public static final String BO_OBJ_CANT_NULL = "A000007";
-	/** 异常---视图对象不能为空---A000008 */
-	public static final String VO_OBJ_CANT_NULL = "A000008";
+	/** 成功---A_000000 */
+	public static final String SUCCESS = "A_000000";
+	/** 异常---系统错误---A_000001 */
+	public static final String SYS_ERROR = "A_000001";
+	/** 异常---系统异常---A_000002 */
+	public static final String SYS_EXCEPTION = "A_000002";
+	/** 异常---运行时异常---A_000003 */
+	public static final String RUNTIME_EXCEPTION = "A_000003";
+	/** 异常---查询对象不能为空---A_000004 */
+	public static final String QUERY_OBJ_CANT_NULL = "A_000004";
+	/** 异常---持久化对象不能为空---A_000005 */
+	public static final String ENTITY_OBJ_CANT_NULL = "A_000005";
+	/** 异常---数据传输对象不能为空---A_000006 */
+	public static final String DTO_OBJ_CANT_NULL = "A_000006";
+	/** 异常---业务逻辑对象不能为空---A_000007 */
+	public static final String BO_OBJ_CANT_NULL = "A_000007";
+	/** 异常---视图对象不能为空---A_000008 */
+	public static final String VO_OBJ_CANT_NULL = "A_000008";
 	/** 错误代码和消息容器 */
-	protected static final Map<String, String> ERROR_CODE_AND_MSG_MAP = new HashMap<>();
+	private static final Map<String, String> ERROR_CODE_AND_MSG_MAP = new HashMap<>();
 	
 	static{
-		ERROR_CODE_AND_MSG_MAP.put(SUCCESS, "成功");
-		ERROR_CODE_AND_MSG_MAP.put(SYS_ERROR, "系统错误");
-		ERROR_CODE_AND_MSG_MAP.put(SYS_EXCEPTION, "系统异常");
-		ERROR_CODE_AND_MSG_MAP.put(RUNTIME_EXCEPTION, "运行时异常");
-		ERROR_CODE_AND_MSG_MAP.put(QUERY_OBJ_CANT_NULL, "查询对象不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(ENTITY_OBJ_CANT_NULL, "持久化对象不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(DTO_OBJ_CANT_NULL, "数据传输对象不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(BO_OBJ_CANT_NULL, "业务逻辑对象不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(VO_OBJ_CANT_NULL, "视图对象不能为空");
+		setErrorMsg(SUCCESS, "成功");
+		setErrorMsg(SYS_ERROR, "系统错误");
+		setErrorMsg(SYS_EXCEPTION, "系统异常");
+		setErrorMsg(RUNTIME_EXCEPTION, "运行时异常");
+		setErrorMsg(QUERY_OBJ_CANT_NULL, "查询对象不能为空");
+		setErrorMsg(ENTITY_OBJ_CANT_NULL, "持久化对象不能为空");
+		setErrorMsg(DTO_OBJ_CANT_NULL, "数据传输对象不能为空");
+		setErrorMsg(BO_OBJ_CANT_NULL, "业务逻辑对象不能为空");
+		setErrorMsg(VO_OBJ_CANT_NULL, "视图对象不能为空");
+	}
+	/**
+	 * 
+	 * <p>
+	 * 设置错误码和信息到map集合中
+	 * </p>
+	 *
+	 * @param errorCode : String : 错误码
+	 * @param errorMsg : String : 错误信息
+	 * @author daiqi
+	 * 创建时间    2018年2月22日 上午10:26:42
+	 */
+	public static void setErrorMsg(String errorCode, String errorMsg){
+		ERROR_CODE_AND_MSG_MAP.put(errorCode, errorMsg);
 	}
 	/**
 	 * 

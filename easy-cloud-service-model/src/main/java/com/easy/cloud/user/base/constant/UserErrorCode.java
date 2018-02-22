@@ -33,12 +33,12 @@ public class UserErrorCode extends DqBaseErrorCode{
 	public static final String USER_EMAIL_CANT_EMPTY = "U_000006";
 
 	static{
-		ERROR_CODE_AND_MSG_MAP.put(USER_NOT_EXIST, "用户不存在");
-		ERROR_CODE_AND_MSG_MAP.put(USER_ID_CANT_NULL, "用户id不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(USER_CANT_NULL, "用户对象不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(USER_NAME_CANT_EMPTY, "用户名不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(USER_PASSWOR_CANT_EMPTY, "用户密码不能为空");
-		ERROR_CODE_AND_MSG_MAP.put(USER_EMAIL_CANT_EMPTY, "用户邮箱不能为空");
+		setErrorMsg(USER_NOT_EXIST, "用户不存在");
+		setErrorMsg(USER_ID_CANT_NULL, "用户id不能为空");
+		setErrorMsg(USER_CANT_NULL, "用户对象不能为空");
+		setErrorMsg(USER_NAME_CANT_EMPTY, "用户名不能为空");
+		setErrorMsg(USER_PASSWOR_CANT_EMPTY, "用户密码不能为空");
+		setErrorMsg(USER_EMAIL_CANT_EMPTY, "用户邮箱不能为空");
 	}
 }
 

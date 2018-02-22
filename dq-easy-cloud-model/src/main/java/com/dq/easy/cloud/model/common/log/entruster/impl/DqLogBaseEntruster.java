@@ -1,6 +1,11 @@
 package com.dq.easy.cloud.model.common.log.entruster.impl;
 
+import java.util.Map;
+
 import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractEntruster;
+import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogAnalysisDTO;
+import com.dq.easy.cloud.model.common.log.utils.DqLogAnalysisUtils;
+import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 
 /**
  * 
@@ -19,12 +24,12 @@ public class DqLogBaseEntruster extends DqLogAbstractEntruster{
 
 	@Override
 	protected void doLogConsole() {
-		logTemplate();
+		super.logTemplate();
 	}
 
 	@Override
 	protected void doLogFile() {
-		logTemplate();
+		super.logTemplate();
 	}
 
 	@Override
@@ -37,9 +42,4 @@ public class DqLogBaseEntruster extends DqLogAbstractEntruster{
 		
 	}
 
-	@Override
-	protected void doLogAnalysis() {
-		
-	}
-	
 }

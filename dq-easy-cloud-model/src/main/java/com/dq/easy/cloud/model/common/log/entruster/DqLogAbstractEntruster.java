@@ -1,12 +1,17 @@
 package com.dq.easy.cloud.model.common.log.entruster;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
+import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogAnalysisBO;
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
+import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogAnalysisDTO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+import com.dq.easy.cloud.model.common.log.utils.DqLogAnalysisUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 
 /**
@@ -26,9 +31,11 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
  */
 public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DqLogBaseEntruster.class);
-	/** 日志传输对象 */
+	protected static final Logger LOG = LoggerFactory.getLogger(DqLogBaseEntruster.class);
+	/** 日志数据传输对象 */
 	protected DqLogDTO dqLogDTO;
+	/** 日志分析数据传输对象 */
+	protected DqLogAnalysisBO dqLogAnalysisBO;
 	/** 日志注解 */
 	protected DqLog dqLog;
 	/** 日志级别 */
@@ -38,18 +45,26 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 
 	@Override
 	public void handle(DqLogBO dqLogBO) {
-		// 1：数据初始化
-		init(dqLogBO);
-//		获取日志开关
-		if (DqLogUtils.getLogSwitch(dqLog, dqLogDTO)){
-//			2：执行日志处理
-			doLogHandle();
+		try {
+			// 1：数据初始化
+			init(dqLogBO);
+//			获取日志开关
+			if (DqLogUtils.getLogSwitch(dqLog, dqLogDTO)){
+//				2：执行日志处理
+				doLogHandle();
+			}
+//			获取日志分析开关
+			if (DqLogAnalysisUtils.getLogAnalysisSwitch(dqLog, dqLogDTO)){
+				if (DqBaseUtils.isNull(dqLogAnalysisBO)) {
+					return ;
+				}
+//				执行方法分析处理
+				doLogAnalysis();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-//		获取日志分析开关
-		if (DqLogUtils.getLogAnalysisSwitch(dqLog, dqLogDTO)){
-//			执行方法分析处理
-			doLogAnalysis();
-		}
+		
 
 	}
 
@@ -65,7 +80,7 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		log("请求参数值", dqLogDTO.getTargetParameterValues());
 		log("返回参数类型", dqLogDTO.getTargetReturnType());
 		log("返回参数值", dqLogDTO.getTargetReturnValue());
-		log("方法运行时间", (dqLogDTO.getExecutTimeMinllis()) +"ms");
+		log("方法运行时间", (dqLogDTO.getRunTimeMinllis()) +"ms");
 		logDataExtraAfter();
 		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
 		targetLogger.info("\r\n");
@@ -132,6 +147,8 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		this.dqLogDTO = dqLogBO.getDqLogDTO();
 		this.dqLog = dqLogBO.getDqLog();
 		dqLogLevel = dqLog.dqLogLevel();
+		this.dqLogDTO.setLogType(dqLog.dqLogType());
+		
 		if (DqBaseUtils.isNotNull(dqLogDTO.getLogger())) {
 			targetLogger = dqLogDTO.getLogger();
 		}
@@ -139,9 +156,20 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 
 	/** 初始化其他数据 */
 	private void initOtherData() {
-
+//		初始化日志分析数据
+		if (DqLogAnalysisUtils.getLogAnalysisSwitch(dqLog, dqLogDTO)){
+			initDqLogAnalysisBOData();
+			dqLogAnalysisBO.buildDqLogAnalysisData();
+		}
 	}
-
+	
+	/** 初始化日志分析业务逻辑对象数据---子类可以重写该方法进行数据初始化 */
+	protected void initDqLogAnalysisBOData() {
+//		初始化日志分析数据
+		Map<String, DqLogAnalysisDTO> dqLogAnalysisMap = DqLogAnalysisUtils.getLogAnalysisContainerByType(dqLogDTO.getLogType());
+		dqLogAnalysisBO = DqLogAnalysisBO.newInstanceFromContainer(dqLogAnalysisMap, dqLogDTO);
+	}
+	
 	/** 执行日志处理业务逻辑 */
 	private void doLogHandle() {
 		int dqLogMode = dqLog.dqLogMode();
@@ -155,8 +183,23 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 			doLogMq();
 		}
 	}
-	/** 执行日志分析业务逻辑 */
-	protected abstract void doLogAnalysis();
+	
+	/**
+	 * 
+	 * <p>
+	 * 执行日志分析业务逻辑 子类可以重写该方法进行日志分析处理 
+	 * </p>
+	 * <p>
+	 * 重写该方法必须同时重写initDqLogAnalysisBOData()方法
+	 * </p>
+	 *
+	 * @author daiqi
+	 * 创建时间    2018年2月22日 下午2:47:31
+	 */
+	protected void doLogAnalysis(){
+		dqLogAnalysisBO.setDqLogAnalysisDTOToContainer(DqLogAnalysisUtils.getLogAnalysisContainerByType(dqLog.dqLogType()));
+		DqLogUtils.info("日志分析数据", dqLogAnalysisBO, LOG);
+	}
 
 	/** 日志记录方式---控制台 */
 	protected abstract void doLogConsole();

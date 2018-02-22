@@ -19,6 +19,6 @@ public class UserComposeErrorCode extends UserErrorCode{
 	public static final String LOGIN_MODE_WRONG = "UC_000001";
 
 	static{
-		ERROR_CODE_AND_MSG_MAP.put(LOGIN_MODE_WRONG, "登录类型有误");
+		setErrorMsg(LOGIN_MODE_WRONG, "登录类型有误");
 	}
 }

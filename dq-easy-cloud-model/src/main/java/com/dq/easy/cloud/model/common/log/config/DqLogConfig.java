@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
-
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 
 /**
@@ -24,7 +23,7 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
  * 创建时间    2018年2月9日 下午5:50:39
  */
 @Component
-public class DqLogConfig {
+public class DqLogConfig{
 	/** 日志开关配置容器 */
 	private static Map<String, Boolean> DQ_LOG_SWITCH_CONFIG = new HashMap<>();
 	/** 方法分析开关配置容器 */

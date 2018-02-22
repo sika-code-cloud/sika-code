@@ -1,7 +1,5 @@
 package com.dq.easy.cloud.model.common.log.pojo.dto;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 
 /**
@@ -38,11 +36,12 @@ public class DqLogDTO {
 	private Long beginTimeMillis;
 	/** 结束时间毫秒数 */
 	private Long endTimeMillis;
-	/** 方法执行时间毫秒数 */
-	private Long executTimeMinllis;
+	/** 方法运行时间毫秒数 */
+	private long runTimeMinllis;
 	/** 日志记录对象 -- 该对象来源于目标class中的Logger属性*/
 	private Logger logger;
-
+	/** 日志类型---{@link} DqLogConstant.DqLogType */
+	private int logType;
 	public DqLogDTO() {
 
 	}
@@ -57,20 +56,20 @@ public class DqLogDTO {
 	}
 
 	public static DqLogDTO newInstance(Long beginTimeMillis, Long endTimeMillis) {
-		return new DqLogDTO(beginTimeMillis, endTimeMillis).buildExecutTimeMillis();
+		return new DqLogDTO(beginTimeMillis, endTimeMillis).buildRunTimeMillis();
 	}
 
-	public DqLogDTO buildExecutTimeMillis(Long beginTimeMillis, Long endTimeMillis) {
-		return buildExecutTimeMillis(endTimeMillis - beginTimeMillis);
+	public DqLogDTO buildExecuteTimeMillis(Long beginTimeMillis, Long endTimeMillis) {
+		return buildRunTimeMillis(endTimeMillis - beginTimeMillis);
 	}
 
-	public DqLogDTO buildExecutTimeMillis(Long executTimeMinllis) {
-		this.executTimeMinllis = executTimeMinllis;
+	public DqLogDTO buildRunTimeMillis(long executeTimeMinllis) {
+		this.runTimeMinllis = executeTimeMinllis;
 		return this;
 	}
 
-	private DqLogDTO buildExecutTimeMillis() {
-		this.executTimeMinllis = this.endTimeMillis - this.beginTimeMillis;
+	private DqLogDTO buildRunTimeMillis() {
+		this.runTimeMinllis = this.endTimeMillis - this.beginTimeMillis;
 		return this;
 	}
 
@@ -146,12 +145,12 @@ public class DqLogDTO {
 		this.targetReturnType = targetReturnType;
 	}
 
-	public Long getExecutTimeMinllis() {
-		return executTimeMinllis;
+	public Long getRunTimeMinllis() {
+		return runTimeMinllis;
 	}
 
-	public void setExecutTimeMinllis(Long executTimeMinllis) {
-		this.executTimeMinllis = executTimeMinllis;
+	public void setRunTimeMinllis(Long runTimeMinllis) {
+		this.runTimeMinllis = runTimeMinllis;
 	}
 
 	public Logger getLogger() {
@@ -160,6 +159,14 @@ public class DqLogDTO {
 
 	public void setLogger(Logger logger) {
 		this.logger = logger;
+	}
+
+	public int getLogType() {
+		return logType;
+	}
+
+	public void setLogType(int logType) {
+		this.logType = logType;
 	}
 
 }

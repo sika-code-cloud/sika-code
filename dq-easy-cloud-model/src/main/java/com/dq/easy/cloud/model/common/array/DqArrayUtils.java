@@ -2,6 +2,8 @@ package com.dq.easy.cloud.model.common.array;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+
 /**
  * 数组工具类
  * @author daiqi
@@ -56,5 +58,32 @@ public class DqArrayUtils {
 		for (int i = 0 ; i < targetArray.length ; ++i){
 			targetArray[i] = fromArray[i];
 		}
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 获取class数组的字符串格式
+	 * </p>
+	 *
+	 * @param classArray
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月22日 下午2:15:22
+	 */
+	public static String getClassArrayStr(Class<?> [] classArray){
+		if (DqArrayUtils.isEmpty(classArray)){
+			return null;
+		}
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		sb.append("[");
+		for(int i = 0 ; i < classArray.length ; ++i){
+			sb.append(classArray[i].getName());
+			if (i != classArray.length - 1){
+				sb.append(",");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }

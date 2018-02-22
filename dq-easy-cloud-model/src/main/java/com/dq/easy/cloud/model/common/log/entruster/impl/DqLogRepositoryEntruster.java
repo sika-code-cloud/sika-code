@@ -1,5 +1,9 @@
 package com.dq.easy.cloud.model.common.log.entruster.impl;
 
+import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogAnalysisContainer;
+import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogAnalysisBO;
+import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
+
 /**
  * 
  * <p>
@@ -21,4 +25,17 @@ public class DqLogRepositoryEntruster extends DqLogBaseEntruster{
 		super.log("这是Repository层的日志", "这是Repository层的日志");
 	}
 
+	@Override
+	protected void initDqLogAnalysisBOData() {
+		dqLogAnalysisBO = DqLogAnalysisBO.newInstanceFromContainer(DqLogAnalysisContainer.getLogAnalysisContainerRepository(), dqLogDTO);
+		DqLogUtils.info("这是repository的日志分析", "repository日志分析数据初始化", LOG);
+	}
+
+	@Override
+	protected void doLogAnalysis() {
+		dqLogAnalysisBO.setDqLogAnalysisDTOToContainer(DqLogAnalysisContainer.getLogAnalysisContainerRepository());
+		DqLogUtils.info("这是repository的日志分析", dqLogAnalysisBO.getDqLogAnalysisDTO(), LOG);
+	}
+	
+	
 }
