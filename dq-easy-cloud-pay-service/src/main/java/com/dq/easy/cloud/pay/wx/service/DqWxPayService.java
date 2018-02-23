@@ -10,6 +10,7 @@ import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.base.api.DqBasePayService;
 import com.dq.easy.cloud.pay.model.base.config.dto.DqPayConfigStorage;
+import com.dq.easy.cloud.pay.model.base.constant.DqPayConstant;
 import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
@@ -17,6 +18,8 @@ import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant;
+import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 
 import org.apache.commons.logging.Log;
@@ -52,7 +55,7 @@ public class DqWxPayService extends DqBasePayService {
 	public final static String RESULT_MSG = "result_msg";
 	public final static String SIGN = "sign";
 	public final static String SPBILL_CREATE_IP_DEFAULT = "192.168.1.1";
-	
+
 	/**
 	 * 创建支付服务
 	 * 
@@ -150,9 +153,9 @@ public class DqWxPayService extends DqBasePayService {
 	private Map<String, Object> getPublicParameters() {
 
 		Map<String, Object> parameters = new TreeMap<String, Object>();
-		parameters.put("appid", payConfigStorage.getAppid());
-		parameters.put("mch_id", payConfigStorage.getPid());
-		parameters.put("nonce_str", DqSignUtils.randomStr());
+		parameters.put(DqWxPayKey.APPID_KEY, payConfigStorage.getAppid());
+		parameters.put(DqWxPayKey.MCH_ID_KEY, payConfigStorage.getPid());
+		parameters.put(DqWxPayKey.NONCE_STR_KEY, DqSignUtils.randomStr());
 		return parameters;
 
 	}
@@ -169,15 +172,14 @@ public class DqWxPayService extends DqBasePayService {
 		//// 统一下单
 		Map<String, Object> parameters = getPublicParameters();
 
-		parameters.put("body", order.getSubject());// 购买支付信息
-		parameters.put("out_trade_no", order.getOutTradeNo());// 订单号
-		parameters.put("spbill_create_ip",
-				DqStringUtils.isEmpty(order.getSpbillCreateIp()) ? SPBILL_CREATE_IP_DEFAULT : order.getSpbillCreateIp());
-		parameters.put("total_fee", conversion(order.getPrice()));// 总金额单位为分
-
-		parameters.put("attach", order.getBody());
-		parameters.put("notify_url", payConfigStorage.getNotifyUrl());
-		parameters.put("trade_type", order.getTransactionType().getType());
+		parameters.put(DqWxPayKey.BODY_KEY, order.getSubject());// 购买支付信息
+		parameters.put(DqWxPayKey.OUT_TRADE_NO_KEY, order.getOutTradeNo());// 订单号
+		parameters.put(DqWxPayKey.SPBILL_CREATE_IP_KEY, DqStringUtils.isEmpty(order.getSpbillCreateIp())
+				? SPBILL_CREATE_IP_DEFAULT : order.getSpbillCreateIp());
+		parameters.put(DqWxPayKey.TOTAL_FEE_KEY, conversion(order.getPrice()));// 总金额单位为分
+		parameters.put(DqWxPayKey.ATTACH_KEY, order.getBody());
+		parameters.put(DqWxPayKey.NOTIFY_URL_KEY, payConfigStorage.getNotifyUrl());
+		parameters.put(DqWxPayKey.TRADE_TYPE_KEY, order.getTransactionType().getType());
 		((DqWxTransactionType) order.getTransactionType()).setAttribute(parameters, order);
 
 		String sign = createSign(DqSignUtils.parameterText(parameters), payConfigStorage.getInputCharset());
