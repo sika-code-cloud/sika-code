@@ -40,6 +40,11 @@ public class DqBaseErrorCode {
 	public static final String BO_OBJ_CANT_NULL = "A_000007";
 	/** 异常---视图对象不能为空---A_000008 */
 	public static final String VO_OBJ_CANT_NULL = "A_000008";
+	/** 异常---类型转换异常---A_000009 */
+	public static final String TYPE_CONVERT_EXCEPTION = "A_000009";
+	/** 异常---非法类型异常---A_000009 */
+	public static final String ILLICIT_TYPE_EXCEPTION = "A_000010";
+	
 	/** 错误代码和消息容器 */
 	private static final Map<String, String> ERROR_CODE_AND_MSG_MAP = new HashMap<>();
 	
@@ -53,6 +58,8 @@ public class DqBaseErrorCode {
 		setErrorMsg(DTO_OBJ_CANT_NULL, "数据传输对象不能为空");
 		setErrorMsg(BO_OBJ_CANT_NULL, "业务逻辑对象不能为空");
 		setErrorMsg(VO_OBJ_CANT_NULL, "视图对象不能为空");
+		setErrorMsg(TYPE_CONVERT_EXCEPTION, "类型转换异常");
+		setErrorMsg(ILLICIT_TYPE_EXCEPTION, "非法类型异常常");
 	}
 	/**
 	 * 

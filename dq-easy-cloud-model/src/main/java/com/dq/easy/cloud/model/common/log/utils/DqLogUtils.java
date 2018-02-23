@@ -194,7 +194,8 @@ public class DqLogUtils {
 		}
 		logger.debug("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.debug(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.debug(detail.toString());
 		logger.debug("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -220,7 +221,8 @@ public class DqLogUtils {
 		logger.info("\r");
 		logger.info("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.info(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.info(detail.toString());
 		logger.info("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		logger.info("\r\n");
@@ -248,7 +250,8 @@ public class DqLogUtils {
 		}
 		logger.info("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.info(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.info(detail.toString());
 		logger.info("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -274,7 +277,8 @@ public class DqLogUtils {
 		logger.warn("\r");
 		logger.warn("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.warn(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.warn(detail.toString());
 		logger.warn("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		logger.warn("\r\n");
@@ -302,7 +306,8 @@ public class DqLogUtils {
 		}
 		logger.warn("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.warn(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.warn(detail.toString());
 		logger.warn("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -328,7 +333,8 @@ public class DqLogUtils {
 		logger.error("\r");
 		logger.error("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.error(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.error(detail.toString());
 		logger.error("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		logger.error("\r\n");
@@ -356,7 +362,8 @@ public class DqLogUtils {
 		}
 		logger.error("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
-		logger.error(DqJSONUtils.parseObject(logDetail, String.class));
+		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
+		logger.error(detail.toString());
 		logger.error("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {

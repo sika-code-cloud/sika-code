@@ -19,6 +19,8 @@
 	<properties>
 		<!-- alibaba.fastjson依赖 -->
 		<fastjson.version>1.2.39</fastjson.version>
+		<org.jdom.version>2.0.2</org.jdom.version>
+		<zxing.version>3.3.1</zxing.version>
 		<!-- druid依赖 -->
 		<druid.version>1.1.6</druid.version>
 		<!-- 版本依赖管理 end -->
@@ -57,6 +59,18 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
+		<!-- jdom依赖 -->
+		<dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+           	<version>${org.jdom.version}</version>
+        </dependency>
+        <!-- zxing依赖 谷歌二维码生成工具 -->
+        <dependency>
+              <groupId>com.google.zxing</groupId>
+              <artifactId>core</artifactId>
+              <version>${zxing.version}</version>
+          </dependency>
 		<!-- mysql连接依赖 -->
 		<dependency>
 			<groupId>mysql</groupId>

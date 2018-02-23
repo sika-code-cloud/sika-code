@@ -2,6 +2,8 @@ package com.dq.easy.cloud.model.common.map.utils;
 
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
+
 /**
  * 
  * @author daiqi
@@ -48,5 +50,33 @@ public class DqMapUtils {
 		return !isEmpty(map);
 	}
 	
+	public static <T,V> String getString(Map<T,V> map, String key){
+		return MapUtils.getString(map, key);
+	}
 	
+	public static <T,V> Integer getInteger(Map<T,V> map, String key){
+		return MapUtils.getInteger(map, key);
+	}
+	
+	public static <T,V> Long getLong(Map<T,V> map, String key){
+		return MapUtils.getLong(map, key);
+	}
+	
+	public static <T,V> Boolean getBoolean(Map<T,V> map, String key){
+		return MapUtils.getBoolean(map, key);
+	}
+	
+	public static <T,V> Short getShort(Map<T,V> map, String key){
+		return MapUtils.getShort(map, key);
+	}
+	
+	public static <T,V> Double getDouble(Map<T,V> map, String key){
+		return MapUtils.getDouble(map, key);
+	}
+	public static <T,V> Float getFloat(Map<T,V> map, String key){
+		return MapUtils.getFloat(map, key);
+	}
+	public static <T,V> Object getObject(Map<T,V> map, String key){
+		return MapUtils.getObject(map, key);
+	}
 }

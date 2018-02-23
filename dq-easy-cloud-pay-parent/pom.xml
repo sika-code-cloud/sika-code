@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../dq-easy-cloud-parent/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>dq-easy-cloud-pay-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>dq-easy-cloud-pay-parent</name>
+	<url>http://maven.apache.org</url>
+	
+	<!-- 子模块 -->
+	<modules>
+		<module>../dq-easy-cloud-pay-model</module>
+		<module>../dq-easy-cloud-pay-service</module>
+	</modules>
+</project>
