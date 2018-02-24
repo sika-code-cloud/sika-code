@@ -177,6 +177,7 @@ public class DqWxPayService extends DqBasePayService {
 		
 //		不成功抛出异常
 		if (DqStringUtils.notEquals(DqWxPayValue.SUCCESS, DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY))) {
+			DqLogUtils.error("订单创建失败", result, LOG);
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY),
 					DqMapUtils.getString(result, DqWxPayKey.RETURN__MSG_KEY));
 		}

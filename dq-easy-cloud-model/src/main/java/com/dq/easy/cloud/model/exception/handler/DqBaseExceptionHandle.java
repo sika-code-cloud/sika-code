@@ -33,7 +33,7 @@ public class DqBaseExceptionHandle {
         
         if(ex instanceof DqBaseBusinessException) {
         	DqBaseBusinessException dbbException = (DqBaseBusinessException) ex;
-        	dqBaseServiceResult.setErrorCode(dbbException.getErrorCode());
+        	dqBaseServiceResult.buildErrorCode(dbbException.getErrorCode()).buildErrorMsg(dbbException.getErrorMsg());
         }else if(ex instanceof RuntimeException){
         	dqBaseServiceResult.buildErrorCode(DqBaseErrorCode.RUNTIME_EXCEPTION);
         }else{

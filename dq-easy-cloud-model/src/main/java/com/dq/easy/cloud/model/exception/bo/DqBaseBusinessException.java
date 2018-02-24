@@ -62,7 +62,7 @@ public class DqBaseBusinessException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		DqBaseServiceResult result = DqBaseServiceResult.newInstanceOfError(errorCode);
+		DqBaseServiceResult result = DqBaseServiceResult.newInstanceOfError(errorCode).buildErrorMsg(errorMsg);
 		return DqJSONUtils.parseObject(result, String.class);
 	}
 
