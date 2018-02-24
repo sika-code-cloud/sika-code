@@ -41,6 +41,8 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String DESC_KEY = "desc";
 		/** amount键名---AMOUNT_KEY---amount */
 		public static final String AMOUNT_KEY = "amount";
+		/** nonceStr键名---NONCE_STR_KEY---nonceStr */
+		public static final String NONCE_STR_KEY = "nonceStr";
 		/** noncestr键名---NONCESTR_KEY---noncestr */
 		public static final String NONCESTR_KEY = "noncestr";
 		

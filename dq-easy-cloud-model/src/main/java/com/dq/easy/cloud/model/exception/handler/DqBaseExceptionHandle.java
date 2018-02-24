@@ -45,7 +45,7 @@ public class DqBaseExceptionHandle {
         serviceResultException.setPath(path);
         dqBaseServiceResult.buildServiceResultException(serviceResultException);
         
-        DqLogUtils.error("异常统一处理日志", serviceResultException, logger);
+        DqLogUtils.error("异常统一处理日志", dqBaseServiceResult, logger);
         return dqBaseServiceResult;
     }
 }

@@ -109,11 +109,12 @@ public class DqLogConstant extends DqBaseConstant {
 		public static final int OTHER = 0;
 		/** 日志记录类型---controller---1 */
 		public static final int CONTROLLER = 1;
-		/** 日志记录类型---service---2 */
-		public static final int SERVICE = 2;
-		/** 日志记录类型---repository---3 */
-		public static final int REPOSITORY = 3;
-
+		/** 日志记录类型---logic---2 */
+		public static final int LOGIC = 2;
+		/** 日志记录类型---service---3 */
+		public static final int SERVICE = 3;
+		/** 日志记录类型---repository---4 */
+		public static final int REPOSITORY = 4;
 		/** 记录日志是其他 */
 		public static boolean isOther(Integer dqLogType) {
 			return DqBaseUtils.equals(dqLogType, OTHER);
@@ -124,6 +125,11 @@ public class DqLogConstant extends DqBaseConstant {
 			return DqBaseUtils.equals(dqLogType, CONTROLLER);
 		}
 
+		/** 记录日志类型是Logic */
+		public static boolean isLogic(Integer dqLogType) {
+			return DqBaseUtils.equals(dqLogType, LOGIC);
+		}
+		
 		/** 记录日志类型是Service */
 		public static boolean isService(Integer dqLogType) {
 			return DqBaseUtils.equals(dqLogType, SERVICE);
@@ -133,12 +139,14 @@ public class DqLogConstant extends DqBaseConstant {
 		public static boolean isRepository(Integer dqLogType) {
 			return DqBaseUtils.equals(dqLogType, REPOSITORY);
 		}
+		
 	}
 
 	/** 日志分析容器常量类 */
 	public static class DqLogAnalysisContainer {
 		private static final Map<String, DqLogAnalysisDTO> DQ_LOG_ANALYSIS_CONTAINER_REPOSITORY = new ConcurrentHashMap<>();
 		private static final Map<String, DqLogAnalysisDTO> DQ_LOG_ANALYSIS_CONTAINER_SERVICE = new ConcurrentHashMap<>();
+		private static final Map<String, DqLogAnalysisDTO> DQ_LOG_ANALYSIS_CONTAINER_LOGIC = new ConcurrentHashMap<>();
 		private static final Map<String, DqLogAnalysisDTO> DQ_LOG_ANALYSIS_CONTAINER_CONTROLLER = new ConcurrentHashMap<>();
 		private static final Map<String, DqLogAnalysisDTO> DQ_LOG_ANALYSIS_CONTAINER_OTHER = new ConcurrentHashMap<>();
 
@@ -152,6 +160,11 @@ public class DqLogConstant extends DqBaseConstant {
 			return DQ_LOG_ANALYSIS_CONTAINER_SERVICE;
 		}
 
+		/** 获取日志分析容器---logic类型 */
+		public static Map<String, DqLogAnalysisDTO> getLogAnalysisContainerLogic() {
+			return DQ_LOG_ANALYSIS_CONTAINER_LOGIC;
+		}
+		
 		/** 获取日志分析容器---controller类型 */
 		public static Map<String, DqLogAnalysisDTO> getLogAnalysisContainerController() {
 			return DQ_LOG_ANALYSIS_CONTAINER_CONTROLLER;

@@ -1,5 +1,5 @@
 
-package com.dq.easy.cloud.pay.controller;
+package com.dq.easy.cloud.pay.controller.wx;
 
 
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqPayService;
@@ -17,6 +18,7 @@ import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.wx.logic.DqWxPayLogic;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxBank;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import javax.imageio.ImageIO;
@@ -38,6 +40,9 @@ public class DqWxPayController extends DqBaseController{
 	/** 在DqWxPayConfig类中进行了注入 */
 	@Autowired
     private DqPayService service;
+	@Autowired
+	private DqWxPayLogic dqWxPayLogic;
+	
     private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     /**
@@ -64,25 +69,15 @@ public class DqWxPayController extends DqBaseController{
     /**
      * 公众号支付
      *
-     *
      * @param openid openid
      * @param price 金额
      * @return 返回jsapi所需参数
      */
-    @RequestMapping(value = "jsapi" )
-    public Map toPay(String openid, BigDecimal price) {
-
-        DqPayOrderDTO order = new DqPayOrderDTO("订单title", "摘要", null == price ? new BigDecimal(0.01) : price, UUID.randomUUID().toString().replace("-", ""), DqWxTransactionType.JSAPI);
-        order.setOpenid(openid);
-
-        Map orderInfo = service.orderInfo(order);
-        orderInfo.put("code", 0);
-
-        return orderInfo;
+    @RequestMapping(value = "wxJsapiPay" )
+    public DqBaseServiceResult wxJsapiPay(DqPayOrderDTO dDqPayOrderDTO) {
+        return dqWxPayLogic.wxJsapiPay(dDqPayOrderDTO);
     }
-
-
-
+    
     /**
      * 获取支付预订单信息
      *

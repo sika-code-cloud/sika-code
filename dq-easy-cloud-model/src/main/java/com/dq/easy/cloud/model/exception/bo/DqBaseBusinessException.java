@@ -1,5 +1,11 @@
 package com.dq.easy.cloud.model.exception.bo;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
+
 /**
  * 
  * <p>
@@ -52,6 +58,12 @@ public class DqBaseBusinessException extends RuntimeException {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	@Override
+	public String getMessage() {
+		DqBaseServiceResult result = DqBaseServiceResult.newInstanceOfError(errorCode);
+		return DqJSONUtils.parseObject(result, String.class);
 	}
 
 }

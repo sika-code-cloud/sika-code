@@ -131,9 +131,24 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 	 * 创建时间  2018年2月21日 下午4:41:46
 	 */
 	protected final void log(String logTitle, Object logDetailInfo) {
-		DqLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger);
+		DqLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger, false);
 	}
-
+	
+	/**
+	 * 
+	 * <p>记录日志带换行格式</p>
+	 *
+	 * <pre>所有子类记录日志通过调用该方法进行日志记录</pre>
+	 *
+	 * @param logTitle : String : 日志主题
+	 * @param logDetailInfo : Object : 日志详情信息
+	 *
+	 * author daiqi
+	 * 创建时间  2018年2月21日 下午4:41:46
+	 */
+	protected final void logWrap(String logTitle, Object logDetailInfo) {
+		DqLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger, true);
+	}
 	/** 初始化数据 */
 	private void init(DqLogBO dqLogBO) {
 		// 1：基础数据初始化

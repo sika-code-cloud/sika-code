@@ -28,13 +28,13 @@ public class DqLogControllerEntruster extends DqLogBaseEntruster{
 	@Override
 	protected void initDqLogAnalysisBOData() {
 		dqLogAnalysisBO = DqLogAnalysisBO.newInstanceFromContainer(DqLogAnalysisContainer.getLogAnalysisContainerController(), dqLogDTO);
-		super.log("这是controller的日志分析", "controller日志分析数据初始化");
+		super.logWrap("这是controller的日志分析", "controller日志分析数据初始化");
 	}
 
 	@Override
 	protected void doLogAnalysis() {
 		dqLogAnalysisBO.setDqLogAnalysisDTOToContainer(DqLogAnalysisContainer.getLogAnalysisContainerController());
-		super.log("这是controller的日志分析", dqLogAnalysisBO.getDqLogAnalysisDTO());
+		super.logWrap("这是controller的日志分析", dqLogAnalysisBO.getDqLogAnalysisDTO());
 	}
 	
 	

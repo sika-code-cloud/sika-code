@@ -26,9 +26,6 @@
 		<module>../dq-easy-cloud-producer</module>
 		<module>../dq-easy-cloud-consumer</module>
 		
-		<!-- 支付子模块 begin -->
-		<module>../dq-easy-cloud-pay-core</module>
-		<!-- 支付子模块 end -->
 	</modules>
 
 

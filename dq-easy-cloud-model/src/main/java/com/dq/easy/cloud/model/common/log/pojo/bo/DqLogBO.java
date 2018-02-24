@@ -113,6 +113,9 @@ public class DqLogBO {
 				if(Modifier.isStatic(field.getModifiers())) {
 					fieldValue = field.get(targetClass);
 				}else{
+					if (Modifier.isAbstract(targetClass.getModifiers())) {
+						break;
+					}
 					fieldValue = field.get(targetClass.newInstance());
 				}
 				if(DqBaseUtils.isNotNull(fieldValue) && fieldValue instanceof Logger){

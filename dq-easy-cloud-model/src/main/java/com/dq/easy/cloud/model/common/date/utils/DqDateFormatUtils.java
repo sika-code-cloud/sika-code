@@ -21,8 +21,13 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
  * 创建时间    2018年2月3日 下午5:09:17
  */
 public class DqDateFormatUtils {
+	/** 时间格式---精确到天---yyyyMMdd */
 	public static final String FORMAT_SHORT = "yyyyMMdd";
+	/** 时间格式---精确到秒---yyyyMMddHHmmss */
 	public static final String FORMAT_LONG = "yyyyMMddHHmmss";
+	/** 时间格式---精确到毫秒---yyyyMMddHHmmssSSS */
+	public static final String FORMAT_LONG_MILLIS = "yyyyMMddHHmmssSSS";
+	/** 时间格式---精确到秒---yyyy-MM-dd HH:mm:ss */
 	public static final String FORMAT_NORMAL = "yyyy-MM-dd HH:mm:ss";
 
 	/**
