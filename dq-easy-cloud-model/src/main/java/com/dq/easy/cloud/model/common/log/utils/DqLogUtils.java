@@ -329,20 +329,12 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void error(String logTitle, Object logDetail, Logger logger) {
-		logger = filterLogger(logger);
-		logger.error("\r");
-		logger.error("**********************************************   start_logger:" + logTitle
-				+ ":start_logger   **********************************************");
-		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.error(detail.toString());
-		logger.error("**********************************************   end_logger:" + logTitle
-				+ ":end_logger   **********************************************");
-		logger.error("\r\n");
+		error(logTitle, logDetail, logger, true);
 	}
 
 	/**
 	 * <p>
-	 * info级别的统一格式日志
+	 * error级别的统一格式日志
 	 * </p>
 	 * 
 	 * @param logTitle
@@ -371,7 +363,54 @@ public class DqLogUtils {
 			logger.error("\r\n");
 		}
 	}
-
+	
+	/**
+	 * <p>
+	 * error级别的统一格式日志
+	 * </p>
+	 * 
+	 * @param logTitle
+	 *            : String : 打印的日志主题
+	 * @param Throwable
+	 *            : throwable : 异常对象
+	 * @param logger
+	 *            : Logger : 目标类的日志记录对象
+	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
+	 */
+	public static void error(String logTitle, Throwable throwable, Logger logger) {
+		error(logTitle, throwable, logger, true);
+	}
+	/**
+	 * <p>
+	 * error级别的统一格式日志
+	 * </p>
+	 * 
+	 * @param logTitle
+	 *            : String : 打印的日志主题
+	 * @param Throwable
+	 *            : throwable : 异常对象
+	 * @param logger
+	 *            : Logger : 目标类的日志记录对象
+	 * @param isNeedWrap
+	 *            : boolean : 是否需要换行 true需要 false不需要
+	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
+	 */
+	public static void error(String logTitle, Throwable throwable, Logger logger,  boolean isNeedWrap) {
+		logger = filterLogger(logger);
+		if (isNeedWrap) {
+			logger.error("\r");
+		}
+		logger.error("**********************************************   start_logger:" + logTitle
+				+ ":start_logger   **********************************************");
+		logger.error(throwable.getMessage(), throwable);
+		
+		logger.error("**********************************************   end_logger:" + logTitle
+				+ ":end_logger   **********************************************");
+		if (isNeedWrap) {
+			logger.error("\r\n");
+		}
+	}
+	
 	private static Logger filterLogger(Logger logger) {
 		if (DqBaseUtils.isNull(logger)) {
 			logger = null;

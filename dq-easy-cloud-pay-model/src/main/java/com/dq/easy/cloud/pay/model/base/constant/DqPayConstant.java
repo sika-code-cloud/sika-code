@@ -13,9 +13,9 @@ public class DqPayConstant extends DqBaseConstant{
 	public static class DqPayKey extends DqPayConstant{
 		/** appid的键名---APPID_KEY---appid */
 		public static final String APPID_KEY = "appid";
-		/** mch_id的键名---APPID_MCH_ID_KEY---mch_id */
-		public static final String MCH_ID_KEY = "mch_id";
-		/** nonce_str的键名---APPID_NONCE_STR_KEY---nonce_str */
-		public static final String NONCE_STR_KEY = "nonce_str";
+		/** mch_id非驼峰键名使用两个下划线隔开---MCH__ID_KEY---mch_id */
+		public static final String MCH__ID_KEY = "mch_id";
+		/** nonce_str非驼峰键名使用两个下划线隔开---NONCE__STR_KEY---nonce_str */
+		public static final String NONCE__STR_KEY = "nonce_str";
 	}
 }

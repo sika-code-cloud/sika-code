@@ -1,9 +1,12 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,7 +26,7 @@ public enum  DqWxTransactionType implements DqTransactionType {
     JSAPI("pay/unifiedorder") {
         @Override
         public void setAttribute(Map<String, Object> parameters, DqPayOrderDTO order) {
-            parameters.put("openid", order.getOpenid());
+            parameters.put(DqWxPayKey.OPENID_KEY, order.getOpenid());
         }
     },
     /**
@@ -32,7 +35,7 @@ public enum  DqWxTransactionType implements DqTransactionType {
     NATIVE("pay/unifiedorder") {
         @Override
         public void setAttribute(Map<String, Object> parameters, DqPayOrderDTO order) {
-            parameters.put("product_id", order.getOutTradeNo());
+            parameters.put(DqWxPayKey.PRODUCT__ID_KEY, order.getOutTradeNo());
         }
     },
     /**
@@ -46,15 +49,16 @@ public enum  DqWxTransactionType implements DqTransactionType {
         @Override
         public void setAttribute(Map<String, Object> parameters, DqPayOrderDTO order) {
             //H5支付专用
-            LinkedHashMap value = new LinkedHashMap();
-            value.put("type", "Wap");
+            LinkedHashMap<String, Object> value = new LinkedHashMap<>();
+            value.put(DqWxPayKey.TYPE_KEY, "Wap");
             //WAP网站URL地址
-            value.put("wap_url", order.getWapUrl());
+            value.put(DqWxPayKey.WAP__URL_KEY, order.getWapUrl());
             //WAP 网站名
-            value.put("wap_name", order.getWapName());
-            JSONObject sceneInfo = new JSONObject();
-            sceneInfo.put("h5_info", value);
-            parameters.put("scene_info", sceneInfo.toJSONString());
+            value.put(DqWxPayKey.WAP__NAME_KEY, order.getWapName());
+            
+            Map<String, Object> sceneInfo = new HashMap<>();
+            sceneInfo.put(DqWxPayKey.H5__INFO_KEY, value);
+            parameters.put(DqWxPayKey.SCENE__INFO_KEY, DqJSONUtils.parseObject(sceneInfo, String.class));
         }
     },
     /**
@@ -63,12 +67,11 @@ public enum  DqWxTransactionType implements DqTransactionType {
     MICROPAY("pay/micropay"){
         @Override
         public void setAttribute(Map<String, Object> parameters, DqPayOrderDTO order) {
-            parameters.put("auth_code", order.getAuthCode());
-            parameters.remove("notify_url");
-            parameters.remove("trade_type");
+            parameters.put(DqWxPayKey.AUTH__CODE_KEY, order.getAuthCode());
+            parameters.remove(DqWxPayKey.NOTIFY__URL_KEY);
+            parameters.remove(DqWxPayKey.TRADE__TYPE_KEY);
         }
     },
-    // TODO 2017/3/8 19:14 author: egan  交易辅助接口
     /**
      * 查询订单
      */

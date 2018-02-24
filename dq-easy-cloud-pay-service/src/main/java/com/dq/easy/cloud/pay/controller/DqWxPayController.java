@@ -17,12 +17,8 @@ import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
-import com.dq.easy.cloud.pay.wx.config.dto.DqWxPayConfigStorage;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxBank;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
-import com.dq.easy.cloud.pay.wx.service.DqWxPayService;
-
-import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
@@ -34,31 +30,15 @@ import java.util.UUID;
 
 /**
  * 发起支付入口
- *
+ * 该类为测试controller
  */
 @RestController
 @RequestMapping("wx")
 public class DqWxPayController extends DqBaseController{
-	@Autowired
-	private DqWxPayConfigStorage dqWxPayConfigStorage;
+	/** 在DqWxPayConfig类中进行了注入 */
 	@Autowired
     private DqPayService service;
     private Logger LOG = LoggerFactory.getLogger(this.getClass());
-    @PostConstruct
-    public void init() {
-        DqWxPayConfigStorage wxPayConfigStorage = DqWxPayConfigStorage.newInstance();
-        wxPayConfigStorage.setMchId("1394437802");
-        wxPayConfigStorage.setAppid("wxcb207fb7c8f9ddf0");
-        wxPayConfigStorage.setKeyPublic("转账公钥，转账时必填");
-        wxPayConfigStorage.setSecretKey("2ab9071b06b9f739b950ddb41db2690d");
-        wxPayConfigStorage.setNotifyUrl("http://lxzl.4kb.cn/wx/payBack.json");
-        wxPayConfigStorage.setReturnUrl("同步回调地址");
-        wxPayConfigStorage.setSignType("MD5");
-        wxPayConfigStorage.setInputCharset("utf-8");
-//        service = new DqWxPayService(this.dqWxPayConfigStorage);
-    }
-
-
 
     /**
      * 跳到支付页面
