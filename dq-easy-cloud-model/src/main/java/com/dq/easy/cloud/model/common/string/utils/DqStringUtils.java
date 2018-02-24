@@ -243,6 +243,33 @@ public class DqStringUtils {
 	}
 	
 	/**
+	 * 判断两个字符串是否不相等
+     * <p>Compares two Strings, returning <code>true</code> if they are not equal.</p>
+     *
+     * <p><code>null</code>s are handled without exceptions. Two <code>null</code>
+     * references are considered to be equal. The comparison is case sensitive.</p>
+     *
+     * <pre>
+     * StringUtils.equals(null, null)   = true
+     * StringUtils.equals(null, "abc")  = false
+     * StringUtils.equals("abc", null)  = false
+     * StringUtils.equals("abc", "abc") = flase
+     * StringUtils.equals("abc", "ABC") = true
+     * </pre>
+     *
+     * @see java.lang.String#equals(Object)
+     * @param str1  the first String, may be null
+     * @param str2  the second String, may be null
+     * @return <code>true</code> if the Strings are not equal, case sensitive, or
+     *  both <code>null</code>
+     * @author daiqi
+	 * @date 2017年12月5日 下午8:08:37
+     */
+	public static boolean notEquals(String str1, String str2){
+		return !StringUtils.equals(str1, str2);
+	}
+	
+	/**
 	 * 判断两个字符串是否相等(忽略大小写)
      * <p>Compares two Strings, returning <code>true</code> if they are equal ignoring
      * the case.</p>

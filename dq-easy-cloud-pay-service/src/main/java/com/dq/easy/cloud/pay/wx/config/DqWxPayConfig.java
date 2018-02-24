@@ -19,7 +19,7 @@ import com.dq.easy.cloud.pay.wx.service.DqWxPayService;
  */
 @Configuration
 @PropertySource(value = {"classpath:config/wechat.properties"}, ignoreResourceNotFound = true)
-public class WxPayConfig {
+public class DqWxPayConfig {
 	
 	@Bean
 	@ConfigurationProperties(prefix="wx", ignoreUnknownFields = false)  
