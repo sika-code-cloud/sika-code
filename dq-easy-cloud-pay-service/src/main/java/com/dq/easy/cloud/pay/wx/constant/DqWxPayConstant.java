@@ -24,5 +24,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String NOTIFY_URL_KEY = "notify_url";
 		/** trade_type的键名---TRADE_TYPE_KEY---trade_type */
 		public static final String TRADE_TYPE_KEY = "trade_type";
+		
 	}
 }
