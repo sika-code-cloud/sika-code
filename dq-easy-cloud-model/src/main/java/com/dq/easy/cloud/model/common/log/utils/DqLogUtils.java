@@ -364,6 +364,7 @@ public class DqLogUtils {
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
 		logger.error(detail.toString());
+		
 		logger.error("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
