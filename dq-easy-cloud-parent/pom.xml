@@ -25,10 +25,6 @@
 		<module>../dq-easy-cloud-eureka-server</module>
 		<module>../dq-easy-cloud-producer</module>
 		<module>../dq-easy-cloud-consumer</module>
-<<<<<<< HEAD
-=======
-		
->>>>>>> b45f8b19f2b98ac6eea02b503885625d3d975240
 	</modules>
 
 
