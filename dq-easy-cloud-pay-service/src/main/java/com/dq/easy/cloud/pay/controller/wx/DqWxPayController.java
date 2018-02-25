@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.RequestHeaderKey;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqPayService;
 import com.dq.easy.cloud.pay.model.base.pojo.query.DqOrderQuery;
@@ -93,43 +94,51 @@ public class DqWxPayController extends DqBaseController {
 	}
 
 	/**
-	 * 跳到支付页面 针对实时支付
+	 * 
+	 * <p>
+	 * 跳到支付页面 针对H5支付
+	 * </p>
 	 *
-	 * @param price
-	 *            金额
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
+	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
+	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
+	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 否，不传由支付系统自动创建
+	 * </pre>
+	 *
+	 * @param dqPayOrderDTO
 	 * @return 跳到支付页面
+	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
 	 */
-	@RequestMapping(value = "toPay.html", produces = "text/html;charset=UTF-8")
-	public String toPay(HttpServletRequest request, BigDecimal price) {
-		DqPayOrderDTO order = new DqPayOrderDTO("订单title", "摘要", null == price ? new BigDecimal(0.01) : price,
-				UUID.randomUUID().toString().replace("-", ""), DqWxTransactionType.MWEB);
-		order.setSpbillCreateIp(request.getHeader("X-Real-IP"));
-		StringBuffer requestURL = request.getRequestURL();
-		// 设置网页地址
-		order.setWapUrl(
-				requestURL.substring(0, requestURL.indexOf("/") > 0 ? requestURL.indexOf("/") : requestURL.length()));
-		// 设置网页名称
-		order.setWapName("在线充值");
-
-		Map<String, Object> orderInfo = service.orderInfo(order);
-		return service.buildRequest(orderInfo, MethodType.POST);
+	@RequestMapping(value = "wxMWebPay", produces = "text/html;charset=UTF-8")
+	public String toPay(DqPayOrderDTO dqPayOrderDTO, HttpServletRequest request) {
+		return dqWxPayLogic.wxMWebPay(dqPayOrderDTO, request);
 	}
 
 	/**
-	 * 获取支付预订单信息
+	 * 
+	 * <p>
+	 * 获取支付预订单信息--app支付
+	 * </p>
 	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
+	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
+	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
+	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 否，不传由支付系统自动创建
+	 * </pre>
+	 *
+	 * @param dqPayOrderDTO
 	 * @return 支付预订单信息
+	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
 	 */
-	@RequestMapping("app")
-	public Map<String, Object> app() {
-		Map<String, Object> data = new HashMap<>();
-		data.put("code", 0);
-		DqPayOrderDTO order = new DqPayOrderDTO("订单title", "摘要", new BigDecimal(0.01),
-				UUID.randomUUID().toString().replace("-", ""));
-		// App支付
-		order.setTransactionType(DqWxTransactionType.APP);
-		data.put("orderInfo", service.orderInfo(order));
-		return data;
+	@RequestMapping("wxAppPay")
+	public DqBaseServiceResult wxAppPay(DqPayOrderDTO dqPayOrderDTO) {
+		return dqWxPayLogic.wxAppPay(dqPayOrderDTO);
 	}
 
 	/**

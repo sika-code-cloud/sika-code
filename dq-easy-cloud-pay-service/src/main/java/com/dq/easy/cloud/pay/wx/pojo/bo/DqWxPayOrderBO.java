@@ -1,5 +1,8 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.RequestHeaderKey;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.payment.bo.DqPayOrderBO;
@@ -31,38 +34,67 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 	}
 
 	@Override
+	public DqPayOrderBO initMWebData(HttpServletRequest request) {
+		super.dqPayOrderDTO.setSpbillCreateIp(request.getHeader(RequestHeaderKey.X_REAL_IP_KEY));
+		// 设置网页地址
+		super.dqPayOrderDTO.setWapUrl(request.getRequestURL().toString());
+		super.initWapName();
+		return this;
+	}
+
+	@Override
 	protected void initOutTradeNo() {
 		if (DqStringUtils.isNotEmpty(super.dqPayOrderDTO.getOutTradeNo())) {
 			return;
 		}
 		String outTradeNo = null;
-		if (super.getDqPayOrderDTO().getTransactionType() == DqWxTransactionType.JSAPI) {
+		DqTransactionType transactionType = getDqPayOrderDTO().getTransactionType();
+		if (DqWxTransactionType.isJSAPI(transactionType)) {
 			outTradeNo = DqOrderNoGenerator.generateWxPayJsapiOrderNO();
-		} else if (super.getDqPayOrderDTO().getTransactionType() == DqWxTransactionType.APP) {
+		} else if (DqWxTransactionType.isAPP(transactionType)) {
 			outTradeNo = DqOrderNoGenerator.generateWxPayJsapiOrderNO();
-		} else if (super.getDqPayOrderDTO().getTransactionType() == DqWxTransactionType.NATIVE) {
+		} else if (DqWxTransactionType.isNATIVE(transactionType)) {
 			outTradeNo = DqOrderNoGenerator.generateWxPayQrCodeOrderNO();
+		} else if (DqWxTransactionType.isMWEB(transactionType)) {
+			outTradeNo = DqOrderNoGenerator.generateWxMWebOrderNO();
 		} else{
 			
 		}
 		super.dqPayOrderDTO.setOutTradeNo(outTradeNo);
 	}
-
+	
+	@Override
 	public DqPayOrderBO verifyPubPayData() {
 		// 校验链
-		super.verifyDqPayOrderDTO();
-		super.verifyBody();
-		super.verifyOutTradeNo();
-		super.verifyPrice();
+		verifyCommonData();
 		super.verifyOpenid();
-		super.verifySubject();
-		super.verifyTransactionType();
 		return this;
 	}
 	
 	@Override
 	public DqPayOrderBO verifyGeneratePayQrCodeData() {
 		// 校验链
+		verifyCommonData();
+		return this;
+		
+	}
+	
+	@Override
+	public DqPayOrderBO verifyMWebPayData() {
+		verifyCommonData();
+		super.verifyWapUrl();
+		super.verifySpbillCreateIp();
+		return this;
+	}
+	
+	@Override
+	public DqPayOrderBO verifyAppPayData() {
+		verifyCommonData();
+		return this;
+	}
+	
+	private DqPayOrderBO verifyCommonData() {
+		// 校验链
 		super.verifyDqPayOrderDTO();
 		super.verifyBody();
 		super.verifyOutTradeNo();
@@ -70,12 +102,5 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 		super.verifySubject();
 		super.verifyTransactionType();
 		return this;
-		
 	}
-
-	@Override
-	public DqPayOrderBO verifyAppPayData() {
-		return null;
-	}
-
 }

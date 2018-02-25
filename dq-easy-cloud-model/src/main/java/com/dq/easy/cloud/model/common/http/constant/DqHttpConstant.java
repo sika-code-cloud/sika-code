@@ -17,4 +17,10 @@ public class DqHttpConstant extends DqBaseConstant{
 	public static enum MethodType{
 		GET, POST
 	}
+	
+	/** 请求头的key类 */
+	public static class RequestHeaderKey {
+		public static final String X_REAL_IP_KEY = "X-Real-IP";
+	}
+	
 }

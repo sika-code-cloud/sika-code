@@ -18,4 +18,9 @@ public class DqPayConstant extends DqBaseConstant{
 		/** nonce_str非驼峰键名使用两个下划线隔开---NONCE__STR_KEY---nonce_str */
 		public static final String NONCE__STR_KEY = "nonce_str";
 	}
+	
+	/** 支付值类 */
+	public static class DqPayValue extends DqPayConstant {
+		public static final String WAP_NAME_DEFAULT = "在线支付";
+	}
 }

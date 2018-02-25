@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.Symbol;
 
 /**
  * 以org.apache.commons包为基础封装的String操作类
@@ -22,7 +23,7 @@ public class DqStringUtils {
      */
     public static final String EMPTY = "";
     /** 分割符---英文冒号---:*/
-    public static final String SPLIT_COLON = ":";
+    public static final String SPLIT_COLON = Symbol.SPLIT_COLON;
     /** 初始化相关String容器的容量--512 */
     private static final int INIT_CAPACITY = 512;
 	

@@ -37,6 +37,11 @@ public class DqPayErrorCode extends DqBaseErrorCode{
 	public static final String TRANSACTION_TYPE_CANT_NULL = "PAY_000010";
 	/** openid不能为空---OPENID_CANT_EMPTY---PAY_000011 */
 	public static final String OPENID_CANT_EMPTY = "PAY_000011";
+	/** spbillCreateIp不能为空---SPBILL_CREATE_IP_CANT_EMPTY---PAY_000012 */
+	public static final String SPBILL_CREATE_IP_CANT_EMPTY = "PAY_000012";
+	/** wapUrl不能为空---WAP_URL_CANT_EMPTY---PAY_000013 */
+	public static final String WAP_URL_CANT_EMPTY = "PAY_000013";
+	
 	
 	static {
 		setErrorMsg(PAY_CERTSIGN_IS_FLASE, "certDescriptor fail, isCertSign is false");
@@ -50,6 +55,8 @@ public class DqPayErrorCode extends DqBaseErrorCode{
 		setErrorMsg(OUT_TRADE_NO_CANT_EMPTY, "outTradeNo不能为空");
 		setErrorMsg(TRANSACTION_TYPE_CANT_NULL, "TransactionType对象不能为空");
 		setErrorMsg(OPENID_CANT_EMPTY, "openid不能为空");
+		setErrorMsg(SPBILL_CREATE_IP_CANT_EMPTY, "spbillCreateIp不能为空");
+		setErrorMsg(WAP_URL_CANT_EMPTY, "wapUrl不能为空");
 	}
 	
 }

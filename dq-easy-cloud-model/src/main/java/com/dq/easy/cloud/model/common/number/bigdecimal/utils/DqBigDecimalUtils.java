@@ -161,6 +161,18 @@ public class DqBigDecimalUtils extends DqNumberUtils {
 		BigDecimal b2 = new BigDecimal(Double.valueOf(value2));
 		return b1.multiply(b2).doubleValue();
 	}
+	/**
+	 * 提供精确乘法运算的mul方法
+	 * 
+	 * @param value1
+	 *            被乘数
+	 * @param value2
+	 *            乘数
+	 * @return 两个参数的积
+	 */
+	public static BigDecimal mul(BigDecimal value1, BigDecimal value2){
+		return value1.multiply(value2);
+	}
 
 	/**
 	 * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指定精度，以后的数字四舍五入。

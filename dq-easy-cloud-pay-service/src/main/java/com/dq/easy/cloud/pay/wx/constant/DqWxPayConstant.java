@@ -1,6 +1,9 @@
 package com.dq.easy.cloud.pay.wx.constant;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.pay.model.base.constant.DqPayConstant;
+import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
+import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayValue;
 
 /**
  * 微信支付常量类
@@ -104,14 +107,17 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String ENC__TRUE__NAME_KEY = "enc_true_name";
 		/** bank_code非驼峰键名使用两个下划线隔开---BANK__CODE_KEY---bank_code */
 		public static final String BANK__CODE_KEY = "bank_code";
+		/** mweb_url非驼峰键名使用两个下划线隔开---MWEB__URL_KEY---mweb_url */
+		public static final String MWEB__URL_KEY = "mweb_url";
+		
 		
 	}
 	
 	/** 微信支付值常量类 */
-	public static class DqWxPayValue extends DqWxPayConstant{
+	public static class DqWxPayValue extends DqPayValue{
 		/** 沙箱sandboxnew目录---SANDBOXNEW---sandboxnew/ */
 		public static final String SANDBOXNEW = "sandboxnew/";
-		/** SUCCESS值---SUCCESS---trade_type */
+		/** SUCCESS值---SUCCESS---SUCCESS */
 		public static final String SUCCESS = "SUCCESS";
 		/** ok值---OK---ok */
 		public static final String OK = "ok";
@@ -121,6 +127,15 @@ public class DqWxPayConstant extends DqPayConstant{
 		public final static String URI = "https://api.mch.weixin.qq.com/";
 		/** app的包值---APP_PACKAGE_VALUE---Sign=WXPay */
 		public final static String APP_PACKAGE_VALUE = "Sign=WXPay";
+		
+		/** 判断statusCode是否为SUCCESS---与大写得SUCCESS比较 */
+		public static boolean isSUCCESS(Object statusCode){
+			return DqBaseUtils.equals(DqWxPayValue.SUCCESS, statusCode);
+		}
+		/** 判断statusCode是否不为SUCCESS---与大写得SUCCESS比较 */
+		public static boolean isNotSUCCESS(Object statusCode){
+			return !isSUCCESS(statusCode);
+		}
 		
 	}
 	

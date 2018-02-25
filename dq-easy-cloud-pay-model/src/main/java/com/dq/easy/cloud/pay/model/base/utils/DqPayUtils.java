@@ -1,7 +1,12 @@
 package com.dq.easy.cloud.pay.model.base.utils;
 
+import java.math.BigDecimal;
+
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
+import com.dq.easy.cloud.model.common.number.bigdecimal.utils.DqBigDecimalUtils;
+import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
 /**
  * 
@@ -13,6 +18,43 @@ import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
  */
 public class DqPayUtils {
 
+    /**
+     * 
+     * <p>比较DqTransactionType类型得两个枚举是否相等</p>
+     *
+     * <pre>
+     * transactionType1 == transactionType2 = true
+     * </pre>
+     *
+     * @param transactionType1 : DqTransactionType : 交易类型
+     * @param transactionType2 : DqTransactionType : 交易类型
+     * @return
+     *
+     * author daiqi
+     * 创建时间  2018年2月25日 下午7:46:30
+     */
+    public static boolean equalsDqTransactionType(DqTransactionType transactionType1, DqTransactionType transactionType2){
+    	if (DqBaseUtils.isNull(transactionType1) || DqBaseUtils.isNull(transactionType2)) {
+    		return false;
+    	}
+    	if (transactionType1 == transactionType2) {
+    		return true; 
+    	}
+    	return false;
+    }
+
+	/**
+	 * 元转分
+	 * 
+	 * @param amount
+	 *            元的金额
+	 * @return 分的金额
+	 */
+	public static int yuanToCent(BigDecimal amount) {
+		return DqBigDecimalUtils.mul(amount, new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+	}
+
+    
 	/**
 	 * 
 	 * <p>
@@ -33,6 +75,10 @@ public class DqPayUtils {
 		/** 产生微信扫码支付订单 */
 		public static String generateWxPayQrCodeOrderNO() {
 			return generateOrderNOCore("WXPQCON");
+		}
+		/** 产生微信web支付订单 */
+		public static String generateWxMWebOrderNO() {
+			return generateOrderNOCore("WMWON");
 		}
 		/**
 		 * 

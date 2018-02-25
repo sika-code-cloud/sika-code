@@ -3,6 +3,7 @@ package com.dq.easy.cloud.pay.model.payment.dto;
 import java.math.BigDecimal;
 
 import com.dq.easy.cloud.pay.model.base.constant.DqCurType;
+import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
 /**
@@ -69,6 +70,11 @@ public class DqPayOrderDTO {
 		this.transactionType = transactionType;
 		return this;
 	}
+	
+	public int getPriceOfCent(){
+		return DqPayUtils.yuanToCent(price);
+	}
+	
 	public DqCurType getDqCurType() {
 		return dqCurType;
 	}

@@ -92,4 +92,5 @@ public class DqBaseConstant {
 		public static final String TIFF = "TIFF";
 		public static final String PXR = "PXR";
 	}
+	
 }
