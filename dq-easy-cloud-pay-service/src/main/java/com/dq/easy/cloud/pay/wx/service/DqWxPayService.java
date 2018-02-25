@@ -40,11 +40,10 @@ import java.util.*;
 public class DqWxPayService extends DqBasePayService {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	/**
-	 * 微信请求地址
-	 */
-//	public final static String URI = "https://api.mch.weixin.qq.com/";
-
+	/** 提供默认构造--只是为了反射用 */
+	public DqWxPayService() {
+		
+	}
 	/**
 	 * 创建支付服务
 	 * 
@@ -178,6 +177,7 @@ public class DqWxPayService extends DqBasePayService {
 		
 //		不成功抛出异常
 		if (DqStringUtils.notEquals(DqWxPayValue.SUCCESS, DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY))) {
+			DqLogUtils.error("订单创建失败", result, LOG);
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY),
 					DqMapUtils.getString(result, DqWxPayKey.RETURN__MSG_KEY));
 		}
@@ -185,12 +185,25 @@ public class DqWxPayService extends DqBasePayService {
 	}
 
 	/**
-	 * 返回创建的订单信息
+	 * 
+	 * <p>
+	 * 微信公众号支付
+	 * </p>
 	 *
-	 * @param order
-	 *            支付订单
-	 * @return 订单信息
-	 * @see PayOrder 支付订单信息
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
+	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
+	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
+	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 是
+	 *     dqPayOrderDTO.DqWxTransactionType : DqWxTransactionType.JSAPI : 支付价格 : 交易类型
+	 * </pre>
+	 *
+	 * @param dqPayOrderDTO
+	 * @return DqBaseServiceResult
+	 * @author daiqi
+	 * 创建时间    2018年2月24日 下午2:19:55
 	 */
 	@Override
 	public Map<String, Object> orderInfo(DqPayOrderDTO order) {
@@ -212,14 +225,14 @@ public class DqWxPayService extends DqBasePayService {
 			params.put(DqWxPayKey.APP_ID_KEY, payConfigStorage.getAppid());
 			// 此处必须为String类型 否则调用jsapi时会提示找不到timeStamp
 			params.put(DqWxPayKey.TIME_STAMP_KEY, String.valueOf(System.currentTimeMillis() / 1000));
-			params.put(DqWxPayKey.NONCE__STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
+			params.put(DqWxPayKey.NONCE_STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
 			params.put(DqWxPayKey.PACKAGE_KEY, DqWxPayKey.PREPAY__ID_KEY + "=" + result.get(DqWxPayKey.PREPAY__ID_KEY));
 		} else if (DqWxTransactionType.APP == order.getTransactionType()) {
 			params.put(DqWxPayKey.PARTNERID_KEY, payConfigStorage.getPid());
 			params.put(DqWxPayKey.APPID_KEY, payConfigStorage.getAppid());
 			params.put(DqWxPayKey.PREPAYID_KEY, result.get(DqWxPayKey.PREPAY__ID_KEY));
 			params.put(DqWxPayKey.TIMESTAMP_KEY, String.valueOf(System.currentTimeMillis() / 1000));
-			params.put(DqWxPayKey.NONCESTR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
+			params.put(DqWxPayKey.NONCE_STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
 			params.put(DqWxPayKey.PACKAGE_KEY, DqWxPayValue.APP_PACKAGE_VALUE);
 		}
 		String paySign = createSign(DqSignUtils.parameterText(params), payConfigStorage.getInputCharset());

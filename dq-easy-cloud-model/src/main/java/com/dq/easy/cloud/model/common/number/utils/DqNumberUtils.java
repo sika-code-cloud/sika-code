@@ -1,5 +1,9 @@
 package com.dq.easy.cloud.model.common.number.utils;
 
+import java.math.BigDecimal;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 
 /***
@@ -19,4 +23,33 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
  * 创建时间    2018年2月7日 下午7:49:33
  */
 public class DqNumberUtils extends DqBaseUtils{
+	/**
+	 * 
+	 * <p>
+	 * 判断字符串是否为整数
+	 * </p>
+	 *
+	 * @param str
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月24日 下午3:56:21
+	 */
+	public static boolean isDigits(String str){
+		return NumberUtils.isDigits(str);
+	}
+	/**
+	 * 
+	 * <p>
+	 * 判断字符串是否为数字
+	 * </p>
+	 *
+	 * @param str
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月24日 下午3:56:21
+	 */
+	public static boolean isNumber(String str){
+		return NumberUtils.isNumber(str);
+	}
+	
 }

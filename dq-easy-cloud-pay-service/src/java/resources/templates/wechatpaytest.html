@@ -7,76 +7,8 @@
 </head>
 <body>
 
-
-
-账户信息添加用于下面测试
-<div>
-    <form id="form">
-    账户id<input type="text" name="payId"/>
-    <br/>
-    支付合作id<input type="text" name="partner"/>
-    <br/>
-    应用id<input type="text" name="appid"/>
-    <br/>
-
-
-    支付平台公钥(签名校验使用)<input type="text" name="publicKey"/>
-    <br/>
-    <b>支付公钥，sign_type只有单一key时public_key与private_key相等，比如sign_type=MD5(友店支付除外)的情况
-        <br/>
-        <span style="color: red">银联：验签证书链格式： 中级证书路径;根证书路径</span>
-    </b>
-    <br/>
-    应用私钥(生成签名使用)<input type="text" name="privateKey"/>
-        <b>
-            <br/>
-            <span style="color: red">银联, 私钥证书格式： 私钥证书路径;私钥证书对应的密码</span>
-        </b>
-    <br/>
-    异步回调地址<input type="text" name="notifyUrl"/><b>友店支付用不到此参数，在友店管理端进行配置</b>
-    <br/>
-    同步回调地址<input type="text" name="returnUrl"/><b>同上</b>
-    <br/>
-    收款账号(即时付款填写支付合作id)<input type="text" name="seller"/><b>针对支付宝</b>
-        <br/>
-    签名类型<select name="signType">
-    <option>MD5</option>
-    <option>RSA</option>
-    <option>RSA2</option>
-</select>
-    <br/>
-    编码类型(建议UTF-8)<input type="text" name="inputCharset" value="UTF-8"/>
-    <br/>
-    支付账户类型 <select name="payType">
-    <option value="aliPay">aliPay</option>
-    <option value="wxPay">wxPay</option>
-    <option value="youdianPay">youdianPay</option>
-    <option value="youdianPay">fuiou</option>
-</select><b>此处为开发者自定义，详情请查看 com.egzosn.pay.demo.entity.PayType</b>
-    <br/>
-    消息类型 <select name="msgType">
-    <option>text</option>
-    <option>xml</option>
-    <option>json</option>
-</select>
-    <br/>
-        是否为沙箱环境<select type="text" name="isTest">
-        <option value="true">是</option>
-        <option value="false">否</option>
-    </select>
-    <br/>
-    </form>
-    <button id="submit">提交</button>
-</div>
-
 <br/>
-<div>各个支付对应的<b>交易类型</b>可自行查看对应的官方文档，本项目已实现几种交易类型,对应各个支付类型的<code>com.egzosn.pay.common.bean.TransactionType</code>具体实现</div>
-<div>旧版支付宝(<code>com.egzosn.pay.ali.before.bean.AliTransactionType</code>)： 即时付款=DIRECT ， 移动支付=APP ， 手机网站支付=WAP</div>
-<div>新版支付宝(<code>com.egzosn.pay.ali.bean.AliTransactionType</code>)：  即时付款=DIRECT ， app支付=APP ， 手机网站支付=WAP , 扫码付=SWEEPPAY, 条码付=BAR_CODE, 声波付=WAVE_CODE </div>
 <div>微信(<code>com.egzosn.pay.wx.bean.WxTransactionType</code>)： 公众号支付=JSAPI ， 移动支付=APP ， 扫码付=NATIVE</div>
-<div>银联(<code>com.egzosn.pay.union.bean.UnionTransactionType</code>)：苹果支付=APPLE，手机控件=APP，WAP支付=WAP，网关支付=WEB，无跳转支付=NO_JUMP，B2B支付=B2B，申码(主扫场景)=APPLY_QR_CODE，消费(被扫场景)=CONSUME</div>
-<div>友店微信(<code>com.egzosn.pay.wx.youdian.bean.YoudianTransactionType</code>)： 扫码付=NATIVE</div>
-<div>富友(<code>com.egzosn.pay.fuiou.bean.FuiouTransactionType</code>)： B2B，B2C</div>
 
 <br/>
 <br/>
@@ -112,6 +44,10 @@ getOrderInfo" target="_blank">
     金额<input type="text" name="price" value="0.01"/>
     <br/>
     openid<input type="text" name="openid" value="oPNSTwszglIUNMOXW6IHl2WhXJBo"/>
+    <br/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+    <br/>
+    body<input type="text" name="body" value="这是商品描述"/>
     <br/>
 </form>
 <button id="js_submit">提交</button>
@@ -254,26 +190,28 @@ var basePath = "http://localhost:8400/dq-easy-cloud-pay-service/";
         }) ;
        $("#js_submit").click(function () {
             $.ajax({
-                url : getPath("wxtest/jsapi"),
+                url : getPath("wx/wxJsapiPay"),
                 type : "post",
                 async: true,
                 data : $("#jsapi").serialize(),
                 dataType : 'json',
                 success : function(data) {
-                    if (data.code == 0){
+                    if (data.errorCode == "A_000000"){
+                    	var result = data.result.payResult;
                         if (typeof WeixinJSBridge == "undefined"){
                             if( document.addEventListener ){
-                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady(data), false);
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady(result), false);
                             }else if (document.attachEvent){
-                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady(data));
-                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady(data));
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady(result));
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady(result));
                             }
                         }else{
-                            onBridgeReady(data);
+                            onBridgeReady(result);
                         }
                         return;
+                    }else{
+						alert(data.errorMsg);
                     }
-                    alert("保存失败");
                 },
                 error : function(edata) {
                     alert("服务器异常")

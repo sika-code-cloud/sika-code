@@ -196,6 +196,8 @@ public class DqLogAnalysisUtils {
 	public static Map<String, DqLogAnalysisDTO> getLogAnalysisContainerByType(int dqLogType) {
 		if (DqLogType.isController(dqLogType)) {
 			return DqLogAnalysisContainer.getLogAnalysisContainerController();
+		} else if (DqLogType.isLogic(dqLogType)) {
+			return DqLogAnalysisContainer.getLogAnalysisContainerLogic();
 		} else if (DqLogType.isService(dqLogType)) {
 			return DqLogAnalysisContainer.getLogAnalysisContainerService();
 		} else if (DqLogType.isRepository(dqLogType)) {
