@@ -123,4 +123,5 @@ public class DqWxPayConstant extends DqPayConstant{
 		public final static String APP_PACKAGE_VALUE = "Sign=WXPay";
 		
 	}
+	
 }

@@ -109,7 +109,7 @@ public class DqWxPayControllerTest extends DqBaseController{
     public byte[] toWxQrPay( BigDecimal price) throws IOException {
         //获取对应的支付账户操作工具（可根据账户id）
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(service.genQrPay( new DqPayOrderDTO("订单title", "摘要", null == price ? new BigDecimal(0.01) : price, System.currentTimeMillis()+"", DqWxTransactionType.NATIVE)), "JPEG", baos);
+        ImageIO.write(service.generatePayQrCode( new DqPayOrderDTO("订单title", "摘要", null == price ? new BigDecimal(0.01) : price, System.currentTimeMillis()+"", DqWxTransactionType.NATIVE)), "JPEG", baos);
         return baos.toByteArray();
     }
 
@@ -210,7 +210,7 @@ public class DqWxPayControllerTest extends DqBaseController{
      */
     @RequestMapping("refundquery")
     public Map<String, Object> refundquery(DqOrderQuery order) {
-        return service.refundquery(order.getTradeNo(), order.getOutTradeNo());
+        return service.refundQuery(order.getTradeNo(), order.getOutTradeNo());
     }
 
     /**
@@ -221,7 +221,7 @@ public class DqWxPayControllerTest extends DqBaseController{
      */
     @RequestMapping("downloadbill")
     public Object downloadbill(DqOrderQuery order) {
-        return service.downloadbill(order.getBillDate(), order.getBillType());
+        return service.downLoadBill(order.getBillDate(), order.getBillType());
     }
 
 

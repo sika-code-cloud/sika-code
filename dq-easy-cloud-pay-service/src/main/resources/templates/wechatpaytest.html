@@ -15,7 +15,7 @@
 <br/>
 APP提交(返回对应的json，具体实现，app端demo暂时未实现)
 <form action="
-getOrderInfo" target="_blank">
+wx/getOrderInfo" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     金额<input type="text" name="price"/>
@@ -27,7 +27,7 @@ getOrderInfo" target="_blank">
 
 <br/>
 普通web提交
-<form action="toPay.html" target="_blank">
+<form action="wx/toPay.html" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     金额<input type="text" name="price"/>
@@ -55,7 +55,7 @@ getOrderInfo" target="_blank">
 
 <br/>
 主动收款(pos条码声波付等)
-<form action="microPay" target="_blank">
+<form id="microPay" action="wx/microPay" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     金额<input type="text" name="price"/>
@@ -70,19 +70,21 @@ getOrderInfo" target="_blank">
 
 <br/>
 二维码
-<form action="toQrPay.jpg" target="_blank">
+<form id="toQrPay" action="wx/generateWxPayQrCode" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     金额<input type="text" name="price"/>
     <br/>
-    交易类型<input type="text" name="transactionType"/>
+   subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
     <br/>
     <input type="submit" value="提交"/>
 </form>
 <br/>
 
 支付宝微信一码付二维码
-<form action="toWxAliQrPay.jpg" target="_blank">
+<form id="toWxAliQrPay" action="wx/toWxAliQrPay.jpg" target="_blank">
     账户（微信）id<input type="text" name="wxPayId"/>
     <br/>
     账户(支付宝)id<input type="text" name="aliPayId"/>
@@ -94,7 +96,7 @@ getOrderInfo" target="_blank">
 </form>
 <br/>
 查询账单
-<form action="query" target="_blank">
+<form action="wx/query" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
@@ -105,7 +107,7 @@ getOrderInfo" target="_blank">
 </form>
 <br/>
 交易关闭接口
-<form action="close" target="_blank">
+<form action="wx/close" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
@@ -116,7 +118,7 @@ getOrderInfo" target="_blank">
 </form>
 <br/>
 申请退款接口
-<form action="refund" target="_blank">
+<form action="wx/refund" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
@@ -131,7 +133,7 @@ getOrderInfo" target="_blank">
 </form>
 <br/>
 查询退款
-<form action="refundquery" target="_blank">
+<form action="wx/refundquery" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
@@ -143,7 +145,7 @@ getOrderInfo" target="_blank">
 
 <br/>
 下载对账单(日期，不支持月份)
-<form action="downloadbill" target="_blank">
+<form action="wx/downloadbill" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     账单时间：具体请查看对应支付平台<input type="text" name="billDate"/>
@@ -155,7 +157,7 @@ getOrderInfo" target="_blank">
 
 <br/>
 通用查询接口，根据 交易类型（TransactionType） 进行实现,此接口不包括退款
-<form action="secondaryInterface" target="_blank">
+<form action="wx/secondaryInterface" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号或者账单日期<input type="text" name="tradeNoOrBillDate"/>

@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.model.common.encrypt.sm3.utils;
 
-import com.dq.easy.cloud.model.common.hex.DqHexUtils;
+import com.dq.easy.cloud.model.common.hex.utils.DqHexUtils;
 
 public class DqSM3Utils {
 	public static final byte[] iv = { 0x73, (byte) 0x80, 0x16, 0x6f, 0x49, 0x14, (byte) 0xb2, (byte) 0xb9, 0x17, 0x24,

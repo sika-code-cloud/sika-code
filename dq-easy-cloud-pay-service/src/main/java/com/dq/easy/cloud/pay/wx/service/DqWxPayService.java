@@ -350,15 +350,14 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回图片信息，支付时需要的
 	 */
 	@Override
-	public BufferedImage genQrPay(DqPayOrderDTO order) {
+	public BufferedImage generatePayQrCode(DqPayOrderDTO order) {
 		Map<String, Object> orderInfo = orderInfo(order);
 		// 获取对应的支付账户操作工具（可根据账户id）
-		if (!DqWxPayValue.SUCCESS.equals(orderInfo.get(DqWxPayKey.RESULT__CODE_KEY))) {
+		if (DqBaseUtils.notEquals(DqWxPayValue.SUCCESS, DqMapUtils.getObject(orderInfo, DqWxPayKey.RESULT__CODE_KEY))) {
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RESULT__CODE_KEY),
 					DqMapUtils.getString(orderInfo, DqWxPayKey.ERR__CODE_KEY));
 		}
-
-		return DqQrCodeUtil.writeInfoToJpgBuff((String) orderInfo.get(DqWxPayKey.CODE__URL_KEY));
+		return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(orderInfo, DqWxPayKey.CODE__URL_KEY));
 	}
 
 	/**
@@ -462,7 +461,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> refundquery(String transactionId, String outTradeNo) {
+	public Map<String, Object> refundQuery(String transactionId, String outTradeNo) {
 		return secondaryInterface(transactionId, outTradeNo, DqWxTransactionType.REFUNDQUERY);
 	}
 
@@ -477,7 +476,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public Map<String, Object> downloadbill(Date billDate, String billType) {
+	public Map<String, Object> downLoadBill(Date billDate, String billType) {
 
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
@@ -524,7 +523,7 @@ public class DqWxPayService extends DqBasePayService {
 
 		if (transactionType == DqWxTransactionType.DOWNLOADBILL) {
 			if (transactionIdOrBillDate instanceof Date) {
-				return downloadbill((Date) transactionIdOrBillDate, outTradeNoBillType);
+				return downLoadBill((Date) transactionIdOrBillDate, outTradeNoBillType);
 			}
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}

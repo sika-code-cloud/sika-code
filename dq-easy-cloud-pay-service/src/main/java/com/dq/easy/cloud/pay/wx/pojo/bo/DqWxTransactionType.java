@@ -1,6 +1,5 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;

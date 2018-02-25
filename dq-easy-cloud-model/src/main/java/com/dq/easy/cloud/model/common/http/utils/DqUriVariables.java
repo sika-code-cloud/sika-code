@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.dq.easy.cloud.model.basic.constant.DqCharsetConstant;
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 
@@ -110,11 +110,11 @@ public class DqUriVariables {
 						String value = os[i].toString().trim();
 						valueStr += (i == len - 1) ? value : value + ",";
 					}
-					builder.append(key).append("=").append(URLEncoder.encode(valueStr, DqCharsetConstant.UTF_8)).append("&");
+					builder.append(key).append("=").append(URLEncoder.encode(valueStr, DqCharset.UTF_8)).append("&");
 
 					continue;
 				}
-				builder.append(key).append("=").append(URLEncoder.encode(pe.get(key).toString(), DqCharsetConstant.UTF_8)).append("&");
+				builder.append(key).append("=").append(URLEncoder.encode(pe.get(key).toString(), DqCharset.UTF_8)).append("&");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

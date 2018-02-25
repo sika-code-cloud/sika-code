@@ -242,8 +242,8 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 处理过后的类型对象，返回支付方查询退款后的结果
 	 */
 	@Override
-	public <T> T refundquery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
-		return callback.perform(refundquery(tradeNo, outTradeNo));
+	public <T> T refundQuery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
+		return callback.perform(refundQuery(tradeNo, outTradeNo));
 	}
 
 	/**
@@ -261,8 +261,8 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public <T> T downloadbill(Date billDate, String billType, DqCallback<T> callback) {
-		return callback.perform(downloadbill(billDate, billType));
+	public <T> T downLoadBill(Date billDate, String billType, DqCallback<T> callback) {
+		return callback.perform(downLoadBill(billDate, billType));
 	}
 
 	/**

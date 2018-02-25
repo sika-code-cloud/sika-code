@@ -1,7 +1,5 @@
 package com.dq.easy.cloud.pay.model.base.utils;
 
-import java.util.Date;
-
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 
@@ -24,11 +22,18 @@ public class DqPayUtils {
 	 * @author daiqi 创建时间 2018年2月24日 下午5:19:47
 	 */
 	public static class DqOrderNoGenerator {
-		/** 产生支付订单 */
-		public static String generatePayOrderNO() {
-			return generateOrderNOCore("PON");
+		/** 产生微信公众号支付订单 */
+		public static String generateWxPayJsapiOrderNO() {
+			return generateOrderNOCore("WXPJON");
 		}
-		
+		/** 产生微信app支付订单号 */
+		public static String generateWxAppOrderNO() {
+			return generateOrderNOCore("WXPJON");
+		}
+		/** 产生微信扫码支付订单 */
+		public static String generateWxPayQrCodeOrderNO() {
+			return generateOrderNOCore("WXPQCON");
+		}
 		/**
 		 * 
 		 * <p>
