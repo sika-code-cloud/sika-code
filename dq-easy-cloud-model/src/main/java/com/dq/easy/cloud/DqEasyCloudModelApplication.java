@@ -17,4 +17,5 @@ public class DqEasyCloudModelApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DqEasyCloudModelApplication.class, args);
 	}
+	
 }
