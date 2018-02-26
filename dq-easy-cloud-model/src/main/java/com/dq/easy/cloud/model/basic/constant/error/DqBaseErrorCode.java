@@ -6,12 +6,6 @@ package com.dq.easy.cloud.model.basic.constant.error;
  * 错误代码常量基础类
  * </p>
  *
- * <pre>
- * 1、所有的服务错误代码应该继承该常量类
- * 2、各个子类的静态块中往ERROR_CODE_AND_MSG_MAP中添加错误说明信息
- * 3、每个子类添加@Component注解。这样就能加载类从而使得子类的错误说明信息能加载到ERROR_CODE_AND_MSG_MAP容器中
- * </pre>
- *
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:07:03
  */
