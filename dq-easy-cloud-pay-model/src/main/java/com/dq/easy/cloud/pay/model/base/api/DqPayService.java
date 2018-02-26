@@ -8,8 +8,8 @@ import com.dq.easy.cloud.pay.model.payment.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -129,7 +129,7 @@ public interface DqPayService {
 	 *            请求流
 	 * @return 获得回调的请求参数
 	 */
-	Map<String, Object> getParameter2Map(Map<String, String[]> parameterMap, InputStream is);
+	Map<String, Object> getParameterToMap(Map<String, String[]> parameterMap, InputStream is);
 
 	/**
 	 * 获取输出消息，用户返回给支付端
@@ -190,7 +190,7 @@ public interface DqPayService {
 	 *            商户单号
 	 * @return 返回查询回来的结果集，支付方原值返回
 	 */
-	Map<String, Object> query(String tradeNo, String outTradeNo);
+	Map<String, Object> queryPayResult(String tradeNo, String outTradeNo);
 
 	/**
 	 * 交易查询接口，带处理器
@@ -303,7 +303,7 @@ public interface DqPayService {
 	 *            商户单号
 	 * @return 返回支付方查询退款后的结果
 	 */
-	Map<String, Object> refundQuery(String tradeNo, String outTradeNo);
+	Map<String, Object> queryRefundResult(String tradeNo, String outTradeNo);
 
 	/**
 	 * 查询退款
@@ -388,7 +388,7 @@ public interface DqPayService {
 	 *            转账订单
 	 * @return 对应的转账结果
 	 */
-	Map<String, Object> transfer(DqTransferOrder order);
+	Map<String, Object> transfer(DqTransferOrderDTO order);
 
 	/**
 	 * 转账
@@ -401,7 +401,7 @@ public interface DqPayService {
 	 *            返回类型
 	 * @return 对应的转账结果
 	 */
-	<T> T transfer(DqTransferOrder order, DqCallback<T> callback);
+	<T> T transfer(DqTransferOrderDTO order, DqCallback<T> callback);
 
 	/**
 	 * 转账查询
@@ -413,7 +413,7 @@ public interface DqPayService {
 	 *
 	 * @return 对应的转账订单
 	 */
-	Map<String, Object> transferQuery(String outNo, String tradeNo);
+	Map<String, Object> queryTransferResult(String outNo, String tradeNo);
 
 	/**
 	 * 转账查询

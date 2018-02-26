@@ -3,128 +3,175 @@ package com.dq.easy.cloud.pay.model.base.pojo.query;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
+
 /**
  * 订单辅助接口
+ * 
  * @author: egan
  * @email egzosn@gmail.com
  * @date 2017/3/12 14:50
  */
 public class DqOrderQuery {
 
-    private Integer payId;
-//    支付平台订单号
-    private String tradeNo;
+	private Integer payId;
+	// 支付平台订单号
+	private String tradeNo;
 
-//    商户单号
-    private String outTradeNo;
-//    退款金额
-    private BigDecimal refundAmount;
-//    总金额
-    private BigDecimal totalAmount;
-//    账单时间：具体请查看对应支付平台
-    private Date billDate;
-//    账单时间：具体请查看对应支付平台
-    private String billType;
-    //    支付平台订单号或者账单日期
-    private Object tradeNoOrBillDate;
-    //    商户单号或者 账单类型
-    private String outTradeNoBillType;
-    //    交易类型
-    private String transactionType;
+	// 商户单号
+	private String outTradeNo;
+	// 退款金额
+	private BigDecimal refundAmount;
+	// 总金额
+	private BigDecimal totalAmount;
+	// 账单时间：具体请查看对应支付平台
+	private Date billDate;
+	// 账单类型：具体请查看对应支付平台
+	private String billType;
+	// 支付平台订单号或者账单日期
+	private Object tradeNoOrBillDate;
+	// 商户单号或者 账单类型
+	private String outTradeNoBillType;
+	// 交易类型
+	private String transactionType;
 
-    public Integer getPayId() {
-        return payId;
-    }
+	/** 校验支付平台订单号 */
+	public DqOrderQuery verifyTradeNo() {
+		if (DqStringUtils.isEmpty(this.getTradeNo())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_CANT_EMPTY);
+		}
+		return this;
+	}
 
-    public void setPayId(Integer payId) {
-        this.payId = payId;
-    }
+	/** 校验商户订单号 */
+	public DqOrderQuery verifyOutTradeNo() {
+		if (DqStringUtils.isEmpty(this.getOutTradeNo())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
+		}
+		return this;
+	}
 
-    public String getTradeNo() {
-        return tradeNo;
-    }
+	/** 校验账单时间 */
+	public DqOrderQuery verifyBillDate() {
+		if (DqBaseUtils.isNull(this.getBillDate())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_DATE_CANT_NULL);
+		}
+		return this;
+	}
 
-    public void setTradeNo(String tradeNo) {
-        this.tradeNo = tradeNo;
-    }
+	/** 校验账单类型 */
+	public DqOrderQuery verifyBillType() {
+		if (DqBaseUtils.isNull(this.getBillType())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_TYPE_CANT_NULL);
+		}
+		return this;
+	}
+	
+	/** 校验账单类型 */
+	public DqOrderQuery verifyTradeNoOrBillDate() {
+		if (DqBaseUtils.isNull(this.getTradeNoOrBillDate())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_OR_BILL_DATE_CANT_NULL);
+		}
+		return this;
+	}
+	
+	/** 校验账单类型 */
+	public DqOrderQuery verifyOutTradeNoBillType() {
+		if (DqBaseUtils.isNull(this.getOutTradeNoBillType())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
+		}
+		return this;
+	}
 
-    public String getOutTradeNo() {
-        return outTradeNo;
-    }
+	public Integer getPayId() {
+		return payId;
+	}
 
-    public void setOutTradeNo(String outTradeNo) {
-        this.outTradeNo = outTradeNo;
-    }
+	public void setPayId(Integer payId) {
+		this.payId = payId;
+	}
 
-    public BigDecimal getRefundAmount() {
-        return refundAmount;
-    }
+	public String getTradeNo() {
+		return tradeNo;
+	}
 
-    public void setRefundAmount(BigDecimal refundAmount) {
-        this.refundAmount = refundAmount;
-    }
+	public void setTradeNo(String tradeNo) {
+		this.tradeNo = tradeNo;
+	}
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
+	public String getOutTradeNo() {
+		return outTradeNo;
+	}
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
+	public void setOutTradeNo(String outTradeNo) {
+		this.outTradeNo = outTradeNo;
+	}
 
-    public Date getBillDate() {
-        return billDate;
-    }
+	public BigDecimal getRefundAmount() {
+		return refundAmount;
+	}
 
-    public void setBillDate(Date billDate) {
-        this.billDate = billDate;
-    }
+	public void setRefundAmount(BigDecimal refundAmount) {
+		this.refundAmount = refundAmount;
+	}
 
-    public String getBillType() {
-        return billType;
-    }
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
 
-    public void setBillType(String billType) {
-        this.billType = billType;
-    }
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 
-    public Object getTradeNoOrBillDate() {
-        return tradeNoOrBillDate;
-    }
+	public Date getBillDate() {
+		return billDate;
+	}
 
-    public void setTradeNoOrBillDate(Object tradeNoOrBillDate) {
-        this.tradeNoOrBillDate = tradeNoOrBillDate;
-    }
+	public void setBillDate(Date billDate) {
+		this.billDate = billDate;
+	}
 
-    public String getOutTradeNoBillType() {
-        return outTradeNoBillType;
-    }
+	public String getBillType() {
+		return billType;
+	}
 
-    public void setOutTradeNoBillType(String outTradeNoBillType) {
-        this.outTradeNoBillType = outTradeNoBillType;
-    }
+	public void setBillType(String billType) {
+		this.billType = billType;
+	}
 
-    public String getTransactionType() {
-        return transactionType;
-    }
+	public Object getTradeNoOrBillDate() {
+		return tradeNoOrBillDate;
+	}
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
+	public void setTradeNoOrBillDate(Object tradeNoOrBillDate) {
+		this.tradeNoOrBillDate = tradeNoOrBillDate;
+	}
 
-    @Override
-    public String toString() {
-        return "QueryOrder{" +
-                "payId=" + payId +
-                ", tradeNo='" + tradeNo + '\'' +
-                ", outTradeNo='" + outTradeNo + '\'' +
-                ", refundAmount=" + refundAmount +
-                ", totalAmount=" + totalAmount +
-                ", billDate=" + billDate +
-                ", billType='" + billType + '\'' +
-                ", tradeNoOrBillDate=" + tradeNoOrBillDate +
-                ", outTradeNoBillType='" + outTradeNoBillType + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                '}';
-    }
+	public String getOutTradeNoBillType() {
+		return outTradeNoBillType;
+	}
+
+	public void setOutTradeNoBillType(String outTradeNoBillType) {
+		this.outTradeNoBillType = outTradeNoBillType;
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	@Override
+	public String toString() {
+		return "QueryOrder{" + "payId=" + payId + ", tradeNo='" + tradeNo + '\'' + ", outTradeNo='" + outTradeNo + '\''
+				+ ", refundAmount=" + refundAmount + ", totalAmount=" + totalAmount + ", billDate=" + billDate
+				+ ", billType='" + billType + '\'' + ", tradeNoOrBillDate=" + tradeNoOrBillDate
+				+ ", outTradeNoBillType='" + outTradeNoBillType + '\'' + ", transactionType='" + transactionType + '\''
+				+ '}';
+	}
 }

@@ -17,26 +17,22 @@ import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.base.api.DqBasePayService;
 import com.dq.easy.cloud.pay.model.base.config.dto.DqPayConfigStorage;
 import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
-import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -288,7 +284,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 获得回调的请求参数
 	 */
 	@Override
-	public Map<String, Object> getParameter2Map(Map<String, String[]> parameterMap, InputStream is) {
+	public Map<String, Object> getParameterToMap(Map<String, String[]> parameterMap, InputStream is) {
 		TreeMap<String, Object> map = new TreeMap<>();
 		try {
 			return DqXMLUtils.getMapFromInputStream(is, map);
@@ -392,7 +388,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回查询回来的结果集，支付方原值返回
 	 */
 	@Override
-	public Map<String, Object> query(String transactionId, String outTradeNo) {
+	public Map<String, Object> queryPayResult(String transactionId, String outTradeNo) {
 		return secondaryInterface(transactionId, outTradeNo, DqWxTransactionType.QUERY);
 	}
 
@@ -471,7 +467,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> refundQuery(String transactionId, String outTradeNo) {
+	public Map<String, Object> queryRefundResult(String transactionId, String outTradeNo) {
 		return secondaryInterface(transactionId, outTradeNo, DqWxTransactionType.REFUNDQUERY);
 	}
 
@@ -555,16 +551,32 @@ public class DqWxPayService extends DqBasePayService {
 	}
 
 	/**
+	 * 
+	 * <p>
 	 * 转账
+	 * </p>
+	 * <p>
+	 *  采用标准RSA算法，公钥由微信侧提供,将公钥信息配置在DqPayConfigStorage#setKeyPublic(String)
+	 * </p>
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqTransferOrderDTO.payeeAccount : 468555xx : enc_bank_no，收款方银行卡号 : 是
+	 *     dqTransferOrderDTO.payeeName : 张三 : 收款方用户名  : 是
+	 *     dqTransferOrderDTO.bankStr : ACBC : 收款方开户行枚举字符串 : 是
+	 *     dqTransferOrderDTO.amount : 0.01 : 转账金额 : 是
+	 *     dqTransferOrderDTO.outNo : WXTON2014578... : partner_trade_no,商户转账订单号 : 是
+	 *     dqTransferOrderDTO.remark : 1 : 转账备注, 非必填 : 是
+	 * </pre>
 	 *
-	 * @param order
-	 *            转账订单
-	 *
-	 * @return 对应的转账结果
+	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
+	 * @return DqBaseServiceResult : 返回对应的转账结果
+	 * @author daiqi
+	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> transfer(DqTransferOrder order) {
+	public Map<String, Object> transfer(DqTransferOrderDTO order) {
 		Map<String, Object> parameters = new TreeMap<String, Object>();
 		// 转账到余额
 		// parameters.put("mch_appid", payConfigStorage.getAppid());
@@ -595,7 +607,7 @@ public class DqWxPayService extends DqBasePayService {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> transferQuery(String outNo, String tradeNo) {
+	public Map<String, Object> queryTransferResult(String outNo, String tradeNo) {
 		Map<String, Object> parameters = new TreeMap<String, Object>();
 		parameters.put(DqWxPayKey.MCH__ID_KEY, payConfigStorage.getPid());
 		parameters.put(DqWxPayKey.PARTNER__TRADE__NO_KEY, DqStringUtils.isEmpty(outNo) ? tradeNo : outNo);

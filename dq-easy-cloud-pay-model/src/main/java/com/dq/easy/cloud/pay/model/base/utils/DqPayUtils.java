@@ -65,20 +65,24 @@ public class DqPayUtils {
 	 */
 	public static class DqOrderNoGenerator {
 		/** 产生微信公众号支付订单 */
-		public static String generateWxPayJsapiOrderNO() {
-			return generateOrderNOCore("WXPJON");
+		public static String generateWxJsapiPayOrderNO() {
+			return generateOrderNOCore("WXJPON");
 		}
 		/** 产生微信app支付订单号 */
-		public static String generateWxAppOrderNO() {
-			return generateOrderNOCore("WXPJON");
+		public static String generateWxAppPayOrderNO() {
+			return generateOrderNOCore("WXAPON");
 		}
 		/** 产生微信扫码支付订单 */
-		public static String generateWxPayQrCodeOrderNO() {
-			return generateOrderNOCore("WXPQCON");
+		public static String generateWxQrCodePayOrderNO() {
+			return generateOrderNOCore("WXQCPON");
 		}
 		/** 产生微信web支付订单 */
-		public static String generateWxMWebOrderNO() {
-			return generateOrderNOCore("WMWON");
+		public static String generateWxMWebPayOrderNO() {
+			return generateOrderNOCore("WXMWPON");
+		}
+		/** 产生微信转账订单号 */
+		public static String generateWxTransferOrderNO() {
+			return generateOrderNOCore("WXTON");
 		}
 		/**
 		 * 

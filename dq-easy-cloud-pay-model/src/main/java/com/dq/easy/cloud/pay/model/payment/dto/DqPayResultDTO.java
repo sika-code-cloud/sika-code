@@ -18,23 +18,24 @@ import java.util.Map;
  * @author daiqi 创建时间 2018年2月24日 下午2:46:09
  */
 public class DqPayResultDTO {
-	private Map<String, Object> payResult;
+	private Map<String, Object> rspResult;
 	
 	
 	public DqPayResultDTO() {
 
 	}
 
-	public DqPayResultDTO(Map<String, Object> payResult) {
-		this.payResult = payResult;
-	}
-	
-	public Map<String, Object> getPayResult() {
-		return payResult;
+	public DqPayResultDTO(Map<String, Object> rspResult) {
+		this.rspResult = rspResult;
 	}
 
-	public void setPayResult(Map<String, Object> payResult) {
-		this.payResult = payResult;
+	public Map<String, Object> getRspResult() {
+		return rspResult;
 	}
+
+	public void setRspResult(Map<String, Object> rspResult) {
+		this.rspResult = rspResult;
+	}
+	
 
 }

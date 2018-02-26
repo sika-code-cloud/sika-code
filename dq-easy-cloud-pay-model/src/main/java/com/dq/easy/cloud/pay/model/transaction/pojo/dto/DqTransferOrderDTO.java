@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.pay.model.transaction.dto;
+package com.dq.easy.cloud.pay.model.transaction.pojo.dto;
 
 import java.math.BigDecimal;
 
@@ -14,7 +14,7 @@ import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
  *
  * @author daiqi 创建时间 2018年2月23日 下午3:06:02
  */
-public class DqTransferOrder {
+public class DqTransferOrderDTO {
 
 	/**
 	 * 转账订单单号
@@ -49,6 +49,11 @@ public class DqTransferOrder {
 	 * 收款开户行
 	 */
 	private DqBank bank;
+	
+	/**
+	 * 收款开户行枚举字符串
+	 */
+	private String bankStr;
 
 	/**
 	 * 币种
@@ -114,6 +119,14 @@ public class DqTransferOrder {
 
 	public void setBank(DqBank bank) {
 		this.bank = bank;
+	}
+
+	public String getBankStr() {
+		return bankStr;
+	}
+
+	public void setBankStr(String bankStr) {
+		this.bankStr = bankStr;
 	}
 
 	public DqCurType getCurType() {

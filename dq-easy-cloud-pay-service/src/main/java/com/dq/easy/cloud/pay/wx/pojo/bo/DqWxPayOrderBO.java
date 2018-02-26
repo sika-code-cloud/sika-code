@@ -34,11 +34,16 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 	}
 
 	@Override
-	public DqPayOrderBO initMWebData(HttpServletRequest request) {
+	public DqPayOrderBO initMWebPayData(HttpServletRequest request) {
 		super.dqPayOrderDTO.setSpbillCreateIp(request.getHeader(RequestHeaderKey.X_REAL_IP_KEY));
 		// 设置网页地址
 		super.dqPayOrderDTO.setWapUrl(request.getRequestURL().toString());
 		super.initWapName();
+		return this;
+	}
+
+	@Override
+	public DqPayOrderBO initMicroPayData(HttpServletRequest request) {
 		return this;
 	}
 
@@ -50,13 +55,13 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 		String outTradeNo = null;
 		DqTransactionType transactionType = getDqPayOrderDTO().getTransactionType();
 		if (DqWxTransactionType.isJSAPI(transactionType)) {
-			outTradeNo = DqOrderNoGenerator.generateWxPayJsapiOrderNO();
+			outTradeNo = DqOrderNoGenerator.generateWxJsapiPayOrderNO();
 		} else if (DqWxTransactionType.isAPP(transactionType)) {
-			outTradeNo = DqOrderNoGenerator.generateWxPayJsapiOrderNO();
+			outTradeNo = DqOrderNoGenerator.generateWxJsapiPayOrderNO();
 		} else if (DqWxTransactionType.isNATIVE(transactionType)) {
-			outTradeNo = DqOrderNoGenerator.generateWxPayQrCodeOrderNO();
+			outTradeNo = DqOrderNoGenerator.generateWxQrCodePayOrderNO();
 		} else if (DqWxTransactionType.isMWEB(transactionType)) {
-			outTradeNo = DqOrderNoGenerator.generateWxMWebOrderNO();
+			outTradeNo = DqOrderNoGenerator.generateWxMWebPayOrderNO();
 		} else{
 			
 		}
@@ -93,6 +98,13 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 		return this;
 	}
 	
+	@Override
+	public DqPayOrderBO verifyMicroPayData() {
+		verifyCommonData();
+		super.verifyAuthCode();
+		return this;
+	}
+
 	private DqPayOrderBO verifyCommonData() {
 		// 校验链
 		super.verifyDqPayOrderDTO();

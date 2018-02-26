@@ -2,8 +2,6 @@ package com.dq.easy.cloud.pay.wx.constant;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.pay.model.base.constant.DqPayConstant;
-import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
-import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayValue;
 
 /**
  * 微信支付常量类

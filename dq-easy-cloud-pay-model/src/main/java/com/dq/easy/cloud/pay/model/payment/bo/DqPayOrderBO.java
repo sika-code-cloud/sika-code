@@ -51,9 +51,11 @@ public abstract class DqPayOrderBO {
 	/** 初始化交易订单号 */
 	protected abstract void initOutTradeNo();
 
-	/** 初始化交易订单号 */
-	public abstract DqPayOrderBO initMWebData(HttpServletRequest request);
+	/** 初始化H5支付数据 */
+	public abstract DqPayOrderBO initMWebPayData(HttpServletRequest request);
 
+	/** 初始化刷卡支付数据 */
+	public abstract DqPayOrderBO initMicroPayData(HttpServletRequest request);
 	/**
 	 * 
 	 * <p>
@@ -75,6 +77,17 @@ public abstract class DqPayOrderBO {
 	 * @author daiqi 创建时间 2018年2月24日 下午3:40:21
 	 */
 	public abstract DqPayOrderBO verifyAppPayData();
+	
+	/**
+	 * 
+	 * <p>
+	 * 校验刷卡支付数据
+	 * </p>
+	 *
+	 * @return DqPayOrderBO
+	 * @author daiqi 创建时间 2018年2月24日 下午3:40:21
+	 */
+	public abstract DqPayOrderBO verifyMicroPayData();
 
 	/**
 	 * 
@@ -190,6 +203,14 @@ public abstract class DqPayOrderBO {
 	protected DqPayOrderBO verifyWapUrl() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getWapUrl())) {
 			throw DqPayException.newInstance(DqPayErrorCode.WAP_URL_CANT_EMPTY);
+		}
+		return this;
+	}
+	
+	/** 授权码校验 */
+	protected DqPayOrderBO verifyAuthCode() {
+		if (DqStringUtils.isEmpty(dqPayOrderDTO.getAuthCode())) {
+			throw DqPayException.newInstance(DqPayErrorCode.AUTH_CODE_CANT_EMPTY);
 		}
 		return this;
 	}

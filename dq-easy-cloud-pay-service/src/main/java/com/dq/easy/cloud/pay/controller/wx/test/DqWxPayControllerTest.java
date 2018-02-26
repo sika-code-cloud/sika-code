@@ -15,8 +15,8 @@ import com.dq.easy.cloud.pay.model.base.api.DqPayService;
 import com.dq.easy.cloud.pay.model.base.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxBank;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import javax.imageio.ImageIO;
@@ -152,7 +152,7 @@ public class DqWxPayControllerTest extends DqBaseController{
     public String payBack(HttpServletRequest request) throws IOException {
 
         //获取支付方返回的对应参数
-        Map<String, Object> params = service.getParameter2Map(request.getParameterMap(), request.getInputStream());
+        Map<String, Object> params = service.getParameterToMap(request.getParameterMap(), request.getInputStream());
         if (null == params) {
             return service.getPayOutMessage("fail", "失败").toMessage();
         }
@@ -176,7 +176,7 @@ public class DqWxPayControllerTest extends DqBaseController{
      */
     @RequestMapping("query")
     public Map<String, Object> query(DqOrderQuery order) {
-        return service.query(order.getTradeNo(), order.getOutTradeNo());
+        return service.queryPayResult(order.getTradeNo(), order.getOutTradeNo());
     }
 
 
@@ -210,7 +210,7 @@ public class DqWxPayControllerTest extends DqBaseController{
      */
     @RequestMapping("refundquery")
     public Map<String, Object> refundquery(DqOrderQuery order) {
-        return service.refundQuery(order.getTradeNo(), order.getOutTradeNo());
+        return service.queryRefundResult(order.getTradeNo(), order.getOutTradeNo());
     }
 
     /**
@@ -247,7 +247,7 @@ public class DqWxPayControllerTest extends DqBaseController{
      * @return 对应的转账结果
      */
     @RequestMapping("transfer")
-    public Map<String, Object> transfer(DqTransferOrder order) {
+    public Map<String, Object> transfer(DqTransferOrderDTO order) {
         order.setOutNo("partner_trade_no 商户转账订单号");
         //采用标准RSA算法，公钥由微信侧提供,将公钥信息配置在PayConfigStorage#setKeyPublic(String)
         order.setPayeeAccount("enc_bank_no 收款方银行卡号");
@@ -268,6 +268,6 @@ public class DqWxPayControllerTest extends DqBaseController{
      */
     @RequestMapping("transferQuery")
     public Map<String, Object> transferQuery(String outNo, String tradeNo) {
-        return service.transferQuery(outNo, tradeNo);
+        return service.queryTransferResult(outNo, tradeNo);
     }
 }

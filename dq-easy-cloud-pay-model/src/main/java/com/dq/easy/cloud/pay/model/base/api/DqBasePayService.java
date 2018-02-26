@@ -5,14 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
 
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.common.http.pojo.bo.DqHttpRequestTemplateBO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.base.config.dto.DqPayConfigStorage;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.dto.DqTransferOrder;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
 /**
  * 支付基础服务
@@ -121,7 +122,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 获得回调的请求参数
 	 */
 	@Override
-	public Map<String, Object> getParameter2Map(Map<String, String[]> parameterMap, InputStream is) {
+	public Map<String, Object> getParameterToMap(Map<String, String[]> parameterMap, InputStream is) {
 
 		Map<String, Object> params = new TreeMap<String, Object>();
 		for (Iterator iter = parameterMap.keySet().iterator(); iter.hasNext();) {
@@ -133,8 +134,8 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 			}
 			if (!valueStr.matches("\\w+")) {
 				try {
-					if (valueStr.equals(new String(valueStr.getBytes("iso8859-1"), "iso8859-1"))) {
-						valueStr = new String(valueStr.getBytes("iso8859-1"), payConfigStorage.getInputCharset());
+					if (valueStr.equals(new String(valueStr.getBytes(DqCharset.ISO8859_1), "iso8859-1"))) {
+						valueStr = new String(valueStr.getBytes(DqCharset.ISO8859_1), payConfigStorage.getInputCharset());
 					}
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -161,7 +162,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	@Override
 	public <T> T query(String tradeNo, String outTradeNo, DqCallback<T> callback) {
 
-		return callback.perform(query(tradeNo, outTradeNo));
+		return callback.perform(queryPayResult(tradeNo, outTradeNo));
 	}
 
 	/**
@@ -243,7 +244,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 */
 	@Override
 	public <T> T refundQuery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
-		return callback.perform(refundQuery(tradeNo, outTradeNo));
+		return callback.perform(queryRefundResult(tradeNo, outTradeNo));
 	}
 
 	/**
@@ -296,7 +297,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 对应的转账结果
 	 */
 	@Override
-	public <T> T transfer(DqTransferOrder order, DqCallback<T> callback) {
+	public <T> T transfer(DqTransferOrderDTO order, DqCallback<T> callback) {
 		return callback.perform(transfer(order));
 	}
 
@@ -309,7 +310,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 对应的转账结果
 	 */
 	@Override
-	public Map<String, Object> transfer(DqTransferOrder order) {
+	public Map<String, Object> transfer(DqTransferOrderDTO order) {
 		return new HashMap<>(0);
 	}
 
@@ -324,7 +325,7 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 * @return 对应的转账订单
 	 */
 	@Override
-	public Map<String, Object> transferQuery(String outNo, String tradeNo) {
+	public Map<String, Object> queryTransferResult(String outNo, String tradeNo) {
 		return new HashMap<>(0);
 	}
 
@@ -343,6 +344,6 @@ public abstract class DqBasePayService extends DqBaseService implements DqPaySer
 	 */
 	@Override
 	public <T> T transferQuery(String outNo, String tradeNo, DqCallback<T> callback) {
-		return callback.perform(transferQuery(outNo, tradeNo));
+		return callback.perform(queryTransferResult(outNo, tradeNo));
 	}
 }

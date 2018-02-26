@@ -22,5 +22,13 @@ public class DqPayConstant extends DqBaseConstant{
 	/** 支付值类 */
 	public static class DqPayValue extends DqPayConstant {
 		public static final String WAP_NAME_DEFAULT = "在线支付";
+		/** 失败代码---FAIL_CODE---fail */
+		public static final String FAIL_CODE = "fail";
+		/** 失败描述---FAIL_DESC---失败 */
+		public static final String FAIL_DESC = "失败";
+		/** 成功代码---FAIL_CODE---success */
+		public static final String SUCCESS_CODE = "success";
+		/** 成功描述---SUCCESS_DESC---成功 */
+		public static final String SUCCESS_DESC = "成功";
 	}
 }

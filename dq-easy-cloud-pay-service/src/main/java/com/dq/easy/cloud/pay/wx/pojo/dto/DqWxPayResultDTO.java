@@ -17,7 +17,7 @@ public class DqWxPayResultDTO extends DqPayResultDTO {
 
 	}
 
-	public DqWxPayResultDTO(Map<String, Object> payResult) {
-		super(payResult);
+	public DqWxPayResultDTO(Map<String, Object> rspResult) {
+		super(rspResult);
 	}
 }

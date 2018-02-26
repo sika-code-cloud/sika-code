@@ -1,6 +1,5 @@
 package com.dq.easy.cloud.pay.model.base.constant;
 
-import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
@@ -40,6 +39,28 @@ public enum DqPayErrorCode implements DqBaseErrorCodeInf{
 	SPBILL_CREATE_IP_CANT_EMPTY ("PAY_000012", "spbillCreateIp不能为空"),
 	/** wapUrl不能为空---WAP_URL_CANT_EMPTY---PAY_000013 */
 	WAP_URL_CANT_EMPTY ("PAY_000013", "wapUrl不能为空"),
+	/** authCode不能为空---WAP_URL_CANT_EMPTY---PAY_000014 */
+	AUTH_CODE_CANT_EMPTY ("PAY_000014", "authCode不能为空"),
+	/** tradeNo不能为空---TRADE_NO_CANT_EMPTY---PAY_000015 */
+	TRADE_NO_CANT_EMPTY ("PAY_000015", "tradeNo不能为空"),
+	/** billDate不能为空---BILL_DATE_CANT_NULL---PAY_000016 */
+	BILL_DATE_CANT_NULL ("PAY_000016", "billDate不能为空"),
+	/** billType不能为空---BILL_TYPE_CANT_NULL---PAY_000017 */
+	BILL_TYPE_CANT_NULL ("PAY_000016", "billType不能为空"),
+	/** tradeNoOrBillDate不能为空---TRADE_NO_OR_BILL_DATE_CANT_NULL---PAY_000018 */
+	TRADE_NO_OR_BILL_DATE_CANT_NULL ("PAY_000018", "tradeNoOrBillDate不能为空"),
+	/** outTradeNoBillType不能为空---OUT_TRADE_NO_BILL_TYPE_CANT_NULL---PAY_000019 */
+	OUT_TRADE_NO_BILL_TYPE_CANT_NULL ("PAY_000019", "outTradeNoBillType不能为空"),
+	/** bank不能为空---BANK_CANT_NULL---PAY_000020 */
+	BANK_CANT_NULL ("PAY_000020", "bank不能为空"),
+	/** outNo不能为空---OUT_NO_CANT_NULL---PAY_000021 */
+	OUT_NO_CANT_EMPTY ("PAY_000021", "outNo不能为空"),
+	/** payeeAccount不能为空---PAYEE_ACCOUNT_CANT_NULL---PAY_000022 */
+	PAYEE_ACCOUNT_CANT_EMPTY ("PAY_000022", "payeeAccount不能为空"),
+	/** payeeName不能为空---PAYEE_NAME_CANT_NULL---PAY_000023 */
+	PAYEE_NAME_CANT_EMPTY ("PAY_000023", "payeeName不能为空"),
+	/** amount不能为空---AMOUNT_CANT_NULL---PAY_000024 */
+	AMOUNT_CANT_NULL ("PAY_000024", "amount不能为空"),
 	;
 	
 	private String errorCode;
