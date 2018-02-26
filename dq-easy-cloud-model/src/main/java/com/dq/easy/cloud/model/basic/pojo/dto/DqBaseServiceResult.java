@@ -120,13 +120,19 @@ public class DqBaseServiceResult{
 		return DqJSONUtils.parseArray(this.result, clazz);
 	}
 	
-	/**构建errorCode*/
+	/** 构建errorCode */
 	public DqBaseServiceResult buildErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 		return this;
 	}
 	
-	/**构建result*/
+	/** 构建errorMsg */
+	public DqBaseServiceResult buildErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+		return this;
+	}
+	
+	/** 构建result */
 	public DqBaseServiceResult buildResult(Object result) {
 		this.result = result;
 		return this;
@@ -137,6 +143,7 @@ public class DqBaseServiceResult{
 		this.serviceResultException = serviceResultException;
 		return this;
 	}
+	
 	public String getErrorCode() {
 		return errorCode;
 	}

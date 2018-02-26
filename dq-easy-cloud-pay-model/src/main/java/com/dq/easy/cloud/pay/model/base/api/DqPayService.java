@@ -164,13 +164,13 @@ public interface DqPayService {
 	String buildRequest(Map<String, Object> orderInfo, MethodType method);
 
 	/**
-	 * 获取输出二维码，用户返回给支付端,
+	 * 生成支付二维码，用户返回给支付端,
 	 *
 	 * @param order
 	 *            发起支付的订单信息
 	 * @return 返回图片信息，支付时需要的
 	 */
-	BufferedImage genQrPay(DqPayOrderDTO order);
+	BufferedImage generatePayQrCode(DqPayOrderDTO order);
 
 	/**
 	 * 刷卡付,pos主动扫码付款(条码付)
@@ -303,7 +303,7 @@ public interface DqPayService {
 	 *            商户单号
 	 * @return 返回支付方查询退款后的结果
 	 */
-	Map<String, Object> refundquery(String tradeNo, String outTradeNo);
+	Map<String, Object> refundQuery(String tradeNo, String outTradeNo);
 
 	/**
 	 * 查询退款
@@ -318,7 +318,7 @@ public interface DqPayService {
 	 *            返回类型
 	 * @return 返回支付方查询退款后的结果
 	 */
-	<T> T refundquery(String tradeNo, String outTradeNo, DqCallback<T> callback);
+	<T> T refundQuery(String tradeNo, String outTradeNo, DqCallback<T> callback);
 
 	/**
 	 * 下载对账单
@@ -330,7 +330,7 @@ public interface DqPayService {
 	 *            trade指商户基于支付宝交易收单的业务账单；signcustomer是指基于商户支付宝余额收入及支出等资金变动的帐务账单；
 	 * @return 返回支付方下载对账单的结果
 	 */
-	Map<String, Object> downloadbill(Date billDate, String billType);
+	Map<String, Object> downLoadBill(Date billDate, String billType);
 
 	/**
 	 * 下载对账单
@@ -345,7 +345,7 @@ public interface DqPayService {
 	 *            返回类型
 	 * @return 返回支付方下载对账单的结果
 	 */
-	<T> T downloadbill(Date billDate, String billType, DqCallback<T> callback);
+	<T> T downLoadBill(Date billDate, String billType, DqCallback<T> callback);
 
 	/**
 	 *

@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
-
-import com.dq.easy.cloud.model.basic.constant.DqCharsetConstant;
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -101,7 +99,7 @@ public class DqQrCodeUtil {
 	public static void writeInfoToJpgFile(String content, String fileUrl) {
 		MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 		Map<EncodeHintType, Object> hints = new HashMap<>();
-		hints.put(EncodeHintType.CHARACTER_SET, DqCharsetConstant.UTF_8);
+		hints.put(EncodeHintType.CHARACTER_SET, DqCharset.UTF_8);
 		try {
 			BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, 250, 250, hints);
 			File file1 = new File(fileUrl);
@@ -123,7 +121,7 @@ public class DqQrCodeUtil {
 
 		MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 		Map<EncodeHintType, Object> hints = new HashMap<>();
-		hints.put(EncodeHintType.CHARACTER_SET, DqCharsetConstant.UTF_8);
+		hints.put(EncodeHintType.CHARACTER_SET, DqCharset.UTF_8);
 		try {
 			BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, 250, 250, hints);
 			re = DqQrCodeUtil.toBufferedImage(bitMatrix);

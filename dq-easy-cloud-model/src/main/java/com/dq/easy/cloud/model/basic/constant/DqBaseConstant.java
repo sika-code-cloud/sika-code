@@ -59,4 +59,38 @@ public class DqBaseConstant {
 	public static <T extends DqBaseConstant> boolean isNotAvailableValue(Class<T> clazz, Object value) {
 		return !isAvailableValue(clazz, value);
 	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 字符集类型常量类
+	 * </p>
+	 *
+	 * @author daiqi
+	 * 创建时间    2018年2月23日 下午2:08:00
+	 */
+	public static class DqCharset {
+		public static final String UTF_8 = "UTF-8";
+		public static final String GBK = "GBK";
+		public static final String ISO_8859_1 = "ISO-8859-1";
+		public static final String UNICODE = "UNICODE";
+		public static final String ASCII = "ASCII";
+	}
+	
+	/** 图片格式常量类 */
+	public static class DqImageFormat {
+		public static final String BMP = "BMP";
+		public static final String GIF = "GIF";
+		public static final String EPS = "EPS";
+		public static final String DCS = "DCS";
+		public static final String JPEG = "JPEG";
+		public static final String JPG = "JPG";
+		public static final String JPE = "JPE";
+		public static final String PCX = "PCX";
+		public static final String PDF = "PDF";
+		public static final String PNG = "PNG";
+		public static final String TIFF = "TIFF";
+		public static final String PXR = "PXR";
+	}
+	
 }

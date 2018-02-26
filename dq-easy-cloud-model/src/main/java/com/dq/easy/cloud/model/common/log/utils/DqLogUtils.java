@@ -12,6 +12,7 @@ import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
 import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruster;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogLogicEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
@@ -119,6 +120,9 @@ public class DqLogUtils {
 		if (DqLogType.isController(dqLog.dqLogType())) {
 			return DqReflectionUtils.newInstance(DqLogControllerEntruster.class);
 		}
+		if (DqLogType.isLogic(dqLog.dqLogType())) {
+			return DqReflectionUtils.newInstance(DqLogLogicEntruster.class);
+		}
 		if (DqLogType.isService(dqLog.dqLogType())) {
 			return DqReflectionUtils.newInstance(DqLogServiceEntruster.class);
 		}
@@ -141,20 +145,21 @@ public class DqLogUtils {
 	 *            : Object : 打印的日志详情信息
 	 * @param logger
 	 *            : Logger : 目标类的日志记录对象
+	 * @param isNeedWrap
+	 *            : boolean : 是否需要换行 true需要 false不需要
 	 * @author daiqi 创建时间 2018年2月9日 上午11:42:31
 	 */
-	public static void logByLogLevel(Integer logLevel, String logTitle, Object logDetail, Logger logger) {
+	public static void logByLogLevel(Integer logLevel, String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
 		if (DqLogLevel.isDebug(logLevel)) {
-			debug(logTitle, logDetail, logger, false);
+			debug(logTitle, logDetail, logger, isNeedWrap);
 		} else if (DqLogLevel.isInfo(logLevel)) {
-			info(logTitle, logDetail, logger, false);
+			info(logTitle, logDetail, logger, isNeedWrap);
 		} else if (DqLogLevel.isWarn(logLevel)) {
-			warn(logTitle, logDetail, logger, false);
+			warn(logTitle, logDetail, logger, isNeedWrap);
 		} else if (DqLogLevel.isError(logLevel)) {
-			error(logTitle, logDetail, logger, false);
+			error(logTitle, logDetail, logger, isNeedWrap);
 		}
 	}
-
 	/**
 	 * <p>
 	 * debug级别的统一格式日志
@@ -195,7 +200,7 @@ public class DqLogUtils {
 		logger.debug("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.debug(detail.toString());
+		logger.debug(detail == null ? "" : detail.toString());
 		logger.debug("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -222,7 +227,7 @@ public class DqLogUtils {
 		logger.info("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.info(detail.toString());
+		logger.info(detail == null ? "" : detail.toString());
 		logger.info("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		logger.info("\r\n");
@@ -251,7 +256,7 @@ public class DqLogUtils {
 		logger.info("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.info(detail.toString());
+		logger.info(detail == null ? "" : detail.toString());
 		logger.info("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -278,7 +283,7 @@ public class DqLogUtils {
 		logger.warn("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.warn(detail.toString());
+		logger.warn(detail == null ? "" : detail.toString());
 		logger.warn("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		logger.warn("\r\n");
@@ -307,7 +312,7 @@ public class DqLogUtils {
 		logger.warn("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.warn(detail.toString());
+		logger.warn(detail == null ? "" : detail.toString());
 		logger.warn("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");
 		if (isNeedWrap) {
@@ -355,7 +360,7 @@ public class DqLogUtils {
 		logger.error("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
 		Object detail = DqJSONUtils.parseObject(logDetail, String.class);
-		logger.error(detail.toString());
+		logger.error(detail == null ? "" : detail.toString());
 		
 		logger.error("**********************************************   end_logger:" + logTitle
 				+ ":end_logger   **********************************************");

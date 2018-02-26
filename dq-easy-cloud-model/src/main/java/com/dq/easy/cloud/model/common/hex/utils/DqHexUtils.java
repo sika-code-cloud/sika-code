@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.common.hex;
+package com.dq.easy.cloud.model.common.hex.utils;
 
 import java.math.BigInteger;
 

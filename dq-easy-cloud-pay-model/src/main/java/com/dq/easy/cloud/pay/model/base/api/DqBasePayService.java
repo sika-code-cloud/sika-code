@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
 
+import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.common.http.pojo.bo.DqHttpRequestTemplateBO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
@@ -23,7 +24,7 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
  *      date 2017/3/5 20:36
  *          </pre>
  */
-public abstract class DqBasePayService implements DqPayService {
+public abstract class DqBasePayService extends DqBaseService implements DqPayService {
 
 	protected DqPayConfigStorage payConfigStorage;
 
@@ -32,6 +33,9 @@ public abstract class DqBasePayService implements DqPayService {
 
 	protected int maxRetryTimes = 5;
 
+	public DqBasePayService(){
+		
+	}
 	/**
 	 * 设置支付配置
 	 * 
@@ -238,8 +242,8 @@ public abstract class DqBasePayService implements DqPayService {
 	 * @return 处理过后的类型对象，返回支付方查询退款后的结果
 	 */
 	@Override
-	public <T> T refundquery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
-		return callback.perform(refundquery(tradeNo, outTradeNo));
+	public <T> T refundQuery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
+		return callback.perform(refundQuery(tradeNo, outTradeNo));
 	}
 
 	/**
@@ -257,8 +261,8 @@ public abstract class DqBasePayService implements DqPayService {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public <T> T downloadbill(Date billDate, String billType, DqCallback<T> callback) {
-		return callback.perform(downloadbill(billDate, billType));
+	public <T> T downLoadBill(Date billDate, String billType, DqCallback<T> callback) {
+		return callback.perform(downLoadBill(billDate, billType));
 	}
 
 	/**

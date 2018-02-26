@@ -20,7 +20,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
-import com.dq.easy.cloud.model.basic.constant.DqCharsetConstant;
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpHeaderDTO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpStringEntityDTO;
@@ -248,7 +248,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
         if (null != value && 2 == charset.length()) {
             charset = value[1].substring(value[1].indexOf("=") + 1);
         }
-        String result = EntityUtils.toString(entity, DqCharsetConstant.UTF_8);
+        String result = EntityUtils.toString(entity, DqCharset.UTF_8);
         String first = result.substring(0, 1);
         if (responseType.isAssignableFrom(String.class) || isJson(value[0], first)) {
             return DqJSONUtils.parseObject(result, responseType);

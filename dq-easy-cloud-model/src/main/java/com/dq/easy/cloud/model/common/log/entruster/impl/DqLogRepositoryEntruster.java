@@ -21,13 +21,13 @@ public class DqLogRepositoryEntruster extends DqLogBaseEntruster{
 
 	@Override
 	protected void logDataExtraAfter() {
-		super.log("这是Repository层的日志", "这是Repository层的日志");
+		super.logWrap("这是Repository层的日志", "这是Repository层的日志");
 	}
 
 	@Override
 	protected void initDqLogAnalysisBOData() {
 		dqLogAnalysisBO = DqLogAnalysisBO.newInstanceFromContainer(DqLogAnalysisContainer.getLogAnalysisContainerRepository(), dqLogDTO);
-		super.log("这是repository的日志分析", "repository日志分析数据初始化");
+		super.logWrap("这是repository的日志分析", "repository日志分析数据初始化");
 	}
 
 	@Override

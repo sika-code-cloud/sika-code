@@ -3,6 +3,8 @@ package com.dq.easy.cloud.pay.model.refund.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
+
 /**
  * 
  * <p>
@@ -38,6 +40,16 @@ public class DqRefundOrderDTO {
      * 交易日期
      */
     private Date orderDate;
+    
+    /** 以分为单位 */
+    public int getTotalAmountOfCent(){
+    	return DqPayUtils.yuanToCent(totalAmount);
+    }
+
+    /** 以分为单位 */
+    public int getRefundAmountOfCent(){
+    	return DqPayUtils.yuanToCent(refundAmount);
+    }
 
     public String getRefundNo() {
         return refundNo;

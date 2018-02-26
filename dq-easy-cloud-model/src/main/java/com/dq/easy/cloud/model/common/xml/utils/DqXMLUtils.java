@@ -13,7 +13,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import com.dq.easy.cloud.model.basic.constant.DqCharsetConstant;
+import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
@@ -42,7 +42,7 @@ public class DqXMLUtils {
 			return null;
 		}
 		try {
-			InputStream in = new ByteArrayInputStream(content.getBytes(DqCharsetConstant.UTF_8));
+			InputStream in = new ByteArrayInputStream(content.getBytes(DqCharset.UTF_8));
 			return getMapFromInputStream(in, null);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,18 +1,22 @@
 package com.dq.easy.cloud.pay.wx.service;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
+import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.Symbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.base.api.DqBasePayService;
 import com.dq.easy.cloud.pay.model.base.config.dto.DqPayConfigStorage;
 import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
@@ -40,11 +44,10 @@ import java.util.*;
 public class DqWxPayService extends DqBasePayService {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	/**
-	 * 微信请求地址
-	 */
-//	public final static String URI = "https://api.mch.weixin.qq.com/";
-
+	/** 提供默认构造--只是为了反射用 */
+	public DqWxPayService() {
+		
+	}
 	/**
 	 * 创建支付服务
 	 * 
@@ -90,7 +93,7 @@ public class DqWxPayService extends DqBasePayService {
 	@Override
 	public boolean verify(Map<String, Object> params) {
 //		校验是否成功
-		if (DqStringUtils.notEquals(DqWxPayValue.SUCCESS, DqMapUtils.getString(params, DqWxPayKey.RETURN__CODE_KEY))){
+		if (DqWxPayValue.isNotSUCCESS(params.get(DqWxPayKey.RETURN__CODE_KEY))){
 			DqLogUtils.debug(String.format("微信支付异常：return_code=%s,参数集=%s", params.get(DqWxPayKey.RETURN__CODE_KEY)), params, LOG);
 			return false;
 		}
@@ -100,7 +103,7 @@ public class DqWxPayService extends DqBasePayService {
 			return false;
 		}
 		try {
-			return signVerify(params, (String) params.get(DqWxPayKey.SIGN_KEY)) && verifySource((String) params.get("out_trade_no"));
+			return signVerify(params, DqMapUtils.getString(params, DqWxPayKey.SIGN_KEY)) && verifySource(DqMapUtils.getString(params, DqWxPayKey.OUT__TRADE__NO_KEY));
 		} catch (Exception e) {
 			DqLogUtils.error("签名校验异常", e, LOG);
 		}
@@ -161,7 +164,7 @@ public class DqWxPayService extends DqBasePayService {
 		parameters.put(DqWxPayKey.OUT__TRADE__NO_KEY, order.getOutTradeNo());// 订单号
 		String spbillCreateIp = DqStringUtils.isEmpty(order.getSpbillCreateIp()) ? DqWxPayValue.SPBILL_CREATE_IP_DEFAULT : order.getSpbillCreateIp();
 		parameters.put(DqWxPayKey.SPBILL__CREATE__IP_KEY, spbillCreateIp);
-		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, conversion(order.getPrice()));// 总金额单位为分
+		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, order.getPriceOfCent());// 总金额单位为分
 		parameters.put(DqWxPayKey.ATTACH_KEY, order.getBody());
 		parameters.put(DqWxPayKey.NOTIFY__URL_KEY, payConfigStorage.getNotifyUrl());
 		parameters.put(DqWxPayKey.TRADE__TYPE_KEY, order.getTransactionType().getType());
@@ -177,7 +180,8 @@ public class DqWxPayService extends DqBasePayService {
 		Map<String, Object> result = requestTemplate.postForObject(getUrl(order.getTransactionType()), requestXML, HashMap.class);
 		
 //		不成功抛出异常
-		if (DqStringUtils.notEquals(DqWxPayValue.SUCCESS, DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY))) {
+		if (DqWxPayValue.isNotSUCCESS(result.get(DqWxPayKey.RETURN__CODE_KEY))) {
+			DqLogUtils.error("订单创建失败", result, LOG);
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY),
 					DqMapUtils.getString(result, DqWxPayKey.RETURN__MSG_KEY));
 		}
@@ -185,12 +189,25 @@ public class DqWxPayService extends DqBasePayService {
 	}
 
 	/**
-	 * 返回创建的订单信息
+	 * 
+	 * <p>
+	 * 微信公众号支付
+	 * </p>
 	 *
-	 * @param order
-	 *            支付订单
-	 * @return 订单信息
-	 * @see PayOrder 支付订单信息
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
+	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
+	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
+	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 是
+	 *     dqPayOrderDTO.DqWxTransactionType : DqWxTransactionType.JSAPI : 支付价格 : 交易类型
+	 * </pre>
+	 *
+	 * @param dqPayOrderDTO
+	 * @return DqBaseServiceResult
+	 * @author daiqi
+	 * 创建时间    2018年2月24日 下午2:19:55
 	 */
 	@Override
 	public Map<String, Object> orderInfo(DqPayOrderDTO order) {
@@ -198,28 +215,29 @@ public class DqWxPayService extends DqBasePayService {
 		//// 统一下单
 		Map<String, Object> result = unifiedOrder(order);
 
+		DqTransactionType transactionType = order.getTransactionType();
 		// 如果是扫码支付或者刷卡付无需处理，直接返回
-		if (DqWxTransactionType.NATIVE == order.getTransactionType()
-				|| DqWxTransactionType.MICROPAY == order.getTransactionType()
-				|| DqWxTransactionType.MWEB == order.getTransactionType()) {
+		if (DqWxTransactionType.isNATIVE(transactionType)
+				|| DqWxTransactionType.isMICROPAY(transactionType)
+				|| DqWxTransactionType.isMWEB(transactionType)) {
 			return result;
 		}
 
 		SortedMap<String, Object> params = new TreeMap<String, Object>();
 
-		if (DqWxTransactionType.JSAPI == order.getTransactionType()) {
+		if (DqWxTransactionType.isJSAPI(transactionType)) {
 			params.put(DqWxPayKey.SIGN_TYPE_KEY, payConfigStorage.getSignType());
 			params.put(DqWxPayKey.APP_ID_KEY, payConfigStorage.getAppid());
 			// 此处必须为String类型 否则调用jsapi时会提示找不到timeStamp
-			params.put(DqWxPayKey.TIME_STAMP_KEY, String.valueOf(System.currentTimeMillis() / 1000));
-			params.put(DqWxPayKey.NONCE__STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
+			params.put(DqWxPayKey.TIME_STAMP_KEY, DqDateUtils.getCurrentTimeSecStr());
+			params.put(DqWxPayKey.NONCE_STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
 			params.put(DqWxPayKey.PACKAGE_KEY, DqWxPayKey.PREPAY__ID_KEY + "=" + result.get(DqWxPayKey.PREPAY__ID_KEY));
-		} else if (DqWxTransactionType.APP == order.getTransactionType()) {
+		} else if (DqWxTransactionType.isAPP(transactionType)) {
 			params.put(DqWxPayKey.PARTNERID_KEY, payConfigStorage.getPid());
 			params.put(DqWxPayKey.APPID_KEY, payConfigStorage.getAppid());
 			params.put(DqWxPayKey.PREPAYID_KEY, result.get(DqWxPayKey.PREPAY__ID_KEY));
-			params.put(DqWxPayKey.TIMESTAMP_KEY, String.valueOf(System.currentTimeMillis() / 1000));
-			params.put(DqWxPayKey.NONCESTR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
+			params.put(DqWxPayKey.TIMESTAMP_KEY, DqDateUtils.getCurrentTimeSecStr());
+			params.put(DqWxPayKey.NONCE_STR_KEY, result.get(DqWxPayKey.NONCE__STR_KEY));
 			params.put(DqWxPayKey.PACKAGE_KEY, DqWxPayValue.APP_PACKAGE_VALUE);
 		}
 		String paySign = createSign(DqSignUtils.parameterText(params), payConfigStorage.getInputCharset());
@@ -237,7 +255,7 @@ public class DqWxPayService extends DqBasePayService {
 	 */
 	private Map<String, Object> setSign(Map<String, Object> parameters) {
 		parameters.put(DqWxPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
-		String sign = createSign(DqSignUtils.parameterText(parameters, "&", DqWxPayKey.SIGN_KEY, "appId"),
+		String sign = createSign(DqSignUtils.parameterText(parameters, Symbol.SINGLE_AND, DqWxPayKey.SIGN_KEY, DqWxPayKey.APP_ID_KEY),
 				payConfigStorage.getInputCharset());
 		parameters.put(DqWxPayKey.SIGN_KEY, sign);
 		return parameters;
@@ -254,7 +272,8 @@ public class DqWxPayService extends DqBasePayService {
 	 */
 	@Override
 	public String createSign(String content, String characterEncoding) {
-		return DqSignUtils.valueOf(payConfigStorage.getSignType().toUpperCase())
+		
+		return DqSignUtils.valueOf(DqStringUtils.upperCase(payConfigStorage.getSignType()))
 				.createSign(content, "&key=" + payConfigStorage.getKeyPrivate(), characterEncoding).toUpperCase();
 	}
 
@@ -269,7 +288,7 @@ public class DqWxPayService extends DqBasePayService {
 	 */
 	@Override
 	public Map<String, Object> getParameter2Map(Map<String, String[]> parameterMap, InputStream is) {
-		TreeMap<String, Object> map = new TreeMap<String, Object>();
+		TreeMap<String, Object> map = new TreeMap<>();
 		try {
 			return DqXMLUtils.getMapFromInputStream(is, map);
 		} catch (IOException e) {
@@ -315,15 +334,18 @@ public class DqWxPayService extends DqBasePayService {
 	 */
 	@Override
 	public String buildRequest(Map<String, Object> orderInfo, MethodType method) {
-		if (!DqWxPayValue.SUCCESS.equals(orderInfo.get(DqWxPayKey.RETURN__CODE_KEY))) {
-			throw DqBaseBusinessException.newInstance((String) orderInfo.get(DqWxPayKey.RETURN__CODE_KEY),
-					(String) orderInfo.get(DqWxPayKey.RETURN__MSG_KEY));
-
+		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RETURN__CODE_KEY))) {
+			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__CODE_KEY),DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__MSG_KEY));
 		}
-		if (DqWxTransactionType.MWEB.name().equals(orderInfo.get("trade_type"))) {
-			return String.format("<script type=\"text/javascript\">location.href=\"%s%s\"</script>",
-					orderInfo.get("mweb_url"), DqStringUtils.isEmpty(payConfigStorage.getReturnUrl()) ? ""
-							: "&redirect_url=" + URLEncoder.encode(payConfigStorage.getReturnUrl()));
+		if (DqWxTransactionType.isMWEB(DqMapUtils.getString(orderInfo, DqWxPayKey.TRADE__TYPE_KEY))) {
+//			需要被格式化得字符串
+			String needBeFormatStr = "<script type=\"text/javascript\">location.href=\"%s%s\"</script>";
+			String formatReturnUrl = DqStringUtils.EMPTY;
+			
+			if (DqStringUtils.isNotEmpty(payConfigStorage.getReturnUrl())){
+				formatReturnUrl = "&redirect_url=" + URLEncoder.encode(payConfigStorage.getReturnUrl());
+			}
+			return String.format(needBeFormatStr, orderInfo.get(DqWxPayKey.MWEB__URL_KEY), formatReturnUrl);
 		}
 		throw new UnsupportedOperationException();
 
@@ -337,15 +359,14 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回图片信息，支付时需要的
 	 */
 	@Override
-	public BufferedImage genQrPay(DqPayOrderDTO order) {
+	public BufferedImage generatePayQrCode(DqPayOrderDTO order) {
 		Map<String, Object> orderInfo = orderInfo(order);
 		// 获取对应的支付账户操作工具（可根据账户id）
-		if (!DqWxPayValue.SUCCESS.equals(orderInfo.get(DqWxPayKey.RESULT__CODE_KEY))) {
+		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RESULT__CODE_KEY))) {
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RESULT__CODE_KEY),
 					DqMapUtils.getString(orderInfo, DqWxPayKey.ERR__CODE_KEY));
 		}
-
-		return DqQrCodeUtil.writeInfoToJpgBuff((String) orderInfo.get(DqWxPayKey.CODE__URL_KEY));
+		return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(orderInfo, DqWxPayKey.CODE__URL_KEY));
 	}
 
 	/**
@@ -423,14 +444,14 @@ public class DqWxPayService extends DqBasePayService {
 	public Map<String, Object> refund(DqRefundOrderDTO refundOrder) {
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
-		if (null != refundOrder.getTradeNo()) {
+		if (DqStringUtils.isNotEmpty(refundOrder.getTradeNo())) {
 			parameters.put(DqWxPayKey.TRANSACTION__ID_KEY, refundOrder.getTradeNo());
 		} else {
 			parameters.put(DqWxPayKey.OUT__TRADE__NO_KEY, refundOrder.getOutTradeNo());
 		}
 		parameters.put(DqWxPayKey.OUT__REFUND__NO_KEY, refundOrder.getRefundNo());
-		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, conversion(refundOrder.getTotalAmount()));
-		parameters.put(DqWxPayKey.REFUND__FEE_KEY, conversion(refundOrder.getRefundAmount()));
+		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, refundOrder.getTotalAmountOfCent());
+		parameters.put(DqWxPayKey.REFUND__FEE_KEY, refundOrder.getRefundAmount());
 		parameters.put(DqWxPayKey.OP__USER__ID_KEY, payConfigStorage.getPid());
 
 		// 设置签名
@@ -449,7 +470,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> refundquery(String transactionId, String outTradeNo) {
+	public Map<String, Object> refundQuery(String transactionId, String outTradeNo) {
 		return secondaryInterface(transactionId, outTradeNo, DqWxTransactionType.REFUNDQUERY);
 	}
 
@@ -464,22 +485,21 @@ public class DqWxPayService extends DqBasePayService {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public Map<String, Object> downloadbill(Date billDate, String billType) {
+	public Map<String, Object> downLoadBill(Date billDate, String billType) {
 
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
 
 		parameters.put(DqWxPayKey.BILL__TYPE_KEY, billType);
 		// 目前只支持日账单
-		DateFormat df = new SimpleDateFormat("yyyyMMdd");
-		df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-		parameters.put(DqWxPayKey.BILL__DATE_KEY, df.format(billDate));
+		String billDateStr = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_SHORT, TimeZone.getTimeZone("GMT+8"));
+		parameters.put(DqWxPayKey.BILL__DATE_KEY, billDateStr);
 
 		// 设置签名
 		setSign(parameters);
 		String respStr = requestTemplate.postForObject(getUrl(DqWxTransactionType.DOWNLOADBILL),
 				DqXMLUtils.getXmlStrFromMap(parameters), String.class);
-		if (respStr.indexOf("<") == 0) {
+		if (respStr.indexOf(Symbol.LESS_THAN) == 0) {
 			return DqXMLUtils.getMapFromXmlStr(respStr);
 		}
 
@@ -511,7 +531,7 @@ public class DqWxPayService extends DqBasePayService {
 
 		if (transactionType == DqWxTransactionType.DOWNLOADBILL) {
 			if (transactionIdOrBillDate instanceof Date) {
-				return downloadbill((Date) transactionIdOrBillDate, outTradeNoBillType);
+				return downLoadBill((Date) transactionIdOrBillDate, outTradeNoBillType);
 			}
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}
@@ -553,7 +573,7 @@ public class DqWxPayService extends DqBasePayService {
 		parameters.put(DqWxPayKey.ENC__BANK__NO_KEY, keyPublic(order.getPayeeAccount()));
 		parameters.put(DqWxPayKey.ENC__TRUE__NAME_KEY, keyPublic(order.getPayeeName()));
 		parameters.put(DqWxPayKey.BANK__CODE_KEY, order.getBank().getCode());
-		parameters.put(DqWxPayKey.AMOUNT_KEY, conversion(order.getAmount()));
+		parameters.put(DqWxPayKey.AMOUNT_KEY, order.getAmountOfCent()); // 以分为单位
 		if (!DqStringUtils.isEmpty(order.getRemark())) {
 			parameters.put(DqWxPayKey.DESC_KEY, order.getRemark());
 		}
@@ -583,17 +603,6 @@ public class DqWxPayService extends DqBasePayService {
 				payConfigStorage.getKeyPrivate(), payConfigStorage.getInputCharset()));
 		return getHttpRequestTemplate().postForObject(getUrl(DqWxTransactionType.QUERY_BANK), parameters,
 				HashMap.class);
-	}
-
-	/**
-	 * 元转分
-	 * 
-	 * @param amount
-	 *            元的金额
-	 * @return 分的金额
-	 */
-	public int conversion(BigDecimal amount) {
-		return amount.multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 	}
 
 	public String keyPublic(String content) {
