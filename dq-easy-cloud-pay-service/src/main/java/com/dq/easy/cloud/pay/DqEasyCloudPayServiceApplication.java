@@ -11,7 +11,8 @@ import com.dq.easy.cloud.pay.model.base.constant.DqEasyCloudPayComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @AutoConfigureDataJpa
-@ComponentScan(basePackages={DqEasyCloudPayComponentScan.COM_DQ_EASY_CLOUD, DqEasyCloudPayComponentScan.COM_DQ_EASY_CLOUD_PAY})
+@ComponentScan(basePackages = { DqEasyCloudPayComponentScan.COM_DQ_EASY_CLOUD,
+		DqEasyCloudPayComponentScan.COM_DQ_EASY_CLOUD_PAY })
 public class DqEasyCloudPayServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DqEasyCloudPayServiceApplication.class, args);

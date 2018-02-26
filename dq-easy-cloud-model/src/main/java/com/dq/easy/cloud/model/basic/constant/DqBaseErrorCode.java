@@ -1,9 +1,8 @@
 package com.dq.easy.cloud.model.basic.constant;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
+
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**
  * 
@@ -20,74 +19,45 @@ import org.springframework.stereotype.Component;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:07:03
  */
-@Component
-public class DqBaseErrorCode {
+public enum DqBaseErrorCode implements DqBaseErrorCodeInf{
 	/** 成功---A_000000 */
-	public static final String SUCCESS = "A_000000";
+	SUCCESS("A_000000", "成功"),
 	/** 异常---系统错误---A_000001 */
-	public static final String SYS_ERROR = "A_000001";
+	SYS_ERROR("A_000001", "系统错误"),
 	/** 异常---系统异常---A_000002 */
-	public static final String SYS_EXCEPTION = "A_000002";
+	SYS_EXCEPTION("A_000002", "系统异常"),
 	/** 异常---运行时异常---A_000003 */
-	public static final String RUNTIME_EXCEPTION = "A_000003";
+	RUNTIME_EXCEPTION("A_000003", "运行时异常"),
 	/** 异常---查询对象不能为空---A_000004 */
-	public static final String QUERY_OBJ_CANT_NULL = "A_000004";
+	QUERY_OBJ_CANT_NULL("A_000004", "查询对象不能为空"),
 	/** 异常---持久化对象不能为空---A_000005 */
-	public static final String ENTITY_OBJ_CANT_NULL = "A_000005";
+	ENTITY_OBJ_CANT_NULL("A_000005", "持久化对象不能为空"),
 	/** 异常---数据传输对象不能为空---A_000006 */
-	public static final String DTO_OBJ_CANT_NULL = "A_000006";
+	DTO_OBJ_CANT_NULL("A_000006", "数据传输对象不能为空"),
 	/** 异常---业务逻辑对象不能为空---A_000007 */
-	public static final String BO_OBJ_CANT_NULL = "A_000007";
+	BO_OBJ_CANT_NULL("A_000007", "业务逻辑对象不能为空"),
 	/** 异常---视图对象不能为空---A_000008 */
-	public static final String VO_OBJ_CANT_NULL = "A_000008";
+	VO_OBJ_CANT_NULL("A_000008", "视图对象不能为空"),
 	/** 异常---类型转换异常---A_000009 */
-	public static final String TYPE_CONVERT_EXCEPTION = "A_000009";
-	/** 异常---非法类型异常---A_000009 */
-	public static final String ILLICIT_TYPE_EXCEPTION = "A_000010";
+	TYPE_CONVERT_EXCEPTION("A_000009", "类型转换异常"),
+	/** 异常---非法类型异常---A_000010 */
+	ILLICIT_TYPE_EXCEPTION("A_000010", "非法类型异常")
+	;
+
+	private String errorCode;
+	private String errorMsg;
 	
-	/** 错误代码和消息容器 */
-	private static final Map<String, String> ERROR_CODE_AND_MSG_MAP = new HashMap<>();
-	
-	static{
-		setErrorMsg(SUCCESS, "成功");
-		setErrorMsg(SYS_ERROR, "系统错误");
-		setErrorMsg(SYS_EXCEPTION, "系统异常");
-		setErrorMsg(RUNTIME_EXCEPTION, "运行时异常");
-		setErrorMsg(QUERY_OBJ_CANT_NULL, "查询对象不能为空");
-		setErrorMsg(ENTITY_OBJ_CANT_NULL, "持久化对象不能为空");
-		setErrorMsg(DTO_OBJ_CANT_NULL, "数据传输对象不能为空");
-		setErrorMsg(BO_OBJ_CANT_NULL, "业务逻辑对象不能为空");
-		setErrorMsg(VO_OBJ_CANT_NULL, "视图对象不能为空");
-		setErrorMsg(TYPE_CONVERT_EXCEPTION, "类型转换异常");
-		setErrorMsg(ILLICIT_TYPE_EXCEPTION, "非法类型异常常");
+	private DqBaseErrorCode(String errorCode, String errorMsg) {
+		
 	}
-	/**
-	 * 
-	 * <p>
-	 * 设置错误码和信息到map集合中
-	 * </p>
-	 *
-	 * @param errorCode : String : 错误码
-	 * @param errorMsg : String : 错误信息
-	 * @author daiqi
-	 * 创建时间    2018年2月22日 上午10:26:42
-	 */
-	public static void setErrorMsg(String errorCode, String errorMsg){
-		ERROR_CODE_AND_MSG_MAP.put(errorCode, errorMsg);
+	@Override
+	public String getErrorCode() {
+		return this.errorCode;
 	}
-	/**
-	 * 
-	 * <p>
-	 * 根据错误代码获取错误信息
-	 * </p>
-	 *
-	 * @param errorCode
-	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年2月2日 下午4:15:56
-	 */
-	public static String getErrorMsg(String errorCode){
-		return ERROR_CODE_AND_MSG_MAP.get(errorCode);
+
+	@Override
+	public String getErrorMsg() {
+		return this.errorMsg;
 	}
 	
 }

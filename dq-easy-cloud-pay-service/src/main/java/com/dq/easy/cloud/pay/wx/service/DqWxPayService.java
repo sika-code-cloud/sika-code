@@ -1,5 +1,6 @@
 package com.dq.easy.cloud.pay.wx.service;
 
+import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
@@ -533,11 +534,11 @@ public class DqWxPayService extends DqBasePayService {
 			if (transactionIdOrBillDate instanceof Date) {
 				return downLoadBill((Date) transactionIdOrBillDate, outTradeNoBillType);
 			}
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		if (!(null == transactionIdOrBillDate || transactionIdOrBillDate instanceof String)) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		// 获取公共参数

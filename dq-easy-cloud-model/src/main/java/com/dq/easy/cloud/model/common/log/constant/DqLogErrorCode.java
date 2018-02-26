@@ -1,23 +1,32 @@
 package com.dq.easy.cloud.model.common.log.constant;
 
-import org.springframework.stereotype.Component;
-
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**
  * 日志错误码
  * @author daiqi
  * @date 2018年2月8日 下午10:29:01
  */
-@Component
-public class DqLogErrorCode extends DqBaseErrorCode{
-	/** dqLogAnalysisDTO不能为空 */
-	public static final String DQ_LOG_ANALYSIS_DTO_CANT_NULL = "LOG_000001";
-	/** dqLogDTO不能为空 */
-	public static final String DQ_LOG_DTO_CANT_NULL = "LOG_000002";
+public enum DqLogErrorCode implements DqBaseErrorCodeInf{
+	/** dqLogAnalysisDTO不能为空---LOG_000001 */
+	DQ_LOG_ANALYSIS_DTO_CANT_NULL("LOG_000001","dqLogAnalysisDTO不能为空"),
+	/** dqLogDTO不能为空---LOG_000002 */
+	DQ_LOG_DTO_CANT_NULL("LOG_000002","dqLogDTO不能为空")
+	;
 	
-	static {
-		setErrorMsg(DQ_LOG_ANALYSIS_DTO_CANT_NULL, "dqLogAnalysisDTO不能为空");
-		setErrorMsg(DQ_LOG_DTO_CANT_NULL, "dqLogDTO不能为空");
+	private String errorCode;
+	private String errorMsg;
+	
+	private DqLogErrorCode(String errorCode, String errorMsg) {
+		
+	}
+	@Override
+	public String getErrorCode() {
+		return this.errorCode;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return this.errorMsg;
 	}
 }

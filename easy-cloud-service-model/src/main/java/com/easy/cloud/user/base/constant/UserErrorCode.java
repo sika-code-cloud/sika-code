@@ -1,8 +1,6 @@
 package com.easy.cloud.user.base.constant;
 
-import org.springframework.stereotype.Component;
-
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**
  * 
@@ -17,28 +15,36 @@ import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:25:50
  */
-@Component
-public class UserErrorCode extends DqBaseErrorCode{
-	/** 用户不存在 */
-	public static final String USER_NOT_EXIST = "U_000001";
+public enum UserErrorCode implements DqBaseErrorCodeInf{
+	/** 用户不存在---U_000001 */
+	USER_NOT_EXIST ("U_000001", "用户不存在"),
 	/** 用户id不能为空 */
-	public static final String USER_ID_CANT_NULL = "U_000002";
+	USER_ID_CANT_NULL ("U_000002", "用户id不能为空"),
 	/** 用户对象不能为空 */
-	public static final String USER_CANT_NULL = "U_000003";
+	USER_CANT_NULL ("U_000003", "用户对象不能为空"),
 	/** 用户名不能为空 */
-	public static final String USER_NAME_CANT_EMPTY = "U_000004";
+	USER_NAME_CANT_EMPTY ("U_000004", "用户名不能为空"),
 	/** 用户密码不能为空 */
-	public static final String USER_PASSWOR_CANT_EMPTY = "U_000005";
+	USER_PASSWOR_CANT_EMPTY ("U_000005", "用户密码不能为空"),
 	/** 用户邮箱不能为空  */
-	public static final String USER_EMAIL_CANT_EMPTY = "U_000006";
+	USER_EMAIL_CANT_EMPTY ("U_000006", "用户邮箱不能为空"),
+	;
+	private String errorCode;
+	private String errorMsg;
 
-	static{
-		setErrorMsg(USER_NOT_EXIST, "用户不存在");
-		setErrorMsg(USER_ID_CANT_NULL, "用户id不能为空");
-		setErrorMsg(USER_CANT_NULL, "用户对象不能为空");
-		setErrorMsg(USER_NAME_CANT_EMPTY, "用户名不能为空");
-		setErrorMsg(USER_PASSWOR_CANT_EMPTY, "用户密码不能为空");
-		setErrorMsg(USER_EMAIL_CANT_EMPTY, "用户邮箱不能为空");
+	private UserErrorCode(String errorCode, String errorMsg) {
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
+	}
+
+	@Override
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 }
 

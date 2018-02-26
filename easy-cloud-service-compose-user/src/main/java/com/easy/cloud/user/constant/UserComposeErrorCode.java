@@ -1,8 +1,7 @@
 package com.easy.cloud.user.constant;
 
-import org.springframework.stereotype.Component;
 
-import com.easy.cloud.user.base.constant.UserErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**
  * 
@@ -13,12 +12,26 @@ import com.easy.cloud.user.base.constant.UserErrorCode;
  * @author daiqi
  * 创建时间    2018年2月6日 上午11:40:43
  */
-@Component
-public class UserComposeErrorCode extends UserErrorCode{
+public enum UserComposeErrorCode implements DqBaseErrorCodeInf{
 	/** 用户邮箱不能为空  */
-	public static final String LOGIN_MODE_WRONG = "UC_000001";
+	LOGIN_MODE_WRONG ("UC_000001", "用户邮箱不能为空"),
+	;
 
-	static{
-		setErrorMsg(LOGIN_MODE_WRONG, "登录类型有误");
+	private String errorCode;
+	private String errorMsg;
+
+	private UserComposeErrorCode(String errorCode, String errorMsg) {
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
+	}
+
+	@Override
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 }

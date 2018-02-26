@@ -5,16 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.log.annotation.DqLog;
-import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
-import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.easy.cloud.user.base.constant.UserErrorCode;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.client.UserClient;
 import com.easy.cloud.user.constant.LoginMode;
@@ -51,10 +48,10 @@ public class UserServiceImpl extends DqBaseService implements UserService{
 	@Override
 	public DqBaseServiceResult login(UserComposeQuery userComposeQuery) {
 		if(DqBaseUtils.isNull(userComposeQuery)){
-			throw DqBaseBusinessException.newInstance(UserComposeErrorCode.QUERY_OBJ_CANT_NULL);
+			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.QUERY_OBJ_CANT_NULL);
 		}
 		if(DqStringUtils.isEmpty(userComposeQuery.getPassword())){
-			throw DqBaseBusinessException.newInstance(UserComposeErrorCode.USER_PASSWOR_CANT_EMPTY);
+			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_PASSWOR_CANT_EMPTY);
 		}
 		Integer loginMode = userComposeQuery.getLoginMode();
 		if(LoginMode.isNotAvailableValue(LoginMode.class, loginMode)){
@@ -62,11 +59,11 @@ public class UserServiceImpl extends DqBaseService implements UserService{
 		}
 		if(LoginMode.isLoginByEmailAndPassword(loginMode)){
 			if(DqStringUtils.isEmpty(userComposeQuery.getEmail())){
-				throw DqBaseBusinessException.newInstance(UserComposeErrorCode.USER_EMAIL_CANT_EMPTY);	
+				throw DqBaseBusinessException.newInstance(UserErrorCode.USER_EMAIL_CANT_EMPTY);	
 			}
 		}else if(LoginMode.isLoginByUsernameAndPassword(loginMode)){
 			if(DqStringUtils.isEmpty(userComposeQuery.getUserName())){
-				throw DqBaseBusinessException.newInstance(UserComposeErrorCode.USER_NAME_CANT_EMPTY);	
+				throw DqBaseBusinessException.newInstance(UserErrorCode.USER_NAME_CANT_EMPTY);	
 			}
 		}
 		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();

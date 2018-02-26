@@ -3,6 +3,8 @@ package com.dq.easy.cloud.model.basic.pojo.dto;
 import java.util.List;
 
 import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.dto.DqBaseServiceResultException;
@@ -20,10 +22,15 @@ public class DqBaseServiceResult{
 	private String errorCode; // 错误代码
 	private String errorMsg; // 错误信息
 	private Object result; // 返回结果
+	private DqBaseErrorCodeInf dqBaseErrorCodeInf; // 错误代码接口
+	
 	private DqBaseServiceResultException serviceResultException; // 服务异常结果
 
 	public static DqBaseServiceResult newInstance(){
 		return new DqBaseServiceResult();
+	}
+	public static DqBaseServiceResult newInstance(DqBaseErrorCodeInf dqBaseErrorCodeInf){
+		return new DqBaseServiceResult().buildDqBaseErrorCodeInf(dqBaseErrorCodeInf);
 	}
 	/**
 	 * <p>
@@ -59,9 +66,8 @@ public class DqBaseServiceResult{
 	 * @author daiqi
 	 * 创建时间    2018年2月2日 下午4:42:04
 	 */
-	public static DqBaseServiceResult newInstanceOfError(String errorCode){
-		DqBaseServiceResult dqBaseServiceResult = newInstance();
-		return dqBaseServiceResult.buildErrorCode(errorCode);
+	public static DqBaseServiceResult newInstanceOfError(DqBaseErrorCodeInf dqBaseErrorCodeInf){
+		return newInstance(dqBaseErrorCodeInf);
 	}
 	/**
 	 * <p>
@@ -72,8 +78,7 @@ public class DqBaseServiceResult{
 	 * 创建时间    2018年2月2日 下午4:42:04
 	 */
 	public static DqBaseServiceResult newInstanceOfSucResult(Object result){
-		DqBaseServiceResult dqBaseServiceResult = newInstanceOfSuccess();
-		return dqBaseServiceResult.buildResult(result);
+		return newInstanceOfSuccess().buildResult(result);
 	}
 	/**
 	 * <p>
@@ -85,9 +90,8 @@ public class DqBaseServiceResult{
 	 * @author daiqi
 	 * 创建时间    2018年2月2日 下午4:43:20
 	 */
-	public static DqBaseServiceResult newInstance(String errorCode, Object result){
-		DqBaseServiceResult dqBaseServiceResult = newInstance();
-		return dqBaseServiceResult.buildErrorCode(errorCode).buildResult(result);
+	public static DqBaseServiceResult newInstance(DqBaseErrorCodeInf dqBaseErrorCodeInf, Object result){
+		return newInstance(dqBaseErrorCodeInf).buildResult(result);
 	}
 	
 	/**
@@ -119,18 +123,26 @@ public class DqBaseServiceResult{
 	public <T> List<T> getTList(Class<T> clazz){
 		return DqJSONUtils.parseArray(this.result, clazz);
 	}
-	
-	/** 构建errorCode */
-	public DqBaseServiceResult buildErrorCode(String errorCode) {
-		this.errorCode = errorCode;
+	/** 构建errorMsg */
+	public DqBaseServiceResult buildDqBaseErrorCodeInf(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		this.dqBaseErrorCodeInf = dqBaseErrorCodeInf;
+		this.errorCode = dqBaseErrorCodeInf.getErrorCode();
+		this.errorMsg = dqBaseErrorCodeInf.getErrorMsg();
 		return this;
 	}
 	
-	/** 构建errorMsg */
-	public DqBaseServiceResult buildErrorMsg(String errorMsg) {
+	/** 构建errorCode */
+	public DqBaseServiceResult buildErrorCode(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		return buildDqBaseErrorCodeInf(dqBaseErrorCodeInf);
+	}
+	
+	/** 构建errorCode和errorMsg */
+	public DqBaseServiceResult buildErrorCodeAndMsg(String errorCode, String errorMsg) {
+		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 		return this;
 	}
+	
 	
 	/** 构建result */
 	public DqBaseServiceResult buildResult(Object result) {
@@ -166,8 +178,8 @@ public class DqBaseServiceResult{
 	}
 
 	public String getErrorMsg() {
-		if(DqStringUtils.isEmpty(this.errorMsg)){
-			this.errorMsg = DqBaseErrorCode.getErrorMsg(errorCode); 
+		if(DqStringUtils.isEmpty(this.errorMsg) && DqBaseUtils.isNotNull(dqBaseErrorCodeInf)) {
+			this.errorMsg = dqBaseErrorCodeInf.getErrorMsg(); 
 		}
 		return errorMsg;
 	}
