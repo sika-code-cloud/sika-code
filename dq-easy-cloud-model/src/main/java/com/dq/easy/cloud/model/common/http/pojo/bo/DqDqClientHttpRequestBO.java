@@ -21,6 +21,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
+import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpHeaderDTO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpStringEntityDTO;
@@ -258,7 +259,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
             return DqJSONUtils.parseObject(DqXMLUtils.getMapFromXmlStr(result), responseType);
         }
 
-        throw DqBaseBusinessException.newInstance(DqHttpErrorCode.TYPE_CONVERT_EXCEPTION);
+        throw DqBaseBusinessException.newInstance(DqBaseErrorCode.TYPE_CONVERT_EXCEPTION);
 
 
     }

@@ -2,7 +2,7 @@ package com.dq.easy.cloud.model.common.sign.constant;
 
 import org.springframework.stereotype.Component;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**
  * 
@@ -17,15 +17,28 @@ import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
  *  使用示例：
  * </pre>
  *
- * @author daiqi
- * 创建时间    2018年2月23日 下午2:40:08
+ * @author daiqi 创建时间 2018年2月23日 下午2:40:08
  */
-@Component
-public class DqSignErrorCode extends DqBaseErrorCode{
-	/** HMACSHA256 签名异常 */
-	public static final String SIGN_HMACSHA256_EXCEPTION = "SIGN_000001";
-	
-	static {
-		setErrorMsg(SIGN_HMACSHA256_EXCEPTION, "HMACSHA256 签名异常");
+public enum DqSignErrorCode implements DqBaseErrorCodeInf {
+	/** HMACSHA256 签名异常---SIGN_000001 */
+	SIGN_HMACSHA256_EXCEPTION ("SIGN_000001", "HMACSHA256 签名异常")
+	;
+
+	private String errorCode;
+	private String errorMsg;
+
+	private DqSignErrorCode(String errorCode, String errorMsg) {
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
+	}
+
+	@Override
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 }

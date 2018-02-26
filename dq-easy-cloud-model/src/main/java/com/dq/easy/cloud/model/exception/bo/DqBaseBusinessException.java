@@ -3,6 +3,7 @@ package com.dq.easy.cloud.model.exception.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 
@@ -19,27 +20,35 @@ public class DqBaseBusinessException extends RuntimeException {
 
 	private String errorCode;
 	private String errorMsg;
+	private DqBaseErrorCodeInf dqBaseErrorCodeInf;
 
-	public static DqBaseBusinessException newInstance(){
+	public static DqBaseBusinessException newInstance() {
 		return new DqBaseBusinessException();
 	}
-	
-	public static DqBaseBusinessException newInstance(String errorCode){
-		return new DqBaseBusinessException().buildErrorCode(errorCode);
+
+	public static DqBaseBusinessException newInstance(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		return new DqBaseBusinessException().buildDqBaseErrorCodeInf(dqBaseErrorCodeInf);
 	}
-	
-	public static DqBaseBusinessException newInstance(String errorCode, String errorMsg){
+
+	public static DqBaseBusinessException newInstance(String errorCode, String errorMsg) {
 		return new DqBaseBusinessException().buildErrorCode(errorCode).buildErrorMsg(errorMsg);
 	}
-	
+
+	public DqBaseBusinessException buildDqBaseErrorCodeInf(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		this.dqBaseErrorCodeInf = dqBaseErrorCodeInf;
+		this.errorCode = dqBaseErrorCodeInf.getErrorCode();
+		this.errorMsg = dqBaseErrorCodeInf.getErrorMsg();
+		return this;
+	}
+
 	/** 构建errorCode */
-	public DqBaseBusinessException buildErrorCode(String errorCode) {
+	private DqBaseBusinessException buildErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 		return this;
 	}
 
 	/** 构建errorMsg */
-	public DqBaseBusinessException buildErrorMsg(String errorMsg) {
+	private DqBaseBusinessException buildErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
 		return this;
 	}
@@ -62,7 +71,7 @@ public class DqBaseBusinessException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		DqBaseServiceResult result = DqBaseServiceResult.newInstanceOfError(errorCode).buildErrorMsg(errorMsg);
+		DqBaseServiceResult result = DqBaseServiceResult.newInstanceOfError(dqBaseErrorCodeInf);
 		return DqJSONUtils.parseObject(result, String.class);
 	}
 
