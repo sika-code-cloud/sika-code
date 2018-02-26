@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.wx.service;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;

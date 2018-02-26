@@ -1,8 +1,4 @@
-package com.dq.easy.cloud.model.basic.constant;
-
-import org.springframework.stereotype.Component;
-
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
+package com.dq.easy.cloud.model.basic.constant.error;
 
 /**
  * 
@@ -48,7 +44,8 @@ public enum DqBaseErrorCode implements DqBaseErrorCodeInf{
 	private String errorMsg;
 	
 	private DqBaseErrorCode(String errorCode, String errorMsg) {
-		
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
 	}
 	@Override
 	public String getErrorCode() {

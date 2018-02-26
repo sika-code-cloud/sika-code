@@ -2,7 +2,7 @@ package com.dq.easy.cloud.model.basic.pojo.dto;
 
 import java.util.List;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;

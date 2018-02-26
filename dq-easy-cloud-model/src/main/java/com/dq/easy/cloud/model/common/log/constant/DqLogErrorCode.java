@@ -18,7 +18,8 @@ public enum DqLogErrorCode implements DqBaseErrorCodeInf{
 	private String errorMsg;
 	
 	private DqLogErrorCode(String errorCode, String errorMsg) {
-		
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
 	}
 	@Override
 	public String getErrorCode() {

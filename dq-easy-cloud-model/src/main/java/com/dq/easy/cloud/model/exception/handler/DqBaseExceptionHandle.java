@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
@@ -35,9 +35,9 @@ public class DqBaseExceptionHandle {
         	DqBaseBusinessException dbbException = (DqBaseBusinessException) ex;
         	dqBaseServiceResult.buildErrorCodeAndMsg(dbbException.getErrorCode(), dbbException.getErrorMsg());
         }else if(ex instanceof RuntimeException){
-        	dqBaseServiceResult.buildErrorCode(DqBaseErrorCode.RUNTIME_EXCEPTION);
+        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCode.RUNTIME_EXCEPTION);
         }else{
-        	dqBaseServiceResult.buildErrorCode(DqBaseErrorCode.SYS_EXCEPTION);
+        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCode.SYS_EXCEPTION);
         }
         serviceResultException.setException(ex.getClass().getName());
         serviceResultException.setFailureDetails(ex.getMessage());
