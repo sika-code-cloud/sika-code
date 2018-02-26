@@ -13,7 +13,6 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月23日 下午3:23:52
  */
-@Component
 public enum DqPayErrorCode implements DqBaseErrorCodeInf{
 	/** isCertSign is false---PAY_CERTSIGN_IS_FLASE---PAY_000001 */
 	PAY_CERTSIGN_IS_FLASE ("PAY_000001", "isCertSign is false"),

@@ -1,9 +1,7 @@
 package com.easy.cloud.user.constant;
 
-import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
-import com.easy.cloud.user.base.constant.UserErrorCode;
 
 /**
  * 

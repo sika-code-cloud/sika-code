@@ -19,7 +19,6 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:07:03
  */
-@Component
 public enum DqBaseErrorCode implements DqBaseErrorCodeInf{
 	/** 成功---A_000000 */
 	SUCCESS("A_000000", "成功"),
