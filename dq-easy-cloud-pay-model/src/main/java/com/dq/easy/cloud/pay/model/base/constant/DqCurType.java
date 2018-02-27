@@ -36,5 +36,13 @@ public enum DqCurType {
         this.name = name;
     }
 
+	public String getName() {
+		return name;
+	}
+
+
+	public int getIndex() {
+		return index;
+	}
 
 }

@@ -112,6 +112,7 @@ public class PayMessageRouter {
 	 *            支付消息
 	 * @return 支付输出结果
 	 */
+	@SuppressWarnings("rawtypes")
 	public DqPayOutMessageDTO route(final DqPayMessageDTO payMessage) {
 
 		final List<PayMessageRouterRule> matchRules = new ArrayList<PayMessageRouterRule>();
@@ -151,7 +152,7 @@ public class PayMessageRouter {
 			executorService.submit(new Runnable() {
 				@Override
 				public void run() {
-					for (Future future : futures) {
+					for (Future<?> future : futures) {
 						try {
 							future.get();
 							LOG.debug("End session access: async=true, fromPay=" + payMessage.getFromPay());

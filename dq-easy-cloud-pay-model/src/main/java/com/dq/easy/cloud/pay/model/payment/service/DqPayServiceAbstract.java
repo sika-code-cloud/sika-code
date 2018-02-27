@@ -126,7 +126,7 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	public Map<String, Object> getParameterToMap(Map<String, String[]> parameterMap, InputStream is) {
 
 		Map<String, Object> params = new TreeMap<String, Object>();
-		for (Iterator iter = parameterMap.keySet().iterator(); iter.hasNext();) {
+		for (Iterator<String> iter = parameterMap.keySet().iterator(); iter.hasNext();) {
 			String name = (String) iter.next();
 			String[] values = parameterMap.get(name);
 			String valueStr = "";

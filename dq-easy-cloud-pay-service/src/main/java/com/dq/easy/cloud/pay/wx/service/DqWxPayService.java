@@ -329,6 +329,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 * @return 获取输出消息，用户返回给支付端, 针对于web端
 	 * @see MethodType 请求类型
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public String buildRequest(Map<String, Object> orderInfo, MethodType method) {
 		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RETURN__CODE_KEY))) {

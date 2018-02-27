@@ -3,18 +3,14 @@ package com.dq.easy.cloud.pay.wx.logic;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqImageFormat;
 import com.dq.easy.cloud.model.basic.logic.DqBaseLogic;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
@@ -29,7 +25,6 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayValue;
-import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxBank;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxPayOrderBO;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransferOrderBO;
