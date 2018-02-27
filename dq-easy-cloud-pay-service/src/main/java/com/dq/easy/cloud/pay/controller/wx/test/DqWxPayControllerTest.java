@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
@@ -58,7 +58,7 @@ public class DqWxPayControllerTest extends DqBaseController{
         order.setWapName("在线充值");
 
         Map<String, Object> orderInfo = service.orderInfo(order);
-        return service.buildRequest(orderInfo, MethodType.POST);
+        return service.buildRequest(orderInfo, DqMethodType.POST);
     }
 
     /**

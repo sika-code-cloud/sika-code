@@ -1,60 +1,35 @@
+package com.dq.easy.cloud.pay.model.payment.logic;
 
-package com.dq.easy.cloud.pay.controller.wx;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.dq.easy.cloud.model.basic.controller.DqBaseController;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
-import com.dq.easy.cloud.pay.wx.logic.DqWxPayLogic;
-import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
- * 微信Controller
+ * 
+ * <p>
+ * 支付逻辑接口
+ * </p>
+ *
+ * <pre>
+ *  说明：
+ *  约定：
+ *  命名规范：
+ *  使用示例：
+ * </pre>
+ *
+ * @author daiqi
+ * 创建时间    2018年2月27日 上午10:19:05
  */
-@RestController
-@RequestMapping("wx")
-public class DqWxPayController extends DqBaseController {
-	@Autowired
-	private DqWxPayLogic dqWxPayLogic;
-
+interface DqPayLogicInf {
 	/**
 	 * 
 	 * <p>
-	 * 微信公众号支付
-	 * </p>
-	 *
-	 * <pre>
-	 *     所需参数示例及其说明
-	 *     参数名称 : 示例值 : 说明 : 是否必须
-	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
-	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
-	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
-	 *     dqPayOrderDTO.openid : eraweea343 : 用户openid : 是
-	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 否，不传由支付系统自动创建
-	 * </pre>
-	 *
-	 * @param dqPayOrderDTO
-	 * @return DqBaseServiceResult
-	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
-	 */
-	@RequestMapping(value = "jsapiPay")
-	public DqBaseServiceResult jsapiPay(DqPayOrderDTO dDqPayOrderDTO) {
-		return dqWxPayLogic.jsapiPay(dDqPayOrderDTO, DqWxTransactionType.JSAPI);
-	}
-
-	/**
-	 * 
-	 * <p>
-	 * 生成微信支付二维码
+	 * 网页支付
 	 * </p>
 	 *
 	 * <pre>
@@ -67,18 +42,15 @@ public class DqWxPayController extends DqBaseController {
 	 * </pre>
 	 *
 	 * @param dqPayOrderDTO
-	 * @return DqBaseServiceResult
+	 * @return String : 重定向的路径
 	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
 	 */
-	@RequestMapping(value = "generatePayQrCode", produces = "image/jpeg;charset=UTF-8")
-	public byte[] generatePayQrCode(DqPayOrderDTO dqPayOrderDTO) throws IOException {
-		return dqWxPayLogic.generatePayQrCode(dqPayOrderDTO, DqWxTransactionType.NATIVE);
-	}
+	String mWebPay(DqPayOrderDTO dqPayOrderDTO, HttpServletRequest request, DqTransactionType transactionType);
 
 	/**
 	 * 
 	 * <p>
-	 * 跳到支付页面 针对H5支付
+	 * App支付
 	 * </p>
 	 *
 	 * <pre>
@@ -91,42 +63,15 @@ public class DqWxPayController extends DqBaseController {
 	 * </pre>
 	 *
 	 * @param dqPayOrderDTO
-	 * @return 跳到支付页面
+	 * @return String : 重定向的路径
 	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
 	 */
-	@RequestMapping(value = "mWebPay", produces = "text/html;charset=UTF-8")
-	public String mWebPay(DqPayOrderDTO dqPayOrderDTO, HttpServletRequest request) {
-		return dqWxPayLogic.mWebPay(dqPayOrderDTO, request, DqWxTransactionType.MWEB);
-	}
+	DqBaseServiceResult appPay(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType) ;
 
 	/**
 	 * 
 	 * <p>
-	 * 获取支付预订单信息--app支付
-	 * </p>
-	 *
-	 * <pre>
-	 *     所需参数示例及其说明
-	 *     参数名称 : 示例值 : 说明 : 是否必须
-	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
-	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
-	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
-	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 否，不传由支付系统自动创建
-	 * </pre>
-	 *
-	 * @param dqPayOrderDTO
-	 * @return 支付预订单信息
-	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
-	 */
-	@RequestMapping("appPay")
-	public DqBaseServiceResult appPay(DqPayOrderDTO dqPayOrderDTO) {
-		return dqWxPayLogic.appPay(dqPayOrderDTO, DqWxTransactionType.APP);
-	}
-
-	/**
-	 * 
-	 * <p>
-	 * 微信刷卡支付--刷卡付,pos主动扫码付款(条码付)
+	 * 刷卡支付---pos主动扫码付款(条码付)
 	 * </p>
 	 *
 	 * <pre>
@@ -143,34 +88,60 @@ public class DqWxPayController extends DqBaseController {
 	 * @return DqBaseServiceResult : 处理结果
 	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
 	 */
-	@RequestMapping(value = "microPay")
-	public DqBaseServiceResult microPay(DqPayOrderDTO dqPayOrderDTO) throws IOException {
-		return dqWxPayLogic.microPay(dqPayOrderDTO, DqWxTransactionType.MICROPAY);
-	}
-
-	/**
-	 * 支付回调地址
-	 *
-	 * @param request
-	 *
-	 * @return
-	 */
-	@RequestMapping(value = "payCallBack")
-	public String payCallBack(HttpServletRequest request) throws IOException {
-		return dqWxPayLogic.payCallBack(request);
-	}
+	DqBaseServiceResult microPay(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType) throws IOException ;
 
 	/**
 	 * 
 	 * <p>
-	 * 查询 支付订单结果信息
+	 * 获取支付二维码
 	 * </p>
 	 *
 	 * <pre>
 	 *     所需参数示例及其说明
 	 *     参数名称 : 示例值 : 说明 : 是否必须
-	 *     dqPayOrderDTO.tradeNo : ert43543rete : 支付平台订单号 : 是
-	 *     dqPayOrderDTO.outTradeNo : CNG20154987957 : 商户订单号: 是
+	 *     dqPayOrderDTO.subject : 支付洛 : 支付主题 : 是
+	 *     dqPayOrderDTO.body : 摘要 : 支付主简述: 是
+	 *     dqPayOrderDTO.price : 0.01 : 支付价格 : 是
+	 *     dqPayOrderDTO.outTradeNo : PON2017152453125487 : 商户订单号 : 否，不传由支付系统自动创建
+	 * </pre>
+	 *
+	 * @param dqPayOrderDTO
+	 *            : DqPayOrderDTO : 支付订单数据传输对象
+	 * @return 二维码图像
+	 * @author daiqi 创建时间 2018年2月24日 下午2:19:55
+	 * @throws IOException
+	 */
+	byte[] generatePayQrCode(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType) throws IOException ;
+
+	/**
+	 * 
+	 * <p>
+	 * 支付回调
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param request
+	 * @return 处理结果
+	 * @throws IOException
+	 * @author daiqi 创建时间 2018年2月26日 下午5:57:51
+	 */
+	String payCallBack(HttpServletRequest request) throws IOException ;
+	
+	/**
+	 * 
+	 * <p>
+	 * 查询订单信息
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     dqOrderQuery.tradeNo : ert43543rete : 支付平台订单号 : 是
+	 *     dqOrderQuery.outTradeNo : CNG20154987957 : 商户订单号: 是
 	 * </pre>
 	 *
 	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
@@ -178,10 +149,8 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("queryPayResult")
-	public DqBaseServiceResult queryPayResult(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.queryPayResult(dqOrderQuery);
-	}
+	DqBaseServiceResult queryPayResult(DqOrderQuery dqOrderQuery) ;
+	
 	/**
 	 * 
 	 * <p>
@@ -191,8 +160,8 @@ public class DqWxPayController extends DqBaseController {
 	 * <pre>
 	 *     所需参数示例及其说明
 	 *     参数名称 : 示例值 : 说明 : 是否必须
-	 *     dqPayOrderDTO.tradeNo : ert43543rete : 支付平台订单号 : 是
-	 *     dqPayOrderDTO.outTradeNo : CNG20154987957 : 商户订单号: 是
+	 *     dqOrderQuery.tradeNo : ert43543rete : 支付平台订单号 : 是
+	 *     dqOrderQuery.outTradeNo : CNG20154987957 : 商户订单号: 是
 	 * </pre>
 	 *
 	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
@@ -200,11 +169,8 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("close")
-	public DqBaseServiceResult close(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.close(dqOrderQuery);
-	}
-
+	DqBaseServiceResult close(DqOrderQuery dqOrderQuery) ;
+	
 	/**
 	 * 
 	 * <p>
@@ -221,11 +187,8 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("refund")
-	public DqBaseServiceResult refund(DqRefundOrderDTO order) {
-		return dqWxPayLogic.refund(order);
-	}
-
+	DqBaseServiceResult refund(DqRefundOrderDTO dqRefundOrderDTO) ;
+	
 	/**
 	 * 
 	 * <p>
@@ -244,10 +207,7 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("queryRefundResult")
-	public DqBaseServiceResult queryRefundResult(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.queryRefundResult(dqOrderQuery);
-	}
+	DqBaseServiceResult queryRefundResult(DqOrderQuery dqOrderQuery) ;
 
 	/**
 	 * 
@@ -262,16 +222,13 @@ public class DqWxPayController extends DqBaseController {
 	 *     dqOrderQuery.billType : 1 : 账单类型、具体请查看对应支付平台: 是
 	 * </pre>
 	 *
-	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
+	 * @param dqOrderQuery
+	 *            : DqOrderQuery : 订单查询对象
 	 * @return DqBaseServiceResult : 返回支付方下载对账单的结果
-	 * @author daiqi
-	 * 创建时间    2018年2月26日 下午7:04:13
+	 * @author daiqi 创建时间 2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("downLoadBill")
-	public Object downLoadBill(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.downLoadBill(dqOrderQuery);
-	}
-
+	Object downLoadBill(DqOrderQuery dqOrderQuery) ;
+	
 	/**
 	 * 
 	 * <p>
@@ -291,18 +248,15 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("secondaryInterface")
-	public DqBaseServiceResult secondaryInterface(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.secondaryInterface(dqOrderQuery);
-	}
-
+	DqBaseServiceResult secondaryInterface(DqOrderQuery dqOrderQuery) ;
+	
 	/**
 	 * 
 	 * <p>
 	 * 转账
 	 * </p>
 	 * <p>
-	 *  采用标准RSA算法，公钥由微信侧提供,将公钥信息配置在DqPayConfigStorage#setKeyPublic(String)
+	 *  采用标准RSA算法，公钥由侧提供,将公钥信息配置在DqPayConfigStorage#setKeyPublic(String)
 	 * </p>
 	 * <pre>
 	 *     所需参数示例及其说明
@@ -320,11 +274,8 @@ public class DqWxPayController extends DqBaseController {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("transfer")
-	public DqBaseServiceResult transfer(DqTransferOrderDTO dqTransferOrderDTO) {
-		return dqWxPayLogic.transfer(dqTransferOrderDTO);
-	}
-
+	DqBaseServiceResult transfer(DqTransferOrderDTO dqTransferOrderDTO) ;
+	
 	/**
 	 * 
 	 * <p>
@@ -339,12 +290,10 @@ public class DqWxPayController extends DqBaseController {
 	 * </pre>
 	 *
 	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
-	 * @return DqBaseServiceResult : 返回对应的转账订单
+	 * @return DqBaseServiceResult : 返回查询的转账结果
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	@RequestMapping("queryTransferResult")
-	public DqBaseServiceResult queryTransferResult(DqOrderQuery dqOrderQuery) {
-		return dqWxPayLogic.queryTransferResult(dqOrderQuery);
-	}
+	DqBaseServiceResult queryTransferResult(DqOrderQuery dqOrderQuery) ;
+	
 }

@@ -29,6 +29,11 @@ public class DqDateFormatUtils {
 	public static final String FORMAT_LONG_MILLIS = "yyyyMMddHHmmssSSS";
 	/** 时间格式---精确到秒---yyyy-MM-dd HH:mm:ss */
 	public static final String FORMAT_NORMAL = "yyyy-MM-dd HH:mm:ss";
+	/** 时间格式---精确到天---yyyy-MM-dd */
+	public static final String FORMAT_NORMAL_SHORT = "yyyy-MM-dd";
+	/** 时区---东八时区---GMT+8 */
+	public static final String EAST_EIGHT_TIME_ZONE = "GMT+8";
+	
 
 	/**
      * <p>Formats a date/time into a specific pattern using the UTC time zone.</p>

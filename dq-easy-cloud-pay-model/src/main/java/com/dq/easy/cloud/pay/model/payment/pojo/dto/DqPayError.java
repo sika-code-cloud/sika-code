@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.pay.model.base.inf;
+package com.dq.easy.cloud.pay.model.payment.pojo.dto;
 
 /**
  * 

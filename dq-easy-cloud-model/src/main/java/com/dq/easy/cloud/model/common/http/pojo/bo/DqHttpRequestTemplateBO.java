@@ -12,7 +12,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpHeaderDTO;
 import com.dq.easy.cloud.model.common.http.utils.DqUriVariables;
@@ -165,15 +165,15 @@ public class DqHttpRequestTemplateBO {
      * @return 类型对象
      */
     public <T> T postForObject(String uri, Object request, Class<T> responseType, Object... uriVariables){
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), request, responseType, MethodType.POST);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), request, responseType, DqMethodType.POST);
     }
 
     public <T> T postForObject(String uri, Object request, Class<T> responseType, Map<String, Object> uriVariables) {
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), request, responseType, MethodType.POST);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), request, responseType, DqMethodType.POST);
     }
 
     public <T> T postForObject(URI uri, Object request, Class<T> responseType){
-        return doExecute(uri, request, responseType, MethodType.POST);
+        return doExecute(uri, request, responseType, DqMethodType.POST);
     }
 
 
@@ -193,7 +193,7 @@ public class DqHttpRequestTemplateBO {
      */
     public <T> T getForObject(String uri, Class<T> responseType, Object... uriVariables){
 
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), null, responseType, MethodType.GET);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), null, responseType, DqMethodType.GET);
     }
 
     /**
@@ -215,7 +215,7 @@ public class DqHttpRequestTemplateBO {
      * </code>
      */
     public <T> T getForObject(String uri, Class<T> responseType, Map<String, ?> uriVariables){
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), null, responseType, MethodType.GET);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), null, responseType, DqMethodType.GET);
     }
 
 
@@ -234,7 +234,7 @@ public class DqHttpRequestTemplateBO {
      */
     public <T> T getForObject(String uri, DqHttpHeaderDTO header,Class<T> responseType, Object... uriVariables){
 
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), header, responseType, MethodType.GET);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), header, responseType, DqMethodType.GET);
     }
 
     /**
@@ -257,7 +257,7 @@ public class DqHttpRequestTemplateBO {
      * </code>
      */
     public <T> T getForObject(String uri, DqHttpHeaderDTO header, Class<T> responseType, Map<String, ?> uriVariables){
-        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), header, responseType, MethodType.GET);
+        return doExecute(URI.create(DqUriVariables.getUri(uri, uriVariables)), header, responseType, DqMethodType.GET);
     }
 
 
@@ -270,7 +270,7 @@ public class DqHttpRequestTemplateBO {
      * @param <T> 响应类型
      * @return 类型对象
      */
-    public <T>T doExecute(URI uri, Object request, Class<T> responseType, MethodType method){
+    public <T>T doExecute(URI uri, Object request, Class<T> responseType, DqMethodType method){
         DqDqClientHttpRequestBO<T> httpRequest = new DqDqClientHttpRequestBO(uri ,method, request);
         //判断是否有代理设置
         if (null == httpProxy){
@@ -297,7 +297,7 @@ public class DqHttpRequestTemplateBO {
      * @param <T> 响应类型
      * @return 类型对象
      */
-    public <T>T doExecute(String uri, Object request, Class<T> responseType, MethodType method){
+    public <T>T doExecute(String uri, Object request, Class<T> responseType, DqMethodType method){
        return doExecute(URI.create(uri), request, responseType, method);
     }
 }

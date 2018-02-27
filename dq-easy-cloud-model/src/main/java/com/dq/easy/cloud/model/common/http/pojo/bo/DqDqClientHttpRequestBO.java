@@ -19,7 +19,7 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
@@ -47,7 +47,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
     /**
      * http请求方式 get pos
      */
-    private MethodType methodType;
+    private DqMethodType methodType;
     /**
      *  响应类型
      */
@@ -71,7 +71,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param method  请求方法
      * @param request 请求内容
      */
-    public DqDqClientHttpRequestBO(URI uri, MethodType method, Object request) {
+    public DqDqClientHttpRequestBO(URI uri, DqMethodType method, Object request) {
        this(uri, method);
         setParameters(request);
     }
@@ -80,7 +80,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param uri 请求地址
      * @param method  请求方法
      */
-    public DqDqClientHttpRequestBO(URI uri, MethodType method) {
+    public DqDqClientHttpRequestBO(URI uri, DqMethodType method) {
         this.setURI(uri);
         this.methodType = method;
     }
@@ -104,7 +104,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param uri 请求地址
      * @param method  请求方法
      */
-    public DqDqClientHttpRequestBO(String uri, MethodType method) {
+    public DqDqClientHttpRequestBO(String uri, DqMethodType method) {
         this.setURI(URI.create(uri));
         this.methodType = method;
     }
@@ -114,7 +114,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param method  请求方法
      * @param request 请求内容
      */
-    public DqDqClientHttpRequestBO(String uri, MethodType method, Object request) {
+    public DqDqClientHttpRequestBO(String uri, DqMethodType method, Object request) {
         this(uri, method);
         setParameters(request);
     }
@@ -123,9 +123,9 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * 设置请求方式
      *
      * @param method 请求方式
-     * {@link com.egzosn.pay.common.bean.MethodType} 请求方式
+     * {@link com.DqMethodType.pay.common.bean.MethodType} 请求方式
      */
-    public void setMethod(MethodType method) {
+    public void setMethod(DqMethodType method) {
         this.methodType = method;
     }
 

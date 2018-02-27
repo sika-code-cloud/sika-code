@@ -1,45 +1,39 @@
-package com.dq.easy.cloud.pay.wx.pojo.bo;
+package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqRequestHeaderKey;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.common.utils.DqPayUtils.DqPayOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
 /**
  * 
  * <p>
- * 微信订单业务逻辑对象
+ * 支付宝订单业务逻辑对象
  * </p>
  *
  * @author daiqi 创建时间 2018年2月24日 下午3:34:30
  */
-public class DqWxPayOrderBO extends DqPayOrderBO {
+public class DqZfbPayOrderBO extends DqPayOrderBO {
 
 	/** 只用作json序列化的时候请勿调用默认构造函数创建对象 */
-	public DqWxPayOrderBO() {
+	public DqZfbPayOrderBO() {
 
 	}
 
-	public DqWxPayOrderBO(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType) {
+	public DqZfbPayOrderBO(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType) {
 		super(dqPayOrderDTO, transactionType);
 	}
 
-	public DqWxPayOrderBO buildDqPayOrderDTO(DqPayOrderDTO dqPayOrderDTO) {
+	public DqZfbPayOrderBO buildDqPayOrderDTO(DqPayOrderDTO dqPayOrderDTO) {
 		super.dqPayOrderDTO = dqPayOrderDTO;
 		return this;
 	}
 
 	@Override
 	public DqPayOrderBO initMWebPayData(HttpServletRequest request) {
-		super.dqPayOrderDTO.setSpbillCreateIp(request.getHeader(DqRequestHeaderKey.X_REAL_IP_KEY));
-		// 设置网页地址
-		super.dqPayOrderDTO.setWapUrl(request.getRequestURL().toString());
-		super.initWapName();
 		return this;
 	}
 
@@ -54,7 +48,7 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 			return;
 		}
 		DqTransactionType transactionType = getDqPayOrderDTO().getTransactionType();
-		super.dqPayOrderDTO.setOutTradeNo(DqPayOrderNoGenerator.generateWxOrderNO(transactionType));
+		super.dqPayOrderDTO.setOutTradeNo(DqPayOrderNoGenerator.generateZfbOrderNO(transactionType));
 	}
 	
 	@Override
@@ -76,8 +70,6 @@ public class DqWxPayOrderBO extends DqPayOrderBO {
 	@Override
 	public DqPayOrderBO verifyMWebPayData() {
 		verifyCommonData();
-		super.verifyWapUrl();
-		super.verifySpbillCreateIp();
 		return this;
 	}
 	

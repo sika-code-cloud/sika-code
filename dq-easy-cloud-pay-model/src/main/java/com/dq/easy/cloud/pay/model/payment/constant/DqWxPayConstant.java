@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.pay.wx.constant;
+package com.dq.easy.cloud.pay.model.payment.constant;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant;
@@ -14,12 +14,8 @@ public class DqWxPayConstant extends DqPayConstant{
 	public static class DqWxPayKey extends DqPayKey{
 		/** appId的键名---APP_ID_KEY---appId */
 		public static final String APP_ID_KEY = "appId";
-		/** body的键名---BODY_KEY---body */
-		public static final String BODY_KEY = "body";
 		/** total_fee的键名---ATTACH_KEY---attach */
 		public static final String ATTACH_KEY = "attach";
-		/** sign的键名---SIGN_KEY---sign */
-		public static final String SIGN_KEY = "sign";
 		/** signType的键名---SIGN_TYPE_KEY---signType */
 		public static final String SIGN_TYPE_KEY = "signType";
 		/** timeStamp的键名---TIME_STAMP_KEY---timeStamp */
@@ -30,8 +26,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String PARTNERID_KEY = "partnerid";
 		/** prepayid键名---PREPAYID_KEY---prepayid */
 		public static final String PREPAYID_KEY = "prepayid";
-		/** timestamp键名---TIMESTAMP_KEY---timestamp */
-		public static final String TIMESTAMP_KEY = "timestamp";
 		/** data键名---DATA_KEY---data */
 		public static final String DATA_KEY = "data";
 		/** openid键名---OPENID_KEY---openid */
@@ -40,8 +34,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String TYPE_KEY = "type";
 		/** desc键名---DESC_KEY---desc */
 		public static final String DESC_KEY = "desc";
-		/** amount键名---AMOUNT_KEY---amount */
-		public static final String AMOUNT_KEY = "amount";
 		/** nonceStr键名---NONCE_STR_KEY---nonceStr */
 		public static final String NONCE_STR_KEY = "nonceStr";
 		/** noncestr键名---NONCESTR_KEY---noncestr */
@@ -51,8 +43,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String TRADE__TYPE_KEY = "trade_type";
 		/** spbill_create_ip非驼峰键名使用两个下划线隔开---SPBILL__CREATE__IP_KEY---spbill_create_ip */
 		public static final String SPBILL__CREATE__IP_KEY = "spbill_create_ip";
-		/** notify_url非驼峰键名使用两个下划线隔开---NOTIFY__URL_KEY---notify_url */
-		public static final String NOTIFY__URL_KEY = "notify_url";
 		/** return_code非驼峰键名使用两个下划线隔开---RETURN__CODE_KEY---return_code */
 		public static final String RETURN__CODE_KEY = "return_code";
 		/** return_msg非驼峰键名使用两个下划线隔开---RETURN__MSG_KEY---return_msg */
@@ -65,14 +55,10 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String RESULT__MSG_KEY = "result_msg";
 		/** prepay_id非驼峰键名使用两个下划线隔开---PREPAY__ID_KEY---prepay_id */
 		public static final String PREPAY__ID_KEY = "prepay_id";
-		/** sign_type非驼峰键名使用两个下划线隔开---SIGN__TYPE_KEY---sign_type */
-		public static final String SIGN__TYPE_KEY = "sign_type";
 		/** code_url非驼峰键名使用两个下划线隔开---CODE__URL_KEY---code_url */
 		public static final String CODE__URL_KEY = "code_url";
 		/** transaction_id非驼峰键名使用两个下划线隔开---TRANSACTION__ID_KEY---transaction_id */
 		public static final String TRANSACTION__ID_KEY = "transaction_id";
-		/** out_trade_no非驼峰键名使用两个下划线隔开---OUT__TRADE__NO_KEY---out_trade_no */
-		public static final String OUT__TRADE__NO_KEY = "out_trade_no";
 		/** out_refund_no非驼峰键名使用两个下划线隔开---OUT__REFUND__NO_KEY---out_refund_no */
 		public static final String OUT__REFUND__NO_KEY = "out_refund_no";
 		/** total_fee非驼峰键名使用两个下划线隔开---TOTAL__FEE_KEY---total_fee */
@@ -81,10 +67,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String REFUND__FEE_KEY = "refund_fee";
 		/** op_user_id非驼峰键名使用两个下划线隔开---OP__USER__ID_KEY---op_user_id */
 		public static final String OP__USER__ID_KEY = "op_user_id";
-		/** bill_type非驼峰键名使用两个下划线隔开---BILL__TYPE_KEY---bill_type */
-		public static final String BILL__TYPE_KEY = "bill_type";
-		/** bill_date非驼峰键名使用两个下划线隔开---BILL__DATE_KEY---bill_date */
-		public static final String BILL__DATE_KEY = "bill_date";
 		/** wap_url非驼峰键名使用两个下划线隔开---WAP__URL_KEY---wap_url */
 		public static final String WAP__URL_KEY = "wap_url";
 		/** wap_name非驼峰键名使用两个下划线隔开---WAP__NAME_KEY---wap_name */
@@ -93,8 +75,6 @@ public class DqWxPayConstant extends DqPayConstant{
 		public static final String H5__INFO_KEY = "h5_info";
 		/** scene_info非驼峰键名使用两个下划线隔开---SCENE__INFO_KEY---scene_info */
 		public static final String SCENE__INFO_KEY = "scene_info";
-		/** auth_code非驼峰键名使用两个下划线隔开---AUTH__CODE_KEY---auth_code */
-		public static final String AUTH__CODE_KEY = "auth_code";
 		/** product_id非驼峰键名使用两个下划线隔开---PRODUCT__ID_KEY---product_id */
 		public static final String PRODUCT__ID_KEY = "product_id";
 		/** partner_trade_no非驼峰键名使用两个下划线隔开---PARTNER__TRADE__NO_KEY---partner_trade_no */

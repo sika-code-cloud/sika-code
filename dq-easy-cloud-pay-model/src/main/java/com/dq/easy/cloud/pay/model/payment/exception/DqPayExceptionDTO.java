@@ -1,7 +1,7 @@
 
 package com.dq.easy.cloud.pay.model.payment.exception;
 
-import com.dq.easy.cloud.pay.model.base.inf.DqPayError;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayError;
 
 /**
  * 

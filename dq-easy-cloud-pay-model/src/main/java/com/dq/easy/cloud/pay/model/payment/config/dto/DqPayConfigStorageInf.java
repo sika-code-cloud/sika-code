@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.pay.model.payment.config;
+package com.dq.easy.cloud.pay.model.payment.config.dto;
 
 import com.dq.easy.cloud.model.common.sign.dto.DqCertDescriptorDTO;
 import com.dq.easy.cloud.pay.model.paymessage.constant.DqMsgType;

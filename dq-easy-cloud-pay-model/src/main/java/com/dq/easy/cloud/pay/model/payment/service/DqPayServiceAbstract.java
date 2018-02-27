@@ -11,7 +11,7 @@ import com.dq.easy.cloud.model.common.http.pojo.bo.DqHttpRequestTemplateBO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
-import com.dq.easy.cloud.pay.model.payment.config.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;

@@ -39,6 +39,21 @@ public abstract class DqPayOrderBO {
 		initOutTradeNo();
 		return this;
 	}
+	/**
+	 * 
+	 * <p>
+	 * 初始化transactionType类型
+	 * </p>
+	 *
+	 * @param transactionType
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月27日 下午5:07:46
+	 */
+	public DqPayOrderBO initDqTransactionType(DqTransactionType transactionType) {
+		this.dqPayOrderDTO.setTransactionType(transactionType);
+		return this;
+	}
 
 	/** 初始化initWapName */
 	public DqPayOrderBO initWapName() {

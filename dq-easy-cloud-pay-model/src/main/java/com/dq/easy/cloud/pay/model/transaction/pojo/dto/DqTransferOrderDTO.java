@@ -2,6 +2,7 @@ package com.dq.easy.cloud.pay.model.transaction.pojo.dto;
 
 import java.math.BigDecimal;
 
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.model.base.constant.DqCurType;
 import com.dq.easy.cloud.pay.model.base.inf.DqBank;
 import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
@@ -65,6 +66,9 @@ public class DqTransferOrderDTO {
 		return DqPayUtils.yuanToCent(amount);
 	}
 
+	public String getBankStrUpper() {
+		return DqStringUtils.upperCase(bankStr);
+	}
 	public String getOutNo() {
 		return outNo;
 	}

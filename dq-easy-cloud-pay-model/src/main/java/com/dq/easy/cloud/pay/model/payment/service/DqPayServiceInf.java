@@ -1,10 +1,10 @@
 package com.dq.easy.cloud.pay.model.payment.service;
 
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.http.pojo.bo.DqHttpRequestTemplateBO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
-import com.dq.easy.cloud.pay.model.payment.config.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -160,9 +160,9 @@ public interface DqPayServiceInf {
 	 * @param method
 	 *            请求方式 "post" "get",
 	 * @return 获取输出消息，用户返回给支付端, 针对于web端
-	 * @see MethodType 请求类型
+	 * @see DqMethodType 请求类型
 	 */
-	String buildRequest(Map<String, Object> orderInfo, MethodType method);
+	String buildRequest(Map<String, Object> orderInfo, DqMethodType method);
 
 	/**
 	 * 生成支付二维码，用户返回给支付端,

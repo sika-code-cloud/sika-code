@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.pay.model.payment.config;
+package com.dq.easy.cloud.pay.model.payment.config.dto;
 
 
 import java.util.concurrent.locks.Lock;

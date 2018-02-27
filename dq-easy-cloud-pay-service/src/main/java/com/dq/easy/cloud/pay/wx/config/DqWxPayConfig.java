@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.dq.easy.cloud.pay.wx.config.dto.DqWxPayConfigStorage;
+import com.dq.easy.cloud.pay.wx.config.dto.DqWxPayConfigStorageDTO;
 import com.dq.easy.cloud.pay.wx.service.DqWxPayService;
 
 /**
@@ -23,8 +23,8 @@ public class DqWxPayConfig {
 	
 	@Bean
 	@ConfigurationProperties(prefix="wx", ignoreUnknownFields = false)  
-	public DqWxPayConfigStorage dqWxPayConfigStorage(){
-		return DqWxPayConfigStorage.newInstance();
+	public DqWxPayConfigStorageDTO dqWxPayConfigStorage(){
+		return DqWxPayConfigStorageDTO.newInstance();
 	}
 	
 	@Bean

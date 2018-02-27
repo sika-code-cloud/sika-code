@@ -14,12 +14,12 @@ import com.dq.easy.cloud.model.basic.constant.DqBaseConstant;
 public class DqHttpConstant extends DqBaseConstant{
 	
 	/** 方法类型常量 */
-	public static enum MethodType{
+	public static enum DqMethodType{
 		GET, POST
 	}
 	
 	/** 请求头的key类 */
-	public static class RequestHeaderKey {
+	public static class DqRequestHeaderKey {
 		public static final String X_REAL_IP_KEY = "X-Real-IP";
 	}
 	

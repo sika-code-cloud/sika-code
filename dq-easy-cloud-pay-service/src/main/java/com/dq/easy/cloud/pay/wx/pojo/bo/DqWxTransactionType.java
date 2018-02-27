@@ -2,10 +2,10 @@ package com.dq.easy.cloud.pay.wx.pojo.bo;
 
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
-import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -166,6 +166,14 @@ public enum DqWxTransactionType implements DqTransactionType {
 		return DqPayUtils.equalsDqTransactionType(MICROPAY, dqTransactionType);
 	}
 	
+	/** 类型是BANK---银行卡转账 */
+	public static boolean isBANK(String type) {
+		return DqStringUtils.equals(BANK.getType(), type);
+	}
+	/** 类型是BANK---银行卡转账 */
+	public static boolean isBANK(DqTransactionType dqTransactionType) {
+		return DqPayUtils.equalsDqTransactionType(BANK, dqTransactionType);
+	}
 	public void setAttribute(Map<String, Object> parameters, DqPayOrderDTO order) {
 
 	}

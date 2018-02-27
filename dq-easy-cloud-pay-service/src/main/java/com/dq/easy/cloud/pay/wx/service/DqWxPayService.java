@@ -4,18 +4,20 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
-import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.Symbol;
+import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.payment.config.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
+import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
@@ -23,8 +25,6 @@ import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
-import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
-import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -252,7 +252,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 */
 	private Map<String, Object> setSign(Map<String, Object> parameters) {
 		parameters.put(DqWxPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
-		String sign = createSign(DqSignUtils.parameterText(parameters, Symbol.SINGLE_AND, DqWxPayKey.SIGN_KEY, DqWxPayKey.APP_ID_KEY),
+		String sign = createSign(DqSignUtils.parameterText(parameters, DqSymbol.SINGLE_AND, DqWxPayKey.SIGN_KEY, DqWxPayKey.APP_ID_KEY),
 				payConfigStorage.getInputCharset());
 		parameters.put(DqWxPayKey.SIGN_KEY, sign);
 		return parameters;
@@ -327,11 +327,11 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 * @param method
 	 *            请求方式 "post" "get",
 	 * @return 获取输出消息，用户返回给支付端, 针对于web端
-	 * @see MethodType 请求类型
+	 * @see DqMethodType 请求类型
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public String buildRequest(Map<String, Object> orderInfo, MethodType method) {
+	public String buildRequest(Map<String, Object> orderInfo, DqMethodType method) {
 		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RETURN__CODE_KEY))) {
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__CODE_KEY),DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__MSG_KEY));
 		}
@@ -497,7 +497,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		setSign(parameters);
 		String respStr = requestTemplate.postForObject(getUrl(DqWxTransactionType.DOWNLOADBILL),
 				DqXMLUtils.getXmlStrFromMap(parameters), String.class);
-		if (respStr.indexOf(Symbol.LESS_THAN) == 0) {
+		if (respStr.indexOf(DqSymbol.LESS_THAN) == 0) {
 			return DqXMLUtils.getMapFromXmlStr(respStr);
 		}
 

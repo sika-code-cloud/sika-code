@@ -18,30 +18,34 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
  */
 public class DqPayUtils {
 
-    /**
-     * 
-     * <p>比较DqTransactionType类型得两个枚举是否相等</p>
-     *
-     * <pre>
-     * transactionType1 == transactionType2 = true
-     * </pre>
-     *
-     * @param transactionType1 : DqTransactionType : 交易类型
-     * @param transactionType2 : DqTransactionType : 交易类型
-     * @return
-     *
-     * author daiqi
-     * 创建时间  2018年2月25日 下午7:46:30
-     */
-    public static boolean equalsDqTransactionType(DqTransactionType transactionType1, DqTransactionType transactionType2){
-    	if (DqBaseUtils.isNull(transactionType1) || DqBaseUtils.isNull(transactionType2)) {
-    		return false;
-    	}
-    	if (transactionType1 == transactionType2) {
-    		return true; 
-    	}
-    	return false;
-    }
+	/**
+	 * 
+	 * <p>
+	 * 比较DqTransactionType类型得两个枚举是否相等
+	 * </p>
+	 *
+	 * <pre>
+	 * transactionType1 == transactionType2 = true
+	 * </pre>
+	 *
+	 * @param transactionType1
+	 *            : DqTransactionType : 交易类型
+	 * @param transactionType2
+	 *            : DqTransactionType : 交易类型
+	 * @return
+	 *
+	 * 		author daiqi 创建时间 2018年2月25日 下午7:46:30
+	 */
+	public static boolean equalsDqTransactionType(DqTransactionType transactionType1,
+			DqTransactionType transactionType2) {
+		if (DqBaseUtils.isNull(transactionType1) || DqBaseUtils.isNull(transactionType2)) {
+			return false;
+		}
+		if (transactionType1 == transactionType2) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 元转分
@@ -54,7 +58,6 @@ public class DqPayUtils {
 		return DqBigDecimalUtils.mul(amount, new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 	}
 
-    
 	/**
 	 * 
 	 * <p>
@@ -65,38 +68,79 @@ public class DqPayUtils {
 	 */
 	public static class DqOrderNoGenerator {
 		/** 产生微信公众号支付订单 */
-		public static String generateWxJsapiPayOrderNO() {
+		protected static String generateWxJsapiPayOrderNO() {
 			return generateOrderNOCore("WXJPON");
 		}
+
 		/** 产生微信app支付订单号 */
-		public static String generateWxAppPayOrderNO() {
+		protected static String generateWxAppPayOrderNO() {
 			return generateOrderNOCore("WXAPON");
 		}
+
 		/** 产生微信扫码支付订单 */
-		public static String generateWxQrCodePayOrderNO() {
+		protected static String generateWxQrCodePayOrderNO() {
 			return generateOrderNOCore("WXQCPON");
 		}
+
 		/** 产生微信web支付订单 */
-		public static String generateWxMWebPayOrderNO() {
+		protected static String generateWxMWebPayOrderNO() {
 			return generateOrderNOCore("WXMWPON");
 		}
+
 		/** 产生微信转账订单号 */
 		public static String generateWxTransferOrderNO() {
 			return generateOrderNOCore("WXTON");
 		}
+
+		/** 产生支付宝即时到帐支付订单号 */
+		protected static String generateZfbDirectPayOrderNO() {
+			return generateOrderNOCore("ZFBDPON");
+		}
+
+		/** 产生支付宝移动网页支付订单号 */
+		protected static String generateZfbWapPayOrderNO() {
+			return generateOrderNOCore("ZFBWPON");
+		}
+
+		/** 产生支付宝App支付订单号 */
+		protected static String generateZfbAppPayOrderNO() {
+			return generateOrderNOCore("ZFBAPON");
+		}
+
+		/** 产生支付宝扫码付支付订单号 */
+		protected static String generateZfbSweepPayOrderNO() {
+			return generateOrderNOCore("ZFBSPON");
+		}
+
+		/** 产生支付宝条码支付订单号 */
+		protected static String generateZfbBarCodePayOrderNO() {
+			return generateOrderNOCore("ZFBTON");
+		}
+
+		/** 产生支付宝声波支付订单号 */
+		protected static String generateZfbWaveCodePayOrderNO() {
+			return generateOrderNOCore("ZFWCPON");
+		}
+
+		/** 产生支付宝转账订单号 */
+		public static String generateZfbTransferOrderNO() {
+			return generateOrderNOCore("ZFBTON");
+		}
+
 		/**
 		 * 
 		 * <p>
 		 * 核心产生订单号的方法
 		 * </p>
 		 *
-		 * @param prefix : String : 订单前缀
+		 * @param prefix
+		 *            : String : 订单前缀
 		 * @return String
-		 * @author daiqi
-		 * 创建时间    2018年2月24日 下午5:23:03
+		 * @author daiqi 创建时间 2018年2月24日 下午5:23:03
 		 */
-		private static String generateOrderNOCore(String prefix){
-			return prefix + DqDateFormatUtils.format(DqDateUtils.getCurrentDate(), DqDateFormatUtils.FORMAT_LONG_MILLIS);
+		private static String generateOrderNOCore(String prefix) {
+			return prefix
+					+ DqDateFormatUtils.format(DqDateUtils.getCurrentDate(), DqDateFormatUtils.FORMAT_LONG_MILLIS);
 		}
 	}
 }
