@@ -14,12 +14,12 @@ import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.Symbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.base.api.DqBasePayService;
-import com.dq.easy.cloud.pay.model.base.config.dto.DqPayConfigStorage;
-import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayMessageDTO;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
+import com.dq.easy.cloud.pay.model.payment.config.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
+import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
+import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -38,7 +38,7 @@ import java.util.*;
 /**
  * 微信支付服务
  */
-public class DqWxPayService extends DqBasePayService {
+public class DqWxPayService extends DqPayServiceAbstract {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	/** 提供默认构造--只是为了反射用 */
@@ -51,7 +51,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @param payConfigStorage
 	 *            微信对应的支付配置
 	 */
-	public DqWxPayService(DqPayConfigStorage payConfigStorage) {
+	public DqWxPayService(DqPayConfigStorageInf payConfigStorage) {
 		super(payConfigStorage);
 	}
 
@@ -63,7 +63,7 @@ public class DqWxPayService extends DqBasePayService {
 	 * @param configStorage
 	 *            微信对应的网络配置，包含代理配置、ssl证书配置
 	 */
-	public DqWxPayService(DqPayConfigStorage payConfigStorage, DqHttpConfigStorageDTO configStorage) {
+	public DqWxPayService(DqPayConfigStorageInf payConfigStorage, DqHttpConfigStorageDTO configStorage) {
 		super(payConfigStorage, configStorage);
 	}
 

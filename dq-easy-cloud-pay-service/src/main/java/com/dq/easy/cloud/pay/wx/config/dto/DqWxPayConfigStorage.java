@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.wx.config.dto;
 
-import com.dq.easy.cloud.pay.model.base.config.dto.DqBasePayConfigStorage;
+import com.dq.easy.cloud.pay.model.payment.config.DqPayConfigStorageAbstract;
 
 /**
  * 
@@ -10,7 +10,7 @@ import com.dq.easy.cloud.pay.model.base.config.dto.DqBasePayConfigStorage;
  *
  * @author daiqi 创建时间 2018年2月23日 下午3:53:19
  */
-public class DqWxPayConfigStorage extends DqBasePayConfigStorage {
+public class DqWxPayConfigStorage extends DqPayConfigStorageAbstract {
 
 	/**
 	 * 应用id

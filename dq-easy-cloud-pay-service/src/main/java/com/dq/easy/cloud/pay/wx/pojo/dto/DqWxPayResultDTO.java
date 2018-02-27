@@ -2,7 +2,7 @@ package com.dq.easy.cloud.pay.wx.pojo.dto;
 
 import java.util.Map;
 
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayResultDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayResultDTO;
 
 /**
  * 

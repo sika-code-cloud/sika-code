@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.model.base.pojo.builder;
 
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOutMessageDTO;
+import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
 
 /**
  * source chanjarster/weixin-java-tools

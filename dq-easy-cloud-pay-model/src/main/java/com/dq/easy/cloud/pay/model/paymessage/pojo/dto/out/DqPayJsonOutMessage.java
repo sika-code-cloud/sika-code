@@ -1,0 +1,26 @@
+package com.dq.easy.cloud.pay.model.paymessage.pojo.dto.out;
+
+import com.dq.easy.cloud.pay.model.paymessage.constant.DqMsgType;
+import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
+
+/**
+ * @author egan
+ * 
+ *         <pre>
+ *      email egzosn@gmail.com
+ *      date 2016-6-1 11:40:30
+ *         </pre>
+ */
+public class DqPayJsonOutMessage extends DqPayOutMessageDTO {
+	private static final long serialVersionUID = 1L;
+
+	public DqPayJsonOutMessage() {
+		this.msgType = DqMsgType.json.name();
+	}
+
+	@Override
+	public String toMessage() {
+		return getContent();
+	}
+
+}

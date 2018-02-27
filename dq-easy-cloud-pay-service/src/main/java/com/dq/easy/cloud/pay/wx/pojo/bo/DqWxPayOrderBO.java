@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.RequestHeaderKey;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils.DqOrderNoGenerator;
-import com.dq.easy.cloud.pay.model.payment.bo.DqPayOrderBO;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
 /**

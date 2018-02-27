@@ -2,7 +2,7 @@ package com.dq.easy.cloud.pay.model.transaction.pojo.bo;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.base.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
 /**

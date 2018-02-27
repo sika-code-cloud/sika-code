@@ -2,8 +2,8 @@ package com.dq.easy.cloud.pay.wx.pojo.bo;
 
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.wx.constant.DqWxPayConstant.DqWxPayKey;
 import java.util.HashMap;

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.MethodType;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
-import com.dq.easy.cloud.pay.model.base.api.DqPayService;
-import com.dq.easy.cloud.pay.model.base.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.payment.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
+import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -37,7 +37,7 @@ import java.util.UUID;
 public class DqWxPayControllerTest extends DqBaseController{
 	/** 在DqWxPayConfig类中进行了注入 */
 	@Autowired
-    private DqPayService service;
+    private DqPayServiceInf service;
     private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     /**

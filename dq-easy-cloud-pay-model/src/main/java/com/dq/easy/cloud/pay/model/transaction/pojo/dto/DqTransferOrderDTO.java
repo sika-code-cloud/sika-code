@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.dq.easy.cloud.pay.model.base.constant.DqCurType;
 import com.dq.easy.cloud.pay.model.base.inf.DqBank;
-import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
+import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 
 /**
  * 

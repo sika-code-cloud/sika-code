@@ -3,7 +3,7 @@ package com.dq.easy.cloud.pay.model.refund.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.dq.easy.cloud.pay.model.base.utils.DqPayUtils;
+import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 
 /**
  * 
