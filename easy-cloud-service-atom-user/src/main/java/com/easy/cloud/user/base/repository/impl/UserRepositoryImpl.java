@@ -19,7 +19,6 @@ import com.easy.cloud.user.base.repository.inf.UserRepository;
 @Repository(value="userRepository")
 public class UserRepositoryImpl extends DqBaseRepository implements UserRepository{
 
-	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public UserEntity findUserById(Long id) {
 		return DqJdbcTemplateHandler.findOne(UserEntity.class, id);

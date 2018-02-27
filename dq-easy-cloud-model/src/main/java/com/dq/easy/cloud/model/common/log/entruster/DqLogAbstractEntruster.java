@@ -31,7 +31,7 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
  */
 public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 
-	protected static final Logger LOG = LoggerFactory.getLogger(DqLogBaseEntruster.class);
+	protected final Logger LOG = LoggerFactory.getLogger(DqLogBaseEntruster.class);
 	/** 日志数据传输对象 */
 	protected DqLogDTO dqLogDTO;
 	/** 日志分析数据传输对象 */

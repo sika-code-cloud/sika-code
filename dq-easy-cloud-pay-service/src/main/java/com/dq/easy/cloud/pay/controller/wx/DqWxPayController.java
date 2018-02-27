@@ -9,20 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.logic.DqWxPayLogic;
-import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxBank;
-import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * 发起支付入口 该类为测试controller
@@ -30,9 +23,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("wx")
 public class DqWxPayController extends DqBaseController {
-	/** 在DqWxPayConfig类中进行了注入 */
-	@Autowired
-	private DqPayServiceInf service;
 	@Autowired
 	private DqWxPayLogic dqWxPayLogic;
 

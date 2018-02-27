@@ -48,7 +48,6 @@ import com.dq.easy.cloud.pay.wx.service.DqWxPayService;
  */
 @Component
 public class DqWxPayLogic extends DqBaseLogic {
-	/** 统一日志处理会获取到该属性进行日志打印 */
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired

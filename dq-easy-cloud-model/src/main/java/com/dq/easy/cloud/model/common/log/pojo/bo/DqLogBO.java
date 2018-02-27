@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,8 +19,6 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-
-import ch.qos.logback.classic.Logger;
 
 /**
  * 
@@ -105,27 +105,7 @@ public class DqLogBO {
 		if(DqBaseUtils.isNull(targetClass)){
 			return this;
 		}
-		Field [] fields = targetClass.getDeclaredFields();
-		try {
-			for(Field field : fields){
-				field.setAccessible(true);
-				Object fieldValue = null;
-				if(Modifier.isStatic(field.getModifiers())) {
-					fieldValue = field.get(targetClass);
-				}else{
-					if (Modifier.isAbstract(targetClass.getModifiers())) {
-						break;
-					}
-					fieldValue = field.get(targetClass.newInstance());
-				}
-				if(DqBaseUtils.isNotNull(fieldValue) && fieldValue instanceof Logger){
-					this.buildLogger((Logger) fieldValue);
-					break;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.buildLogger( LoggerFactory.getLogger(targetClass));
 		return this;
 	}
 	/**
