@@ -2,11 +2,6 @@ package com.dq.easy.cloud.model.common.log.pojo.dto;
 
 import org.slf4j.Logger;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.array.DqArrayUtils;
-import com.dq.easy.cloud.model.common.json.config.DqJsonConfig;
-
 /**
  * 
  * <p>
@@ -135,9 +130,6 @@ public class DqLogDTO {
 	}
 
 	public Object getTargetReturnValue() {
-		if (targetReturnType.isArray() || DqJsonConfig.isCantBeSerializedClass(targetReturnType)) {
-			return targetReturnType;
-		}
 		return targetReturnValue;
 	}
 

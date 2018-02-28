@@ -6,10 +6,14 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.dq.easy.cloud.model.common.json.constant.DqJsonConstant.DqJsonConfigKey;
+import com.dq.easy.cloud.model.common.json.pojo.dto.DqJsonFilterDTO;
+import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+
 /**
  * 
  * <p>
- * json配置类
+ * json配置类--子类可以继承此类进行配置不需要json序列化的过滤规则
  * </p>
  *
  * @author daiqi
@@ -17,22 +21,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DqJsonConfig {
-	private static Map<Class<?>, String[]>  CANT_BE_SERIALIZED_CLASS = new HashMap<>();
+	/** json过滤数据传输对象得map集合 */
+	private static Map<String, DqJsonFilterDTO>  JSON_FILTER_DTO_MAP = new HashMap<>();
 		
 	static {
-		setCantBeSerializedClass(BufferedImage.class, new String[]{"targetReturnValue"});
+		setJsonFilterDTOMap(new DqJsonFilterDTO(DqJsonConfigKey.FILTER_BUFFER_IMAGE_KEY, DqLogDTO.class, "targetReturnValue", BufferedImage.class));
 	}
 	
-	private static void setCantBeSerializedClass(Class<?> clazz, String[] value){
-		CANT_BE_SERIALIZED_CLASS.put(clazz, value);
+	private static void setJsonFilterDTOMap(DqJsonFilterDTO dqJsonFilterDTO){
+		JSON_FILTER_DTO_MAP.put(dqJsonFilterDTO.getKey(), dqJsonFilterDTO);
 	}
 	
 	public static boolean isCantBeSerializedClass(Class<?> clazz){
-		return CANT_BE_SERIALIZED_CLASS.get(clazz) == null ? false : true;
+		return JSON_FILTER_DTO_MAP.get(clazz) == null ? false : true;
 	}
 	
-	public static Map<Class<?>, String[]> getCantBeSerializedClass() {
-		return CANT_BE_SERIALIZED_CLASS;
+	public static Map<String, DqJsonFilterDTO> getJsonFilterDTOMap() {
+		return JSON_FILTER_DTO_MAP;
 	}
-	
 }
+

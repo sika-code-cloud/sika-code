@@ -11,7 +11,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dq.easy.cloud.model.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.model.common.json.config.DqJsonConfig;
-import com.dq.easy.cloud.model.common.json.filter.DqJsonPropertyPreFilter;
+import com.dq.easy.cloud.model.common.json.filter.DqJsonPropertyFilter;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 /**
@@ -23,7 +23,6 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
  *
  */
 public class DqJSONUtils {
-	private static final Logger LOG = LoggerFactory.getLogger(DqJSONUtils.class);
 	/**
 	 * 将obj转化为class对应的泛型对象
 	 * 
@@ -36,13 +35,12 @@ public class DqJSONUtils {
 		if (obj == null) {
 			return null;
 		}
-		DqJsonPropertyPreFilter propertyPreFilter = new DqJsonPropertyPreFilter();
-		propertyPreFilter.setExcludes(DqJsonConfig.getCantBeSerializedClass());
+		DqJsonPropertyFilter propertyFilter = new DqJsonPropertyFilter(DqJsonConfig.getJsonFilterDTOMap());
 		try {
 			if (obj instanceof String) {
 				obj = JSONObject.parse(obj.toString());
 			}
-			String jsonStr = com.alibaba.fastjson.JSONObject.toJSONString(obj, propertyPreFilter);
+			String jsonStr = com.alibaba.fastjson.JSONObject.toJSONString(obj, propertyFilter);
 			return com.alibaba.fastjson.JSONObject.parseObject(jsonStr, clazz);
 		} catch (Exception e) {
 			return (T) obj;
