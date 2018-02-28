@@ -14,4 +14,8 @@ import com.dq.easy.cloud.model.basic.constant.DqBaseComponentScan;
 public class DqEasyCloudPayComponentScan extends DqBaseComponentScan{
 	/** 扫描支付模块包名---com.dq.easy.cloud */
 	public static final String COM_DQ_EASY_CLOUD_PAY = "com.dq.easy.cloud.pay";
+	/** 扫描微信支付服务包名---com.dq.easy.cloud */
+	public static final String COM_DQ_EASY_CLOUD_PAY_WX = "com.dq.easy.cloud.pay.wx";
+	/** 扫描支付宝支付服务包名---com.dq.easy.cloud.pay.zfb */
+	public static final String COM_DQ_EASY_CLOUD_PAY_ZFB = "com.dq.easy.cloud.pay.zfb";
 }

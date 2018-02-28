@@ -163,5 +163,20 @@ public class DqLogAnalysisDTO extends DqBaseDTO {
 	public void setLogType(int logType) {
 		this.logType = logType;
 	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 将dqLoDTO对象设置为空
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年2月28日 下午2:13:42
+	 */
+	public DqLogAnalysisDTO emptyDqLogDTO(){
+		this.dqLogDTO = null;
+		return this;
+	}
 
 }

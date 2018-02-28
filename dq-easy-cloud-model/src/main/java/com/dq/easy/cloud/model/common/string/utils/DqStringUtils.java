@@ -852,6 +852,35 @@ public class DqStringUtils {
 	}
 	
 	/**
+	 * 截取字符串
+     * <p>Gets a substring from the specified String avoiding exceptions.</p>
+     *
+     * <p>A negative start position can be used to start <code>n</code>
+     * characters from the end of the String.</p>
+     *
+     * <p>A <code>null</code> String will return <code>null</code>.
+     * An empty ("") String will return "".</p>
+     *
+     * <pre>
+     * StringUtils.substring(null, *)   = null
+     * StringUtils.substring("", *)     = ""
+     * StringUtils.substring("abc", 0)  = "abc"
+     * StringUtils.substring("abc", 2)  = "c"
+     * StringUtils.substring("abc", 4)  = ""
+     * StringUtils.substring("abc", -2) = "bc"
+     * StringUtils.substring("abc", -4) = "abc"
+     * </pre>
+     *
+     * @param str  the String to get the substring from, may be null
+     * @param start  the position to start from, negative means
+     *  count back from the end of the String by this many characters
+     * @return substring from start position, <code>null</code> if null String input
+     */
+	public static String substring(String str, int start, int end){
+		return StringUtils.substring(str, start, end);
+	}
+	
+	/**
 	 * 去除首位空格
      * <p>Removes control characters (char &lt;= 32) from both
      * ends of this String returning an empty String ("") if the String
