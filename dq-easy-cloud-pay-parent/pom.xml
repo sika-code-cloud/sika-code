@@ -17,5 +17,7 @@
 	<modules>
 		<module>../dq-easy-cloud-pay-model</module>
 		<module>../dq-easy-cloud-pay-service</module>
+		<module>../dq-easy-cloud-pay-wx-service</module>
+		<module>../dq-easy-cloud-pay-zfb-service</module>
 	</modules>
 </project>

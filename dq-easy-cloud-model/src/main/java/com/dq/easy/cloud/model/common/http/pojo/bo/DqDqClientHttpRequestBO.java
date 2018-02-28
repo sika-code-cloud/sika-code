@@ -22,7 +22,6 @@ import org.apache.http.util.EntityUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpHeaderDTO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpStringEntityDTO;
 import com.dq.easy.cloud.model.common.http.utils.DqUriVariables;
@@ -143,7 +142,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param httpProxy http代理配置信息
      * @return 当前HTTP请求的客户端
      */
-    public DqDqClientHttpRequestBO setProxy(HttpHost httpProxy){
+    public DqDqClientHttpRequestBO<T> setProxy(HttpHost httpProxy){
         if (httpProxy != null) {
             RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
             setConfig(config);
@@ -158,7 +157,8 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param request 请求参数
      * @return 当前HTTP请求的客户端
      */
-    public DqDqClientHttpRequestBO setParameters(Object request) {
+    @SuppressWarnings("unchecked")
+	public DqDqClientHttpRequestBO<T> setParameters(Object request) {
         if (null == request){
             return this;
         }
@@ -182,7 +182,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
         } else if (request instanceof HttpEntity){
             setEntity((HttpEntity)request);
         } else if (request instanceof Map) {
-            StringEntity entity = new StringEntity(DqUriVariables.getParameters((Map) request), APPLICATION_FORM_URLENCODED_UTF_8);
+            StringEntity entity = new StringEntity(DqUriVariables.getParameters((Map<String, Object>) request), APPLICATION_FORM_URLENCODED_UTF_8);
             setEntity(entity);
         } else if (request instanceof String) {
             StringEntity entity = new StringEntity((String) request,  APPLICATION_FORM_URLENCODED_UTF_8);
@@ -197,7 +197,8 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
     }
 
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public T handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
         final StatusLine statusLine = response.getStatusLine();
         final HttpEntity entity = response.getEntity();
@@ -226,7 +227,8 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
 
     }
 
-    private T toBean(HttpEntity entity, String[] value) throws IOException {
+    @SuppressWarnings("unchecked")
+	private T toBean(HttpEntity entity, String[] value) throws IOException {
         if (ContentType.APPLICATION_OCTET_STREAM.getMimeType().equals(value[0])){
 
             if (responseType.isAssignableFrom(InputStream.class)){

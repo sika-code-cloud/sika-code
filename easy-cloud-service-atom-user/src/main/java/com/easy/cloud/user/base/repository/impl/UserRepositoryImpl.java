@@ -3,10 +3,7 @@ package com.easy.cloud.user.base.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
 import com.dq.easy.cloud.model.basic.repository.DqBaseRepository;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;

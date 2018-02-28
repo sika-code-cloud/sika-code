@@ -1,8 +1,5 @@
 package com.dq.easy.cloud.model.exception.bo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;

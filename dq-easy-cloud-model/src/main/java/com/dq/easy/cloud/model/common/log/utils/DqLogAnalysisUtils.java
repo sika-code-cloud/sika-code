@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.array.DqArrayUtils;
@@ -35,7 +33,6 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
  * 创建时间    2018年2月22日 下午12:59:12
  */
 public class DqLogAnalysisUtils {
-	private static Logger LOG = LoggerFactory.getLogger(DqLogAnalysisUtils.class);
 	/**
 	 * <p>
 	 * 获取日志分析开关

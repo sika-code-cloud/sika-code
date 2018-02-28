@@ -97,7 +97,7 @@ public class DqUriVariables {
 			}
 
 			if (o instanceof List) {
-				o = ((List) o).toArray();
+				o = ((List<?>) o).toArray();
 			}
 			try {
 				if (o instanceof Object[]) {

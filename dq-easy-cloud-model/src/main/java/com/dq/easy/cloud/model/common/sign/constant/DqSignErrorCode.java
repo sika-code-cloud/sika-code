@@ -1,7 +1,5 @@
 package com.dq.easy.cloud.model.common.sign.constant;
 
-import org.springframework.stereotype.Component;
-
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
 
 /**

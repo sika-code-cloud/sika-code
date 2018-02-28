@@ -3,7 +3,6 @@ package com.easy.cloud.base.log.config;
 import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
-import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.easy.cloud.controller.UserController;
 
 /**

@@ -280,13 +280,14 @@ public enum DqSignUtils {
 	 *            分隔符
 	 * @return 参数排序好的值
 	 */
+	@SuppressWarnings("unchecked")
 	public static String parameters2MD5Str(Object parameters, String separator) {
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
 
 		if (parameters instanceof LinkedHashMap) {
-			Set<String> keys = (Set<String>) ((LinkedHashMap) parameters).keySet();
+			Set<String> keys = (Set<String>) ((LinkedHashMap<String, ?>) parameters).keySet();
 			for (String key : keys) {
-				String val = ((LinkedHashMap) parameters).get(key).toString();
+				String val = ((LinkedHashMap<?, ?>) parameters).get(key).toString();
 				sb.append(val).append(separator);
 			}
 		} else if (parameters instanceof List) {

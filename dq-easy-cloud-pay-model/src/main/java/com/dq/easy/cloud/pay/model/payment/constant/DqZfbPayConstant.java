@@ -1,6 +1,5 @@
 package com.dq.easy.cloud.pay.model.payment.constant;
 
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant;
 
 /**

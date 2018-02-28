@@ -271,7 +271,7 @@ public class DqHttpRequestTemplateBO {
      * @return 类型对象
      */
     public <T>T doExecute(URI uri, Object request, Class<T> responseType, DqMethodType method){
-        DqDqClientHttpRequestBO<T> httpRequest = new DqDqClientHttpRequestBO(uri ,method, request);
+        DqDqClientHttpRequestBO<T> httpRequest = new DqDqClientHttpRequestBO<T>(uri ,method, request);
         //判断是否有代理设置
         if (null == httpProxy){
             httpRequest.setProxy(httpProxy);

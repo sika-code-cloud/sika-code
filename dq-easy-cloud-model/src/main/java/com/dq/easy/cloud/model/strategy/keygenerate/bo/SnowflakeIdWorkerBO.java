@@ -141,9 +141,9 @@ public class SnowflakeIdWorkerBO {
         long beginTimestamp = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
            long id = idWorker.nextId();
-//            System.out.println(Long.toBinaryString(id));
-//            System.out.println(id);
-//            System.out.println(Long.valueOf(id).toString().length());
+            System.out.println(Long.toBinaryString(id));
+            System.out.println(id);
+            System.out.println(Long.valueOf(id).toString().length());
         }
         long endTimestamp = System.currentTimeMillis();
         System.out.println("================"+(endTimestamp - beginTimestamp));
