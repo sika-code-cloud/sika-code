@@ -1,11 +1,9 @@
 package com.dq.easy.cloud.model.common.log.entruster;
-import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.json.config.DqJsonConfig;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
 import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
@@ -81,11 +79,7 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		log("请求参数类型", dqLogDTO.getTargetParameterTypes());
 		log("请求参数值", dqLogDTO.getTargetParameterValues());
 		log("返回参数类型", dqLogDTO.getTargetReturnType());
-		if (DqJsonConfig.isCantBeSerializedClass(dqLogDTO.getTargetReturnType())){
-			log("返回参数值", dqLogDTO.getTargetReturnType().toString());
-		}else{
-			log("返回参数值", dqLogDTO.getTargetReturnValue());
-		}
+		log("返回参数值", dqLogDTO.getTargetReturnValue());
 		log("方法运行时间", (dqLogDTO.getRunTimeMinllis()) +"ms");
 		logDataExtraAfter();
 		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");

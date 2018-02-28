@@ -13,11 +13,18 @@ import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 /**
  * 
  * <p>
- * json配置类--子类可以继承此类进行配置不需要json序列化的过滤规则
+ * json基础配置类
  * </p>
  *
+ * <pre>
+ *  说明：所有子服务都应该使用@Component注解进行注入
+ *  约定：所有子服务的日志配置类都应该继承该类,配置不需要json序列化的过滤规则
+ *  命名规范：UserLogConfig
+ *  使用示例：
+ * </pre>
+ *
  * @author daiqi
- * 创建时间    2018年2月28日 下午3:31:35
+ * 创建时间     2018年2月28日 下午3:31:35
  */
 @Component
 public class DqJsonConfig {
@@ -28,12 +35,8 @@ public class DqJsonConfig {
 		setJsonFilterDTOMap(new DqJsonFilterDTO(DqJsonConfigKey.FILTER_BUFFER_IMAGE_KEY, DqLogDTO.class, "targetReturnValue", BufferedImage.class));
 	}
 	
-	private static void setJsonFilterDTOMap(DqJsonFilterDTO dqJsonFilterDTO){
+	protected static void setJsonFilterDTOMap(DqJsonFilterDTO dqJsonFilterDTO){
 		JSON_FILTER_DTO_MAP.put(dqJsonFilterDTO.getKey(), dqJsonFilterDTO);
-	}
-	
-	public static boolean isCantBeSerializedClass(Class<?> clazz){
-		return JSON_FILTER_DTO_MAP.get(clazz) == null ? false : true;
 	}
 	
 	public static Map<String, DqJsonFilterDTO> getJsonFilterDTOMap() {
