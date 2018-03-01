@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.number.utils.DqNumberUtils;
 
 /**
@@ -171,6 +172,9 @@ public class DqBigDecimalUtils extends DqNumberUtils {
 	 * @return 两个参数的积
 	 */
 	public static BigDecimal mul(BigDecimal value1, BigDecimal value2){
+		if (DqBaseUtils.isNull(value1) || DqBaseUtils.isNull(value2)) {
+			return null;
+		}
 		return value1.multiply(value2);
 	}
 

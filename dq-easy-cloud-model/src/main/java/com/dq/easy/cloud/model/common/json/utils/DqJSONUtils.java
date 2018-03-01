@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.dq.easy.cloud.model.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.model.common.json.config.DqJsonConfig;
@@ -39,8 +40,11 @@ public class DqJSONUtils {
 			}
 			String jsonStr = com.alibaba.fastjson.JSONObject.toJSONString(obj, propertyFilter);
 			return com.alibaba.fastjson.JSONObject.parseObject(jsonStr, clazz);
-		} catch (Exception e) {
+		} catch (JSONException e) {
 			return (T) obj;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

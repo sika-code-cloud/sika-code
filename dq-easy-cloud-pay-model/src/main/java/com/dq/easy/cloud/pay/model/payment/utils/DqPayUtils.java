@@ -54,7 +54,10 @@ public class DqPayUtils {
 	 *            元的金额
 	 * @return 分的金额
 	 */
-	public static int yuanToCent(BigDecimal amount) {
+	public static Integer yuanToCent(BigDecimal amount) {
+		if (DqBaseUtils.isNull(amount)) {
+			return null;
+		}
 		return DqBigDecimalUtils.mul(amount, new BigDecimal(100)).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 	}
 

@@ -63,12 +63,12 @@ public class DqRefundOrderDTO {
 	}
 
 	/** 以分为单位 */
-	public int getTotalAmountOfCent() {
+	public Integer getTotalAmountOfCent() {
 		return DqPayUtils.yuanToCent(totalAmount);
 	}
 
 	/** 以分为单位 */
-	public int getRefundAmountOfCent() {
+	public Integer getRefundAmountOfCent() {
 		return DqPayUtils.yuanToCent(refundAmount);
 	}
 

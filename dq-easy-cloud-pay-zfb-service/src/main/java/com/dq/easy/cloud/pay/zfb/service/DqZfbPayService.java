@@ -321,7 +321,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.REFUND);
 
 		Map<String, Object> bizContent = getBizContent(refundOrder.getTradeNo(), refundOrder.getOutTradeNo(), null);
-		if (!DqStringUtils.isEmpty(refundOrder.getRefundNo())) {
+		if (DqStringUtils.isNotEmpty(refundOrder.getRefundNo())) {
 			bizContent.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, refundOrder.getRefundNo());
 		}
 		bizContent.put(DqZfbPayKey.REFUND__AMOUNT_KEY, refundOrder.getRefundAmount().setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -402,11 +402,16 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		if (!(tradeNoOrBillDate instanceof String)) {
 			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}
-
+		
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters(transactionType);
+		Map<String, Object> contentMap = null;
+		if (transactionType == DqZfbTransactionType.REFUNDQUERY) {
+			contentMap = new HashMap<>();
+			contentMap.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, outTradeNoBillType);
+		}
 		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(tradeNoOrBillDate.toString(), outTradeNoBillType));
+		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(tradeNoOrBillDate.toString(), outTradeNoBillType, contentMap));
 		// 设置签名
 		setSign(parameters);
 		return getRequestResult(parameters, transactionType);
@@ -563,8 +568,19 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 获取biz_content。不包含下载账单
 	 */
 	private String getContentToJson(String tradeNo, String outTradeNo) {
-
-		return JSON.toJSONString(getBizContent(tradeNo, outTradeNo, null));
+		return getContentToJson(tradeNo, outTradeNo, null);
+	}
+	/**
+	 * 获取biz_content。不包含下载账单
+	 * 
+	 * @param tradeNo
+	 *            支付平台订单号
+	 * @param outTradeNo
+	 *            商户单号
+	 * @return 获取biz_content。不包含下载账单
+	 */
+	private String getContentToJson(String tradeNo, String outTradeNo, Map<String, Object> contentMap) {
+		return DqJSONUtils.parseObject(getBizContent(tradeNo, outTradeNo, contentMap), String.class);
 	}
 	/**
 	 * 生成并设置签名
@@ -604,6 +620,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		Map<String, Object> resultMap =  getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
 				null, HashMap.class);
 //		结果校验
+		DqLogUtils.info("获取请求结果", resultMap, LOG);
 		return verifyResult(resultMap, dqTransactionType);
 	}
 }
