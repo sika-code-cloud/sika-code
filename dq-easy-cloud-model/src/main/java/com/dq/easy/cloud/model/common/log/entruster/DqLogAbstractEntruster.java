@@ -78,7 +78,7 @@ public abstract class DqLogAbstractEntruster implements DqLogEntruster {
 		log("请求的方法名称", dqLogDTO.getTargetMethodName());
 		log("请求参数类型", dqLogDTO.getTargetParameterTypes());
 		log("请求参数值", dqLogDTO.getTargetParameterValues());
-		log("返回参数类型", dqLogDTO.getTargetReturnType());
+		log("返回参数类型", dqLogDTO.getTargetReturnType().getName());
 		log("返回参数值", dqLogDTO.getTargetReturnValue());
 		log("方法运行时间", (dqLogDTO.getRunTimeMinllis()) +"ms");
 		logDataExtraAfter();

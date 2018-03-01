@@ -4,9 +4,9 @@ import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
 
-public class DqPayUtils {
+public class DqZfbPayUtils {
 	
-	public static class DqPayOrderNoGenerator extends DqOrderNoGenerator{
+	public static class DqZfbOrderNoGenerator extends DqOrderNoGenerator{
 		/**
 		 * 
 		 * <p>
@@ -34,6 +34,8 @@ public class DqPayUtils {
 				outTradeNo = DqOrderNoGenerator.generateZfbWaveCodePayOrderNO();
 			} else if (DqZfbTransactionType.isTRANS(transactionType)){
 				outTradeNo = DqOrderNoGenerator.generateZfbTransferOrderNO();
+			} else if (DqZfbTransactionType.isREFUND(transactionType)){
+				outTradeNo = DqOrderNoGenerator.generateZfbRefundOrderNO();
 			}
 			return outTradeNo;
 		}

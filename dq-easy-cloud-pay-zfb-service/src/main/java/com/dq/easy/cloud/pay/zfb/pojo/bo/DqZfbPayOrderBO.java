@@ -6,7 +6,7 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
-import com.dq.easy.cloud.pay.zfb.common.utils.DqPayUtils.DqPayOrderNoGenerator;
+import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class DqZfbPayOrderBO extends DqPayOrderBO {
 			return;
 		}
 		DqTransactionType transactionType = getDqPayOrderDTO().getTransactionType();
-		super.dqPayOrderDTO.setOutTradeNo(DqPayOrderNoGenerator.generateZfbOrderNO(transactionType));
+		super.dqPayOrderDTO.setOutTradeNo(DqZfbOrderNoGenerator.generateZfbOrderNO(transactionType));
 	}
 	
 	@Override
@@ -81,19 +81,8 @@ public class DqZfbPayOrderBO extends DqPayOrderBO {
 	
 	@Override
 	public DqPayOrderBO verifyMicroPayData() {
-		verifyCommonData();
+		super.verifyCommonData();
 		super.verifyAuthCode();
-		return this;
-	}
-
-	private DqPayOrderBO verifyCommonData() {
-		// 校验链
-		super.verifyDqPayOrderDTO();
-		super.verifyBody();
-		super.verifyOutTradeNo();
-		super.verifyPrice();
-		super.verifySubject();
-		super.verifyTransactionType();
 		return this;
 	}
 }

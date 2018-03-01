@@ -34,7 +34,9 @@ public class DqZfbPayConfigStorageDTO extends DqPayConfigStorageAbstract{
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
-
+	public void setAppid(String appId) {
+		this.appId = appId;
+	}
 	public void setPid(String pid) {
 		this.pid = pid;
 	}

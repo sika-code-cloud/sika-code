@@ -229,4 +229,15 @@ public abstract class DqPayOrderBO {
 		}
 		return this;
 	}
+	/** 校验公共支付支付 */
+	protected DqPayOrderBO verifyCommonData() {
+		// 校验链
+		this.verifyDqPayOrderDTO();
+		this.verifyOutTradeNo();
+		this.verifyPrice();
+		this.verifyTransactionType();
+		this.verifyBody();
+		this.verifySubject();
+		return this;
+	}
 }

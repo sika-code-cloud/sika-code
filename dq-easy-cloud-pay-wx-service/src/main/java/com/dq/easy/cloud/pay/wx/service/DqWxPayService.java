@@ -372,7 +372,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		// 获取对应的支付账户操作工具（可根据账户id）
 		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RESULT__CODE_KEY))) {
 			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RESULT__CODE_KEY),
-					DqMapUtils.getString(orderInfo, DqWxPayKey.ERR__CODE_KEY));
+					DqMapUtils.getString(orderInfo, DqWxPayKey.ERR__CODE_KEY)).buildExceptionDetail(orderInfo);
 		}
 		return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(orderInfo, DqWxPayKey.CODE__URL_KEY));
 	}

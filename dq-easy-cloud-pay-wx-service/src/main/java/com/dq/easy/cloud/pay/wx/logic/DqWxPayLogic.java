@@ -11,8 +11,10 @@ import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.logic.DqPayLogicAbstract;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
+import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -131,5 +133,11 @@ public class DqWxPayLogic extends DqPayLogicAbstract {
 	@Override
 	protected DqTransactionType getDqTransactionType(String transactionTypeName) {
 		return DqWxTransactionType.valueOf(transactionTypeName);
+	}
+
+	@Override
+	protected DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

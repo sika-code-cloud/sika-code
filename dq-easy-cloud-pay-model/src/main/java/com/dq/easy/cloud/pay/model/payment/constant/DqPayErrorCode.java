@@ -61,6 +61,14 @@ public enum DqPayErrorCode implements DqBaseErrorCodeInf{
 	PAYEE_NAME_CANT_EMPTY ("PAY_000023", "payeeName不能为空"),
 	/** amount不能为空---AMOUNT_CANT_NULL---PAY_000024 */
 	AMOUNT_CANT_NULL ("PAY_000024", "amount不能为空"),
+	/** 调用第三方支付失败---PAY_FAILURE---PAY_000025 */
+	PAY_FAILURE ("PAY_000025", "调用第三方支付失败"),
+	/** 退款订单号不能为空---REFUND_ORDER_NO_CANT_EMPTY---PAY_000026 */
+	REFUND_ORDER_NO_CANT_EMPTY ("PAY_000026", "退款订单号不能为空"),
+	/** 退款金额不能为空---REFUND_AMOUNT_CANT_EMPTY---PAY_000027 */
+	REFUND_AMOUNT_CANT_NULL ("PAY_000027", "退款金额不能为空"),
+	/** 总金额不能为空---TOTAL_AMOUNT_CANT_NULL---PAY_000028 */
+	TOTAL_AMOUNT_CANT_NULL ("PAY_000028", "总金额不能为空"),
 	;
 	
 	private String errorCode;

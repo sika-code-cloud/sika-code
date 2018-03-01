@@ -32,6 +32,9 @@ public class DqJsonPropertyFilter implements PropertyFilter{
 		for (Map.Entry<String, DqJsonFilterDTO> item : this.filterDTOMap.entrySet()) {
 			// isAssignableFrom()，用来判断类型间是否有继承关系
 			DqJsonFilterDTO filterDTO = item.getValue();
+			if (targetObj.getClass().isAssignableFrom(filterDTO.getFilterPropertyClass())){
+				return false;
+			}
 			if (!filterDTO.getTargetObjClass().isAssignableFrom(targetObj.getClass())){
 				continue;
 			}

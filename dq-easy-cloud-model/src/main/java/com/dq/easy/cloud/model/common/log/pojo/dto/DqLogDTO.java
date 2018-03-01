@@ -2,6 +2,8 @@ package com.dq.easy.cloud.model.common.log.pojo.dto;
 
 import org.slf4j.Logger;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 
  * <p>
@@ -39,6 +41,7 @@ public class DqLogDTO {
 	/** 方法运行时间毫秒数 */
 	private long runTimeMinllis;
 	/** 日志记录对象 -- 该对象来源于目标class中的Logger属性*/
+	@JSONField(serialize = false)
 	private Logger logger;
 	/** 日志类型---{@link} DqLogConstant.DqLogType */
 	private int logType;

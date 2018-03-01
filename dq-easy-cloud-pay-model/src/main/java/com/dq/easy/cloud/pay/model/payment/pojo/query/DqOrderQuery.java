@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
+import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
@@ -20,7 +22,6 @@ public class DqOrderQuery {
 	private Integer payId;
 	// 支付平台订单号
 	private String tradeNo;
-
 	// 商户单号
 	private String outTradeNo;
 	// 退款金额
@@ -29,6 +30,8 @@ public class DqOrderQuery {
 	private BigDecimal totalAmount;
 	// 账单时间：具体请查看对应支付平台
 	private Date billDate;
+	// 账单时间字符串：具体请查看对应支付平台
+	private String billDateTimestamp;
 	// 账单类型：具体请查看对应支付平台
 	private String billType;
 	// 支付平台订单号或者账单日期
@@ -86,6 +89,15 @@ public class DqOrderQuery {
 		return this;
 	}
 
+
+	public String getBillDateTimestamp() {
+		return billDateTimestamp;
+	}
+
+	public void setBillDateTimestamp(String billDateTimestamp) {
+		this.billDateTimestamp = billDateTimestamp;
+	}
+
 	public Integer getPayId() {
 		return payId;
 	}
@@ -127,6 +139,9 @@ public class DqOrderQuery {
 	}
 
 	public Date getBillDate() {
+		if (billDate == null) {
+			billDate = DqDateUtils.getCurrentDate();
+		}
 		return billDate;
 	}
 

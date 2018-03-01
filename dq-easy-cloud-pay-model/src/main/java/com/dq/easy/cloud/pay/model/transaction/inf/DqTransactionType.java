@@ -21,5 +21,11 @@ public interface DqTransactionType {
      * @return 接口
      */
      String getMethod();
+     
+     /**
+      * 获取响应key
+      * @return 接口
+      */
+      String getResponseKey();
 }
 

@@ -82,14 +82,24 @@ public class DqPayUtils {
 			return generateOrderNOCore("WXQCPON");
 		}
 
+		/** 产生微信扫条形码卡支付类型 */
+		protected static String generateWxMicroPayOrderNO() {
+			return generateOrderNOCore("WXMPON");
+		}
+
 		/** 产生微信web支付订单 */
 		protected static String generateWxMWebPayOrderNO() {
 			return generateOrderNOCore("WXMWPON");
 		}
 
 		/** 产生微信转账订单号 */
-		public static String generateWxTransferOrderNO() {
+		protected static String generateWxTransferOrderNO() {
 			return generateOrderNOCore("WXTON");
+		}
+
+		/** 产生微信退款订单号 */
+		protected static String generateWxRefundOrderNO() {
+			return generateOrderNOCore("WXRON");
 		}
 
 		/** 产生支付宝即时到帐支付订单号 */
@@ -123,8 +133,13 @@ public class DqPayUtils {
 		}
 
 		/** 产生支付宝转账订单号 */
-		public static String generateZfbTransferOrderNO() {
+		protected static String generateZfbTransferOrderNO() {
 			return generateOrderNOCore("ZFBTON");
+		}
+
+		/** 产生支付宝退款订单号 */
+		protected static String generateZfbRefundOrderNO() {
+			return generateOrderNOCore("ZFBRON");
 		}
 
 		/**

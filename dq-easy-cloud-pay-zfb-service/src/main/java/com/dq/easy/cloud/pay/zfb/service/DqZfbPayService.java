@@ -29,6 +29,7 @@ import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
@@ -148,20 +149,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		return true;
 	}
 
-	/**
-	 * 生成并设置签名
-	 * 
-	 * @param parameters
-	 *            请求参数
-	 * @return 请求参数
-	 */
-	private Map<String, Object> setSign(Map<String, Object> parameters) {
-		parameters.put(DqZfbPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
-		String sign = createSign(DqSignUtils.parameterText(parameters, DqSymbol.SINGLE_AND, DqZfbPayKey.SIGN_KEY),
-				payConfigStorage.getInputCharset());
-		parameters.put(DqZfbPayKey.SIGN_KEY, sign);
-		return parameters;
-	}
 
 	/**
 	 * 返回创建的订单信息
@@ -176,68 +163,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		return setSign(getOrder(order));
 	}
 
-	/**
-	 * 支付宝创建订单信息 create the order info
-	 *
-	 * @param order
-	 *            支付订单
-	 * @return 返回支付宝预下单信息
-	 * @see DqPayOrderDTO 支付订单信息
-	 */
-	private Map<String, Object> getOrder(DqPayOrderDTO order) {
-
-		Map<String, Object> orderInfo = getPublicParameters(order.getTransactionType());
-
-		orderInfo.put(DqZfbPayKey.NOTIFY__URL_KEY, payConfigStorage.getNotifyUrl());
-		orderInfo.put(DqZfbPayKey.FORMAT_KEY, DqZfbPayValue.JSON);
-
-		Map<String, Object> bizContent = new TreeMap<>();
-		bizContent.put(DqZfbPayKey.BODY_KEY, order.getBody());
-		bizContent.put(DqZfbPayKey.SELLER__ID_KEY, payConfigStorage.getSeller());
-		bizContent.put(DqZfbPayKey.SUBJECT_KEY, order.getSubject());
-		bizContent.put(DqZfbPayKey.OUT__TRADE__NO_KEY, order.getOutTradeNo());
-		bizContent.put(DqZfbPayKey.TOTAL__AMOUNT_KEY, order.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-		switch ((DqZfbTransactionType) order.getTransactionType()) {
-		case DIRECT:
-			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.FAST_INSTANT_TRADE_PAY);
-			orderInfo.put(DqZfbPayKey.RETURN__URL_KEY, payConfigStorage.getReturnUrl());
-			break;
-		case WAP:
-			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.QUICK_WAP_PAY);
-			orderInfo.put(DqZfbPayKey.RETURN__URL_KEY, payConfigStorage.getReturnUrl());
-			break;
-		case BAR_CODE:
-		case WAVE_CODE:
-			bizContent.put(DqZfbPayKey.SCENE_KEY, DqStringUtils.lowerCase(order.getTransactionType().toString()));
-			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.FACE_TO_FACE_PAYMENT);
-			bizContent.put(DqZfbPayKey.AUTH__CODE_KEY, order.getAuthCode());
-			break;
-		default:
-			if (order.getTransactionType() != DqZfbTransactionType.SWEEPPAY) {
-				bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.QUICK_MSECURITY_PAY);
-			}
-		}
-		orderInfo.put(DqZfbPayKey.BIZ__CONTENT_KEY, DqJSONUtils.parseObject(bizContent, String.class));
-		return orderInfo;
-	}
-
-	/**
-	 * 获取公共请求参数
-	 * 
-	 * @param transactionType
-	 *            交易类型
-	 * @return 放回公共请求参数
-	 */
-	private Map<String, Object> getPublicParameters(DqTransactionType transactionType) {
-		Map<String, Object> orderInfo = new TreeMap<>();
-		orderInfo.put(DqZfbPayKey.APP__ID_KEY, payConfigStorage.getAppid());
-		orderInfo.put(DqZfbPayKey.METHOD_KEY, transactionType.getMethod());
-		orderInfo.put(DqZfbPayKey.CHARSET_KEY, payConfigStorage.getInputCharset());
-		String timestampStr = DqDateFormatUtils.format(DqDateUtils.getCurrentDate(), DqDateFormatUtils.FORMAT_NORMAL, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
-		orderInfo.put(DqZfbPayKey.TIMESTAMP_KEY, timestampStr);
-		orderInfo.put(DqZfbPayKey.VERSION_KEY, "1.0");
-		return orderInfo;
-	}
 
 	/**
 	 * 获取输出消息，用户返回给支付端
@@ -304,11 +229,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		HashMap<String, Object> result = getHttpRequestTemplate()
 				.postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(orderInfo), null, HashMap.class);
 		
-		HashMap<String, Object> response = DqJSONUtils.parseObject(result.get(DqZfbPayKey.ALIPAY__TRADE__PRECREATE__RESPONSE_KEY), HashMap.class) ;
+		HashMap<String, Object> response = DqJSONUtils.parseObject(result.get(order.getTransactionType().getResponseKey()), HashMap.class) ;
 		if (DqBaseUtils.equals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY))) {
 			return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(response, DqZfbPayKey.QR__CODE_KEY));
 		}
-		throw DqBaseBusinessException.newInstance(DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY), DqMapUtils.getString(response, DqZfbPayKey.MSG_KEY));
+		throw DqBaseBusinessException.newInstance(DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY), DqMapUtils.getString(response, DqZfbPayKey.MSG_KEY)).buildExceptionDetail(response);
 
 	}
 
@@ -326,7 +251,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		// 预订单
 		HashMap<String, Object> result = getHttpRequestTemplate()
 				.postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(orderInfo), null, HashMap.class);
-		HashMap<String, Object> response = DqJSONUtils.parseObject(result.get(DqZfbPayKey.ALIPAY__TRADE__PAY__RESPONSE_KEY), HashMap.class);
+		HashMap<String, Object> response = DqJSONUtils.parseObject(result.get(order.getTransactionType().getResponseKey()), HashMap.class);
 		if (DqStringUtils.notEquals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY))) {
 			DqLogUtils.info("收款失败", order, LOG);
 		}
@@ -390,7 +315,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *            退款订单信息
 	 * @return 返回支付方申请退款后的结果
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> refund(DqRefundOrderDTO refundOrder) {
 		// 获取公共参数
@@ -405,8 +329,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, DqJSONUtils.parseObject(bizContent, String.class));
 		// 设置签名
 		setSign(parameters);
-		return requestTemplate.getForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
-				HashMap.class);
+		return getRequestResult(parameters, DqZfbTransactionType.REFUND);
 	}
 
 	/**
@@ -433,7 +356,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *            账单时间：日账单格式为yyyy-MM-dd，月账单格式为yyyy-MM。
 	 * @return 返回支付方下载对账单的结果
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> downLoadBill(Date billDate, String billType) {
 		// 获取公共参数
@@ -448,8 +370,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
 		// 设置签名
 		setSign(parameters);
-		return requestTemplate.getForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
-				HashMap.class);
+		return getRequestResult(parameters, DqZfbTransactionType.DOWNLOADBILL);
 	}
 
 	/**
@@ -463,7 +384,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *            交易类型
 	 * @return 返回支付方对应接口的结果
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> secondaryInterface(Object tradeNoOrBillDate, String outTradeNoBillType,
 			DqTransactionType transactionType) {
@@ -489,8 +409,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(tradeNoOrBillDate.toString(), outTradeNoBillType));
 		// 设置签名
 		setSign(parameters);
-		return requestTemplate.getForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
-				HashMap.class);
+		return getRequestResult(parameters, transactionType);
 	}
 
 	/**
@@ -501,7 +420,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *
 	 * @return 对应的转账结果
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> transfer(DqTransferOrderDTO order) {
 		// 获取公共参数
@@ -519,8 +437,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
 		// 设置签名
 		setSign(parameters);
-		return getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
-				null, HashMap.class);
+		return getRequestResult(parameters, DqZfbTransactionType.TRANS);
 	}
 
 	/**
@@ -533,7 +450,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *
 	 * @return 对应的转账订单
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> queryTransferResult(String outNo, String tradeNo) {
 		// 获取公共参数
@@ -547,8 +463,70 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		}
 		// 设置请求参数的集合
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
-		return getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
-				null, HashMap.class);
+		return getRequestResult(parameters, DqZfbTransactionType.TRANS_QUERY);
+	}
+	
+	/**
+	 * 支付宝创建订单信息 create the order info
+	 *
+	 * @param order
+	 *            支付订单
+	 * @return 返回支付宝预下单信息
+	 * @see DqPayOrderDTO 支付订单信息
+	 */
+	private Map<String, Object> getOrder(DqPayOrderDTO order) {
+
+		Map<String, Object> orderInfo = getPublicParameters(order.getTransactionType());
+
+		orderInfo.put(DqZfbPayKey.NOTIFY__URL_KEY, payConfigStorage.getNotifyUrl());
+		orderInfo.put(DqZfbPayKey.FORMAT_KEY, DqZfbPayValue.JSON);
+
+		Map<String, Object> bizContent = new TreeMap<>();
+		bizContent.put(DqZfbPayKey.BODY_KEY, order.getBody());
+		bizContent.put(DqZfbPayKey.SELLER__ID_KEY, payConfigStorage.getSeller());
+		bizContent.put(DqZfbPayKey.SUBJECT_KEY, order.getSubject());
+		bizContent.put(DqZfbPayKey.OUT__TRADE__NO_KEY, order.getOutTradeNo());
+		bizContent.put(DqZfbPayKey.TOTAL__AMOUNT_KEY, order.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+		switch ((DqZfbTransactionType) order.getTransactionType()) {
+		case DIRECT:
+			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.FAST_INSTANT_TRADE_PAY);
+			orderInfo.put(DqZfbPayKey.RETURN__URL_KEY, payConfigStorage.getReturnUrl());
+			break;
+		case WAP:
+			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.QUICK_WAP_PAY);
+			orderInfo.put(DqZfbPayKey.RETURN__URL_KEY, payConfigStorage.getReturnUrl());
+			break;
+		case BAR_CODE:
+		case WAVE_CODE:
+			bizContent.put(DqZfbPayKey.SCENE_KEY, DqStringUtils.lowerCase(order.getTransactionType().toString()));
+			bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.FACE_TO_FACE_PAYMENT);
+			bizContent.put(DqZfbPayKey.AUTH__CODE_KEY, order.getAuthCode());
+			break;
+		default:
+			if (order.getTransactionType() != DqZfbTransactionType.SWEEPPAY) {
+				bizContent.put(DqZfbPayKey.PRODUCT__CODE_KEY, DqZfbProductCode.QUICK_MSECURITY_PAY);
+			}
+		}
+		orderInfo.put(DqZfbPayKey.BIZ__CONTENT_KEY, DqJSONUtils.parseObject(bizContent, String.class));
+		return orderInfo;
+	}
+
+	/**
+	 * 获取公共请求参数
+	 * 
+	 * @param transactionType
+	 *            交易类型
+	 * @return 放回公共请求参数
+	 */
+	private Map<String, Object> getPublicParameters(DqTransactionType transactionType) {
+		Map<String, Object> orderInfo = new TreeMap<>();
+		orderInfo.put(DqZfbPayKey.APP__ID_KEY, payConfigStorage.getAppid());
+		orderInfo.put(DqZfbPayKey.METHOD_KEY, transactionType.getMethod());
+		orderInfo.put(DqZfbPayKey.CHARSET_KEY, payConfigStorage.getInputCharset());
+		String timestampStr = DqDateFormatUtils.format(DqDateUtils.getCurrentDate(), DqDateFormatUtils.FORMAT_NORMAL, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
+		orderInfo.put(DqZfbPayKey.TIMESTAMP_KEY, timestampStr);
+		orderInfo.put(DqZfbPayKey.VERSION_KEY, "1.0");
+		return orderInfo;
 	}
 
 	/**
@@ -588,5 +566,44 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 
 		return JSON.toJSONString(getBizContent(tradeNo, outTradeNo, null));
 	}
-
+	/**
+	 * 生成并设置签名
+	 * 
+	 * @param parameters
+	 *            请求参数
+	 * @return 请求参数
+	 */
+	private Map<String, Object> setSign(Map<String, Object> parameters) {
+		parameters.put(DqZfbPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
+		String sign = createSign(DqSignUtils.parameterText(parameters, DqSymbol.SINGLE_AND, DqZfbPayKey.SIGN_KEY),
+				payConfigStorage.getInputCharset());
+		parameters.put(DqZfbPayKey.SIGN_KEY, sign);
+		return parameters;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> verifyResult(Map<String, Object> resultMap, DqTransactionType dqTransactionType) {
+		Map<String, Object> verifyMap = new HashMap<>();
+		if (DqStringUtils.isEmpty(dqTransactionType.getResponseKey())){
+			verifyMap = resultMap;
+		}else {
+			verifyMap = DqJSONUtils.parseObject(resultMap.get(dqTransactionType.getResponseKey()), HashMap.class);
+			verifyMap.put(DqPayKey.SIGN_KEY, DqMapUtils.getString(resultMap, DqPayKey.SIGN_KEY));
+		}
+		
+		if (DqStringUtils.notEquals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(verifyMap, DqZfbPayKey.CODE_KEY))) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(verifyMap);
+		}
+		
+		return verifyMap;
+	}
+	
+	/** 获取请求结果 */
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> getRequestResult(Map<String, Object> parameters, DqTransactionType dqTransactionType) {
+		Map<String, Object> resultMap =  getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
+				null, HashMap.class);
+//		结果校验
+		return verifyResult(resultMap, dqTransactionType);
+	}
 }

@@ -13,8 +13,10 @@ import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayValue;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
+import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayResultDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
@@ -75,7 +77,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 		// 2、支付订单数据传输对象数据初始化
 		dqPayOrderBO.initDqPayOrderDTO();
 		// 3、支付订单数据传输对象数据校验
-		dqPayOrderBO.verifyAppPayData();
+		dqPayOrderBO.verifyMicroPayData();
 		// 4、获取订单信息
 		Map<String, Object> orderInfo = getDqPayService().microPay(dqPayOrderBO.getDqPayOrderDTO());
 		// 5、签名校验
@@ -84,7 +86,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 			return microPayLogic(orderInfo);
 		}
 		// 6、返回结果
-		return DqBaseServiceResult.newInstanceOfSucResult(new DqPayResultDTO(orderInfo));
+		return DqBaseServiceResult.newInstanceOfError(DqPayErrorCode.PAY_FAILURE).buildResult(orderInfo);
 	}
 
 	@Override
@@ -111,14 +113,14 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 				request.getInputStream());
 		DqLogUtils.info("支付回调", payCallBackParams, getLogger());
 		if (DqMapUtils.isEmpty(payCallBackParams)) {
-			return getDqPayService().getPayOutMessage(DqZfbPayValue.FAIL_CODE, DqZfbPayValue.FAIL_DESC).toMessage();
+			return getDqPayService().getPayOutMessage(DqPayValue.FAIL_CODE, DqPayValue.FAIL_DESC).toMessage();
 		}
 		// 参数校验
 		if (getDqPayService().verify(payCallBackParams)) {
 			
 			return payCallBackLogic(payCallBackParams);
 		}
-		return getDqPayService().getPayOutMessage(DqZfbPayValue.FAIL_CODE, DqZfbPayValue.FAIL_DESC).toMessage();
+		return getDqPayService().getPayOutMessage(DqPayValue.FAIL_CODE, DqPayValue.FAIL_DESC).toMessage();
 	}
 
 	@Override
@@ -143,9 +145,15 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 
 	@Override
 	public DqBaseServiceResult refund(DqRefundOrderDTO dqRefundOrderDTO) {
-//		获取结果
+//		1、创建退款订单业务逻辑对象
+		DqRefundOrderBO dqRefundOrderBO = getDqRefundOrderBO(dqRefundOrderDTO);
+//		2、数据初始化
+		dqRefundOrderBO.initDqRefundOrderDTO();
+//		3、数据校验
+		dqRefundOrderBO.verifyRefundData();
+//		4、获取结果
 		Map<String, Object> refundResult = getDqPayService().refund(dqRefundOrderDTO);
-//		返回结果
+//		5、返回结果
 		return DqBaseServiceResult.newInstanceOfSucResult(new DqPayResultDTO(refundResult));
 	}
 
@@ -230,6 +238,8 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	protected abstract String payCallBackLogic(Map<String, Object> payCallBackParams);
 	/** 获取支付订单业务逻辑对象 */
 	protected abstract DqPayOrderBO getDqPayOrderBO(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType);
+	/** 获取支付订单业务逻辑对象 */
+	protected abstract DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO);
 	/** 获取交易订单业务逻辑对象 */
 	protected abstract DqTransferOrderBO getDqTransferOrderBO(DqTransferOrderDTO dqTransferOrderDTO);
 	/** 获取支付服务类 */

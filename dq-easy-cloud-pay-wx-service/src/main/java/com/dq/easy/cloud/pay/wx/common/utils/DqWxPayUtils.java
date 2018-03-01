@@ -4,9 +4,9 @@ import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 
-public class DqPayUtils {
+public class DqWxPayUtils {
 	
-	public static class DqPayOrderNoGenerator extends DqOrderNoGenerator{
+	public static class DqWxOrderNoGenerator extends DqOrderNoGenerator{
 		/**
 		 * 
 		 * <p>
@@ -28,8 +28,12 @@ public class DqPayUtils {
 				outTradeNo = DqOrderNoGenerator.generateWxQrCodePayOrderNO();
 			} else if (DqWxTransactionType.isMWEB(transactionType)) {
 				outTradeNo = DqOrderNoGenerator.generateWxMWebPayOrderNO();
-			} else if (DqWxTransactionType.isBANK(transactionType)) {
+			} else if (DqWxTransactionType.isMICROPAY(transactionType)) {
+				outTradeNo = DqOrderNoGenerator.generateWxMicroPayOrderNO();
+			}else if (DqWxTransactionType.isBANK(transactionType)) {
 				outTradeNo = DqOrderNoGenerator.generateWxTransferOrderNO();
+			} else if (DqWxTransactionType.isREFUND(transactionType)) {
+				outTradeNo = DqOrderNoGenerator.generateWxRefundOrderNO();
 			}
 			return outTradeNo;
 		}

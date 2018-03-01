@@ -22,8 +22,8 @@ public class HelloController extends DqBaseController{
      * @author daiqi
      * 创建时间    2018年2月24日 下午1:44:59
      */
-    @RequestMapping("/toWechatPay")
+    @RequestMapping("/toZfbPay")
     public String toWechatPayTest(){ 
-        return "wechatpaytest";
+        return "zfbpaytest";
     }
 }

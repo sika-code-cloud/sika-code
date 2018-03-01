@@ -14,33 +14,30 @@
 <br/>
 <br/>
 APP提交(返回对应的json，具体实现，app端demo暂时未实现)
-<form action="
-wx/getOrderInfo" target="_blank">
-    账户id<input type="text" name="payId"/>
+<form action="wx/appPay" target="_blank">
+    金额<input type="text" name="price" value = "0.01"/>
     <br/>
-    金额<input type="text" name="price"/>
-    <br/>
-    交易类型<input type="text" name="transactionType" value="APP" readonly="readonly" />
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
     <br/>
     <input type="submit" value="提交"/>
 </form>
 
 <br/>
 普通web提交
-<form action="wx/toPay.html" target="_blank">
-    账户id<input type="text" name="payId"/>
+<form action="wx/mWebPay" target="_blank">
+    金额<input type="text" name="price" value = "0.01"/>
     <br/>
-    金额<input type="text" name="price"/>
-    <br/>
-    交易类型<input type="text" name="transactionType"/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
     <br/>
     <input type="submit" value="提交"/>
 </form>
 <br/>
 公众号支付(请用微信访问)
 <form id="jsapi" >
-    账户id<input type="text" name="payId" value="2"/>
-    <br/>
     金额<input type="text" name="price" value="0.01"/>
     <br/>
     openid<input type="text" name="openid" value="oPNSTwszglIUNMOXW6IHl2WhXJBo"/>
@@ -56,11 +53,11 @@ wx/getOrderInfo" target="_blank">
 <br/>
 主动收款(pos条码声波付等)
 <form id="microPay" action="wx/microPay" target="_blank">
-    账户id<input type="text" name="payId"/>
+  金额<input type="text" name="price" value = "0.01"/>
     <br/>
-    金额<input type="text" name="price"/>
-    <br/>
-    交易类型<input type="text" name="transactionType"/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
     <br/>
     条码授权信息<input type="text" name="authCode"/>
     <br/>
@@ -73,7 +70,7 @@ wx/getOrderInfo" target="_blank">
 <form id="toQrPay" action="wx/generatePayQrCode" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
-    金额<input type="text" name="price"/>
+    金额<input type="text" name="price" value = "0.01"/>
     <br/>
    subject<input type="text" name="subject" value="这是商品名称"/>
    <br/>
@@ -83,18 +80,6 @@ wx/getOrderInfo" target="_blank">
 </form>
 <br/>
 
-支付宝微信一码付二维码
-<form id="toWxAliQrPay" action="wx/toWxAliQrPay.jpg" target="_blank">
-    账户（微信）id<input type="text" name="wxPayId"/>
-    <br/>
-    账户(支付宝)id<input type="text" name="aliPayId"/>
-    <br/>
-    金额<input type="text" name="price"/>
-    <br/>
-    <br/>
-    <input type="submit" value="提交"/>
-</form>
-<br/>
 查询账单
 <form action="wx/query" target="_blank">
     账户id<input type="text" name="payId"/>

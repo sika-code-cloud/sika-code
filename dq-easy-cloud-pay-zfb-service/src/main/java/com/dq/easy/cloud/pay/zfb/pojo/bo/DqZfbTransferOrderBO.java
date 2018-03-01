@@ -1,9 +1,9 @@
 package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
 import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
+import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**
  * 
@@ -35,7 +35,7 @@ public class DqZfbTransferOrderBO extends DqTransferOrderBO{
 	@Override
 	protected DqTransferOrderBO initOutNoData() {
 		if (DqStringUtils.isEmpty(super.dqTransferOrderDTO.getOutNo())) {
-			super.dqTransferOrderDTO.setOutNo(DqOrderNoGenerator.generateWxTransferOrderNO());
+			super.dqTransferOrderDTO.setOutNo(DqZfbOrderNoGenerator.generateZfbOrderNO(DqZfbTransactionType.TRANS));
 		}
 		return this;
 	}

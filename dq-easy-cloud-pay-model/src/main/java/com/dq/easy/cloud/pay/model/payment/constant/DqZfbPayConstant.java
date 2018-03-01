@@ -64,11 +64,6 @@ public class DqZfbPayConstant extends DqPayConstant{
 		public static final String ORDER__ID_KEY = "order_id";
 		/** trade_no非驼峰键名使用两个下划线隔开---TRADE__NO_KEY---trade_no */
 		public static final String TRADE__NO_KEY = "trade_no";
-		
-		/** alipay_trade_precreate_response非驼峰键名使用两个下划线隔开---ALIPAY__TRADE__PRECREATE__RESPONSE_KEY---alipay_trade_precreate_response */
-		public static final String ALIPAY__TRADE__PRECREATE__RESPONSE_KEY = "alipay_trade_precreate_response";
-		/** alipay_trade_pay_response非驼峰键名使用两个下划线隔开---ALIPAY__TRADE__PAY__RESPONSE_KEY---alipay_trade_pay_response */
-		public static final String ALIPAY__TRADE__PAY__RESPONSE_KEY = "alipay_trade_pay_response";
 	}
 	
 	/** 支付宝支付值常量类 */
@@ -83,6 +78,7 @@ public class DqZfbPayConstant extends DqPayConstant{
 		public final static String DEV_REQ_URL = "https://openapi.alipaydev.com/gateway.do";
 		/** json的常量值---JSON---json */
 		public final static String JSON = "json";
+		
 	}
 	
 	/** 支付宝产品代码常量类 */
@@ -96,5 +92,4 @@ public class DqZfbPayConstant extends DqPayConstant{
 		/** 支付宝产品代码的常量值---QUICK_MSECURITY_PAY---QUICK_MSECURITY_PAY */
 		public final static String QUICK_MSECURITY_PAY = "QUICK_MSECURITY_PAY";
 	}
-	
 }
