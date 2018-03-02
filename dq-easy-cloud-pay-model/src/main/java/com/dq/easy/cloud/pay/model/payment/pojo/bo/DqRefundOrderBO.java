@@ -42,7 +42,13 @@ public abstract class DqRefundOrderBO {
 		return this;
 	}
 	
-	
+	/** 校验商户支付订单号 */
+	protected DqRefundOrderBO verifyOutTradeNoAdnTradeNo() {
+		if (DqStringUtils.isEmpty(this.dqRefundOrderDTO.getOutTradeNo()) && DqStringUtils.isEmpty(this.dqRefundOrderDTO.getTradeNo())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
+		}
+		return this;
+	}
 	
 	/** 校验退款数据 */
 	public abstract DqRefundOrderBO verifyRefundData();
@@ -50,7 +56,7 @@ public abstract class DqRefundOrderBO {
 	protected abstract DqRefundOrderBO initRefundNo();
 	
 	protected DqRefundOrderBO verifyCommonData() {
-		return verifyOutTradeNo().verifyRefundAmount().verifyRefundNo().verifyTradeNo();
+		return verifyOutTradeNoAdnTradeNo().verifyRefundAmount().verifyRefundNo();
 	}
 
 	/** 校验总金额 */

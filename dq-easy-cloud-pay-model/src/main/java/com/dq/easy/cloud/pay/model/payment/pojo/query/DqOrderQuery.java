@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
@@ -24,6 +22,8 @@ public class DqOrderQuery {
 	private String tradeNo;
 	// 商户单号
 	private String outTradeNo;
+	// 退款订单号	
+	private String refundTradeNo;
 	// 退款金额
 	private BigDecimal refundAmount;
 	// 总金额
@@ -31,7 +31,7 @@ public class DqOrderQuery {
 	// 账单时间：具体请查看对应支付平台
 	private Date billDate;
 	// 账单时间字符串：具体请查看对应支付平台
-	private String billDateTimestamp;
+	private Long billDateTimestamp;
 	// 账单类型：具体请查看对应支付平台
 	private String billType;
 	// 支付平台订单号或者账单日期
@@ -41,6 +41,22 @@ public class DqOrderQuery {
 	// 交易类型
 	private String transactionType;
 
+	/**
+	 * 
+	 * <p>
+	 * 校验tradeNo和outTradeNo
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月2日 下午1:45:14
+	 */
+	public DqOrderQuery verifyTradeNoAndOutTradeNo() {
+		if (DqStringUtils.isEmpty(this.getTradeNo()) && DqStringUtils.isEmpty(this.getOutTradeNo())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
+		}
+		return this;
+	}
 	/** 校验支付平台订单号 */
 	public DqOrderQuery verifyTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo())) {
@@ -67,7 +83,7 @@ public class DqOrderQuery {
 
 	/** 校验账单类型 */
 	public DqOrderQuery verifyBillType() {
-		if (DqBaseUtils.isNull(this.getBillType())) {
+		if (DqStringUtils.isEmpty(this.getBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_TYPE_CANT_NULL);
 		}
 		return this;
@@ -83,18 +99,25 @@ public class DqOrderQuery {
 	
 	/** 校验账单类型 */
 	public DqOrderQuery verifyOutTradeNoBillType() {
-		if (DqBaseUtils.isNull(this.getOutTradeNoBillType())) {
+		if (DqStringUtils.isEmpty(this.getOutTradeNoBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
+		}
+		return this;
+	}
+	/** 校验退款订单号 */
+	public DqOrderQuery verifyRefundTradeNo() {
+		if (DqStringUtils.isEmpty(this.getRefundTradeNo())) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_ORDER_NO_CANT_EMPTY);
 		}
 		return this;
 	}
 
 
-	public String getBillDateTimestamp() {
+	public Long getBillDateTimestamp() {
 		return billDateTimestamp;
 	}
 
-	public void setBillDateTimestamp(String billDateTimestamp) {
+	public void setBillDateTimestamp(Long billDateTimestamp) {
 		this.billDateTimestamp = billDateTimestamp;
 	}
 
@@ -139,8 +162,8 @@ public class DqOrderQuery {
 	}
 
 	public Date getBillDate() {
-		if (billDate == null) {
-			billDate = DqDateUtils.getCurrentDate();
+		if (billDate == null && billDateTimestamp != null) {
+			billDate = new Date(billDateTimestamp);
 		}
 		return billDate;
 	}
@@ -179,6 +202,14 @@ public class DqOrderQuery {
 
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
+	}
+
+	public String getRefundTradeNo() {
+		return refundTradeNo;
+	}
+
+	public void setRefundTradeNo(String refundTradeNo) {
+		this.refundTradeNo = refundTradeNo;
 	}
 
 	@Override

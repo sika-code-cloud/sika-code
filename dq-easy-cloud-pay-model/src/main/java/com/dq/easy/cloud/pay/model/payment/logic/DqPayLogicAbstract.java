@@ -7,12 +7,15 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqImageFormat;
 import com.dq.easy.cloud.model.basic.logic.DqBaseLogic;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayValue;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
@@ -42,6 +45,7 @@ import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
  * @author daiqi 创建时间 2018年2月27日 上午10:19:45
  */
 public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLogicInf {
+	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public String mWebPay(DqPayOrderDTO dqPayOrderDTO, HttpServletRequest request, DqTransactionType transactionType) {
 		// 1、创建支付订单业务逻辑对象
@@ -126,9 +130,12 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	@Override
 	public DqBaseServiceResult queryPayResult(DqOrderQuery dqOrderQuery) {
 //		数据校验
-		dqOrderQuery.verifyTradeNo().verifyOutTradeNo();
+		dqOrderQuery.verifyTradeNoAndOutTradeNo();
 //		获取查询结果
 		Map<String, Object> queryResult = getDqPayService().queryPayResult(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo());
+		if (getDqPayService().signVerify(queryResult, queryResult.get(DqPayKey.SIGN_KEY).toString())) {
+			DqLogUtils.info("签名校验通过洛", queryResult, LOG);
+		}
 //		返回结果
 		return DqBaseServiceResult.newInstanceOfSucResult(new DqPayResultDTO(queryResult));
 	}
@@ -136,7 +143,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	@Override
 	public DqBaseServiceResult close(DqOrderQuery dqOrderQuery) {
 //		数据校验
-		dqOrderQuery.verifyTradeNo().verifyOutTradeNo();
+		dqOrderQuery.verifyTradeNoAndOutTradeNo();
 //		获取结果
 		Map<String, Object> closeResult = getDqPayService().close(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo());
 //		返回结果
@@ -160,9 +167,9 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	@Override
 	public DqBaseServiceResult queryRefundResult(DqOrderQuery dqOrderQuery) {
 //		数据校验
-		dqOrderQuery.verifyTradeNo().verifyOutTradeNo();
+		dqOrderQuery.verifyTradeNoAndOutTradeNo().verifyRefundTradeNo();
 //		获取结果
-		Map<String, Object> queryResult = getDqPayService().queryRefundResult(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo());
+		Map<String, Object> queryResult = getDqPayService().queryRefundResult(dqOrderQuery);
 //		返回结果
 		return DqBaseServiceResult.newInstanceOfSucResult(new DqPayResultDTO(queryResult));
 	}

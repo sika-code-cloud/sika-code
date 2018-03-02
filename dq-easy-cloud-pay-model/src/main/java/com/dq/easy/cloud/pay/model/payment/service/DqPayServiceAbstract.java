@@ -12,6 +12,7 @@ import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -244,8 +245,8 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	 * @return 处理过后的类型对象，返回支付方查询退款后的结果
 	 */
 	@Override
-	public <T> T refundQuery(String tradeNo, String outTradeNo, DqCallback<T> callback) {
-		return callback.perform(queryRefundResult(tradeNo, outTradeNo));
+	public <T> T refundQuery(DqOrderQuery dqOrderQuery, DqCallback<T> callback) {
+		return callback.perform(queryRefundResult(dqOrderQuery));
 	}
 
 	/**

@@ -30,7 +30,9 @@ public class DqDateFormatUtils {
 	/** 时间格式---精确到秒---yyyy-MM-dd HH:mm:ss */
 	public static final String FORMAT_NORMAL = "yyyy-MM-dd HH:mm:ss";
 	/** 时间格式---精确到天---yyyy-MM-dd */
-	public static final String FORMAT_NORMAL_SHORT = "yyyy-MM-dd";
+	public static final String FORMAT_NORMAL_DAY = "yyyy-MM-dd";
+	/** 时间格式---精确到月---yyyy-MM */
+	public static final String FORMAT_NORMAL_MONTH = "yyyy-MM";
 	/** 时区---东八时区---GMT+8 */
 	public static final String EAST_EIGHT_TIME_ZONE = "GMT+8";
 	

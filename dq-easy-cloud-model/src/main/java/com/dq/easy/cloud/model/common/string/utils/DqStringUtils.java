@@ -480,7 +480,7 @@ public class DqStringUtils {
 	 * @date 2017年12月5日 下午7:44:49
      */
 	public static boolean isEmpty(String str){
-		return StringUtils.isEmpty(str) || "".equals(str.trim());
+		return StringUtils.isEmpty(str) || "".equals(str.trim()) || "null".equalsIgnoreCase(str);
 	}
 	
 	/**

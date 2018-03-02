@@ -69,6 +69,8 @@ public enum DqPayErrorCode implements DqBaseErrorCodeInf{
 	REFUND_AMOUNT_CANT_NULL ("PAY_000027", "退款金额不能为空"),
 	/** 总金额不能为空---TOTAL_AMOUNT_CANT_NULL---PAY_000028 */
 	TOTAL_AMOUNT_CANT_NULL ("PAY_000028", "总金额不能为空"),
+	/** outNo和tradeNo不能同时为空---TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY---PAY_000029 */
+	TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY ("PAY_000029", "outNo和tradeNo不能同时为空"),
 	;
 	
 	private String errorCode;

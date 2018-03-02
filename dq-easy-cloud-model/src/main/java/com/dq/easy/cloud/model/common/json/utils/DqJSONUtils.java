@@ -42,13 +42,15 @@ public class DqJSONUtils {
 			return com.alibaba.fastjson.JSONObject.parseObject(jsonStr, clazz);
 		} catch (JSONException e) {
 			return (T) obj;
+		} catch (UnsupportedOperationException e) {
+			return (T) obj;
+		} catch (IllegalStateException e) {
+			return (T) obj;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	
 
 	/**
 	 * 将json数格式的字符串或者list转换为Class对应泛型对象的集合

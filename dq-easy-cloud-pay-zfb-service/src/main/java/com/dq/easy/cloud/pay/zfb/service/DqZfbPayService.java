@@ -35,6 +35,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbProductCode;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -132,7 +133,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 						sign, payConfigStorage.getKeyPublic(), payConfigStorage.getInputCharset());
 			}
 		}
-
 		return DqSignUtils.valueOf(payConfigStorage.getSignType()).verify(params, sign, payConfigStorage.getKeyPublic(),
 				payConfigStorage.getInputCharset());
 	}
@@ -342,18 +342,29 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> queryRefundResult(String tradeNo, String outTradeNo) {
-		return secondaryInterface(tradeNo, outTradeNo, DqZfbTransactionType.REFUNDQUERY);
+	public Map<String, Object> queryRefundResult(DqOrderQuery dqOrderQuery) {
+		// 获取公共参数
+		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.REFUNDQUERY);
+		
+		Map<String, Object> contentMap = new HashMap<>();
+		contentMap.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, dqOrderQuery.getRefundTradeNo());
+		// 设置请求参数的集合
+		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo(), contentMap));
+		// 设置签名
+		setSign(parameters);
+		return getRequestResult(parameters, DqZfbTransactionType.REFUNDQUERY);
 	}
 
 	/**
-	 * 目前只支持日账单
+	 * <p>下载对账单</p>
 	 * 
-	 * @param billDate
-	 *            账单类型，商户通过接口或商户经开放平台授权后其所属服务商通过接口可以获取以下账单类型：trade、signcustomer；
+	 * <pre>
+	 * 	这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法
+	 *  下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 
+	 * </pre>
+	 * @param billDate : 账单类型，商户通过接口或商户经开放平台授权后其所属服务商通过接口可以获取以下账单类型：trade、signcustomer；
 	 *            trade指商户基于支付宝交易收单的业务账单；signcustomer是指基于商户支付宝余额收入及支出等资金变动的帐务账单；
-	 * @param billType
-	 *            账单时间：日账单格式为yyyy-MM-dd，月账单格式为yyyy-MM。
+	 * @param billType : 账单时间：日账单格式为yyyy-MM-dd，月账单格式为yyyy-MM。
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
@@ -364,7 +375,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		Map<String, Object> bizContent = new TreeMap<>();
 		bizContent.put(DqZfbPayKey.BILL__TYPE_KEY, billType);
 		// 目前只支持日账单
-		String fomatDate = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_NORMAL_SHORT, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
+		String fomatDate = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_NORMAL_DAY, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
 		bizContent.put(DqZfbPayKey.BILL__DATE_KEY, fomatDate);
 		// 设置请求参数的集合
 		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
@@ -567,18 +578,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 *            商户单号
 	 * @return 获取biz_content。不包含下载账单
 	 */
-	private String getContentToJson(String tradeNo, String outTradeNo) {
-		return getContentToJson(tradeNo, outTradeNo, null);
-	}
-	/**
-	 * 获取biz_content。不包含下载账单
-	 * 
-	 * @param tradeNo
-	 *            支付平台订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @return 获取biz_content。不包含下载账单
-	 */
 	private String getContentToJson(String tradeNo, String outTradeNo, Map<String, Object> contentMap) {
 		return DqJSONUtils.parseObject(getBizContent(tradeNo, outTradeNo, contentMap), String.class);
 	}
@@ -606,7 +605,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 			verifyMap = DqJSONUtils.parseObject(resultMap.get(dqTransactionType.getResponseKey()), HashMap.class);
 			verifyMap.put(DqPayKey.SIGN_KEY, DqMapUtils.getString(resultMap, DqPayKey.SIGN_KEY));
 		}
-		
 		if (DqStringUtils.notEquals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(verifyMap, DqZfbPayKey.CODE_KEY))) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(verifyMap);
 		}

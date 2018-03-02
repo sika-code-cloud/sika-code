@@ -11,10 +11,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
@@ -34,6 +32,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -461,11 +460,15 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, refundOrder.getTotalAmountOfCent());
 		parameters.put(DqWxPayKey.REFUND__FEE_KEY, refundOrder.getRefundAmount());
 		parameters.put(DqWxPayKey.OP__USER__ID_KEY, payConfigStorage.getPid());
-
+		parameters.put(DqWxPayKey.NONCE__STR_KEY, String.valueOf(System.currentTimeMillis()));
 		// 设置签名
 		setSign(parameters);
-		return requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
+		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
 				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
+		if (DqMapUtils.isEmpty(retMap)) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
+		}
+		return retMap;
 	}
 
 	/**
@@ -477,19 +480,34 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 *            商户单号
 	 * @return 返回支付方查询退款后的结果
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> queryRefundResult(String transactionId, String outTradeNo) {
-		return secondaryInterface(transactionId, outTradeNo, DqWxTransactionType.REFUNDQUERY);
+	public Map<String, Object> queryRefundResult(DqOrderQuery dqOrderQuery) {
+		// 获取公共参数
+		Map<String, Object> parameters = getPublicParameters();
+		if (DqStringUtils.isNotEmpty(dqOrderQuery.getOutTradeNo())) {
+			parameters.put(DqWxPayKey.OUT__TRADE__NO_KEY, dqOrderQuery.getOutTradeNo());
+		} else {
+			parameters.put(DqWxPayKey.TRANSACTION__ID_KEY, dqOrderQuery.getTradeNo());
+		}
+		parameters.put(DqWxPayKey.OUT__REFUND__NO_KEY, dqOrderQuery.getRefundTradeNo());
+		// 设置签名
+		setSign(parameters);
+		return requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUNDQUERY), DqXMLUtils.getXmlStrFromMap(parameters),
+				HashMap.class);
 	}
 
 	/**
 	 * 目前只支持日账单
 	 *
 	 * @param billDate
-	 *            账单类型，商户通过接口或商户经开放平台授权后其所属服务商通过接口可以获取以下账单类型：trade、signcustomer；
-	 *            trade指商户基于支付宝交易收单的业务账单；signcustomer是指基于商户支付宝余额收入及支出等资金变动的帐务账单；
+	 *             账单时间：日账单格式为yyyy-MM-dd，月账单格式为yyyy-MM。
 	 * @param billType
-	 *            账单时间：日账单格式为yyyy-MM-dd，月账单格式为yyyy-MM。
+	 * ALL，返回当日所有订单信息，默认值
+	 * SUCCESS，返回当日成功支付的订单
+	 * REFUND，返回当日退款订单
+	 * RECHARGE_REFUND，返回当日充值退款订单
+	 *           
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
@@ -508,14 +526,17 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		String respStr = requestTemplate.postForObject(getUrl(DqWxTransactionType.DOWNLOADBILL),
 				DqXMLUtils.getXmlStrFromMap(parameters), String.class);
 		if (respStr.indexOf(DqSymbol.LESS_THAN) == 0) {
-			return DqXMLUtils.getMapFromXmlStr(respStr);
+			Map<String, Object> errorMap = DqXMLUtils.getMapFromXmlStr(respStr);
+			if (DqBaseUtils.notEquals(errorMap.get(DqWxPayKey.RETURN__CODE_KEY), DqWxPayValue.SUCCESS)) {
+				throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(errorMap);
+			}
 		}
-
-		Map<String, Object> ret = new HashMap<String, Object>();
-		ret.put(DqWxPayKey.RETURN__CODE_KEY, DqWxPayValue.SUCCESS);
-		ret.put(DqWxPayKey.RETURN__MSG_KEY, DqWxPayValue.OK);
-		ret.put(DqWxPayKey.DATA_KEY, respStr);
-		return ret;
+		
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		retMap.put(DqWxPayKey.RETURN__CODE_KEY, DqWxPayValue.SUCCESS);
+		retMap.put(DqWxPayKey.RETURN__MSG_KEY, DqWxPayValue.OK);
+		retMap.put(DqWxPayKey.DATA_KEY, respStr);
+		return retMap;
 	}
 
 	/**

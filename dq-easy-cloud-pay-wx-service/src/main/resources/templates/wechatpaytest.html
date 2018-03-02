@@ -81,7 +81,7 @@ APP提交(返回对应的json，具体实现，app端demo暂时未实现)
 <br/>
 
 查询账单
-<form action="wx/query" target="_blank">
+<form action="wx/queryPayResult" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
@@ -118,22 +118,22 @@ APP提交(返回对应的json，具体实现，app端demo暂时未实现)
 </form>
 <br/>
 查询退款
-<form action="wx/refundquery" target="_blank">
+<form action="wx/queryRefundResult" target="_blank">
     账户id<input type="text" name="payId"/>
     <br/>
     支付平台订单号<input type="text" name="tradeNo"/>
     <br/>
     商户单号<input type="text" name="outTradeNo"/>
     <br/>
+          退款订单号<input type="text" name="refundTradeNo"/>
+    <br/>
     <input type="submit" value="提交"/>
 </form>
 
 <br/>
 下载对账单(日期，不支持月份)
-<form action="wx/downloadbill" target="_blank">
-    账户id<input type="text" name="payId"/>
-    <br/>
-    账单时间：具体请查看对应支付平台<input type="text" name="billDate"/>
+<form action="wx/downLoadBill" target="_blank">
+    账单时间：具体请查看对应支付平台<input type="text" name="billDateTimestamp"/>
     <br/>
     账单类型 <input type="text" name="billType"/>
     <br/>
@@ -141,18 +141,8 @@ APP提交(返回对应的json，具体实现，app端demo暂时未实现)
 </form>
 
 <br/>
-通用查询接口，根据 交易类型（TransactionType） 进行实现,此接口不包括退款
-<form action="wx/secondaryInterface" target="_blank">
-    账户id<input type="text" name="payId"/>
-    <br/>
-    支付平台订单号或者账单日期<input type="text" name="tradeNoOrBillDate"/>
-    <br/>
-    商户单号或者 账单类型<input type="text" name="outTradeNoBillType"/>
-    <br/>
-    交易类型<input type="text" name="transactionType"/>
-    <br/>
-    <input type="submit" value="提交"/>
-</form>
+
+<br/>
 <script src="/jquery-3.1.1.min.js"></script>
 <script>
 var basePath = "http://localhost:8400/dq-easy-cloud-pay-service/";

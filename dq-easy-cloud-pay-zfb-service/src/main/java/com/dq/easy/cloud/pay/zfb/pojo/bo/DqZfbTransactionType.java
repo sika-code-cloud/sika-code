@@ -40,9 +40,9 @@ public enum DqZfbTransactionType implements DqTransactionType {
 	/** 下载对账单 */
 	DOWNLOADBILL("alipay.data.dataservice.bill.downloadurl.query", "alipay_data_dataservice_bill_downloadurl_query_response"), 
 	/** 转账到支付宝 */
-	TRANS("alipay.fund.trans.toaccount.transfer", "alipay_trade_trans_response"), 
+	TRANS("alipay.fund.trans.toaccount.transfer", "alipay_fund_trans_toaccount_transfer_response"), 
 	/** 转账查询 */
-	TRANS_QUERY("alipay.fund.trans.order.query", "alipay_trade_trans_query_response");
+	TRANS_QUERY("alipay.fund.trans.order.query", "alipay_fund_trans_order_query_response");
 
 	private String method;
 	private String responseKey;
