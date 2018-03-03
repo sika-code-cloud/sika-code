@@ -1,24 +1,46 @@
 package com.dq.easy.cloud.pay.wx.service;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.security.KeyStore;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSONObject;
 import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
+import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
@@ -463,13 +485,112 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		parameters.put(DqWxPayKey.NONCE__STR_KEY, String.valueOf(System.currentTimeMillis()));
 		// 设置签名
 		setSign(parameters);
-		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
-				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
-		if (DqMapUtils.isEmpty(retMap)) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
-		}
+//		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
+//				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
+//		if (DqMapUtils.isEmpty(retMap)) {
+//			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
+//		}
+		Map<String, Object> retMap = DqJSONUtils.parseObject(wxPayRefund(refundOrder), HashMap.class);
 		return retMap;
 	}
+	/**
+     * @Author: HONGLINCHEN
+     * @Description:微信退款   注意：：微信金额的单位是分 所以这里要X100 转成int是因为 退款的时候不能有小数点
+     * @param merchantNumber 商户这边的订单号
+     * @param wxTransactionNumber 微信那边的交易单号
+     * @param totalFee 订单的金额
+     * @Date: 2017-9-12 11:18
+     */
+    @SuppressWarnings("deprecation")
+	public Object wxPayRefund(DqRefundOrderDTO refundOrder) {
+        try{
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            FileInputStream instream = new FileInputStream(new File("E:/tools/wx_pay/cert/apiclient_cert.p12"));
+            try {
+                keyStore.load(instream, payConfigStorage.getPid().toCharArray());
+            }finally {
+                instream.close();
+            }
+            // Trust own CA and all self-signed certs
+            SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, payConfigStorage.getPid().toCharArray()).build();
+            // Allow TLSv1 protocol only
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                    sslcontext, new String[] { "TLSv1" }, null,
+                    SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            CloseableHttpClient httpclient = HttpClients.custom()
+                    .setSSLSocketFactory(sslsf).build();
+            // HttpGet httpget = new
+            // HttpGet("https://api.mch.weixin.qq.com/secapi/pay/refund");
+            HttpPost httppost = new HttpPost("https://api.mch.weixin.qq.com/secapi/pay/refund");
+            //微信金额的单位是分 所以这里要X100 转成int是因为 退款的时候不能有小数点
+//            String xml = WXPayUtil.wxPayRefund(merchantNumber,wxTransactionNumber,String.valueOf((int)(totalFee*100)));
+         // 获取公共参数
+    		Map<String, Object> parameters = getPublicParameters();
+    		if (DqStringUtils.isNotEmpty(refundOrder.getTradeNo())) {
+    			parameters.put(DqWxPayKey.TRANSACTION__ID_KEY, refundOrder.getTradeNo());
+    		} else {
+    			parameters.put(DqWxPayKey.OUT__TRADE__NO_KEY, refundOrder.getOutTradeNo());
+    		}
+    		parameters.put(DqWxPayKey.OUT__REFUND__NO_KEY, refundOrder.getRefundNo());
+    		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, refundOrder.getTotalAmountOfCent());
+    		parameters.put(DqWxPayKey.REFUND__FEE_KEY, refundOrder.getRefundAmount());
+    		parameters.put(DqWxPayKey.OP__USER__ID_KEY, payConfigStorage.getPid());
+    		parameters.put(DqWxPayKey.NONCE__STR_KEY, String.valueOf(System.currentTimeMillis()));
+    		// 设置签名
+    		setSign(parameters);
+            String xml = DqXMLUtils.getXmlStrFromMap(parameters);
+            try {
+                StringEntity se = new StringEntity(xml);
+                httppost.setEntity(se);
+                System.out.println("executing request" + httppost.getRequestLine());
+                CloseableHttpResponse responseEntry = httpclient.execute(httppost);
+                try {
+                    HttpEntity entity = responseEntry.getEntity();
+                    System.out.println(responseEntry.getStatusLine());
+                    if (entity != null) {
+                    	Map<String, Object> resultMap = DqXMLUtils.getMapFromInputStream(entity.getContent());
+                        System.out.println("Response content length: "+ entity.getContentLength());
+                        SAXReader saxReader = new SAXReader();
+                        Document document = saxReader.read(entity.getContent());
+                        Element rootElt = document.getRootElement();
+                        System.out.println("根节点：" + rootElt.getName());
+                        System.out.println("==="+rootElt.elementText("result_code"));
+                        System.out.println("==="+rootElt.elementText("return_msg"));
+                        String resultCode = rootElt.elementText("result_code");
+                        JSONObject result = new JSONObject();
+                        Document documentXml = DocumentHelper.parseText(xml);
+                        Element rootEltXml = documentXml.getRootElement();
+                        if(resultCode.equals("SUCCESS")){
+                            System.out.println("=================prepay_id===================="+ rootElt.elementText("prepay_id"));
+                            System.out.println("=================sign===================="+ rootEltXml.elementText("sign"));
+                            result.put("weixinPayUrl", rootElt.elementText("code_url"));
+                            result.put("prepayId", rootElt.elementText("prepay_id"));
+                            result.put("status","success");
+                            result.put("msg","success");
+                        }else{
+                            result.put("status","false");
+                            result.put("msg",rootElt.elementText("err_code_des"));
+                        }
+                        return result;
+                    }
+                    EntityUtils.consume(entity);
+                }
+                finally {
+                    responseEntry.close();
+                }
+            }
+            finally {
+                httpclient.close();
+            }
+            return null;
+        }catch(Exception e){
+            e.printStackTrace();
+            JSONObject result = new JSONObject();
+            result.put("status","error");
+            result.put("msg",e.getMessage());
+            return result;
+        }
+    }
 
 	/**
 	 * 查询退款

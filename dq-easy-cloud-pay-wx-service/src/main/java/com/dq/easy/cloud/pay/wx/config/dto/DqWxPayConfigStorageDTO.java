@@ -44,7 +44,7 @@ public class DqWxPayConfigStorageDTO extends DqPayConfigStorageAbstract {
 
 	@Override
 	public String getSeller() {
-		return null;
+		return mchId;
 	}
 
 	public String getMchId() {
