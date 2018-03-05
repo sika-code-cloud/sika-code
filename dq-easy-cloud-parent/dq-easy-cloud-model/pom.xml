@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>dq-easy-cloud-model</artifactId>
+	<packaging>jar</packaging>
+	<name>dq-easy-cloud-model</name>
+	<description>dq-easy-cloud-model</description>
+	
+	<parent>
+		<groupId>dq.easy.cloud</groupId>
+		<artifactId>dq-easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath/>
+	</parent>
+	
+	<properties>
+		<!-- alibaba.fastjson依赖 -->
+		<fastjson.version>1.2.39</fastjson.version>
+		<org.jdom.version>2.0.2</org.jdom.version>
+		<zxing.version>3.3.1</zxing.version>
+		<!-- druid依赖 -->
+		<druid.version>1.1.6</druid.version>
+		<!-- 版本依赖管理 end -->
+	</properties>
+	<dependencies>
+		<!-- spring框架相关依赖 bigen -->
+		<!-- spring-boot-start-x依赖 begin -->
+		<!-- spring-boot-starter-jdbc 模块 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-jpa 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-redis 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-solr依赖 -->
+		<!-- 先注释solr 因为会导致eureka的client找不到Base64=原因未知 -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-solr</artifactId>
+		</dependency> -->
+		<!-- spring-boot-start-x依赖 end -->
+		<!-- spring框架相关依赖 end -->
+
+		<!-- 非spring项目的第三方依赖 begin -->
+		<!-- fastjson依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<!-- jdom依赖 -->
+		<dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+           	<version>${org.jdom.version}</version>
+        </dependency>
+        <!-- zxing依赖 谷歌二维码生成工具 -->
+        <dependency>
+              <groupId>com.google.zxing</groupId>
+              <artifactId>core</artifactId>
+              <version>${zxing.version}</version>
+          </dependency>
+		<!-- mysql连接依赖 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<!-- 非spring项目的第三方依赖 end -->
+	</dependencies>
+</project>
