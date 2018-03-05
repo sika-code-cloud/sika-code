@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>easy 充值</title>
+</head>
+<body>
+
+<br/>
+<div>支付宝(<code>com.egzosn.pay.wx.bean.WxTransactionType</code>)： 公众号支付=JSAPI ， 移动支付=APP ， 扫码付=NATIVE</div>
+
+<br/>
+<br/>
+<br/>
+APP提交(返回对应的json，具体实现，app端demo暂时未实现)
+<form action="
+zfb/appPay" target="_blank">
+    金额<input type="text" name="price" value = "0.01"/>
+  <br/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+
+<br/>
+普通web提交
+<form action="zfb/directPay" target="_blank">
+        金额<input type="text" name="price" value = "0.01"/>
+    <br/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+移动h5支付
+<form action="zfb/mWebPay" target="_blank">
+     金额<input type="text" name="price" value = "0.01"/>
+    <br/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+<br/>
+主动收款(pos条码声波付等)
+<form id="microPay" action="zfb/microPay" target="_blank">
+     金额<input type="text" name="price" value = "0.01"/>
+    <br/>
+    subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
+    <br/>
+    条码授权信息<input type="text" name="authCode"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+
+<br/>
+二维码
+<form id="toQrPay" action="zfb/generatePayQrCode" target="_blank">
+        金额<input type="text" name="price" value = "0.01"/>
+    <br/>
+   subject<input type="text" name="subject" value="这是商品名称"/>
+   <br/>
+   body<input type="text" name="body" value="这是商品描述"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+
+<br/>
+查询账单
+<form action="zfb/queryPayResult" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    支付平台订单号<input type="text" name="tradeNo"/>
+    <br/>
+    商户单号<input type="text" name="outTradeNo"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+交易关闭接口
+<form action="zfb/close" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    支付平台订单号<input type="text" name="tradeNo"/>
+    <br/>
+    商户单号<input type="text" name="outTradeNo"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+申请退款接口
+<form action="zfb/refund" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    支付平台订单号<input type="text" name="tradeNo"/>
+    <br/>
+    商户单号<input type="text" name="outTradeNo"/>
+    <br/>
+    退款金额<input type="text" name="refundAmount"/>
+    <br/>
+    总金额(微信必填)<input type="text" name="totalAmount"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+查询退款
+<form action="zfb/queryRefundResult" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    支付平台订单号<input type="text" name="tradeNo"/>
+    <br/>
+    商户单号<input type="text" name="outTradeNo"/>
+    <br/>
+      退款订单号<input type="text" name="refundTradeNo"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+支付宝转账
+<form action="zfb/transfer" target="_blank">
+   收款方银行卡号<input type="text" name="payeeAccount" value="6214637830343897"/>
+    <br/>
+    收款方用户名<input type="text" name="payeeName" value="戴齐"/>
+    <br/>
+    银行枚举字符串<input type="text" name="bankStr" value="CMB"/>
+    <br/>
+      转账金额<input type="text" name="amount" value="0.01"/>
+    <br/>
+    备注<input type="text" name="remark"/>
+    <br/>
+    
+    <input type="submit" value="提交"/>
+</form>
+查询转账
+<form action="zfb/queryTransferResult" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    支付平台订单号<input type="text" name="tradeNo"/>
+    <br/>
+    商户单号<input type="text" name="outTradeNo"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+<br/>
+<br/>
+<br/>
+下载对账单(日期，不支持月份)
+<form action="zfb/downLoadBill" target="_blank">
+    账户id<input type="text" name="payId"/>
+    <br/>
+    账单时间：具体请查看对应支付平台<input type="text" name="billDateTimestamp"/>
+    <br/>
+    账单类型 <input type="text" name="billType"/>
+    <br/>
+    <input type="submit" value="提交"/>
+</form>
+
+<br/>
+
+<script src="/jquery-3.1.1.min.js"></script>
+<script>
+var basePath = "http://localhost:8400/dq-easy-cloud-pay-service/";
+   $(function ($) {
+        $("#submit").click(function () {
+            $.ajax({
+                url : getPath("add"),
+                type : "post",
+                data : $("#form").serialize(),
+                dataType : 'json',
+                success : function(data) {
+                    if (data.code == 0){
+                        alert("保存成功");
+                        return;
+                    }
+                    alert("保存失败");
+                },
+                error : function(edata) {
+                    alert("服务器异常")
+                }
+            })
+        }) ;
+       $("#js_submit").click(function () {
+            $.ajax({
+                url : getPath("zfb/wxJsapiPay"),
+                type : "post",
+                async: true,
+                data : $("#jsapi").serialize(),
+                dataType : 'json',
+                success : function(data) {
+                    if (data.errorCode == "A_000000"){
+                    	var result = data.result.payResult;
+                        if (typeof WeixinJSBridge == "undefined"){
+                            if( document.addEventListener ){
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady(result), false);
+                            }else if (document.attachEvent){
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady(result));
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady(result));
+                            }
+                        }else{
+                            onBridgeReady(result);
+                        }
+                        return;
+                    }else{
+						alert(data.errorMsg);
+                    }
+                },
+                error : function(edata) {
+                    alert("服务器异常")
+                }
+            })
+        })
+   });
+   function onBridgeReady(data){
+	   console.log(data)
+       WeixinJSBridge.invoke(
+           'getBrandWCPayRequest', {
+               "appId": data.appId,     //公众号名称，由商户传入
+               "timeStamp": data.timeStamp,         //时间戳，自1970年以来的秒数
+               "nonceStr": data.nonceStr, //随机串
+               "package": data.package,
+               "signType": data.signType,         //微信签名方式：
+               "paySign": data.sign //微信签名
+           },
+           function(res){
+               // 使用以断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+               if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                   alert("支付成功")
+
+               }
+           }
+       );
+   }
+   var getPath = function (path){
+	   return "/"+ path;
+   }
+
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</body>
+</html>
