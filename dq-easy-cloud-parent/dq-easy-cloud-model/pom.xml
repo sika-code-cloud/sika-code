@@ -4,10 +4,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<artifactId>dq-easy-cloud-model</artifactId>
+	<artifactId>dq-easy-cloud-common</artifactId>
 	<packaging>jar</packaging>
-	<name>dq-easy-cloud-model</name>
-	<description>dq-easy-cloud-model</description>
+	<name>dq-easy-cloud-common</name>
+	<description>dq-easy-cloud-common</description>
 	
 	<parent>
 		<groupId>dq.easy.cloud</groupId>

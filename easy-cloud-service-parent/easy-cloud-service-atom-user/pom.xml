@@ -15,13 +15,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-model</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>easy.cloud.service</groupId>
-			<artifactId>easy-cloud-service-model</artifactId>
+			<artifactId>easy-cloud-service-common</artifactId>
 			<version>${dq.easy.cloud.version}</version>
 		</dependency>
 	</dependencies>

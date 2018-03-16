@@ -15,9 +15,17 @@
 	<description>easy-cloud-service-parent</description>
 	<!-- 子模块 -->
 	<modules>
-		<module>easy-cloud-service-model</module>
+		<module>easy-cloud-service-common</module>
 		<module>easy-cloud-service-atom-user</module>
 		<module>easy-cloud-service-atom-movie</module>
 		<module>easy-cloud-service-compose-user</module>
 	</modules>
+	
+	<dependencies>
+		<dependency>
+			<groupId>dq.easy.cloud</groupId>
+			<artifactId>dq-easy-cloud-common</artifactId>
+			<version>${dq.easy.cloud.version}</version>
+		</dependency>
+	</dependencies>
 </project>

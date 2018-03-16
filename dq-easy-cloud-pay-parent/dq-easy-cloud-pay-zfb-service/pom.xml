@@ -19,12 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-model</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-pay-model</artifactId>
+			<artifactId>dq-easy-cloud-pay-common</artifactId>
 			<version>${dq.easy.cloud.version}</version>
 		</dependency>
 		<dependency>

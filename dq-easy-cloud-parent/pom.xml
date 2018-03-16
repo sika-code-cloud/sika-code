@@ -19,7 +19,7 @@
 	</parent>
 	<!-- 子模块 -->
 	<modules>
-		<module>dq-easy-cloud-model</module>
+		<module>dq-easy-cloud-common</module>
 		<module>dq-easy-cloud-config-server</module>
 		<module>dq-easy-cloud-config-client</module>
 		<module>dq-easy-cloud-eureka-server</module>

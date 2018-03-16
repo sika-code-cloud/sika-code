@@ -7,16 +7,9 @@
 		<version>1.0.0</version>
 		<relativePath/>
 	</parent>
-	
-	<artifactId>easy-cloud-service-model</artifactId>
-	<name>easy-cloud-service-model</name>
-	<description>easy-cloud-service-model</description>
-	
-	<dependencies>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-model</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-	</dependencies>
+
+	<artifactId>easy-cloud-service-common</artifactId>
+	<name>easy-cloud-service-common</name>
+	<description>easy-cloud-service-common</description>
+
 </project>

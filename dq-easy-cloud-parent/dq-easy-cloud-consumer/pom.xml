@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-model</artifactId>
+			<artifactId>dq-easy-cloud-common</artifactId>
 			<version>${dq.easy.cloud.version}</version>
 		</dependency>
 	</dependencies>
