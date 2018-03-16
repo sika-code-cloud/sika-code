@@ -26,10 +26,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +36,6 @@ import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
@@ -98,19 +93,6 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	}
 
 	/**
-	 * 根据交易类型获取url
-	 *
-	 * @param transactionType
-	 *            交易类型
-	 *
-	 * @return 请求url
-	 */
-	private String getUrl(DqTransactionType transactionType) {
-
-		return DqWxPayValue.URI + (payConfigStorage.isTest() ? DqWxPayValue.SANDBOXNEW : "") + transactionType.getMethod();
-	}
-
-	/**
 	 * 回调校验
 	 *
 	 * @param params
@@ -162,19 +144,6 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	public boolean signVerify(Map<String, Object> params, String sign) {
 		return DqSignUtils.valueOf(payConfigStorage.getSignType()).verify(params, sign,
 				"&key=" + payConfigStorage.getKeyPrivate(), payConfigStorage.getInputCharset());
-	}
-
-	/**
-	 * 获取公共参数
-	 *
-	 * @return 公共参数
-	 */
-	private Map<String, Object> getPublicParameters() {
-		Map<String, Object> parameters = new TreeMap<String, Object>();
-		parameters.put(DqWxPayKey.APPID_KEY, payConfigStorage.getAppid());
-		parameters.put(DqWxPayKey.MCH__ID_KEY, payConfigStorage.getPid());
-		parameters.put(DqWxPayKey.NONCE__STR_KEY, DqSignUtils.randomStr());
-		return parameters;
 	}
 
 	/**
@@ -271,21 +240,6 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		params.put(DqWxPayKey.SIGN_KEY, paySign);
 		return params;
 
-	}
-
-	/**
-	 * 生成并设置签名
-	 *
-	 * @param parameters
-	 *            请求参数
-	 * @return 请求参数
-	 */
-	private Map<String, Object> setSign(Map<String, Object> parameters) {
-		parameters.put(DqWxPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
-		String sign = createSign(DqSignUtils.parameterText(parameters, DqSymbol.SINGLE_AND, DqWxPayKey.SIGN_KEY, DqWxPayKey.APP_ID_KEY),
-				payConfigStorage.getInputCharset());
-		parameters.put(DqWxPayKey.SIGN_KEY, sign);
-		return parameters;
 	}
 
 	/**
@@ -480,17 +434,17 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		}
 		parameters.put(DqWxPayKey.OUT__REFUND__NO_KEY, refundOrder.getRefundNo());
 		parameters.put(DqWxPayKey.TOTAL__FEE_KEY, refundOrder.getTotalAmountOfCent());
-		parameters.put(DqWxPayKey.REFUND__FEE_KEY, refundOrder.getRefundAmount());
+		parameters.put(DqWxPayKey.REFUND__FEE_KEY, refundOrder.getRefundAmountOfCent());
 		parameters.put(DqWxPayKey.OP__USER__ID_KEY, payConfigStorage.getPid());
 		parameters.put(DqWxPayKey.NONCE__STR_KEY, String.valueOf(System.currentTimeMillis()));
 		// 设置签名
 		setSign(parameters);
-//		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
-//				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
-//		if (DqMapUtils.isEmpty(retMap)) {
-//			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
-//		}
-		Map<String, Object> retMap = DqJSONUtils.parseObject(wxPayRefund(refundOrder), HashMap.class);
+		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
+				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
+		if (DqMapUtils.isEmpty(retMap)) {
+			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
+		}
+//		Map<String, Object> retMap = DqJSONUtils.parseObject(wxPayRefund(refundOrder), HashMap.class);
 		return retMap;
 	}
 	/**
@@ -548,30 +502,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
                     HttpEntity entity = responseEntry.getEntity();
                     System.out.println(responseEntry.getStatusLine());
                     if (entity != null) {
-                    	Map<String, Object> resultMap = DqXMLUtils.getMapFromInputStream(entity.getContent());
-                        System.out.println("Response content length: "+ entity.getContentLength());
-                        SAXReader saxReader = new SAXReader();
-                        Document document = saxReader.read(entity.getContent());
-                        Element rootElt = document.getRootElement();
-                        System.out.println("根节点：" + rootElt.getName());
-                        System.out.println("==="+rootElt.elementText("result_code"));
-                        System.out.println("==="+rootElt.elementText("return_msg"));
-                        String resultCode = rootElt.elementText("result_code");
-                        JSONObject result = new JSONObject();
-                        Document documentXml = DocumentHelper.parseText(xml);
-                        Element rootEltXml = documentXml.getRootElement();
-                        if(resultCode.equals("SUCCESS")){
-                            System.out.println("=================prepay_id===================="+ rootElt.elementText("prepay_id"));
-                            System.out.println("=================sign===================="+ rootEltXml.elementText("sign"));
-                            result.put("weixinPayUrl", rootElt.elementText("code_url"));
-                            result.put("prepayId", rootElt.elementText("prepay_id"));
-                            result.put("status","success");
-                            result.put("msg","success");
-                        }else{
-                            result.put("status","false");
-                            result.put("msg",rootElt.elementText("err_code_des"));
-                        }
-                        return result;
+                    	return DqXMLUtils.getMapFromInputStream(entity.getContent());
                     }
                     EntityUtils.consume(entity);
                 }
@@ -773,6 +704,47 @@ public class DqWxPayService extends DqPayServiceAbstract {
 
 	public String keyPublic(String content) {
 		return DqSignUtils.RSA.createSign(content, payConfigStorage.getKeyPublic(), payConfigStorage.getInputCharset());
+	}
+
+	/**
+	 * 根据交易类型获取url
+	 *
+	 * @param transactionType
+	 *            交易类型
+	 *
+	 * @return 请求url
+	 */
+	private String getUrl(DqTransactionType transactionType) {
+
+		return DqWxPayValue.URI + (payConfigStorage.isTest() ? DqWxPayValue.SANDBOXNEW : "") + transactionType.getMethod();
+	}
+
+	/**
+	 * 获取公共参数
+	 *
+	 * @return 公共参数
+	 */
+	private Map<String, Object> getPublicParameters() {
+		Map<String, Object> parameters = new TreeMap<String, Object>();
+		parameters.put(DqWxPayKey.APPID_KEY, payConfigStorage.getAppid());
+		parameters.put(DqWxPayKey.MCH__ID_KEY, payConfigStorage.getPid());
+		parameters.put(DqWxPayKey.NONCE__STR_KEY, DqSignUtils.randomStr());
+		return parameters;
+	}
+
+	/**
+	 * 生成并设置签名
+	 *
+	 * @param parameters
+	 *            请求参数
+	 * @return 请求参数
+	 */
+	private Map<String, Object> setSign(Map<String, Object> parameters) {
+		parameters.put(DqWxPayKey.SIGN__TYPE_KEY, payConfigStorage.getSignType());
+		String sign = createSign(DqSignUtils.parameterText(parameters, DqSymbol.SINGLE_AND, DqWxPayKey.SIGN_KEY, DqWxPayKey.APP_ID_KEY),
+				payConfigStorage.getInputCharset());
+		parameters.put(DqWxPayKey.SIGN_KEY, sign);
+		return parameters;
 	}
 
 }

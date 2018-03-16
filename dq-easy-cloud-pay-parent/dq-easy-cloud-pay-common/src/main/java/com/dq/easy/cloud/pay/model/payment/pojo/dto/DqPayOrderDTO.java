@@ -3,6 +3,7 @@ package com.dq.easy.cloud.pay.model.payment.pojo.dto;
 import java.math.BigDecimal;
 
 import com.dq.easy.cloud.pay.model.base.constant.DqCurType;
+import com.dq.easy.cloud.pay.model.base.pojo.dto.DqBasePayDTO;
 import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
@@ -14,7 +15,7 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
  *
  * @author daiqi 创建时间 2018年2月23日 下午3:03:43
  */
-public class DqPayOrderDTO {
+public class DqPayOrderDTO extends DqBasePayDTO{
 	// 商品名称
 	private String subject;
 	// 商品描述
