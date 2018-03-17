@@ -45,9 +45,9 @@ public class DqBaseEntity {
 	private Long createBy;
 	@LastModifiedBy
 	private Long updateBy;
-//	删除标志
+	/** 删除标志  */
 	private Integer isDeleted;
-//	备注
+	/** 备注 */
 	private String remark;
 	@PrePersist
 	public void basePrePersist(){

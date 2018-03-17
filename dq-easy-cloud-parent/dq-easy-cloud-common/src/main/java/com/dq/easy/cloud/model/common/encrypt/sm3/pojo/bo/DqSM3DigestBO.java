@@ -28,7 +28,7 @@ public class DqSM3DigestBO {
 	private int xBufOff;
 
 	/** 初始向量 */
-	private byte[] V = DqSM3Utils.iv.clone();
+	private byte[] v = DqSM3Utils.IV.clone();
 
 	private int cntBlock = 0;
 
@@ -43,7 +43,7 @@ public class DqSM3DigestBO {
 	public DqSM3DigestBO(DqSM3DigestBO dqSM3DigestDTO) {
 		System.arraycopy(dqSM3DigestDTO.xBuf, 0, this.xBuf, 0, dqSM3DigestDTO.xBuf.length);
 		this.xBufOff = dqSM3DigestDTO.xBufOff;
-		System.arraycopy(dqSM3DigestDTO.V, 0, this.V, 0, dqSM3DigestDTO.V.length);
+		System.arraycopy(dqSM3DigestDTO.v, 0, this.v, 0, dqSM3DigestDTO.v.length);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class DqSM3DigestBO {
 	public void reset() {
 		xBufOff = 0;
 		cntBlock = 0;
-		V = DqSM3Utils.iv.clone();
+		v = DqSM3Utils.IV.clone();
 	}
 
 	/**
@@ -105,10 +105,10 @@ public class DqSM3DigestBO {
 	 * 更新
 	 */
 	private void doUpdate() {
-		byte[] B = new byte[BLOCK_LENGTH];
+		byte[] byteArray = new byte[BLOCK_LENGTH];
 		for (int i = 0; i < BUFFER_LENGTH; i += BLOCK_LENGTH) {
-			System.arraycopy(xBuf, i, B, 0, B.length);
-			doHash(B);
+			System.arraycopy(xBuf, i, byteArray, 0, byteArray.length);
+			doHash(byteArray);
 		}
 		xBufOff = 0;
 	}
@@ -116,25 +116,25 @@ public class DqSM3DigestBO {
 	/**
 	 * 转16进制
 	 * 
-	 * @param B
+	 * @param byteArray
 	 *            字节数组
 	 */
-	private void doHash(byte[] B) {
-		byte[] tmp = DqSM3Utils.CF(V, B);
-		System.arraycopy(tmp, 0, V, 0, V.length);
+	private void doHash(byte[] byteArray) {
+		byte[] tmp = DqSM3Utils.cf(v, byteArray);
+		System.arraycopy(tmp, 0, v, 0, v.length);
 		cntBlock++;
 	}
 
 	private byte[] doFinal() {
-		byte[] B = new byte[BLOCK_LENGTH];
+		byte[] byteArray = new byte[BLOCK_LENGTH];
 		byte[] buffer = new byte[xBufOff];
 		System.arraycopy(xBuf, 0, buffer, 0, buffer.length);
 		byte[] tmp = DqSM3Utils.padding(buffer, cntBlock);
 		for (int i = 0; i < tmp.length; i += BLOCK_LENGTH) {
-			System.arraycopy(tmp, i, B, 0, B.length);
-			doHash(B);
+			System.arraycopy(tmp, i, byteArray, 0, byteArray.length);
+			doHash(byteArray);
 		}
-		return V;
+		return v;
 	}
 
 	public void update(byte in) {

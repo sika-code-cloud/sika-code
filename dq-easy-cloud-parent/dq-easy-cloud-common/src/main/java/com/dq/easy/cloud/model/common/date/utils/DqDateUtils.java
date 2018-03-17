@@ -1,5 +1,6 @@
 package com.dq.easy.cloud.model.common.date.utils;
 
+import java.security.Timestamp;
 import java.util.Date;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
@@ -12,6 +13,8 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 public class DqDateUtils {
 	/** 时间戳进制---1000---TIMESTAMP_HEX */
 	private static final int TIMESTAMP_HEX = 1000;
+	/** 时间戳秒的长度---10 */
+	private static final int TIMESTAMP_SEC_LENGTH = 10;
 
 	/**
 	 * <p>
@@ -101,7 +104,7 @@ public class DqDateUtils {
 		if (DqBaseUtils.isNull(timestamp)) {
 			return null;
 		}
-		if (timestamp.toString().length() > 10) {
+		if (timestamp.toString().length() > TIMESTAMP_SEC_LENGTH) {
 			return timestamp;
 		}
 		return timestamp * TIMESTAMP_HEX;

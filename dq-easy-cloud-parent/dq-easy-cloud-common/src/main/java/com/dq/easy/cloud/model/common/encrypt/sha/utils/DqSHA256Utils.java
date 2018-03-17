@@ -22,14 +22,14 @@ public class DqSHA256Utils {
 	 *            需要签名的字符串
 	 * @param key
 	 *            密钥
-	 * @param input_charset
+	 * @param inputCharset
 	 *            编码格式
 	 * @return 签名结果
 	 */
-	public static String sign(String text, String key, String input_charset) {
+	public static String sign(String text, String key, String inputCharset) {
 		// 拼接key
 		text = text + key;
-		return DigestUtils.sha256Hex(DqEncryptUtils.getContentBytes(text, input_charset));
+		return DigestUtils.sha256Hex(DqEncryptUtils.getContentBytes(text, inputCharset));
 	}
 
 	/**
@@ -41,13 +41,13 @@ public class DqSHA256Utils {
 	 *            签名结果
 	 * @param key
 	 *            密钥
-	 * @param input_charset
+	 * @param inputCharset
 	 *            编码格式
 	 * @return 签名结果
 	 */
-	public static boolean verify(String text, String sign, String key, String input_charset) {
+	public static boolean verify(String text, String sign, String key, String inputCharset) {
 		// 判断是否一样
-		return DqStringUtils.equals(sign(text, key, input_charset).toUpperCase(), sign.toUpperCase());
+		return DqStringUtils.equals(sign(text, key, inputCharset).toUpperCase(), sign.toUpperCase());
 	}
 
 }

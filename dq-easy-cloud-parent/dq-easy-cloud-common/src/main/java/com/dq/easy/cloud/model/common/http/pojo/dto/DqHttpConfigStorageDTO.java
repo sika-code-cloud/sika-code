@@ -30,7 +30,7 @@ public class DqHttpConfigStorageDTO {
     /**
      * @see #keystore 是否为https请求所需的证书（PKCS12）的地址,默认为地址，否则为证书信息串
      */
-    private boolean isPath = true;
+    private boolean path = true;
 
     //https请求所需的证书（PKCS12）
     private String keystore;
@@ -152,7 +152,7 @@ public class DqHttpConfigStorageDTO {
      * @return  是否为证书地址,配合 {@link #getKeystore()}使用
      */
     public boolean isPath() {
-        return isPath;
+        return path;
     }
 
     /**
@@ -160,7 +160,7 @@ public class DqHttpConfigStorageDTO {
      * @param path 是否为证书地址
      */
     public void setPath(boolean path) {
-        isPath = path;
+        path = path;
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.*;
  */
 public enum DqSignUtils {
 
+	/** md5加密算法 */
 	MD5 {
 		/**
 		 *
@@ -78,12 +79,12 @@ public enum DqSignUtils {
 		 */
 		@Override
 		public String createSign(String content, String key, String characterEncoding) {
-			Mac sha256_HMAC = null;
+			Mac sha256Hmac = null;
 			try {
-				sha256_HMAC = Mac.getInstance("HmacSHA256");
-				SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(characterEncoding), "HmacSHA256");
-				sha256_HMAC.init(secret_key);
-				byte[] array = sha256_HMAC.doFinal(content.getBytes(characterEncoding));
+				sha256Hmac = Mac.getInstance("HmacSHA256");
+				SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(characterEncoding), "HmacSHA256");
+				sha256Hmac.init(secretKey);
+				byte[] array = sha256Hmac.doFinal(content.getBytes(characterEncoding));
 				StringBuilder sb = new StringBuilder();
 				for (byte item : array) {
 					sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));

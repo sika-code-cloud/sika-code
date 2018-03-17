@@ -40,8 +40,24 @@ package com.dq.easy.cloud.model.basic.constant.error;
  * 创建时间    2018年2月26日 上午10:00:50
  */
 public interface DqBaseErrorCodeInf {
-	/** 获取错误码 */
+	/**
+	 * 
+	 * <p>获取错误码</p>
+	 *
+	 * @return String 错误码
+	 *
+	 * author daiqi
+	 * 创建时间  2018年3月18日 上午12:47:47
+	 */
 	String getErrorCode();
-	/** 获取错误信息 */
+	/**
+	 * 
+	 * <p>获取错误信息</p>
+	 *
+	 * @return String : 错误信息
+	 *
+	 * author daiqi
+	 * 创建时间  2018年3月18日 上午12:48:14
+	 */
 	String getErrorMsg();
 }

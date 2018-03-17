@@ -18,13 +18,16 @@ import com.dq.easy.cloud.model.exception.dto.DqBaseServiceResultException;
  * @author daiqi 创建时间 2018年2月2日 下午3:57:33
  */
 public class DqBaseServiceResult{
-
-	private String errorCode; // 错误代码
-	private String errorMsg; // 错误信息
-	private Object result; // 返回结果
-	private DqBaseErrorCodeInf dqBaseErrorCodeInf; // 错误代码接口
-	
-	private DqBaseServiceResultException serviceResultException; // 服务异常结果
+	/** 错误代码 */
+	private String errorCode;
+	/** 错误信息 */
+	private String errorMsg;
+	/** 返回结果 */
+	private Object result; 
+	/** 错误代码接口 */
+	private DqBaseErrorCodeInf dqBaseErrorCodeInf; 
+	/** 服务异常结果 */
+	private DqBaseServiceResultException serviceResultException; 
 
 	public static DqBaseServiceResult newInstance(){
 		return new DqBaseServiceResult();

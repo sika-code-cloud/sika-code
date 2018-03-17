@@ -15,9 +15,9 @@ public class DqBaseDTO {
 	private Integer version;
 	private Long createBy;
 	private Long updateBy;
-//	删除标志
+	/** 删除标志 */
 	private Integer isDeleted;
-//	备注
+	/** 备注 */
 	private String remark;
 	public Long getId() {
 		return id;
@@ -66,6 +66,13 @@ public class DqBaseDTO {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	@Override
+	public String toString() {
+		return "DqBaseDTO [id=" + id + ", createDate=" + createDate + ", updateDate=" + updateDate + ", version="
+				+ version + ", createBy=" + createBy + ", updateBy=" + updateBy + ", isDeleted=" + isDeleted
+				+ ", remark=" + remark + "]";
 	}
 	
 	

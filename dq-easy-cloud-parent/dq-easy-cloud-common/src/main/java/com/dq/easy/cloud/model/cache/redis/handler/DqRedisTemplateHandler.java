@@ -149,7 +149,7 @@ public class DqRedisTemplateHandler {
 		if(DqMapUtils.isEmpty(multiMap)){
 			return ;
 		}
-		Map<String,String> insertMultiMap = new HashMap<>();
+		Map<String,String> insertMultiMap = DqMapUtils.newHashMap();
 		
 		for(String key : multiMap.keySet()){
 			insertMultiMap.put(key, DqJSONUtils.parseObject(multiMap.get(key), String.class));
@@ -591,7 +591,7 @@ public class DqRedisTemplateHandler {
 		if(DqStringUtils.isEmpty(key) || DqMapUtils.isEmpty(hashMap)){
 			return ;
 		}
-		Map<String, Object> putHashMap = new HashMap<>();
+		Map<String, Object> putHashMap = DqMapUtils.newHashMap();
 		for(Object hashKey : hashMap.keySet()){
 			putHashMap.put(String.valueOf(hashKey), DqJSONUtils.parseObject(hashMap.get(hashKey), String.class));
 		}

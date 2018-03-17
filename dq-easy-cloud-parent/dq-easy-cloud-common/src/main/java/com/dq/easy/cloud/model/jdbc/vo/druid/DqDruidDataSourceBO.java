@@ -6,7 +6,7 @@ import org.springframework.core.env.Environment;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.jdbc.vo.DqDataSourceBO;
+import com.dq.easy.cloud.model.jdbc.vo.AbstractDqDataSourceBO;
 
 /**
  * 
@@ -16,7 +16,7 @@ import com.dq.easy.cloud.model.jdbc.vo.DqDataSourceBO;
  * @date 2017年12月6日 上午10:09:13 
  *
  */
-public class DqDruidDataSourceBO extends DqDataSourceBO{
+public class DqDruidDataSourceBO extends AbstractDqDataSourceBO{
 	
 	private DruidDataSource druidDataSource;
 	

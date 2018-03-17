@@ -7,7 +7,7 @@ import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryProxy;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 
@@ -20,7 +20,7 @@ import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
  *
  */
 @Repository
-@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogEntrusterClass = DqLogRepositoryEntruster.class, dqLogType = DqLogType.REPOSITORY)
+@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogEntrusterClass = DqLogRepositoryProxy.class, dqLogType = DqLogType.REPOSITORY)
 public class DqBaseRepository {
 	/** 原点字符串*/
 	protected static final String ORIGIN_STR = ".";

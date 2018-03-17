@@ -11,7 +11,6 @@ import java.security.PublicKey;
 import java.security.Signature;
 
 public class DqSecureUtil {
-	// 日志
 	protected static final Log log = LogFactory.getLog(DqSecureUtil.class);
 	/**
 	 * 算法常量： SHA1

@@ -35,7 +35,7 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 @Order(99)
 public class DqLogAspect {
 
-	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Pointcut("@within(com.dq.easy.cloud.model.common.log.annotation.DqLog)")
 	public void dqLogPointcut() {
@@ -76,11 +76,10 @@ public class DqLogAspect {
 			dqLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
 //			获取日志注解
 			DqLog dqLog = dqLogBO.getDqLog();
-			if (DqBaseUtils.isNull(dqLog) || DqBaseUtils.isNull(dqLog.dqLogEntrusterClass())){
-				return targetReturnValue;
+			if (DqBaseUtils.isNotNull(dqLog) && DqBaseUtils.isNotNull(dqLog.dqLogEntrusterClass())){
+//				根据注解获取Log委托处理对象执行日志处理
+				DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 			}
-//			根据注解获取Log委托处理对象执行日志处理
-			DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
 		}
 		return targetReturnValue;
 	}

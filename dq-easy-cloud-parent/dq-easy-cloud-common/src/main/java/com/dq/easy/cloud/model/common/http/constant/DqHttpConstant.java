@@ -15,7 +15,10 @@ public class DqHttpConstant extends DqBaseConstant{
 	
 	/** 方法类型常量 */
 	public static enum DqMethodType{
-		GET, POST
+		/** 方法类型为Get */
+		GET,
+		/** 方法类型为Post */
+		POST
 	}
 	
 	/** 请求头的key类 */

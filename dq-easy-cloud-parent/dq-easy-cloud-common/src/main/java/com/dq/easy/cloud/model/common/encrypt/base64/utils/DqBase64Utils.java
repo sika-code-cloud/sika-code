@@ -77,7 +77,7 @@ import java.util.Objects;
  */
 
 public class DqBase64Utils {
-
+	
     private DqBase64Utils() {}
     /**
      * Encodes hex octects into Base64
@@ -151,7 +151,7 @@ public class DqBase64Utils {
      */
     public static Encoder getMimeEncoder(int lineLength, byte[] lineSeparator) {
         Objects.requireNonNull(lineSeparator);
-        int[] base64 = Decoder.fromBase64;
+        int[] base64 = Decoder.FROM_BASE64;
         for (byte b : lineSeparator) {
             if (base64[b & 0xff] != -1){
                 throw new IllegalArgumentException(
@@ -229,7 +229,7 @@ public class DqBase64Utils {
          * index values into their "Base64 Alphabet" equivalents as specified
          * in "Table 1: The Base64 Alphabet" of RFC 2045 (and RFC 4648).
          */
-        private static final char[] toBase64 = {
+        private static final char[] TO_BASE64 = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -242,7 +242,7 @@ public class DqBase64Utils {
          * in Table 2 of the RFC 4648, with the '+' and '/' changed to '-' and
          * '_'. This table is used when BASE64_URL is specified.
          */
-        private static final char[] toBase64URL = {
+        private static final char[] TO_BASE64_URL = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -265,7 +265,8 @@ public class DqBase64Utils {
                 int n = srclen % 3;
                 len = 4 * (srclen / 3) + (n == 0 ? 0 : n + 1);
             }
-            if (linemax > 0) {                                  // line separators
+            // line separators
+            if (linemax > 0) {                                 
                 len += (len - 1) / linemax * newline.length;
             }
             return len;
@@ -282,7 +283,8 @@ public class DqBase64Utils {
          *          encoded bytes.
          */
         public byte[] encode(byte[] src) {
-            int len = outLength(src.length);          // dst array size
+        	// dst array size
+            int len = outLength(src.length);          
             byte[] dst = new byte[len];
             int ret = encode0(src, 0, src.length, dst);
             if (ret != dst.length) {
@@ -311,10 +313,13 @@ public class DqBase64Utils {
          *          space for encoding all input bytes.
          */
         public int encode(byte[] src, byte[] dst) {
-            int len = outLength(src.length);         // dst array size
-            if (dst.length < len)
-                throw new IllegalArgumentException(
-                        "Output byte array is too small for encoding all input bytes");
+        	// dst array size
+            int len = outLength(src.length);         
+            if (dst.length < len) {
+        	   throw new IllegalArgumentException(
+                       "Output byte array is too small for encoding all input bytes");
+            }
+             
             return encode0(src, 0, src.length, dst);
         }
 
@@ -392,7 +397,7 @@ public class DqBase64Utils {
          */
         public OutputStream wrap(OutputStream os) {
             Objects.requireNonNull(os);
-            return new EncOutputStream(os, isURL ? toBase64URL : toBase64,
+            return new EncOutputStream(os, isURL ? TO_BASE64_URL : TO_BASE64,
                     newline, linemax, doPadding);
         }
 
@@ -409,13 +414,14 @@ public class DqBase64Utils {
          *         padding character at the end
          */
         public Encoder withoutPadding() {
-            if (!doPadding)
-                return this;
+            if (!doPadding) {
+            	return this;
+            }
             return new Encoder(isURL, newline, linemax, false);
         }
 
         private int encode0(byte[] src, int off, int end, byte[] dst) {
-            char[] base64 = isURL ? toBase64URL : toBase64;
+            char[] base64 = isURL ? TO_BASE64_URL : TO_BASE64;
             int sp = off;
             int slen = (end - off) / 3 * 3;
             int sl = off + slen;
@@ -509,27 +515,27 @@ public class DqBase64Utils {
          * the array are encoded to -1.
          *
          */
-        private static final int[] fromBase64 = new int[256];
+        private static final int[] FROM_BASE64 = new int[256];
         static {
-            Arrays.fill(fromBase64, -1);
-            for (int i = 0; i < Encoder.toBase64.length; i++){
-                fromBase64[Encoder.toBase64[i]] = i;
+            Arrays.fill(FROM_BASE64, -1);
+            for (int i = 0; i < Encoder.TO_BASE64.length; i++){
+                FROM_BASE64[Encoder.TO_BASE64[i]] = i;
             }
-            fromBase64['='] = -2;
+            FROM_BASE64['='] = -2;
         }
 
         /**
          * Lookup table for decoding "URL and Filename safe Base64 Alphabet"
          * as specified in Table2 of the RFC 4648.
          */
-        private static final int[] fromBase64URL = new int[256];
+        private static final int[] FROM_BASE64_URL = new int[256];
 
         static {
-            Arrays.fill(fromBase64URL, -1);
-            for (int i = 0; i < Encoder.toBase64URL.length; i++){
-                fromBase64URL[Encoder.toBase64URL[i]] = i;
+            Arrays.fill(FROM_BASE64_URL, -1);
+            for (int i = 0; i < Encoder.TO_BASE64_URL.length; i++){
+                FROM_BASE64_URL[Encoder.TO_BASE64_URL[i]] = i;
             }
-            fromBase64URL['='] = -2;
+            FROM_BASE64_URL['='] = -2;
         }
 
         static final Decoder RFC4648         = new Decoder(false, false);
@@ -608,9 +614,10 @@ public class DqBase64Utils {
          */
         public int decode(byte[] src, byte[] dst) {
             int len = outLength(src, 0, src.length);
-            if (dst.length < len)
-                throw new IllegalArgumentException(
-                        "Output byte array is too small for decoding all input bytes");
+            if (dst.length < len) {
+            	throw new IllegalArgumentException(
+            			"Output byte array is too small for decoding all input bytes");
+            }
             return decode0(src, 0, src.length, dst);
         }
 
@@ -676,11 +683,11 @@ public class DqBase64Utils {
          */
         public InputStream wrap(InputStream is) {
             Objects.requireNonNull(is);
-            return new DecInputStream(is, isURL ? fromBase64URL : fromBase64, isMIME);
+            return new DecInputStream(is, isURL ? FROM_BASE64_URL : FROM_BASE64, isMIME);
         }
 
         private int outLength(byte[] src, int sp, int sl) {
-            int[] base64 = isURL ? fromBase64URL : fromBase64;
+            int[] base64 = isURL ? FROM_BASE64_URL : FROM_BASE64;
             int paddings = 0;
             int len = sl - sp;
             if (len == 0){
@@ -703,8 +710,9 @@ public class DqBase64Utils {
                         len -= (sl - sp + 1);
                         break;
                     }
-                    if ((b = base64[b]) == -1)
-                        n++;
+                    if ((b = base64[b]) == -1) {
+                    	n++;
+                    }
                 }
                 len -= n;
             } else {
@@ -722,7 +730,7 @@ public class DqBase64Utils {
         }
 
         private int decode0(byte[] src, int sp, int sl, byte[] dst) {
-            int[] base64 = isURL ? fromBase64URL : fromBase64;
+            int[] base64 = isURL ? FROM_BASE64_URL : FROM_BASE64;
             int dp = 0;
             int bits = 0;
             int shiftto = 18;       // pos of first byte of 4-byte atom
@@ -730,11 +738,6 @@ public class DqBase64Utils {
                 int b = src[sp++] & 0xff;
                 if ((b = base64[b]) < 0) {
                     if (b == -2) {         // padding byte '='
-                        // =     shiftto==18 unnecessary padding
-                        // x=    shiftto==12 a dangling single x
-                        // x     to be handled together with non-padding case
-                        // xx=   shiftto==6&&sp==sl missing last =
-                        // xx=y  shiftto==6 last is not =
                         if (shiftto == 6 && (sp == sl || src[sp++] != '=') ||
                                 shiftto == 18) {
                             throw new IllegalArgumentException(

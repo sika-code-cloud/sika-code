@@ -9,6 +9,11 @@ import org.springframework.context.annotation.ComponentScan;
 import com.dq.easy.cloud.model.basic.constant.DqBaseComponentScan;
 
 
+/**
+ * 
+ * @author daiqi
+ * @date 2018年3月18日 上午12:47:25
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 @AutoConfigureDataJpa

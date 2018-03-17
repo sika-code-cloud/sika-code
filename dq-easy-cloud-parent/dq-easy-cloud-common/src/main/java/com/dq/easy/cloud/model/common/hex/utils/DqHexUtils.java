@@ -337,7 +337,7 @@ public class DqHexUtils {
 	 *            字符串
 	 * @return ASCII字符串
 	 */
-	public static String StringToAsciiString(String content) {
+	public static String stringToAsciiString(String content) {
 		String result = "";
 		int max = content.length();
 		for (int i = 0; i < max; i++) {
@@ -453,7 +453,11 @@ public class DqHexUtils {
 			case 'F':
 				result += "1111";
 				break;
+			default : 
+				result += "0000";
+				break;
 			}
+			
 		}
 		return result;
 	}
@@ -465,7 +469,7 @@ public class DqHexUtils {
 	 *            ASCII字符串
 	 * @return 字符串
 	 */
-	public static String AsciiStringToString(String content) {
+	public static String asciiStringToString(String content) {
 		String result = "";
 		int length = content.length() / 2;
 		for (int i = 0; i < length; i++) {

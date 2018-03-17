@@ -9,12 +9,12 @@ import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.DqLogEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogLogicEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryEntruster;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceEntruster;
+import com.dq.easy.cloud.model.common.log.entruster.DqLogProxy;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseProxy;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerProxy;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogLogicProxy;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryProxy;
+import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceProxy;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
@@ -109,27 +109,27 @@ public class DqLogUtils {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午4:02:34
 	 */
-	public static DqLogEntruster getDqLogEntruster(DqLog dqLog) {
+	public static DqLogProxy getDqLogEntruster(DqLog dqLog) {
 		if (DqBaseUtils.isNull(dqLog)) {
 			return null;
 		}
 		if (DqBaseUtils.isNotNull(dqLog.dqLogEntrusterClass())
-				&& DqBaseUtils.notEquals(dqLog.dqLogEntrusterClass(), DqLogBaseEntruster.class)) {
-			return (DqLogEntruster) DqReflectionUtils.newInstance(dqLog.dqLogEntrusterClass());
+				&& DqBaseUtils.notEquals(dqLog.dqLogEntrusterClass(), DqLogBaseProxy.class)) {
+			return (DqLogProxy) DqReflectionUtils.newInstance(dqLog.dqLogEntrusterClass());
 		}
 		if (DqLogType.isController(dqLog.dqLogType())) {
-			return DqReflectionUtils.newInstance(DqLogControllerEntruster.class);
+			return DqReflectionUtils.newInstance(DqLogControllerProxy.class);
 		}
 		if (DqLogType.isLogic(dqLog.dqLogType())) {
-			return DqReflectionUtils.newInstance(DqLogLogicEntruster.class);
+			return DqReflectionUtils.newInstance(DqLogLogicProxy.class);
 		}
 		if (DqLogType.isService(dqLog.dqLogType())) {
-			return DqReflectionUtils.newInstance(DqLogServiceEntruster.class);
+			return DqReflectionUtils.newInstance(DqLogServiceProxy.class);
 		}
 		if (DqLogType.isRepository(dqLog.dqLogType())) {
-			return DqReflectionUtils.newInstance(DqLogRepositoryEntruster.class);
+			return DqReflectionUtils.newInstance(DqLogRepositoryProxy.class);
 		}
-		return DqReflectionUtils.newInstance(DqLogBaseEntruster.class);
+		return DqReflectionUtils.newInstance(DqLogBaseProxy.class);
 	}
 
 	/**

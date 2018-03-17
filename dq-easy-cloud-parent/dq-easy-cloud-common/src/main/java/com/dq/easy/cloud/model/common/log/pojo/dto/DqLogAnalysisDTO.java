@@ -29,9 +29,9 @@ public class DqLogAnalysisDTO extends DqBaseDTO {
 	/** 方法运行时间毫秒数---最小运行时间 */
 	private long runTimeMinllisMin;
 	/** 是否构建了总运行次数数据 */
-	private boolean isBuildRunTimesTotal;
+	private boolean buildRunTimesTotal;
 	/** 是否构建了总运行时间数据 */
-	private boolean isBuildRunTimeMinllisTotal;
+	private boolean buildRunTimeMinllisTotal;
 	/** 日志类型---{@link} DqLogConstant.DqLogType */
 	private int logType;
 	
@@ -50,23 +50,23 @@ public class DqLogAnalysisDTO extends DqBaseDTO {
 	/** 构建运行时间戳---总运行时间 */
 	public DqLogAnalysisDTO buildRunTimeMinllisTotal() {
 		this.runTimeMinllisTotal += dqLogDTO.getRunTimeMinllis();
-		this.isBuildRunTimeMinllisTotal = true;
+		this.buildRunTimeMinllisTotal = true;
 		return this;
 	}
 
 	/** 构建运行总次数 */
 	public DqLogAnalysisDTO buildRunTimesTotal() {
 		this.runTimesTotal += 1;
-		this.isBuildRunTimesTotal = true;
+		this.buildRunTimesTotal = true;
 		return this;
 	}
 	
 	/** 构建运行时间戳---平均运行时间 */
 	public DqLogAnalysisDTO buildRunTimeMinllisAvg() {
-		if (!this.isBuildRunTimeMinllisTotal){
+		if (!this.buildRunTimeMinllisTotal){
 			this.buildRunTimeMinllisTotal();
 		}
-		if (!this.isBuildRunTimesTotal){
+		if (!this.buildRunTimesTotal){
 			this.buildRunTimesTotal();
 		}
 		this.runTimeMinllisAvg = this.runTimeMinllisTotal / this.runTimesTotal;

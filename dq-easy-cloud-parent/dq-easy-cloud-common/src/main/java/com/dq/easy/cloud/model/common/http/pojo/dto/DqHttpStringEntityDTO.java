@@ -31,26 +31,26 @@ public class DqHttpStringEntityDTO extends StringEntity {
     /**
      * 是否为空的请求实体
      */
-    private boolean isEmpty = false;
+    private boolean empty = false;
 
 
     public boolean isEmpty() {
-        return isEmpty;
+        return empty;
     }
 
     public void setEmpty(boolean empty) {
-        isEmpty = empty;
+        this.empty = empty;
     }
 
 
     public void requestIsEmpty(Map<String, Object> request) {
         if (null == request || request.isEmpty()){
-            this.isEmpty = true;
+            this.empty = true;
         }
     }
     public void requestIsEmpty(String request) {
         if (null == request || request.isEmpty()){
-            this.isEmpty = true;
+            this.empty = true;
         }
 
     }

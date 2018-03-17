@@ -3,7 +3,7 @@ package com.dq.easy.cloud.model.common.encrypt.sm3.utils;
 import com.dq.easy.cloud.model.common.hex.utils.DqHexUtils;
 
 public class DqSM3Utils {
-	public static final byte[] iv = { 0x73, (byte) 0x80, 0x16, 0x6f, 0x49, 0x14, (byte) 0xb2, (byte) 0xb9, 0x17, 0x24,
+	public static final byte[] IV = { 0x73, (byte) 0x80, 0x16, 0x6f, 0x49, 0x14, (byte) 0xb2, (byte) 0xb9, 0x17, 0x24,
 			0x42, (byte) 0xd7, (byte) 0xda, (byte) 0x8a, 0x06, 0x00, (byte) 0xa9, 0x6f, 0x30, (byte) 0xbc, (byte) 0x16,
 			0x31, 0x38, (byte) 0xaa, (byte) 0xe3, (byte) 0x8d, (byte) 0xee, 0x4d, (byte) 0xb0, (byte) 0xfb, 0x0e,
 			0x4e };
@@ -20,11 +20,11 @@ public class DqSM3Utils {
 		}
 	}
 
-	public static byte[] CF(byte[] V, byte[] B) {
+	public static byte[] cf(byte[] vArray, byte[] bArray) {
 		int[] v, b;
-		v = convert(V);
-		b = convert(B);
-		return convert(CF(v, b));
+		v = convert(vArray);
+		b = convert(bArray);
+		return convert(cf(v, b));
 	}
 
 	private static int[] convert(byte[] arr) {
@@ -47,19 +47,19 @@ public class DqSM3Utils {
 		return out;
 	}
 
-	public static int[] CF(int[] V, int[] B) {
+	public static int[] cf(int[] vArray, int[] bArray) {
 		int a, b, c, d, e, f, g, h;
 		int ss1, ss2, tt1, tt2;
-		a = V[0];
-		b = V[1];
-		c = V[2];
-		d = V[3];
-		e = V[4];
-		f = V[5];
-		g = V[6];
-		h = V[7];
+		a = vArray[0];
+		b = vArray[1];
+		c = vArray[2];
+		d = vArray[3];
+		e = vArray[4];
+		f = vArray[5];
+		g = vArray[6];
+		h = vArray[7];
 
-		int[][] arr = expand(B);
+		int[][] arr = expand(bArray);
 		int[] w = arr[0];
 		int[] w1 = arr[1];
 
@@ -67,8 +67,8 @@ public class DqSM3Utils {
 			ss1 = (bitCycleLeft(a, 12) + e + bitCycleLeft(Tj[j], j));
 			ss1 = bitCycleLeft(ss1, 7);
 			ss2 = ss1 ^ bitCycleLeft(a, 12);
-			tt1 = FFj(a, b, c, j) + d + ss2 + w1[j];
-			tt2 = GGj(e, f, g, j) + h + ss1 + w[j];
+			tt1 = ffj(a, b, c, j) + d + ss2 + w1[j];
+			tt2 = ggj(e, f, g, j) + h + ss1 + w[j];
 			d = c;
 			c = bitCycleLeft(b, 9);
 			b = a;
@@ -76,7 +76,7 @@ public class DqSM3Utils {
 			h = g;
 			g = bitCycleLeft(f, 19);
 			f = e;
-			e = P0(tt2);
+			e = po(tt2);
 
 			/*
 			 * System.out.print(j+" "); System.out.print(Integer.toHexString(a)+
@@ -93,34 +93,34 @@ public class DqSM3Utils {
 		// System.out.println("");
 
 		int[] out = new int[8];
-		out[0] = a ^ V[0];
-		out[1] = b ^ V[1];
-		out[2] = c ^ V[2];
-		out[3] = d ^ V[3];
-		out[4] = e ^ V[4];
-		out[5] = f ^ V[5];
-		out[6] = g ^ V[6];
-		out[7] = h ^ V[7];
+		out[0] = a ^ vArray[0];
+		out[1] = b ^ vArray[1];
+		out[2] = c ^ vArray[2];
+		out[3] = d ^ vArray[3];
+		out[4] = e ^ vArray[4];
+		out[5] = f ^ vArray[5];
+		out[6] = g ^ vArray[6];
+		out[7] = h ^ vArray[7];
 
 		return out;
 	}
 
-	private static int[][] expand(int[] B) {
-		int W[] = new int[68];
-		int W1[] = new int[64];
-		for (int i = 0; i < B.length; i++) {
-			W[i] = B[i];
+	private static int[][] expand(int[] byteArray) {
+		int wArray[] = new int[68];
+		int wArray1[] = new int[64];
+		for (int i = 0; i < byteArray.length; i++) {
+			wArray[i] = byteArray[i];
 		}
 
 		for (int i = 16; i < 68; i++) {
-			W[i] = P1(W[i - 16] ^ W[i - 9] ^ bitCycleLeft(W[i - 3], 15)) ^ bitCycleLeft(W[i - 13], 7) ^ W[i - 6];
+			wArray[i] = p1(wArray[i - 16] ^ wArray[i - 9] ^ bitCycleLeft(wArray[i - 3], 15)) ^ bitCycleLeft(wArray[i - 13], 7) ^ wArray[i - 6];
 		}
 
 		for (int i = 0; i < 64; i++) {
-			W1[i] = W[i] ^ W[i + 4];
+			wArray1[i] = wArray[i] ^ wArray[i + 4];
 		}
 
-		int arr[][] = new int[][] { W, W1 };
+		int arr[][] = new int[][] { wArray, wArray1 };
 		return arr;
 	}
 
@@ -132,54 +132,54 @@ public class DqSM3Utils {
 		return DqHexUtils.byteToInt(back(bytes));
 	}
 
-	private static int FFj(int X, int Y, int Z, int j) {
+	private static int ffj(int x, int y, int z, int j) {
 		if (j >= 0 && j <= 15) {
-			return FF1j(X, Y, Z);
+			return ff1j(x, y, z);
 		} else {
-			return FF2j(X, Y, Z);
+			return ff2j(x, y, z);
 		}
 	}
 
-	private static int GGj(int X, int Y, int Z, int j) {
+	private static int ggj(int x, int y, int z, int j) {
 		if (j >= 0 && j <= 15) {
-			return GG1j(X, Y, Z);
+			return gg1j(x, y, z);
 		} else {
-			return GG2j(X, Y, Z);
+			return gg2j(x, y, z);
 		}
 	}
 
 	// 逻辑位运算函数
-	private static int FF1j(int X, int Y, int Z) {
-		int tmp = X ^ Y ^ Z;
+	private static int ff1j(int x, int y, int z) {
+		int tmp = x ^ y ^ z;
 		return tmp;
 	}
 
-	private static int FF2j(int X, int Y, int Z) {
-		int tmp = ((X & Y) | (X & Z) | (Y & Z));
+	private static int ff2j(int x, int y, int z) {
+		int tmp = ((x & y) | (x & z) | (y & z));
 		return tmp;
 	}
 
-	private static int GG1j(int X, int Y, int Z) {
-		int tmp = X ^ Y ^ Z;
+	private static int gg1j(int x, int y, int z) {
+		int tmp = x ^ y ^ z;
 		return tmp;
 	}
 
-	private static int GG2j(int X, int Y, int Z) {
-		int tmp = (X & Y) | (~X & Z);
+	private static int gg2j(int x, int y, int z) {
+		int tmp = (x & y) | (~x & z);
 		return tmp;
 	}
 
-	private static int P0(int X) {
-		int y = rotateLeft(X, 9);
-		y = bitCycleLeft(X, 9);
-		int z = rotateLeft(X, 17);
-		z = bitCycleLeft(X, 17);
-		int t = X ^ y ^ z;
+	private static int po(int x) {
+		int y = rotateLeft(x, 9);
+		y = bitCycleLeft(x, 9);
+		int z = rotateLeft(x, 17);
+		z = bitCycleLeft(x, 17);
+		int t = x ^ y ^ z;
 		return t;
 	}
 
-	private static int P1(int X) {
-		int t = X ^ bitCycleLeft(X, 15) ^ bitCycleLeft(X, 23);
+	private static int p1(int x) {
+		int t = x ^ bitCycleLeft(x, 15) ^ bitCycleLeft(x, 23);
 		return t;
 	}
 
