@@ -2,8 +2,6 @@ package com.easy.cloud.user.base.service.imp;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +20,6 @@ import com.easy.cloud.user.base.service.inf.UserService;
 
 @Service(value="userService")
 public class UserServiceImpl extends DqBaseService implements UserService {
-	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Resource
 	private UserRepository userRepository;
 	

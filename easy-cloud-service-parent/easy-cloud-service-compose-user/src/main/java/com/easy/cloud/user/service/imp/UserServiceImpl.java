@@ -1,7 +1,5 @@
 package com.easy.cloud.user.service.imp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +35,6 @@ import com.easy.cloud.user.service.inf.UserService;
 public class UserServiceImpl extends DqBaseService implements UserService{
 	@Autowired
 	private UserClient userClient;
-	
-	private Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public DqBaseServiceResult register(UserDTO userDTO) {
