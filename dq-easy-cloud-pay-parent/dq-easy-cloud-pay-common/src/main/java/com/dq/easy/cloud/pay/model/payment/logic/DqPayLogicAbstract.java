@@ -24,7 +24,7 @@ import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayResultDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -151,7 +151,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult refund(DqRefundOrderDTO dqRefundOrderDTO) {
+	public DqBaseServiceResult refund(DqRefundOrderAbstractDTO dqRefundOrderDTO) {
 //		1、创建退款订单业务逻辑对象
 		DqRefundOrderBO dqRefundOrderBO = getDqRefundOrderBO(dqRefundOrderDTO);
 //		2、数据初始化
@@ -246,7 +246,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	/** 获取支付订单业务逻辑对象 */
 	protected abstract DqPayOrderBO getDqPayOrderBO(DqPayOrderDTO dqPayOrderDTO, DqTransactionType transactionType);
 	/** 获取支付订单业务逻辑对象 */
-	protected abstract DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO);
+	protected abstract DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderAbstractDTO dqRefundOrderDTO);
 	/** 获取交易订单业务逻辑对象 */
 	protected abstract DqTransferOrderBO getDqTransferOrderBO(DqTransferOrderDTO dqTransferOrderDTO);
 	/** 获取支付服务类 */

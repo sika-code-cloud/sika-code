@@ -12,7 +12,7 @@ import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogControllerProxy;
 import com.dq.easy.cloud.model.exception.handler.DqBaseExceptionHandle;
 
 /**
@@ -21,7 +21,7 @@ import com.dq.easy.cloud.model.exception.handler.DqBaseExceptionHandle;
  * @date 2018年3月18日 上午12:48:58
  */
 @Controller
-@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogEntrusterClass = DqLogControllerProxy.class, dqLogType = DqLogType.CONTROLLER)
+@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogProxyClass = DqLogControllerProxy.class, dqLogType = DqLogType.CONTROLLER)
 public class DqBaseController extends DqBaseExceptionHandle{
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {

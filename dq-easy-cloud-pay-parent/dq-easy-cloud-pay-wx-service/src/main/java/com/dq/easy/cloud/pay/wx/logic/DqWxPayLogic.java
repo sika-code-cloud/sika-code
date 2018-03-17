@@ -14,7 +14,7 @@ import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -137,7 +137,7 @@ public class DqWxPayLogic extends DqPayLogicAbstract {
 	}
 
 	@Override
-	protected DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO) {
+	protected DqRefundOrderBO getDqRefundOrderBO(DqRefundOrderAbstractDTO dqRefundOrderDTO) {
 		return new DqWxRefundOrderBO(dqRefundOrderDTO);
 	}
 }

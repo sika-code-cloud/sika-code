@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
@@ -187,7 +187,7 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult refund(DqRefundOrderDTO dqRefundOrderDTO) ;
+	DqBaseServiceResult refund(DqRefundOrderAbstractDTO dqRefundOrderDTO) ;
 	
 	/**
 	 * 

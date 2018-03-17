@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.common.log.entruster;
+package com.dq.easy.cloud.model.common.log.proxy;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseProxy;
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogAnalysisBO;
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogAnalysisDTO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogBaseProxy;
 import com.dq.easy.cloud.model.common.log.utils.DqLogAnalysisUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 

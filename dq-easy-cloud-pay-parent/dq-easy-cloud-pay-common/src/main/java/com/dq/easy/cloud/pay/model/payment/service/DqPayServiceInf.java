@@ -9,13 +9,11 @@ import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
-
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -235,44 +233,6 @@ public interface DqPayServiceInf {
 	 */
 	<T> T close(String tradeNo, String outTradeNo, DqCallback<T> callback);
 
-	/**
-	 * 申请退款接口 废弃
-	 * 
-	 * @param tradeNo
-	 *            支付平台订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @param refundAmount
-	 *            退款金额
-	 * @param totalAmount
-	 *            总金额
-	 * @return 返回支付方申请退款后的结果
-	 * @see #refund(RefundOrder)
-	 */
-	@Deprecated
-	Map<String, Object> refund(String tradeNo, String outTradeNo, BigDecimal refundAmount, BigDecimal totalAmount);
-
-	/**
-	 * 申请退款接口 废弃
-	 * 
-	 * @param tradeNo
-	 *            支付平台订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @param refundAmount
-	 *            退款金额
-	 * @param totalAmount
-	 *            总金额
-	 * @param callback
-	 *            处理器
-	 * @param <T>
-	 *            返回类型
-	 * @return 返回支付方申请退款后的结果
-	 * @see #refund(RefundOrder, DqCallback)
-	 */
-	@Deprecated
-	<T> T refund(String tradeNo, String outTradeNo, BigDecimal refundAmount, BigDecimal totalAmount,
-			DqCallback<T> callback);
 
 	/**
 	 * 申请退款接口
@@ -281,7 +241,7 @@ public interface DqPayServiceInf {
 	 *            退款订单信息
 	 * @return 返回支付方申请退款后的结果
 	 */
-	Map<String, Object> refund(DqRefundOrderDTO refundOrder);
+	Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder);
 
 	/**
 	 * 申请退款接口
@@ -294,7 +254,7 @@ public interface DqPayServiceInf {
 	 *            返回类型
 	 * @return 返回支付方申请退款后的结果
 	 */
-	<T> T refund(DqRefundOrderDTO refundOrder, DqCallback<T> callback);
+	<T> T refund(DqRefundOrderAbstractDTO refundOrder, DqCallback<T> callback);
 
 	/**
 	 * 查询退款

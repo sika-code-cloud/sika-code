@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogMode;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogBaseProxy;
 
 /**
  * 
@@ -32,7 +32,7 @@ public @interface DqLog {
 	int dqLogLevel() default DqLogLevel.DEBUG;
 	
 	/** 日志处理基础委托类class */
-	Class<?> dqLogEntrusterClass() default DqLogBaseProxy.class;
+	Class<?> dqLogProxyClass() default DqLogBaseProxy.class;
 	
 	/** 日志记录类型 详情@Link DqLogConstant.DqLogType */
 	int dqLogType() default DqLogType.OTHER;

@@ -2,9 +2,7 @@ package com.dq.easy.cloud.pay.model.payment.service;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.util.*;
-
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
 import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.common.http.pojo.bo.DqHttpRequestTemplateBO;
@@ -13,7 +11,7 @@ import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
@@ -186,33 +184,6 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	}
 
 	/**
-	 * 退款
-	 *
-	 * @param tradeNo
-	 *            支付平台订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @param refundAmount
-	 *            退款金额
-	 * @param totalAmount
-	 *            总金额
-	 * @param callback
-	 *            处理器
-	 * @param <T>
-	 *            返回类型
-	 *
-	 * @return 处理过后的类型对象， 返回支付方申请退款后的结果
-	 * @see #refund(RefundOrder, DqCallback)
-	 */
-	@Deprecated
-	@Override
-	public <T> T refund(String tradeNo, String outTradeNo, BigDecimal refundAmount, BigDecimal totalAmount,
-			DqCallback<T> callback) {
-
-		return callback.perform(refund(new DqRefundOrderDTO(tradeNo, outTradeNo, refundAmount, totalAmount)));
-	}
-
-	/**
 	 * 申请退款接口
 	 *
 	 * @param refundOrder
@@ -225,7 +196,7 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	 * @return 返回支付方申请退款后的结果
 	 */
 	@Override
-	public <T> T refund(DqRefundOrderDTO refundOrder, DqCallback<T> callback) {
+	public <T> T refund(DqRefundOrderAbstractDTO refundOrder, DqCallback<T> callback) {
 
 		return callback.perform(refund(refundOrder));
 	}

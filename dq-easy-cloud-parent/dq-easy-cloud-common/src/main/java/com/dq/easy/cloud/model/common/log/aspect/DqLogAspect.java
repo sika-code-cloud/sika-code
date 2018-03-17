@@ -76,9 +76,9 @@ public class DqLogAspect {
 			dqLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
 //			获取日志注解
 			DqLog dqLog = dqLogBO.getDqLog();
-			if (DqBaseUtils.isNotNull(dqLog) && DqBaseUtils.isNotNull(dqLog.dqLogEntrusterClass())){
+			if (DqBaseUtils.isNotNull(dqLog) && DqBaseUtils.isNotNull(dqLog.dqLogProxyClass())){
 //				根据注解获取Log委托处理对象执行日志处理
-				DqLogUtils.getDqLogEntruster(dqLog).handle(dqLogBO);
+				DqLogUtils.getDqLogProxy(dqLog).handle(dqLogBO);
 			}
 		}
 		return targetReturnValue;

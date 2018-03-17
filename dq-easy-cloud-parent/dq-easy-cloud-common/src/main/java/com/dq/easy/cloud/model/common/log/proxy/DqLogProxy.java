@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.common.log.entruster;
+package com.dq.easy.cloud.model.common.log.proxy;
 
 import com.dq.easy.cloud.model.common.log.pojo.bo.DqLogBO;
 

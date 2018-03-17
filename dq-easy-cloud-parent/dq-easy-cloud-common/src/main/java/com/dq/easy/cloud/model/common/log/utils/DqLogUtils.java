@@ -9,13 +9,13 @@ import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.DqLogProxy;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogBaseProxy;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogControllerProxy;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogLogicProxy;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogRepositoryProxy;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceProxy;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
+import com.dq.easy.cloud.model.common.log.proxy.DqLogProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogBaseProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogControllerProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogLogicProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogRepositoryProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogServiceProxy;
 import com.dq.easy.cloud.model.common.reflection.utils.DqReflectionUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
@@ -49,7 +49,6 @@ public class DqLogUtils {
 			if (DqStringUtils.isNotEmpty(key)) {
 				keyBuilder.append(DqStringUtils.SPLIT_COLON).append(key);
 			}
-
 		}
 		String keyStr = keyBuilder.toString();
 		return DqStringUtils.substring(keyStr, DqStringUtils.indexOf(keyStr, DqStringUtils.SPLIT_COLON) + 1);
@@ -109,13 +108,13 @@ public class DqLogUtils {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午4:02:34
 	 */
-	public static DqLogProxy getDqLogEntruster(DqLog dqLog) {
+	public static DqLogProxy getDqLogProxy(DqLog dqLog) {
 		if (DqBaseUtils.isNull(dqLog)) {
 			return null;
 		}
-		if (DqBaseUtils.isNotNull(dqLog.dqLogEntrusterClass())
-				&& DqBaseUtils.notEquals(dqLog.dqLogEntrusterClass(), DqLogBaseProxy.class)) {
-			return (DqLogProxy) DqReflectionUtils.newInstance(dqLog.dqLogEntrusterClass());
+		if (DqBaseUtils.isNotNull(dqLog.dqLogProxyClass())
+				&& DqBaseUtils.notEquals(dqLog.dqLogProxyClass(), DqLogBaseProxy.class)) {
+			return (DqLogProxy) DqReflectionUtils.newInstance(dqLog.dqLogProxyClass());
 		}
 		if (DqLogType.isController(dqLog.dqLogType())) {
 			return DqReflectionUtils.newInstance(DqLogControllerProxy.class);
@@ -193,7 +192,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void debug(String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		logger = filterLogger(logger);
+		if (!logger.isDebugEnabled()) {
+			return;
+		}
 		if (isNeedWrap) {
 			logger.debug("\r");
 		}
@@ -222,7 +223,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void info(String logTitle, Object logDetail, Logger logger) {
-		logger = filterLogger(logger);
+		if (!logger.isInfoEnabled()) {
+			return ;
+		}
 		logger.info("\r");
 		logger.info("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
@@ -249,7 +252,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void info(String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		logger = filterLogger(logger);
+		if (!logger.isInfoEnabled()) {
+			return ;
+		}
 		if (isNeedWrap) {
 			logger.info("\r");
 		}
@@ -278,7 +283,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void warn(String logTitle, Object logDetail, Logger logger) {
-		logger = filterLogger(logger);
+		if (!logger.isWarnEnabled()) {
+			return ;
+		}
 		logger.warn("\r");
 		logger.warn("**********************************************   start_logger:" + logTitle
 				+ ":start_logger   **********************************************");
@@ -305,7 +312,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void warn(String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		logger = filterLogger(logger);
+		if (!logger.isWarnEnabled()) {
+			return ;
+		}
 		if (isNeedWrap) {
 			logger.warn("\r");
 		}
@@ -353,7 +362,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void error(String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		logger = filterLogger(logger);
+		if (!logger.isErrorEnabled()) {
+			return ;
+		}
 		if (isNeedWrap) {
 			logger.error("\r");
 		}
@@ -401,7 +412,9 @@ public class DqLogUtils {
 	 * @author daiqi 创建时间 2018年2月3日 下午5:21:06
 	 */
 	public static void error(String logTitle, Throwable throwable, Logger logger,  boolean isNeedWrap) {
-		logger = filterLogger(logger);
+		if (!logger.isErrorEnabled()) {
+			return ;
+		}
 		if (isNeedWrap) {
 			logger.error("\r");
 		}
@@ -415,12 +428,4 @@ public class DqLogUtils {
 			logger.error("\r\n");
 		}
 	}
-	
-	private static Logger filterLogger(Logger logger) {
-		if (DqBaseUtils.isNull(logger)) {
-			logger = null;
-		}
-		return logger;
-	}
-
 }

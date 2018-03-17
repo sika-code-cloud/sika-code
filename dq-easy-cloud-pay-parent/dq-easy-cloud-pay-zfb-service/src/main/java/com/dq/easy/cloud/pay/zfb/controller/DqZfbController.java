@@ -11,10 +11,10 @@ import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.logic.DqZfbPayLogic;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
+import com.dq.easy.cloud.pay.zfb.pojo.dto.DqZfbRefundOrderDTO;
 
 /**
  * 
@@ -233,13 +233,13 @@ public class DqZfbController extends DqBaseController {
 	 *     参数名称 : 示例值 : 说明 : 是否必须
 	 * </pre>
 	 *
-	 * @param dqOrderQuery : DqOrderQuery : 订单查询对象
+	 * @param DqZfbRefundOrderDTO : dqRefundOrderDTO : 支付宝退款数据传输对象
 	 * @return DqBaseServiceResult : 返回支付方申请退款后的结果
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("refund")
-    public DqBaseServiceResult refund(DqRefundOrderDTO dqRefundOrderDTO) {
+    public DqBaseServiceResult refund(DqZfbRefundOrderDTO dqRefundOrderDTO) {
         return dqZfbPayLogic.refund(dqRefundOrderDTO);
     }
 

@@ -1,7 +1,7 @@
 package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**
@@ -14,7 +14,7 @@ import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerato
  * 创建时间    2018年3月1日 下午4:20:22
  */
 public class DqZfbRefundOrderBO extends DqRefundOrderBO{
-	public DqZfbRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO) {
+	public DqZfbRefundOrderBO(DqRefundOrderAbstractDTO dqRefundOrderDTO) {
 		super(dqRefundOrderDTO);
 	}
 

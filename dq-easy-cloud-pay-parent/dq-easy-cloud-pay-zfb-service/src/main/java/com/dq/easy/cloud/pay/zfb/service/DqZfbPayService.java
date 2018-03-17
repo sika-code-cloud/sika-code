@@ -39,7 +39,7 @@ import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
@@ -288,27 +288,6 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	}
 
 	/**
-	 * 申请退款接口 废弃
-	 * 
-	 * @param tradeNo
-	 *            支付平台订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @param refundAmount
-	 *            退款金额
-	 * @param totalAmount
-	 *            总金额
-	 * @return 返回支付方申请退款后的结果
-	 * @see #refund(RefundOrder, Callback)
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> refund(String tradeNo, String outTradeNo, BigDecimal refundAmount,
-			BigDecimal totalAmount) {
-		return refund(new DqRefundOrderDTO(tradeNo, outTradeNo, refundAmount, totalAmount));
-	}
-
-	/**
 	 * 申请退款接口
 	 *
 	 * @param refundOrder
@@ -316,20 +295,10 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方申请退款后的结果
 	 */
 	@Override
-	public Map<String, Object> refund(DqRefundOrderDTO refundOrder) {
-		// 获取公共参数
-		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.REFUND);
-
-		Map<String, Object> bizContent = getBizContent(refundOrder.getTradeNo(), refundOrder.getOutTradeNo(), null);
-		if (DqStringUtils.isNotEmpty(refundOrder.getRefundNo())) {
-			bizContent.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, refundOrder.getRefundNo());
-		}
-		bizContent.put(DqZfbPayKey.REFUND__AMOUNT_KEY, refundOrder.getRefundAmount().setScale(2, BigDecimal.ROUND_HALF_UP));
-		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, DqJSONUtils.parseObject(bizContent, String.class));
-		// 设置签名
-		setSign(parameters);
-		return getRequestResult(parameters, DqZfbTransactionType.REFUND);
+	public Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder) {
+		refundOrder.setMethod(DqZfbTransactionType.REFUND.getMethod());
+		refundOrder.putCommonSignData(payConfigStorage);
+		return getRequestResult(refundOrder.getSignatureParameters(), DqZfbTransactionType.REFUND);
 	}
 
 	/**

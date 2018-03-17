@@ -1,7 +1,7 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.wx.common.utils.DqWxPayUtils.DqWxOrderNoGenerator;
 
 /**
@@ -15,7 +15,7 @@ import com.dq.easy.cloud.pay.wx.common.utils.DqWxPayUtils.DqWxOrderNoGenerator;
  */
 public class DqWxRefundOrderBO extends DqRefundOrderBO{
 
-	public DqWxRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO) {
+	public DqWxRefundOrderBO(DqRefundOrderAbstractDTO dqRefundOrderDTO) {
 		super(dqRefundOrderDTO);
 	}
 

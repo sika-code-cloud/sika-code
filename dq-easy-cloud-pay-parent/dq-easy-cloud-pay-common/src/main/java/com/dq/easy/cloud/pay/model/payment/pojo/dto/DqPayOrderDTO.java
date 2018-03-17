@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.dq.easy.cloud.pay.model.base.constant.DqCurType;
 import com.dq.easy.cloud.pay.model.base.pojo.dto.DqBasePayDTO;
+import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
@@ -44,6 +45,18 @@ public class DqPayOrderDTO extends DqBasePayDTO{
 	private DqCurType dqCurType;
 
 	public DqPayOrderDTO() {
+		
+	}
+
+	@Override
+	public void putCommonSignData(DqPayConfigStorageInf dqPayConfigStorage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void putSignSignData() {
+		// TODO Auto-generated method stub
 		
 	}
 

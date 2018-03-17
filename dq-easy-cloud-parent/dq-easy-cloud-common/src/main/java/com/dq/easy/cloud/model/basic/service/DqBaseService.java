@@ -3,7 +3,7 @@ package com.dq.easy.cloud.model.basic.service;
 import com.dq.easy.cloud.model.common.log.annotation.DqLog;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogLevel;
 import com.dq.easy.cloud.model.common.log.constant.DqLogConstant.DqLogType;
-import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceProxy;
+import com.dq.easy.cloud.model.common.log.proxy.impl.DqLogServiceProxy;
 
 /**
  * 
@@ -21,7 +21,7 @@ import com.dq.easy.cloud.model.common.log.entruster.impl.DqLogServiceProxy;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogEntrusterClass = DqLogServiceProxy.class, dqLogType = DqLogType.SERVICE)
+@DqLog(dqLogLevel = DqLogLevel.INFO, dqLogProxyClass = DqLogServiceProxy.class, dqLogType = DqLogType.SERVICE)
 public class DqBaseService {
 
 }

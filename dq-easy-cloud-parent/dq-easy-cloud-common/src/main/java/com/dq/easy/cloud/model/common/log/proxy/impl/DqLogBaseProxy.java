@@ -1,6 +1,6 @@
-package com.dq.easy.cloud.model.common.log.entruster.impl;
+package com.dq.easy.cloud.model.common.log.proxy.impl;
 
-import com.dq.easy.cloud.model.common.log.entruster.DqLogAbstractProxy;
+import com.dq.easy.cloud.model.common.log.proxy.DqLogAbstractProxy;
 
 /**
  * 

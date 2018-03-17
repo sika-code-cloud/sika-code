@@ -6,7 +6,7 @@ import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.exception.DqPayException;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 
 /**
  * 
@@ -25,10 +25,10 @@ import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
  */
 public abstract class DqRefundOrderBO {
 	/** 退款订单数据传输对象 */
-	protected DqRefundOrderDTO dqRefundOrderDTO;
+	protected DqRefundOrderAbstractDTO dqRefundOrderDTO;
 	
 	
-	public DqRefundOrderBO(DqRefundOrderDTO dqRefundOrderDTO) {
+	public DqRefundOrderBO(DqRefundOrderAbstractDTO dqRefundOrderDTO) {
 		super();
 		this.dqRefundOrderDTO = dqRefundOrderDTO;
 	}

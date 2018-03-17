@@ -53,7 +53,7 @@ import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderDTO;
+import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
@@ -394,28 +394,6 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	}
 
 	/**
-	 * 退款
-	 *
-	 * @param transactionId
-	 *            微信订单号
-	 * @param outTradeNo
-	 *            商户单号
-	 * @param refundAmount
-	 *            退款金额
-	 * @param totalAmount
-	 *            总金额
-	 * @return 返回支付方申请退款后的结果
-	 * @see #refund(RefundOrder, Callback)
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> refund(String transactionId, String outTradeNo, BigDecimal refundAmount,
-			BigDecimal totalAmount) {
-
-		return refund(new DqRefundOrderDTO(transactionId, outTradeNo, refundAmount, totalAmount));
-	}
-
-	/**
 	 * 申请退款接口
 	 *
 	 * @param refundOrder
@@ -424,7 +402,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> refund(DqRefundOrderDTO refundOrder) {
+	public Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder) {
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
 		if (DqStringUtils.isNotEmpty(refundOrder.getTradeNo())) {
@@ -456,7 +434,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
      * @Date: 2017-9-12 11:18
      */
     @SuppressWarnings("deprecation")
-	public Object wxPayRefund(DqRefundOrderDTO refundOrder) {
+	public Object wxPayRefund(DqRefundOrderAbstractDTO refundOrder) {
         try{
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             FileInputStream instream = new FileInputStream(new File("E:/tools/wx_pay/cert/apiclient_cert.p12"));
