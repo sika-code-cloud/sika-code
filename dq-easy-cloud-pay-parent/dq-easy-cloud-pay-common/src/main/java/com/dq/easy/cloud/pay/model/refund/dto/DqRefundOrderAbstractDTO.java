@@ -40,10 +40,6 @@ public abstract class DqRefundOrderAbstractDTO extends DqBasePayDTO {
 	 * 交易日期
 	 */
 	private Date orderDate;
-	/**
-	 * 调用方法
-	 */
-	private String method;
 
 	public DqRefundOrderAbstractDTO() {
 
@@ -64,11 +60,6 @@ public abstract class DqRefundOrderAbstractDTO extends DqBasePayDTO {
 	/** 压入orderDate签名数据 */
 	protected abstract void putTotalAmountSignData();
 
-	/** 压入orderDate签名数据 */
-	protected abstract void putOrderDateSignData();
-	/** 压入method签名数据 */
-	protected abstract void putMethodSignData();
-	
 	/** 以分为单位 */
 	public Integer getTotalAmountOfCent() {
 		return DqPayUtils.yuanToCent(totalAmount);
@@ -131,16 +122,6 @@ public abstract class DqRefundOrderAbstractDTO extends DqBasePayDTO {
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
-		putOrderDateSignData();
-	}
-
-	public String getMethod() {
-		return method;
-	}
-
-	public void setMethod(String method) {
-		this.method = method;
-		putMethodSignData();
 	}
 
 	@Override

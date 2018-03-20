@@ -49,13 +49,19 @@ public class DqPayOrderDTO extends DqBasePayDTO{
 	}
 
 	@Override
-	public void putCommonSignData(DqPayConfigStorageInf dqPayConfigStorage) {
+	public void buildSignParamters(DqPayConfigStorageInf dqPayConfigStorage, DqTransactionType dqTransactionType) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void putSignSignData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void buildSign(DqPayConfigStorageInf dqPayConfigStorage) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -212,4 +218,6 @@ public class DqPayOrderDTO extends DqBasePayDTO{
 				+ ", wapUrl='" + wapUrl + '\'' + ", wapName='" + wapName + '\'' + ", openid='" + openid + '\''
 				+ ", transactionType=" + transactionType + ", dqCurType=" + dqCurType + '}';
 	}
+
+	
 }

@@ -18,6 +18,8 @@ import com.dq.easy.cloud.model.common.number.utils.DqNumberUtils;
 public class DqBigDecimalUtils extends DqNumberUtils {
 	/** 数值为0的BigDecimal对象 */
 	public static final BigDecimal ZERO = createBigDecimal("0");
+	/** 精度值---保留两位小叔---2 */
+	public static final int SCALE_TWO = 2;
 	/**
 	 * 
 	 * <p>
@@ -283,5 +285,29 @@ public class DqBigDecimalUtils extends DqNumberUtils {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * bigDecimal对象格式化为保留两位小数精度--四舍五入
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     
+	 * </pre>
+	 *
+	 * @param bigDecimal : BigDecimal : 待格式化的bigDecimal对象
+	 * @return 格式化后的bigDecimal
+	 * @author daiqi
+	 * 创建时间    2018年3月20日 下午4:08:00
+	 */
+	public static BigDecimal formatTwoScale(BigDecimal bigDecimal) {
+		if (DqBaseUtils.isNull(bigDecimal)) {
+			return null;
+		}
+		return bigDecimal.setScale(SCALE_TWO);
 	}
 }

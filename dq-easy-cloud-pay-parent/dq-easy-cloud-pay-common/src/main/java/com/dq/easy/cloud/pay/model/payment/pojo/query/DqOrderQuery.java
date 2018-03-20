@@ -15,7 +15,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
  * @email egzosn@gmail.com
  * @date 2017/3/12 14:50
  */
-public class DqOrderQuery {
+public class DqOrderQuery{
 
 	private Integer payId;
 	// 支付平台订单号

@@ -1,14 +1,10 @@
 package com.dq.easy.cloud.pay.wx.pojo.dto;
 
-import java.util.UUID;
-
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
-import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
 /**
  * 
@@ -26,9 +22,8 @@ import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
  * @author daiqi 创建时间 2018年3月16日 下午6:47:06
  */
 public class DqWxRefundOrderDTO extends DqRefundOrderAbstractDTO {
-
 	@Override
-	public void putCommonSignData(DqPayConfigStorageInf dqPayConfigStorage) {
+	public void buildSignParamters(DqPayConfigStorageInf dqPayConfigStorage, DqTransactionType dqTransactionType) {
 		putSignatureData(DqWxPayKey.APPID_KEY, dqPayConfigStorage.getAppid());
 		putSignatureData(DqWxPayKey.MCH__ID_KEY, dqPayConfigStorage.getPid());
 		putSignatureData(DqWxPayKey.SIGN__TYPE_KEY, dqPayConfigStorage.getSignType());
@@ -63,18 +58,13 @@ public class DqWxRefundOrderDTO extends DqRefundOrderAbstractDTO {
 	}
 
 	@Override
-	protected void putOrderDateSignData() {
-		putSignatureData(DqWxPayKey.TRANSACTION__ID_KEY, this.getTradeNo());
-	}
-
-	@Override
-	protected void putMethodSignData() {
-
-	}
-
-	@Override
 	public void putSignSignData() {
 		putSignatureData(DqWxPayKey.SIGN_KEY, super.getSign());
+	}
+
+	@Override
+	protected void buildSign(DqPayConfigStorageInf dqPayConfigStorage) {
+		
 	}
 
 }

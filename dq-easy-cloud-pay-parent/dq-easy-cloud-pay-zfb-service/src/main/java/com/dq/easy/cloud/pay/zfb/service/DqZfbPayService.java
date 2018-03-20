@@ -296,8 +296,8 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 */
 	@Override
 	public Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder) {
-		refundOrder.setMethod(DqZfbTransactionType.REFUND.getMethod());
-		refundOrder.putCommonSignData(payConfigStorage);
+		refundOrder.buildSignParamters(payConfigStorage, DqZfbTransactionType.REFUND);
+		
 		return getRequestResult(refundOrder.getSignatureParameters(), DqZfbTransactionType.REFUND);
 	}
 
@@ -584,6 +584,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	/** 获取请求结果 */
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> getRequestResult(Map<String, Object> parameters, DqTransactionType dqTransactionType) {
+		DqLogUtils.info("调用支付宝接口请求参数", parameters, LOG);
 		Map<String, Object> resultMap =  getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
 				null, HashMap.class);
 //		结果校验
