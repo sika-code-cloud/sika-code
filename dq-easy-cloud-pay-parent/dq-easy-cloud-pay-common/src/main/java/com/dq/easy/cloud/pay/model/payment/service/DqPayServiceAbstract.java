@@ -10,7 +10,7 @@ import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -216,7 +216,7 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	 * @return 处理过后的类型对象，返回支付方查询退款后的结果
 	 */
 	@Override
-	public <T> T refundQuery(DqOrderQAbstractuery dqOrderQuery, DqCallback<T> callback) {
+	public <T> T refundQuery(DqOrderAbstractQuery dqOrderQuery, DqCallback<T> callback) {
 		return callback.perform(queryRefundResult(dqOrderQuery));
 	}
 
@@ -235,8 +235,9 @@ public abstract class DqPayServiceAbstract extends DqBaseService implements DqPa
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public <T> T downLoadBill(Date billDate, String billType, DqCallback<T> callback) {
-		return callback.perform(downLoadBill(billDate, billType));
+	public <T> T downLoadBill(DqOrderAbstractQuery dqOrderQuery, DqCallback<T> callback) {
+		
+		return callback.perform(downLoadBill(dqOrderQuery));
 	}
 
 	/**

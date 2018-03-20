@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.security.KeyStore;
 import java.util.Date;
@@ -49,7 +48,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -57,8 +56,7 @@ import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
-
-import javassist.tools.Callback;
+import com.dq.easy.cloud.pay.wx.pojo.query.DqWxOrderQuery;
 
 /**
  * 微信支付服务
@@ -512,7 +510,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> queryRefundResult(DqOrderQAbstractuery dqOrderQuery) {
+	public Map<String, Object> queryRefundResult(DqOrderAbstractQuery dqOrderQuery) {
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
 		if (DqStringUtils.isNotEmpty(dqOrderQuery.getOutTradeNo())) {
@@ -541,14 +539,14 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public Map<String, Object> downLoadBill(Date billDate, String billType) {
+	public Map<String, Object> downLoadBill(DqOrderAbstractQuery dqOrderQuery) {
 
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
 
-		parameters.put(DqWxPayKey.BILL__TYPE_KEY, billType);
+		parameters.put(DqWxPayKey.BILL__TYPE_KEY, dqOrderQuery.getBillType());
 		// 目前只支持日账单
-		String billDateStr = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_SHORT, TimeZone.getTimeZone("GMT+8"));
+		String billDateStr = DqDateFormatUtils.format(dqOrderQuery.getBillDate(), DqDateFormatUtils.FORMAT_SHORT, TimeZone.getTimeZone("GMT+8"));
 		parameters.put(DqWxPayKey.BILL__DATE_KEY, billDateStr);
 
 		// 设置签名
@@ -590,7 +588,10 @@ public class DqWxPayService extends DqPayServiceAbstract {
 
 		if (transactionType == DqWxTransactionType.DOWNLOADBILL) {
 			if (transactionIdOrBillDate instanceof Date) {
-				return downLoadBill((Date) transactionIdOrBillDate, outTradeNoBillType);
+				DqWxOrderQuery dqWxOrderQuery = new DqWxOrderQuery();
+				dqWxOrderQuery.setTradeNoOrBillDate(transactionIdOrBillDate);
+				dqWxOrderQuery.setOutTradeNoBillType(outTradeNoBillType);
+				return downLoadBill(dqWxOrderQuery);
 			}
 			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}

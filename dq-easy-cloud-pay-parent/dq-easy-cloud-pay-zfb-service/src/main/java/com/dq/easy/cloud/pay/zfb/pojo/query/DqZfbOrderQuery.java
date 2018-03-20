@@ -1,8 +1,11 @@
 package com.dq.easy.cloud.pay.zfb.pojo.query;
 
+import java.util.TimeZone;
+
+import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbSignUtils;
 
@@ -22,11 +25,11 @@ import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbSignUtils;
  * @author daiqi
  * 创建时间    2018年3月20日 下午8:10:31
  */
-public class DqZfbOrderQuery extends DqOrderQAbstractuery{
+public class DqZfbOrderQuery extends DqOrderAbstractQuery{
 
 	@Override
 	protected void putBillDateTimestampSignData() {
-		// TODO Auto-generated method stub
+		putBillDateSignData();
 		
 	}
 
@@ -60,14 +63,13 @@ public class DqZfbOrderQuery extends DqOrderQAbstractuery{
 
 	@Override
 	protected void putBillDateSignData() {
-		// TODO Auto-generated method stub
-		
+		String fomatDate = DqDateFormatUtils.format(getBillDate(), DqDateFormatUtils.FORMAT_NORMAL_DAY, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
+		putContentSignatureData(DqZfbPayKey.BILL__DATE_KEY, fomatDate);
 	}
 
 	@Override
 	protected void putBillTypeSignData() {
-		// TODO Auto-generated method stub
-		
+		putContentSignatureData(DqZfbPayKey.BILL__TYPE_KEY, getBillType());
 	}
 
 	@Override

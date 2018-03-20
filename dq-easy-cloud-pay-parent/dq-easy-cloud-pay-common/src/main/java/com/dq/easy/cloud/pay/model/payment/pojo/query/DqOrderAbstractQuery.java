@@ -16,7 +16,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
  * @email egzosn@gmail.com
  * @date 2017/3/12 14:50
  */
-public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
+public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 
 	private Integer payId;
 	// 支付平台订单号
@@ -52,14 +52,14 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	 * @author daiqi
 	 * 创建时间    2018年3月2日 下午1:45:14
 	 */
-	public DqOrderQAbstractuery verifyTradeNoAndOutTradeNo() {
+	public DqOrderAbstractQuery verifyTradeNoAndOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo()) && DqStringUtils.isEmpty(this.getOutTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
 	/** 校验支付平台订单号 */
-	public DqOrderQAbstractuery verifyTradeNo() {
+	public DqOrderAbstractQuery verifyTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_CANT_EMPTY);
 		}
@@ -67,7 +67,7 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	}
 
 	/** 校验商户订单号 */
-	public DqOrderQAbstractuery verifyOutTradeNo() {
+	public DqOrderAbstractQuery verifyOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
 		}
@@ -75,7 +75,7 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	}
 
 	/** 校验账单时间 */
-	public DqOrderQAbstractuery verifyBillDate() {
+	public DqOrderAbstractQuery verifyBillDate() {
 		if (DqBaseUtils.isNull(this.getBillDate())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_DATE_CANT_NULL);
 		}
@@ -83,7 +83,7 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	}
 
 	/** 校验账单类型 */
-	public DqOrderQAbstractuery verifyBillType() {
+	public DqOrderAbstractQuery verifyBillType() {
 		if (DqStringUtils.isEmpty(this.getBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_TYPE_CANT_NULL);
 		}
@@ -91,7 +91,7 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	}
 	
 	/** 校验账单类型 */
-	public DqOrderQAbstractuery verifyTradeNoOrBillDate() {
+	public DqOrderAbstractQuery verifyTradeNoOrBillDate() {
 		if (DqBaseUtils.isNull(this.getTradeNoOrBillDate())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_OR_BILL_DATE_CANT_NULL);
 		}
@@ -99,14 +99,14 @@ public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 	}
 	
 	/** 校验账单类型 */
-	public DqOrderQAbstractuery verifyOutTradeNoBillType() {
+	public DqOrderAbstractQuery verifyOutTradeNoBillType() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNoBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
 		}
 		return this;
 	}
 	/** 校验退款订单号 */
-	public DqOrderQAbstractuery verifyRefundTradeNo() {
+	public DqOrderAbstractQuery verifyRefundTradeNo() {
 		if (DqStringUtils.isEmpty(this.getRefundTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_ORDER_NO_CANT_EMPTY);
 		}

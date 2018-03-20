@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbProductCode;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -43,6 +44,7 @@ import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
+import com.dq.easy.cloud.pay.zfb.pojo.query.DqZfbOrderQuery;
 
 /**
  * 
@@ -312,7 +314,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> queryRefundResult(DqOrderQAbstractuery dqOrderQuery) {
+	public Map<String, Object> queryRefundResult(DqOrderAbstractQuery dqOrderQuery) {
 //		构建签名参数
 		dqOrderQuery.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.REFUNDQUERY);
 //		获取请求结果
@@ -332,20 +334,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public Map<String, Object> downLoadBill(Date billDate, String billType) {
-		// 获取公共参数
-		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.DOWNLOADBILL);
-
-		Map<String, Object> bizContent = new TreeMap<>();
-		bizContent.put(DqZfbPayKey.BILL__TYPE_KEY, billType);
-		// 目前只支持日账单
-		String fomatDate = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_NORMAL_DAY, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
-		bizContent.put(DqZfbPayKey.BILL__DATE_KEY, fomatDate);
-		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
-		// 设置签名
-		setSign(parameters);
-		return getRequestResult(parameters, DqZfbTransactionType.DOWNLOADBILL);
+	public Map<String, Object> downLoadBill(DqOrderAbstractQuery dqOrderQuery) {
+//		构建签名参数
+		dqOrderQuery.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.DOWNLOADBILL);
+//		获取请求结果
+		return getRequestResult(dqOrderQuery.getSignatureParameters(), DqZfbTransactionType.DOWNLOADBILL);
 	}
 
 	/**
@@ -369,7 +362,10 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 
 		if (transactionType == DqZfbTransactionType.DOWNLOADBILL) {
 			if (tradeNoOrBillDate instanceof Date) {
-				return downLoadBill((Date) tradeNoOrBillDate, outTradeNoBillType);
+				DqOrderAbstractQuery dqOrderAbstractQuery = new DqZfbOrderQuery();
+				dqOrderAbstractQuery.setTradeNoOrBillDate(tradeNoOrBillDate);
+				dqOrderAbstractQuery.setOutTradeNoBillType(outTradeNoBillType);
+				return downLoadBill(dqOrderAbstractQuery);
 			}
 			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
 		}

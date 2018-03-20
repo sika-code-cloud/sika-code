@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
@@ -149,7 +149,7 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult queryPayResult(DqOrderQAbstractuery dqOrderQuery) ;
+	DqBaseServiceResult queryPayResult(DqOrderAbstractQuery dqOrderQuery) ;
 	
 	/**
 	 * 
@@ -169,7 +169,7 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult close(DqOrderQAbstractuery dqOrderQuery) ;
+	DqBaseServiceResult close(DqOrderAbstractQuery dqOrderQuery) ;
 	
 	/**
 	 * 
@@ -207,7 +207,7 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult queryRefundResult(DqOrderQAbstractuery dqOrderQuery) ;
+	DqBaseServiceResult queryRefundResult(DqOrderAbstractQuery dqOrderQuery) ;
 
 	/**
 	 * 
@@ -227,7 +227,7 @@ interface DqPayLogicInf {
 	 * @return DqBaseServiceResult : 返回支付方下载对账单的结果
 	 * @author daiqi 创建时间 2018年2月26日 下午7:04:13
 	 */
-	Object downLoadBill(DqOrderQAbstractuery dqOrderQuery) ;
+	Object downLoadBill(DqOrderAbstractQuery dqOrderQuery) ;
 	
 	/**
 	 * 
@@ -248,7 +248,7 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult secondaryInterface(DqOrderQAbstractuery dqOrderQuery) ;
+	DqBaseServiceResult secondaryInterface(DqOrderAbstractQuery dqOrderQuery) ;
 	
 	/**
 	 * 
@@ -294,6 +294,6 @@ interface DqPayLogicInf {
 	 * @author daiqi
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
-	DqBaseServiceResult queryTransferResult(DqOrderQAbstractuery dqOrderQuery) ;
+	DqBaseServiceResult queryTransferResult(DqOrderAbstractQuery dqOrderQuery) ;
 	
 }

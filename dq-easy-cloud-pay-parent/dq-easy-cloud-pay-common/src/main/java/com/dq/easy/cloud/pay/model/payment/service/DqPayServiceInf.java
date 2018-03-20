@@ -6,7 +6,7 @@ import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.pay.model.base.api.DqCallback;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
@@ -262,7 +262,7 @@ public interface DqPayServiceInf {
 	 * @param dqOrderQuery : DqOrderQuery : 订单查询接口
 	 * @return 返回支付方查询退款后的结果
 	 */
-	Map<String, Object> queryRefundResult(DqOrderQAbstractuery dqOrderQuery);
+	Map<String, Object> queryRefundResult(DqOrderAbstractQuery dqOrderQuery);
 
 	/**
 	 * 查询退款
@@ -275,14 +275,14 @@ public interface DqPayServiceInf {
 	 *            返回类型
 	 * @return 返回支付方查询退款后的结果
 	 */
-	<T> T refundQuery(DqOrderQAbstractuery dqOrderQuery, DqCallback<T> callback);
+	<T> T refundQuery(DqOrderAbstractQuery dqOrderQuery, DqCallback<T> callback);
 
 	/**
 	 * 下载对账单
 	 *
 	 * @return 返回支付方下载对账单的结果
 	 */
-	Map<String, Object> downLoadBill(Date billDate, String billType);
+	Map<String, Object> downLoadBill(DqOrderAbstractQuery dqOrderQuery);
 
 	/**
 	 * 下载对账单
@@ -297,7 +297,7 @@ public interface DqPayServiceInf {
 	 *            返回类型
 	 * @return 返回支付方下载对账单的结果
 	 */
-	<T> T downLoadBill(Date billDate, String billType, DqCallback<T> callback);
+	<T> T downLoadBill(DqOrderAbstractQuery dqOrderQuery, DqCallback<T> callback);
 
 	/**
 	 *

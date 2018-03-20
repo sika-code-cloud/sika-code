@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dq.easy.cloud.model.basic.controller.DqBaseController;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.logic.DqZfbPayLogic;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
@@ -195,7 +195,7 @@ public class DqZfbController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("queryPayResult")
-    public DqBaseServiceResult queryPayResult(DqOrderQAbstractuery dqOrderQuery) {
+    public DqBaseServiceResult queryPayResult(DqOrderAbstractQuery dqOrderQuery) {
         return dqZfbPayLogic.queryPayResult(dqOrderQuery);
     }
 
@@ -219,7 +219,7 @@ public class DqZfbController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("close")
-    public DqBaseServiceResult close(DqOrderQAbstractuery dqOrderQuery) {
+    public DqBaseServiceResult close(DqOrderAbstractQuery dqOrderQuery) {
         return dqZfbPayLogic.close(dqOrderQuery);
     }
 
@@ -286,7 +286,7 @@ public class DqZfbController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("downLoadBill")
-    public Object downLoadBill(DqOrderQAbstractuery dqOrderQuery) {
+    public Object downLoadBill(DqZfbOrderQuery dqOrderQuery) {
         return dqZfbPayLogic.downLoadBill(dqOrderQuery);
     }
 
@@ -311,7 +311,7 @@ public class DqZfbController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("secondaryInterface")
-    public DqBaseServiceResult secondaryInterface(DqOrderQAbstractuery dqOrderQuery) {
+    public DqBaseServiceResult secondaryInterface(DqOrderAbstractQuery dqOrderQuery) {
         return dqZfbPayLogic.secondaryInterface(dqOrderQuery);
     }
 
@@ -363,7 +363,7 @@ public class DqZfbController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
     @RequestMapping("queryTransferResult")
-    public DqBaseServiceResult queryTransferResult(DqOrderQAbstractuery dqOrderQuery) {
+    public DqBaseServiceResult queryTransferResult(DqOrderAbstractQuery dqOrderQuery) {
         return dqZfbPayLogic.queryTransferResult(dqOrderQuery);
     }
 }
