@@ -18,11 +18,4 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-common</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-	</dependencies>
 </project>
