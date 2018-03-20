@@ -22,7 +22,7 @@ import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayResultDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceInf;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
@@ -128,7 +128,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult queryPayResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryPayResult(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyTradeNoAndOutTradeNo();
 //		获取查询结果
@@ -141,7 +141,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult close(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult close(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyTradeNoAndOutTradeNo();
 //		获取结果
@@ -165,7 +165,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult queryRefundResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryRefundResult(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyTradeNoAndOutTradeNo().verifyRefundTradeNo();
 //		获取结果
@@ -175,7 +175,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public Object downLoadBill(DqOrderQuery dqOrderQuery) {
+	public Object downLoadBill(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyBillDate().verifyBillType();
 //		获取结果
@@ -185,7 +185,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult secondaryInterface(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult secondaryInterface(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyOutTradeNoBillType().verifyTradeNoOrBillDate();
 //		数据转换
@@ -211,7 +211,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 	}
 
 	@Override
-	public DqBaseServiceResult queryTransferResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryTransferResult(DqOrderQAbstractuery dqOrderQuery) {
 //		数据校验
 		dqOrderQuery.verifyOutTradeNo().verifyTradeNo();
 //		获取结果

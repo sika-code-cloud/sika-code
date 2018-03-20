@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
@@ -25,17 +26,45 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 public abstract class DqBasePayDTO {
 	/** 签名参数容器 */
 	private Map<String, Object> signatureParameters;
-	/** 签名sign */
-	private String sign;
-
+	/** 内容参数容器 */
+	protected Map<String, Object> contentSignatureMap;
+	
 	public DqBasePayDTO() {
-		signatureParameters = DqMapUtils.newTreeMap();
+		contentSignatureMap = DqMapUtils.newTreeMap();
 	}
 
 	public Map<String, Object> getSignatureParameters() {
 		return signatureParameters;
 	}
-
+	
+	protected void setSignatureParameters(Map<String, Object> signatureParameters) {
+		this.signatureParameters = signatureParameters;
+	}
+	/**
+	 * 
+	 * <p>
+	 * 内容签名数据
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param key
+	 * @param value
+	 * @author daiqi
+	 * 创建时间    2018年3月20日 下午4:13:23
+	 */
+	protected void putContentSignatureData(String key, Object value) {
+		if (DqBaseUtils.isNull(value)) {
+			return ;
+		}
+		if (value instanceof String && DqStringUtils.isEmpty((String)value)) {
+			return ;
+		}
+		contentSignatureMap.put(key, value);
+	}
 	/**
 	 * 
 	 * <p>
@@ -49,48 +78,8 @@ public abstract class DqBasePayDTO {
 	 *            : DqTransactionType : 交易类型枚举接口
 	 * @author daiqi 创建时间 2018年3月20日 下午4:20:54
 	 */
-	public abstract void buildSignParamters(DqPayConfigStorageInf dqPayConfigStorage,
+	public abstract void buildSignatureParameters(DqPayConfigStorageInf dqPayConfigStorage,
 			DqTransactionType dqTransactionType);
-
-	/** 压入sign签名参数 */
-	protected abstract void putSignSignData();
-
-	public String getSign() {
-		return sign;
-	}
-
-	protected void setSign(String sign) {
-		this.sign = sign;
-		putSignSignData();
-	}
-
-	/**
-	 * 
-	 * <p>
-	 * 构建sign参数
-	 * </p>
-	 *
-	 * @param dqPayConfigStorage
-	 * @author daiqi 创建时间 2018年3月20日 下午4:22:51
-	 */
-	protected abstract void buildSign(DqPayConfigStorageInf dqPayConfigStorage);
-
-	/**
-	 * 
-	 * <p>
-	 * 将签名数据put到签名参数容器中
-	 * </p>
-	 *
-	 * @param key : String : 参数key
-	 * @param value : Object : 参数值
-	 *
-	 * author daiqi 创建时间 2018年3月18日 上午1:37:26
-	 */
-	protected void putSignatureData(String key, Object value) {
-		if (DqBaseUtils.isNotNull(value)) {
-			signatureParameters.put(key, value);
-		}
-	}
 
 	@Override
 	public String toString() {

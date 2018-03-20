@@ -6,6 +6,7 @@ import java.util.Date;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.pay.model.base.pojo.dto.DqBasePayDTO;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 
 /**
@@ -15,7 +16,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
  * @email egzosn@gmail.com
  * @date 2017/3/12 14:50
  */
-public class DqOrderQuery{
+public abstract class DqOrderQAbstractuery extends DqBasePayDTO{
 
 	private Integer payId;
 	// 支付平台订单号
@@ -40,7 +41,7 @@ public class DqOrderQuery{
 	private String outTradeNoBillType;
 	// 交易类型
 	private String transactionType;
-
+	
 	/**
 	 * 
 	 * <p>
@@ -51,14 +52,14 @@ public class DqOrderQuery{
 	 * @author daiqi
 	 * 创建时间    2018年3月2日 下午1:45:14
 	 */
-	public DqOrderQuery verifyTradeNoAndOutTradeNo() {
+	public DqOrderQAbstractuery verifyTradeNoAndOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo()) && DqStringUtils.isEmpty(this.getOutTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
 	/** 校验支付平台订单号 */
-	public DqOrderQuery verifyTradeNo() {
+	public DqOrderQAbstractuery verifyTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_CANT_EMPTY);
 		}
@@ -66,7 +67,7 @@ public class DqOrderQuery{
 	}
 
 	/** 校验商户订单号 */
-	public DqOrderQuery verifyOutTradeNo() {
+	public DqOrderQAbstractuery verifyOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
 		}
@@ -74,7 +75,7 @@ public class DqOrderQuery{
 	}
 
 	/** 校验账单时间 */
-	public DqOrderQuery verifyBillDate() {
+	public DqOrderQAbstractuery verifyBillDate() {
 		if (DqBaseUtils.isNull(this.getBillDate())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_DATE_CANT_NULL);
 		}
@@ -82,7 +83,7 @@ public class DqOrderQuery{
 	}
 
 	/** 校验账单类型 */
-	public DqOrderQuery verifyBillType() {
+	public DqOrderQAbstractuery verifyBillType() {
 		if (DqStringUtils.isEmpty(this.getBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_TYPE_CANT_NULL);
 		}
@@ -90,7 +91,7 @@ public class DqOrderQuery{
 	}
 	
 	/** 校验账单类型 */
-	public DqOrderQuery verifyTradeNoOrBillDate() {
+	public DqOrderQAbstractuery verifyTradeNoOrBillDate() {
 		if (DqBaseUtils.isNull(this.getTradeNoOrBillDate())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_OR_BILL_DATE_CANT_NULL);
 		}
@@ -98,27 +99,39 @@ public class DqOrderQuery{
 	}
 	
 	/** 校验账单类型 */
-	public DqOrderQuery verifyOutTradeNoBillType() {
+	public DqOrderQAbstractuery verifyOutTradeNoBillType() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNoBillType())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
 		}
 		return this;
 	}
 	/** 校验退款订单号 */
-	public DqOrderQuery verifyRefundTradeNo() {
+	public DqOrderQAbstractuery verifyRefundTradeNo() {
 		if (DqStringUtils.isEmpty(this.getRefundTradeNo())) {
 			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_ORDER_NO_CANT_EMPTY);
 		}
 		return this;
 	}
 
-
+	protected abstract void putBillDateTimestampSignData();
+	protected abstract void putPayIdSignData();
+	protected abstract void putTradeNoSignData();
+	protected abstract void putOutTradeNoSignData();
+	protected abstract void putRefundAmountSignData();
+	protected abstract void putTotalAmountSignData();
+	protected abstract void putBillDateSignData();
+	protected abstract void putBillTypeSignData();
+	protected abstract void putTradeNoOrBillDateSignData();
+	protected abstract void putOutTradeNoBillTypeSignData();
+	protected abstract void putRefundTradeNoSignData();
+	
 	public Long getBillDateTimestamp() {
 		return billDateTimestamp;
 	}
 
 	public void setBillDateTimestamp(Long billDateTimestamp) {
 		this.billDateTimestamp = billDateTimestamp;
+		putBillDateTimestampSignData();
 	}
 
 	public Integer getPayId() {
@@ -127,6 +140,7 @@ public class DqOrderQuery{
 
 	public void setPayId(Integer payId) {
 		this.payId = payId;
+		putPayIdSignData();
 	}
 
 	public String getTradeNo() {
@@ -135,6 +149,7 @@ public class DqOrderQuery{
 
 	public void setTradeNo(String tradeNo) {
 		this.tradeNo = tradeNo;
+		putTradeNoSignData();
 	}
 
 	public String getOutTradeNo() {
@@ -143,6 +158,7 @@ public class DqOrderQuery{
 
 	public void setOutTradeNo(String outTradeNo) {
 		this.outTradeNo = outTradeNo;
+		putOutTradeNoSignData();
 	}
 
 	public BigDecimal getRefundAmount() {
@@ -151,6 +167,7 @@ public class DqOrderQuery{
 
 	public void setRefundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;
+		putRefundAmountSignData();
 	}
 
 	public BigDecimal getTotalAmount() {
@@ -159,6 +176,7 @@ public class DqOrderQuery{
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+		putTotalAmountSignData();
 	}
 
 	public Date getBillDate() {
@@ -170,6 +188,7 @@ public class DqOrderQuery{
 
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
+		putBillDateSignData();
 	}
 
 	public String getBillType() {
@@ -178,6 +197,7 @@ public class DqOrderQuery{
 
 	public void setBillType(String billType) {
 		this.billType = billType;
+		putBillTypeSignData();
 	}
 
 	public Object getTradeNoOrBillDate() {
@@ -186,6 +206,7 @@ public class DqOrderQuery{
 
 	public void setTradeNoOrBillDate(Object tradeNoOrBillDate) {
 		this.tradeNoOrBillDate = tradeNoOrBillDate;
+		putTradeNoOrBillDateSignData();
 	}
 
 	public String getOutTradeNoBillType() {
@@ -194,6 +215,7 @@ public class DqOrderQuery{
 
 	public void setOutTradeNoBillType(String outTradeNoBillType) {
 		this.outTradeNoBillType = outTradeNoBillType;
+		putOutTradeNoBillTypeSignData();
 	}
 
 	public String getTransactionType() {
@@ -210,6 +232,7 @@ public class DqOrderQuery{
 
 	public void setRefundTradeNo(String refundTradeNo) {
 		this.refundTradeNo = refundTradeNo;
+		putRefundTradeNoSignData();
 	}
 
 	@Override

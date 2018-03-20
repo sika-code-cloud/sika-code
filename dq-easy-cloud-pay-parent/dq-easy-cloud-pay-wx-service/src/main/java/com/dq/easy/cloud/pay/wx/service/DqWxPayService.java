@@ -49,7 +49,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -512,7 +512,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> queryRefundResult(DqOrderQuery dqOrderQuery) {
+	public Map<String, Object> queryRefundResult(DqOrderQAbstractuery dqOrderQuery) {
 		// 获取公共参数
 		Map<String, Object> parameters = getPublicParameters();
 		if (DqStringUtils.isNotEmpty(dqOrderQuery.getOutTradeNo())) {

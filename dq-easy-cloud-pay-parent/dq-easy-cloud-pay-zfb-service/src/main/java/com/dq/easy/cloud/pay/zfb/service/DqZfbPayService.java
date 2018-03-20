@@ -35,7 +35,7 @@ import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbProductCode;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
+import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQAbstractuery;
 import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
 import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
@@ -296,8 +296,9 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 */
 	@Override
 	public Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder) {
-		refundOrder.buildSignParamters(payConfigStorage, DqZfbTransactionType.REFUND);
-		
+//		构建签名参数
+		refundOrder.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.REFUND);
+//		获取请求结果
 		return getRequestResult(refundOrder.getSignatureParameters(), DqZfbTransactionType.REFUND);
 	}
 
@@ -311,17 +312,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> queryRefundResult(DqOrderQuery dqOrderQuery) {
-		// 获取公共参数
-		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.REFUNDQUERY);
-		
-		Map<String, Object> contentMap = new HashMap<>();
-		contentMap.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, dqOrderQuery.getRefundTradeNo());
-		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo(), contentMap));
-		// 设置签名
-		setSign(parameters);
-		return getRequestResult(parameters, DqZfbTransactionType.REFUNDQUERY);
+	public Map<String, Object> queryRefundResult(DqOrderQAbstractuery dqOrderQuery) {
+//		构建签名参数
+		dqOrderQuery.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.REFUNDQUERY);
+//		获取请求结果
+		return getRequestResult(dqOrderQuery.getSignatureParameters(), DqZfbTransactionType.REFUNDQUERY);
 	}
 
 	/**

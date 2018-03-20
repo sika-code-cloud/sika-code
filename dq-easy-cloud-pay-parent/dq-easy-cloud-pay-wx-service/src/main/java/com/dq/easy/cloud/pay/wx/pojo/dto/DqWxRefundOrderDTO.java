@@ -1,8 +1,6 @@
 package com.dq.easy.cloud.pay.wx.pojo.dto;
 
-import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
 
@@ -23,48 +21,39 @@ import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
  */
 public class DqWxRefundOrderDTO extends DqRefundOrderAbstractDTO {
 	@Override
-	public void buildSignParamters(DqPayConfigStorageInf dqPayConfigStorage, DqTransactionType dqTransactionType) {
-		putSignatureData(DqWxPayKey.APPID_KEY, dqPayConfigStorage.getAppid());
-		putSignatureData(DqWxPayKey.MCH__ID_KEY, dqPayConfigStorage.getPid());
-		putSignatureData(DqWxPayKey.SIGN__TYPE_KEY, dqPayConfigStorage.getSignType());
-		putSignatureData(DqWxPayKey.NONCE__STR_KEY, DqSignUtils.randomStr());
+	public void buildSignatureParameters(DqPayConfigStorageInf dqPayConfigStorage, DqTransactionType dqTransactionType) {
 
-		buildSign(dqPayConfigStorage);
 	}
 
 	@Override
 	protected void putRefundNoSignData() {
-		putSignatureData(DqWxPayKey.OUT__REFUND__NO_KEY, this.getTradeNo());
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	protected void putTradeNoSignData() {
-		putSignatureData(DqWxPayKey.TRANSACTION__ID_KEY, this.getTradeNo());
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	protected void putOutTradeNoSignData() {
-		putSignatureData(DqWxPayKey.OUT__TRADE__NO_KEY, this.getOutTradeNo());
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	protected void putRefundAmountSignData() {
-		putSignatureData(DqWxPayKey.OUT__TRADE__NO_KEY, this.getRefundAmountOfCent());
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	protected void putTotalAmountSignData() {
-		putSignatureData(DqWxPayKey.TOTAL__FEE_KEY, this.getTradeNo());
-	}
-
-	@Override
-	public void putSignSignData() {
-		putSignatureData(DqWxPayKey.SIGN_KEY, super.getSign());
-	}
-
-	@Override
-	protected void buildSign(DqPayConfigStorageInf dqPayConfigStorage) {
+		// TODO Auto-generated method stub
 		
 	}
+
 
 }
