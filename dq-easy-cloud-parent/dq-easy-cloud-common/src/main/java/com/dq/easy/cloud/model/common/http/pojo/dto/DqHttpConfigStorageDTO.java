@@ -160,7 +160,7 @@ public class DqHttpConfigStorageDTO {
      * @param path 是否为证书地址
      */
     public void setPath(boolean path) {
-        path = path;
+        this.path = path;
     }
 
     /**

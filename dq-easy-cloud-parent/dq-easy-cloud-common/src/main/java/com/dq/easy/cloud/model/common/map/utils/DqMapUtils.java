@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
-
 import org.apache.commons.collections.MapUtils;
 
 
@@ -86,6 +84,24 @@ public class DqMapUtils {
 		return false;
 	}
 
+	/**
+	 * 
+	 * <p>
+	 * 判断map中是否包含key
+	 * </p>
+	 *
+	 * @param map
+	 * @param key
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月21日 下午8:33:51
+	 */
+	public static <T, V> boolean containsKey(Map<T, V> map, String key) {
+		if (isEmpty(map)) {
+			return false;
+		}
+		return map.containsKey(key);
+	}
 	/**
 	 * 
 	 * <p>

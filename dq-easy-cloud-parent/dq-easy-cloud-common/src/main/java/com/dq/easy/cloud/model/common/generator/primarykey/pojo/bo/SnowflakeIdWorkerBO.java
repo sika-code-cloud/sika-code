@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.strategy.keygenerate.bo;
+package com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo;
 /**
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>

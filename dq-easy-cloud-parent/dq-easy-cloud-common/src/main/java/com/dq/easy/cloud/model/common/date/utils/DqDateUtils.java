@@ -1,6 +1,5 @@
 package com.dq.easy.cloud.model.common.date.utils;
 
-import java.security.Timestamp;
 import java.util.Date;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;

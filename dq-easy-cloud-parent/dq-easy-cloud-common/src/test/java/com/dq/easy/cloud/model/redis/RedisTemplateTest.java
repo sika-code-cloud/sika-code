@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.dq.easy.cloud.DqEasyCloudModelApplication;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.cache.redis.handler.DqRedisTemplateHandler;
+import com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo.SnowflakeIdWorkerBO;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.strategy.keygenerate.bo.SnowflakeIdWorkerBO;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 
 

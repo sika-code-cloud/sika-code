@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.model.strategy.keygenerate;
+package com.dq.easy.cloud.model.common.generator.primarykey;
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -12,7 +12,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
-import com.dq.easy.cloud.model.strategy.keygenerate.bo.SnowflakeIdWorkerBO;
+import com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo.SnowflakeIdWorkerBO;
 
 /**
  * 

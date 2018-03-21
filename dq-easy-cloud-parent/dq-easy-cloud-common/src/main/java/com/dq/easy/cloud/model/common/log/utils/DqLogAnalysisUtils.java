@@ -111,7 +111,7 @@ public class DqLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static DqLogAnalysisDTO getDqLogAnalysisDTOFromRedis(DqLogDTO dqLogDTO) {
-		String switchKey = getLogKeyOfDqLogAnalysis(dqLogDTO);
+//		String switchKey = getLogKeyOfDqLogAnalysis(dqLogDTO);
 //		从redis中获取日志分析数据传输对象
 		// TODO 从redis中获取日志分析数据传输对象
 		return null;
