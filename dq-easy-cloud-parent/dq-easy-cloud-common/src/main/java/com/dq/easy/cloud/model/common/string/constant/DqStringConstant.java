@@ -13,13 +13,21 @@ public class DqStringConstant {
 	 * @date 2018年2月25日 下午8:44:33
 	 */
 	public static class DqSymbol {
-		/** 符号---单and符号---& */
+		/** 符号---单and符号--- & */
 		public static final String SINGLE_AND = "&";
-		/** 符号常量---英文冒号---: */
+		/** 符号常量---英文冒号--- : */
 	    public static final String SPLIT_COLON = ":";
-	    /** 符号常量---英文小于号---< */
+	    /** 符号常量---英文小于号--- < */
 	    public static final String LESS_THAN = "<";
-	    /** 符号常量---英文大于号---> */
+	    /** 符号常量---英文大于号--- > */
 	    public static final String GREATER_THAN = ">";
+	    /** 符号常量---英文正斜杠--- / */
+	    public static final String FORWARD_SLASH = "/";
+	    /** 符号常量---英文反斜杠--- \\ */
+	    public static final String BACK_SLASH = "\\";
+	    /** 符号常量---英文下划线--- _ */
+	    public static final String UNDER_LINE = "_";
+	    /** 符号常量---英文句号--- . */
+	    public static final String STOP  = ".";
 	}
 }

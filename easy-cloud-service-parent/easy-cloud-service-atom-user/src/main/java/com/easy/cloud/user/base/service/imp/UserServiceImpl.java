@@ -10,8 +10,8 @@ import com.dq.easy.cloud.model.basic.service.DqBaseService;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.easy.cloud.user.base.constant.UserErrorCode;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
+import com.easy.cloud.user.base.constant.UserErrorCodeEnum;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
@@ -52,15 +52,15 @@ public class UserServiceImpl extends DqBaseService implements UserService {
 	public DqBaseServiceResult saveUser(UserDTO userDTO) {
 		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
 		if(DqBaseUtils.isNull(userDTO)){
-			dqBaseServiceResult.buildErrorCode(UserErrorCode.USER_CANT_NULL);
+			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_CANT_NULL);
 			return dqBaseServiceResult;
 		}
 		if(DqStringUtils.isEmpty(userDTO.getUserName())){
-			dqBaseServiceResult.buildErrorCode(UserErrorCode.USER_NAME_CANT_EMPTY);
+			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);
 			return dqBaseServiceResult;
 		}
 		if(DqStringUtils.isEmpty(userDTO.getPassword())){
-			dqBaseServiceResult.buildErrorCode(UserErrorCode.USER_PASSWOR_CANT_EMPTY);
+			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
 			return dqBaseServiceResult;
 		}
 		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
@@ -72,16 +72,16 @@ public class UserServiceImpl extends DqBaseService implements UserService {
 	public DqBaseServiceResult register(UserDTO userDTO) {
 		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
 		if(DqBaseUtils.isNull(userDTO)){
-			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(UserErrorCodeEnum.USER_CANT_NULL);
 		}
 		if(DqStringUtils.isEmpty(userDTO.getUserName())){
-			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_NAME_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);
 		}
 		if(DqStringUtils.isEmpty(userDTO.getPassword())){
-			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_PASSWOR_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
 		}
 		if(DqStringUtils.isEmpty(userDTO.getEmail())){
-			throw DqBaseBusinessException.newInstance(UserErrorCode.USER_EMAIL_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(UserErrorCodeEnum.USER_EMAIL_CANT_EMPTY);
 		}
 		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
 		return dqBaseServiceResult.buildResult(userEntity);

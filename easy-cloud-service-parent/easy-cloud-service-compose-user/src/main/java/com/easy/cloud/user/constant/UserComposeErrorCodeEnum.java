@@ -12,7 +12,7 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月6日 上午11:40:43
  */
-public enum UserComposeErrorCode implements DqBaseErrorCodeInf{
+public enum UserComposeErrorCodeEnum implements DqBaseErrorCodeInf{
 	/** 用户邮箱不能为空  */
 	LOGIN_MODE_WRONG ("UC_000001", "用户邮箱不能为空"),
 	;
@@ -20,7 +20,7 @@ public enum UserComposeErrorCode implements DqBaseErrorCodeInf{
 	private String errorCode;
 	private String errorMsg;
 
-	private UserComposeErrorCode(String errorCode, String errorMsg) {
+	private UserComposeErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
@@ -42,9 +42,9 @@ import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqWxPayConstant.DqWxPayValue;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
@@ -176,7 +176,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 //		不成功抛出异常
 		if (DqWxPayValue.isNotSUCCESS(result.get(DqWxPayKey.RETURN__CODE_KEY))) {
 			DqLogUtils.error("订单创建失败", result, LOG);
-			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY),
+			throw DqBaseBusinessExceptionEnum.newInstance(DqMapUtils.getString(result, DqWxPayKey.RETURN__CODE_KEY),
 					DqMapUtils.getString(result, DqWxPayKey.RETURN__MSG_KEY));
 		}
 		return result;
@@ -315,7 +315,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 	@Override
 	public String buildRequest(Map<String, Object> orderInfo, DqMethodType method) {
 		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RETURN__CODE_KEY))) {
-			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__CODE_KEY),DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__MSG_KEY));
+			throw DqBaseBusinessExceptionEnum.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__CODE_KEY),DqMapUtils.getString(orderInfo, DqWxPayKey.RETURN__MSG_KEY));
 		}
 		if (DqWxTransactionType.isMWEB(DqMapUtils.getString(orderInfo, DqWxPayKey.TRADE__TYPE_KEY))) {
 //			需要被格式化得字符串
@@ -344,7 +344,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		DqLogUtils.info("二维码对象", orderInfo, LOG);
 		// 获取对应的支付账户操作工具（可根据账户id）
 		if (DqWxPayValue.isNotSUCCESS(orderInfo.get(DqWxPayKey.RESULT__CODE_KEY))) {
-			throw DqBaseBusinessException.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RESULT__CODE_KEY),
+			throw DqBaseBusinessExceptionEnum.newInstance(DqMapUtils.getString(orderInfo, DqWxPayKey.RESULT__CODE_KEY),
 					DqMapUtils.getString(orderInfo, DqWxPayKey.ERR__CODE_KEY)).buildExceptionDetail(orderInfo);
 		}
 		return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(orderInfo, DqWxPayKey.CODE__URL_KEY));
@@ -418,7 +418,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		Map<String, Object> retMap = requestTemplate.postForObject(getUrl(DqWxTransactionType.REFUND),
 				DqXMLUtils.getXmlStrFromMap(parameters), HashMap.class);
 		if (DqMapUtils.isEmpty(retMap)) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(retMap);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_FAILURE).buildExceptionDetail(retMap);
 		}
 //		Map<String, Object> retMap = DqJSONUtils.parseObject(wxPayRefund(refundOrder), HashMap.class);
 		return retMap;
@@ -556,7 +556,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 		if (respStr.indexOf(DqSymbol.LESS_THAN) == 0) {
 			Map<String, Object> errorMap = DqXMLUtils.getMapFromXmlStr(respStr);
 			if (DqBaseUtils.notEquals(errorMap.get(DqWxPayKey.RETURN__CODE_KEY), DqWxPayValue.SUCCESS)) {
-				throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(errorMap);
+				throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_FAILURE).buildExceptionDetail(errorMap);
 			}
 		}
 		
@@ -583,7 +583,7 @@ public class DqWxPayService extends DqPayServiceAbstract {
 			DqTransactionType transactionType) {
 
 		if (transactionType == DqWxTransactionType.REFUND) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
 		}
 
 		if (transactionType == DqWxTransactionType.DOWNLOADBILL) {
@@ -593,11 +593,11 @@ public class DqWxPayService extends DqPayServiceAbstract {
 				dqWxOrderQuery.setOutTradeNoBillType(outTradeNoBillType);
 				return downLoadBill(dqWxOrderQuery);
 			}
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		if (!(null == transactionIdOrBillDate || transactionIdOrBillDate instanceof String)) {
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		// 获取公共参数

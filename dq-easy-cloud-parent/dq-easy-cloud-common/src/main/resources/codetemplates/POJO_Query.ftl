@@ -21,18 +21,18 @@ public class ${table_name} extends BaseModel implements ICreateListenable,IModif
 <#if model_column?exists>
     <#list model_column as model>
     /** ${model.columnComment} */
-    @Column(name = "${model.columnName}",columnDefinition = "${model.columnType}")
-    private ${model.columnType} ${model.changeColumnName?uncap_first};
+    @Column(name = "${model.columnName}",columnDefinition = "${model.fieldType}")
+    private ${model.fieldType} ${model.changeColumnName?uncap_first};
     </#list>
 </#if>
 
 <#if model_column?exists>
 	<#list model_column as model>
-    public ${model.columnType} get${model.changeColumnName}() {
+    public ${model.fieldType} get${model.changeColumnName}() {
         return this.${model.changeColumnName?uncap_first};
     }
 
-    public void set${model.changeColumnName}(${model.columnType} ${model.changeColumnName?uncap_first}) {
+    public void set${model.changeColumnName}(${model.fieldType} ${model.changeColumnName?uncap_first}) {
         this.${model.changeColumnName?uncap_first} = ${model.changeColumnName?uncap_first};
     }
     

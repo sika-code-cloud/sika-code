@@ -12,7 +12,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
-import com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo.SnowflakeIdWorkerBO;
+import com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo.DqSnowflakeIdWorkerBO;
 
 /**
  * 
@@ -22,8 +22,8 @@ import com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo.SnowflakeIdWo
  * @date 2017年12月4日 下午12:57:51 
  *
  */
-public class KeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implements Configurable {
-	private static SnowflakeIdWorkerBO snowflakeIdWorker;
+public class DqKeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implements Configurable {
+	private static DqSnowflakeIdWorkerBO snowflakeIdWorker;
 	@Override
 	public Serializable generate(SessionImplementor arg0, Object arg1) throws HibernateException {
 		if(arg1 != null && arg1 instanceof DqBaseEntity){
@@ -37,7 +37,7 @@ public class KeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implemen
 
 	@Override
 	public void configure(Type arg0, Properties properties, ServiceRegistry arg2) throws MappingException {
-		snowflakeIdWorker = SnowflakeIdWorkerBO.singleInstance(0, 0);
+		snowflakeIdWorker = DqSnowflakeIdWorkerBO.singleInstance(0, 0);
 	}
 
 }

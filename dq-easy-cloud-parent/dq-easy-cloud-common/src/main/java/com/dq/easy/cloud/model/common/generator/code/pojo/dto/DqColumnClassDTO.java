@@ -1,9 +1,8 @@
 package com.dq.easy.cloud.model.common.generator.code.pojo.dto;
 
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
-public class ColumnClassDTO {
+public class DqColumnClassDTO {
 
 	/** 数据库字段名称 **/
 	private String columnName;
@@ -30,7 +29,6 @@ public class ColumnClassDTO {
 
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
-		buildFieldType();
 	}
 
 	public String getColumnType() {
@@ -39,6 +37,7 @@ public class ColumnClassDTO {
 
 	public void setColumnType(String columnType) {
 		this.columnType = columnType;
+		buildFieldType();
 	}
 
 	public String getChangeColumnName() {

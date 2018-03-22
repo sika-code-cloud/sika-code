@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.model.common.generator.code.utils;
 
+import static org.mockito.Matchers.contains;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,15 +18,18 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.dq.easy.cloud.model.common.generator.code.constant.CodeGenerateConstant.DqIgnoreField;
-import com.dq.easy.cloud.model.common.generator.code.pojo.dto.ColumnClassDTO;
+import com.dq.easy.cloud.model.common.generator.code.constant.DqCodeGenerateConstant.DqIgnoreField;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.DqCodeGenerateBaseDTO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.DqColumnClassDTO;
+import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
 import freemarker.template.Template;
 
 /**
  * 描述：代码生成器 Created by Ay on 2017/5/1.
  */
-public class CodeGenerateUtils {
+public class DqCodeGenerateUtils {
 
 	private final String AUTHOR = System.getenv().get("USERNAME");
 	private final String CURRENT_DATE = "2017/05/03";
@@ -35,7 +40,7 @@ public class CodeGenerateUtils {
 	private final String USER = "seashare";
 	private final String PASSWORD = "Seashare123";
 	private final String DRIVER = "com.mysql.jdbc.Driver";
-	private final String diskPath = System.getProperty("user.dir")+"\\src\\main\\java\\" ;
+	private final String diskPath = System.getProperty("user.dir") + "\\src\\main\\java\\";
 	private final String changeTableName = replaceUnderLineAndUpperCase(tableName);
 
 	public Connection getConnection() throws Exception {
@@ -45,8 +50,10 @@ public class CodeGenerateUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
-		codeGenerateUtils.generate();
+		DqCodeGenerateUtils dqCodeGenerateUtils = new DqCodeGenerateUtils();
+		System.out.println(dqCodeGenerateUtils.replaceUnderLineAndUpperCase(dqCodeGenerateUtils.tableName));
+
+		// dqCodeGenerateUtils.generate();
 	}
 
 	public void generate() throws Exception {
@@ -55,7 +62,7 @@ public class CodeGenerateUtils {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 			ResultSet resultSet = databaseMetaData.getColumns(null, "%", tableName, "%");
 			// 生成Mapper文件
-//			generateMapperFile(resultSet);
+			// generateMapperFile(resultSet);
 			// 生成Dao文件
 			generateDaoFile(resultSet);
 			// 生成服务层接口文件
@@ -82,14 +89,14 @@ public class CodeGenerateUtils {
 		final String path = diskPath + modelPath + changeTableName + suffix;
 		final String templateName = "POJO_DO.ftl";
 		File mapperFile = new File(path);
-		List<ColumnClassDTO> columnClassList = new ArrayList<>();
-		ColumnClassDTO columnClass = null;
+		List<DqColumnClassDTO> columnClassList = new ArrayList<>();
+		DqColumnClassDTO columnClass = null;
 		while (resultSet.next()) {
 			// id字段略过
-			if (DqIgnoreField.isIgnoreField(resultSet.getString("COLUMN_NAME"))){
+			if (DqIgnoreField.isIgnoreField(resultSet.getString("COLUMN_NAME"))) {
 				continue;
 			}
-			columnClass = new ColumnClassDTO();
+			columnClass = new DqColumnClassDTO();
 			// 获取字段名称
 			columnClass.setColumnName(resultSet.getString("COLUMN_NAME"));
 			// 获取字段类型
@@ -105,11 +112,12 @@ public class CodeGenerateUtils {
 		generateFileByTemplate(templateName, mapperFile, dataMap);
 
 	}
+
 	private String createMkDir(String sunName) {
-		String [] packageNameArray = packageName.split("\\.");
+		String[] packageNameArray = packageName.split("\\.");
 		String modelPath = "";
-		for (int i = 0 ; i < packageNameArray.length ; ++i) {
-			modelPath = modelPath + packageNameArray[i] +"\\";
+		for (int i = 0; i < packageNameArray.length; ++i) {
+			modelPath = modelPath + packageNameArray[i] + "\\";
 		}
 		modelPath = modelPath + sunName + "\\";
 		String mkdirPath = diskPath + modelPath;
@@ -183,7 +191,7 @@ public class CodeGenerateUtils {
 
 	private void generateFileByTemplate(final String templateName, File file, Map<String, Object> dataMap)
 			throws Exception {
-		Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
+		Template template = DqFreeMarkerTemplateUtils.getTemplate(templateName);
 		FileOutputStream fos = new FileOutputStream(file);
 		dataMap.put("table_name_small", tableName);
 		dataMap.put("table_name", changeTableName);
@@ -195,7 +203,7 @@ public class CodeGenerateUtils {
 		template.process(dataMap, out);
 	}
 
-	public String replaceUnderLineAndUpperCase(String str) {
+	public static String replaceUnderLineAndUpperCase(String str) {
 		int infoIndex = str.indexOf("_info");
 		if (infoIndex > 0) {
 			str = str.substring(0, infoIndex);
@@ -216,4 +224,142 @@ public class CodeGenerateUtils {
 		return StringUtils.capitalize(result);
 	}
 
+	/**
+	 * 
+	 * <p>
+	 * 根据包名获取完整包路径
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 *     codeGenerateBaseDTO.modelBasePackageName : : 模块包名 : 是
+	 *     codeGenerateBaseDTO.subModulePelativeBaseName : : 子模块包名 : 是
+	 * </pre>
+	 *
+	 * @param codeGenerateBaseDTO
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月22日 下午7:25:53
+	 */
+	public static String getPackagePathFull(DqCodeGenerateBaseDTO codeGenerateBaseDTO) {
+		String modelBasePackageName = codeGenerateBaseDTO.getModelBasePackageName();
+		String subModulePelativeBaseName = codeGenerateBaseDTO.getSubModuleRelativePackageName();
+		
+		StringBuilder packageFullPathBuild = DqStringUtils.newStringBuilderDefault();
+		packageFullPathBuild.append(codeGenerateBaseDTO.getProjectRootPath());
+		packageFullPathBuild.append(changePackageNameToPath(modelBasePackageName));
+		packageFullPathBuild.append(changePackageNameToPath(subModulePelativeBaseName));
+		return packageFullPathBuild.toString();
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据codeGenerateBaseDTO获取完整文件路径
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param codeGenerateBaseDTO
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月22日 下午7:28:16
+	 */
+	public static String getFilePathFull(DqCodeGenerateBaseDTO codeGenerateBaseDTO) {
+		StringBuilder fileFullPathBuild = DqStringUtils.newStringBuilderDefault();
+		if (DqStringUtils.isEmpty(codeGenerateBaseDTO.getPackgePathFull())) {
+			fileFullPathBuild.append(getPackagePathFull(codeGenerateBaseDTO));
+		} else {
+			fileFullPathBuild.append(codeGenerateBaseDTO.getPackgePathFull());
+		}
+		fileFullPathBuild.append(codeGenerateBaseDTO.getClassNameStartWith());
+		fileFullPathBuild.append(codeGenerateBaseDTO.getClassNameEndWith());
+		
+		return fileFullPathBuild.toString();
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 将包名转换为路径字符串
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param packegeName
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月22日 下午7:32:59
+	 */
+	public static String changePackageNameToPath(String packegeName) {
+		String [] packageNameArr = packegeName.split("\\.");
+		StringBuilder packagePathBuild = DqStringUtils.newStringBuilderDefault();
+		for (String tempModelBasePackageName : packageNameArr) {
+			packagePathBuild.append(tempModelBasePackageName).append(DqSymbol.BACK_SLASH);
+		}
+		return packagePathBuild.toString();
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 获取完整的类名
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param codeGenerateBaseDTO
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月22日 下午8:15:24
+	 */
+	public static String getClassNameFull(DqCodeGenerateBaseDTO codeGenerateBaseDTO) {
+		StringBuilder classNameFull = DqStringUtils.newStringBuilderDefault();
+		if (DqStringUtils.isNotEmpty(codeGenerateBaseDTO.getClassNameStartWith())) {
+			classNameFull.append(codeGenerateBaseDTO.getClassNameStartWith());
+		}
+		if (DqStringUtils.isNotEmpty(codeGenerateBaseDTO.getClassNameBody())) {
+			classNameFull.append(codeGenerateBaseDTO.getClassNameBody());
+		}
+		if (DqStringUtils.isNotEmpty(codeGenerateBaseDTO.getClassNameEndWith())) {
+			classNameFull.append(codeGenerateBaseDTO.getClassNameEndWith());
+		}
+		return classNameFull.toString();
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 获取完整的包名
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param codeGenerateBaseDTO
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月22日 下午8:35:15
+	 */
+	public static String getPackageNameFull(DqCodeGenerateBaseDTO codeGenerateBaseDTO) {
+		StringBuilder packageNameFullBuild = DqStringUtils.newStringBuilderDefault();
+		packageNameFullBuild.append(codeGenerateBaseDTO.getModelBasePackageName());
+		
+		if (DqStringUtils.isNotEmpty(codeGenerateBaseDTO.getSubModuleRelativePackageName())) {
+			packageNameFullBuild.append(DqSymbol.STOP).append(codeGenerateBaseDTO.getSubModuleRelativePackageName());
+		}
+		return packageNameFullBuild.toString();
+	}
 }

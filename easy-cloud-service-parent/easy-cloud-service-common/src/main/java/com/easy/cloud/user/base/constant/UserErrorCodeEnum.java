@@ -15,7 +15,7 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:25:50
  */
-public enum UserErrorCode implements DqBaseErrorCodeInf{
+public enum UserErrorCodeEnum implements DqBaseErrorCodeInf{
 	/** 用户不存在---U_000001 */
 	USER_NOT_EXIST ("U_000001", "用户不存在"),
 	/** 用户id不能为空 */
@@ -32,7 +32,7 @@ public enum UserErrorCode implements DqBaseErrorCodeInf{
 	private String errorCode;
 	private String errorMsg;
 
-	private UserErrorCode(String errorCode, String errorMsg) {
+	private UserErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

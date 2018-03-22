@@ -21,13 +21,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpHeaderDTO;
 import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpStringEntityDTO;
 import com.dq.easy.cloud.model.common.http.utils.DqUriVariables;
 import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.model.common.xml.utils.DqXMLUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 
 
 /**
@@ -261,7 +261,7 @@ public class DqDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
             return DqJSONUtils.parseObject(DqXMLUtils.getMapFromXmlStr(result), responseType);
         }
 
-        throw DqBaseBusinessException.newInstance(DqBaseErrorCode.TYPE_CONVERT_EXCEPTION);
+        throw DqBaseBusinessExceptionEnum.newInstance(DqBaseErrorCodeEnum.TYPE_CONVERT_EXCEPTION);
 
 
     }

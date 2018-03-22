@@ -3,11 +3,11 @@ package com.dq.easy.cloud.model.common.log.pojo.bo;
 import java.util.Map;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.log.constant.DqLogErrorCode;
+import com.dq.easy.cloud.model.common.log.constant.DqLogErrorCodeEnum;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogAnalysisDTO;
 import com.dq.easy.cloud.model.common.log.pojo.dto.DqLogDTO;
 import com.dq.easy.cloud.model.common.log.utils.DqLogAnalysisUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class DqLogAnalysisBO {
 		}
 		DqLogDTO dqLogDTO = this.dqLogAnalysisDTO.getDqLogDTO();
 		if (DqBaseUtils.isNull(dqLogDTO)) {
-			throw DqBaseBusinessException.newInstance(DqLogErrorCode.DQ_LOG_DTO_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqLogErrorCodeEnum.DQ_LOG_DTO_CANT_NULL);
 		}
 		this.dqLogAnalysisDTO.buildRunTimeMinllisTotal().buildRunTimesTotal().buildRunTimeMinllisAvg();
 		this.dqLogAnalysisDTO.buildRunTimeMinllisMin().buildRunTimeMinllisMax().buildLogType();

@@ -17,7 +17,7 @@ import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayValue;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
@@ -90,7 +90,7 @@ public abstract class DqPayLogicAbstract extends DqBaseLogic implements DqPayLog
 			return microPayLogic(orderInfo);
 		}
 		// 6、返回结果
-		return DqBaseServiceResult.newInstanceOfError(DqPayErrorCode.PAY_FAILURE).buildResult(orderInfo);
+		return DqBaseServiceResult.newInstanceOfError(DqPayErrorCodeEnum.PAY_FAILURE).buildResult(orderInfo);
 	}
 
 	@Override

@@ -5,9 +5,9 @@ import java.util.Date;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 import com.dq.easy.cloud.pay.model.base.pojo.dto.DqBasePayDTO;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 
 /**
  * 订单辅助接口
@@ -54,14 +54,14 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	 */
 	public DqOrderAbstractQuery verifyTradeNoAndOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo()) && DqStringUtils.isEmpty(this.getOutTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
 	/** 校验支付平台订单号 */
 	public DqOrderAbstractQuery verifyTradeNo() {
 		if (DqStringUtils.isEmpty(this.getTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -69,7 +69,7 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	/** 校验商户订单号 */
 	public DqOrderAbstractQuery verifyOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -77,7 +77,7 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	/** 校验账单时间 */
 	public DqOrderAbstractQuery verifyBillDate() {
 		if (DqBaseUtils.isNull(this.getBillDate())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_DATE_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.BILL_DATE_CANT_NULL);
 		}
 		return this;
 	}
@@ -85,7 +85,7 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	/** 校验账单类型 */
 	public DqOrderAbstractQuery verifyBillType() {
 		if (DqStringUtils.isEmpty(this.getBillType())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BILL_TYPE_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.BILL_TYPE_CANT_NULL);
 		}
 		return this;
 	}
@@ -93,7 +93,7 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	/** 校验账单类型 */
 	public DqOrderAbstractQuery verifyTradeNoOrBillDate() {
 		if (DqBaseUtils.isNull(this.getTradeNoOrBillDate())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_OR_BILL_DATE_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TRADE_NO_OR_BILL_DATE_CANT_NULL);
 		}
 		return this;
 	}
@@ -101,14 +101,14 @@ public abstract class DqOrderAbstractQuery extends DqBasePayDTO{
 	/** 校验账单类型 */
 	public DqOrderAbstractQuery verifyOutTradeNoBillType() {
 		if (DqStringUtils.isEmpty(this.getOutTradeNoBillType())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.OUT_TRADE_NO_BILL_TYPE_CANT_NULL);
 		}
 		return this;
 	}
 	/** 校验退款订单号 */
 	public DqOrderAbstractQuery verifyRefundTradeNo() {
 		if (DqStringUtils.isEmpty(this.getRefundTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_ORDER_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.REFUND_ORDER_NO_CANT_EMPTY);
 		}
 		return this;
 	}

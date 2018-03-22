@@ -9,7 +9,7 @@ package com.dq.easy.cloud.model.basic.constant.error;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:07:03
  */
-public enum DqBaseErrorCode implements DqBaseErrorCodeInf{
+public enum DqBaseErrorCodeEnum implements DqBaseErrorCodeInf{
 	/** 成功---A_000000 */
 	SUCCESS("A_000000", "成功"),
 	/** 异常---系统错误---A_000001 */
@@ -37,7 +37,7 @@ public enum DqBaseErrorCode implements DqBaseErrorCodeInf{
 	private String errorCode;
 	private String errorMsg;
 	
-	private DqBaseErrorCode(String errorCode, String errorMsg) {
+	private DqBaseErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

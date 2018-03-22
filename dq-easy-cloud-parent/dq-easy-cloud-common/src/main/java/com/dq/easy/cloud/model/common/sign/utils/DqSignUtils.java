@@ -8,9 +8,9 @@ import com.dq.easy.cloud.model.common.encrypt.rsa.utils.DqRSA2Utils;
 import com.dq.easy.cloud.model.common.encrypt.rsa.utils.DqRSAUtils;
 import com.dq.easy.cloud.model.common.encrypt.sha.utils.DqSHA1Utils;
 import com.dq.easy.cloud.model.common.encrypt.sha.utils.DqSHA256Utils;
-import com.dq.easy.cloud.model.common.sign.constant.DqSignErrorCode;
+import com.dq.easy.cloud.model.common.sign.constant.DqSignErrorCodeEnum;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -98,7 +98,7 @@ public enum DqSignUtils {
 				e.printStackTrace();
 			}
 
-			throw DqBaseBusinessException.newInstance(DqSignErrorCode.SIGN_HMACSHA256_EXCEPTION);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqSignErrorCodeEnum.SIGN_HMACSHA256_EXCEPTION);
 		}
 
 		/**

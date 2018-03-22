@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.dq.easy.cloud.model.basic.constant.DqBaseConstant.DqCharset;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCode;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.common.http.constant.DqHttpErrorCodeEnum;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 
 /**
  * 
@@ -189,12 +189,12 @@ public class DqUriVariables {
 		if (isKey) {
 			key = temp.toString();
 			if (key.length() == 0) {
-				throw DqBaseBusinessException.newInstance(DqHttpErrorCode.HTTP_CONTENT_FORMAT_WRONG);
+				throw DqBaseBusinessExceptionEnum.newInstance(DqHttpErrorCodeEnum.HTTP_CONTENT_FORMAT_WRONG);
 			}
 			map.put(key, "");
 		} else {
 			if (key.length() == 0) {
-				throw DqBaseBusinessException.newInstance(DqHttpErrorCode.HTTP_CONTENT_FORMAT_WRONG);
+				throw DqBaseBusinessExceptionEnum.newInstance(DqHttpErrorCodeEnum.HTTP_CONTENT_FORMAT_WRONG);
 			}
 			map.put(key, temp.toString());
 		}

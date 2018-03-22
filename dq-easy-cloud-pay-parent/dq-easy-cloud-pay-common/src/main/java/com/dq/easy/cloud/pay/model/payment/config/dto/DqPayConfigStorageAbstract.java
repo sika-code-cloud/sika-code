@@ -6,8 +6,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.sign.dto.DqCertDescriptorDTO;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.paymessage.constant.DqMsgType;
 
 /**
@@ -102,7 +102,7 @@ public abstract class DqPayConfigStorageAbstract implements DqPayConfigStorageIn
     @Override
     public DqCertDescriptorDTO getCertDescriptor() {
         if (!isCertSign){
-           throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_CERTSIGN_IS_FLASE);
+           throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_CERTSIGN_IS_FLASE);
         }
         if (DqBaseUtils.isNull(dqCertDescriptorDTO)){
         	dqCertDescriptorDTO = DqCertDescriptorDTO.newInstance();

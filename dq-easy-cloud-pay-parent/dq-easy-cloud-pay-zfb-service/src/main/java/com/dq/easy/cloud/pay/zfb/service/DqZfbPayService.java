@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
@@ -28,10 +28,10 @@ import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
 import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayKey;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
 import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbProductCode;
@@ -235,7 +235,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 		if (DqBaseUtils.equals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY))) {
 			return DqQrCodeUtil.writeInfoToJpgBuff(DqMapUtils.getString(response, DqZfbPayKey.QR__CODE_KEY));
 		}
-		throw DqBaseBusinessException.newInstance(DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY), DqMapUtils.getString(response, DqZfbPayKey.MSG_KEY)).buildExceptionDetail(response);
+		throw DqBaseBusinessExceptionEnum.newInstance(DqMapUtils.getString(response, DqZfbPayKey.CODE_KEY), DqMapUtils.getString(response, DqZfbPayKey.MSG_KEY)).buildExceptionDetail(response);
 
 	}
 
@@ -357,7 +357,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 			DqTransactionType transactionType) {
 
 		if (transactionType == DqZfbTransactionType.REFUND) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
 		}
 
 		if (transactionType == DqZfbTransactionType.DOWNLOADBILL) {
@@ -367,11 +367,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 				dqOrderAbstractQuery.setOutTradeNoBillType(outTradeNoBillType);
 				return downLoadBill(dqOrderAbstractQuery);
 			}
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		if (!(tradeNoOrBillDate instanceof String)) {
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 		
 		// 获取公共参数
@@ -566,7 +566,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 			verifyMap.put(DqPayKey.SIGN_KEY, DqMapUtils.getString(resultMap, DqPayKey.SIGN_KEY));
 		}
 		if (DqStringUtils.notEquals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(verifyMap, DqZfbPayKey.CODE_KEY))) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(verifyMap);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAY_FAILURE).buildExceptionDetail(verifyMap);
 		}
 		
 		return verifyMap;

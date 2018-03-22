@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.pay.model.transaction.pojo.bo;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
 
 /**
@@ -45,7 +45,7 @@ public abstract class DqTransferOrderBO {
 	/** 校验收款开户行 */
 	protected DqTransferOrderBO verifyBank() {
 		if (DqBaseUtils.isNull(this.dqTransferOrderDTO.getBank())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.BANK_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.BANK_CANT_NULL);
 		}
 		return this;
 	}
@@ -53,7 +53,7 @@ public abstract class DqTransferOrderBO {
 	/** 校验转账订单号 */
 	protected DqTransferOrderBO verifyOutNo() {
 		if (DqBaseUtils.isNull(this.dqTransferOrderDTO.getOutNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.OUT_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -61,7 +61,7 @@ public abstract class DqTransferOrderBO {
 	/** 校验收款方账户 */
 	protected DqTransferOrderBO verifyPayeeAccount() {
 		if (DqBaseUtils.isNull(this.dqTransferOrderDTO.getPayeeAccount())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAYEE_ACCOUNT_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAYEE_ACCOUNT_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -69,7 +69,7 @@ public abstract class DqTransferOrderBO {
 	/** 校验收款方账户 */
 	protected DqTransferOrderBO verifyPayeeName() {
 		if (DqBaseUtils.isNull(this.dqTransferOrderDTO.getPayeeName())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAYEE_NAME_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.PAYEE_NAME_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -77,7 +77,7 @@ public abstract class DqTransferOrderBO {
 	/** 校验转账金额 */
 	protected DqTransferOrderBO verifyAmount() {
 		if (DqBaseUtils.isNull(this.dqTransferOrderDTO.getAmount())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.AMOUNT_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.AMOUNT_CANT_NULL);
 		}
 		return this;
 	}

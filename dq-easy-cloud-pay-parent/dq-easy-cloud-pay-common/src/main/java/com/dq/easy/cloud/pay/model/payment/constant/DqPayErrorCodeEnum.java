@@ -12,7 +12,7 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月23日 下午3:23:52
  */
-public enum DqPayErrorCode implements DqBaseErrorCodeInf{
+public enum DqPayErrorCodeEnum implements DqBaseErrorCodeInf{
 	/** isCertSign is false---PAY_CERTSIGN_IS_FLASE---PAY_000001 */
 	PAY_CERTSIGN_IS_FLASE ("PAY_000001", "isCertSign is false"),
 	/** 通用接口不支持---PAY_CERTSIGN_IS_FLASE---PAY_000002 */
@@ -76,7 +76,7 @@ public enum DqPayErrorCode implements DqBaseErrorCodeInf{
 	private String errorCode;
 	private String errorMsg;
 
-	private DqPayErrorCode(String errorCode, String errorMsg) {
+	private DqPayErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

@@ -19,179 +19,179 @@ import java.util.Date;
 public class TlCygBkbgbase extends BaseModel implements ICreateListenable,IModifyListenable,IDeleteListenable {
 
     /** 创建者，若无特殊要求其值由框架管理 */
-    @Column(name = "create_by",columnDefinition = "BIGINT")
-    private BIGINT createBy;
+    @Column(name = "create_by",columnDefinition = "Long")
+    private Long createBy;
     /** 更新者，若无特殊要求其值由框架管理 */
-    @Column(name = "update_by",columnDefinition = "BIGINT")
-    private BIGINT updateBy;
+    @Column(name = "update_by",columnDefinition = "Long")
+    private Long updateBy;
     /** 数据更新时间,若无特殊要求，由框架自动生成 */
-    @Column(name = "update_date",columnDefinition = "TIMESTAMP")
-    private TIMESTAMP updateDate;
+    @Column(name = "update_date",columnDefinition = "Date")
+    private Date updateDate;
     /** 数据创建时间，若无特殊要求，由框架自动生成 */
-    @Column(name = "create_date",columnDefinition = "TIMESTAMP")
-    private TIMESTAMP createDate;
+    @Column(name = "create_date",columnDefinition = "Date")
+    private Date createDate;
     /** 删除标志 0:未删 1：已删 */
-    @Column(name = "is_deleted",columnDefinition = "TINYINT")
-    private TINYINT isDeleted;
+    @Column(name = "is_deleted",columnDefinition = "Integer")
+    private Integer isDeleted;
     /** 可用状态 0:不可用 1：可用 */
-    @Column(name = "available",columnDefinition = "TINYINT")
-    private TINYINT available;
+    @Column(name = "available",columnDefinition = "Integer")
+    private Integer available;
     /** 角色售卖订单号 */
-    @Column(name = "role_serial_num",columnDefinition = "BIGINT")
-    private BIGINT roleSerialNum;
+    @Column(name = "role_serial_num",columnDefinition = "Long")
+    private Long roleSerialNum;
     /** 仓库金币 单位为铜币 */
-    @Column(name = "bank_gold",columnDefinition = "INT")
-    private INT bankGold;
+    @Column(name = "bank_gold",columnDefinition = "Integer")
+    private Integer bankGold;
     /** 金币 单位为铜币 */
-    @Column(name = "gold",columnDefinition = "INT")
-    private INT gold;
+    @Column(name = "gold",columnDefinition = "Integer")
+    private Integer gold;
     /** 交子 单位为铜币 */
-    @Column(name = "jiao_zi",columnDefinition = "INT")
-    private INT jiaoZi;
+    @Column(name = "jiao_zi",columnDefinition = "Integer")
+    private Integer jiaoZi;
     /** 材料栏数量 */
-    @Column(name = "cailiao_num",columnDefinition = "INT")
-    private INT cailiaoNum;
+    @Column(name = "cailiao_num",columnDefinition = "Integer")
+    private Integer cailiaoNum;
     /** 仓库格子数量 */
-    @Column(name = "cangku_num",columnDefinition = "INT")
-    private INT cangkuNum;
+    @Column(name = "cangku_num",columnDefinition = "Integer")
+    private Integer cangkuNum;
     /** 道具栏数量 */
-    @Column(name = "daoju_num",columnDefinition = "INT")
-    private INT daojuNum;
+    @Column(name = "daoju_num",columnDefinition = "Integer")
+    private Integer daojuNum;
     /** 绑定元宝 */
-    @Column(name = "bind_yuan_bao",columnDefinition = "INT")
-    private INT bindYuanBao;
+    @Column(name = "bind_yuan_bao",columnDefinition = "Integer")
+    private Integer bindYuanBao;
     /** 通宝 */
-    @Column(name = "tong_bao",columnDefinition = "INT")
-    private INT tongBao;
+    @Column(name = "tong_bao",columnDefinition = "Integer")
+    private Integer tongBao;
     /** 元宝 */
-    @Column(name = "yuan_bao",columnDefinition = "INT")
-    private INT yuanBao;
+    @Column(name = "yuan_bao",columnDefinition = "Integer")
+    private Integer yuanBao;
 
-    public BIGINT getCreateBy() {
+    public Long getCreateBy() {
         return this.createBy;
     }
 
-    public void setCreateBy(BIGINT createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
     
-    public BIGINT getUpdateBy() {
+    public Long getUpdateBy() {
         return this.updateBy;
     }
 
-    public void setUpdateBy(BIGINT updateBy) {
+    public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
     
-    public TIMESTAMP getUpdateDate() {
+    public Date getUpdateDate() {
         return this.updateDate;
     }
 
-    public void setUpdateDate(TIMESTAMP updateDate) {
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
     
-    public TIMESTAMP getCreateDate() {
+    public Date getCreateDate() {
         return this.createDate;
     }
 
-    public void setCreateDate(TIMESTAMP createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
     
-    public TINYINT getIsDeleted() {
+    public Integer getIsDeleted() {
         return this.isDeleted;
     }
 
-    public void setIsDeleted(TINYINT isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
     
-    public TINYINT getAvailable() {
+    public Integer getAvailable() {
         return this.available;
     }
 
-    public void setAvailable(TINYINT available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
     
-    public BIGINT getRoleSerialNum() {
+    public Long getRoleSerialNum() {
         return this.roleSerialNum;
     }
 
-    public void setRoleSerialNum(BIGINT roleSerialNum) {
+    public void setRoleSerialNum(Long roleSerialNum) {
         this.roleSerialNum = roleSerialNum;
     }
     
-    public INT getBankGold() {
+    public Integer getBankGold() {
         return this.bankGold;
     }
 
-    public void setBankGold(INT bankGold) {
+    public void setBankGold(Integer bankGold) {
         this.bankGold = bankGold;
     }
     
-    public INT getGold() {
+    public Integer getGold() {
         return this.gold;
     }
 
-    public void setGold(INT gold) {
+    public void setGold(Integer gold) {
         this.gold = gold;
     }
     
-    public INT getJiaoZi() {
+    public Integer getJiaoZi() {
         return this.jiaoZi;
     }
 
-    public void setJiaoZi(INT jiaoZi) {
+    public void setJiaoZi(Integer jiaoZi) {
         this.jiaoZi = jiaoZi;
     }
     
-    public INT getCailiaoNum() {
+    public Integer getCailiaoNum() {
         return this.cailiaoNum;
     }
 
-    public void setCailiaoNum(INT cailiaoNum) {
+    public void setCailiaoNum(Integer cailiaoNum) {
         this.cailiaoNum = cailiaoNum;
     }
     
-    public INT getCangkuNum() {
+    public Integer getCangkuNum() {
         return this.cangkuNum;
     }
 
-    public void setCangkuNum(INT cangkuNum) {
+    public void setCangkuNum(Integer cangkuNum) {
         this.cangkuNum = cangkuNum;
     }
     
-    public INT getDaojuNum() {
+    public Integer getDaojuNum() {
         return this.daojuNum;
     }
 
-    public void setDaojuNum(INT daojuNum) {
+    public void setDaojuNum(Integer daojuNum) {
         this.daojuNum = daojuNum;
     }
     
-    public INT getBindYuanBao() {
+    public Integer getBindYuanBao() {
         return this.bindYuanBao;
     }
 
-    public void setBindYuanBao(INT bindYuanBao) {
+    public void setBindYuanBao(Integer bindYuanBao) {
         this.bindYuanBao = bindYuanBao;
     }
     
-    public INT getTongBao() {
+    public Integer getTongBao() {
         return this.tongBao;
     }
 
-    public void setTongBao(INT tongBao) {
+    public void setTongBao(Integer tongBao) {
         this.tongBao = tongBao;
     }
     
-    public INT getYuanBao() {
+    public Integer getYuanBao() {
         return this.yuanBao;
     }
 
-    public void setYuanBao(INT yuanBao) {
+    public void setYuanBao(Integer yuanBao) {
         this.yuanBao = yuanBao;
     }
     

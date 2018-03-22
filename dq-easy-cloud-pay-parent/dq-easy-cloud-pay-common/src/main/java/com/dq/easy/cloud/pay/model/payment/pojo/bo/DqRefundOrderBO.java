@@ -1,10 +1,10 @@
 package com.dq.easy.cloud.pay.model.payment.pojo.bo;
 
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.payment.exception.DqPayException;
 import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
 
@@ -35,7 +35,7 @@ public abstract class DqRefundOrderBO {
 
 	public DqRefundOrderBO initDqRefundOrderDTO() {
 		if (DqBaseUtils.isNull(this.dqRefundOrderDTO)) {
-			throw DqPayException.newInstance(DqBaseErrorCode.DTO_OBJ_CANT_NULL);
+			throw DqPayException.newInstance(DqBaseErrorCodeEnum.DTO_OBJ_CANT_NULL);
 		}
 		// 初始化订单信息
 		initRefundNo();
@@ -45,7 +45,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验商户支付订单号 */
 	protected DqRefundOrderBO verifyOutTradeNoAdnTradeNo() {
 		if (DqStringUtils.isEmpty(this.dqRefundOrderDTO.getOutTradeNo()) && DqStringUtils.isEmpty(this.dqRefundOrderDTO.getTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TRADE_NO_AND_OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -62,7 +62,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验总金额 */
 	protected DqRefundOrderBO verifyTotalAmount() {
 		if (DqBaseUtils.isNull(this.dqRefundOrderDTO.getTotalAmount())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TOTAL_AMOUNT_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TOTAL_AMOUNT_CANT_NULL);
 		}
 		return this;
 	}
@@ -70,7 +70,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验退款订单号 */
 	protected DqRefundOrderBO verifyRefundNo() {
 		if (DqStringUtils.isEmpty(this.dqRefundOrderDTO.getRefundNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_ORDER_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.REFUND_ORDER_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -78,7 +78,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验商户支付订单号 */
 	protected DqRefundOrderBO verifyOutTradeNo() {
 		if (DqStringUtils.isEmpty(this.dqRefundOrderDTO.getOutTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -86,7 +86,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验支付平台订单号 */
 	protected DqRefundOrderBO verifyTradeNo() {
 		if (DqStringUtils.isEmpty(this.dqRefundOrderDTO.getTradeNo())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.TRADE_NO_CANT_EMPTY);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -94,7 +94,7 @@ public abstract class DqRefundOrderBO {
 	/** 校验退款金额 */
 	protected DqRefundOrderBO verifyRefundAmount() {
 		if (DqBaseUtils.isNull(this.dqRefundOrderDTO.getRefundAmount())) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.REFUND_AMOUNT_CANT_NULL);
+			throw DqBaseBusinessExceptionEnum.newInstance(DqPayErrorCodeEnum.REFUND_AMOUNT_CANT_NULL);
 		}
 		return this;
 	}

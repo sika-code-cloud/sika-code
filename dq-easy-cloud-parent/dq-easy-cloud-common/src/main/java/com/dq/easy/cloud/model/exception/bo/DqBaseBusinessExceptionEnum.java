@@ -13,45 +13,58 @@ import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
  *
  * @author daiqi 创建时间 2018年2月2日 下午7:19:35
  */
-public class DqBaseBusinessException extends RuntimeException {
+public class DqBaseBusinessExceptionEnum extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	private String errorCode;
 	private String errorMsg;
 	private DqBaseErrorCodeInf dqBaseErrorCodeInf;
-//	异常详情信息
+	// 异常详情信息
 	private Object exceptionDetail;
 
-	public static DqBaseBusinessException newInstance() {
-		return new DqBaseBusinessException();
+	public DqBaseBusinessExceptionEnum(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		buildDqBaseErrorCodeInf(dqBaseErrorCodeInf);
+	}
+	
+	public DqBaseBusinessExceptionEnum(String errorCode, String errorMsg) {
+		buildErrorCode(errorCode).buildErrorMsg(errorMsg);
+	}
+	
+	public DqBaseBusinessExceptionEnum() {
 	}
 
-	public static DqBaseBusinessException newInstance(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
-		return new DqBaseBusinessException().buildDqBaseErrorCodeInf(dqBaseErrorCodeInf);
+	public static DqBaseBusinessExceptionEnum newInstance() {
+		return new DqBaseBusinessExceptionEnum();
 	}
 
-	public static DqBaseBusinessException newInstance(String errorCode, String errorMsg) {
-		return new DqBaseBusinessException().buildErrorCode(errorCode).buildErrorMsg(errorMsg);
+	public static DqBaseBusinessExceptionEnum newInstance(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+		return new DqBaseBusinessExceptionEnum(dqBaseErrorCodeInf);
 	}
 
-	public DqBaseBusinessException buildDqBaseErrorCodeInf(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
+	public static DqBaseBusinessExceptionEnum newInstance(String errorCode, String errorMsg) {
+		return new DqBaseBusinessExceptionEnum(errorCode, errorMsg);
+	}
+
+	public DqBaseBusinessExceptionEnum buildDqBaseErrorCodeInf(DqBaseErrorCodeInf dqBaseErrorCodeInf) {
 		this.dqBaseErrorCodeInf = dqBaseErrorCodeInf;
 		this.errorCode = dqBaseErrorCodeInf.getErrorCode();
 		this.errorMsg = dqBaseErrorCodeInf.getErrorMsg();
 		return this;
 	}
-	public DqBaseBusinessException buildExceptionDetail(Object exceptionDetail) {
+
+	public DqBaseBusinessExceptionEnum buildExceptionDetail(Object exceptionDetail) {
 		this.exceptionDetail = exceptionDetail;
 		return this;
 	}
+
 	/** 构建errorCode */
-	private DqBaseBusinessException buildErrorCode(String errorCode) {
+	private DqBaseBusinessExceptionEnum buildErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 		return this;
 	}
 
 	/** 构建errorMsg */
-	private DqBaseBusinessException buildErrorMsg(String errorMsg) {
+	private DqBaseBusinessExceptionEnum buildErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
 		return this;
 	}

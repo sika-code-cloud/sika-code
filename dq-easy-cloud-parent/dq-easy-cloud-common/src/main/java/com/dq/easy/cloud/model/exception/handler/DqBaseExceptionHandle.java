@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
+import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
 import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
 import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessExceptionEnum;
 import com.dq.easy.cloud.model.exception.dto.DqBaseServiceResultException;
 
 @Component
@@ -31,13 +31,13 @@ public class DqBaseExceptionHandle {
     	DqBaseServiceResultException serviceResultException = DqBaseServiceResultException.newInstance();
         String path = request.getRequestURL().toString();
         
-        if(ex instanceof DqBaseBusinessException) {
-        	DqBaseBusinessException dbbException = (DqBaseBusinessException) ex;
+        if(ex instanceof DqBaseBusinessExceptionEnum) {
+        	DqBaseBusinessExceptionEnum dbbException = (DqBaseBusinessExceptionEnum) ex;
         	dqBaseServiceResult.buildErrorCodeAndMsg(dbbException.getErrorCode(), dbbException.getErrorMsg());
         }else if(ex instanceof RuntimeException){
-        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCode.RUNTIME_EXCEPTION);
+        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCodeEnum.RUNTIME_EXCEPTION);
         }else{
-        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCode.SYS_EXCEPTION);
+        	dqBaseServiceResult.buildDqBaseErrorCodeInf(DqBaseErrorCodeEnum.SYS_EXCEPTION);
         }
         serviceResultException.setException(ex.getClass().getName());
         serviceResultException.setFailureDetails(ex.getMessage());

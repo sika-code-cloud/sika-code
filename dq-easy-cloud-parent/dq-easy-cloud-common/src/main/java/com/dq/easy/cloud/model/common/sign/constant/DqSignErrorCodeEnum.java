@@ -17,7 +17,7 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  *
  * @author daiqi 创建时间 2018年2月23日 下午2:40:08
  */
-public enum DqSignErrorCode implements DqBaseErrorCodeInf {
+public enum DqSignErrorCodeEnum implements DqBaseErrorCodeInf {
 	/** HMACSHA256 签名异常---SIGN_000001 */
 	SIGN_HMACSHA256_EXCEPTION ("SIGN_000001", "HMACSHA256 签名异常")
 	;
@@ -25,7 +25,7 @@ public enum DqSignErrorCode implements DqBaseErrorCodeInf {
 	private String errorCode;
 	private String errorMsg;
 
-	private DqSignErrorCode(String errorCode, String errorMsg) {
+	private DqSignErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

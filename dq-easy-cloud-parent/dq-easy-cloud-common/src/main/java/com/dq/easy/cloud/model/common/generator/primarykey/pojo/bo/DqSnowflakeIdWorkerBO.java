@@ -11,9 +11,9 @@ package com.dq.easy.cloud.model.common.generator.primarykey.pojo.bo;
  * 加起来刚好64位，为一个Long型。<br>
  * SnowFlake的优点是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)，并且效率较高，经测试，SnowFlake每秒能够产生26万ID左右。
  */
-public class SnowflakeIdWorkerBO {
-	private static SnowflakeIdWorkerBO snowflakeIdWorker = new SnowflakeIdWorkerBO();
-	private SnowflakeIdWorkerBO(){
+public class DqSnowflakeIdWorkerBO {
+	private static DqSnowflakeIdWorkerBO snowflakeIdWorker = new DqSnowflakeIdWorkerBO();
+	private DqSnowflakeIdWorkerBO(){
 		
 	}
     // ==============================Fields===========================================
@@ -60,11 +60,11 @@ public class SnowflakeIdWorkerBO {
     private long lastTimestamp = -1L;
 
     //==============================Constructors=====================================
-    public static SnowflakeIdWorkerBO singleInstance(long workerId, long datacenterId) {
+    public static DqSnowflakeIdWorkerBO singleInstance(long workerId, long datacenterId) {
     	return snowflakeIdWorker.buidWorkerIdAndDatacenterId(workerId, datacenterId);
     }
     
-    public SnowflakeIdWorkerBO buidWorkerIdAndDatacenterId(long workerId, long datacenterId) {
+    public DqSnowflakeIdWorkerBO buidWorkerIdAndDatacenterId(long workerId, long datacenterId) {
     	if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
@@ -137,7 +137,7 @@ public class SnowflakeIdWorkerBO {
     //==============================Test=============================================
     /** 测试 */
     public static void main(String[] args) {
-        SnowflakeIdWorkerBO idWorker = SnowflakeIdWorkerBO.singleInstance(0, 0);
+        DqSnowflakeIdWorkerBO idWorker = DqSnowflakeIdWorkerBO.singleInstance(0, 0);
         long beginTimestamp = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
            long id = idWorker.nextId();

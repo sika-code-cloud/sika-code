@@ -7,7 +7,7 @@ import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * @date 2018年2月8日 下午10:29:01
  */
-public enum DqLogErrorCode implements DqBaseErrorCodeInf{
+public enum DqLogErrorCodeEnum implements DqBaseErrorCodeInf{
 	/** dqLogAnalysisDTO不能为空---LOG_000001 */
 	DQ_LOG_ANALYSIS_DTO_CANT_NULL("LOG_000001","dqLogAnalysisDTO不能为空"),
 	/** dqLogDTO不能为空---LOG_000002 */
@@ -17,7 +17,7 @@ public enum DqLogErrorCode implements DqBaseErrorCodeInf{
 	private String errorCode;
 	private String errorMsg;
 	
-	private DqLogErrorCode(String errorCode, String errorMsg) {
+	private DqLogErrorCodeEnum(String errorCode, String errorMsg) {
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}

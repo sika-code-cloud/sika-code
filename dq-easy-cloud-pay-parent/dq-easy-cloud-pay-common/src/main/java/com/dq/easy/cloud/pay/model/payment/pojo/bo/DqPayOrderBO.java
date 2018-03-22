@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.number.bigdecimal.utils.DqBigDecimalUtils;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
+import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCodeEnum;
 import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayValue;
 import com.dq.easy.cloud.pay.model.payment.exception.DqPayException;
 import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
@@ -33,7 +33,7 @@ public abstract class DqPayOrderBO {
 	 */
 	public DqPayOrderBO initDqPayOrderDTO() {
 		if (DqBaseUtils.isNull(this.dqPayOrderDTO)) {
-			throw DqPayException.newInstance(DqPayErrorCode.DQ_PAY_ORDER_DTO_CANT_NULL);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.DQ_PAY_ORDER_DTO_CANT_NULL);
 		}
 		// 初始化订单信息
 		initOutTradeNo();
@@ -152,7 +152,7 @@ public abstract class DqPayOrderBO {
 	/** 校验dqPayOrderDTO对象 */
 	protected DqPayOrderBO verifyDqPayOrderDTO() {
 		if (DqBaseUtils.isNull(this.dqPayOrderDTO)) {
-			throw DqPayException.newInstance(DqPayErrorCode.DQ_PAY_ORDER_DTO_CANT_NULL);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.DQ_PAY_ORDER_DTO_CANT_NULL);
 		}
 		return this;
 	}
@@ -160,7 +160,7 @@ public abstract class DqPayOrderBO {
 	/** 校验openid对象 */
 	protected DqPayOrderBO verifyOpenid() {
 		if (DqStringUtils.isEmpty(this.dqPayOrderDTO.getOpenid())) {
-			throw DqPayException.newInstance(DqPayErrorCode.OPENID_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.OPENID_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -168,10 +168,10 @@ public abstract class DqPayOrderBO {
 	/** 校验价格 */
 	protected DqPayOrderBO verifyPrice() {
 		if (DqBaseUtils.isNull(dqPayOrderDTO.getPrice())) {
-			throw DqPayException.newInstance(DqPayErrorCode.PRICE_CANT_NULL);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.PRICE_CANT_NULL);
 		}
 		if (DqBigDecimalUtils.isNotGreaterThan(dqPayOrderDTO.getPrice(), DqBigDecimalUtils.ZERO)) {
-			throw DqPayException.newInstance(DqPayErrorCode.PRICE_CANT_LESS_THAN_ZERO);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.PRICE_CANT_LESS_THAN_ZERO);
 		}
 		return this;
 	}
@@ -179,7 +179,7 @@ public abstract class DqPayOrderBO {
 	/** 校验subject */
 	protected DqPayOrderBO verifySubject() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getSubject())) {
-			throw DqPayException.newInstance(DqPayErrorCode.SUBJECT_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.SUBJECT_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -187,7 +187,7 @@ public abstract class DqPayOrderBO {
 	/** 校验body */
 	protected DqPayOrderBO verifyBody() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getBody())) {
-			throw DqPayException.newInstance(DqPayErrorCode.BODY_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.BODY_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -195,7 +195,7 @@ public abstract class DqPayOrderBO {
 	/** 校验outTradeNo */
 	protected DqPayOrderBO verifyOutTradeNo() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getOutTradeNo())) {
-			throw DqPayException.newInstance(DqPayErrorCode.OUT_TRADE_NO_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.OUT_TRADE_NO_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -203,21 +203,21 @@ public abstract class DqPayOrderBO {
 	/** 校验TransactionType */
 	protected DqPayOrderBO verifyTransactionType() {
 		if (DqBaseUtils.isNull(dqPayOrderDTO.getTransactionType())) {
-			throw DqPayException.newInstance(DqPayErrorCode.TRANSACTION_TYPE_CANT_NULL);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.TRANSACTION_TYPE_CANT_NULL);
 		}
 		return this;
 	}
 
 	protected DqPayOrderBO verifySpbillCreateIp() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getSpbillCreateIp())) {
-			throw DqPayException.newInstance(DqPayErrorCode.SPBILL_CREATE_IP_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.SPBILL_CREATE_IP_CANT_EMPTY);
 		}
 		return this;
 	}
 	
 	protected DqPayOrderBO verifyWapUrl() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getWapUrl())) {
-			throw DqPayException.newInstance(DqPayErrorCode.WAP_URL_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.WAP_URL_CANT_EMPTY);
 		}
 		return this;
 	}
@@ -225,7 +225,7 @@ public abstract class DqPayOrderBO {
 	/** 授权码校验 */
 	protected DqPayOrderBO verifyAuthCode() {
 		if (DqStringUtils.isEmpty(dqPayOrderDTO.getAuthCode())) {
-			throw DqPayException.newInstance(DqPayErrorCode.AUTH_CODE_CANT_EMPTY);
+			throw DqPayException.newInstance(DqPayErrorCodeEnum.AUTH_CODE_CANT_EMPTY);
 		}
 		return this;
 	}
