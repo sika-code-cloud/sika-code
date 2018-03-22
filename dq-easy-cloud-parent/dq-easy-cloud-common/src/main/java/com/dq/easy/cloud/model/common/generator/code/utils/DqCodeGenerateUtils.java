@@ -16,9 +16,16 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.dq.easy.cloud.model.common.generator.code.constant.DqCodeGenerateConstant.DqCodeProject;
 import com.dq.easy.cloud.model.common.generator.code.constant.DqCodeGenerateConstant.DqIgnoreField;
+import com.dq.easy.cloud.model.common.generator.code.pojo.bo.DqCodeGenerateBaseBO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.bo.database.DqCodeGenerateDatabaseBO;
 import com.dq.easy.cloud.model.common.generator.code.pojo.dto.DqCodeGenerateBaseDTO;
 import com.dq.easy.cloud.model.common.generator.code.pojo.dto.DqColumnClassDTO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.DqFieldDTO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.database.DqCodeGenerateDatabaseAbstractDTO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.database.DqFieldDatabaseDTO;
+import com.dq.easy.cloud.model.common.generator.code.pojo.dto.database.mysql.DqMysqlCodeGenerateDTO;
 import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
 
@@ -51,7 +58,7 @@ public class DqCodeGenerateUtils {
 		DqCodeGenerateUtils dqCodeGenerateUtils = new DqCodeGenerateUtils();
 		System.out.println(dqCodeGenerateUtils.replaceUnderLineAndUpperCase(dqCodeGenerateUtils.tableName));
 
-		// dqCodeGenerateUtils.generate();
+		 dqCodeGenerateUtils.generate();
 	}
 
 	public void generate() throws Exception {
@@ -72,14 +79,46 @@ public class DqCodeGenerateUtils {
 			// 生成DTO文件
 			generateDTOFile(resultSet);
 			// 生成Model文件
-			generateDOFile(resultSet);
+//			generateDOFile(resultSet);
+			generateDOFileUseDTO(resultSet);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
 
 		}
 	}
+	private void generateDOFileUseDTO(ResultSet resultSet) throws Exception {
+		DqCodeGenerateDatabaseAbstractDTO dqCodeGenerateDatabaseDTO = new DqMysqlCodeGenerateDTO();
+		dqCodeGenerateDatabaseDTO.setFileSuffix(DqCodeProject.SOURCE_CODE_SUFFIX);
+		dqCodeGenerateDatabaseDTO.setModelBasePackageName(packageName);
+		dqCodeGenerateDatabaseDTO.setSubModuleRelativePackageName("pojo.entity");
+		dqCodeGenerateDatabaseDTO.setTableNameLower(tableName);
+		dqCodeGenerateDatabaseDTO.setClassNameBody(changeTableName);
+		dqCodeGenerateDatabaseDTO.setClassNameEndWith("Entity");
+		dqCodeGenerateDatabaseDTO.setTemplateName("POJO_DO.ftl");
+		List<DqFieldDTO> dqFieldDTOs = new ArrayList<>();
+		while (resultSet.next()) {
+			// id字段略过
+			if (DqIgnoreField.isIgnoreField(resultSet.getString("COLUMN_NAME"))) {
+				continue;
+			}
+			DqFieldDatabaseDTO dqFieldDTO = new DqFieldDatabaseDTO();
+			// 获取字段名称
+			dqFieldDTO.setTableColumnName(resultSet.getString("COLUMN_NAME"));
+			// 获取字段类型
+			dqFieldDTO.setTableColumnType(resultSet.getString("TYPE_NAME"));
+			// 字段在数据库的注释
+			dqFieldDTO.setFieldComment(resultSet.getString("REMARKS"));
+			dqFieldDTO.setFieldName(replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
+			dqFieldDTOs.add(dqFieldDTO);
+		}
+		dqCodeGenerateDatabaseDTO.setFieldDTOs(dqFieldDTOs);
+		DqCodeGenerateBaseBO dqCodeGenerateBaseBO = new DqCodeGenerateDatabaseBO(dqCodeGenerateDatabaseDTO);
+		dqCodeGenerateBaseBO.initCodeGenerateData();
+		dqCodeGenerateBaseBO.verifyCodeGenerateData();
+		dqCodeGenerateBaseBO.generateFileByTemplate();
 
+	}
 	private void generateDOFile(ResultSet resultSet) throws Exception {
 
 		final String suffix = ".java";

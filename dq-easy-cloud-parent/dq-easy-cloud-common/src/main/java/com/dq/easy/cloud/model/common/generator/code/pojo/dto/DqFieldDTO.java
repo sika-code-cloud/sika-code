@@ -2,6 +2,8 @@ package com.dq.easy.cloud.model.common.generator.code.pojo.dto;
 
 import java.util.List;
 
+import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+
 /**
  * 属性数据传输对象
  * 
@@ -13,6 +15,8 @@ public class DqFieldDTO {
 	private String fieldName;
 	/** 属性类型 */
 	private String fieldType;
+	/** 属性注释 */
+	private String fieldComment;
 	/** 属性注解列表 */
 	private List<String> fieldAntations;
 
@@ -40,4 +44,12 @@ public class DqFieldDTO {
 		this.fieldAntations = fieldAntations;
 	}
 
+	public String getFieldComment() {
+		return fieldComment;
+	}
+
+	public void setFieldComment(String fieldComment) {
+		this.fieldComment = fieldComment;
+	}
+	
 }

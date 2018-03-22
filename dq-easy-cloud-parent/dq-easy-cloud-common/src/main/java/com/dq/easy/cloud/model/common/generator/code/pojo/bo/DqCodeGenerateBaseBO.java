@@ -121,7 +121,7 @@ public abstract class DqCodeGenerateBaseBO {
 	protected abstract void initCodeGenerateSubClassData();
 	
 	@SuppressWarnings("unchecked")
-	private void generateFileByTemplate(Map<String, Object> dataMap)
+	public void generateFileByTemplate()
 			throws Exception {
 		Template template = DqFreeMarkerTemplateUtils.getTemplate(dqCodeGenerateBaseDTO.getTemplateName());
 		File packageFile = new File(dqCodeGenerateBaseDTO.getPackgePathFull());
@@ -132,8 +132,8 @@ public abstract class DqCodeGenerateBaseBO {
 		File needGenerateeFile = new File(dqCodeGenerateBaseDTO.getFilePathFull()); 
 		
 		FileOutputStream needGenerateeFileStram = new FileOutputStream(needGenerateeFile);
-		dataMap.put("author", dqCodeGenerateBaseDTO.getAuthor());
-		dataMap.put("packageNameFull", dqCodeGenerateBaseDTO.getPackageNameFull());
+//		dataMap.put("author", dqCodeGenerateBaseDTO.getAuthor());
+//		dataMap.put("packageNameFull", dqCodeGenerateBaseDTO.getPackageNameFull());
 //		dataMap.put("table_name_small", tableName);
 //		dataMap.put("table_name", changeTableName);
 //		dataMap.put("author", AUTHOR);

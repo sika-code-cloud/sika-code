@@ -1,10 +1,9 @@
 package com.dq.easy.cloud.model.common.generator.code.pojo.dto;
 
+import java.util.List;
+
 import com.dq.easy.cloud.model.common.generator.code.config.DqCodeGenerateConfig;
-import com.dq.easy.cloud.model.common.generator.code.constant.DqCodeGenerateConstant.DqClassNameEndWith;
-import com.dq.easy.cloud.model.common.generator.code.constant.DqCodeGenerateConstant.DqClassNameStartWith;
 import com.dq.easy.cloud.model.common.generator.code.utils.DqCodeGenerateUtils;
-import com.dq.easy.cloud.model.common.properties.utils.DqPropertiesUtils;
 
 /**
  * 
@@ -26,6 +25,8 @@ public class DqCodeGenerateBaseDTO {
 	private String author;
 	/** 代码模版基础包路径 */
 	private String codeTemplateBasePackagePath;
+	/** 文件后缀 */
+	private String fileSuffix;
 	/** 模块所在包名 */
 	private String modelBasePackageName;
 	/** 模板名称 */
@@ -48,6 +49,8 @@ public class DqCodeGenerateBaseDTO {
 	private String packgePathFull;
 	/** 文件完整路径 */
 	private String filePathFull;
+	/** 属性数据传输对象列表 */
+	private List<DqFieldDTO> fieldDTOs;
 
 	public DqCodeGenerateBaseDTO initClassNameFullDefault() {
 		setClassNameFull(DqCodeGenerateUtils.getClassNameFull(this));
@@ -93,6 +96,14 @@ public class DqCodeGenerateBaseDTO {
 
 	public void setCodeTemplateBasePackagePath(String codeTemplateBasePackagePath) {
 		this.codeTemplateBasePackagePath = codeTemplateBasePackagePath;
+	}
+
+	public String getFileSuffix() {
+		return fileSuffix;
+	}
+
+	public void setFileSuffix(String fileSuffix) {
+		this.fileSuffix = fileSuffix;
 	}
 
 	public String getModelBasePackageName() {
@@ -182,6 +193,14 @@ public class DqCodeGenerateBaseDTO {
 
 	public void setPackageNameFull(String packageNameFull) {
 		this.packageNameFull = packageNameFull;
+	}
+
+	public List<DqFieldDTO> getFieldDTOs() {
+		return fieldDTOs;
+	}
+
+	public void setFieldDTOs(List<DqFieldDTO> fieldDTOs) {
+		this.fieldDTOs = fieldDTOs;
 	}
 
 	public String getCreateDate() {
