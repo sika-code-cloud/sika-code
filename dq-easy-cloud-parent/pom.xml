@@ -101,6 +101,11 @@
 		</dependency>
 		<!-- spring-cloud-start-x依赖 end -->
 		<!-- spring框架相关依赖 end -->
+		<dependency>
+			<groupId>dq.easy.cloud</groupId>
+			<artifactId>dq-easy-cloud-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<!--依赖管理，用于管理spring-cloud的依赖，其中spring.cloud.version是版本号 -->

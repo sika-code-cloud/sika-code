@@ -2,8 +2,7 @@ package com.dq.easy.cloud.model.common.string.utils;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;

@@ -1,7 +1,5 @@
 package com.dq.easy.cloud.model.common.generator.code.utils;
 
-import static org.mockito.Matchers.contains;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
