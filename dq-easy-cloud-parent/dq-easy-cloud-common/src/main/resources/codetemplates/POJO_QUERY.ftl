@@ -9,7 +9,7 @@ import ${importClazz};
 </#if>
 
 /**
- <#if fileComment?exists>* 描述：${fileComment}业务逻辑对象</#if>
+ <#if fileComment?exists>* 描述：${fileComment}查询对象</#if>
  * @author ${author}
  * @date ${createDate}
  */

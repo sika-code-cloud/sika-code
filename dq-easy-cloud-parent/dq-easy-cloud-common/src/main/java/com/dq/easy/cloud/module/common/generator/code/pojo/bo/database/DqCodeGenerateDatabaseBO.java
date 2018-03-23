@@ -133,7 +133,7 @@ public class DqCodeGenerateDatabaseBO extends DqCodeGenerateBaseBO {
 				// 获取字段类型
 				dqFieldDTO.setTableColumnType(resultSet.getString("TYPE_NAME"));
 				// 字段在数据库的注释
-				dqFieldDTO.setFieldComment(resultSet.getString("REMARKS"));
+				dqFieldDTO.setComment(resultSet.getString("REMARKS"));
 				dqFieldDTO.setFieldName(DqCodeGenerateUtils.replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
 				dqFieldBaseDTOs.add(dqFieldDTO);
 			}

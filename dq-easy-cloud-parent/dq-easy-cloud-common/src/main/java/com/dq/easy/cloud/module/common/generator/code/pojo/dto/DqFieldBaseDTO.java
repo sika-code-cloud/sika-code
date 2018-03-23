@@ -8,15 +8,9 @@ import java.util.List;
  * @author daiqi
  * @date 2018年3月23日 上午12:08:52
  */
-public abstract class DqFieldBaseDTO {
-	/** 属性名称 */
-	private String fieldName;
+public abstract class DqFieldBaseDTO extends DqCodeGeneratorJavaDTO{
 	/** 属性类型 */
-	private String fieldType;
-	/** 属性注释 */
-	private String fieldComment;
-	/** 属性注解列表 */
-	private List<String> fieldAntations;
+	private String fieldName;
 
 	public String getFieldName() {
 		return fieldName;
@@ -24,30 +18,6 @@ public abstract class DqFieldBaseDTO {
 
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
-	}
-
-	public String getFieldType() {
-		return fieldType;
-	}
-
-	public void setFieldType(String fieldType) {
-		this.fieldType = fieldType;
-	}
-
-	public List<String> getFieldAntations() {
-		return fieldAntations;
-	}
-
-	public void setFieldAntations(List<String> fieldAntations) {
-		this.fieldAntations = fieldAntations;
-	}
-
-	public String getFieldComment() {
-		return fieldComment;
-	}
-
-	public void setFieldComment(String fieldComment) {
-		this.fieldComment = fieldComment;
 	}
 
 	

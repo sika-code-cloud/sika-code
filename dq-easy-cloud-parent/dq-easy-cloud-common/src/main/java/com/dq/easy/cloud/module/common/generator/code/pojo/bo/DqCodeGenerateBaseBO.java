@@ -167,8 +167,8 @@ public abstract class DqCodeGenerateBaseBO {
 			for (Object fieldBaseDTO : dqCodeGenerateBaseDTO.getFieldDTOs()) {
 				if (fieldBaseDTO instanceof DqFieldBaseDTO) {
 					DqFieldBaseDTO fieldBase = (DqFieldBaseDTO) fieldBaseDTO;
-					if (DqStringUtils.isNotEmpty(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getFieldType()))) {
-						dqCodeGenerateBaseDTO.getImportClazzs().add(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getFieldType()));
+					if (DqStringUtils.isNotEmpty(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleName()))) {
+						dqCodeGenerateBaseDTO.getImportClazzs().add(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleName()));
 					}
 				}
 			}
