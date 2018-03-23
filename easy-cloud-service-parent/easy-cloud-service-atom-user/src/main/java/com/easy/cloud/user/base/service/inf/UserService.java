@@ -1,6 +1,6 @@
  package com.easy.cloud.user.base.service.inf;
 
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;

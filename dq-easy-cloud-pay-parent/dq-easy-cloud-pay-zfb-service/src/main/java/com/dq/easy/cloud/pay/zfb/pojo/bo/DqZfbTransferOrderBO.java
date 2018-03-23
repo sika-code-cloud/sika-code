@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.transaction.pojo.bo.DqTransferOrderBO;
-import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.pay.module.transaction.pojo.bo.DqTransferOrderBO;
+import com.dq.easy.cloud.pay.module.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**

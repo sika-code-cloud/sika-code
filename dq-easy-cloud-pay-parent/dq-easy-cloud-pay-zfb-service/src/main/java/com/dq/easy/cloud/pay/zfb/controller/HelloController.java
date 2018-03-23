@@ -3,7 +3,7 @@ package com.dq.easy.cloud.pay.zfb.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dq.easy.cloud.model.basic.controller.DqBaseController;
+import com.dq.easy.cloud.module.basic.controller.DqBaseController;
 
 @Controller
 public class HelloController extends DqBaseController{

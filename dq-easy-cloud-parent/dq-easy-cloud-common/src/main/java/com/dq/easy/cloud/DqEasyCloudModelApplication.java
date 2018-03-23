@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseComponentScan;
+import com.dq.easy.cloud.module.basic.constant.DqBaseComponentScan;
 
 
 /**

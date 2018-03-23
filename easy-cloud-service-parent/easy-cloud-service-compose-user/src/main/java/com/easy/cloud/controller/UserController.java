@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dq.easy.cloud.model.basic.controller.DqBaseController;
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+
+import com.dq.easy.cloud.module.basic.controller.DqBaseController;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.pojo.query.UserComposeQuery;
 import com.easy.cloud.user.service.inf.UserService;

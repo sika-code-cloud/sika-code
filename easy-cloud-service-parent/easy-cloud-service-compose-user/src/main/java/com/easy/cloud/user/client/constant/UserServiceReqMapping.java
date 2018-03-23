@@ -1,6 +1,6 @@
 package com.easy.cloud.user.client.constant;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseServiceReqMapping;
+import com.dq.easy.cloud.module.basic.constant.DqBaseServiceReqMapping;
 
 /**
  * 

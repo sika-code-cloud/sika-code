@@ -2,10 +2,10 @@ package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqPayOrderBO;
-import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.pay.module.payment.pojo.bo.DqPayOrderBO;
+import com.dq.easy.cloud.pay.module.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**

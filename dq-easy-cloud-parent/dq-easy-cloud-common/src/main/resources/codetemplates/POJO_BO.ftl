@@ -1,42 +1,29 @@
-package ${package_name}.model;
-import com.evada.inno.common.domain.BaseModel;
-import com.evada.inno.common.listener.ICreateListenable;
-import com.evada.inno.common.listener.IDeleteListenable;
-import com.evada.inno.common.listener.IModifyListenable;
-import org.hibernate.annotations.Where;
-import javax.persistence.*;
-import java.util.Date;
-
-/**
- * 描述：${table_annotation}模型
- * @author ${author}
- * @date ${date}
- */
-@Entity
-@Table(name="${table_name_small}")
-@Where(clause = "status > '0'")
-@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public class ${table_name} extends BaseModel implements ICreateListenable,IModifyListenable,IDeleteListenable {
-
-<#if model_column?exists>
-    <#list model_column as model>
-    /** ${model.columnComment} */
-    @Column(name = "${model.columnName}",columnDefinition = "${model.fieldType}")
-    private ${model.fieldType} ${model.changeColumnName?uncap_first};
+package ${packageNameFull};
+<#if importClazzs?exists>
+    <#list importClazzs as importClazz>
+    	<#if importClazz?exists>
+import ${importClazz};
+    	</#if>
     </#list>
 </#if>
 
-<#if model_column?exists>
-	<#list model_column as model>
-    public ${model.fieldType} get${model.changeColumnName}() {
-        return this.${model.changeColumnName?uncap_first};
-    }
+/**
+ <#if fileComment?exists>* 描述：${fileComment}模型</#if>
+ * @author ${author}
+ * @date ${createDate}
+ */
+public class ${classNameFull} <#if extendsParentClass?exists>extends ${extendsParentClass}</#if> {
 
-    public void set${model.changeColumnName}(${model.fieldType} ${model.changeColumnName?uncap_first}) {
-        this.${model.changeColumnName?uncap_first} = ${model.changeColumnName?uncap_first};
-    }
-    
-	</#list>
+<#if fieldDTOs?exists>
+    <#list fieldDTOs as model>
+    /** ${model.fieldComment} */
+    	<#if model.fieldAntations?exists>
+	    	<#list model.fieldAntations as fieldAntation>
+	${fieldAntation}
+	    	</#list>
+    	</#if>
+    private ${model.fieldType} ${model.fieldName?uncap_first};
+    </#list>
 </#if>
 
 }

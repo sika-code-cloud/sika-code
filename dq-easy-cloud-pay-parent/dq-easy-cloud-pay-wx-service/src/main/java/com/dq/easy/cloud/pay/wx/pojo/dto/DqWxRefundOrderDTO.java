@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.pay.wx.pojo.dto;
 
-import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.module.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
 
 /**
  * 

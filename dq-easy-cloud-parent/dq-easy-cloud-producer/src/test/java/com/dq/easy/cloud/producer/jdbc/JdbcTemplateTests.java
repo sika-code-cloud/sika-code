@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dq.easy.cloud.DqEasyCloudProducerApplication;
-import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 import com.dq.easy.cloud.model.user.service.UserService;
+import com.dq.easy.cloud.module.jdbc.handler.DqJdbcTemplateHandler;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DqEasyCloudProducerApplication.class) // 指定spring-boot的启动类

@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dq.easy.cloud.model.basic.controller.DqBaseController;
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderAbstractQuery;
-import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
+
+import com.dq.easy.cloud.module.basic.controller.DqBaseController;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.pay.module.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.module.payment.pojo.query.DqOrderAbstractQuery;
+import com.dq.easy.cloud.pay.module.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.logic.DqZfbPayLogic;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
 import com.dq.easy.cloud.pay.zfb.pojo.dto.DqZfbRefundOrderDTO;

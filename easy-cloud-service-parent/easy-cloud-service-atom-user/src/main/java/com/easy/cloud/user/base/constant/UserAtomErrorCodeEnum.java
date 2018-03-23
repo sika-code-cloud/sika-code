@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.constant;
 
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCodeInf;
+import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
 
 
 /**

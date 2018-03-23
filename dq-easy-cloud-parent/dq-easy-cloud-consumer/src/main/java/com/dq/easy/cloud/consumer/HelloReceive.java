@@ -3,7 +3,7 @@ package com.dq.easy.cloud.consumer;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName;
+import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName;
 
 @Component
 public class HelloReceive {

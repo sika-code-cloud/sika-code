@@ -1,6 +1,6 @@
 package com.easy.cloud.base.constant;
 
-import com.dq.easy.cloud.model.basic.constant.DqBaseServiceName;
+import com.dq.easy.cloud.module.basic.constant.DqBaseServiceName;
 
 /**
  * 

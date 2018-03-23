@@ -3,16 +3,16 @@ package com.dq.easy.cloud.pay.zfb.common.utils;
 import java.util.Map;
 import java.util.TimeZone;
 
-import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
-import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
-import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
-import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.module.common.date.utils.DqDateFormatUtils;
+import com.dq.easy.cloud.module.common.date.utils.DqDateUtils;
+import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
+import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
+import com.dq.easy.cloud.module.common.sign.utils.DqSignUtils;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.module.payment.constant.DqZfbPayConstant.DqZfbPayKey;
+import com.dq.easy.cloud.pay.module.payment.utils.DqPayUtils.DqOrderNoGenerator;
+import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
 
 public class DqZfbPayUtils {

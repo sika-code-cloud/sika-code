@@ -6,10 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dq.easy.cloud.DqEasyCloudModelApplication;
-import com.dq.easy.cloud.model.mq.amqp.base.dto.DqAmqpBaseDTO;
-import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
-import com.dq.easy.cloud.model.mq.amqp.handler.DqAmqpTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
+import com.dq.easy.cloud.module.mq.amqp.base.dto.DqAmqpBaseDTO;
+import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
+import com.dq.easy.cloud.module.mq.amqp.handler.DqAmqpTemplateHandler;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DqEasyCloudModelApplication.class) // 指定spring-boot的启动类

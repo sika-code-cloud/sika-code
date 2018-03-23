@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.wx.config.dto;
 
-import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageAbstract;
+import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageAbstract;
 
 /**
  * 
