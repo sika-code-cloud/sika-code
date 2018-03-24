@@ -5,7 +5,7 @@ import java.io.File;
 import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.file.constant.error.DqFileErrorCodeEnum;
-import com.dq.easy.cloud.module.common.file.pojo.dto.DqFileDescDTO;
+import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
 

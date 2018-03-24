@@ -1,11 +1,11 @@
-package com.dq.easy.cloud.module.common.file.pojo.dto;
+package com.dq.easy.cloud.module.common.file.pojo.desc;
 
 /**
  * 文件描述
  * @author daiqi
  * @date 2018年3月23日 下午11:37:33
  */
-public class DqFileDescDTO {
+public class DqFileDesc {
 	/** 文件目录完整路径 */
 	private String fileDirectoryFullPath;
 	/** 文件完整路径 */

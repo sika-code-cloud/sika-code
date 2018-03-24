@@ -16,8 +16,8 @@ import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.generator.code.constant.error.DqCodeGenerateErrorCodeEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqCodeGenerateBaseDTO;
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqFieldBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.utils.DqFreeMarkerTemplateUtils;
 import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
@@ -165,10 +165,10 @@ public abstract class DqCodeGenerateBaseBO {
 		
 		if (!closeImportFieldClazzs) {
 			for (Object fieldBaseDTO : dqCodeGenerateBaseDTO.getFieldDTOs()) {
-				if (fieldBaseDTO instanceof DqFieldBaseDTO) {
-					DqFieldBaseDTO fieldBase = (DqFieldBaseDTO) fieldBaseDTO;
-					if (DqStringUtils.isNotEmpty(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleName()))) {
-						dqCodeGenerateBaseDTO.getImportClazzs().add(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleName()));
+				if (fieldBaseDTO instanceof DqJavaContentDesc) {
+					DqJavaContentDesc fieldBase = (DqJavaContentDesc) fieldBaseDTO;
+					if (DqStringUtils.isNotEmpty(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleClassType()))) {
+						dqCodeGenerateBaseDTO.getImportClazzs().add(DqCodeGenerateUtils.getCompleteClassName(fieldBase.getSimpleClassType()));
 					}
 				}
 			}

@@ -12,8 +12,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqIgnoreField;
 import com.dq.easy.cloud.module.common.generator.code.constant.error.DqCodeGenerateErrorCodeEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.DqCodeGenerateBaseBO;
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqFieldBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.DqCodeGenerateDatabaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.DqFieldDatabaseAbstractDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.mysql.DqFieldMysqlDTO;
@@ -119,7 +119,7 @@ public class DqCodeGenerateDatabaseBO extends DqCodeGenerateBaseBO {
 
 	@Override
 	protected List<?> buildFieldDTOs() {
-		List<DqFieldBaseDTO> dqFieldBaseDTOs = new ArrayList<>();
+		List<DqJavaContentDesc> dqFieldBaseDTOs = new ArrayList<>();
 		ResultSet resultSet = getResultSet();
 		try {
 			while (resultSet.next()) {
@@ -134,7 +134,7 @@ public class DqCodeGenerateDatabaseBO extends DqCodeGenerateBaseBO {
 				dqFieldDTO.setTableColumnType(resultSet.getString("TYPE_NAME"));
 				// 字段在数据库的注释
 				dqFieldDTO.setComment(resultSet.getString("REMARKS"));
-				dqFieldDTO.setFieldName(DqCodeGenerateUtils.replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
+				dqFieldDTO.setName(DqCodeGenerateUtils.replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
 				dqFieldBaseDTOs.add(dqFieldDTO);
 			}
 		} catch (SQLException e) {

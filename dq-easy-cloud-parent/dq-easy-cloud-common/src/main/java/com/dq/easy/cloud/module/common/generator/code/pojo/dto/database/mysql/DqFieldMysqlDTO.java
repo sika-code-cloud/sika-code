@@ -27,21 +27,21 @@ public class DqFieldMysqlDTO extends DqFieldDatabaseAbstractDTO{
 		}
 		String tempColumnType = DqStringUtils.lowerCase(getTableColumnType());
 		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
-			super.setSimpleName("Integer");
+			super.setSimpleClassType("Integer");
 		} else if(tempColumnType.contains("float")) {
-			super.setSimpleName("Float");
+			super.setSimpleClassType("Float");
 		} else if(tempColumnType.contains("double")) {
-			super.setSimpleName("Double");
+			super.setSimpleClassType("Double");
 		} else if(tempColumnType.contains("bigint")) {
-			super.setSimpleName("Long");
+			super.setSimpleClassType("Long");
 		} else if(tempColumnType.contains("char") || tempColumnType.contains("text")) {
-			super.setSimpleName("String");
+			super.setSimpleClassType("String");
 		} else if(tempColumnType.contains("datetime") || tempColumnType.contains("timestamp")) {
-			super.setSimpleName("Date");
+			super.setSimpleClassType("Date");
 		} else if(tempColumnType.contains("decimal")) {
-			super.setSimpleName("BigDecimal");
+			super.setSimpleClassType("BigDecimal");
 		} else if(tempColumnType.contains("blob")) {
-			super.setSimpleName("Byte []");
+			super.setSimpleClassType("Byte []");
 		}
 	}
 

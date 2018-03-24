@@ -22,10 +22,10 @@ import com.dq.easy.cloud.module.common.generator.code.config.database.mysql.DqDa
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqSourceCodePathRelative;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqTemplateName;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.DqCodeGenerateBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.common.DqCodeGenerateCommonBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.database.DqCodeGenerateDatabaseBO;
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqFieldBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.common.DqCodeGenerateCommonDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.common.DqFieldCommonDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.DqCodeGenerateDatabaseDTO;
@@ -195,11 +195,11 @@ public class CodeGenerateTest {
 		dqCodeGenerateCommonDTO.setClassNameEndWith(DqClassNameEndWith.POJO_BO);
 		dqCodeGenerateCommonDTO.setTemplateName(DqTemplateName.POJO_BO);
 		
-		List<DqFieldBaseDTO> dqFieldBaseDTOs = new ArrayList<>();
-		DqFieldBaseDTO dqFieldBaseDTO = new DqFieldCommonDTO();
+		List<DqJavaContentDesc> dqFieldBaseDTOs = new ArrayList<>();
+		DqJavaContentDesc dqFieldBaseDTO = new DqFieldCommonDTO();
 		dqFieldBaseDTO.setComment("数据传输对象");
-		dqFieldBaseDTO.setFieldName(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
-		dqFieldBaseDTO.setSimpleName(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
+		dqFieldBaseDTO.setName(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
+		dqFieldBaseDTO.setSimpleClassType(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
 		dqFieldBaseDTOs.add(dqFieldBaseDTO);
 		dqCodeGenerateCommonDTO.setFieldDTOs(dqFieldBaseDTOs);
 		
