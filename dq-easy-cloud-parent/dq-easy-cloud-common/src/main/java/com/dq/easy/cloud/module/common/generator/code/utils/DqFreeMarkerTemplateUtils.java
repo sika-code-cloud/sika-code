@@ -36,16 +36,16 @@ public class DqFreeMarkerTemplateUtils {
 	 *     参数名称 : 示例值 : 说明 : 是否必须
 	 * </pre>
 	 *
-	 * @param dqCodeGenerateBaseDTO
+	 * @param templateBasePackagePath
 	 * @author daiqi
 	 * 创建时间    2018年3月22日 下午5:45:14
 	 */
-	public static void initConfigurationData(DqCodeGenerateBaseDTO dqCodeGenerateBaseDTO) {
+	public static void initConfigurationData(String templateBasePackagePath) {
 		if (INIT_CONFIGURATION_FLAG) {
 			return;
 		}
 		// 这里比较重要，用来指定加载模板所在的路径
-		CONFIGURATION.setTemplateLoader(new ClassTemplateLoader(DqFreeMarkerTemplateUtils.class, dqCodeGenerateBaseDTO.getCodeTemplateBasePackagePath()));
+		CONFIGURATION.setTemplateLoader(new ClassTemplateLoader(DqFreeMarkerTemplateUtils.class, templateBasePackagePath));
 		CONFIGURATION.setDefaultEncoding(DqCharset.UTF_8);
 		CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		CONFIGURATION.setCacheStorage(NullCacheStorage.INSTANCE);

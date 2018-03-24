@@ -212,7 +212,7 @@ public class DqCodeGenerateConstant {
 		 * @date 2018年3月24日 上午1:25:14
 		 */
 		public static enum DqModifierMappingEnum {
-			ABSTRACT(Modifier.ABSTRACT, "class"),
+			ABSTRACT(Modifier.ABSTRACT, "abstract"),
 			FINAL(Modifier.FINAL, "final"),
 			INTERFACE(Modifier.INTERFACE, "interface"),
 			NATIVE(Modifier.NATIVE, "native"),

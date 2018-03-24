@@ -2,10 +2,7 @@ package com.dq.easy.cloud.module.common.file.utils;
 
 import java.io.File;
 
-import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.file.constant.error.DqFileErrorCodeEnum;
-import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
 
@@ -36,7 +33,7 @@ public class DqFileUtils {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_DIRECTORY_FULL_PATH_CANT_EMPTY);
 		}
 		File directory = new File(directoryPath);
-		if (directory.isDirectory() && !directory.exists()) {
+		if (!directory.exists()) {
 			directory.mkdirs();
 		}
 		return directory;

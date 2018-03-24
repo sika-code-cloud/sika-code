@@ -8,11 +8,14 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBas
  * @date 2018年3月24日 上午1:48:58
  */
 public class DqClassAnnotationParamDesc extends DqJavaContentBaseDesc{
-	private String value;
-	public String getValue() {
+	
+	private Object value;
+
+	public Object getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+
+	public void setValue(Object value) {
 		this.value = value;
 	}
 	

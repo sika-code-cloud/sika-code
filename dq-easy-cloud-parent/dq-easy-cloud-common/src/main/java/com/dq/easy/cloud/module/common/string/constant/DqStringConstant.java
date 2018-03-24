@@ -13,6 +13,8 @@ public class DqStringConstant {
 	 * @date 2018年2月25日 下午8:44:33
 	 */
 	public static class DqSymbol {
+		/** 符号---空串--- " " */
+		public static final String EMPTY = " ";
 		/** 符号---单and符号--- & */
 		public static final String SINGLE_AND = "&";
 		/** 符号常量---英文冒号--- : */
@@ -29,5 +31,15 @@ public class DqStringConstant {
 	    public static final String UNDER_LINE = "_";
 	    /** 符号常量---英文句号--- . */
 	    public static final String STOP  = ".";
+	    /** 符号常量---英文等于号--- = */
+	    public static final String EQUAL  = "=";
+	    /** 符号常量---英文双引号--- " */
+	    public static final String DOUBLE_QUOTES  = "\"";
+	    /** 符号常量---英文左括号--- ( */
+	    public static final String LEFT_BRACKETS  = "(";
+	    /** 符号常量---英文右括号--- ) */
+	    public static final String RIGHT_BRACKETS  = ")";
+	    /** 符号常量---英文逗号--- , */
+	    public static final String COMMA  = ",";
 	}
 }

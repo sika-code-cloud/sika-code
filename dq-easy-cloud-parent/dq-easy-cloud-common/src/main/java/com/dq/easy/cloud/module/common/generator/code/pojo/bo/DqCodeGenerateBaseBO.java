@@ -110,7 +110,7 @@ public abstract class DqCodeGenerateBaseBO {
 			this.dqCodeGenerateBaseDTO.initImportClazzsDefault();
 		}
 		// 初始化模板数据
-		DqFreeMarkerTemplateUtils.initConfigurationData(dqCodeGenerateBaseDTO);
+		DqFreeMarkerTemplateUtils.initConfigurationData(dqCodeGenerateBaseDTO.getCodeTemplateBasePackagePath());
 		// 初始化子类数据
 		initCodeGenerateSubClassData();
 	}

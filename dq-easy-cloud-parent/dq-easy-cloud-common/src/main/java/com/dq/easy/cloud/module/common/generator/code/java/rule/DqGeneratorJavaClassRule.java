@@ -1,31 +1,61 @@
 package com.dq.easy.cloud.module.common.generator.code.java.rule;
 
+import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
+
 /**
  * 生成java类规则
+ * 
  * @author daiqi
  * @date 2018年3月24日 上午10:28:06
  */
-public class DqGeneratorJavaClassRule {
-	private boolean needGetMethod;
-	private boolean needSetMethod;
-	private boolean needBuildMethod;
-	public boolean isNeedGetMethod() {
-		return needGetMethod;
-	}
-	public void setNeedGetMethod(boolean needGetMethod) {
-		this.needGetMethod = needGetMethod;
-	}
-	public boolean isNeedSetMethod() {
-		return needSetMethod;
-	}
-	public void setNeedSetMethod(boolean needSetMethod) {
-		this.needSetMethod = needSetMethod;
-	}
-	public boolean isNeedBuildMethod() {
-		return needBuildMethod;
-	}
-	public void setNeedBuildMethod(boolean needBuildMethod) {
-		this.needBuildMethod = needBuildMethod;
-	}
+public class DqGeneratorJavaClassRule implements DqGenerateRule {
+	/** 生成Get方法 */
+	private boolean generateGetMethod;
+	/** 生成Set方法 */
+	private boolean generateSetMethod;
+	/** 生成Build方法 */
+	private boolean generateBuildMethod;
+
 	
+	public DqGeneratorJavaClassRule(boolean generateGetMethod, boolean generateSetMethod, boolean generateBuildMethod) {
+		this.generateGetMethod = generateGetMethod;
+		this.generateSetMethod = generateSetMethod;
+		this.generateBuildMethod = generateBuildMethod;
+	}
+
+	public boolean isGenerateGetMethod() {
+		return generateGetMethod;
+	}
+
+	public void setGenerateGetMethod(boolean generateGetMethod) {
+		this.generateGetMethod = generateGetMethod;
+	}
+
+	public boolean isGenerateSetMethod() {
+		return generateSetMethod;
+	}
+
+	public void setGenerateSetMethod(boolean generateSetMethod) {
+		this.generateSetMethod = generateSetMethod;
+	}
+
+	public boolean isGenerateBuildMethod() {
+		return generateBuildMethod;
+	}
+
+	public void setGenerateBuildMethod(boolean generateBuildMethod) {
+		this.generateBuildMethod = generateBuildMethod;
+	}
+	public DqGeneratorJavaClassRule buildGenerateGetMethod(boolean generateGetMethod) {
+		this.generateGetMethod = generateGetMethod;
+		return this;
+	}
+	public DqGeneratorJavaClassRule buildGenerateSetMethod(boolean generateSetMethod) {
+		this.generateSetMethod = generateSetMethod;
+		return this;
+	}
+	public DqGeneratorJavaClassRule buildGenerateBuildMethod(boolean generateBuildMethod) {
+		this.generateBuildMethod = generateBuildMethod;
+		return this;
+	}
 }

@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.module.common.file.pojo.bo;
 
 import java.io.File;
-
 import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.file.constant.error.DqFileErrorCodeEnum;
@@ -17,10 +16,10 @@ import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
  * @date 2018年3月23日 下午11:44:29
  */
 public class DqFileBO {
-	private DqFileDesc fileDescDTO;
+	private DqFileDesc fileDesc;
 
-	public DqFileBO(DqFileDesc fileDescDTO) {
-		this.fileDescDTO = fileDescDTO;
+	public DqFileBO(DqFileDesc fileDesc) {
+		this.fileDesc = fileDesc;
 	}
 
 	/**
@@ -40,9 +39,9 @@ public class DqFileBO {
 //		校验
 		verifyFileDescData();
 //		创建目录
-		DqFileUtils.mkdirs(fileDescDTO.getFileDirectoryFullPath());
+		DqFileUtils.mkdirs(fileDesc.getFileDirectoryFullPath());
 //		创建文件
-		return DqFileUtils.newFile(fileDescDTO.getFileFullPath());
+		return DqFileUtils.newFile(fileDesc.getFileFullPath());
 	}
 	
 	/**
@@ -56,7 +55,7 @@ public class DqFileBO {
 	 * author daiqi
 	 * 创建时间  2018年3月24日 上午12:20:45
 	 */
-	public DqFileBO initFileDescData() {
+	private DqFileBO initFileDescData() {
 		buildFileFullPath();
 		return this;
 	}
@@ -72,20 +71,20 @@ public class DqFileBO {
 	 * author daiqi
 	 * 创建时间  2018年3月24日 上午12:20:45
 	 */
-	public DqFileBO verifyFileDescData () {
-		if (DqBaseUtils.isNull(fileDescDTO)) {
+	private DqFileBO verifyFileDescData () {
+		if (DqBaseUtils.isNull(fileDesc)) {
 			throw new DqBaseBusinessException(DqBaseErrorCodeEnum.DTO_OBJ_CANT_NULL);
 		}
-		if (DqBaseUtils.isNull(fileDescDTO.getFileDirectoryFullPath())) {
+		if (DqBaseUtils.isNull(fileDesc.getFileDirectoryFullPath())) {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_DIRECTORY_FULL_PATH_CANT_EMPTY);
 		}
-		if (DqBaseUtils.isNull(fileDescDTO.getFileFullPath())) {
+		if (DqBaseUtils.isNull(fileDesc.getFileFullPath())) {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_FULL_PATH_CANT_EMPTY);
 		}
-		if (DqBaseUtils.isNull(fileDescDTO.getFileName())) {
+		if (DqBaseUtils.isNull(fileDesc.getFileName())) {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_NAME_CANT_EMPTY);
 		}
-		if (DqBaseUtils.isNull(fileDescDTO.getFileSuffix())) {
+		if (DqBaseUtils.isNull(fileDesc.getFileSuffix())) {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_SUFFIX_CANT_EMPTY);
 		}
 		return this;
@@ -102,12 +101,12 @@ public class DqFileBO {
 	 * author daiqi
 	 * 创建时间  2018年3月24日 上午12:29:31
 	 */
-	public DqFileBO buildFileFullPath() {
-		if (DqStringUtils.isEmpty(fileDescDTO.getFileFullPath())) {
+	private DqFileBO buildFileFullPath() {
+		if (DqStringUtils.isEmpty(fileDesc.getFileFullPath())) {
 			StringBuilder fileFullPathBuild = DqStringUtils.newStringBuilderDefault();
-			fileFullPathBuild.append(fileDescDTO.getFileDirectoryFullPath()).append(DqSymbol.BACK_SLASH);
-			fileFullPathBuild.append(fileDescDTO.getFileName()).append(DqSymbol.STOP).append(fileDescDTO.getFileSuffix());
-			fileDescDTO.setFileFullPath(fileFullPathBuild.toString());
+			fileFullPathBuild.append(fileDesc.getFileDirectoryFullPath()).append(DqSymbol.BACK_SLASH);
+			fileFullPathBuild.append(fileDesc.getFileName()).append(DqSymbol.STOP).append(fileDesc.getFileSuffix());
+			fileDesc.setFileFullPath(fileFullPathBuild.toString());
 		}
 		return this;
 	}
