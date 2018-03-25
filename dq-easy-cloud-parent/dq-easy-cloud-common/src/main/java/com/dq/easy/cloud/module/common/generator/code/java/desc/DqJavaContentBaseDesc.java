@@ -1,10 +1,5 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.sources.DqBaseDataSources;

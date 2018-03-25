@@ -7,6 +7,7 @@ import java.util.Set;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
@@ -21,11 +22,11 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	/** 继承的父类 */
 	private DqJavaContentBaseDesc extendsParentClass;
 	/** 实现的接口列表 */
-	private List<DqJavaContentBaseDesc> implementsInterfaces;
+	private List<DqJavaInterfaceContentDesc> implementsInterfaces;
 	/** 属性列表 */
-	private List<DqJavaContentDesc> fields;
+	private List<DqJavaFieldContentDesc> fields;
 	/** 方法列表 */
-	private List<DqJavaContentDesc> methods;
+	private List<DqJavaMethodContentDesc> methods;
 	/** 导入的类名列表 */
 	private Set<String> importClassNames = new HashSet<>();
 
@@ -60,27 +61,27 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		this.extendsParentClass = extendsParentClass;
 	}
 
-	public List<DqJavaContentBaseDesc> getImplementsInterfaces() {
+	public List<DqJavaInterfaceContentDesc> getImplementsInterfaces() {
 		return implementsInterfaces;
 	}
 
-	public void setImplementsInterfaces(List<DqJavaContentBaseDesc> implementsInterfaces) {
+	public void setImplementsInterfaces(List<DqJavaInterfaceContentDesc> implementsInterfaces) {
 		this.implementsInterfaces = implementsInterfaces;
 	}
 
-	public List<DqJavaContentDesc> getFields() {
+	public List<DqJavaFieldContentDesc> getFields() {
 		return fields;
 	}
 
-	public void setFields(List<DqJavaContentDesc> fields) {
+	public void setFields(List<DqJavaFieldContentDesc> fields) {
 		this.fields = fields;
 	}
 
-	public List<DqJavaContentDesc> getMethods() {
+	public List<DqJavaMethodContentDesc> getMethods() {
 		return methods;
 	}
 
-	public void setMethods(List<DqJavaContentDesc> methods) {
+	public void setMethods(List<DqJavaMethodContentDesc> methods) {
 		this.methods = methods;
 	}
 
@@ -111,8 +112,11 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 			}
 		}
 		if (DqCollectionsUtils.isNotEmpty(fields)) {
-			for (DqJavaContentBaseDesc field : fields) {
+			for (DqJavaFieldContentDesc field : fields) {
 				importClassNames.add(field.getFullClassType());
+				for (DqJavaAnnotationDesc fileAnnotationDesc : field.getAnnotations()) {
+					importClassNames.add(fileAnnotationDesc.getFullClassType());
+				}
 			}
 		}
 		if (DqCollectionsUtils.isNotEmpty(methods)) {

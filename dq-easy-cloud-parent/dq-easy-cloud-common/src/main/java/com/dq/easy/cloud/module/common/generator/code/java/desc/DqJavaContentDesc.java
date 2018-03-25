@@ -1,10 +1,9 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
 import java.util.List;
-import java.util.Set;
 
 import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqClassAnnotationDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 
 /**
  * java内容描述类
@@ -17,9 +16,9 @@ public class DqJavaContentDesc extends DqJavaContentBaseDesc {
 	/** 注释 */
 	private String comment;
 	/** 注解列表 */
-	private List<DqClassAnnotationDesc> annotations;
+	private List<DqJavaAnnotationDesc> annotations;
 	/** 修饰符列表 */
-	private List<DqModifierDesc> modifiers;
+	private List<DqJavaModifierDesc> modifiers;
 
 	public DqJavaContentDesc() {
 		super();
@@ -37,19 +36,19 @@ public class DqJavaContentDesc extends DqJavaContentBaseDesc {
 		this.comment = comment;
 	}
 
-	public List<DqClassAnnotationDesc> getAnnotations() {
+	public List<DqJavaAnnotationDesc> getAnnotations() {
 		return annotations;
 	}
 
-	public void setAnnotations(List<DqClassAnnotationDesc> annotations) {
+	public void setAnnotations(List<DqJavaAnnotationDesc> annotations) {
 		this.annotations = annotations;
 	}
 
-	public List<DqModifierDesc> getModifiers() {
+	public List<DqJavaModifierDesc> getModifiers() {
 		return modifiers;
 	}
 
-	public void setModifiers(List<DqModifierDesc> modifiers) {
+	public void setModifiers(List<DqJavaModifierDesc> modifiers) {
 		this.modifiers = modifiers;
 	}
 }

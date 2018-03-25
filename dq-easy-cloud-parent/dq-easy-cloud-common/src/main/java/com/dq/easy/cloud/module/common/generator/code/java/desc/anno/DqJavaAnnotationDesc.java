@@ -13,15 +13,15 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * @author daiqi
  * @date 2018年3月24日 上午1:48:58
  */
-public class DqClassAnnotationDesc extends DqJavaContentBaseDesc {
+public class DqJavaAnnotationDesc extends DqJavaContentBaseDesc {
 	/** 注解的参数列表 */
-	private List<DqClassAnnotationParamDesc> params;
+	private List<DqJavaAnnotationParamDesc> params;
 
-	public List<DqClassAnnotationParamDesc> getParams() {
+	public List<DqJavaAnnotationParamDesc> getParams() {
 		return params;
 	}
 
-	public void setParams(List<DqClassAnnotationParamDesc> params) {
+	public void setParams(List<DqJavaAnnotationParamDesc> params) {
 		this.params = params;
 	}
 
@@ -29,7 +29,7 @@ public class DqClassAnnotationDesc extends DqJavaContentBaseDesc {
 		if (DqCollectionsUtils.isNotEmpty(params)) {
 			StringBuilder paramsBuild = DqStringUtils.newStringBuilderDefault();
 			for (int i = 0 ; i < params.size(); ++i) {
-				DqClassAnnotationParamDesc param = params.get(i);
+				DqJavaAnnotationParamDesc param = params.get(i);
 				paramsBuild.append(param.getName());
 				paramsBuild.append(DqSymbol.EMPTY).append(DqSymbol.EQUAL).append(DqSymbol.EMPTY);
 				if (param.getValue() instanceof String) {

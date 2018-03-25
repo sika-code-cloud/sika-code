@@ -7,7 +7,7 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBas
  * @author daiqi
  * @date 2018年3月24日 上午1:48:58
  */
-public class DqClassAnnotationParamDesc extends DqJavaContentBaseDesc{
+public class DqJavaAnnotationParamDesc extends DqJavaContentBaseDesc{
 	
 	private Object value;
 

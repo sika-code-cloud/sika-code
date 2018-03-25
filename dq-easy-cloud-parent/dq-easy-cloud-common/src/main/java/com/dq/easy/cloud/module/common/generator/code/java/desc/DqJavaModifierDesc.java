@@ -2,13 +2,13 @@ package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
 
-public class DqModifierDesc {
+public class DqJavaModifierDesc {
 	private Integer code;
 	private String desc;
 	
-	public DqModifierDesc() {
+	public DqJavaModifierDesc() {
 	}
-	public DqModifierDesc(DqModifierMappingEnum modifierMappingEnum) {
+	public DqJavaModifierDesc(DqModifierMappingEnum modifierMappingEnum) {
 		this.code = modifierMappingEnum.getModifier();
 		this.desc = modifierMappingEnum.getModifierDesc();
 	}

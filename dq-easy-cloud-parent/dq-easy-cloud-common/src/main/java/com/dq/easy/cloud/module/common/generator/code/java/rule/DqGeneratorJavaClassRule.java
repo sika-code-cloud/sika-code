@@ -10,17 +10,29 @@ import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule
  */
 public class DqGeneratorJavaClassRule implements DqGenerateRule {
 	/** 生成Get方法 */
+	private boolean generateField;
+	/** 生成Get方法 */
 	private boolean generateGetMethod;
 	/** 生成Set方法 */
 	private boolean generateSetMethod;
 	/** 生成Build方法 */
 	private boolean generateBuildMethod;
 
-	
-	public DqGeneratorJavaClassRule(boolean generateGetMethod, boolean generateSetMethod, boolean generateBuildMethod) {
+	public DqGeneratorJavaClassRule(boolean generateField, boolean generateGetMethod, boolean generateSetMethod,
+			boolean generateBuildMethod) {
+		super();
+		this.generateField = generateField;
 		this.generateGetMethod = generateGetMethod;
 		this.generateSetMethod = generateSetMethod;
 		this.generateBuildMethod = generateBuildMethod;
+	}
+
+	public boolean isGenerateField() {
+		return generateField;
+	}
+
+	public void setGenerateField(boolean generateField) {
+		this.generateField = generateField;
 	}
 
 	public boolean isGenerateGetMethod() {
