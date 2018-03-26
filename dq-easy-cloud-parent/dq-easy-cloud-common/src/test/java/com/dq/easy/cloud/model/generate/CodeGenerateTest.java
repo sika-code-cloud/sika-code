@@ -16,18 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
+import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
 import com.dq.easy.cloud.module.common.generator.code.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.config.database.mysql.DqDataBaseMysqlConfig;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqSourceCodePathRelative;
 import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqTemplateName;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.DqCodeGenerateBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.common.DqCodeGenerateCommonBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.database.DqCodeGenerateDatabaseBO;
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqFieldBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.common.DqCodeGenerateCommonDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.common.DqFieldCommonDTO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.DqCodeGenerateDatabaseDTO;
+import com.dq.easy.cloud.module.common.generator.code.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 
 /**
@@ -42,41 +44,43 @@ import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol
 public class CodeGenerateTest {
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
 	private String packageStartWith = "com.dq.easy.cloud";
-	private String needSubstrClassNameStartWith = "payment";
+	private String needSubstrClassNameStartWith = "tlcyg";
 	@Before
 	public void initData() {
 		databaseAbstactConfig = new DqDataBaseMysqlConfig();
-		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://192.168.10.205");
+		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com");
 		databaseAbstactConfig.buildDatabasePort("3306");
-		databaseAbstactConfig.buildDatabaseName("lxzl_payment_gateway");
-		databaseAbstactConfig.buildDatabasePassword("lxzldev");
-		databaseAbstactConfig.buildDatabaseUserName("lxzldev");
+		databaseAbstactConfig.buildDatabaseName("sea_share_db");
+		databaseAbstactConfig.buildDatabaseUserName("seashare");
+		databaseAbstactConfig.buildDatabasePassword("Seashare123");
 	}
+	
+	private String moduleName = "goods";
+	private String tableName = "tl_cyg_goods_info";
+	private String fileComment = "商品";
 //	测试生成模块
 	@Test
 	public void testGenerateModule() {
-		testGenerateDefaultModule("payorder", "payment_pay_order", "支付单表");
-	}
-	public void testGenerateDefaultModule(String moduleName, String tableName , String fileComment) {
 		generateDO(moduleName, tableName, fileComment);
 		generateDTO(moduleName, tableName, fileComment);
-		testGenerateBO();
+		generateBO(moduleName, tableName, fileComment);
+		generateQuery(moduleName, tableName, fileComment);
 	}
 	@Test
 	public void testGenerateoDO() {
-		generateDO("payorder", "payment_pay_order", "支付单表");
+		generateDO(moduleName, tableName, fileComment);
 	}
 	@Test
 	public void testGenerateDTO() {
-		generateDTO("payorder", "payment_pay_order", "支付单表");
+		generateDTO(moduleName, tableName, fileComment);
 	}
 	@Test
 	public void testGenerateBO() {
-		generateBO("payorder", "PayOrder", "支付单表");
+		generateBO(moduleName, tableName, fileComment);
 	}
 	@Test
 	public void testGenerateQuery() {
-		
+		generateQuery(moduleName, tableName, fileComment);
 	}
 	@Test
 	public void testGenerateDAOInf() {
@@ -183,17 +187,19 @@ public class CodeGenerateTest {
 	 * @author daiqi
 	 * 创建时间    2018年3月23日 下午4:06:13
 	 */
-	public void generateBO(String moduleName, String classNameBody , String fileComment) {
-		DqCodeGenerateCommonDTO dqCodeGenerateCommonDTO = getDqCodeGenerateCommonDTO(moduleName, classNameBody, fileComment); 
+	public void generateBO(String moduleName, String tableName , String fileComment) {
+		String classNameBody = DqCodeGenerateUtils.replaceUnderLineAndUpperCase(tableName);
+		DqCodeGenerateCommonDTO dqCodeGenerateCommonDTO = getDqCodeGenerateCommonDTO(moduleName, classNameBody, fileComment);
+		dqCodeGenerateCommonDTO.initClassNameBody();
 		dqCodeGenerateCommonDTO.setSubModuleRelativePackageName("pojo.bo");
 		dqCodeGenerateCommonDTO.setClassNameEndWith(DqClassNameEndWith.POJO_BO);
 		dqCodeGenerateCommonDTO.setTemplateName(DqTemplateName.POJO_BO);
 		
-		List<DqFieldBaseDTO> dqFieldBaseDTOs = new ArrayList<>();
-		DqFieldBaseDTO dqFieldBaseDTO = new DqFieldCommonDTO();
-		dqFieldBaseDTO.setFieldComment("数据传输对象");
-		dqFieldBaseDTO.setFieldName(classNameBody + DqClassNameEndWith.POJO_DTO);
-		dqFieldBaseDTO.setFieldType(classNameBody + DqClassNameEndWith.POJO_DTO);
+		List<DqJavaContentDesc> dqFieldBaseDTOs = new ArrayList<>();
+		DqJavaContentDesc dqFieldBaseDTO = new DqFieldCommonDTO();
+		dqFieldBaseDTO.setComment("数据传输对象");
+		dqFieldBaseDTO.setName(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
+		dqFieldBaseDTO.setSimpleClassType(dqCodeGenerateCommonDTO.getClassNameBody() + DqClassNameEndWith.POJO_DTO);
 		dqFieldBaseDTOs.add(dqFieldBaseDTO);
 		dqCodeGenerateCommonDTO.setFieldDTOs(dqFieldBaseDTOs);
 		
@@ -211,6 +217,38 @@ public class CodeGenerateTest {
 		dqCodeGenerateBaseBO.getDqCodeGenerateBaseDTO().setImportClazzs(importClazzs);
 		doGenerateFileByTemplate(dqCodeGenerateBaseBO);
 	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 生成Query
+	 * </p>
+	 *
+	 * @param moduleName : String : 模块名称
+	 * @param classNameBody : String : 类名主体
+	 * @param fileComment : String : 文件注释
+	 * @author daiqi
+	 * 创建时间    2018年3月23日 下午4:06:13
+	 */
+	public void generateQuery(String moduleName, String tableName , String fileComment) {
+		String classNameBody = DqCodeGenerateUtils.replaceUnderLineAndUpperCase(tableName);
+		DqCodeGenerateCommonDTO dqCodeGenerateCommonDTO = getDqCodeGenerateCommonDTO(moduleName, classNameBody, fileComment);
+		dqCodeGenerateCommonDTO.initClassNameBody();
+		dqCodeGenerateCommonDTO.setSubModuleRelativePackageName("pojo.query");
+		dqCodeGenerateCommonDTO.setClassNameEndWith(DqClassNameEndWith.POJO_QUERY);
+		dqCodeGenerateCommonDTO.setTemplateName(DqTemplateName.POJO_QUERY);
+		
+		DqCodeGenerateBaseBO dqCodeGenerateBaseBO = new DqCodeGenerateCommonBO(dqCodeGenerateCommonDTO);
+		dqCodeGenerateBaseBO.initCodeGenerateData();
+		
+		dqCodeGenerateBaseBO.getDqCodeGenerateBaseDTO().setExtendsParentClass(DqBaseQuery.class.getSimpleName());
+		
+		Set<String> importClazzs = dqCodeGenerateBaseBO.getDqCodeGenerateBaseDTO().getImportClazzs();
+		importClazzs.add(DqBaseQuery.class.getName());
+		dqCodeGenerateBaseBO.getDqCodeGenerateBaseDTO().setImportClazzs(importClazzs);
+		doGenerateFileByTemplate(dqCodeGenerateBaseBO);
+	}
+	
 	public DqCodeGenerateDatabaseDTO getDqCodeGenerateDatabase(String moduleName, String tableName , String fileComment) {
 		DqCodeGenerateDatabaseDTO dqCodeGenerateDatabaseDTO = new DqCodeGenerateDatabaseDTO(databaseAbstactConfig);
 		dqCodeGenerateDatabaseDTO.setModelBasePackageName(packageStartWith + DqSymbol.STOP + moduleName);
@@ -225,10 +263,9 @@ public class CodeGenerateTest {
 	public DqCodeGenerateCommonDTO getDqCodeGenerateCommonDTO(String moduleName, String classNameBody , String fileComment) {
 		DqCodeGenerateCommonDTO dqCodeGenerateCommonDTO = new DqCodeGenerateCommonDTO();
 		dqCodeGenerateCommonDTO.setModelBasePackageName(packageStartWith + DqSymbol.STOP + moduleName);
+		dqCodeGenerateCommonDTO.setNeedSubstrClassNameStartWith(needSubstrClassNameStartWith);
 		dqCodeGenerateCommonDTO.setFileComment(fileComment);
 		dqCodeGenerateCommonDTO.setClassNameBody(classNameBody);
-		
-		dqCodeGenerateCommonDTO.setNeedSubstrClassNameStartWith(needSubstrClassNameStartWith);
 		dqCodeGenerateCommonDTO.setFileSuffix(DqFileSuffix.JAVA);
 		dqCodeGenerateCommonDTO.setSourceFilePathRelative(DqSourceCodePathRelative.JAVA);
 		return dqCodeGenerateCommonDTO;

@@ -1,13 +1,13 @@
 package com.dq.easy.cloud.module.common.generator.code.pojo.dto.database;
 
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqFieldBaseDTO;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 
 /**
  * 属性数据传输对象---根据数据库生成
  * @author daiqi
  * @date 2018年3月23日 上午12:21:27
  */
-public abstract class DqFieldDatabaseAbstractDTO extends DqFieldBaseDTO{
+public abstract class DqFieldDatabaseAbstractDTO extends DqJavaContentDesc{
 	/** 表的列名 */
 	private String tableColumnName;
 	/** 表的列类型 */

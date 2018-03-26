@@ -2,7 +2,12 @@ package com.dq.easy.cloud.module.common.generator.code.pojo.dto;
 
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
-public class DqColumnClassDTO {
+/**
+ * java属性文件类容基础描述类
+ * @author daiqi
+ * @date 2018年3月24日 上午9:23:22
+ */
+public class DqJavaColumnFileContentDesc {
 
 	/** 数据库字段名称 **/
 	private String columnName;

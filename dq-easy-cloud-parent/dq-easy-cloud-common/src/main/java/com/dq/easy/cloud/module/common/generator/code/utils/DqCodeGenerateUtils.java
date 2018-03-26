@@ -24,7 +24,7 @@ import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateCon
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.DqCodeGenerateBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.bo.database.DqCodeGenerateDatabaseBO;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqCodeGenerateBaseDTO;
-import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqColumnClassDTO;
+import com.dq.easy.cloud.module.common.generator.code.pojo.dto.DqJavaColumnFileContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.pojo.dto.database.DqCodeGenerateDatabaseDTO;
 import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
@@ -114,14 +114,14 @@ public class DqCodeGenerateUtils {
 		final String path = diskPath + modelPath + changeTableName + suffix;
 		final String templateName = "POJO_DO.ftl";
 		File mapperFile = new File(path);
-		List<DqColumnClassDTO> columnClassList = new ArrayList<>();
-		DqColumnClassDTO columnClass = null;
+		List<DqJavaColumnFileContentDesc> columnClassList = new ArrayList<>();
+		DqJavaColumnFileContentDesc columnClass = null;
 		while (resultSet.next()) {
 			// id字段略过
 			if (DqIgnoreField.isIgnoreField(resultSet.getString("COLUMN_NAME"))) {
 				continue;
 			}
-			columnClass = new DqColumnClassDTO();
+			columnClass = new DqJavaColumnFileContentDesc();
 			// 获取字段名称
 			columnClass.setColumnName(resultSet.getString("COLUMN_NAME"));
 			// 获取字段类型

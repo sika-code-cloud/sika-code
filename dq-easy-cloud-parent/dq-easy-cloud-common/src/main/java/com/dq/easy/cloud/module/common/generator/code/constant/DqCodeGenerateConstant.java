@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.module.common.generator.code.constant;
 
+import java.lang.reflect.Modifier;
+
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -93,7 +95,7 @@ public class DqCodeGenerateConstant {
 		public static final String POJO_DO = "POJO_DO.ftl";
 		public static final String POJO_DTO = "POJO_DTO.ftl";
 		public static final String POJO_BO = "POJO_BO.ftl";
-		public static final String POJO_QUERY = "POJO_QEURY.ftl";
+		public static final String POJO_QUERY = "POJO_QUERY.ftl";
 		public static final String DAO_INF = "DAO_INF.ftl";
 		public static final String DAO_IMPL = "DAO_IMPL.ftl";
 		public static final String SERVICE_INF = "SERVICE_INF.ftl";
@@ -108,7 +110,7 @@ public class DqCodeGenerateConstant {
 		public static final String PROXY = "PROXY.ftl";
 		public static final String UTIL = "UTIL.ftl";
 		public static final String COMMON = "COMMON.ftl";
-		public static final String ERROR_CODE = "ERROR_CODE.ftl";
+		public static final String ERROR_CODE = "																																																																									QQQQQQQQQQQQQQQQQQQQ				QQQ																																																																																																																																																																																										.ftl";
 	}
 	
 	/**
@@ -202,6 +204,43 @@ public class DqCodeGenerateConstant {
 //			移除下划线的小写字符串
 			String rmOnderLineLowerCaseStr = DqStringUtils.lowerCase(DqStringUtils.replace(fieldName, DqSymbol.UNDER_LINE, DqStringUtils.EMPTY));
 			return DqBaseUtils.isExistConstantValue(DqIgnoreField.class, rmOnderLineLowerCaseStr);
+		}
+		
+		/**
+		 * 修饰符映射美剧类
+		 * @author daiqi
+		 * @date 2018年3月24日 上午1:25:14
+		 */
+		public static enum DqModifierMappingEnum {
+			ABSTRACT(Modifier.ABSTRACT, "abstract"),
+			FINAL(Modifier.FINAL, "final"),
+			INTERFACE(Modifier.INTERFACE, "interface"),
+			NATIVE(Modifier.NATIVE, "native"),
+			PRIVATE(Modifier.PRIVATE, "private"),
+			PROTECTED(Modifier.PROTECTED, "protected"),
+			PUBLIC(Modifier.PUBLIC, "public"),
+			STATIC(Modifier.STATIC, "static"),
+			STRICT(Modifier.STRICT, "strict"),
+			SYNCHRONIZED(Modifier.SYNCHRONIZED, "synchronized"),
+			TRANSIENT(Modifier.TRANSIENT, "transient"),
+			VOLATILE(Modifier.VOLATILE, "volatile"),
+			ENUM(0x00004000, "enum"),
+			CLASS(0x00004020, "class");
+			;
+			
+			private int modifier;
+			private String modifierDesc;
+			private DqModifierMappingEnum(int modifier, String modifierDesc){
+				this.modifier = modifier;
+				this.modifierDesc = modifierDesc;
+			}
+			public int getModifier() {
+				return modifier;
+			}
+			public String getModifierDesc() {
+				return modifierDesc;
+			}
+			
 		}
 	}
 }

@@ -104,7 +104,7 @@ public class DqCodeGenerateBaseDTO {
 		if (DqStringUtils.isNotEmpty(needSubstrClassNameStartWith)) {
 			if (DqStringUtils.startsWithIgnoreCase(classNameBody, needSubstrClassNameStartWith)) {
 				int subStartIndex = needSubstrClassNameStartWith.length();
-				setClassNameBody(DqStringUtils.substring(classNameBody, subStartIndex));
+				this.classNameBody = DqStringUtils.substring(classNameBody, subStartIndex);
 			}
 		}
 	}

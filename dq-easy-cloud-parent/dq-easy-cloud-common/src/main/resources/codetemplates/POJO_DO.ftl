@@ -1,5 +1,6 @@
 package ${packageNameFull};
 <#if importClazzs?exists>
+
     <#list importClazzs as importClazz>
     	<#if importClazz?exists>
 import ${importClazz};
@@ -13,13 +14,17 @@ import ${importClazz};
  * @date ${createDate}
  */
 @Entity
-@Table(name="${tableNameLower}")
+@Table(name = "${tableNameLower}")
 public class ${classNameFull} <#if extendsParentClass?exists>extends ${extendsParentClass}</#if> {
-
 <#if fieldDTOs?exists>
     <#list fieldDTOs as model>
     /** ${model.fieldComment} */
-    @Column(name = "${model.tableColumnName}",columnDefinition = "${model.tableColumnType}")
+    	<#if model.fieldAntations?exists>
+	    	<#list model.fieldAntations as fieldAntation>
+	${fieldAntation}
+	    	</#list>
+    	</#if>
+    @Column(name = "${model.tableColumnName}", columnDefinition = "${model.tableColumnType}")
     private ${model.fieldType} ${model.fieldName?uncap_first};
     </#list>
 </#if>
@@ -36,4 +41,5 @@ public class ${classNameFull} <#if extendsParentClass?exists>extends ${extendsPa
     
 	</#list>
 </#if>
+
 }
