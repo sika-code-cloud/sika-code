@@ -9,10 +9,10 @@ import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
 import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.module.common.sign.utils.DqSignUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
-import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.module.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.module.payment.utils.DqPayUtils.DqOrderNoGenerator;
-import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbPayKey;
+import com.dq.easy.cloud.pay.common.payment.utils.DqPayUtils.DqOrderNoGenerator;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
 
 public class DqZfbPayUtils {

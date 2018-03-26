@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.zfb.config.dto;
 
-import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageAbstract;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageAbstract;
 
 /**
  * 

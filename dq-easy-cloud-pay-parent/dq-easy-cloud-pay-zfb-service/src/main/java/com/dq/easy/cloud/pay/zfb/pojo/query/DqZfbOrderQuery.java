@@ -3,10 +3,10 @@ package com.dq.easy.cloud.pay.zfb.pojo.query;
 import java.util.TimeZone;
 
 import com.dq.easy.cloud.module.common.date.utils.DqDateFormatUtils;
-import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.module.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.module.payment.pojo.query.DqOrderAbstractQuery;
-import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbPayKey;
+import com.dq.easy.cloud.pay.common.payment.pojo.query.DqOrderAbstractQuery;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbSignUtils;
 
 /**

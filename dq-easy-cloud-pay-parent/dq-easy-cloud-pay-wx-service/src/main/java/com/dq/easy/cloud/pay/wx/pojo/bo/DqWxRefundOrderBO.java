@@ -1,7 +1,7 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
-import com.dq.easy.cloud.pay.module.payment.pojo.bo.DqRefundOrderBO;
-import com.dq.easy.cloud.pay.module.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.common.payment.pojo.bo.DqRefundOrderBO;
+import com.dq.easy.cloud.pay.common.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.wx.common.utils.DqWxPayUtils.DqWxOrderNoGenerator;
 
 /**

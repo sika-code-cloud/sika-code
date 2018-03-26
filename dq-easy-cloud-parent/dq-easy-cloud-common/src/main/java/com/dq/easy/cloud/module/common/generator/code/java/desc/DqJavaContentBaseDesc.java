@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
-import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
-import com.dq.easy.cloud.module.common.generator.code.sources.DqBaseDataSources;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
+import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 
 /**
  * java文件类容基础描述类
@@ -60,9 +60,9 @@ public class DqJavaContentBaseDesc extends DqFileContentBaseDesc {
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
-	
+
 	@Override
-	public DqFileContentBaseDesc buildFileContentDescByDatabaseSources(DqBaseDataSources dqBaseDataSources) {
+	public DqFileContentBaseDesc buildDescByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
 		return new DqJavaContentBaseDesc();
 	}
 	

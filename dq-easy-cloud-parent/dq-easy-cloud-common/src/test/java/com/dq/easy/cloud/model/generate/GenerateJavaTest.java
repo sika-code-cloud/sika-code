@@ -2,15 +2,11 @@ package com.dq.easy.cloud.model.generate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.imageio.stream.ImageInputStream;
 import javax.persistence.Column;
 
-import org.hibernate.sql.ordering.antlr.ColumnMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.stereotype.Service;
@@ -18,23 +14,22 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
-import com.dq.easy.cloud.module.common.generator.code.common.bo.DqGeneratorBO;
-import com.dq.easy.cloud.module.common.generator.code.common.desc.DqTemplateDesc;
-import com.dq.easy.cloud.module.common.generator.code.config.DqCodeGenerateConfig;
-import com.dq.easy.cloud.module.common.generator.code.config.database.DqDatabaseAbstactConfig;
-import com.dq.easy.cloud.module.common.generator.code.config.database.mysql.DqDataBaseMysqlConfig;
-import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqCodeProject;
-import com.dq.easy.cloud.module.common.generator.code.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
+import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
+import com.dq.easy.cloud.module.common.generator.code.base.config.database.mysql.DqDataBaseMysqlConfig;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqCodeProject;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGeneratorBO;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
+import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaInterfaceContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGeneratorJavaClassRule;
+import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaClassRule;
 
 public class GenerateJavaTest {
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
@@ -62,7 +57,7 @@ public class GenerateJavaTest {
 		fileDesc.setFileName("UserDO");
 		fileDesc.setFileSuffix("java");
 		
-		DqGeneratorJavaClassRule generateRule = new DqGeneratorJavaClassRule(true, true, true, true);
+		DqGenerateJavaClassRule generateRule = new DqGenerateJavaClassRule(true, true, true, true);
 		DqJavaClassContentDesc javaClassContentDesc = new DqJavaClassContentDesc(generateRule);
 //		设置包名		
 		javaClassContentDesc.setPackageName("com.dq.easy.user.entity");
@@ -103,23 +98,25 @@ public class GenerateJavaTest {
 		
 //		设置类名称
 		javaClassContentDesc.setName("UserDO");
+		javaClassContentDesc.setSimpleClassType("UserDO");
 //		设置继承父类---begin
 		DqJavaClassContentDesc extendsParentClass = new DqJavaClassContentDesc();
 		extendsParentClass.setName("DqBaseDO");
 		extendsParentClass.setSimpleClassType(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseBO.class.getName());
+		javaClassContentDesc.setExtendsParentClass(extendsParentClass);
 //		设置继承父类---end
 		
 //		设置实现的接口--begin
-		List<DqJavaInterfaceContentDesc> implementsInterfaces = new ArrayList<>();
+		List<DqJavaImplInterfaceContentDesc> implementsInterfaces = new ArrayList<>();
 		
-		DqJavaInterfaceContentDesc implementsClassName1 = new DqJavaInterfaceContentDesc();
+		DqJavaImplInterfaceContentDesc implementsClassName1 = new DqJavaImplInterfaceContentDesc();
 		implementsClassName1.setName(Serializable.class.getSimpleName());
 		implementsClassName1.setSimpleClassType(Serializable.class.getSimpleName());
 		implementsClassName1.setFullClassType(Serializable.class.getName());
 		implementsInterfaces.add(implementsClassName1);
 
-		DqJavaInterfaceContentDesc implementsClassName3 = new DqJavaInterfaceContentDesc();
+		DqJavaImplInterfaceContentDesc implementsClassName3 = new DqJavaImplInterfaceContentDesc();
 		implementsClassName3.setName(ImageInputStream.class.getSimpleName());
 		implementsClassName3.setSimpleClassType(ImageInputStream.class.getSimpleName());
 		implementsClassName3.setFullClassType(ImageInputStream.class.getName());
@@ -200,6 +197,8 @@ public class GenerateJavaTest {
 		methodContentDesc1.setFullClassType(field1.getFullClassType());
 		methodContentDesc1.setName("name");
 		methodContentDesc1.setType(1);
+		methodContentDesc1.setReturnSimpleClassType(field1.getSimpleClassType());
+		methodContentDesc1.setReturnFullClassType(field1.getFullClassType());
 //		根据属性生成get方法---end
 		
 //		根据属性生成set方法---begin
@@ -207,13 +206,30 @@ public class GenerateJavaTest {
 		methodContentDesc2.setComment("获取名称");
 		List<DqJavaModifierDesc> methodModifierDescs2 = new ArrayList<>();
 		methodModifierDescs2.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
-		methodContentDesc2.setModifiers(methodModifierDescs);
+		methodContentDesc2.setModifiers(methodModifierDescs2);
 		
 		methodContentDesc2.setSimpleClassType(field1.getSimpleClassType());
 		methodContentDesc2.setFullClassType(field1.getFullClassType());
 		methodContentDesc2.setName("name");
 		methodContentDesc2.setType(2);
+		methodContentDesc2.setReturnSimpleClassType(void.class.getSimpleName());
+		methodContentDesc2.setReturnFullClassType(void.class.getName());
 //		根据属性生成set方法---end
+		
+//		根据属性生成build方法---begin
+		DqJavaMethodContentDesc methodContentDesc3 = new DqJavaMethodContentDesc();
+		methodContentDesc3.setComment("构建名称");
+		List<DqJavaModifierDesc> methodModifierDescs31 = new ArrayList<>();
+		methodModifierDescs31.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
+		methodContentDesc3.setModifiers(methodModifierDescs31);
+		
+		methodContentDesc3.setSimpleClassType(field1.getSimpleClassType());
+		methodContentDesc3.setFullClassType(field1.getFullClassType());
+		methodContentDesc3.setName("name");
+		methodContentDesc3.setType(3);
+		methodContentDesc3.setReturnSimpleClassType(javaClassContentDesc.getSimpleClassType());
+		methodContentDesc3.setReturnFullClassType(javaClassContentDesc.getFullClassType());
+//		根据属性生成build方法---end
 		fields.add(field1);
 		
 		javaClassContentDesc.setFields(fields);
@@ -223,17 +239,22 @@ public class GenerateJavaTest {
 		List<DqJavaMethodContentDesc> javaMethodContentDescs = new ArrayList<>();
 		javaMethodContentDescs.add(methodContentDesc1);
 		javaMethodContentDescs.add(methodContentDesc2);
+		javaMethodContentDescs.add(methodContentDesc3);
 		javaClassContentDesc.setMethods(javaMethodContentDescs);
 //		设置方法---end
-		javaClassContentDesc.setExtendsParentClass(extendsParentClass);
-		DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "test.ftl");
 		
+		DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "test.ftl");
 //		生成文件
 		try {
-			javaClassContentDesc.addImportClassName();
+			javaClassContentDesc.addImportFullClassType();
 			new DqGeneratorBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void generateJavaByDataBase() {
+		DqCodeGenerateUtils.generateDO(databaseAbstactConfig, tableName);
+	}
+	
 }

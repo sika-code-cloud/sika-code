@@ -97,9 +97,9 @@ public class DqBaseConstant {
 	/** 文件后缀 */
 	public static class DqFileSuffix {
 		/** 源代码后缀--- .java */
-		public static final String JAVA = ".java";	
+		public static final String JAVA = "java";	
 		/** mybaties的mapper文件后缀--- .xml */
-		public static final String XML = ".xml";
+		public static final String XML = "xml";
 		
 		public static boolean isJava(String fileSuffix) {
 			return DqStringUtils.equalsIgnoreCase(fileSuffix, JAVA);

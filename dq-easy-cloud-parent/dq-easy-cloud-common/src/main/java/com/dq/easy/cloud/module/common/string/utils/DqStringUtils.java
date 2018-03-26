@@ -20,7 +20,7 @@ public class DqStringUtils {
 	/**
      * The empty String <code>""</code>.
      */
-    public static final String EMPTY = "";
+    public static final String EMPTY = DqSymbol.EMPTY;
     /** 分割符---英文冒号---:*/
     public static final String SPLIT_COLON = DqSymbol.SPLIT_COLON;
     /** 初始化相关String容器的容量--512 */
@@ -223,7 +223,7 @@ public class DqStringUtils {
      * references are considered to be equal. The comparison is case sensitive.</p>
      *
      * <pre>
-     * StringUtils.equals(null, null)   = true
+     * StringUtils.equals(null, null)   = false
      * StringUtils.equals(null, "abc")  = false
      * StringUtils.equals("abc", null)  = false
      * StringUtils.equals("abc", "abc") = true
@@ -239,6 +239,9 @@ public class DqStringUtils {
 	 * @date 2017年12月5日 下午8:08:37
      */
 	public static boolean equals(String str1, String str2){
+		if (str1 == null || str2 == null) {
+			return false;
+		}
 		return StringUtils.equals(str1, str2);
 	}
 	
@@ -948,5 +951,37 @@ public class DqStringUtils {
      */
 	public static String upperCase(String str){
 		return StringUtils.upperCase(str);
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 替换下划线并且将下划线后一个字母大写
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param str
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午11:01:53
+	 */
+	public static String replaceUnderLineAndUpperCase(String str) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(str);
+		int count = sb.indexOf("_");
+		while (count != 0) {
+			int num = sb.indexOf("_", count);
+			count = num + 1;
+			if (num != -1) {
+				char ss = sb.charAt(count);
+				char ia = (char) (ss - 32);
+				sb.replace(count, count + 1, ia + "");
+			}
+		}
+		return sb.toString().replaceAll("_", "");
 	}
 }

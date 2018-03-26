@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.pay.wx.pojo.query;
 
-import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.module.payment.pojo.query.DqOrderAbstractQuery;
-import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.common.payment.pojo.query.DqOrderAbstractQuery;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
 
 public class DqWxOrderQuery extends DqOrderAbstractQuery{
 

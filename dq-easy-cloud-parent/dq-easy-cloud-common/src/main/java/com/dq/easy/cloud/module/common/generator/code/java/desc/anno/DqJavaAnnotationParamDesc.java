@@ -11,6 +11,15 @@ public class DqJavaAnnotationParamDesc extends DqJavaContentBaseDesc{
 	
 	private Object value;
 
+
+	public DqJavaAnnotationParamDesc() {
+	}
+
+	public DqJavaAnnotationParamDesc(String name, Object value) {
+		super.setName(name);
+		this.value = value;
+	}
+
 	public Object getValue() {
 		return value;
 	}

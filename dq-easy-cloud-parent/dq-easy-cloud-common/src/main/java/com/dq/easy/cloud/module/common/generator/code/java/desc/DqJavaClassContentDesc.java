@@ -1,15 +1,29 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
+
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
-import com.dq.easy.cloud.module.common.generator.code.common.rule.DqGenerateRule;
+import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqMethodTypeEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.error.DqCodeGenerateErrorCodeEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
+import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
 
 /**
  * java类的内容描述类
@@ -18,17 +32,18 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * @date 2018年3月24日 上午9:45:43
  */
 public class DqJavaClassContentDesc extends DqJavaContentDesc {
-
+	/** 作者 */
+	private String author;
 	/** 继承的父类 */
 	private DqJavaContentBaseDesc extendsParentClass;
 	/** 实现的接口列表 */
-	private List<DqJavaInterfaceContentDesc> implementsInterfaces;
+	private List<DqJavaImplInterfaceContentDesc> implementsInterfaces;
 	/** 属性列表 */
 	private List<DqJavaFieldContentDesc> fields;
 	/** 方法列表 */
 	private List<DqJavaMethodContentDesc> methods;
-	/** 导入的类名列表 */
-	private Set<String> importClassNames = new HashSet<>();
+	/** 导入的完整的类类型 */
+	private Set<String> importFullClassTypes = new HashSet<>();
 
 	public DqJavaClassContentDesc() {
 		super();
@@ -53,6 +68,294 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		return implementsInterfaceBuild.toString();
 	}
 
+	/**
+	 * 
+	 * <p>
+	 * 遍历类中所有需要导入的完整的class类型
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 下午2:05:45
+	 */
+	public void addImportFullClassType() {
+		
+//		新增自身注解需要导入的完整类类型
+		if (DqCollectionsUtils.isNotEmpty(getAnnotations())) {
+			for (DqJavaContentBaseDesc annotation : getAnnotations()) {
+				doAddImportFullClassTypes(annotation.getFullClassType());
+			}
+		}
+//		新增继承的类需要导入的完整类类型
+		if (DqBaseUtils.isNotNull(extendsParentClass)
+				&& DqStringUtils.isNotEmpty(extendsParentClass.getFullClassType())) {
+			doAddImportFullClassTypes(extendsParentClass.getFullClassType());
+		}
+//		新增实现的接口需要导入的完整类类型
+		if (DqCollectionsUtils.isNotEmpty(implementsInterfaces)) {
+			for (DqJavaContentBaseDesc implementsInterface : implementsInterfaces) {
+				doAddImportFullClassTypes(implementsInterface.getFullClassType());
+			}
+		}
+//		新增属性需要导入的完整类类型
+		if (DqCollectionsUtils.isNotEmpty(fields)) {
+			for (DqJavaFieldContentDesc field : fields) {
+				doAddImportFullClassTypes(field.getFullClassType());
+				if (DqCollectionsUtils.isEmpty(field.getAnnotations())) {
+					continue;
+				}
+				for (DqJavaAnnotationDesc fileAnnotationDesc : field.getAnnotations()) {
+					doAddImportFullClassTypes(fileAnnotationDesc.getFullClassType());
+				}
+			}
+		}
+//		新增方法需要导入的完整类类型
+		if (DqCollectionsUtils.isNotEmpty(methods)) {
+			for (DqJavaMethodContentDesc method : methods) {
+				doAddImportFullClassTypes(method.getReturnFullClassType());
+				if (DqCollectionsUtils.isEmpty(method.getAnnotations())) {
+					continue;
+				}
+				for (DqJavaAnnotationDesc methodAnnotationDesc : method.getAnnotations()) {
+					doAddImportFullClassTypes(methodAnnotationDesc.getFullClassType());
+				}
+			}
+		}
+	}
+	
+	private void doAddImportFullClassTypes(String fullClassType) {
+		if (DqBaseUtils.isNull(importFullClassTypes)) {
+			importFullClassTypes = new HashSet<>();
+		}
+		if (DqStringUtils.isEmpty(fullClassType)) {
+			return;
+		}
+		
+		if (DqStringUtils.equals(fullClassType, void.class.getName())) {
+			return;
+		}
+		importFullClassTypes.add(fullClassType);
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 获取类的头部字符串
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 下午2:11:31
+	 */
+	public String getClassHeaderStr() {
+		StringBuilder classHeaderBuild = DqStringUtils.newStringBuilderDefault();
+		String modifersStr = getModifiersStr();
+		if (DqStringUtils.isNotEmpty(modifersStr)) {
+			classHeaderBuild.append(modifersStr).append(DqSymbol.EMPTY);
+		}
+		if (DqStringUtils.isNotEmpty(getName())) {
+			classHeaderBuild.append(getName()).append(DqSymbol.EMPTY);
+		}
+		if (DqBaseUtils.isNotNull(getExtendsParentClass())) {
+			classHeaderBuild.append("extends").append(DqSymbol.EMPTY).append(getExtendsParentClass().getSimpleClassType());
+		}
+		String implementsInterfacesStr = getImplementsInterfacesStr();
+		if (DqStringUtils.isNotEmpty(implementsInterfacesStr)) {
+			classHeaderBuild.append("implements").append(DqSymbol.EMPTY).append(implementsInterfacesStr).append(DqSymbol.EMPTY);
+		}
+		return classHeaderBuild.toString();
+	}
+
+	@Override
+	public DqFileContentBaseDesc buildDescByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
+//		初始化属性列表信息
+		buildFieldsByDatabaseSources(databaseDataSources);
+//		根据属性构建方法列表
+		buildJavaMethodsByFields(this.fields);
+		return this;
+	}
+	
+	public DqFileContentBaseDesc buildJavaMethodsByFields(List<DqJavaFieldContentDesc> fields) {
+		if (DqCollectionsUtils.isEmpty(fields)) {
+			return this;
+		}
+		if (DqCollectionsUtils.isEmpty(this.methods)) {
+			this.methods = new ArrayList<>();
+		}
+		for (DqJavaFieldContentDesc fieldContentDesc : fields) {
+			addJavaMethodDescOfDefault(fieldContentDesc);
+		}
+		return this;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 根据field描述生成其默认的方法对象添加到methods
+	 * </p>
+	 *
+	 * @param fieldContentDesc
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午11:30:05
+	 */
+	private void addJavaMethodDescOfDefault(DqJavaFieldContentDesc fieldContentDesc) {
+		this.methods.add(buildJavaMethodDescOfGetByField(fieldContentDesc, DqMethodTypeEnum.GET));
+		this.methods.add(buildJavaMethodDescOfSetByField(fieldContentDesc, DqMethodTypeEnum.SET));
+		this.methods.add(buildJavaMethodDescOfBuildByField(fieldContentDesc, DqMethodTypeEnum.BUILD));
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据属性构建java方法描述---get方法
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午11:18:13
+	 */
+	private DqJavaMethodContentDesc buildJavaMethodDescOfGetByField(DqJavaFieldContentDesc fieldContentDesc, DqMethodTypeEnum methodTypeEnum) {
+		DqJavaMethodContentDesc methodContentDesc= getJavaDefaultMethodDesc(fieldContentDesc, methodTypeEnum);
+		
+		methodContentDesc.setReturnSimpleClassType(fieldContentDesc.getSimpleClassType());
+		methodContentDesc.setReturnFullClassType(fieldContentDesc.getFullClassType());
+		return methodContentDesc;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据属性构建java方法描述---set方法
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午11:18:13
+	 */
+	private DqJavaMethodContentDesc buildJavaMethodDescOfSetByField(DqJavaFieldContentDesc fieldContentDesc, DqMethodTypeEnum methodTypeEnum) {
+		DqJavaMethodContentDesc methodContentDesc= getJavaDefaultMethodDesc(fieldContentDesc, methodTypeEnum);
+		
+		methodContentDesc.setReturnSimpleClassType(void.class.getSimpleName());
+		methodContentDesc.setReturnFullClassType(void.class.getName());
+		
+		return methodContentDesc;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据属性构建java方法描述---build方法
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午11:18:13
+	 */
+	private DqJavaMethodContentDesc buildJavaMethodDescOfBuildByField(DqJavaFieldContentDesc fieldContentDesc, DqMethodTypeEnum methodTypeEnum) {
+		DqJavaMethodContentDesc methodContentDesc= getJavaDefaultMethodDesc(fieldContentDesc, methodTypeEnum);
+		
+		methodContentDesc.setReturnSimpleClassType(this.getSimpleClassType());
+		methodContentDesc.setReturnFullClassType(this.getFullClassType());
+		return methodContentDesc;
+	}
+	
+	private DqJavaMethodContentDesc getJavaDefaultMethodDesc(DqJavaFieldContentDesc fieldContentDesc, DqMethodTypeEnum methodTypeEnum) {
+		DqJavaMethodContentDesc methodContentDesc = new DqJavaMethodContentDesc(methodTypeEnum);
+		methodContentDesc.setComment(fieldContentDesc.getComment());
+//		设置方法modifiers
+		List<DqJavaModifierDesc> methodModifiers = new ArrayList<>();
+		methodModifiers.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
+		methodContentDesc.setModifiers(methodModifiers);
+		methodContentDesc.setName(fieldContentDesc.getName());
+		methodContentDesc.setSimpleClassType(fieldContentDesc.getSimpleClassType());
+		methodContentDesc.setFullClassType(fieldContentDesc.getFullClassType());
+		return methodContentDesc;
+	}
+	
+	private DqJavaClassContentDesc buildFieldsByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
+		ResultSet resultSet = databaseDataSources.getResultSet();
+		if (DqBaseUtils.isNull(resultSet)) {
+			throw new DqBaseBusinessException(DqCodeGenerateErrorCodeEnum.RESULTSET_CANT_NULL);
+		}
+		if (DqCollectionsUtils.isEmpty(this.fields)) {
+			this.fields = new ArrayList<>();
+		}
+		try {
+			while (resultSet.next()) {
+				String name = DqStringUtils.replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME"));
+				// id字段略过
+				if (DqIgnoreField.isIgnoreField(name)) {
+					continue;
+				}
+				DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
+				// 字段在数据库的注释
+				fieldContentDesc.setComment(resultSet.getString("REMARKS"));
+				// 设置属性注解列表信息				
+				List<DqJavaAnnotationDesc> fieldAnnotationDescs = getFieldsAnnotationsByResultSet(resultSet);
+				fieldContentDesc.setAnnotations(fieldAnnotationDescs);
+				
+				// 设置modifer列表信息
+				List<DqJavaModifierDesc> fieldModifierDescs = new ArrayList<>();
+				fieldModifierDescs.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
+				fieldContentDesc.setModifiers(fieldModifierDescs);
+
+				// 设置属性类型
+				fieldContentDesc.setSimpleClassType(databaseDataSources.getFieldTypeByColumnType(resultSet.getString("TYPE_NAME")));
+				// 设置属性名称				
+				fieldContentDesc.setName(name);
+				this.fields.add(fieldContentDesc);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据dataSource构建属性注解列表
+	 * </p>
+	 *
+	 * @param databaseDataSources
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午10:18:57
+	 * @throws SQLException 
+	 */
+	private List<DqJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
+		// 设置属性注解
+		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
+//		设置列注解描述
+		DqJavaAnnotationDesc columnAnnotationDesc = new DqJavaAnnotationDesc();
+		columnAnnotationDesc.setFullClassType(Column.class.getName());
+		columnAnnotationDesc.setSimpleClassType(Column.class.getSimpleName());
+		columnAnnotationDesc.setName(Column.class.getSimpleName());
+//		获取column参数描述列表
+		List<DqJavaAnnotationParamDesc> columnAnnotationParamDescs = new ArrayList<>();
+		columnAnnotationParamDescs.add(new DqJavaAnnotationParamDesc("name", resultSet.getString("COLUMN_NAME")));
+		columnAnnotationDesc.setParams(columnAnnotationParamDescs);
+		
+		annotationDescs.add(columnAnnotationDesc);
+		return annotationDescs;
+	}
+	
+	public String getCreateDateStr() {
+		return DqCodeGenerateConfig.CREATE_DATE;
+	}
+	
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
 	public DqJavaContentBaseDesc getExtendsParentClass() {
 		return extendsParentClass;
 	}
@@ -61,11 +364,11 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		this.extendsParentClass = extendsParentClass;
 	}
 
-	public List<DqJavaInterfaceContentDesc> getImplementsInterfaces() {
+	public List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
 		return implementsInterfaces;
 	}
 
-	public void setImplementsInterfaces(List<DqJavaInterfaceContentDesc> implementsInterfaces) {
+	public void setImplementsInterfaces(List<DqJavaImplInterfaceContentDesc> implementsInterfaces) {
 		this.implementsInterfaces = implementsInterfaces;
 	}
 
@@ -85,45 +388,11 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		this.methods = methods;
 	}
 
-	public Set<String> getImportClassNames() {
-		return importClassNames;
+	public Set<String> getImportFullClassTypes() {
+		return importFullClassTypes;
 	}
 
-	public void setImportClassNames(Set<String> importClassNames) {
-		this.importClassNames = importClassNames;
+	public void setImportFullClassTypes(Set<String> importFullClassTypes) {
+		this.importFullClassTypes = importFullClassTypes;
 	}
-
-	public void addImportClassName() {
-		if (DqBaseUtils.isNull(importClassNames)) {
-			importClassNames = new HashSet<>();
-		}
-		if (DqCollectionsUtils.isNotEmpty(getAnnotations())) {
-			for (DqJavaContentBaseDesc annotation : getAnnotations()) {
-				importClassNames.add(annotation.getFullClassType());
-			}
-		}
-		if (DqBaseUtils.isNotNull(extendsParentClass)
-				&& DqStringUtils.isNotEmpty(extendsParentClass.getFullClassType())) {
-			importClassNames.add(extendsParentClass.getFullClassType());
-		}
-		if (DqCollectionsUtils.isNotEmpty(implementsInterfaces)) {
-			for (DqJavaContentBaseDesc implementsInterface : implementsInterfaces) {
-				importClassNames.add(implementsInterface.getFullClassType());
-			}
-		}
-		if (DqCollectionsUtils.isNotEmpty(fields)) {
-			for (DqJavaFieldContentDesc field : fields) {
-				importClassNames.add(field.getFullClassType());
-				for (DqJavaAnnotationDesc fileAnnotationDesc : field.getAnnotations()) {
-					importClassNames.add(fileAnnotationDesc.getFullClassType());
-				}
-			}
-		}
-		if (DqCollectionsUtils.isNotEmpty(methods)) {
-			for (DqJavaContentBaseDesc method : methods) {
-				importClassNames.add(method.getFullClassType());
-			}
-		}
-	}
-
 }

@@ -1,10 +1,10 @@
 package com.dq.easy.cloud.pay.zfb.pojo.dto;
 
 import com.dq.easy.cloud.module.common.number.bigdecimal.utils.DqBigDecimalUtils;
-import com.dq.easy.cloud.pay.module.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.module.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.module.refund.dto.DqRefundOrderAbstractDTO;
-import com.dq.easy.cloud.pay.module.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbPayKey;
+import com.dq.easy.cloud.pay.common.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbSignUtils;
 
 /**
