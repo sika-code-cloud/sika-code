@@ -123,10 +123,10 @@ public class DqCodeGenerateConstant {
 	 * 创建时间    2018年3月23日 上午9:49:23
 	 */
 	public static class DqSourceCodeRelativePath {
-		/** 源代码路径---java---\\src\\main\\java\\ */
-		public static final String JAVA = "\\src\\main\\java\\";
-		/** 源代码路径---资源路径---\\src\\main\\resources\\ */
-		public static final String RESOURCES = "\\src\\main\\resources\\";
+		/** 源代码路径---java---src\\main\\java */
+		public static final String JAVA = "src\\main\\java";
+		/** 源代码路径---资源路径---src\\main\\resources */
+		public static final String RESOURCES = "src\\main\\resources";
 	}
 	
 	public static class DqClassNameEndWith {

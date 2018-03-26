@@ -23,6 +23,8 @@ public abstract class DqDatabaseAbstactConfig {
 	private String databaseUserName;
 	/** 数据库密码 */
 	private String databasePassword;
+	/** 表名 */
+	private String tableName;
 
 	public DqDatabaseAbstactConfig buildDatabaseBaseUrl(String databaseBaseUrl) {
 		this.databaseBaseUrl = databaseBaseUrl;
@@ -46,6 +48,10 @@ public abstract class DqDatabaseAbstactConfig {
 
 	public DqDatabaseAbstactConfig buildDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
+		return this;
+	}
+	public DqDatabaseAbstactConfig buildTableName(String tableName) {
+		this.tableName = tableName;
 		return this;
 	}
 
@@ -88,6 +94,15 @@ public abstract class DqDatabaseAbstactConfig {
 	public void setDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
 	}
+	
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
 	public void verifyDatabaseConfigData() {
 		if (DqStringUtils.isEmpty(getDatabaseBaseUrl())) {
 			throw new DqBaseBusinessException(DqCodeGenerateErrorCodeEnum.DATABASE_BASEURL_CANT_EMPTY);
@@ -106,6 +121,10 @@ public abstract class DqDatabaseAbstactConfig {
 		}
 		if (DqStringUtils.isEmpty(getDatabaseUserName())) {
 			throw new DqBaseBusinessException(DqCodeGenerateErrorCodeEnum.DATABASE_USER_NAME_CANT_EMPTY);
+		}
+		
+		if (DqStringUtils.isEmpty(getTableName())) {
+			throw new DqBaseBusinessException(DqCodeGenerateErrorCodeEnum.TABLE_NAME_CANT_NULL);
 		}
 	}
 	/** 获取数据库驱动 */

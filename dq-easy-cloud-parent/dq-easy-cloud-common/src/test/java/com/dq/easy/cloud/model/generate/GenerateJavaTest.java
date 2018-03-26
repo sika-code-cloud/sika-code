@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
@@ -19,22 +20,32 @@ import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDat
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.mysql.DqDataBaseMysqlConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqCodeProject;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGeneratorBO;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaDOBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaClassRule;
 
 public class GenerateJavaTest {
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
+	private DqTemplateDesc templateDesc;
+	
 	private String packageStartWith = "com.dq.easy.cloud";
 	private String needSubstrClassNameStartWith = "tlcyg";
+	private String moduleName = "goods";
+	private String tableName = "tl_cyg_goods_info";
+	private String fileComment = "商品";
 	@Before
 	public void initData() {
 		databaseAbstactConfig = new DqDataBaseMysqlConfig();
@@ -43,11 +54,11 @@ public class GenerateJavaTest {
 		databaseAbstactConfig.buildDatabaseName("sea_share_db");
 		databaseAbstactConfig.buildDatabaseUserName("seashare");
 		databaseAbstactConfig.buildDatabasePassword("Seashare123");
+		databaseAbstactConfig.buildTableName(tableName);
+		
+		templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "test.ftl");
 	}
 	
-	private String moduleName = "goods";
-	private String tableName = "tl_cyg_goods_info";
-	private String fileComment = "商品";
 	
 	@Test
 	public void testGenerateBO() {
@@ -247,14 +258,27 @@ public class GenerateJavaTest {
 //		生成文件
 		try {
 			javaClassContentDesc.addImportFullClassType();
-			new DqGeneratorBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
+			new DqGenerateBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	@Test
 	public void generateJavaByDataBase() {
-		DqCodeGenerateUtils.generateDO(databaseAbstactConfig, tableName);
+		String projectName = "dq-easy-cloud-common";
+		String basePackageName = "com.dq.easy";
+		String moduleName = "goods";
+		String subModulePackageName = "pojo.entity" ;
+		String classBodyName = "Goods";
+		String classComment = "商品";
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectName, basePackageName, moduleName, subModulePackageName, classBodyName, classComment);
+		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, true);
+		try {
+			new DqGenerateJavaDOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule).generateCode();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		DqCodeGenerateUtils.generateDO(databaseAbstactConfig, tableName);
 	}
 	
 }

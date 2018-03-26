@@ -25,6 +25,7 @@ public enum DqCodeGenerateErrorCodeEnum implements DqBaseErrorCodeInf{
 	DATABASE_CONFIG_CANT_NULL("CODEGEN_000011", "数据库配置对象不能为空"),
 	RESULTSET_CANT_NULL("CODEGEN_000012", "resultSet对象不能为空"),
 	GET_PROJECT_PATH_FAIL("CODEGEN_000013", "获取project路径失败"),
+	TABLE_NAME_CANT_NULL("CODEGEN_000013", "tableName不能为空"),
 	;
 	private String errorCode;
 	private String errorMsg;

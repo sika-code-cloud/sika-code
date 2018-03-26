@@ -25,6 +25,10 @@ public class DqJavaFileDesc extends DqFileDesc {
 	private String sourceCodeRelativePath;
 	/** 文件所在包名的相对路径 */
 	private String packageRelativePath;
+	
+	public DqJavaFileDesc() {
+		super();
+	}
 
 	public DqJavaFileDesc(String projectName, String sourceCodeRelativePath,
 			String packageRelativePath, String fileName, String fileSuffix) {

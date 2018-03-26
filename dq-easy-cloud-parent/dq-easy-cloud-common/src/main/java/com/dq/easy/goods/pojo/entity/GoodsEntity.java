@@ -1,13 +1,13 @@
 package com.dq.easy.goods.pojo.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Table;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
-import javax.persistence.Entity;
 /**
  * 描述：商品
  * @author 
- * @date 2018-03-26 16:38:51
+ * @date 2018-03-26 23:47:46
  */
 @Table(name = "tl_cyg_goods_info")
 @Entity

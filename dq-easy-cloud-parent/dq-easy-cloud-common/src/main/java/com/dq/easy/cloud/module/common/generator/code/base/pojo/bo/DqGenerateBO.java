@@ -28,15 +28,19 @@ import freemarker.template.Template;
  * @author daiqi
  * @date 2018年3月24日 上午10:57:46
  */
-public class DqGeneratorBO {
+public class DqGenerateBO {
 	/** 文件描述 */
 	private DqFileDesc fileDesc;
 	/** 文件内容描述 */
 	private DqFileContentBaseDesc fileContentDesc;
 	/** 模版描述 */
 	private DqTemplateDesc templateDesc;
-	
-	public DqGeneratorBO(DqFileDesc fileDesc, DqFileContentBaseDesc fileContentDesc, DqTemplateDesc templateDesc) {
+
+	public DqGenerateBO() {
+		super();
+	}
+
+	public DqGenerateBO(DqFileDesc fileDesc, DqFileContentBaseDesc fileContentDesc, DqTemplateDesc templateDesc) {
 		this.fileDesc = fileDesc;
 		this.fileContentDesc = fileContentDesc;
 		this.templateDesc = templateDesc;
@@ -54,37 +58,51 @@ public class DqGeneratorBO {
 		return templateDesc;
 	}
 
+	protected void setFileDesc(DqFileDesc fileDesc) {
+		this.fileDesc = fileDesc;
+	}
+
+	protected void setFileContentDesc(DqFileContentBaseDesc fileContentDesc) {
+		this.fileContentDesc = fileContentDesc;
+	}
+
+	protected void setTemplateDesc(DqTemplateDesc templateDesc) {
+		this.templateDesc = templateDesc;
+	}
+
 	/**
 	 * 
-	 * <p>生成代码</p>
+	 * <p>
+	 * 生成代码
+	 * </p>
 	 *
 	 * <pre></pre>
 	 *
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月24日 下午4:56:34
-	 * @throws Exception 
+	 * author daiqi 创建时间 2018年3月24日 下午4:56:34
+	 * 
+	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	public void generateCode() throws Exception {
 		FileOutputStream needGenerateeFileStram = null;
 		Writer out = null;
 		try {
-//			生成的文件
+			// 生成的文件
 			File generateFile = new DqFileBO(fileDesc).newFile();
 			generateFile = new File(fileDesc.getFileFullPath());
-//			需要生成的文件流
+			// 需要生成的文件流
 			needGenerateeFileStram = new FileOutputStream(generateFile);
 			out = new BufferedWriter(new OutputStreamWriter(needGenerateeFileStram, DqCharset.UTF_8), 10240);
-//			执行生成代码
-//			获取模版数据模型
+			// 执行生成代码
+			// 获取模版数据模型
 			Map<String, Object> dataModel = DqJSONUtils.parseObject(this.getFileContentDesc(), HashMap.class);
 			DqLogUtils.info("模板数据", dataModel, LoggerFactory.getLogger(this.getClass()));
-//			1:初始化配置数据
+			// 1:初始化配置数据
 			DqFreeMarkerTemplateUtils.initConfigurationData(templateDesc.getBasePackagePath());
-//			2:获取模版
+			// 2:获取模版
 			Template template = DqFreeMarkerTemplateUtils.getTemplate(templateDesc.getName());
-//			3:生成模版
+			// 3:生成模版
 			template.process(dataModel, out);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,5 +115,5 @@ public class DqGeneratorBO {
 			}
 		}
 	}
-	
+
 }

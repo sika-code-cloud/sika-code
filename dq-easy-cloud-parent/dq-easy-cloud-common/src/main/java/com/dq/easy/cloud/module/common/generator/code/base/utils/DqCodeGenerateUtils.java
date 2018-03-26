@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.slf4j.LoggerFactory;
+
 import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
@@ -14,7 +16,7 @@ import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDat
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGeneratorBO;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.mysql.DqMysqlDataSources;
@@ -24,6 +26,7 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDe
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaClassRule;
+import com.dq.easy.cloud.module.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -52,8 +55,12 @@ public class DqCodeGenerateUtils {
 	public static String changePackageNameToPath(String packegeName) {
 		String[] packageNameArr = packegeName.split("\\.");
 		StringBuilder packagePathBuild = DqStringUtils.newStringBuilderDefault();
-		for (String tempModelBasePackageName : packageNameArr) {
-			packagePathBuild.append(tempModelBasePackageName).append(DqSymbol.BACK_SLASH);
+		for (int i = 0 ; i < packageNameArr.length; ++i) {
+			String tempModelBasePackageName = packageNameArr[i];
+			packagePathBuild.append(tempModelBasePackageName);
+			if (i < packageNameArr.length - 1) {
+				packagePathBuild.append(DqSymbol.BACK_SLASH);
+			}
 		}
 		return packagePathBuild.toString();
 	}
@@ -92,7 +99,7 @@ public class DqCodeGenerateUtils {
 	}
 	
 	public static void generateDO(DqDatabaseAbstactConfig dataBaseConfig,String tableName) {
-		String projectName = "dq-easy-cloud-pay-common";
+		String projectName = "dq-easy-cloud-common";
 		String basePackageName = "com.dq.easy";
 		String moduleName = "goods";
 		String subModulePackageName = "pojo.entity" ;
@@ -115,7 +122,7 @@ public class DqCodeGenerateUtils {
 		List<DqJavaAnnotationDesc> annotations = new ArrayList<>();
 		
 		DqJavaAnnotationDesc tableAnnotationDesc = new DqJavaAnnotationDesc();
-		tableAnnotationDesc.setName("@Table");
+		tableAnnotationDesc.setName("@" + Table.class.getSimpleName());
 		tableAnnotationDesc.setSimpleClassType(Table.class.getSimpleName());
 		tableAnnotationDesc.setFullClassType(Table.class.getName());
 //		设置类注解参数---begin
@@ -130,7 +137,7 @@ public class DqCodeGenerateUtils {
 		annotations.add(tableAnnotationDesc);
 		
 		DqJavaAnnotationDesc entityAnnotationDesc = new DqJavaAnnotationDesc();
-		entityAnnotationDesc.setName("@Entity");
+		entityAnnotationDesc.setName("@"+Entity.class.getSimpleName());
 		entityAnnotationDesc.setSimpleClassType(Entity.class.getSimpleName());
 		entityAnnotationDesc.setFullClassType(Entity.class.getName());
 		
@@ -159,10 +166,11 @@ public class DqCodeGenerateUtils {
 		DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "test.ftl");
 //		生成文件
 		try {
+			DqLogUtils.info("fileDesc", fileDesc, LoggerFactory.getLogger(DqCodeGenerateUtils.class));
 			DqDatabaseDataSources databaseDataSources = new DqMysqlDataSources(dataBaseConfig, tableName);
 			javaClassContentDesc.buildDescByDatabaseSources(databaseDataSources);
 			javaClassContentDesc.addImportFullClassType();
-			new DqGeneratorBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
+			new DqGenerateBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
