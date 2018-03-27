@@ -1,7 +1,7 @@
 package com.dq.easy.cloud.pay.zfb.pojo.bo;
 
-import com.dq.easy.cloud.pay.model.payment.pojo.bo.DqRefundOrderBO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.common.payment.pojo.bo.DqRefundOrderBO;
+import com.dq.easy.cloud.pay.common.refund.dto.DqRefundOrderAbstractDTO;
 import com.dq.easy.cloud.pay.zfb.common.utils.DqZfbPayUtils.DqZfbOrderNoGenerator;
 
 /**

@@ -1,7 +1,7 @@
 package com.dq.easy.cloud.pay.wx.common.utils;
 
-import com.dq.easy.cloud.pay.model.payment.utils.DqPayUtils.DqOrderNoGenerator;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.payment.utils.DqPayUtils.DqOrderNoGenerator;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 
 public class DqWxPayUtils {

@@ -5,10 +5,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dq.easy.cloud.model.cache.redis.handler.DqRedisTemplateHandler;
-import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 import com.dq.easy.cloud.model.user.repository.UserRepository;
+import com.dq.easy.cloud.module.cache.redis.handler.DqRedisTemplateHandler;
+import com.dq.easy.cloud.module.jdbc.handler.DqJdbcTemplateHandler;
 
 //@Service
 public class UserService {

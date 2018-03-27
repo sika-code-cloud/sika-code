@@ -3,7 +3,7 @@ package com.dq.easy.cloud.model.user.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
+import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
 
 //@Entity
 //@Table(name="test_user")

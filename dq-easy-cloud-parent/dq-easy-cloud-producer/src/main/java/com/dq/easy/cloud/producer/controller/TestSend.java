@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dq.easy.cloud.model.mq.amqp.base.dto.DqAmqpBaseDTO;
-import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName;
-import com.dq.easy.cloud.model.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
-import com.dq.easy.cloud.model.mq.amqp.handler.DqAmqpTemplateHandler;
+import com.dq.easy.cloud.module.mq.amqp.base.dto.DqAmqpBaseDTO;
+import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName;
+import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
+import com.dq.easy.cloud.module.mq.amqp.handler.DqAmqpTemplateHandler;
 
 @RestController
 public class TestSend {

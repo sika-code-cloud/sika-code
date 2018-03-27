@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
+import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
 
 @RestController
 @RequestMapping("test")

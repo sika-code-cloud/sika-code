@@ -8,41 +8,43 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.dq.easy.cloud.model.basic.constant.error.DqBaseErrorCode;
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
-import com.dq.easy.cloud.model.common.date.utils.DqDateUtils;
-import com.dq.easy.cloud.model.common.http.constant.DqHttpConstant.DqMethodType;
-import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
-import com.dq.easy.cloud.model.common.http.utils.DqUriVariables;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.common.log.utils.DqLogUtils;
-import com.dq.easy.cloud.model.common.map.utils.DqMapUtils;
-import com.dq.easy.cloud.model.common.qrcode.utils.DqQrCodeUtil;
-import com.dq.easy.cloud.model.common.sign.utils.DqSignUtils;
-import com.dq.easy.cloud.model.common.string.constant.DqStringConstant.DqSymbol;
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.model.exception.bo.DqBaseBusinessException;
-import com.dq.easy.cloud.pay.model.payment.config.dto.DqPayConfigStorageInf;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayConstant.DqPayKey;
-import com.dq.easy.cloud.pay.model.payment.constant.DqPayErrorCode;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayKey;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbPayValue;
-import com.dq.easy.cloud.pay.model.payment.constant.DqZfbPayConstant.DqZfbProductCode;
-import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.payment.service.DqPayServiceAbstract;
-import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayMessageDTO;
-import com.dq.easy.cloud.pay.model.paymessage.pojo.dto.DqPayOutMessageDTO;
-import com.dq.easy.cloud.pay.model.refund.dto.DqRefundOrderAbstractDTO;
-import com.dq.easy.cloud.pay.model.transaction.inf.DqTransactionType;
-import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
+import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
+import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.module.common.date.utils.DqDateFormatUtils;
+import com.dq.easy.cloud.module.common.date.utils.DqDateUtils;
+import com.dq.easy.cloud.module.common.http.constant.DqHttpConstant.DqMethodType;
+import com.dq.easy.cloud.module.common.http.pojo.dto.DqHttpConfigStorageDTO;
+import com.dq.easy.cloud.module.common.http.utils.DqUriVariables;
+import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
+import com.dq.easy.cloud.module.common.log.utils.DqLogUtils;
+import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
+import com.dq.easy.cloud.module.common.qrcode.utils.DqQrCodeUtil;
+import com.dq.easy.cloud.module.common.sign.utils.DqSignUtils;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
+import com.dq.easy.cloud.pay.common.payment.config.dto.DqPayConfigStorageInf;
+import com.dq.easy.cloud.pay.common.payment.constant.DqPayErrorCodeEnum;
+import com.dq.easy.cloud.pay.common.payment.constant.DqPayConstant.DqPayKey;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbPayKey;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbPayValue;
+import com.dq.easy.cloud.pay.common.payment.constant.DqZfbPayConstant.DqZfbProductCode;
+import com.dq.easy.cloud.pay.common.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.common.payment.pojo.query.DqOrderAbstractQuery;
+import com.dq.easy.cloud.pay.common.payment.service.DqPayServiceAbstract;
+import com.dq.easy.cloud.pay.common.paymessage.pojo.dto.DqPayMessageDTO;
+import com.dq.easy.cloud.pay.common.paymessage.pojo.dto.DqPayOutMessageDTO;
+import com.dq.easy.cloud.pay.common.refund.dto.DqRefundOrderAbstractDTO;
+import com.dq.easy.cloud.pay.common.transaction.inf.DqTransactionType;
+import com.dq.easy.cloud.pay.common.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.zfb.pojo.bo.DqZfbTransactionType;
+import com.dq.easy.cloud.pay.zfb.pojo.query.DqZfbOrderQuery;
 
 /**
  * 
@@ -296,8 +298,9 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 */
 	@Override
 	public Map<String, Object> refund(DqRefundOrderAbstractDTO refundOrder) {
-		refundOrder.setMethod(DqZfbTransactionType.REFUND.getMethod());
-		refundOrder.putCommonSignData(payConfigStorage);
+//		构建签名参数
+		refundOrder.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.REFUND);
+//		获取请求结果
 		return getRequestResult(refundOrder.getSignatureParameters(), DqZfbTransactionType.REFUND);
 	}
 
@@ -311,17 +314,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方查询退款后的结果
 	 */
 	@Override
-	public Map<String, Object> queryRefundResult(DqOrderQuery dqOrderQuery) {
-		// 获取公共参数
-		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.REFUNDQUERY);
-		
-		Map<String, Object> contentMap = new HashMap<>();
-		contentMap.put(DqZfbPayKey.OUT__REQUEST__NO_KEY, dqOrderQuery.getRefundTradeNo());
-		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, getContentToJson(dqOrderQuery.getTradeNo(), dqOrderQuery.getOutTradeNo(), contentMap));
-		// 设置签名
-		setSign(parameters);
-		return getRequestResult(parameters, DqZfbTransactionType.REFUNDQUERY);
+	public Map<String, Object> queryRefundResult(DqOrderAbstractQuery dqOrderQuery) {
+//		构建签名参数
+		dqOrderQuery.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.REFUNDQUERY);
+//		获取请求结果
+		return getRequestResult(dqOrderQuery.getSignatureParameters(), DqZfbTransactionType.REFUNDQUERY);
 	}
 
 	/**
@@ -337,20 +334,11 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	 * @return 返回支付方下载对账单的结果
 	 */
 	@Override
-	public Map<String, Object> downLoadBill(Date billDate, String billType) {
-		// 获取公共参数
-		Map<String, Object> parameters = getPublicParameters(DqZfbTransactionType.DOWNLOADBILL);
-
-		Map<String, Object> bizContent = new TreeMap<>();
-		bizContent.put(DqZfbPayKey.BILL__TYPE_KEY, billType);
-		// 目前只支持日账单
-		String fomatDate = DqDateFormatUtils.format(billDate, DqDateFormatUtils.FORMAT_NORMAL_DAY, TimeZone.getTimeZone(DqDateFormatUtils.EAST_EIGHT_TIME_ZONE));
-		bizContent.put(DqZfbPayKey.BILL__DATE_KEY, fomatDate);
-		// 设置请求参数的集合
-		parameters.put(DqZfbPayKey.BIZ__CONTENT_KEY, JSON.toJSONString(bizContent));
-		// 设置签名
-		setSign(parameters);
-		return getRequestResult(parameters, DqZfbTransactionType.DOWNLOADBILL);
+	public Map<String, Object> downLoadBill(DqOrderAbstractQuery dqOrderQuery) {
+//		构建签名参数
+		dqOrderQuery.buildSignatureParameters(payConfigStorage, DqZfbTransactionType.DOWNLOADBILL);
+//		获取请求结果
+		return getRequestResult(dqOrderQuery.getSignatureParameters(), DqZfbTransactionType.DOWNLOADBILL);
 	}
 
 	/**
@@ -369,18 +357,21 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 			DqTransactionType transactionType) {
 
 		if (transactionType == DqZfbTransactionType.REFUND) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
+			throw DqBaseBusinessException.newInstance(DqPayErrorCodeEnum.PAY_GENERAL_INTERFACE_NOT_SUPPORT);
 		}
 
 		if (transactionType == DqZfbTransactionType.DOWNLOADBILL) {
 			if (tradeNoOrBillDate instanceof Date) {
-				return downLoadBill((Date) tradeNoOrBillDate, outTradeNoBillType);
+				DqOrderAbstractQuery dqOrderAbstractQuery = new DqZfbOrderQuery();
+				dqOrderAbstractQuery.setTradeNoOrBillDate(tradeNoOrBillDate);
+				dqOrderAbstractQuery.setOutTradeNoBillType(outTradeNoBillType);
+				return downLoadBill(dqOrderAbstractQuery);
 			}
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessException.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 
 		if (!(tradeNoOrBillDate instanceof String)) {
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCode.ILLICIT_TYPE_EXCEPTION);
+			throw DqBaseBusinessException.newInstance(DqBaseErrorCodeEnum.ILLICIT_TYPE_EXCEPTION);
 		}
 		
 		// 获取公共参数
@@ -575,7 +566,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 			verifyMap.put(DqPayKey.SIGN_KEY, DqMapUtils.getString(resultMap, DqPayKey.SIGN_KEY));
 		}
 		if (DqStringUtils.notEquals(DqZfbPayValue.CODE_SUCCUSS, DqMapUtils.getString(verifyMap, DqZfbPayKey.CODE_KEY))) {
-			throw DqBaseBusinessException.newInstance(DqPayErrorCode.PAY_FAILURE).buildExceptionDetail(verifyMap);
+			throw DqBaseBusinessException.newInstance(DqPayErrorCodeEnum.PAY_FAILURE).buildExceptionDetail(verifyMap);
 		}
 		
 		return verifyMap;
@@ -584,6 +575,7 @@ public class DqZfbPayService extends DqPayServiceAbstract {
 	/** 获取请求结果 */
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> getRequestResult(Map<String, Object> parameters, DqTransactionType dqTransactionType) {
+		DqLogUtils.info("调用支付宝接口请求参数", parameters, LOG);
 		Map<String, Object> resultMap =  getHttpRequestTemplate().postForObject(getReqUrl() + "?" + DqUriVariables.getParameters(parameters),
 				null, HashMap.class);
 //		结果校验

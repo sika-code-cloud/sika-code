@@ -3,7 +3,7 @@ package com.easy.cloud.movie.base.pojo.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
+import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
 
 /**
  * 电影实体类

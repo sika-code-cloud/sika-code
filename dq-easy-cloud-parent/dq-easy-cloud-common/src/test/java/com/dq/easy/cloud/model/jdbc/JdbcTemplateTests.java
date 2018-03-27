@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dq.easy.cloud.DqEasyCloudModelApplication;
-import com.dq.easy.cloud.model.jdbc.handler.DqJdbcTemplateHandler;
 import com.dq.easy.cloud.model.user.entity.UserEntity;
 import com.dq.easy.cloud.model.user.service.UserService;
+import com.dq.easy.cloud.module.jdbc.handler.DqJdbcTemplateHandler;
 
 
 

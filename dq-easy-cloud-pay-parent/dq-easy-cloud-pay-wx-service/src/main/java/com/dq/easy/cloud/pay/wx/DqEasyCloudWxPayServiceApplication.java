@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.dq.easy.cloud.pay.model.base.constant.DqEasyCloudPayComponentScan;
+import com.dq.easy.cloud.pay.common.base.constant.DqEasyCloudPayComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient

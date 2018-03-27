@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dq.easy.cloud.model.basic.controller.DqBaseController;
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.pay.model.payment.pojo.dto.DqPayOrderDTO;
-import com.dq.easy.cloud.pay.model.payment.pojo.query.DqOrderQuery;
-import com.dq.easy.cloud.pay.model.transaction.pojo.dto.DqTransferOrderDTO;
+
+import com.dq.easy.cloud.module.basic.controller.DqBaseController;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.pay.common.payment.pojo.dto.DqPayOrderDTO;
+import com.dq.easy.cloud.pay.common.payment.pojo.query.DqOrderAbstractQuery;
+import com.dq.easy.cloud.pay.common.transaction.pojo.dto.DqTransferOrderDTO;
 import com.dq.easy.cloud.pay.wx.logic.DqWxPayLogic;
 import com.dq.easy.cloud.pay.wx.pojo.bo.DqWxTransactionType;
 import com.dq.easy.cloud.pay.wx.pojo.dto.DqWxRefundOrderDTO;
@@ -179,7 +180,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("queryPayResult")
-	public DqBaseServiceResult queryPayResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryPayResult(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.queryPayResult(dqOrderQuery);
 	}
 	/**
@@ -201,7 +202,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("close")
-	public DqBaseServiceResult close(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult close(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.close(dqOrderQuery);
 	}
 
@@ -245,7 +246,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("queryRefundResult")
-	public DqBaseServiceResult queryRefundResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryRefundResult(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.queryRefundResult(dqOrderQuery);
 	}
 
@@ -268,7 +269,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("downLoadBill")
-	public Object downLoadBill(DqOrderQuery dqOrderQuery) {
+	public Object downLoadBill(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.downLoadBill(dqOrderQuery);
 	}
 
@@ -292,7 +293,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("secondaryInterface")
-	public DqBaseServiceResult secondaryInterface(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult secondaryInterface(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.secondaryInterface(dqOrderQuery);
 	}
 
@@ -344,7 +345,7 @@ public class DqWxPayController extends DqBaseController {
 	 * 创建时间    2018年2月26日 下午7:04:13
 	 */
 	@RequestMapping("queryTransferResult")
-	public DqBaseServiceResult queryTransferResult(DqOrderQuery dqOrderQuery) {
+	public DqBaseServiceResult queryTransferResult(DqOrderAbstractQuery dqOrderQuery) {
 		return dqWxPayLogic.queryTransferResult(dqOrderQuery);
 	}
 }

@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.model.basic.pojo.entity.DqBaseEntity;
-import com.dq.easy.cloud.model.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.model.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.model.common.string.utils.DqStringUtils;
+import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
+import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 import com.easy.cloud.user.base.constant.UserConstant;
 
 @Entity

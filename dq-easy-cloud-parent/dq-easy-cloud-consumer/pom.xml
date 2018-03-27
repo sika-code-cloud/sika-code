@@ -12,11 +12,4 @@
 	<artifactId>dq-easy-cloud-consumer</artifactId>
 	<name>dq-easy-cloud-consumer</name>
 	<url>http://maven.apache.org</url>
-	<dependencies>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-common</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-	</dependencies>
 </project>

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.dq.easy.cloud.model.common.http.pojo.dto.DqHttpConfigStorageDTO;
+import com.dq.easy.cloud.module.common.http.pojo.dto.DqHttpConfigStorageDTO;
 import com.dq.easy.cloud.pay.wx.config.dto.DqWxPayConfigStorageDTO;
 import com.dq.easy.cloud.pay.wx.service.DqWxPayService;
 

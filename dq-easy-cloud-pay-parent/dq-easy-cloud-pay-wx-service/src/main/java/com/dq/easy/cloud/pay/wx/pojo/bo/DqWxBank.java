@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.pay.wx.pojo.bo;
 
-import com.dq.easy.cloud.pay.model.base.inf.DqBank;
+import com.dq.easy.cloud.pay.common.base.inf.DqBank;
 
 /**
  * 

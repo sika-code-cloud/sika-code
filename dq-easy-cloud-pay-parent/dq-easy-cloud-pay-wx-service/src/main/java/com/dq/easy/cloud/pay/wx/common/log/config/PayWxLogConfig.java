@@ -2,7 +2,7 @@ package com.dq.easy.cloud.pay.wx.common.log.config;
 
 import org.springframework.stereotype.Component;
 
-import com.dq.easy.cloud.model.common.log.config.DqLogConfig;
+import com.dq.easy.cloud.module.common.log.config.DqLogConfig;
 import com.dq.easy.cloud.pay.wx.controller.DqWxPayController;
 import com.dq.easy.cloud.pay.wx.logic.DqWxPayLogic;
 import com.dq.easy.cloud.pay.wx.service.DqWxPayService;

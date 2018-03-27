@@ -4,7 +4,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseServiceResult;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.base.constant.UserServiceName;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.query.UserQuery;

@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.pojo.query;
 
-import com.dq.easy.cloud.model.basic.pojo.query.DqBaseQuery;
+import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
 
 /**
  * 用户查询条件类

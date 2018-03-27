@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.dq.easy.cloud.model.common.date.utils.DqDateFormatUtils;
+import com.dq.easy.cloud.module.common.date.utils.DqDateFormatUtils;
 
 public class DqDateFormatUtilsTest {
 

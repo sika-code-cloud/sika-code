@@ -11,12 +11,4 @@
 	<artifactId>easy-cloud-service-common</artifactId>
 	<name>easy-cloud-service-common</name>
 	<description>easy-cloud-service-common</description>
-	
-	<dependencies>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-common</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-	</dependencies>
 </project>

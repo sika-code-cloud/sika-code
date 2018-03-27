@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.pojo.dto;
 
-import com.dq.easy.cloud.model.basic.pojo.dto.DqBaseDTO;
+import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseDTO;
 
 /**
  * 用户数据传输对象 --- 为了实现字段复用 直接继承了UserEntity
