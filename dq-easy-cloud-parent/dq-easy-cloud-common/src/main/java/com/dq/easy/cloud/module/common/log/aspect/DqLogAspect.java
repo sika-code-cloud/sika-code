@@ -34,7 +34,7 @@ import com.dq.easy.cloud.module.common.log.utils.DqLogUtils;
 @Order(99)
 public class DqLogAspect {
 
-	@Pointcut("@within(com.dq.easy.cloud.model.common.log.annotation.DqLog)")
+	@Pointcut("@within(com.dq.easy.cloud.module.common.log.annotation.DqLog)")
 	public void dqLogPointcut() {
 		
 	}
