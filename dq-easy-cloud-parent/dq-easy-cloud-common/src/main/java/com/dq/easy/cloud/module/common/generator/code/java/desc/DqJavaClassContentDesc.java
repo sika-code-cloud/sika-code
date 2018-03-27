@@ -39,6 +39,8 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	private DqJavaContentBaseDesc extendsParentClass;
 	/** 实现的接口列表 */
 	private List<DqJavaImplInterfaceContentDesc> implementsInterfaces;
+	/** 构造函数列表 */
+	private List<DqJavaMethodContentDesc> constructors;
 	/** 属性列表 */
 	private List<DqJavaFieldContentDesc> fields;
 	/** 方法列表 */
@@ -156,7 +158,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	 * @return
 	 * @author daiqi 创建时间 2018年3月27日 下午1:51:42
 	 */
-	public DqFileContentBaseDesc buildJavaMethodsByFields() {
+	public DqJavaClassContentDesc buildJavaMethodsByFields() {
 		buildJavaMethodsByFields(this.fields);
 		return this;
 	}
@@ -449,6 +451,14 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 
 	public void setImplementsInterfaces(List<DqJavaImplInterfaceContentDesc> implementsInterfaces) {
 		this.implementsInterfaces = implementsInterfaces;
+	}
+
+	public List<DqJavaMethodContentDesc> getConstructors() {
+		return constructors;
+	}
+
+	public void setConstructors(List<DqJavaMethodContentDesc> constructors) {
+		this.constructors = constructors;
 	}
 
 	public List<DqJavaFieldContentDesc> getFields() {

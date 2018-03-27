@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example;
+package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,13 @@ import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenera
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
@@ -27,7 +31,7 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  *
  * @author daiqi 创建时间 2018年3月27日 上午9:54:03
  */
-public class DqGenerateJavaControllerBO extends DqGenerateJavaBaseBO {
+public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 
 	public DqGenerateJavaControllerBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
 			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
@@ -36,7 +40,7 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaBaseBO {
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getClassAnnotations() {
+	protected List<DqJavaAnnotationDesc> getAnnotations() {
 		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		DqJavaAnnotationDesc controllerAnnotation = new DqJavaAnnotationDesc();
 		controllerAnnotation.setName(Controller.class.getSimpleName());
@@ -75,5 +79,30 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaBaseBO {
 	@Override
 	protected String getClassComment() {
 		return super.getClassComment() + DqClassCommentEndWith.CONTROLLER;
+	}
+
+	@Override
+	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaMethodContentDesc> getConstructors() {
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaFieldContentDesc> getFields() {
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaMethodContentDesc> getMethods() {
+		return null;
+	}
+
+	@Override
+	protected String getClassCommentEndWith() {
+		return DqClassCommentEndWith.CONTROLLER;
 	}
 }

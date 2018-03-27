@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example;
+package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,17 @@ import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSubModuleDefaultPackageName;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSubModuleDefaultPackageName;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
 /**
@@ -27,7 +29,7 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  *
  * @author daiqi 创建时间 2018年3月27日 上午9:54:03
  */
-public class DqGenerateJavaBOBO extends DqGenerateJavaBaseBO {
+public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 
 	public DqGenerateJavaBOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
 			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
@@ -36,7 +38,7 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaBaseBO {
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getClassAnnotations() {
+	protected List<DqJavaAnnotationDesc> getAnnotations() {
 		return null;
 	}
 
@@ -55,12 +57,19 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaBaseBO {
 	}
 
 	@Override
-	public DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		super.buildFields(getFieldContentDescs());
-		return this;
+	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private List<DqJavaFieldContentDesc> getFieldContentDescs() {
+	@Override
+	protected List<DqJavaMethodContentDesc> getConstructors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaFieldContentDesc> getFields() {
 		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
 		DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
 		fieldContentDesc.setComment(javaClassContentDesc.getComment() + DqClassCommentEndWith.POJO_DTO);
@@ -78,11 +87,16 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaBaseBO {
 		fieldContentDescs.add(fieldContentDesc);
 
 		return fieldContentDescs;
-
 	}
 
 	@Override
-	protected String getClassComment() {
-		return super.getClassComment() + DqClassCommentEndWith.POJO_BO;
+	protected List<DqJavaMethodContentDesc> getMethods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String getClassCommentEndWith() {
+		return DqClassCommentEndWith.POJO_BO;
 	}
 }
