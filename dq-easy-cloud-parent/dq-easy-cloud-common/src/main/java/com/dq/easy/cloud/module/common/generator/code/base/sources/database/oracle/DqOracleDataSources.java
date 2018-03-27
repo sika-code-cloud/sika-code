@@ -5,8 +5,8 @@ import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDa
 
 public class DqOracleDataSources extends DqDatabaseDataSources{
 
-	public DqOracleDataSources(DqDatabaseAbstactConfig databaseConfig, String tableName) {
-		super(databaseConfig, tableName);
+	public DqOracleDataSources(DqDatabaseAbstactConfig databaseConfig) {
+		super(databaseConfig);
 	}
 
 	@Override

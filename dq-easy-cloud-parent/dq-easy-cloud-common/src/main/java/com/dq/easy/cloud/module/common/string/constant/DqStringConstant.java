@@ -41,5 +41,7 @@ public class DqStringConstant {
 	    public static final String RIGHT_BRACKETS  = ")";
 	    /** 符号常量---英文逗号--- , */
 	    public static final String COMMA  = ",";
+	    /** 符号常量---英文@--- @ */
+	    public static final String AT  = "@";
 	}
 }

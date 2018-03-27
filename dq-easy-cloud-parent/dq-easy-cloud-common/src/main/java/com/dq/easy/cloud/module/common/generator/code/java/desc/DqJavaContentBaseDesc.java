@@ -3,6 +3,8 @@ package com.dq.easy.cloud.module.common.generator.code.java.desc;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
 /**
  * java文件类容基础描述类
@@ -60,9 +62,18 @@ public class DqJavaContentBaseDesc extends DqFileContentBaseDesc {
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
-
+	public void buildFullClassType() {
+		boolean isBuild = DqStringUtils.isEmpty(fullClassType) 
+				&& DqStringUtils.isNotEmpty(packageName) 
+				&& DqStringUtils.isNotEmpty(simpleClassType); 
+		if (isBuild) {
+			StringBuilder build = DqStringUtils.newStringBuilderDefault();
+			build.append(packageName).append(DqSymbol.STOP).append(simpleClassType);
+			setFullClassType(build.toString());
+		}
+	}
 	@Override
-	public DqFileContentBaseDesc buildDescByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
+	public DqFileContentBaseDesc buildDataByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
 		return new DqJavaContentBaseDesc();
 	}
 	

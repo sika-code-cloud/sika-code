@@ -25,17 +25,26 @@ public class DqJavaAnnotationDesc extends DqJavaContentBaseDesc {
 		this.params = params;
 	}
 
+	@Override
+	public String getName() {
+		if (DqStringUtils.isNotEmpty(super.getName())) {
+			return DqSymbol.AT + super.getName();
+		}
+		return super.getName();
+	}
+
 	public String getParamsStr() {
 		if (DqCollectionsUtils.isNotEmpty(params)) {
 			StringBuilder paramsBuild = DqStringUtils.newStringBuilderDefault();
 			for (int i = 0 ; i < params.size(); ++i) {
 				DqJavaAnnotationParamDesc param = params.get(i);
+				Object value = param.getValue();
 				paramsBuild.append(param.getName());
 				paramsBuild.append(DqSymbol.EMPTY).append(DqSymbol.EQUAL).append(DqSymbol.EMPTY);
 				if (param.getValue() instanceof String) {
-					paramsBuild.append(DqSymbol.DOUBLE_QUOTES).append(param.getValue()).append(DqSymbol.DOUBLE_QUOTES);
+					paramsBuild.append(DqSymbol.DOUBLE_QUOTES).append(value).append(DqSymbol.DOUBLE_QUOTES);
 				} else {
-					paramsBuild.append(param.getValue());
+					paramsBuild.append(value);
 				}
 				if (i < params.size() - 1) {
 					paramsBuild.append(DqSymbol.COMMA);

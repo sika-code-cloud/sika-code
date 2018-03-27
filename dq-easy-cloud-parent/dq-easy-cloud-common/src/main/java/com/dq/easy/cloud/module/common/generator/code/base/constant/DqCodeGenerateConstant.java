@@ -38,6 +38,21 @@ public class DqCodeGenerateConstant {
 		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = System.getProperty("user.dir") ;
 	}
 	
+	/** 子模块默认的包名 */
+	public static class DqSubModuleDefaultPackageName {
+		public static final String POJO_DO = "pojo.entity";
+		public static final String POJO_DTO = "pojo.dto";
+		public static final String POJO_BO = "pojo.bo";
+		public static final String POJO_QUERY = "pojo.query";
+		public static final String DAO_INF = "dao";
+		public static final String DAO_IMPL = "dao.impl";
+		public static final String SERVICE_INF = "srvice";
+		public static final String SERVICE_IMPL = "srvice.impl";
+		public static final String LOGIC_INF = "logic";
+		public static final String LOGIC_IMPL = "logic.impl";
+		public static final String CONTROLLER = "controller";
+		public static final String ERROR_CODE = "constant.error";
+	}
 	/**
 	 * 
 	 * <p>
@@ -113,6 +128,7 @@ public class DqCodeGenerateConstant {
 		public static final String ERROR_CODE = "																																																																									QQQQQQQQQQQQQQQQQQQQ				QQQ																																																																																																																																																																																										.ftl";
 	}
 	
+	
 	/**
 	 * 
 	 * <p>
@@ -129,6 +145,23 @@ public class DqCodeGenerateConstant {
 		public static final String RESOURCES = "src\\main\\resources";
 	}
 	
+	/** 注释结尾 */
+	public static class DqClassCommentEndWith {
+		public static final String POJO_DO = "持久化类";
+		public static final String POJO_DTO = "数据传输类";
+		public static final String POJO_BO = "业务逻辑类";
+		public static final String POJO_QUERY = "查询类";
+		public static final String DAO_INF = "数据处理接口";
+		public static final String DAO_IMPL = "数据处理实现类";
+		public static final String SERVICE_INF = "服务接口";
+		public static final String SERVICE_IMPL = "服务实现类";
+		public static final String LOGIC_INF = "业务逻辑接口";
+		public static final String LOGIC_IMPL = "业务逻辑实现类";
+		public static final String CONTROLLER = "控制转发类";
+		public static final String ERROR_CODE = "错误代码枚举";
+	}
+	
+	/** 类名结尾 */
 	public static class DqClassNameEndWith {
 		public static final String POJO_DO = "Entity";
 		public static final String POJO_DTO = "DTO";
@@ -193,6 +226,25 @@ public class DqCodeGenerateConstant {
 		public String getTypeDesc() {
 			return typeDesc;
 		}
+		
+		public static boolean isGet(Integer type) {
+			if (GET.getType().equals(type)) {
+				return true;
+			}
+			return false;
+		}
+		public static boolean isSet(Integer type) {
+			if (SET.getType().equals(type)) {
+				return true;
+			}
+			return false;
+		}
+		public static boolean isBuild(Integer type) {
+			if (BUILD.getType().equals(type)) {
+				return true;
+			}
+			return false;
+		}
 	}
 	
 	/**
@@ -208,7 +260,7 @@ public class DqCodeGenerateConstant {
 		/** 忽略属性---id属性---id */
 		public static final String ID = "id";
 		/** 忽略属性---创建时间属性---createDate */
-		public static final String CREATE_DATE = "createdate";
+//		public static final String CREATE_DATE = "createdate";
 		/** 忽略属性---更新时间属性---updateDate */
 		public static final String UPDATE_DATE = "updatedate";
 		/** 忽略属性---版本属性---version */

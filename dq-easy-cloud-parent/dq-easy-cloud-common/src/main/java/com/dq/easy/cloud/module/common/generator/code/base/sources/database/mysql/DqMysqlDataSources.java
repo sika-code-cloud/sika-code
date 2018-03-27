@@ -11,8 +11,8 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqMysqlDataSources extends DqDatabaseDataSources{
 
-	public DqMysqlDataSources(DqDatabaseAbstactConfig databaseConfig, String tableName) {
-		super(databaseConfig, tableName);
+	public DqMysqlDataSources(DqDatabaseAbstactConfig databaseConfig) {
+		super(databaseConfig);
 	}
 
 	@Override

@@ -90,7 +90,6 @@ public class DqGenerateBO {
 		try {
 			// 生成的文件
 			File generateFile = new DqFileBO(fileDesc).newFile();
-			generateFile = new File(fileDesc.getFileFullPath());
 			// 需要生成的文件流
 			needGenerateeFileStram = new FileOutputStream(generateFile);
 			out = new BufferedWriter(new OutputStreamWriter(needGenerateeFileStram, DqCharset.UTF_8), 10240);

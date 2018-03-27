@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.module.common.file.pojo.desc;
 
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
-import com.dq.easy.cloud.module.common.generator.code.base.sources.DqBaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 
 /**
@@ -13,6 +12,7 @@ public abstract class DqFileContentBaseDesc {
 	/** 生成规则 */
 	private DqGenerateRule generateRule;
 	
+	
 	public DqFileContentBaseDesc() {
 		
 	}
@@ -21,8 +21,8 @@ public abstract class DqFileContentBaseDesc {
 		this.generateRule = generateRule;
 	}
 
-	/** 根据数据库数据源构建文件内容描述文件 */
-	public abstract DqFileContentBaseDesc buildDescByDatabaseSources(DqDatabaseDataSources databaseDataSources);
+	/** 根据数据库数据源构建数据 */
+	public abstract DqFileContentBaseDesc buildDataByDatabaseSources(DqDatabaseDataSources databaseDataSources);
 
 	public DqGenerateRule getGenerateRule() {
 		return generateRule;
