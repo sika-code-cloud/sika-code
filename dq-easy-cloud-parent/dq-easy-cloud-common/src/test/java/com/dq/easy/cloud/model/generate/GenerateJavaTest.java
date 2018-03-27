@@ -52,8 +52,6 @@ public class GenerateJavaTest {
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
 //	模版描述对象
 	private DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "JAVA.ftl");;
-//	表名
-	private String tableName = "easy_user_info";
 //	pojo类所在的项目名称
 	private String projectNamePojo = "dq-easy-cloud-common";
 //	dao类所在的项目名称
@@ -64,6 +62,9 @@ public class GenerateJavaTest {
 	private String projectNameController = "dq-easy-cloud-common";
 //	基础包名称
 	private String basePackageName = "com.dq.easy";
+	
+//	表名
+	private String tableName = "easy_user_info";
 //	模块包名
 	private String moduleName = "user";
 //	类主体名称
