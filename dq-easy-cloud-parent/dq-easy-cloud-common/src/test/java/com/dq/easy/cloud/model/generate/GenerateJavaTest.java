@@ -55,11 +55,11 @@ public class GenerateJavaTest {
 //	pojo类所在的项目名称
 	private String projectNamePojo = "dq-easy-cloud-common";
 //	dao类所在的项目名称
-	private String projectNameDao = "dq-easy-cloud-common";
+	private String projectNameDao = "dq-easy-cloud-config-server";
 //	service类所在的项目名称
-	private String projectNameService = "dq-easy-cloud-common";
+	private String projectNameService = "dq-easy-cloud-config-client";
 //	controller类所在的项目名称
-	private String projectNameController = "dq-easy-cloud-common";
+	private String projectNameController = "dq-easy-cloud-consumer";
 //	基础包名称
 	private String basePackageName = "com.dq.easy";
 	
@@ -119,6 +119,7 @@ public class GenerateJavaTest {
 		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
 				subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, true);
+		generateJavaBaseDTO.setCoverSwith(true);
 		try {
 			new DqGenerateJavaDOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
 					.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig)).generateCode();

@@ -90,6 +90,10 @@ public class DqGenerateBO {
 		try {
 			// 生成的文件
 			File generateFile = new DqFileBO(fileDesc).newFile();
+//			如果文件存在并且覆盖标志为false则不覆盖
+			if (generateFile.exists() && !fileDesc.isCoverSwitch()) {
+				return;
+			}
 			// 需要生成的文件流
 			needGenerateeFileStram = new FileOutputStream(generateFile);
 			out = new BufferedWriter(new OutputStreamWriter(needGenerateeFileStram, DqCharset.UTF_8), 10240);

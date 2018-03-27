@@ -51,6 +51,8 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		dqFileDesc.setSourceCodeRelativePath(DqSourceCodeRelativePath.JAVA);
 		dqFileDesc.setFileSuffix(DqFileSuffix.JAVA);
 		dqFileDesc.setPackageRelativePath(getPackageRelativePath());
+		dqFileDesc.setCoverSwitch(generateJavaBaseDTO.isCoverSwith());
+		
 		DqLogUtils.info("dqFileDesc", dqFileDesc, LoggerFactory.getLogger(this.getClass()));
 		super.setFileDesc(dqFileDesc);
 		

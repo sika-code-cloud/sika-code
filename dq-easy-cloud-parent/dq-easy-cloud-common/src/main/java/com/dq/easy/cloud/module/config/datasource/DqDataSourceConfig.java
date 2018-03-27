@@ -4,9 +4,11 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import com.dq.easy.cloud.module.conditional.datasource.DqDataSourceConditional;
 import com.dq.easy.cloud.module.jdbc.vo.druid.DqDruidDataSourceBO;
 /**
  * 
@@ -17,6 +19,7 @@ import com.dq.easy.cloud.module.jdbc.vo.druid.DqDruidDataSourceBO;
  *
  */
 @Configuration
+@Conditional(DqDataSourceConditional.class)
 public class DqDataSourceConfig {
 	@Autowired
 	private Environment environment;
