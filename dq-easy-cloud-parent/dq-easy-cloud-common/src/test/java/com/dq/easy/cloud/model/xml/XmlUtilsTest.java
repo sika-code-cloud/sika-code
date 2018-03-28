@@ -5,18 +5,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.Format.TextMode;
-import org.jdom2.output.LineSeparator;
 import org.jdom2.output.XMLOutputter;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
 
 public class XmlUtilsTest {
 	SAXBuilder builder = new SAXBuilder();
@@ -39,13 +39,18 @@ public class XmlUtilsTest {
         Element root = doc.getRootElement(); //获取根元素
         
         System.out.println("---获取第一个子节点和子节点下面的节点信息------");
+        List<Element> rmElements = root.getChildren();
         Element rmElement = root.getChild("resultMap");
-        System.out.println("resultMap属性的值列表" + rmElement.getAttributes());
-        for(Element el: rmElement.getChildren()){
-            System.out.println("text:" + el.getText());//第一次输入张三  第二次输出123123
-            System.out.println("attribute:" + el.getAttributes());//第一次输入张三  第二次输出123123
-        }
-        
+        System.out.println("resultMap属性的值列表" + rmElement.getChildren("result").size());
+        System.out.println("getContentSize:" + rmElement.getChildren("result").size());//第一次输入张三  第二次输出123123
+//        for (Content content : rmElement.getContent()) {
+//        	System.out.println("content" + content);
+//        }
+//        System.out.println("result:" + rmElement.getChild("result").getAttributes());
+//        for(Element el: rmElement.getChildren()){
+//            System.out.println("attribute:" + el.getAttributes());//第一次输入张三  第二次输出123123
+//        }
+//        
 //        System.out.println("---直接在根节点下就遍历所有的子节点---");
 //        for(Element el: root.getChildren()){
 //            System.out.println(el.getText());//这里输出4行空格
@@ -66,9 +71,13 @@ public class XmlUtilsTest {
         newEle.setAttribute("jdbcType","VARCHAR");
         newEle.setAttribute("property","updateBy");
         Element resultMap = root.getChild("resultMap"); 
+        List<Element> results = resultMap.getChildren("result");
+        for (int i = 0; i < results.size() ;++i) {
+        	if (i == 5) {
+        		results.get(i).addContent(newEle);
+        	}
+        }
         resultMap.getAttributes();
-        
-        root.getChild("resultMap").addContent(newEle);
         Format format = Format.getRawFormat();
         format.setEncoding("UTF-8");
         format.setTextMode(TextMode.PRESERVE);
