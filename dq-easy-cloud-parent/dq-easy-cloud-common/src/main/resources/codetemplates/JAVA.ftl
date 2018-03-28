@@ -22,6 +22,7 @@ import ${model};
 	<#if enum?exists && enum>
 	;
 	</#if>
+	
 	<#if fields?exists && generateRule?exists && generateRule.generateField>
 		<#list fields as model>
 	<#if model.comment?exists>/** ${model.comment} */</#if>
@@ -32,8 +33,21 @@ import ${model};
 		</#if>
 	<#if model.modifiers?exists><#list model.modifiers as model>${model.desc} </#list></#if>${model.simpleClassType} ${model.name?uncap_first};
 		</#list>
+		
 	</#if>
-
+	<#if constructors?exists>
+	<#list constructors as model>
+	<#if model.modifiersStr?exists>${model.modifiersStr} </#if>${model.name?cap_first}(<#if model.argsStr?exists>${model.argsStr}</#if>) {
+		<#if model.args?exists>
+			<#list model.args as model>
+		this.${model.name?uncap_first} = ${model.name?uncap_first};
+			</#list>
+		</#if>
+	}
+	</#list>
+	<#else>
+	
+	</#if>
 	<#if methods?exists && generateRule?exists>
 		<#list methods as model>
 		<#if model.type == 1  && generateRule.generateGetMethod>

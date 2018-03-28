@@ -2,6 +2,7 @@ package com.dq.easy.cloud.module.config.cache.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,6 +11,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.dq.easy.cloud.module.cache.redis.constant.DqRedisConstant;
+import com.dq.easy.cloud.module.conditional.cache.redis.DqRedisConditional;
 
 /**
  * 
@@ -20,7 +22,8 @@ import com.dq.easy.cloud.module.cache.redis.constant.DqRedisConstant;
  *
  */
 @Configuration
-public class RedisConfig {
+@Conditional(DqRedisConditional.class)
+public class DqRedisConfig {
 	/**
 	 * 注入 RedisConnectionFactory
 	 */

@@ -1,19 +1,15 @@
-package com.dq.easy.user.pojo.entity;
+package com.dq.easy.user.pojo.vo;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
-import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
-import javax.persistence.Entity;
+import com.dq.easy.cloud.module.basic.pojo.vo.DqBaseVO;
 import java.util.Date;
 
 /**
- * 描述：用户持久化类
+ * 描述：用户视图类
  * @author THINK
- * @date 2018-03-28 10:07:37
+ * @date 2018-03-28 10:29:01
  */
-@Table(name = "easy_user_info")
-@Entity
-public class UserEntity extends DqBaseBO{
+public class UserVO extends DqBaseVO{
 	
 	/** 创建日期 */
 	@Column(name = "create_date")
@@ -72,12 +68,6 @@ public class UserEntity extends DqBaseBO{
 		this.createDate = createDate;
 	}
 
-	/** 构建创建日期 */
-	public UserEntity buildCreateDate(Date createDate) {
-		this.createDate = createDate;
-		return this;
-	}
-
 	/** 获取用户名 */
 	public String getUserName() {
 		return this.userName;
@@ -86,12 +76,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置用户名 */
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	/** 构建用户名 */
-	public UserEntity buildUserName(String userName) {
-		this.userName = userName;
-		return this;
 	}
 
 	/** 获取用户昵称 */
@@ -104,12 +88,6 @@ public class UserEntity extends DqBaseBO{
 		this.nickName = nickName;
 	}
 
-	/** 构建用户昵称 */
-	public UserEntity buildNickName(String nickName) {
-		this.nickName = nickName;
-		return this;
-	}
-
 	/** 获取用户名字 */
 	public String getName() {
 		return this.name;
@@ -118,12 +96,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置用户名字 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/** 构建用户名字 */
-	public UserEntity buildName(String name) {
-		this.name = name;
-		return this;
 	}
 
 	/** 获取用户邮箱 */
@@ -136,12 +108,6 @@ public class UserEntity extends DqBaseBO{
 		this.email = email;
 	}
 
-	/** 构建用户邮箱 */
-	public UserEntity buildEmail(String email) {
-		this.email = email;
-		return this;
-	}
-
 	/** 获取电话 */
 	public String getPhoneNumber() {
 		return this.phoneNumber;
@@ -150,12 +116,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置电话 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	/** 构建电话 */
-	public UserEntity buildPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-		return this;
 	}
 
 	/** 获取微信号 */
@@ -168,12 +128,6 @@ public class UserEntity extends DqBaseBO{
 		this.wechatNumber = wechatNumber;
 	}
 
-	/** 构建微信号 */
-	public UserEntity buildWechatNumber(String wechatNumber) {
-		this.wechatNumber = wechatNumber;
-		return this;
-	}
-
 	/** 获取 */
 	public String getUserType() {
 		return this.userType;
@@ -182,12 +136,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置 */
 	public void setUserType(String userType) {
 		this.userType = userType;
-	}
-
-	/** 构建 */
-	public UserEntity buildUserType(String userType) {
-		this.userType = userType;
-		return this;
 	}
 
 	/** 获取微信头像 */
@@ -200,12 +148,6 @@ public class UserEntity extends DqBaseBO{
 		this.headImg = headImg;
 	}
 
-	/** 构建微信头像 */
-	public UserEntity buildHeadImg(String headImg) {
-		this.headImg = headImg;
-		return this;
-	}
-
 	/** 获取openid */
 	public String getOpenId() {
 		return this.openId;
@@ -214,12 +156,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置openid */
 	public void setOpenId(String openId) {
 		this.openId = openId;
-	}
-
-	/** 构建openid */
-	public UserEntity buildOpenId(String openId) {
-		this.openId = openId;
-		return this;
 	}
 
 	/** 获取用户密码 */
@@ -232,12 +168,6 @@ public class UserEntity extends DqBaseBO{
 		this.password = password;
 	}
 
-	/** 构建用户密码 */
-	public UserEntity buildPassword(String password) {
-		this.password = password;
-		return this;
-	}
-
 	/** 获取1男 2 女  3未知 */
 	public Integer getSex() {
 		return this.sex;
@@ -246,12 +176,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置1男 2 女  3未知 */
 	public void setSex(Integer sex) {
 		this.sex = sex;
-	}
-
-	/** 构建1男 2 女  3未知 */
-	public UserEntity buildSex(Integer sex) {
-		this.sex = sex;
-		return this;
 	}
 
 	/** 获取是否冻结 1冻结 0 未冻结  */
@@ -264,12 +188,6 @@ public class UserEntity extends DqBaseBO{
 		this.isFrozen = isFrozen;
 	}
 
-	/** 构建是否冻结 1冻结 0 未冻结  */
-	public UserEntity buildIsFrozen(Integer isFrozen) {
-		this.isFrozen = isFrozen;
-		return this;
-	}
-
 	/** 获取是否管理员 1 是 0 否 */
 	public Integer getIsManager() {
 		return this.isManager;
@@ -280,12 +198,6 @@ public class UserEntity extends DqBaseBO{
 		this.isManager = isManager;
 	}
 
-	/** 构建是否管理员 1 是 0 否 */
-	public UserEntity buildIsManager(Integer isManager) {
-		this.isManager = isManager;
-		return this;
-	}
-
 	/** 获取是否关注公众号 1 是 0 否 */
 	public Integer getIsSubscribe() {
 		return this.isSubscribe;
@@ -294,12 +206,6 @@ public class UserEntity extends DqBaseBO{
 	/** 设置是否关注公众号 1 是 0 否 */
 	public void setIsSubscribe(Integer isSubscribe) {
 		this.isSubscribe = isSubscribe;
-	}
-
-	/** 构建是否关注公众号 1 是 0 否 */
-	public UserEntity buildIsSubscribe(Integer isSubscribe) {
-		this.isSubscribe = isSubscribe;
-		return this;
 	}
 
 }

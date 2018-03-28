@@ -7,7 +7,7 @@ import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseDTO;
  * @author daiqi
  *
  */
-public class DqBaseVo extends DqBaseDTO{
+public class DqBaseVO extends DqBaseDTO{
 	
 	
 }

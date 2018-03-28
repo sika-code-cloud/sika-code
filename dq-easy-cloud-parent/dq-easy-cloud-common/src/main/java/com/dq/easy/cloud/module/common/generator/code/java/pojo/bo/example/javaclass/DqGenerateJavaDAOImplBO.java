@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example;
+package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,17 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.module.basic.repository.DqBaseRepository;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
@@ -27,16 +29,16 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  *
  * @author daiqi 创建时间 2018年3月27日 上午9:54:03
  */
-public class DqGenerateJavaDAOImplBO extends DqGenerateJavaBaseBO {
+public class DqGenerateJavaDAOImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getClassAnnotations() {
+	protected List<DqJavaAnnotationDesc> getAnnotations() {
 		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		DqJavaAnnotationDesc repositoryAnnotation = new DqJavaAnnotationDesc();
 		repositoryAnnotation.setName(Repository.class.getSimpleName());
@@ -67,13 +69,31 @@ public class DqGenerateJavaDAOImplBO extends DqGenerateJavaBaseBO {
 	}
 
 	@Override
-	public DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		return this;
+	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
+		return null;
 	}
 
 	@Override
-	protected String getClassComment() {
-		return super.getClassComment() + DqClassCommentEndWith.DAO_IMPL;
+	protected List<DqJavaMethodContentDesc> getConstructors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaFieldContentDesc> getFields() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<DqJavaMethodContentDesc> getMethods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String getClassCommentEndWith() {
+		return DqClassCommentEndWith.DAO_IMPL;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.dq.easy.cloud.module.common.file.pojo.bo;
 
 import java.io.File;
 
+import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.file.utils.DqFileUtils;
 
@@ -35,8 +36,15 @@ public class DqFileBO {
 		fileDesc.verifyFileDescData();
 //		创建目录
 		DqFileUtils.mkdirs(fileDesc.getFileDirectoryFullPath());
-//		创建文件
-		return DqFileUtils.newFile(fileDesc.getFileFullPath());
+//		根据路径获取文件
+		File newFile = DqFileUtils.newFile(fileDesc.getFileFullPath());
+		if (DqBaseUtils.isNull(newFile)) {
+			return newFile;
+		}
+		if (newFile.exists() && !fileDesc.isCoverSwitch()) {
+			return null;
+		}
+		return newFile;
 	}
 	
 }

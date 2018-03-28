@@ -9,7 +9,7 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 /**
  * 
  * <p>
- *  代码生成常量类
+ * 代码生成常量类
  * </p>
  *
  * <pre>
@@ -19,48 +19,30 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  *  使用示例：
  * </pre>
  *
- * @author daiqi
- * 创建时间    2018年3月21日 下午4:46:23
+ * @author daiqi 创建时间 2018年3月21日 下午4:46:23
  */
 public class DqCodeGenerateConstant {
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 代码项目常量类
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年3月22日 下午5:28:11
+	 * @author daiqi 创建时间 2018年3月22日 下午5:28:11
 	 */
 	public static class DqCodeProject {
 		/** 项目根路径---基础路径---System.getProperty("user.dir") */
-		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = System.getProperty("user.dir") ;
+		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = System.getProperty("user.dir");
 	}
-	
-	/** 子模块默认的包名 */
-	public static class DqSubModuleDefaultPackageName {
-		public static final String POJO_DO = "pojo.entity";
-		public static final String POJO_DTO = "pojo.dto";
-		public static final String POJO_BO = "pojo.bo";
-		public static final String POJO_QUERY = "pojo.query";
-		public static final String DAO_INF = "dao";
-		public static final String DAO_IMPL = "dao.impl";
-		public static final String SERVICE_INF = "srvice";
-		public static final String SERVICE_IMPL = "srvice.impl";
-		public static final String LOGIC_INF = "logic";
-		public static final String LOGIC_IMPL = "logic.impl";
-		public static final String CONTROLLER = "controller";
-		public static final String ERROR_CODE = "constant.error";
-	}
+
 	/**
 	 * 
 	 * <p>
 	 * 类名简称
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年3月23日 下午1:55:37
+	 * @author daiqi 创建时间 2018年3月23日 下午1:55:37
 	 */
 	public static class DqClassNameSimple {
 		/** 类名简称---原始类型---byte */
@@ -95,7 +77,7 @@ public class DqCodeGenerateConstant {
 		public static final String BOOLEAN_PACK = "Boolean";
 		/** 类名简称---包装类型---Character */
 		public static final String CHAR_PACK = "Character";
-		
+
 		/** 类名简称---引用类型---String */
 		public static final String STRING = "String";
 		/** 类名简称---引用类型---BigDecimal */
@@ -105,38 +87,18 @@ public class DqCodeGenerateConstant {
 		/** 类名简称---引用类型---byte [] */
 		public static final String BYTE_ARRAY = "byte []";
 	}
-	
+
 	public static class DqTemplateName {
-		public static final String POJO_DO = "POJO_DO.ftl";
-		public static final String POJO_DTO = "POJO_DTO.ftl";
-		public static final String POJO_BO = "POJO_BO.ftl";
-		public static final String POJO_QUERY = "POJO_QUERY.ftl";
-		public static final String DAO_INF = "DAO_INF.ftl";
-		public static final String DAO_IMPL = "DAO_IMPL.ftl";
-		public static final String SERVICE_INF = "SERVICE_INF.ftl";
-		public static final String SERVICE_IMPL = "SERVICE_IMPL.ftl";
-		public static final String LOGIC_INF = "LOGIC_INF.ftl";
-		public static final String LOGIC_IMPL = "LOGIC_IMPL.ftl";
-		public static final String CONTROLLER = "CONTROLLER.ftl";
-		public static final String ANNOTATION = "ANNOTATION.ftl";
-		public static final String ASPECT = "ASPECT.ftl";
-		public static final String CONFIG = "CONFIG.ftl";
-		public static final String HANDLER = "HANDLER.ftl";
-		public static final String PROXY = "PROXY.ftl";
-		public static final String UTIL = "UTIL.ftl";
-		public static final String COMMON = "COMMON.ftl";
-		public static final String ERROR_CODE = "																																																																									QQQQQQQQQQQQQQQQQQQQ				QQQ																																																																																																																																																																																										.ftl";
+		public static final String JAVA = "JAVA.ftl";
 	}
-	
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 源代码路径常量类
 	 * </p>
 	 * 
-	 * @author daiqi
-	 * 创建时间    2018年3月23日 上午9:49:23
+	 * @author daiqi 创建时间 2018年3月23日 上午9:49:23
 	 */
 	public static class DqSourceCodeRelativePath {
 		/** 源代码路径---java---src\\main\\java */
@@ -144,13 +106,14 @@ public class DqCodeGenerateConstant {
 		/** 源代码路径---资源路径---src\\main\\resources */
 		public static final String RESOURCES = "src\\main\\resources";
 	}
-	
+
 	/** 注释结尾 */
 	public static class DqClassCommentEndWith {
 		public static final String POJO_DO = "持久化类";
 		public static final String POJO_DTO = "数据传输类";
 		public static final String POJO_BO = "业务逻辑类";
 		public static final String POJO_QUERY = "查询类";
+		public static final String POJO_VO = "视图类";
 		public static final String DAO_INF = "数据处理接口";
 		public static final String DAO_IMPL = "数据处理实现类";
 		public static final String SERVICE_INF = "服务接口";
@@ -159,14 +122,19 @@ public class DqCodeGenerateConstant {
 		public static final String LOGIC_IMPL = "业务逻辑实现类";
 		public static final String CONTROLLER = "控制转发类";
 		public static final String ERROR_CODE = "错误代码枚举";
+		public static final String UTIL = "工具类";
+		public static final String PROXY = "代理类";
+		public static final String TEMPLATE = "模板类";
+		public static final String ASPECT = "切面类";
 	}
-	
+
 	/** 类名结尾 */
 	public static class DqClassNameEndWith {
 		public static final String POJO_DO = "Entity";
 		public static final String POJO_DTO = "DTO";
 		public static final String POJO_BO = "BO";
 		public static final String POJO_QUERY = "Query";
+		public static final String POJO_VO = "VO";
 		public static final String DAO_INF = "DAO";
 		public static final String DAO_IMPL = "DAOImpl";
 		public static final String SERVICE_INF = "Service";
@@ -175,15 +143,40 @@ public class DqCodeGenerateConstant {
 		public static final String LOGIC_IMPL = "LogicImpl";
 		public static final String CONTROLLER = "Controller";
 		public static final String ERROR_CODE = "ErrorCodeEnum";
+		public static final String UTIL = "Util";
+		public static final String PROXY = "Proxy";
+		public static final String TEMPLATE = "Template";
+		public static final String ASPECT = "Aspect";
 	}
+
+	/** 子模块默认的包名 */
+	public static class DqSubModuleDefaultPackageName {
+		public static final String POJO_DO = "pojo.entity";
+		public static final String POJO_DTO = "pojo.dto";
+		public static final String POJO_BO = "pojo.bo";
+		public static final String POJO_QUERY = "pojo.query";
+		public static final String POJO_VO = "pojo.vo";
+		public static final String DAO_INF = "dao";
+		public static final String DAO_IMPL = "dao.impl";
+		public static final String SERVICE_INF = "srvice";
+		public static final String SERVICE_IMPL = "srvice.impl";
+		public static final String LOGIC_INF = "logic";
+		public static final String LOGIC_IMPL = "logic.impl";
+		public static final String CONTROLLER = "controller";
+		public static final String ERROR_CODE = "constant.error";
+		public static final String UTIL = "util";
+		public static final String PROXY = "proxy";
+		public static final String TEMPLATE = "template";
+		public static final String ASPECT = "aspect";
+	}
+
 	/**
 	 * 
 	 * <p>
 	 * 字段名标签常量
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年3月22日 下午5:28:11
+	 * @author daiqi 创建时间 2018年3月22日 下午5:28:11
 	 */
 	public static class DqColumnLabel {
 		/** 数据库表的字段名标签---字段名---COLUMN_NAME */
@@ -193,15 +186,14 @@ public class DqCodeGenerateConstant {
 		/** 数据库表的字段名标签---字段的备注---COLUMN_NAME */
 		public static final String REMARKS = "REMARKS";
 	}
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 方法类型枚举
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年3月26日 上午11:56:31
+	 * @author daiqi 创建时间 2018年3月26日 上午11:56:31
 	 */
 	public static enum DqMethodTypeEnum {
 		/** 方法类型枚举---其他方法--- -1 */
@@ -211,34 +203,38 @@ public class DqCodeGenerateConstant {
 		/** 方法类型枚举---set---2 */
 		SET(2, "set"),
 		/** 方法类型枚举---build---3 */
-		BUILD(3, "build")
-		;
-		
+		BUILD(3, "build");
+
 		private Integer type;
 		private String typeDesc;
+
 		private DqMethodTypeEnum(Integer type, String typeDesc) {
 			this.type = type;
 			this.typeDesc = typeDesc;
 		}
+
 		public Integer getType() {
 			return type;
 		}
+
 		public String getTypeDesc() {
 			return typeDesc;
 		}
-		
+
 		public static boolean isGet(Integer type) {
 			if (GET.getType().equals(type)) {
 				return true;
 			}
 			return false;
 		}
+
 		public static boolean isSet(Integer type) {
 			if (SET.getType().equals(type)) {
 				return true;
 			}
 			return false;
 		}
+
 		public static boolean isBuild(Integer type) {
 			if (BUILD.getType().equals(type)) {
 				return true;
@@ -246,21 +242,20 @@ public class DqCodeGenerateConstant {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 忽略生成的属性
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年3月21日 下午7:44:25
+	 * @author daiqi 创建时间 2018年3月21日 下午7:44:25
 	 */
-	public static class DqIgnoreField{
+	public static class DqIgnoreField {
 		/** 忽略属性---id属性---id */
 		public static final String ID = "id";
 		/** 忽略属性---创建时间属性---createDate */
-//		public static final String CREATE_DATE = "createdate";
+		// public static final String CREATE_DATE = "createdate";
 		/** 忽略属性---更新时间属性---updateDate */
 		public static final String UPDATE_DATE = "updatedate";
 		/** 忽略属性---版本属性---version */
@@ -275,58 +270,65 @@ public class DqCodeGenerateConstant {
 		public static final String REMARK = "remark";
 		/** 忽略属性---available属性---available */
 		public static final String AVAILABLE = "available";
-		
+
 		/**
 		 * 
 		 * <p>
 		 * 是否是忽略的属性
 		 * </p>
 		 *
-		 * @param fieldName : String : 属性名称
+		 * @param fieldName
+		 *            : String : 属性名称
 		 * @return true
 		 * @author daiqi 创建时间 2018年3月21日 下午8:37:59
 		 */
 		public static final boolean isIgnoreField(String fieldName) {
-//			移除下划线的小写字符串
-			String rmOnderLineLowerCaseStr = DqStringUtils.lowerCase(DqStringUtils.replace(fieldName, DqSymbol.UNDER_LINE, DqStringUtils.EMPTY));
+			// 移除下划线的小写字符串
+			String rmOnderLineLowerCaseStr = DqStringUtils
+					.lowerCase(DqStringUtils.replace(fieldName, DqSymbol.UNDER_LINE, DqStringUtils.EMPTY));
 			return DqBaseUtils.isExistConstantValue(DqIgnoreField.class, rmOnderLineLowerCaseStr);
 		}
-		
+
 		/**
 		 * 修饰符映射美剧类
+		 * 
 		 * @author daiqi
 		 * @date 2018年3月24日 上午1:25:14
 		 */
 		public static enum DqModifierMappingEnum {
-			ABSTRACT(Modifier.ABSTRACT, "abstract"),
+			ABSTRACT(Modifier.ABSTRACT, "abstract"), 
 			FINAL(Modifier.FINAL, "final"),
-			INTERFACE(Modifier.INTERFACE, "interface"),
+			INTERFACE(Modifier.INTERFACE,"interface"),
 			NATIVE(Modifier.NATIVE, "native"),
 			PRIVATE(Modifier.PRIVATE, "private"),
 			PROTECTED(Modifier.PROTECTED, "protected"),
 			PUBLIC(Modifier.PUBLIC, "public"),
 			STATIC(Modifier.STATIC, "static"),
-			STRICT(Modifier.STRICT, "strict"),
-			SYNCHRONIZED(Modifier.SYNCHRONIZED, "synchronized"),
+			STRICT(Modifier.STRICT, "strict"), 
+			SYNCHRONIZED(Modifier.SYNCHRONIZED, "synchronized"), 
 			TRANSIENT(Modifier.TRANSIENT, "transient"),
 			VOLATILE(Modifier.VOLATILE, "volatile"),
 			ENUM(0x00004000, "enum"),
-			CLASS(0x00004020, "class");
+			CLASS(0x00004020, "class"),
+			ANNOTATION(0x00004040, "@interface")
 			;
-			
+
 			private int modifier;
 			private String modifierDesc;
-			private DqModifierMappingEnum(int modifier, String modifierDesc){
+
+			private DqModifierMappingEnum(int modifier, String modifierDesc) {
 				this.modifier = modifier;
 				this.modifierDesc = modifierDesc;
 			}
+
 			public int getModifier() {
 				return modifier;
 			}
+
 			public String getModifierDesc() {
 				return modifierDesc;
 			}
-			
+
 		}
 	}
 }

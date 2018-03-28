@@ -13,6 +13,8 @@ public class DqGenerateJavaBaseDTO {
 	private String classBodyName;
 	/** 类注释 */
 	private String classComment;
+	/** 文件覆盖开关---true---覆盖---false存在不覆盖 */
+	private boolean coverSwith;
 	public DqGenerateJavaBaseDTO(String projectName, String basePackageName, String moduleName,
 			String subModulePackageName, String classBodyName, String classComment) {
 		this.projectName = projectName;
@@ -69,6 +71,14 @@ public class DqGenerateJavaBaseDTO {
 
 	public void setClassComment(String classComment) {
 		this.classComment = classComment;
+	}
+
+	public boolean isCoverSwith() {
+		return coverSwith;
+	}
+
+	public void setCoverSwith(boolean coverSwith) {
+		this.coverSwith = coverSwith;
 	}
 
 }

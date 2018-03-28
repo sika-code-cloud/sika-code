@@ -39,6 +39,8 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	private DqJavaContentBaseDesc extendsParentClass;
 	/** 实现的接口列表 */
 	private List<DqJavaImplInterfaceContentDesc> implementsInterfaces;
+	/** 构造函数列表 */
+	private List<DqJavaMethodContentDesc> constructors;
 	/** 属性列表 */
 	private List<DqJavaFieldContentDesc> fields;
 	/** 方法列表 */
@@ -137,6 +139,25 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		return classHeaderBuild.toString();
 	}
 
+	/** 根据属性列表构建构造函数 */
+	public DqJavaClassContentDesc buildConstructorsByFields() {
+		List<DqJavaMethodContentDesc> constructors = new ArrayList<>();
+		DqJavaMethodContentDesc constructor = new DqJavaMethodContentDesc();
+//		设置modifier
+		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
+		modifiers.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
+		constructor.setModifiers(modifiers);
+//		设置名称
+		constructor.setName(this.getName());
+		constructor.setSimpleClassType(this.getSimpleClassType());
+//		设置形参列表
+		constructor.setArgs(getFields());
+		
+		constructors.add(constructor);
+		this.constructors = constructors;
+		return this;
+	}
+
 	@Override
 	public DqFileContentBaseDesc buildDataByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
 		if (DqBaseUtils.isNull(databaseDataSources)) {
@@ -156,7 +177,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	 * @return
 	 * @author daiqi 创建时间 2018年3月27日 下午1:51:42
 	 */
-	public DqFileContentBaseDesc buildJavaMethodsByFields() {
+	public DqJavaClassContentDesc buildMethodsByFields() {
 		buildJavaMethodsByFields(this.fields);
 		return this;
 	}
@@ -183,6 +204,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		}
 		return this;
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -204,6 +226,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		}
 		return false;
 	}
+
 	/** add导入属性列表的完整类类型 */
 	private void addImportFieldsFullClassType() {
 		DqGenerateJavaClassRule javaClassRule = (DqGenerateJavaClassRule) getGenerateRule();
@@ -333,6 +356,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		return methodContentDesc;
 	}
 
+	/** 获取默认的方法描述 */
 	private DqJavaMethodContentDesc getJavaDefaultMethodDesc(DqJavaFieldContentDesc fieldContentDesc,
 			DqMethodTypeEnum methodTypeEnum) {
 		DqJavaMethodContentDesc methodContentDesc = new DqJavaMethodContentDesc(methodTypeEnum);
@@ -347,6 +371,7 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		return methodContentDesc;
 	}
 
+	/** 根据数据源构建属性列表 */
 	private DqJavaClassContentDesc buildFieldsByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
 		ResultSet resultSet = databaseDataSources.getResultSet();
 		if (DqBaseUtils.isNull(resultSet)) {
@@ -449,6 +474,14 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 
 	public void setImplementsInterfaces(List<DqJavaImplInterfaceContentDesc> implementsInterfaces) {
 		this.implementsInterfaces = implementsInterfaces;
+	}
+
+	public List<DqJavaMethodContentDesc> getConstructors() {
+		return constructors;
+	}
+
+	public void setConstructors(List<DqJavaMethodContentDesc> constructors) {
+		this.constructors = constructors;
 	}
 
 	public List<DqJavaFieldContentDesc> getFields() {

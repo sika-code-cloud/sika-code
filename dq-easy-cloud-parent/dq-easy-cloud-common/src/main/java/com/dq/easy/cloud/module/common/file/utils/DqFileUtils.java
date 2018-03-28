@@ -53,7 +53,7 @@ public class DqFileUtils {
 	 * @param filePath
 	 * @return
 	 *
-	 * 		author daiqi 创建时间 2018年3月24日 上午12:08:24
+	 * 	author daiqi 创建时间 2018年3月24日 上午12:08:24
 	 */
 	public static File newFile(String filePath) {
 		if (DqStringUtils.isEmpty(filePath)) {

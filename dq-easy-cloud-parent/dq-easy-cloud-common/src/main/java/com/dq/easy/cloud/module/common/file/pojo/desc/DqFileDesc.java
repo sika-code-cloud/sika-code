@@ -23,6 +23,8 @@ public class DqFileDesc {
 	private String fileSuffix;
 	/** 项目名称 */
 	private String projectName;
+	/** 文件覆盖开关---true不论文件是否存在都覆盖---false--文件存在不覆盖 */
+	private boolean coverSwitch;
 
 	public String getFileDirectoryFullPath() {
 		return fileDirectoryFullPath;
@@ -63,16 +65,26 @@ public class DqFileDesc {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+
+	public boolean isCoverSwitch() {
+		return coverSwitch;
+	}
+
+	public void setCoverSwitch(boolean coverSwitch) {
+		this.coverSwitch = coverSwitch;
+	}
+
 	/**
 	 * 
-	 * <p>构建文件完整路径</p>
+	 * <p>
+	 * 构建文件完整路径
+	 * </p>
 	 *
 	 * <pre></pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月24日 上午12:29:31
+	 * 		author daiqi 创建时间 2018年3月24日 上午12:29:31
 	 */
 	public void initFileDescData() {
 		if (DqStringUtils.isEmpty(getFileFullPath())) {
@@ -82,19 +94,20 @@ public class DqFileDesc {
 			setFileFullPath(fileFullPathBuild.toString());
 		}
 	}
-	
+
 	/**
 	 * 
-	 * <p>校验文件描述数据</p>
+	 * <p>
+	 * 校验文件描述数据
+	 * </p>
 	 *
 	 * <pre></pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月24日 上午12:20:45
+	 * 		author daiqi 创建时间 2018年3月24日 上午12:20:45
 	 */
-	public void verifyFileDescData () {
+	public void verifyFileDescData() {
 		if (DqBaseUtils.isNull(getFileDirectoryFullPath())) {
 			throw new DqBaseBusinessException(DqFileErrorCodeEnum.FILE_DIRECTORY_FULL_PATH_CANT_EMPTY);
 		}

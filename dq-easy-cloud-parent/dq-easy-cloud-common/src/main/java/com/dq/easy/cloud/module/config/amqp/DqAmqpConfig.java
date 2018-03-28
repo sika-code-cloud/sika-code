@@ -5,16 +5,21 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
+import com.dq.easy.cloud.module.conditional.amqp.DqAmqpConditional;
 import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName;
 import com.dq.easy.cloud.module.mq.amqp.constant.DqAmqpQueueName.DqAmqpQueueNameEnum;
 import com.dq.easy.cloud.module.mq.amqp.utils.DqAmqpUtils;
 
 
 @Configuration
-public class AmqpConfig {
+@Conditional(DqAmqpConditional.class)
+@ConditionalOnBean
+public class DqAmqpConfig {
 	@Bean
     public Queue queueTest() {
         return DqAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TEST);

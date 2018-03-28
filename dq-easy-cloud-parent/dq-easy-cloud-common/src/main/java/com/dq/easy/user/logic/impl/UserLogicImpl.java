@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 描述：用户业务逻辑实现类
  * @author THINK
- * @date 2018-03-27 16:37:02
+ * @date 2018-03-28 10:07:37
  */
 @Component(value = "userService")
 public class UserLogicImpl extends DqBaseLogic{
+	
 	/** 用户业务逻辑实现类服务接口 */
 	@Autowired
 	private UserService userService;
-
+		
+	
 }
