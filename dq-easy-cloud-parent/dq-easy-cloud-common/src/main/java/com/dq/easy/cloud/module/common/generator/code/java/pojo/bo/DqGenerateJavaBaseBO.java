@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 
 import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
+import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
@@ -32,16 +33,15 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	protected DqDatabaseDataSources databaseDataSources;
 	private DqGenerateRule generateRule;
 
-	public DqGenerateJavaBaseBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
+	public DqGenerateJavaBaseBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
 		this.generateJavaBaseDTO = generateJavaBaseDTO;
-		this.dataBaseConfig = dataBaseConfig;
 		super.setTemplateDesc(templateDesc);
 		this.generateRule = generateRule;
 
 		initData();
 	}
-	
+
 	private void initData() {
 		DqJavaFileDesc dqFileDesc = new DqJavaFileDesc();
 		dqFileDesc.setProjectName(generateJavaBaseDTO.getProjectName());
@@ -50,14 +50,14 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		dqFileDesc.setFileSuffix(DqFileSuffix.JAVA);
 		dqFileDesc.setPackageRelativePath(getPackageRelativePath());
 		dqFileDesc.setCoverSwitch(generateJavaBaseDTO.isCoverSwith());
-		
+
 		DqLogUtils.info("dqFileDesc", dqFileDesc, LoggerFactory.getLogger(this.getClass()));
 		super.setFileDesc(dqFileDesc);
-		
+
 		super.setFileContentDesc(new DqJavaClassContentDesc(generateRule));
 		javaClassContentDesc = (DqJavaClassContentDesc) super.getFileContentDesc();
 	}
-	
+
 	@Override
 	public void generateCode() throws Exception {
 		String className = getClassName();
@@ -77,9 +77,9 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		// 设置继承父类---begin
 		javaClassContentDesc.setExtendsParentClass(getExtendsParentClass());
 		// 设置继承父类---end
-		// 设置实现的接口---begin		
+		// 设置实现的接口---begin
 		javaClassContentDesc.setImplementsInterfaces(getImplementsInterfaces());
-		// 设置实现的接口---end	
+		// 设置实现的接口---end
 		// 设置构造函数列表---begin
 		javaClassContentDesc.setConstructors(getConstructors());
 		// 设置构造函数列表---end
@@ -90,10 +90,10 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		javaClassContentDesc.setMethods(getMethods());
 		// 设置方法列表---end
 		javaClassContentDesc.addImportFullClassType();
-//		调用真正的生成代码方法
+		// 调用真正的生成代码方法
 		super.generateCode();
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -102,34 +102,62 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	 *
 	 * @param databaseDataSources
 	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年3月27日 上午11:38:51
+	 * @author daiqi 创建时间 2018年3月27日 上午11:38:51
 	 */
 	public DqGenerateJavaBaseBO buildDatabaseDataSources(DqDatabaseDataSources databaseDataSources) {
 		this.databaseDataSources = databaseDataSources;
 		return this;
 	}
-	
-	protected abstract DqGenerateJavaBaseBO buildJavaClassContentOtherData();
+
 	/** 获取类名endWith */
 	protected abstract String getClassNameEndWith();
+
 	/** 获取注释endWith */
 	protected abstract String getClassCommentEndWith();
+
 	/** 获取类的注解列表 */
 	protected abstract List<DqJavaAnnotationDesc> getAnnotations();
+
 	/** 获取类的Modifier列表 */
 	protected abstract List<DqJavaModifierDesc> getModifiers();
+
 	/** 获取继承父类的class */
 	protected abstract DqJavaContentBaseDesc getExtendsParentClass();
+
 	/** 获取实现的接口列表 */
 	protected abstract List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces();
+
 	/** 获取构造函数列表 */
 	protected abstract List<DqJavaMethodContentDesc> getConstructors();
+
 	/** 获取属性列表 */
 	protected abstract List<DqJavaFieldContentDesc> getFields();
+
 	/** 获取方法列表 */
 	protected abstract List<DqJavaMethodContentDesc> getMethods();
-	
+
+	/** 根据数据源构建属性列表 */
+	protected List<DqJavaFieldContentDesc> getFieldsByDatabaseDataSources() {
+		javaClassContentDesc.buildDataByDatabaseSources(databaseDataSources);
+		return javaClassContentDesc.getFields();
+	}
+
+	/** 根据属性列表获取方法列表 */
+	protected List<DqJavaMethodContentDesc> getMethodsByFields() {
+		if (DqCollectionsUtils.isEmpty(javaClassContentDesc.getFields())) {
+			javaClassContentDesc.setFields(getFields());
+		}
+		return javaClassContentDesc.buildMethodsByFields().getMethods();
+	}
+
+	/** 根据属性列表获取构造函数列表 */
+	protected List<DqJavaMethodContentDesc> getConstructorsByFields() {
+		if (DqCollectionsUtils.isEmpty(javaClassContentDesc.getFields())) {
+			javaClassContentDesc.setFields(getFields());
+		}
+		return javaClassContentDesc.buildConstructorsByFields().getConstructors();
+	}
+
 	/** 获取类的注释 */
 	protected String getClassComment() {
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
@@ -141,9 +169,9 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		}
 		return sb.toString();
 	}
-	
+
 	/** 获取类的名称 */
-	protected String getClassName () {
+	protected String getClassName() {
 		StringBuilder classNameBuild = DqStringUtils.newStringBuilderDefault();
 		classNameBuild.append(DqStringUtils.capitalize(generateJavaBaseDTO.getClassBodyName()));
 		if (DqStringUtils.isNotEmpty(getClassNameEndWith())) {
@@ -164,7 +192,8 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	private String getPackageRelativePath() {
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
 		if (DqStringUtils.isNotEmpty(generateJavaBaseDTO.getBasePackageName())) {
-			String basePackagePath = DqCodeGenerateUtils.changePackageNameToPath(generateJavaBaseDTO.getBasePackageName());
+			String basePackagePath = DqCodeGenerateUtils
+					.changePackageNameToPath(generateJavaBaseDTO.getBasePackageName());
 			sb.append(basePackagePath).append(DqSymbol.BACK_SLASH);
 		}
 		if (DqStringUtils.isNotEmpty(generateJavaBaseDTO.getModuleName())) {
@@ -177,7 +206,7 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * 
 	 * <p>

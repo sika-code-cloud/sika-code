@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.module.basic.repository.DqBaseRepository;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
@@ -17,7 +16,6 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterf
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -33,9 +31,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaDAOImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
@@ -71,13 +69,7 @@ public class DqGenerateJavaDAOImplBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	public DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		return this;
-	}
-
-	@Override
 	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

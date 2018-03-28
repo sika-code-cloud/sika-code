@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
@@ -31,9 +30,9 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaBOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaBOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
@@ -64,15 +63,14 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected List<DqJavaMethodContentDesc> getConstructors() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getConstructorsByFields();
 	}
 
 	@Override
 	protected List<DqJavaFieldContentDesc> getFields() {
 		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
 		DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
-		fieldContentDesc.setComment(javaClassContentDesc.getComment() + DqClassCommentEndWith.POJO_DTO);
+		fieldContentDesc.setComment(DqClassCommentEndWith.POJO_DTO);
 
 		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
 		DqJavaModifierDesc modifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
@@ -91,8 +89,7 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected List<DqJavaMethodContentDesc> getMethods() {
-		// TODO Auto-generated method stub
-		return null;
+		return getMethodsByFields();
 	}
 
 	@Override

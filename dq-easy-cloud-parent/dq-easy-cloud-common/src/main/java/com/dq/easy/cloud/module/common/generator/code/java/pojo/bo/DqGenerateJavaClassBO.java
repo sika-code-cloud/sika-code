@@ -3,23 +3,17 @@ package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
-public abstract class DqGenerateJavaClassBO extends DqGenerateJavaBaseBO{
+public abstract class DqGenerateJavaClassBO extends DqGenerateJavaBaseBO {
 
-	public DqGenerateJavaClassBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
-	}
-
-	@Override
-	protected DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		return this;
+	public DqGenerateJavaClassBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
 	@Override

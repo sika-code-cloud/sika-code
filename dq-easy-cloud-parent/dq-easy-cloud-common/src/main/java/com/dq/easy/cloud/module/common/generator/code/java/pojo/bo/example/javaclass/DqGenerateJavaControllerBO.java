@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 import com.dq.easy.cloud.module.basic.controller.DqBaseController;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
@@ -17,7 +16,6 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterf
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -33,9 +31,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaControllerBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaControllerBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
@@ -66,22 +64,6 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected String getClassNameEndWith() {
-		return DqClassNameEndWith.CONTROLLER;
-	}
-
-	@Override
-	public DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		return this;
-	}
-
-
-	@Override
-	protected String getClassComment() {
-		return super.getClassComment() + DqClassCommentEndWith.CONTROLLER;
-	}
-
-	@Override
 	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
 		return null;
 	}
@@ -99,6 +81,11 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 	@Override
 	protected List<DqJavaMethodContentDesc> getMethods() {
 		return null;
+	}
+
+	@Override
+	protected String getClassNameEndWith() {
+		return DqClassNameEndWith.CONTROLLER;
 	}
 
 	@Override

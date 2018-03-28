@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.module.basic.logic.DqBaseLogic;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
@@ -36,9 +35,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaLogicImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaLogicImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
@@ -51,7 +50,8 @@ public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 		serviceAnnotation.setFullClassType(Component.class.getName());
 
 		List<DqJavaAnnotationParamDesc> serviceAnnotationParamDescs = new ArrayList<>();
-		String value = DqStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.SERVICE_INF);
+		String value = DqStringUtils
+				.uncapitalize(generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.SERVICE_INF);
 		serviceAnnotationParamDescs.add(new DqJavaAnnotationParamDesc("value", value));
 		serviceAnnotation.setParams(serviceAnnotationParamDescs);
 
@@ -90,7 +90,7 @@ public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
 		DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
 		fieldContentDesc.setComment(javaClassContentDesc.getComment() + DqClassCommentEndWith.SERVICE_INF);
-//		设置属性注解
+		// 设置属性注解
 		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		DqJavaAnnotationDesc annotationDesc = new DqJavaAnnotationDesc();
 		annotationDesc.setName(Autowired.class.getSimpleName());
@@ -98,19 +98,19 @@ public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 		annotationDesc.setFullClassType(Autowired.class.getName());
 		annotationDescs.add(annotationDesc);
 		fieldContentDesc.setAnnotations(annotationDescs);
-		
-//		设置属性的modifiers
+
+		// 设置属性的modifiers
 		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
 		DqJavaModifierDesc modifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
 		modifiers.add(modifierDesc);
 		fieldContentDesc.setModifiers(modifiers);
-//		设置属性名称和类型
+		// 设置属性名称和类型
 		String daoName = super.generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.SERVICE_INF;
 		fieldContentDesc.setName(daoName);
 		fieldContentDesc.setSimpleClassType(daoName);
 		fieldContentDesc.setPackageName(getFullPackageName(DqSubModuleDefaultPackageName.SERVICE_INF));
 		fieldContentDesc.buildFullClassType();
-		
+
 		fieldContentDescs.add(fieldContentDesc);
 
 		return fieldContentDescs;

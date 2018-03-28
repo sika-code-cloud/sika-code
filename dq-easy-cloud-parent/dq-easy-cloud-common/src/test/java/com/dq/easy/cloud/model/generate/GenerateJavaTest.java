@@ -39,6 +39,7 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javac
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaLogicImplBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaQueryBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaServiceImplBO;
+import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaVOBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaenum.DqGenerateJavaErrorCodeBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaDAOBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaLogicBO;
@@ -48,30 +49,31 @@ import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaCl
 
 /** 生成java代码测试类 */
 public class GenerateJavaTest {
-//	数据库配置信息
+	// 数据库配置信息
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
-//	模版描述对象
-	private DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "JAVA.ftl");;
-//	pojo类所在的项目名称
+	// 模版描述对象
+	private DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH,
+			"JAVA.ftl");;
+	// pojo类所在的项目名称
 	private String projectNamePojo = "dq-easy-cloud-common";
-//	dao类所在的项目名称
-	private String projectNameDao = "dq-easy-cloud-config-server";
-//	service类所在的项目名称
-	private String projectNameService = "dq-easy-cloud-config-client";
-//	controller类所在的项目名称
-	private String projectNameController = "dq-easy-cloud-consumer";
-//	基础包名称
+	// dao类所在的项目名称
+	private String projectNameDao = "dq-easy-cloud-common";
+	// service类所在的项目名称
+	private String projectNameService = "dq-easy-cloud-common";
+	// controller类所在的项目名称
+	private String projectNameController = "dq-easy-cloud-common";
+	// 基础包名称
 	private String basePackageName = "com.dq.easy";
-	
-//	表名
+
+	// 表名
 	private String tableName = "easy_user_info";
-//	模块包名
+	// 模块包名
 	private String moduleName = "user";
-//	类主体名称
+	// 类主体名称
 	private String classBodyName = "User";
-//	类的注释
+	// 类的注释
 	private String classComment = "用户";
-	
+
 	@Before
 	public void initData() {
 		databaseAbstactConfig = new DqDataBaseMysqlConfig();
@@ -83,60 +85,60 @@ public class GenerateJavaTest {
 		databaseAbstactConfig.buildTableName(tableName);
 	}
 
-
 	/** 代码生成组建测试 */
 	@Test
 	public void testGenerateJavaCode() {
-//		生成数据持久化类
+		// 生成数据持久化类
 		generateJavaDOByDataBase();
-//		生成数据传输类
+		// 生成数据传输类
 		generateJavaDTOByDataBase();
-//		生成业务逻辑类
+		// 生成业务逻辑类
 		generateJavaBOByDataBase();
-//		生成查询类
+		// 生成查询类
 		generateJavaQueryByDataBase();
-//		生成DAO类
+		// 生成视图类
+		generateJavaVOByDataBase();
+		// 生成DAO类
 		generateJavaDAOByDataBase();
-//		生成DAO实现类
+		// 生成DAO实现类
 		generateJavaDAOImplByDataBase();
-//		生成Service类
+		// 生成Service类
 		generateJavaServiceByDataBase();
-//		生成Service实现类
+		// 生成Service实现类
 		generateJavaServiceImplByDataBase();
-//		生成Logic接口类
+		// 生成Logic接口类
 		generateJavaLogicByDataBase();
-//		生成Logic实现类
+		// 生成Logic实现类
 		generateJavaLogicImplByDataBase();
-//		生成Controller类
+		// 生成Controller类
 		generateJavaControllerByDataBase();
-//		生成错误代码类
+		// 生成错误代码类
 		generateJavaErrorCodeByDataBase();
 	}
-	
+
 	@Test
 	public void generateJavaDOByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_DO;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, true);
 		generateJavaBaseDTO.setCoverSwith(true);
 		try {
-			new DqGenerateJavaDOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
+			new DqGenerateJavaDOBO(generateJavaBaseDTO, templateDesc, generateRule)
 					.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig)).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaDTOByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_DTO;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaDTOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaDTOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,140 +147,149 @@ public class GenerateJavaTest {
 	@Test
 	public void generateJavaBOByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_BO;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
-		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
+		generateJavaBaseDTO.setCoverSwith(true);
+		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, true);
 		try {
-			new DqGenerateJavaBOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaBOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaQueryByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_QUERY;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaQueryBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaQueryBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void generateJavaVOByDataBase() {
+		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_VO;
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
+		generateJavaBaseDTO.setCoverSwith(true);
+		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
+		try {
+			DqGenerateJavaVOBO generateJavaVOBO = new DqGenerateJavaVOBO(generateJavaBaseDTO, templateDesc, generateRule);
+			generateJavaVOBO.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig)).generateCode();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void generateJavaDAOByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.DAO_INF;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameDao, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameDao, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaDAOBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaDAOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaDAOImplByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.DAO_IMPL;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameDao, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameDao, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaDAOImplBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaDAOImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaServiceByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.SERVICE_INF;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaServiceBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaServiceBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaServiceImplByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.SERVICE_IMPL;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaServiceImplBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaServiceImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	public void generateJavaLogicByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.LOGIC_INF;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaLogicBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaLogicBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	public void generateJavaLogicImplByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.LOGIC_IMPL;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameService, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaLogicImplBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaLogicImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaControllerByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.CONTROLLER;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameController, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameController, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaControllerBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaControllerBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void generateJavaErrorCodeByDataBase() {
 		String subModulePackageName = DqSubModuleDefaultPackageName.ERROR_CODE;
-		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameController, basePackageName, moduleName,
-				subModulePackageName, classBodyName, classComment);
+		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameController, basePackageName,
+				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaErrorCodeBO(generateJavaBaseDTO, databaseAbstactConfig, templateDesc, generateRule)
-					.generateCode();
+			new DqGenerateJavaErrorCodeBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testGenerateBO() {
 		DqFileDesc fileDesc = new DqFileDesc();

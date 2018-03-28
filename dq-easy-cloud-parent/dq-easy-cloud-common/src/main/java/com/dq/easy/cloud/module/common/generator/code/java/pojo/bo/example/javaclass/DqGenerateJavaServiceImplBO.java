@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dq.easy.cloud.module.basic.service.DqBaseService;
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
@@ -36,9 +35,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaServiceImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaServiceImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 
 	}
 
@@ -75,13 +74,11 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected List<DqJavaMethodContentDesc> getConstructors() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -90,7 +87,7 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
 		DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
 		fieldContentDesc.setComment(javaClassContentDesc.getComment() + DqClassCommentEndWith.DAO_INF);
-//		设置属性注解
+		// 设置属性注解
 		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		DqJavaAnnotationDesc annotationDesc = new DqJavaAnnotationDesc();
 		annotationDesc.setName(Autowired.class.getSimpleName());
@@ -98,19 +95,19 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 		annotationDesc.setFullClassType(Autowired.class.getName());
 		annotationDescs.add(annotationDesc);
 		fieldContentDesc.setAnnotations(annotationDescs);
-		
-//		设置属性的modifiers
+
+		// 设置属性的modifiers
 		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
 		DqJavaModifierDesc modifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
 		modifiers.add(modifierDesc);
 		fieldContentDesc.setModifiers(modifiers);
-//		设置属性名称和类型
+		// 设置属性名称和类型
 		String daoName = super.generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.DAO_INF;
 		fieldContentDesc.setName(daoName);
 		fieldContentDesc.setSimpleClassType(daoName);
 		fieldContentDesc.setPackageName(getFullPackageName(DqSubModuleDefaultPackageName.DAO_INF));
 		fieldContentDesc.buildFullClassType();
-		
+
 		fieldContentDescs.add(fieldContentDesc);
 
 		return fieldContentDescs;
@@ -118,7 +115,6 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected List<DqJavaMethodContentDesc> getMethods() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

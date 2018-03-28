@@ -90,8 +90,8 @@ public class DqGenerateBO {
 		try {
 			// 生成的文件
 			File generateFile = new DqFileBO(fileDesc).newFile();
-//			如果文件存在并且覆盖标志为false则不覆盖
-			if (generateFile.exists() && !fileDesc.isCoverSwitch()) {
+//			如果文件不存在直接返回
+			if (DqBaseUtils.isNull(generateFile)) {
 				return;
 			}
 			// 需要生成的文件流

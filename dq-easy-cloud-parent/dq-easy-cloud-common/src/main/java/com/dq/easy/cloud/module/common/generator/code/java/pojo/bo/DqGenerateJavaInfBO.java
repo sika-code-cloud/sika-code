@@ -3,7 +3,6 @@ package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqIgnoreField.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
@@ -16,9 +15,9 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
 
 public abstract class DqGenerateJavaInfBO extends DqGenerateJavaBaseBO {
 
-	public DqGenerateJavaInfBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqDatabaseAbstactConfig dataBaseConfig,
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, dataBaseConfig, templateDesc, generateRule);
+	public DqGenerateJavaInfBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+			DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
 	@Override
@@ -27,12 +26,6 @@ public abstract class DqGenerateJavaInfBO extends DqGenerateJavaBaseBO {
 		modifierDescs.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
 		modifierDescs.add(new DqJavaModifierDesc(DqModifierMappingEnum.INTERFACE));
 		return modifierDescs;
-	}
-
-	@Override
-	protected DqGenerateJavaBaseBO buildJavaClassContentOtherData() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

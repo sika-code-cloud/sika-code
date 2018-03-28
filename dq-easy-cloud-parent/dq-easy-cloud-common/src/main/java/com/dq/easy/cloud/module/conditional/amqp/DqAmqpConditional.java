@@ -17,7 +17,7 @@ public class DqAmqpConditional implements Condition {
 
 	@Override
 	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-		return false;
+		return true;
 	}
 
 
