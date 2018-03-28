@@ -34,11 +34,6 @@ public class DqGenerateJavaErrorCodeBO extends DqGenerateJavaEnumBO {
 	}
 
 	@Override
-	protected String getClassNameEndWith() {
-		return DqClassNameEndWith.ERROR_CODE;
-	}
-
-	@Override
 	/** 获取实现的接口列表 */
 	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
 		List<DqJavaImplInterfaceContentDesc> implInterfaceContentDescs = new ArrayList<>();
@@ -48,11 +43,6 @@ public class DqGenerateJavaErrorCodeBO extends DqGenerateJavaEnumBO {
 		implInterfaceContentDesc.setFullClassType(DqBaseErrorCodeInf.class.getName());
 		implInterfaceContentDescs.add(implInterfaceContentDesc);
 		return implInterfaceContentDescs;
-	}
-
-	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		return null;
 	}
 
 	@Override
@@ -93,4 +83,10 @@ public class DqGenerateJavaErrorCodeBO extends DqGenerateJavaEnumBO {
 	protected String getClassCommentEndWith() {
 		return DqClassCommentEndWith.ERROR_CODE;
 	}
+
+	@Override
+	protected String getClassNameEndWith() {
+		return DqClassNameEndWith.ERROR_CODE;
+	}
+
 }

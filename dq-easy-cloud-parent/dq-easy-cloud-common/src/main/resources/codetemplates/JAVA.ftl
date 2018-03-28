@@ -42,10 +42,11 @@ import ${model};
 			<#list model.args as model>
 		this.${model.name?uncap_first} = ${model.name?uncap_first};
 			</#list>
+		<#else>
+		
 		</#if>
 	}
 	</#list>
-	<#else>
 	
 	</#if>
 	<#if methods?exists && generateRule?exists>
