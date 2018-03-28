@@ -7,6 +7,7 @@ import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenera
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
@@ -16,6 +17,17 @@ public abstract class DqGenerateJavaEnumBO extends DqGenerateJavaBaseBO {
 	public DqGenerateJavaEnumBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
 			DqGenerateRule generateRule) {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
+	}
+
+	@Override
+	protected List<DqJavaMethodContentDesc> getConstructors() {
+		List<DqJavaMethodContentDesc> constructors = super.getConstructorsByFields();
+		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
+		modifiers.add(new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE));
+		for (DqJavaMethodContentDesc constructor : constructors) {
+			constructor.setModifiers(modifiers);
+		}
+		return constructors;
 	}
 
 	@Override

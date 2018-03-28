@@ -282,6 +282,7 @@ public class GenerateJavaTest {
 		String subModulePackageName = DqSubModuleDefaultPackageName.ERROR_CODE;
 		DqGenerateJavaBaseDTO generateJavaBaseDTO = new DqGenerateJavaBaseDTO(projectNameController, basePackageName,
 				moduleName, subModulePackageName, classBodyName, classComment);
+		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
 			new DqGenerateJavaErrorCodeBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
