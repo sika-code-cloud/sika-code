@@ -6,10 +6,9 @@ import org.springframework.stereotype.Repository;
 /**
  * 描述：用户数据处理实现类
  * @author THINK
- * @date 2018-03-28 10:07:37
+ * @date 2018-03-28 13:52:10
  */
 @Repository(value = "userDAO")
 public class UserDAOImpl extends DqBaseRepository{
-	
 	
 }

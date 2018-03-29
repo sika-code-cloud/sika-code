@@ -5,7 +5,7 @@ import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
 /**
  * 描述：用户错误代码枚举
  * @author THINK
- * @date 2018-03-28 11:04:32
+ * @date 2018-03-28 13:52:10
  */
 public enum UserErrorCodeEnum implements DqBaseErrorCodeInf {
 	;

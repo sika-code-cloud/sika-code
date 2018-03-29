@@ -3,10 +3,10 @@ package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.java
 import java.util.List;
 
 import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassCommentEndWith;
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;

@@ -14,11 +14,4 @@
 	<name>dq-easy-cloud-producer</name>
 	<url>http://maven.apache.org</url>
 	
-	<dependencies>
-		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-common</artifactId>
-			<version>${dq.easy.cloud.version}</version>
-		</dependency>
-	</dependencies>
 </project>

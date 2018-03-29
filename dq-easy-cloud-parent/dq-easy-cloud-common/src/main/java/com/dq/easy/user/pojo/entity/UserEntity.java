@@ -1,19 +1,15 @@
 package com.dq.easy.user.pojo.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
-import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
-import javax.persistence.Entity;
 import java.util.Date;
+import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
 
 /**
  * 描述：用户持久化类
  * @author THINK
- * @date 2018-03-28 10:07:37
+ * @date 2018-03-28 13:52:10
  */
-@Table(name = "easy_user_info")
-@Entity
-public class UserEntity extends DqBaseBO{
+public class UserEntity extends DqBaseEntity{
 	
 	/** 创建日期 */
 	@Column(name = "create_date")
@@ -61,7 +57,6 @@ public class UserEntity extends DqBaseBO{
 	@Column(name = "is_subscribe")
 	public Integer isSubscribe;
 		
-	
 	/** 获取创建日期 */
 	public Date getCreateDate() {
 		return this.createDate;

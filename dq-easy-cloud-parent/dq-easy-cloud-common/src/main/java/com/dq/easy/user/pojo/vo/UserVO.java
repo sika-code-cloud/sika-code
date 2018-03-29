@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * 描述：用户视图类
  * @author THINK
- * @date 2018-03-28 10:29:01
+ * @date 2018-03-28 13:52:10
  */
 public class UserVO extends DqBaseVO{
 	
@@ -57,7 +57,6 @@ public class UserVO extends DqBaseVO{
 	@Column(name = "is_subscribe")
 	public Integer isSubscribe;
 		
-	
 	/** 获取创建日期 */
 	public Date getCreateDate() {
 		return this.createDate;
