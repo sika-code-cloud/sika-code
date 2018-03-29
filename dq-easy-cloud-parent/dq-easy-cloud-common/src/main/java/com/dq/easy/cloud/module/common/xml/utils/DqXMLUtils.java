@@ -32,10 +32,10 @@ public class DqXMLUtils {
 	 * 解析xml字符串并转化为Map
 	 * </p>
 	 *
-	 * @param content : String : 解析的内容
+	 * @param content
+	 *            : String : 解析的内容
 	 * @return Map<String, Object>
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:47:17
+	 * @author daiqi 创建时间 2018年2月23日 下午12:47:17
 	 */
 	public static Map<String, Object> getMapFromXmlStr(String content) {
 		if (DqStringUtils.isEmpty(content)) {
@@ -57,10 +57,10 @@ public class DqXMLUtils {
 	 * 解析xml流并转化为Map
 	 * </p>
 	 *
-	 * @param inputStream : InputStream : 解析的xml流
+	 * @param inputStream
+	 *            : InputStream : 解析的xml流
 	 * @return Map<String, Object>
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:47:17
+	 * @author daiqi 创建时间 2018年2月23日 下午12:47:17
 	 */
 	public static Map<String, Object> getMapFromInputStream(InputStream inputStream) {
 		if (DqBaseUtils.isNull(inputStream)) {
@@ -81,14 +81,16 @@ public class DqXMLUtils {
 	 * 将xml流中的信息放入map中
 	 * </p>
 	 *
-	 * @param inputStream : InputStream : xml输入流
-	 * @param paramsMap : Map<String, Object> : xml结果容器
+	 * @param inputStream
+	 *            : InputStream : xml输入流
+	 * @param paramsMap
+	 *            : Map<String, Object> : xml结果容器
 	 * @return Map<String, Object>
 	 * @throws IOException
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:49:06
+	 * @author daiqi 创建时间 2018年2月23日 下午12:49:06
 	 */
-	public static Map<String, Object> getMapFromInputStream(InputStream inputStream, Map<String, Object> paramsMap) throws IOException {
+	public static Map<String, Object> getMapFromInputStream(InputStream inputStream, Map<String, Object> paramsMap)
+			throws IOException {
 		if (null == paramsMap) {
 			paramsMap = new HashMap<>();
 		}
@@ -123,10 +125,10 @@ public class DqXMLUtils {
 	 * 获取子结点的xml
 	 * </p>
 	 *
-	 * @param children : List<Element> : 子节点元素
+	 * @param children
+	 *            : List<Element> : 子节点元素
 	 * @return String : 拼接好的xml : 字符串
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:51:44
+	 * @author daiqi 创建时间 2018年2月23日 下午12:51:44
 	 */
 	public static String getChildrenText(List<Element> children) {
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
@@ -154,10 +156,10 @@ public class DqXMLUtils {
 	 * 获取子结点的xml
 	 * </p>
 	 *
-	 * @param children : List<Element> : 子节点集合
+	 * @param children
+	 *            : List<Element> : 子节点集合
 	 * @return Map<String, Object> : map
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:54:22
+	 * @author daiqi 创建时间 2018年2月23日 下午12:54:22
 	 */
 	public static Map<String, Object> getChildren(List<Element> children) {
 		Map<String, Object> retMap = new HashMap<>();
@@ -184,16 +186,17 @@ public class DqXMLUtils {
 	 * 将请求参数转换为xml格式的string
 	 * </p>
 	 *
-	 * @param parameters : Map<String, Object> : 请求参数
+	 * @param parameters
+	 *            : Map<String, Object> : 请求参数
 	 * @return String : xml格式的string
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午12:52:45
+	 * @author daiqi 创建时间 2018年2月23日 下午12:52:45
 	 */
 	public static String getXmlStrFromMap(Map<String, Object> parameters) {
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
 		sb.append("<xml>");
 		for (String key : parameters.keySet()) {
-			if (DqStringUtils.equalsIgnoreCase("attach", key) || DqStringUtils.equalsIgnoreCase("body", key) || DqStringUtils.equalsIgnoreCase("sign", key)) {
+			if (DqStringUtils.equalsIgnoreCase("attach", key) || DqStringUtils.equalsIgnoreCase("body", key)
+					|| DqStringUtils.equalsIgnoreCase("sign", key)) {
 				sb.append("<" + key + ">" + "<![CDATA[" + parameters.get(key) + "]]></" + key + ">");
 			} else {
 				sb.append("<" + key + ">" + parameters.get(key) + "</" + key + ">");
@@ -202,5 +205,4 @@ public class DqXMLUtils {
 		sb.append("</xml>");
 		return sb.toString();
 	}
-
 }

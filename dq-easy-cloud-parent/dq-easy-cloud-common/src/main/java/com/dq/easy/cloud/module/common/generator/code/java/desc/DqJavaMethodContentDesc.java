@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqMethodTypeEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqMethodTypeEnum;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 

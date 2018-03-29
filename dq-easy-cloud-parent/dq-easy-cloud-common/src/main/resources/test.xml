@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxzl.erp.dataaccess.dao.mysql.customer.CustomerMapper">
+    <resultMap id="CustomerDO" type="com.lxzl.erp.dataaccess.domain.customer.CustomerDO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="customer_type" jdbcType="INTEGER" property="customerType"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="customer_no" jdbcType="VARCHAR" property="customerNo"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="is_disabled" jdbcType="INTEGER" property="isDisabled"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="owner" jdbcType="INTEGER" property="owner"/>
+        <result column="union_user" jdbcType="INTEGER" property="unionUser"/>
+        <result column="customer_status" jdbcType="INTEGER" property="customerStatus"/>
+        <result column="first_apply_amount" jdbcType="DECIMAL" property="firstApplyAmount"/>
+        <result column="later_apply_amount" jdbcType="DECIMAL" property="laterApplyAmount"/>
+        <result column="unionUserName" jdbcType="INTEGER" property="unionUserName"/>
+        <result column="ownerName" jdbcType="INTEGER" property="ownerName"/>
+        <result column="localization_time" jdbcType="TIMESTAMP" property="localizationTime"/>
+        <result column="short_limit_receivable_amount" jdbcType="DECIMAL" property="shortLimitReceivableAmount"/>
+        <result column="statement_date" jdbcType="INTEGER" property="statementDate"/>
+        <result column="pass_reason" jdbcType="VARCHAR" property="passReason"/>
+        <result column="fail_reason" jdbcType="VARCHAR" property="failReason"/>
+        <association resultMap="CustomerCompanyDO" property="customerCompanyDO"/>
+        <association resultMap="CustomerPersonDO" property="customerPersonDO"/>
+        <association resultMap="CustomerRiskManagementDO" property="customerRiskManagementDO"/>
+    </resultMap>
+    <resultMap id="CustomerRiskManagementDO" type="com.lxzl.erp.dataaccess.domain.customer.CustomerRiskManagementDO">
+        <id column="ecrm_id" jdbcType="INTEGER" property="id"/>
+        <result column="ecrm_customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="ecrm_credit_amount" jdbcType="DECIMAL" property="creditAmount"/>
+        <result column="ecrm_credit_amount_used" jdbcType="DECIMAL" property="creditAmountUsed"/>
+        <result column="ecrm_deposit_cycle" jdbcType="INTEGER" property="depositCycle"/>
+        <result column="ecrm_payment_cycle" jdbcType="INTEGER" property="paymentCycle"/>
+        <result column="ecrm_apple_deposit_cycle" jdbcType="INTEGER" property="appleDepositCycle"/>
+        <result column="ecrm_apple_payment_cycle" jdbcType="INTEGER" property="applePaymentCycle"/>
+        <result column="ecrm_new_deposit_cycle" jdbcType="INTEGER" property="newDepositCycle"/>
+        <result column="ecrm_new_payment_cycle" jdbcType="INTEGER" property="newPaymentCycle"/>
+        <result column="ecrm_apple_pay_mode" jdbcType="INTEGER" property="applePayMode"/>
+        <result column="ecrm_new_pay_mode" jdbcType="INTEGER" property="newPayMode"/>
+        <result column="ecrm_pay_mode" jdbcType="INTEGER" property="payMode"/>
+        <result column="ecrm_is_limit_apple" jdbcType="INTEGER" property="isLimitApple"/>
+        <result column="ecrm_is_limit_new" jdbcType="INTEGER" property="isLimitNew"/>
+        <result column="ecrm_single_limit_price" jdbcType="DECIMAL" property="singleLimitPrice"/>
+        <result column="ecrm_return_visit_frequency" jdbcType="INTEGER" property="returnVisitFrequency"/>
+        <result column="ecrm_is_full_deposit" jdbcType="INTEGER" property="isFullDeposit"/>
+        <result column="ecrm_data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="ecrm_remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="ecrm_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="ecrm_create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="ecrm_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="ecrm_update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <resultMap id="CustomerCompanyDO" type="com.lxzl.erp.dataaccess.domain.customer.CustomerCompanyDO">
+        <id column="ecc_id" jdbcType="INTEGER" property="id"/>
+        <result column="ecc_customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="ecc_landline" jdbcType="VARCHAR" property="landline"/>
+        <result column="ecc_connect_real_name" jdbcType="VARCHAR" property="connectRealName"/>
+        <result column="ecc_connect_phone" jdbcType="VARCHAR" property="connectPhone"/>
+        <result column="ecc_company_name" jdbcType="VARCHAR" property="companyName"/>
+        <result column="ecc_company_abb" jdbcType="VARCHAR" property="companyAbb"/>
+        <result column="ecc_province" jdbcType="INTEGER" property="province"/>
+        <result column="ecc_city" jdbcType="INTEGER" property="city"/>
+        <result column="ecc_district" jdbcType="INTEGER" property="district"/>
+        <result column="ecc_address" jdbcType="VARCHAR" property="address"/>
+        <result column="ecc_default_address_refer_id" jdbcType="INTEGER" property="defaultAddressReferId"/>
+        <result column="ecc_legal_person" jdbcType="VARCHAR" property="legalPerson"/>
+        <result column="ecc_legal_person_no" jdbcType="VARCHAR" property="legalPersonNo"/>
+        <result column="ecc_business_license_no" jdbcType="VARCHAR" property="businessLicenseNo"/>
+        <result column="ecc_data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="ecc_remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="ecc_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="ecc_create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="ecc_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="ecc_update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="provinceName" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+        <result column="districtName" jdbcType="VARCHAR" property="districtName"/>
+        <result column="ecc_customer_origin" jdbcType="INTEGER" property="customerOrigin"/>
+        <result column="ecc_company_found_time" jdbcType="TIMESTAMP" property="companyFoundTime"/>
+        <result column="ecc_industry" jdbcType="VARCHAR" property="industry"/>
+        <result column="ecc_registered_capital" jdbcType="INTEGER" property="registeredCapital"/>
+        <result column="ecc_office_number" jdbcType="INTEGER" property="officeNumber"/>
+        <result column="ecc_product_purpose" jdbcType="VARCHAR" property="productPurpose"/>
+        <result column="ecc_customer_company_need_first_json" jdbcType="VARCHAR" property="customerCompanyNeedFirstJson"/>
+        <result column="ecc_customer_company_need_later_json" jdbcType="VARCHAR" property="customerCompanyNeedLaterJson"/>
+        <result column="ecc_agent_person_name" jdbcType="VARCHAR" property="agentPersonName"/>
+        <result column="ecc_agent_person_phone" jdbcType="VARCHAR" property="agentPersonPhone"/>
+        <result column="ecc_agent_person_no" jdbcType="VARCHAR" property="agentPersonNo"/>
+        <result column="ecc_unified_credit_code" jdbcType="VARCHAR" property="unifiedCreditCode"/>
+        <result column="ecc_customer_no" jdbcType="VARCHAR" property="customerNo"/>
+        <result column="ecc_is_legal_person_apple" jdbcType="INTEGER" property="isLegalPersonApple"/>
+        <result column="ecc_legal_person_phone" jdbcType="VARCHAR" property="legalPersonPhone"/>
+        <result column="ecc_operating_area" jdbcType="DOUBLE" property="operatingArea"/>
+        <result column="ecc_unit_insured_number" jdbcType="INTEGER" property="unitInsuredNumber"/>
+        <result column="ecc_affiliated_enterprise" jdbcType="VARCHAR" property="affiliatedEnterprise"/>
+    </resultMap>
+    <resultMap id="CustomerPersonDO" type="com.lxzl.erp.dataaccess.domain.customer.CustomerPersonDO">
+        <id column="ecp_id" jdbcType="INTEGER" property="id"/>
+        <result column="ecp_customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="ecp_real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="ecp_email" jdbcType="VARCHAR" property="email"/>
+        <result column="ecp_phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="ecp_province" jdbcType="INTEGER" property="province"/>
+        <result column="ecp_city" jdbcType="INTEGER" property="city"/>
+        <result column="ecp_district" jdbcType="INTEGER" property="district"/>
+        <result column="ecp_address" jdbcType="VARCHAR" property="address"/>
+        <result column="ecp_data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="ecp_remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="ecp_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="ecp_create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="ecp_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="ecp_update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="provinceName" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+        <result column="districtName" jdbcType="VARCHAR" property="districtName"/>
+        <result column="ecp_person_no" jdbcType="VARCHAR" property="personNo"/>
+        <result column="ecp_connect_real_name" jdbcType="VARCHAR" property="connectRealName"/>
+        <result column="ecp_connect_phone" jdbcType="VARCHAR" property="connectPhone"/>
+    </resultMap>
+    <sql id="column_List">ec.id,ec.customer_type,ec.customer_no,ec.customer_name,ec.is_disabled,ec.data_status,ec.remark,ec.create_time,ec.create_user,ec.update_time,ec.update_user,ec.owner,ec.union_user,ec.customer_status,ec.first_apply_amount,ec.later_apply_amount,ec.localization_time,ec.short_limit_receivable_amount,ec.statement_date,ec.pass_reason,ec.fail_reason</sql>
+    <sql id="company_column_List">ecc.id AS ecc_id,ecc.customer_id AS ecc_customer_id,ecc.landline AS ecc_landline,ecc.connect_real_name AS ecc_connect_real_name,ecc.connect_phone AS ecc_connect_phone,ecc.company_name AS ecc_company_name,ecc.company_abb AS ecc_company_abb,ecc.province AS ecc_province,ecc.city AS ecc_city,ecc.district AS ecc_district,ecc.address AS ecc_address,ecc.legal_person AS ecc_legal_person,ecc.legal_person_no AS ecc_legal_person_no,ecc.business_license_no AS ecc_business_license_no,ecc.data_status AS ecc_data_status,ecc.remark AS ecc_remark,ecc.create_time AS ecc_create_time,ecc.create_user AS ecc_create_user,ecc.update_time AS ecc_update_time,ecc.update_user AS ecc_update_user,ecc.customer_origin AS ecc_customer_origin,ecc.company_found_time AS ecc_company_found_time,ecc.industry AS ecc_industry,ecc.registered_capital AS ecc_registered_capital,ecc.office_number AS ecc_office_number,ecc.product_purpose AS ecc_product_purpose,ecc.customer_company_need_first_json AS ecc_customer_company_need_first_json,ecc.customer_company_need_later_json AS ecc_customer_company_need_later_json,ecc.agent_person_name AS ecc_agent_person_name,ecc.agent_person_phone AS ecc_agent_person_phone,ecc.agent_person_no AS ecc_agent_person_no,ecc.unified_credit_code AS ecc_unified_credit_code,ecc.customer_no AS ecc_customer_no,ecc.is_legal_person_apple AS ecc_is_legal_person_apple,ecc.legal_person_phone AS ecc_legal_person_phone,ecc.operating_area AS ecc_operating_area,ecc.unit_insured_number AS ecc_unit_insured_number,ecc.affiliated_enterprise AS ecc_affiliated_enterprise,ecc.default_address_refer_id AS ecc_default_address_refer_id</sql>
+    <sql id="ecc_column_List">ecc.ecc_id AS ecc_id,ecc.ecc_customer_id AS ecc_customer_id,ecc.ecc_landline AS ecc_landline,ecc.ecc_connect_real_name AS ecc_connect_real_name,ecc.ecc_connect_phone AS ecc_connect_phone,ecc.ecc_company_name AS ecc_company_name,ecc.ecc_company_abb AS ecc_company_abb,ecc.ecc_province AS ecc_province,ecc.ecc_city AS ecc_city,ecc.ecc_district AS ecc_district,ecc.ecc_address AS ecc_address,ecc.ecc_legal_person AS ecc_legal_person,ecc.ecc_legal_person_no AS ecc_legal_person_no,ecc.ecc_business_license_no AS ecc_business_license_no,ecc.ecc_data_status AS ecc_data_status,ecc.ecc_remark AS ecc_remark,ecc.ecc_create_time AS ecc_create_time,ecc.ecc_create_user AS ecc_create_user,ecc.ecc_update_time AS ecc_update_time,ecc.ecc_update_user AS ecc_update_user,ecc.ecc_customer_origin AS ecc_customer_origin,ecc.ecc_company_found_time AS ecc_company_found_time,ecc.ecc_industry AS ecc_industry,ecc.ecc_registered_capital AS ecc_registered_capital,ecc.ecc_office_number AS ecc_office_number,ecc.ecc_product_purpose AS ecc_product_purpose,ecc.ecc_customer_company_need_first_json AS ecc_customer_company_need_first_json,ecc.ecc_customer_company_need_later_json AS ecc_customer_company_need_later_json,ecc.ecc_agent_person_name AS ecc_agent_person_name,ecc.ecc_agent_person_phone AS ecc_agent_person_phone,ecc.ecc_agent_person_no AS ecc_agent_person_no,ecc.ecc_unified_credit_code AS ecc_unified_credit_code,ecc.ecc_customer_no AS ecc_customer_no,ecc.ecc_is_legal_person_apple AS ecc_is_legal_person_apple,ecc.ecc_legal_person_phone AS ecc_legal_person_phone,ecc.ecc_operating_area AS ecc_operating_area,ecc.ecc_unit_insured_number AS ecc_unit_insured_number,ecc.ecc_affiliated_enterprise AS ecc_affiliated_enterprise</sql>
+    <sql id="person_column_List">ecp.id AS ecp_id,ecp.customer_id AS ecp_customer_id,ecp.real_name AS ecp_real_name,ecp.email AS ecp_email,ecp.phone AS ecp_phone,ecp.province AS ecp_province,ecp.city AS ecp_city,ecp.district AS ecp_district,ecp.address AS ecp_address,ecp.data_status AS ecp_data_status,ecp.remark AS ecp_remark,ecp.create_time AS ecp_create_time,ecp.create_user AS ecp_create_user,ecp.update_time AS ecp_update_time,ecp.update_user AS ecp_update_user,ecp.person_no AS ecp_person_no, ecp.connect_real_name AS ecp_connect_real_name, ecp.connect_phone AS ecp_connect_phone</sql>
+    <sql id="risk_column_List">ecrm.id AS ecrm_id,ecrm.customer_id AS ecrm_customer_id,ecrm.credit_amount AS ecrm_credit_amount,ecrm.credit_amount_used AS ecrm_credit_amount_used,ecrm.deposit_cycle AS ecrm_deposit_cycle,ecrm.payment_cycle AS ecrm_payment_cycle,ecrm.apple_deposit_cycle AS ecrm_apple_deposit_cycle,ecrm.apple_payment_cycle AS ecrm_apple_payment_cycle,ecrm.new_deposit_cycle AS ecrm_new_deposit_cycle,ecrm.new_payment_cycle AS ecrm_new_payment_cycle,ecrm.apple_pay_mode AS ecrm_apple_pay_mode,ecrm.new_pay_mode AS ecrm_new_pay_mode,ecrm.pay_mode AS ecrm_pay_mode,ecrm.is_limit_apple as ecrm_is_limit_apple,ecrm.is_limit_new as ecrm_is_limit_new,ecrm.single_limit_price as ecrm_single_limit_price,ecrm.return_visit_frequency as ecrm_return_visit_frequency,ecrm.data_status AS ecrm_data_status,ecrm.remark AS ecrm_remark,ecrm.create_time AS ecrm_create_time,ecrm.create_user AS ecrm_create_user,ecrm.update_time AS ecrm_update_time,ecrm.update_user AS ecrm_update_user,ecrm.is_full_deposit as ecrm_is_full_deposit</sql>
+    <select id="findById" resultMap="CustomerDO" parameterType="java.lang.Integer">SELECT 
+        <include refid="column_List"/>,
+        <include refid="risk_column_List"/> FROM erp_customer ec LEFT JOIN erp_customer_risk_management ecrm on ecrm.customer_id = ec.id and ecrm.data_status=1 WHERE ec.id = #{id, jdbcType=INTEGER} AND ec.data_status = 1
+    </select>
+    <select id="findByNo" resultMap="CustomerDO" parameterType="java.lang.String">SELECT 
+        <include refid="column_List"/>,
+        <include refid="risk_column_List"/> FROM erp_customer ec LEFT JOIN erp_customer_risk_management ecrm on ecrm.customer_id = ec.id and ecrm.data_status=1 WHERE ec.customer_no = #{customerNo, jdbcType=VARCHAR} AND ec.data_status = 1
+    </select>
+    <select id="findByName" resultMap="CustomerDO" parameterType="java.lang.String">SELECT 
+        <include refid="column_List"/> FROM erp_customer ec WHERE ec.customer_name = #{customerName, jdbcType=VARCHAR} AND ec.data_status = 1
+    </select>
+    <select id="findCustomerCompanyByNo" resultMap="CustomerDO" parameterType="java.lang.String">SELECT 
+        <include refid="column_List"/>,
+        <include refid="company_column_List"/>,
+        <include refid="risk_column_List"/> ,eap.province_name AS provinceName ,eac.city_name AS cityName ,ead.district_name AS districtName ,union_user.real_name AS unionUserName ,owner_user.real_name AS ownerName FROM erp_customer ec LEFT JOIN erp_customer_company ecc ON ec.id=ecc.customer_id AND ec.customer_type=1 AND ecc.data_status=1 LEFT JOIN erp_area_province eap ON ecc.province=eap.id AND eap.data_status=1 LEFT JOIN erp_area_city eac ON ecc.city=eac.id AND eac.data_status=1 LEFT JOIN erp_area_district ead ON ecc.district=ead.id AND ead.data_status=1 LEFT JOIN erp_customer_risk_management ecrm on ecrm.customer_id = ec.id AND ecrm.data_status=1 LEFT JOIN erp_user union_user on ec.union_user = union_user.id LEFT JOIN erp_user owner_user on ec.owner = owner_user.id WHERE ec.customer_no = #{customerNo, jdbcType=VARCHAR} AND ec.data_status = 1
+    </select>
+    <select id="findCustomerPersonByNo" resultMap="CustomerDO" parameterType="java.lang.String">SELECT 
+        <include refid="column_List"/>,
+        <include refid="person_column_List"/>,
+        <include refid="risk_column_List"/> ,eap.province_name AS provinceName ,eac.city_name AS cityName ,ead.district_name AS districtName ,union_user.real_name AS unionUserName ,owner_user.real_name AS ownerName FROM erp_customer ec LEFT JOIN erp_customer_person ecp ON ec.id=ecp.customer_id AND ec.customer_type=2 AND ecp.data_status=1 LEFT JOIN erp_area_province eap ON ecp.province=eap.id AND eap.data_status=1 LEFT JOIN erp_area_city eac ON ecp.city=eac.id AND eac.data_status=1 LEFT JOIN erp_area_district ead ON ecp.district=ead.id AND ead.data_status=1 LEFT JOIN erp_customer_risk_management ecrm on ecrm.customer_id = ec.id AND ecrm.data_status=1 LEFT JOIN erp_user union_user on ec.union_user = union_user.id LEFT JOIN erp_user owner_user on ec.owner = owner_user.id WHERE ec.customer_no = #{customerNo, jdbcType=VARCHAR} AND ec.data_status = 1
+    </select>
+    <select id="listCount" resultType="java.lang.Integer" parameterType="map">SELECT count(ec.id) FROM erp_customer ec 
+        <where> 
+            <if test="maps.customerQueryParam.createStartTime != null "> <![CDATA[ AND ec.create_time >= #{maps.customerQueryParam.createStartTime} ]]> </if>  
+            <if test="maps.customerQueryParam.createEndTime != null"> <![CDATA[ AND ec.create_time <= #{maps.customerQueryParam.createEndTime} ]]> </if>  
+            <if test="maps.isQueryAll == null">and ec.data_status = 1</if> 
+        </where> 
+    </select>
+    <select id="listPage" resultMap="CustomerDO" parameterType="map">SELECT 
+        <include refid="column_List"/> FROM erp_customer ec 
+        <where> 
+            <if test="maps.customerQueryParam.createStartTime != null "> <![CDATA[ AND ec.create_time >= #{maps.customerQueryParam.createStartTime} ]]> </if>  
+            <if test="maps.customerQueryParam.createEndTime != null"> <![CDATA[ AND ec.create_time <= #{maps.customerQueryParam.createEndTime} ]]> </if>  
+            <if test="maps.isQueryAll == null">and ec.data_status = 1</if> 
+        </where> LIMIT #{maps.start},#{maps.pageSize}
+    </select>
+    <sql id="set_column_sql"> 
+        <set> 
+            <if test="customerType != null">customer_type = #{customerType,jdbcType=INTEGER},</if>  
+            <if test="customerNo != null">customer_no = #{customerNo,jdbcType=VARCHAR},</if>  
+            <if test="customerName != null">customer_name = #{customerName,jdbcType=VARCHAR},</if>  
+            <if test="isDisabled != null">is_disabled = #{isDisabled,jdbcType=INTEGER},</if>  
+            <if test="dataStatus != null">data_status = #{dataStatus,jdbcType=INTEGER},</if>  
+            <if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>  
+            <if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>  
+            <if test="createUser != null">create_user = #{createUser,jdbcType=VARCHAR},</if>  
+            <if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>  
+            <if test="updateUser != null">update_user = #{updateUser,jdbcType=VARCHAR},</if>  
+            <if test="owner != null">owner = #{owner,jdbcType=INTEGER},</if>  
+            <if test="customerStatus != null">customer_status = #{customerStatus,jdbcType=INTEGER},</if>  
+            <if test="firstApplyAmount != null">first_apply_amount = #{firstApplyAmount,jdbcType=DECIMAL},</if>  
+            <if test="laterApplyAmount != null">later_apply_amount = #{laterApplyAmount,jdbcType=DECIMAL},</if>  
+            <if test="localizationTime != null">localization_time = #{localizationTime,jdbcType=TIMESTAMP},</if>  
+            <if test="shortLimitReceivableAmount != null">short_limit_receivable_amount = #{shortLimitReceivableAmount,jdbcType=DECIMAL},</if>  
+            <if test="statementDate != null">statement_date = #{statementDate,jdbcType=INTEGER},</if> pass_reason = #{passReason,jdbcType=VARCHAR}, fail_reason = #{failReason,jdbcType=VARCHAR}, union_user = #{unionUser,jdbcType=INTEGER},
+        </set> 
+    </sql>
+    <insert id="save" keyProperty="id" useGeneratedKeys="true" parameterType="com.lxzl.erp.dataaccess.domain.customer.CustomerDO">INSERT INTO erp_customer 
+        <include refid="set_column_sql"/> 
+    </insert>
+    <update id="update" parameterType="com.lxzl.erp.dataaccess.domain.customer.CustomerDO">UPDATE erp_customer 
+        <include refid="set_column_sql"/> WHERE id = #{id, jdbcType=INTEGER}
+    </update>
+    <select id="findCustomerCompanyCountByParams" resultType="Integer" parameterType="map">SELECT count(ecc.id) FROM erp_customer_company ecc INNER JOIN erp_customer ec ON ec.id = ecc.customer_id AND ec.data_status = 1
+        <where> 
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.customerNo != null &amp;&amp; maps.customerCompanyQueryParam.customerNo != ''">and ecc.customer_no LIKE CONCAT('%','${maps.customerCompanyQueryParam.customerNo}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.connectRealName != null &amp;&amp; maps.customerCompanyQueryParam.connectRealName != ''">and ecc.connect_real_name LIKE CONCAT('%','${maps.customerCompanyQueryParam.connectRealName}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.connectPhone != null &amp;&amp; maps.customerCompanyQueryParam.connectPhone != ''">and ecc.connect_phone LIKE CONCAT('%','${maps.customerCompanyQueryParam.connectPhone}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.companyName != null &amp;&amp; maps.customerCompanyQueryParam.companyName != ''">AND ecc.company_name LIKE CONCAT('%','${maps.customerCompanyQueryParam.companyName}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.province != null">AND ecc.province = #{maps.customerCompanyQueryParam.province, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.city != null">AND ecc.city = #{maps.customerCompanyQueryParam.city, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.district != null">AND ecc.district = #{maps.customerCompanyQueryParam.district, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.isDisabled != null">AND ec.is_disabled = #{maps.customerCompanyQueryParam.isDisabled, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.customerStatus != null">AND ec.customer_status = #{maps.customerCompanyQueryParam.customerStatus, jdbcType=INTEGER}</if>  
+            <if test="maps.isQueryAll == null">and ecc.data_status = 1</if>  
+            <include refid="permission_sql.customer_company_control"/> 
+        </where> 
+    </select>
+    <select id="findCustomerCompanyByParams" resultMap="CustomerDO" parameterType="map">SELECT 
+        <include refid="column_List"/>,
+        <include refid="ecc_column_List"/>,eap.province_name AS provinceName ,eac.city_name AS cityName ,ead.district_name AS districtName ,union_user.real_name AS unionUserName ,owner_user.real_name AS ownerName FROM ( SELECT
+        <include refid="company_column_List"/> FROM erp_customer_company ecc INNER JOIN erp_customer ec ON ec.id = ecc.customer_id AND ec.data_status = 1
+        <where> 
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.customerNo != null &amp;&amp; maps.customerCompanyQueryParam.customerNo != ''">and ecc.customer_no LIKE CONCAT('%','${maps.customerCompanyQueryParam.customerNo}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.connectRealName != null &amp;&amp; maps.customerCompanyQueryParam.connectRealName != ''">and ecc.connect_real_name LIKE CONCAT('%','${maps.customerCompanyQueryParam.connectRealName}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.connectPhone != null &amp;&amp; maps.customerCompanyQueryParam.connectPhone != ''">and ecc.connect_phone LIKE CONCAT('%','${maps.customerCompanyQueryParam.connectPhone}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.companyName != null &amp;&amp; maps.customerCompanyQueryParam.companyName != ''">AND ecc.company_name LIKE CONCAT('%','${maps.customerCompanyQueryParam.companyName}','%' )</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.province != null">AND ecc.province = #{maps.customerCompanyQueryParam.province, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.city != null">AND ecc.city = #{maps.customerCompanyQueryParam.city, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.district != null">AND ecc.district = #{maps.customerCompanyQueryParam.district, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.isDisabled != null">AND ec.is_disabled = #{maps.customerCompanyQueryParam.isDisabled, jdbcType=INTEGER}</if>  
+            <if test="maps.customerCompanyQueryParam != null &amp;&amp; maps.customerCompanyQueryParam.customerStatus != null">AND ec.customer_status = #{maps.customerCompanyQueryParam.customerStatus, jdbcType=INTEGER}</if>  
+            <if test="maps.isQueryAll == null">and ecc.data_status = 1</if>  
+            <include refid="permission_sql.customer_company_control"/> 
+        </where> ORDER BY ecc.create_time DESC LIMIT #{maps.start},#{maps.pageSize} ) ecc LEFT JOIN erp_customer ec ON ecc.ecc_customer_id=ec.id AND ec.data_status=1 LEFT JOIN erp_area_province eap ON ecc.ecc_province=eap.id AND eap.data_status=1 LEFT JOIN erp_area_city eac ON ecc.ecc_city=eac.id AND eac.data_status=1 LEFT JOIN erp_area_district ead ON ecc.ecc_district=ead.id AND ead.data_status=1 LEFT JOIN erp_user union_user on ec.union_user = union_user.id LEFT JOIN erp_user owner_user on ec.owner = owner_user.id ORDER BY ecc.ecc_create_time DESC
+    </select>
+    <select id="findCustomerPersonCountByParams" resultType="java.lang.Integer" parameterType="map">SELECT COUNT(*) FROM erp_customer ec LEFT JOIN erp_customer_person ecp ON ec.id=ecp.customer_id AND ecp.data_status=1
+        <where> 
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.customerNo != null &amp;&amp; maps.customerPersonQueryParam.customerNo != ''">AND ec.customer_no LIKE CONCAT('%','${maps.customerPersonQueryParam.customerNo}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.realName != null &amp;&amp; maps.customerPersonQueryParam.realName != null">AND ecp.real_name LIKE CONCAT('%','${maps.customerPersonQueryParam.realName}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.phone != null &amp;&amp; maps.customerPersonQueryParam.phone != ''">AND ecp.phone LIKE CONCAT('%','${maps.customerPersonQueryParam.phone}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.province != null">AND ecp.province = #{maps.customerPersonQueryParam.province, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.city != null">AND ecp.city = #{maps.customerPersonQueryParam.city, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.district != null">AND ecp.district = #{maps.customerPersonQueryParam.district, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.personNo != null &amp;&amp; maps.customerPersonQueryParam.personNo != ''">AND ecp.person_no LIKE CONCAT('%','${maps.customerPersonQueryParam.personNo}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.connectRealName != null &amp;&amp; maps.customerPersonQueryParam.connectRealName != ''">AND ecp.connect_real_name LIKE CONCAT('%','${maps.customerPersonQueryParam.connectRealName}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.connectPhone != null &amp;&amp; maps.customerPersonQueryParam.connectPhone != ''">AND ecp.connect_phone LIKE CONCAT('%','${maps.customerPersonQueryParam.connectPhone}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.isDisabled != null">AND ec.is_disabled = #{maps.customerPersonQueryParam.isDisabled, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.customerStatus != null">AND ec.customer_status = #{maps.customerPersonQueryParam.customerStatus, jdbcType=INTEGER}</if>  
+            <if test="maps.isQueryAll == null">and ec.data_status = 1 AND ec.customer_type=2</if>  
+            <include refid="permission_sql.customer_control"/> 
+        </where> 
+    </select>
+    <select id="findCustomerPersonByParams" resultMap="CustomerDO" parameterType="map">SELECT 
+        <include refid="column_List"/>,
+        <include refid="person_column_List"/> ,eap.province_name AS provinceName ,eac.city_name AS cityName ,ead.district_name AS districtName ,union_user.real_name AS unionUserName ,owner_user.real_name AS ownerName FROM erp_customer ec LEFT JOIN erp_customer_person ecp ON ec.id=ecp.customer_id AND ecp.data_status=1 LEFT JOIN erp_area_province eap ON ecp.province=eap.id AND eap.data_status=1 LEFT JOIN erp_area_city eac ON ecp.city=eac.id AND eac.data_status=1 LEFT JOIN erp_area_district ead ON ecp.district=ead.id AND ead.data_status=1 LEFT JOIN erp_user union_user on ec.union_user = union_user.id LEFT JOIN erp_user owner_user on ec.owner = owner_user.id
+        <where> 
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.customerNo != null &amp;&amp; maps.customerPersonQueryParam.customerNo != ''">AND ec.customer_no LIKE CONCAT('%','${maps.customerPersonQueryParam.customerNo}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.realName != null &amp;&amp; maps.customerPersonQueryParam.realName != null">AND ecp.real_name LIKE CONCAT('%','${maps.customerPersonQueryParam.realName}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.phone != null &amp;&amp; maps.customerPersonQueryParam.phone != ''">AND ecp.phone LIKE CONCAT('%','${maps.customerPersonQueryParam.phone}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.province != null">AND ecp.province = #{maps.customerPersonQueryParam.province, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.city != null">AND ecp.city = #{maps.customerPersonQueryParam.city, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.district != null">AND ecp.district = #{maps.customerPersonQueryParam.district, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.personNo != null &amp;&amp; maps.customerPersonQueryParam.personNo != ''">AND ecp.person_no LIKE CONCAT('%','${maps.customerPersonQueryParam.personNo}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.connectRealName != null &amp;&amp; maps.customerPersonQueryParam.connectRealName != ''">AND ecp.connect_real_name LIKE CONCAT('%','${maps.customerPersonQueryParam.connectRealName}','%' )</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.connectPhone != null &amp;&amp; maps.customerPersonQueryParam.connectPhone != ''">AND ecp.connect_phone LIKE CONCAT('%','${maps.customerPersonQueryParam.connectPhone}','%' )</if>  
+            <if test="maps.isQueryAll == null">and ec.data_status = 1 AND ec.customer_type=2</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.isDisabled != null">AND ec.is_disabled = #{maps.customerPersonQueryParam.isDisabled, jdbcType=INTEGER}</if>  
+            <if test="maps.customerPersonQueryParam != null &amp;&amp; maps.customerPersonQueryParam.customerStatus != null">AND ec.customer_status = #{maps.customerPersonQueryParam.customerStatus, jdbcType=INTEGER}</if>  
+            <include refid="permission_sql.customer_control"/> 
+        </where> ORDER BY ec.create_time DESC LIMIT #{maps.start},#{maps.pageSize}
+    </select>
+</mapper>

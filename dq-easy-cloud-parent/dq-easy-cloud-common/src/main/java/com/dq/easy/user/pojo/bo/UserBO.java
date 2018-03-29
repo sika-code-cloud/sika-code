@@ -6,7 +6,7 @@ import com.dq.easy.user.pojo.dto.UserDTO;
 /**
  * 描述：用户业务逻辑类
  * @author THINK
- * @date 2018-03-28 10:07:37
+ * @date 2018-03-28 13:52:10
  */
 public class UserBO extends DqBaseBO{
 	
@@ -16,6 +16,7 @@ public class UserBO extends DqBaseBO{
 	public UserBO(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
+	
 	/** 构建数据传输类 */
 	public UserBO buildUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
