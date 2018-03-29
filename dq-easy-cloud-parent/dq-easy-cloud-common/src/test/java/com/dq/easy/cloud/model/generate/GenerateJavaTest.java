@@ -66,7 +66,7 @@ public class GenerateJavaTest {
 	private String basePackageName = "com.dq.easy";
 
 	// 表名
-	private String tableName = "easy_user_info";
+	private String tableName = "p_user";
 	// 模块包名
 	private String moduleName = "user";
 	// 类主体名称

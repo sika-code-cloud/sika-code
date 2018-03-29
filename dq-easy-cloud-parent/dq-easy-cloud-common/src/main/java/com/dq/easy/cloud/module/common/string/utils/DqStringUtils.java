@@ -970,8 +970,11 @@ public class DqStringUtils {
 	 * 创建时间    2018年3月26日 上午11:01:53
 	 */
 	public static String replaceUnderLineAndUpperCase(String str) {
+		if (DqStringUtils.isEmpty(str)) {
+			return str;
+		}
 		StringBuffer sb = new StringBuffer();
-		sb.append(str);
+		sb.append(lowerCase(str));
 		int count = sb.indexOf("_");
 		while (count != 0) {
 			int num = sb.indexOf("_", count);
