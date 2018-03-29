@@ -39,14 +39,17 @@ public class Dom4jTest {
 	}
 
 	@Test
-	public void testRead() {
-
+	public void testRead() throws Exception {
+		SAXReader reader = new SAXReader();
+		Document document = reader.read(new File(path));
 		Element root = document.getRootElement();
-		Element resultMap = root.element("resultMap");
-		List<Element> els = resultMap.elements("result");
-		for (Element e : els) {
-			System.out.println(e.attributeValue("column"));
-		}
+		Element select = root.element("select");
+		System.out.println(select.getText());
+		select.setText(select.getText());
+		OutputFormat format = OutputFormat.createPrettyPrint();
+		XMLWriter writer = new XMLWriter(new OutputStreamWriter(new FileOutputStream(path)), format);
+		writer.write(document);
+		writer.close();
 	}
 
 	@Test
