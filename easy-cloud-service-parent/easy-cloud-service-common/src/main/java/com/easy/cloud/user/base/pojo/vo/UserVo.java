@@ -1,8 +1,8 @@
 package com.easy.cloud.user.base.pojo.vo;
 
-import com.dq.easy.cloud.module.basic.pojo.vo.DqBaseVo;
+import com.dq.easy.cloud.module.basic.pojo.vo.DqBaseVO;
 
-public class UserVo extends DqBaseVo{
+public class UserVo extends DqBaseVO{
 	private String userName;
 	private String password;
 	private Integer status;
