@@ -7,7 +7,6 @@
 		<groupId>dq.easy.cloud</groupId>
 		<artifactId>dq-easy-cloud-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath/>
 	</parent>
 	<artifactId>dq-easy-cloud-eureka-server</artifactId>
 	<name>dq-easy-cloud-eureka-server</name>
