@@ -116,6 +116,7 @@ public class DqCodeGenerateConstant {
 		public static final String TYPE_NAME = "TYPE_NAME";
 		/** 数据库表的字段名标签---字段的备注---COLUMN_NAME */
 		public static final String REMARKS = "REMARKS";
+		/** 列的key---PRI:主键 --- UNI:唯一索引 */
+		public static final String COLUMN_KEY = "COLUMN_KEY";
 	}
-
 }

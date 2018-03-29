@@ -1,42 +1,49 @@
 package com.dq.easy.cloud.module.common.generator.code.xml.pojo.bo;
 
-import java.util.List;
-
 import org.slf4j.LoggerFactory;
 
 import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
+import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
+import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFileDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqStatement;
 import com.dq.easy.cloud.module.common.generator.code.xml.desc.DqXmlContentDocDesc;
-import com.dq.easy.cloud.module.common.generator.code.xml.desc.DqXmlContentElementDesc;
+import com.dq.easy.cloud.module.common.generator.code.xml.desc.DqXmlFileDesc;
+import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlBaseDTO;
 import com.dq.easy.cloud.module.common.log.utils.DqLogUtils;
 
 public abstract class DqGenerateXmlBaseBO extends DqGenerateBO {
-	protected DqGenerateJavaBaseDTO generateJavaBaseDTO;
-	protected DqDatabaseAbstactConfig dataBaseConfig;
 	protected DqXmlContentDocDesc xmlContentDocDesc;
+	protected DqDatabaseAbstactConfig dataBaseConfig;
 	protected DqDatabaseDataSources databaseDataSources;
 	private DqGenerateRule generateRule;
+	
+	public DqGenerateXmlBaseBO() {
+		super();
+	}
 
-	private void initData() {
-		DqJavaFileDesc dqFileDesc = new DqJavaFileDesc();
-		dqFileDesc.setProjectName(generateJavaBaseDTO.getProjectName());
+	public DqGenerateXmlBaseBO(DqFileDesc fileDesc, DqTemplateDesc templateDesc) {
+		super(fileDesc, templateDesc);
+	}
+
+	public final void initData() {
+		DqXmlFileDesc dqFileDesc = new DqXmlFileDesc();
 		dqFileDesc.setSourceCodeRelativePath(DqSourceCodeRelativePath.RESOURCES);
+		dqFileDesc.setProjectName(getGenerateXmlBaseDTO().getProjectName());
+		dqFileDesc.setFileName(getFileName());
 		dqFileDesc.setFileSuffix(DqFileSuffix.XML);
-		dqFileDesc.setCoverSwitch(generateJavaBaseDTO.isCoverSwith());
+		dqFileDesc.setSubPath(getGenerateXmlBaseDTO().getSubPath());
+		dqFileDesc.setCoverSwitch(getGenerateXmlBaseDTO().isCoverSwith());
 
 		DqLogUtils.info("dqFileDesc", dqFileDesc, LoggerFactory.getLogger(this.getClass()));
 		super.setFileDesc(dqFileDesc);
 
-		super.setFileContentDesc(new DqJavaClassContentDesc(generateRule));
-		xmlContentDocDesc = (DqXmlContentDocDesc) super.getFileContentDesc();
+		this.xmlContentDocDesc = new DqXmlContentDocDesc();
 	}
 
 	@Override
@@ -44,7 +51,6 @@ public abstract class DqGenerateXmlBaseBO extends DqGenerateBO {
 		xmlContentDocDesc.setStatement(getStatement());
 		xmlContentDocDesc.setDocType(getDocType());
 		xmlContentDocDesc.setGenerateRule(generateRule);
-		xmlContentDocDesc.setRootContentElementDesc(getRootContentElementDesc());
 		// 调用真正的生成代码方法
 		super.generateCode();
 	}
@@ -53,10 +59,14 @@ public abstract class DqGenerateXmlBaseBO extends DqGenerateBO {
 	protected String getStatement() {
 		return DqStatement.DEFAULT;
 	}
+	
+	protected abstract String getSourceCodeRelativePath();
+	/** 获取文件名称 */
+	protected abstract String getFileName();
 	/** 获取文档类型 */
 	protected abstract String getDocType();
-	/** 获取根内容元素描述 */
-	protected abstract DqXmlContentElementDesc getRootContentElementDesc();
+	/** 获取数据传输对象 */
+	protected abstract DqGenerateXmlBaseDTO getGenerateXmlBaseDTO();
 	/**
 	 * 
 	 * <p>
@@ -70,6 +80,11 @@ public abstract class DqGenerateXmlBaseBO extends DqGenerateBO {
 	public DqGenerateXmlBaseBO buildDatabaseDataSources(DqDatabaseDataSources databaseDataSources) {
 		this.databaseDataSources = databaseDataSources;
 		return this;
+	}
+
+	@Override
+	public DqFileContentBaseDesc getFileContentDesc() {
+		return xmlContentDocDesc;
 	}
 
 }

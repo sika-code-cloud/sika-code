@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.desc;
+package com.dq.easy.cloud.module.common.generator.code.xml.desc;
 
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.file.utils.DqFileUtils;
@@ -11,57 +11,18 @@ import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
 /**
  * 
  * <p>
- * java文件描述类
+ * xml文件描述类
  * </p>
  *
- * @author daiqi 创建时间 2018年3月26日 下午2:29:40
+ * @author daiqi
+ * 创建时间    2018年3月29日 下午3:16:49
  */
-public class DqJavaFileDesc extends DqFileDesc {
-	/** 项目完整路径 */
-	private String projectFullPath;
+public class DqXmlFileDesc extends DqFileDesc{
 	/** 项目源代码的相对路径 */
 	private String sourceCodeRelativePath;
-	/** 文件所在包名的相对路径 */
-	private String packageRelativePath;
+	/** 子路径 */
+	private String subPath;
 	
-	public DqJavaFileDesc() {
-		super();
-	}
-
-	public DqJavaFileDesc(String projectName, String sourceCodeRelativePath,
-			String packageRelativePath, String fileName, String fileSuffix) {
-		setProjectName(projectName);
-		this.sourceCodeRelativePath = sourceCodeRelativePath;
-		this.packageRelativePath = packageRelativePath;
-		setFileName(fileName);
-		setFileSuffix(fileSuffix);
-	}
-
-	public String getProjectFullPath() {
-		return projectFullPath;
-	}
-
-	public void setProjectFullPath(String projectFullPath) {
-		this.projectFullPath = projectFullPath;
-	}
-
-	public String getSourceCodeRelativePath() {
-		return sourceCodeRelativePath;
-	}
-
-	public void setSourceCodeRelativePath(String sourceCodeRelativePath) {
-		this.sourceCodeRelativePath = sourceCodeRelativePath;
-	}
-
-
-	public String getPackageRelativePath() {
-		return packageRelativePath;
-	}
-
-	public void setPackageRelativePath(String packageRelativePath) {
-		this.packageRelativePath = packageRelativePath;
-	}
-
 	@Override
 	public void initFileDescData() {
 		String projectFullPath = DqFileUtils.getTargetProjectPath(null, getProjectName(), DqCodeGenerateConfig.getNeedFilterDirectoryName());
@@ -71,12 +32,26 @@ public class DqJavaFileDesc extends DqFileDesc {
 		StringBuilder targetPathBuild = DqStringUtils.newStringBuilderDefault();
 		targetPathBuild.append(projectFullPath).append(DqSymbol.BACK_SLASH);
 		targetPathBuild.append(sourceCodeRelativePath).append(DqSymbol.BACK_SLASH);
-		targetPathBuild.append(packageRelativePath).append(DqSymbol.BACK_SLASH);
+		if (DqStringUtils.isNotEmpty(this.getSubPath())) {
+			targetPathBuild.append(getSubPath()).append(DqSymbol.BACK_SLASH);
+		}
 //		设置文件目录完整路径
 		setFileDirectoryFullPath(targetPathBuild.toString());
 //		设置文件完整路径
 		targetPathBuild.append(getFileName()).append(DqSymbol.STOP).append(getFileSuffix());
 		setFileFullPath(targetPathBuild.toString());
 	}
-	
+	public String getSourceCodeRelativePath() {
+		return sourceCodeRelativePath;
+	}
+
+	public void setSourceCodeRelativePath(String sourceCodeRelativePath) {
+		this.sourceCodeRelativePath = sourceCodeRelativePath;
+	}
+	public String getSubPath() {
+		return subPath;
+	}
+	public void setSubPath(String subPath) {
+		this.subPath = subPath;
+	}
 }

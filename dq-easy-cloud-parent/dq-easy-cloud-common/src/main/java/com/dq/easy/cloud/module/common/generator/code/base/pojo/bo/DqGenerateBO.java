@@ -28,11 +28,9 @@ import freemarker.template.Template;
  * @author daiqi
  * @date 2018年3月24日 上午10:57:46
  */
-public class DqGenerateBO {
+public abstract class DqGenerateBO {
 	/** 文件描述 */
 	private DqFileDesc fileDesc;
-	/** 文件内容描述 */
-	private DqFileContentBaseDesc fileContentDesc;
 	/** 模版描述 */
 	private DqTemplateDesc templateDesc;
 
@@ -40,9 +38,8 @@ public class DqGenerateBO {
 		super();
 	}
 
-	public DqGenerateBO(DqFileDesc fileDesc, DqFileContentBaseDesc fileContentDesc, DqTemplateDesc templateDesc) {
+	public DqGenerateBO(DqFileDesc fileDesc, DqTemplateDesc templateDesc) {
 		this.fileDesc = fileDesc;
-		this.fileContentDesc = fileContentDesc;
 		this.templateDesc = templateDesc;
 	}
 
@@ -50,9 +47,7 @@ public class DqGenerateBO {
 		return fileDesc;
 	}
 
-	public DqFileContentBaseDesc getFileContentDesc() {
-		return fileContentDesc;
-	}
+	public abstract DqFileContentBaseDesc getFileContentDesc();
 
 	public DqTemplateDesc getTemplateDesc() {
 		return templateDesc;
@@ -60,10 +55,6 @@ public class DqGenerateBO {
 
 	protected void setFileDesc(DqFileDesc fileDesc) {
 		this.fileDesc = fileDesc;
-	}
-
-	protected void setFileContentDesc(DqFileContentBaseDesc fileContentDesc) {
-		this.fileContentDesc = fileContentDesc;
 	}
 
 	protected void setTemplateDesc(DqTemplateDesc templateDesc) {
