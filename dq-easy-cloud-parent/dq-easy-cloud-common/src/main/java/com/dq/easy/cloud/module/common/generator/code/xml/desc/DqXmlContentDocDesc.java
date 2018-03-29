@@ -18,6 +18,8 @@ public class DqXmlContentDocDesc extends DqXmlContentBaseDesc{
 	private String statement;
 	/** 文档类型 */
 	private String docType;
+	/** 跟内容元素描述 */
+	private DqXmlContentElementDesc rootContentElementDesc;
 	
 	public String getStatement() {
 		return statement;
@@ -30,6 +32,12 @@ public class DqXmlContentDocDesc extends DqXmlContentBaseDesc{
 	}
 	public void setDocType(String docType) {
 		this.docType = docType;
+	}
+	public DqXmlContentElementDesc getRootContentElementDesc() {
+		return rootContentElementDesc;
+	}
+	public void setRootContentElementDesc(DqXmlContentElementDesc rootContentElementDesc) {
+		this.rootContentElementDesc = rootContentElementDesc;
 	}
 
 }

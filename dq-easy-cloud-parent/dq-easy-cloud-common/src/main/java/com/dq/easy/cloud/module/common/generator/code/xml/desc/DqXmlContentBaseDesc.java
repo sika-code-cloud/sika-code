@@ -16,8 +16,8 @@ import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDa
  * @author daiqi
  * 创建时间    2018年3月29日 上午10:30:14
  */
-public class DqXmlContentBaseDesc extends DqFileContentBaseDesc{
-
+public abstract class DqXmlContentBaseDesc extends DqFileContentBaseDesc{
+	
 	@Override
 	public DqFileContentBaseDesc buildDataByDatabaseSources(DqDatabaseDataSources databaseDataSources) {
 		return null;
