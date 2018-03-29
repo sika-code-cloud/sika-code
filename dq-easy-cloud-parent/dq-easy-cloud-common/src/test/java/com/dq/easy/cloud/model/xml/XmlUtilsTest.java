@@ -12,6 +12,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.Format.TextMode;
+import org.jdom2.output.LineSeparator;
 import org.jdom2.output.XMLOutputter;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,12 +73,14 @@ public class XmlUtilsTest {
         newEle.setAttribute("property","updateBy");
         Element resultMap = root.getChild("resultMap"); 
         List<Element> results = resultMap.getChildren("result");
-        for (int i = 0; i < results.size() ;++i) {
-        	if (i == 5) {
-        		results.get(i).addContent(newEle);
-        	}
-        }
-        resultMap.getAttributes();
+        System.out.println("result.size" + results.size());
+        results.add(0 , newEle);
+        Element newEle1 = new Element("result");//设置新增的person的信息
+        newEle1.setAttribute("column","update_by");
+        newEle1.setAttribute("jdbcType","VARCHAR");
+        newEle1.setAttribute("property","updateBy");
+        System.out.println("result.size" + results.size());
+        results.add(0 , newEle1);
         Format format = Format.getRawFormat();
         format.setEncoding("UTF-8");
         format.setTextMode(TextMode.PRESERVE);

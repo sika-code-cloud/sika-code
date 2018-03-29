@@ -46,7 +46,7 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 		controllerAnnotation.setFullClassType(Controller.class.getName());
 
 		List<DqJavaAnnotationParamDesc> controllerAnnotationParamDescs = new ArrayList<>();
-		String value = DqStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.DAO_INF);
+		String value = DqStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.CONTROLLER);
 		controllerAnnotationParamDescs.add(new DqJavaAnnotationParamDesc("value", value));
 		controllerAnnotation.setParams(controllerAnnotationParamDescs);
 
