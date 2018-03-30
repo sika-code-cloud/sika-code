@@ -18,7 +18,6 @@ import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerate
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.mysql.DqDataBaseMysqlConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqCodeProject;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.mysql.DqMysqlDataSources;
@@ -493,7 +492,7 @@ public class GenerateJavaTest {
 		// 生成文件
 		try {
 			javaClassContentDesc.addImportFullClassType();
-			new DqGenerateBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
+//			new DqGenerateBO(fileDesc, javaClassContentDesc, templateDesc).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

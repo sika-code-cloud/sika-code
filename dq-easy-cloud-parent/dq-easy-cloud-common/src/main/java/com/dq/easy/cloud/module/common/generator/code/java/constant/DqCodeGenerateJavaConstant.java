@@ -67,8 +67,8 @@ public class DqCodeGenerateJavaConstant {
 		public static final String POJO_VO = "pojo.vo";
 		public static final String DAO_INF = "dao";
 		public static final String DAO_IMPL = "dao.impl";
-		public static final String SERVICE_INF = "srvice";
-		public static final String SERVICE_IMPL = "srvice.impl";
+		public static final String SERVICE_INF = "service";
+		public static final String SERVICE_IMPL = "service.impl";
 		public static final String LOGIC_INF = "logic";
 		public static final String LOGIC_IMPL = "logic.impl";
 		public static final String CONTROLLER = "controller";

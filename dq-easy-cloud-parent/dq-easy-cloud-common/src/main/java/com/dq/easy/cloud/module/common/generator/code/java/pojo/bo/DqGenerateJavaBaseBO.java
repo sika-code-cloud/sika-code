@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
+import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
@@ -38,7 +39,8 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		this.generateJavaBaseDTO = generateJavaBaseDTO;
 		super.setTemplateDesc(templateDesc);
 		this.generateRule = generateRule;
-
+		javaClassContentDesc = new DqJavaClassContentDesc(generateRule);
+		
 		initData();
 	}
 
@@ -54,8 +56,6 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		DqLogUtils.info("dqFileDesc", dqFileDesc, LoggerFactory.getLogger(this.getClass()));
 		super.setFileDesc(dqFileDesc);
 
-		super.setFileContentDesc(new DqJavaClassContentDesc(generateRule));
-		javaClassContentDesc = (DqJavaClassContentDesc) super.getFileContentDesc();
 	}
 
 	@Override
@@ -229,4 +229,10 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public DqFileContentBaseDesc getFileContentDesc() {
+		return javaClassContentDesc;
+	}
+	
 }

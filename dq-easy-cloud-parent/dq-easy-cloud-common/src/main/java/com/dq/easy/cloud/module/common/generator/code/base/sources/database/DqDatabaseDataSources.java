@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
@@ -40,7 +41,7 @@ public abstract class DqDatabaseDataSources extends DqBaseDataSources{
 	/**
 	 * 
 	 * <p>
-	 * 过去resultSet
+	 * 获取column的resultSet
 	 * </p>
 	 *
 	 * <pre>
@@ -68,7 +69,43 @@ public abstract class DqDatabaseDataSources extends DqBaseDataSources{
 		}
 		return null;
 	}
-
+	/**
+	 * 
+	 * <p>
+	 * 获取主键的resultSet
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月26日 上午9:52:07
+	 */
+	public ResultSet getPrimaryKeyResultSet() {
+		if (databaseConfig == null) {
+			return null;
+		}
+		DatabaseMetaData databaseMetaData = null;
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			databaseMetaData = connection.getMetaData();
+			ResultSet resultSet = databaseMetaData.getPrimaryKeys(null, databaseConfig.getDatabaseName(), databaseConfig.getTableName());
+			return resultSet;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	private void verifyDatabaseDataSourcesData() {
 		if (DqBaseUtils.isNull(databaseConfig)) {

@@ -1,8 +1,9 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.dto;
 
-public class DqGenerateJavaBaseDTO {
-	/** 项目名称 */
-	private String projectName;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.dto.DqGenerateBaseDTO;
+
+public class DqGenerateJavaBaseDTO extends DqGenerateBaseDTO{
+
 	/** 基础包名称 */
 	private String basePackageName;
 	/** 模块名称 */
@@ -13,24 +14,15 @@ public class DqGenerateJavaBaseDTO {
 	private String classBodyName;
 	/** 类注释 */
 	private String classComment;
-	/** 文件覆盖开关---true---覆盖---false存在不覆盖 */
-	private boolean coverSwith;
+	
 	public DqGenerateJavaBaseDTO(String projectName, String basePackageName, String moduleName,
 			String subModulePackageName, String classBodyName, String classComment) {
-		this.projectName = projectName;
+		setProjectName(projectName);
 		this.basePackageName = basePackageName;
 		this.moduleName = moduleName;
 		this.subModulePackageName = subModulePackageName;
 		this.classBodyName = classBodyName;
 		this.classComment = classComment;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
 	}
 
 	public String getBasePackageName() {
@@ -72,13 +64,4 @@ public class DqGenerateJavaBaseDTO {
 	public void setClassComment(String classComment) {
 		this.classComment = classComment;
 	}
-
-	public boolean isCoverSwith() {
-		return coverSwith;
-	}
-
-	public void setCoverSwith(boolean coverSwith) {
-		this.coverSwith = coverSwith;
-	}
-
 }

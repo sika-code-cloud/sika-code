@@ -1,5 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.base.utils;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
 import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
@@ -70,5 +73,55 @@ public class DqCodeGenerateUtils {
 	 */
 	public static String getCompleteClassName(String simpleClassName) {
 		return DqMapUtils.getString(DqCodeGenerateConfig.getClassNameSimpleMapping(), simpleClassName);
+	}
+	
+	public static String getJavaSimpleClassTypeOfMysql(String columnType) {
+		if (DqStringUtils.isEmpty(columnType)) {
+			return null;
+		}
+		String tempColumnType = DqStringUtils.lowerCase(columnType);
+		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
+			return Integer.class.getSimpleName();
+		} else if(tempColumnType.contains("float")) {
+			return Float.class.getSimpleName();
+		} else if(tempColumnType.contains("double")) {
+			return Double.class.getSimpleName();
+		} else if(tempColumnType.contains("bigint")) {
+			return Long.class.getSimpleName();
+		} else if(tempColumnType.contains("char") || tempColumnType.contains("text")) {
+			return String.class.getSimpleName();
+		} else if(tempColumnType.contains("datetime") || tempColumnType.contains("timestamp")) {
+			return Date.class.getSimpleName();
+		} else if(tempColumnType.contains("decimal")) {
+			return BigDecimal.class.getSimpleName();
+		} else if(tempColumnType.contains("blob")) {
+			return "Byte []";
+		}
+		return null;
+	}
+	
+	public static String getJavaFullClassTypeOfMysql(String columnType) {
+		if (DqStringUtils.isEmpty(columnType)) {
+			return null;
+		}
+		String tempColumnType = DqStringUtils.lowerCase(columnType);
+		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
+			return Integer.class.getName();
+		} else if(tempColumnType.contains("float")) {
+			return Float.class.getName();
+		} else if(tempColumnType.contains("double")) {
+			return Double.class.getName();
+		} else if(tempColumnType.contains("bigint")) {
+			return Long.class.getName();
+		} else if(tempColumnType.contains("char") || tempColumnType.contains("text")) {
+			return String.class.getName();
+		} else if(tempColumnType.contains("datetime") || tempColumnType.contains("timestamp")) {
+			return Date.class.getName();
+		} else if(tempColumnType.contains("decimal")) {
+			return BigDecimal.class.getName();
+		} else if(tempColumnType.contains("blob")) {
+			return "Byte []";
+		}
+		return null;
 	}
 }
