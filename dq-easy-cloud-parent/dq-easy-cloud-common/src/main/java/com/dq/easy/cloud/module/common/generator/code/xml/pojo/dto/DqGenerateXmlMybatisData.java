@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto;
 
+import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
+
 public class DqGenerateXmlMybatisData {
 	/** 列名 */
 	private String colunmName;
@@ -42,4 +44,7 @@ public class DqGenerateXmlMybatisData {
 		this.columnKey = columnKey;
 	}
 
+	public String getPropertyFullType() {
+		return DqCodeGenerateUtils.getJavaFullClassTypeOfMysql(colunmType);
+	}
 }

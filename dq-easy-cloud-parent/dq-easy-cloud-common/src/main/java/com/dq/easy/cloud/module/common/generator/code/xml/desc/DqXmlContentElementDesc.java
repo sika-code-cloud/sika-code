@@ -39,6 +39,17 @@ public class DqXmlContentElementDesc extends DqXmlContentBaseDesc {
 		super(generateXmlBaseDTO);
 	}
 
+	public DqXmlContentElementDesc addAttribute(String key, String value) {
+		if (DqStringUtils.isEmpty(key) || DqStringUtils.isEmpty(value)) {
+			return this;
+		}
+		if (DqCollectionsUtils.isEmpty(this.attributes)) {
+			this.attributes = new ArrayList<>();
+		}
+		attributes.add(new DqXmlContentElementAttributeDesc(key, value));
+		return this;
+	}
+	
 	public DqXmlContentElementDesc addAttribute(DqXmlContentElementAttributeDesc attributeDesc) {
 		if (DqCollectionsUtils.isEmpty(this.attributes)) {
 			this.attributes = new ArrayList<>();

@@ -2,7 +2,9 @@ package com.dq.easy.cloud.module.common.json.filter;
 
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.json.pojo.dto.DqJsonFilterDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -13,7 +15,11 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * @date 2018年2月28日 下午8:10:33
  */
 public class DqJsonPropertyFilter implements PropertyFilter{
-	
+	static {
+        //全局配置关闭循环引用检测
+        JSON.DEFAULT_GENERATE_FEATURE |= SerializerFeature.DisableCircularReferenceDetect.getMask();
+    }
+
 	private Map<String, DqJsonFilterDTO> filterDTOMap;
 
 	public DqJsonPropertyFilter(Map<String, DqJsonFilterDTO> filterDTOMap) {

@@ -3,25 +3,27 @@ package com.dq.easy.cloud.model.xml;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom2.Content;
+import org.apache.commons.collections.CollectionUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.Format.TextMode;
-import org.jdom2.output.LineSeparator;
 import org.jdom2.output.XMLOutputter;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
+import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
 
 public class XmlUtilsTest {
 	SAXBuilder builder = new SAXBuilder();
-	File xmlFile = new File(DqSourceCodeRelativePath.RESOURCES+"\\test.xml");
+	File xmlFile = new File(DqSourceCodeRelativePath.RESOURCES+"\\mybatis\\easy_user_info.xml");
 	Document doc = null;
 	@Before
 	public void init() {
@@ -40,7 +42,6 @@ public class XmlUtilsTest {
         Element root = doc.getRootElement(); //获取根元素
         
         System.out.println("---获取第一个子节点和子节点下面的节点信息------");
-        List<Element> rmElements = root.getChildren();
         Element rmElement = root.getChild("resultMap");
         System.out.println("resultMap属性的值列表" + rmElement.getChildren("result").size());
         System.out.println("getContentSize:" + rmElement.getChildren("result").size());//第一次输入张三  第二次输出123123
@@ -72,18 +73,36 @@ public class XmlUtilsTest {
         newEle.setAttribute("jdbcType","VARCHAR");
         newEle.setAttribute("property","updateBy");
         Element resultMap = root.getChild("resultMap"); 
-        List<Element> results = resultMap.getChildren("result");
-        System.out.println("result.size" + results.size());
-        results.add(0 , newEle);
-        Element newEle1 = new Element("result");//设置新增的person的信息
-        newEle1.setAttribute("column","update_by");
-        newEle1.setAttribute("jdbcType","VARCHAR");
-        newEle1.setAttribute("property","updateBy");
-        System.out.println("result.size" + results.size());
-        results.add(0 , newEle1);
-        Format format = Format.getRawFormat();
+        List<Element> resultMaps = resultMap.getChildren();
+//        1：获取其他
+        List<Element> others = new ArrayList();
+        for (int i = 0 ; i < resultMaps.size(); ++i) {
+			if (!resultMaps.get(i).getName().equals("result") && !resultMaps.get(i).getName().equals("id")){
+				others.add(resultMaps.get(i));
+			}
+		}
+        List<Element> results = new ArrayList<>();
+        Element idElement = new Element("id");//设置新增的person的信息
+        idElement.setAttribute("column","id");
+        idElement.setAttribute("jdbcType","INTEGER");
+        idElement.setAttribute("property","id");
+        results.add(idElement);
+        for (int i = 0 ; i < 5; ++i) {
+        	 Element resultElement = new Element("result");//设置新增的person的信息
+        	 resultElement.setAttribute("column","customer_type"+i);
+        	 resultElement.setAttribute("jdbcType","INTEGER");
+        	 resultElement.setAttribute("property","id");
+        	 results.add(resultElement);
+        }
+        results.addAll(others);
+        resultMaps.clear();
+        resultMaps.addAll(results);
+        System.out.println("result.size" + resultMaps.size());
+        System.out.println("new:---" + JSONObject.toJSONString(resultMaps.get(0).clone()));
+        System.out.println("result.size" + resultMaps.size());
+        Format format = Format.getPrettyFormat();
+        format.setIndent("    ");
         format.setEncoding("UTF-8");
-        format.setTextMode(TextMode.PRESERVE);
         XMLOutputter out = new XMLOutputter(format);
         out.output(doc, new FileWriter(xmlFile)); //写文件
     }

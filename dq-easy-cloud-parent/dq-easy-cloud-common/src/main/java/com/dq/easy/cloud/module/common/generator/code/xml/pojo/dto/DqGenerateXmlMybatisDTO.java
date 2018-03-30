@@ -13,10 +13,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * mybatis的xml数据传输对象
  * </p>
  *
- * @author daiqi
- * 创建时间    2018年3月29日 下午12:47:38
+ * @author daiqi 创建时间 2018年3月29日 下午12:47:38
  */
-public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
+public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO {
 	/** 命名空间---即dao类完整类型 */
 	private String namespace;
 	/** 表名 */
@@ -27,6 +26,8 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
 	private String fullClassTypeDO;
 	/** 简称的类类型---持久化类 */
 	private String simpleClassTypeDO;
+	/** mybatis的映射列表配置名称 */
+	private String mappersConfigName;
 	/** 主键 */
 	private DqGenerateXmlMybatisData primaryKey;
 	/** 数据列表 */
@@ -49,6 +50,9 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
 	}
 
 	public String getTableSimpleName() {
+		if (DqStringUtils.isEmpty(tableSimpleName) && DqStringUtils.isNotEmpty(tableName)) {
+			tableSimpleName = DqStringUtils.getRmUnderLineSimpleStr(tableName);
+		}
 		return tableSimpleName;
 	}
 
@@ -79,9 +83,17 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
 	public void setDatas(List<DqGenerateXmlMybatisData> datas) {
 		this.datas = datas;
 	}
-	
+
+	public String getMappersConfigName() {
+		return mappersConfigName;
+	}
+
+	public void setMappersConfigName(String mappersConfigName) {
+		this.mappersConfigName = mappersConfigName;
+	}
+
 	public DqGenerateXmlMybatisData getPrimaryKey() {
-		if (primaryKey != null){
+		if (primaryKey != null) {
 			return primaryKey;
 		}
 		for (DqGenerateXmlMybatisData data : datas) {
@@ -95,19 +107,15 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
 	public void setPrimaryKey(DqGenerateXmlMybatisData primaryKey) {
 		this.primaryKey = primaryKey;
 	}
-	
+
 	public String buildDatasStr() {
 		if (DqCollectionsUtils.isEmpty(datas)) {
 			return null;
 		}
 		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
-		for (int i = 0 ; i < datas.size() ; ++i) {
+		for (int i = 0; i < datas.size(); ++i) {
 			DqGenerateXmlMybatisData data = datas.get(i);
-			if (DqStringUtils.isNotEmpty(tableSimpleName)) {
-				sb.append(tableSimpleName);
-			} else {
-				sb.append(tableName);
-			}
+			sb.append(getTableSimpleName());
 			sb.append(DqSymbol.STOP).append(data.getColunmName());
 			if (i < datas.size() - 1) {
 				sb.append(DqSymbol.COMMA);
@@ -115,5 +123,4 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO{
 		}
 		return sb.toString();
 	}
-
 }

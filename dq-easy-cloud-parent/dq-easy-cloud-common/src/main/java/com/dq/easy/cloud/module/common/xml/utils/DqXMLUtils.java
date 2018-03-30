@@ -1,6 +1,7 @@
 package com.dq.easy.cloud.module.common.xml.utils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -205,4 +206,5 @@ public class DqXMLUtils {
 		sb.append("</xml>");
 		return sb.toString();
 	}
+	
 }

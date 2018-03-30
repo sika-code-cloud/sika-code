@@ -180,45 +180,45 @@ public class DqCodeGenerateJavaConstant {
 					.lowerCase(DqStringUtils.replace(fieldName, DqSymbol.UNDER_LINE, DqStringUtils.EMPTY));
 			return DqBaseUtils.isExistConstantValue(DqIgnoreField.class, rmOnderLineLowerCaseStr);
 		}
-
-		/**
-		 * 修饰符映射美剧类
-		 * 
-		 * @author daiqi
-		 * @date 2018年3月24日 上午1:25:14
-		 */
-		public static enum DqModifierMappingEnum {
-			ABSTRACT(Modifier.ABSTRACT, "abstract"), 
-			FINAL(Modifier.FINAL, "final"), 
-			INTERFACE(Modifier.INTERFACE,"interface"), 
-			NATIVE(Modifier.NATIVE, "native"), 
-			PRIVATE(Modifier.PRIVATE, "private"), 
-			PROTECTED(Modifier.PROTECTED, "protected"), 
-			PUBLIC(Modifier.PUBLIC, "public"), 
-			STATIC(Modifier.STATIC,"static"), 
-			STRICT(Modifier.STRICT, "strict"), 
-			SYNCHRONIZED(Modifier.SYNCHRONIZED,"synchronized"), 
-			TRANSIENT(Modifier.TRANSIENT, "transient"), 
-			VOLATILE(Modifier.VOLATILE, "volatile"), 
-			ENUM(0x00004000, "enum"), CLASS(0x00004020, "class"), 
-			ANNOTATION(0x00004040, "@interface");
-
-			private int modifier;
-			private String modifierDesc;
-
-			private DqModifierMappingEnum(int modifier, String modifierDesc) {
-				this.modifier = modifier;
-				this.modifierDesc = modifierDesc;
-			}
-
-			public int getModifier() {
-				return modifier;
-			}
-
-			public String getModifierDesc() {
-				return modifierDesc;
-			}
-
+	}
+	
+	/**
+	 * 修饰符映射美剧类
+	 * 
+	 * @author daiqi
+	 * @date 2018年3月24日 上午1:25:14
+	 */
+	public static enum DqModifierMappingEnum {
+		ABSTRACT(Modifier.ABSTRACT, "abstract"), 
+		FINAL(Modifier.FINAL, "final"), 
+		INTERFACE(Modifier.INTERFACE,"interface"), 
+		NATIVE(Modifier.NATIVE, "native"), 
+		PRIVATE(Modifier.PRIVATE, "private"), 
+		PROTECTED(Modifier.PROTECTED, "protected"), 
+		PUBLIC(Modifier.PUBLIC, "public"), 
+		STATIC(Modifier.STATIC,"static"), 
+		STRICT(Modifier.STRICT, "strict"), 
+		SYNCHRONIZED(Modifier.SYNCHRONIZED,"synchronized"), 
+		TRANSIENT(Modifier.TRANSIENT, "transient"), 
+		VOLATILE(Modifier.VOLATILE, "volatile"), 
+		ENUM(0x00004000, "enum"), CLASS(0x00004020, "class"), 
+		ANNOTATION(0x00004040, "@interface");
+		
+		private int modifier;
+		private String modifierDesc;
+		
+		private DqModifierMappingEnum(int modifier, String modifierDesc) {
+			this.modifier = modifier;
+			this.modifierDesc = modifierDesc;
 		}
+		
+		public int getModifier() {
+			return modifier;
+		}
+		
+		public String getModifierDesc() {
+			return modifierDesc;
+		}
+		
 	}
 }

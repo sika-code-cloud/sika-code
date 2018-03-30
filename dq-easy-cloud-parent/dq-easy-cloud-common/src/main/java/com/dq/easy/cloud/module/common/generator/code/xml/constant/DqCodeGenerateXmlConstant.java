@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.module.common.generator.code.xml.constant;
 
+import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
 /**
@@ -50,31 +52,39 @@ public class DqCodeGenerateXmlConstant {
 		public static final String TYPE = "type";
 		public static final String KEY_PROPERTY = "keyProperty";
 		public static final String USE_GENERATED_KEYS = "useGeneratedKeys";
-		public static final String COLUNM = "colunm";
+		public static final String COLUMN = "column";
 		public static final String JDBC_TYPE = "jdbcType";
 		public static final String PROPERTY = "property";
 		public static final String RESULT_MAP = "resultMap";
+		public static final String RESULT_TYPE = "resultType";
 		public static final String PARAMETER_TYPE = "parameterType";
 		public static final String REFID = "refid";
 		public static final String TEST = "test";
 	}
 
 	/** mybatis sql节点类型 */
-	public static enum DqMyBatisSqlType {
-		/** 查询类型---根据id获取数据 */
-		FIND_BY_ID(1, "findById"),
-		/** 查询类型---获取列表数量 */
-		LIST_COUNT(2, "listCount"),
-		/** 查询类型---获取分页数据 */
-		LIST_PAGE(3, "listPage"),
+	public static enum DqMyBatisSqlTypeEnum {
+		/** 查询类型---resultMap  */
+		RESULT_MAP(0, "resultMap"),
 		/** 查询类型---列名列表类型 */
-		COLUMN_LIST(4, "columnList"),
+		COLUMN_LIST(1, "columnList"),
+		/** 查询类型---根据id获取数据 */
+		FIND_BY_ID(2, "findById"),
+		/** 查询类型---获取列表数量 */
+		LIST_COUNT(3, "listCount"),
+		/** 查询类型---获取分页数据 */
+		LIST_PAGE(4, "listPage"),
 		/** 查询类型---设置列明的sql */
-		SET_COLUMN_SQL(5, "setColumnSql"),;
+		SET_COLUMN_SQL(5, "setColumnSql"),
+		/** 查询类型---保存数据 */
+		SAVE(6, "save"),
+		/** 查询类型---更新数据  */
+		UPDATE(7, "update"),
+		;
 		private Integer type;
 		private String desc;
 
-		private DqMyBatisSqlType(Integer type, String desc) {
+		private DqMyBatisSqlTypeEnum(Integer type, String desc) {
 			this.type = type;
 			this.desc = desc;
 		}
@@ -115,6 +125,8 @@ public class DqCodeGenerateXmlConstant {
 		ID(8, "id"), 
 		RESULT(9, "result"),
 		INCLUDE(10, "include"), 
+		SET(11, "set"), 
+		IF(11, "if"), 
 		;
 		private Integer type;
 		private String desc;
@@ -139,6 +151,34 @@ public class DqCodeGenerateXmlConstant {
 		public void setDesc(String desc) {
 			this.desc = desc;
 		}
-
+	}
+	/**
+	 * 
+	 * <p>
+	 * 忽略设置的列
+	 * </p>
+	 *
+	 * @author daiqi
+	 * 创建时间    2018年3月30日 上午11:58:59
+	 */
+	public static class DqIgnoreSetField {
+		public static final String ID = "id";
+		/**
+		 * 
+		 * <p>
+		 * 是否是忽略的属性
+		 * </p>
+		 *
+		 * @param fieldName
+		 *            : String : 属性名称
+		 * @return true
+		 * @author daiqi 创建时间 2018年3月21日 下午8:37:59
+		 */
+		public static final boolean isIgnoreField(String fieldName) {
+			// 移除下划线的小写字符串
+			String rmOnderLineLowerCaseStr = DqStringUtils
+					.lowerCase(DqStringUtils.replace(fieldName, DqSymbol.UNDER_LINE, DqStringUtils.EMPTY));
+			return DqBaseUtils.isExistConstantValue(DqIgnoreSetField.class, rmOnderLineLowerCaseStr);
+		}
 	}
 }

@@ -31,8 +31,7 @@ public class Dom4jTest {
 	}
 
 	Document document;
-	static String path = DqSourceCodeRelativePath.RESOURCES + "\\test.xml";
-
+	static String path = DqSourceCodeRelativePath.RESOURCES + "\\mybatis\\easy_user_info.xml";
 	@Before
 	public void init() {
 		document = load(path);
@@ -58,19 +57,20 @@ public class Dom4jTest {
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(new File(path));
 		Element resultMap = document.getRootElement().element("resultMap");
-		List list = resultMap.elements();
-		
+		List<Element> list = resultMap.elements();
+		int index = 0 ;
+		for (int i = 0 ; i < list.size(); ++i) {
+			if (list.get(i).getName().equals("result")){
+				index = i;
+			}
+		}
 		Element newEle = DocumentHelper.createElement("result");//设置新增的person的信息
         newEle.addAttribute("column","update_by");
         newEle.addAttribute("jdbcType","VARCHAR");
         newEle.addAttribute("property","updateBy");
-        list.add(2, newEle); 
+        list.add(index + 1, newEle);
 		OutputFormat format = OutputFormat.createPrettyPrint();
-		format = new OutputFormat();
         format.setIndentSize(4);
-        format.setNewlines(true);
-        format.setTrimText(true);
-        format.setPadText(true);
 		format.setEncoding("UTF-8");
 		XMLWriter writer = new XMLWriter(new OutputStreamWriter(new FileOutputStream(path)), format);
 		writer.write(document);

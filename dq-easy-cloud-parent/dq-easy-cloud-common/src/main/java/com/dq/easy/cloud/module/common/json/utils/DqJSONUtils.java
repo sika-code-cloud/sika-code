@@ -38,7 +38,7 @@ public class DqJSONUtils {
 			if (obj instanceof String) {
 				obj = JSONObject.parse(obj.toString());
 			}
-			String jsonStr = com.alibaba.fastjson.JSONObject.toJSONString(obj, propertyFilter);
+			String jsonStr = JSONObject.toJSONString(obj, propertyFilter);
 			return com.alibaba.fastjson.JSONObject.parseObject(jsonStr, clazz);
 		} catch (JSONException e) {
 			return (T) obj;

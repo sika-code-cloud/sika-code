@@ -31,13 +31,7 @@ public class GenerateXmlTest {
 		private String projectNameMybatis = "dq-easy-cloud-common";
 
 		// 表名
-		private String tableName = "p_user";
-		// 模块包名
-		private String moduleName = "user";
-		// 类主体名称
-		private String classBodyName = "User";
-		// 类的注释
-		private String classComment = "用户";
+		private String tableName = "easy_user_info";
 
 		@Before
 		public void initData() {
@@ -56,7 +50,6 @@ public class GenerateXmlTest {
 		mybatisDTO.setCoverSwith(true);
 		mybatisDTO.setNamespace("com.lxzl.payment.gateway.dataaccess.dao.mysql.customer.BusinessCustomerMapper");
 		mybatisDTO.setTableName(tableName);
-		mybatisDTO.setTableSimpleName("pu");
 		mybatisDTO.setProjectName(projectNameMybatis);
 		mybatisDTO.setSubPath("mybatis");
 		mybatisDTO.setSimpleClassTypeDO(DqBaseBO.class.getSimpleName());
@@ -64,12 +57,17 @@ public class GenerateXmlTest {
 		
 		DqGenerateXmlMybatisBO mybatisBO = new DqGenerateXmlMybatisBO(templateDesc,mybatisDTO);
 		mybatisBO.initData();
-		
 		mybatisBO.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig));
+		
 		mybatisBO.buildRootContentElementDesc();
 		mybatisBO.buildResultMap();
 		mybatisBO.buildColumnList();
 		mybatisBO.buildFindById();
+		mybatisBO.buildListCount();
+		mybatisBO.buildListPage();
+		mybatisBO.buildSetColumnSql();
+		mybatisBO.buildSave();
+		mybatisBO.buildUpdate();
 		mybatisBO.generateCode();
 	}
 }

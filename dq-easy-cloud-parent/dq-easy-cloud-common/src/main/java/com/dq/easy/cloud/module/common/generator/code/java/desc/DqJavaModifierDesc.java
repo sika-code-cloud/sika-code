@@ -1,6 +1,6 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
-import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 
 public class DqJavaModifierDesc {
 	private Integer code;

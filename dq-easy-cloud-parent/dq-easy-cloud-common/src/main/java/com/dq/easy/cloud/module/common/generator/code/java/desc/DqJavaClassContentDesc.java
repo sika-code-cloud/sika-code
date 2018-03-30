@@ -18,8 +18,8 @@ import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateR
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField;
-import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqMethodTypeEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaClassRule;

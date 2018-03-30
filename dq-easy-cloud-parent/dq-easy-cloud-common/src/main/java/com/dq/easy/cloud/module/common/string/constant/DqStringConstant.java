@@ -35,13 +35,19 @@ public class DqStringConstant {
 	    public static final String EQUAL  = "=";
 	    /** 符号常量---英文双引号--- " */
 	    public static final String DOUBLE_QUOTES  = "\"";
-	    /** 符号常量---英文左括号--- ( */
-	    public static final String LEFT_BRACKETS  = "(";
-	    /** 符号常量---英文右括号--- ) */
-	    public static final String RIGHT_BRACKETS  = ")";
+	    /** 符号常量---英文左小括号--- ( */
+	    public static final String LEFT_PARENTHESES  = "(";
+	    /** 符号常量---英文右小括号--- ) */
+	    public static final String RIGHT_PARENTHESES  = ")";
+	    /** 符号常量---英文左大括号--- { */
+	    public static final String LEFT_BRACES  = "{";
+	    /** 符号常量---英文右大括号--- } */
+	    public static final String RIGHT_BRACES  = "}";
 	    /** 符号常量---英文逗号--- , */
 	    public static final String COMMA  = ",";
 	    /** 符号常量---英文@--- @ */
 	    public static final String AT  = "@";
+	    /** 符号常量---英文#--- # */
+	    public static final String NUMBER  = "#";
 	}
 }

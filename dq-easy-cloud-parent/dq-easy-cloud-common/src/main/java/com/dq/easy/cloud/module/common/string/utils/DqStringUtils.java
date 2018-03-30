@@ -987,4 +987,34 @@ public class DqStringUtils {
 		}
 		return sb.toString().replaceAll("_", "");
 	}
+	/**
+	 * 
+	 * <p>
+	 * 获取删除下划线的字符串简称
+	 * </p>
+	 *
+	 * <pre>
+	 *     所需参数示例及其说明
+	 *     参数名称 : 示例值 : 说明 : 是否必须
+	 * </pre>
+	 *
+	 * @param needRmLineStr
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年3月30日 上午9:52:34
+	 */
+	public static String getRmUnderLineSimpleStr(String needRmLineStr){
+		if (isEmpty(needRmLineStr)) {
+			return null;
+		}
+		String[] tempStrArr = needRmLineStr.split(DqSymbol.UNDER_LINE);
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		for (String str : tempStrArr) {
+			String strNotTrim = DqStringUtils.trimToEmpty(str);
+			if (strNotTrim.length() > 0) {
+				sb.append(strNotTrim.charAt(0));
+			}
+		}
+		return sb.toString();
+	}
 }

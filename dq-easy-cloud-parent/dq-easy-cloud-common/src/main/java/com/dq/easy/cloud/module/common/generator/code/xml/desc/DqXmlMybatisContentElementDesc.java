@@ -11,16 +11,29 @@ import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqColumnLabel;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
-import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqMyBatisSqlType;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqTableColumnKey;
 import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlMybatisDTO;
 import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlMybatisData;
+import com.dq.easy.cloud.module.common.generator.code.xml.utils.DqGenerateCodeXmlUtils;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
+/**
+ * 
+ * <p>
+ * mybatis内容元素描述类
+ * </p>
+ * 
+ * @author daiqi
+ * 创建时间    2018年3月30日 下午2:24:25
+ */
+
 public class DqXmlMybatisContentElementDesc extends DqXmlContentElementDesc {
+	/** 数据传输对象 */
 	private DqGenerateXmlMybatisDTO mybatisDTO;
+	/** sql的类型对应@see DqCodeGenerateXmlConstant.DqMyBatisSqlType */
 	private Integer sqlType;
+	/** mybatis的where数据列表 */
 	private List<DqGenerateXmlMybatisData> whereDatas;
 
 	public DqXmlMybatisContentElementDesc() {
@@ -52,19 +65,23 @@ public class DqXmlMybatisContentElementDesc extends DqXmlContentElementDesc {
 		this.whereDatas = whereDatas;
 	}
 
+	public DqGenerateXmlMybatisDTO getMybatisDTO() {
+		return mybatisDTO;
+	}
+
 	public DqFileContentBaseDesc addWhereData(DqGenerateXmlMybatisData whereData) {
 		if (DqCollectionsUtils.isEmpty(this.whereDatas)) {
-			whereDatas = new ArrayList<>();
+			this.whereDatas = new ArrayList<>();
 		}
-		whereDatas.add(whereData);
+		this.whereDatas.add(whereData);
 		return this;
 	}
 
 	public DqFileContentBaseDesc addAllWhereData(List<DqGenerateXmlMybatisData> whereDatas) {
 		if (DqCollectionsUtils.isEmpty(this.whereDatas)) {
-			whereDatas = new ArrayList<>();
+			this.whereDatas = new ArrayList<>();
 		}
-		whereDatas.addAll(whereDatas);
+		this.whereDatas.addAll(whereDatas);
 		return this;
 	}
 
@@ -89,23 +106,22 @@ public class DqXmlMybatisContentElementDesc extends DqXmlContentElementDesc {
 				generateXmlMybatisData.setColunmName(resultSet.getString(DqColumnLabel.COLUMN_NAME));
 				generateXmlMybatisData.setPropertyName(name);
 				generateXmlMybatisData.setColunmType(resultSet.getString(DqColumnLabel.TYPE_NAME));
-				if (DqStringUtils.equalsIgnoreCase(generateXmlMybatisData.getColunmName(),primaryKeyName)) {
+				if (DqStringUtils.equalsIgnoreCase(generateXmlMybatisData.getColunmName(), primaryKeyName)) {
 					generateXmlMybatisData.setColumnKey(DqTableColumnKey.PRI);
 				}
 				mybatisDatas.add(generateXmlMybatisData);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		mybatisDTO.setDatas(mybatisDatas);
 		return this;
 	}
-
-	public boolean isColumnList() {
-		if (this.sqlType != null && sqlType == DqMyBatisSqlType.COLUMN_LIST.getType()) {
-			return true;
-		}
-		return false;
+	
+	/** 获取where数据列表字符串格式 */
+	public String getWhereDatasStr() {
+		return DqGenerateCodeXmlUtils.getWhereDatasStr(whereDatas, mybatisDTO.getTableSimpleName());
 	}
+	
 }
