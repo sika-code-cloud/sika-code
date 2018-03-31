@@ -1,8 +1,5 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,11 +10,7 @@ import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateR
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
@@ -37,62 +30,55 @@ public class DqGenerateJavaDOBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getAnnotations() {
+	protected void buildAnnotations() {
 		if (DqBaseUtils.isNull(dataBaseConfig)) {
-			return null;
+			return ;
 		}
-		List<DqJavaAnnotationDesc> annotations = new ArrayList<>();
 
 		DqJavaAnnotationDesc tableAnnotationDesc = new DqJavaAnnotationDesc();
 		tableAnnotationDesc.setName(Table.class.getSimpleName());
 		tableAnnotationDesc.setSimpleClassType(Table.class.getSimpleName());
 		tableAnnotationDesc.setFullClassType(Table.class.getName());
 		// 设置类注解参数---begin
-		List<DqJavaAnnotationParamDesc> tableAnnotationParamDescs = new ArrayList<>();
-		DqJavaAnnotationParamDesc tableAnnotationParamDesc = new DqJavaAnnotationParamDesc();
-		tableAnnotationParamDesc.setName("name");
-		tableAnnotationParamDesc.setValue(dataBaseConfig.getTableName());
-		tableAnnotationParamDescs.add(tableAnnotationParamDesc);
-		tableAnnotationDesc.setParams(tableAnnotationParamDescs);
+		tableAnnotationDesc.addParam("name", dataBaseConfig.getTableName());
 		// 设置类注解参数---end
-		annotations.add(tableAnnotationDesc);
+		super.javaClassContentDesc.addAnnotation(tableAnnotationDesc);
 
 		DqJavaAnnotationDesc entityAnnotationDesc = new DqJavaAnnotationDesc();
 		entityAnnotationDesc.setName(Entity.class.getSimpleName());
 		entityAnnotationDesc.setSimpleClassType(Entity.class.getSimpleName());
 		entityAnnotationDesc.setFullClassType(Entity.class.getName());
-		annotations.add(entityAnnotationDesc);
+		super.javaClassContentDesc.addAnnotation(entityAnnotationDesc);
 
-		return annotations;
 	}
 
 	@Override
-	protected DqJavaClassContentDesc getExtendsParentClass() {
+	protected void buildExtendsParentClass() {
 		DqJavaClassContentDesc extendsParentClass = new DqJavaClassContentDesc();
 		extendsParentClass.setName(DqBaseEntity.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseEntity.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseEntity.class.getName());
-		return extendsParentClass;
+		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		return null;
+	protected void buildImplementsInterfaces() {
+		
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		return null;
+	protected void buildConstructors() {
+		
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		return super.getFieldsByDatabaseDataSources();
+	protected void buildFields() {
+		super.javaClassContentDesc.addFields(getFieldsByDatabaseDataSources());
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		return super.getMethodsByFields();
+	protected void buildMethods() {
+		super.javaClassContentDesc.addMethods(super.getMethodsByFields());
 	}
 
 	@Override

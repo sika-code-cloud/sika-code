@@ -1,176 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lxzl.payment.gateway.dataaccess.dao.mysql.customer.BusinessCustomerMapper" >
-
-	<resultMap id="DqBaseBO" type="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO" >
-		<id column="ID" jdbcType="INT" property="id" />
-		<result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
-		<result column="USER_PASSWORD" jdbcType="VARCHAR" property="userPassword" />
-		<result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
-		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
-		<result column="USER_NICKNAME" jdbcType="VARCHAR" property="userNickname" />
-		<result column="USER_RANK" jdbcType="VARCHAR" property="userRank" />
-		<result column="USER_TYPE" jdbcType="INT" property="userType" />
-		<result column="USER_NAME_CN" jdbcType="VARCHAR" property="userNameCn" />
-		<result column="USER_NAME_EN" jdbcType="VARCHAR" property="userNameEn" />
-		<result column="USER_HEADURL" jdbcType="VARCHAR" property="userHeadurl" />
-		<result column="USER_GENDER" jdbcType="VARCHAR" property="userGender" />
-		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
-		<result column="USER_LOCATION" jdbcType="INT" property="userLocation" />
-		<result column="USER_LOCATION_PROVINCE" jdbcType="VARCHAR" property="userLocationProvince" />
-		<result column="USER_LOCATION_CITY" jdbcType="VARCHAR" property="userLocationCity" />
-		<result column="USER_LOCATION_ADDRESS" jdbcType="VARCHAR" property="userLocationAddress" />
-		<result column="USER_LOCATION_ZIPCODE" jdbcType="VARCHAR" property="userLocationZipcode" />
-		<result column="PAY_CURRENCY" jdbcType="INT" property="payCurrency" />
-		<result column="USER_STATUS" jdbcType="INT" property="userStatus" />
-		<result column="USER_IS_AUTO_LOGIN" jdbcType="INT" property="userIsAutoLogin" />
-		<result column="CHECK_TIME" jdbcType="DATETIME" property="checkTime" />
-		<result column="LASTLOGIN_TIME" jdbcType="DATETIME" property="lastloginTime" />
-		<result column="ACCOUNT_CODE" jdbcType="VARCHAR" property="accountCode" />
-		<result column="ENTITY_ID" jdbcType="INT" property="entityId" />
-		<result column="GROUP_ID" jdbcType="INT" property="groupId" />
-		<result column="USER_UUID" jdbcType="VARCHAR" property="userUuid" />
-		<result column="IS_ACTIVE" jdbcType="INT" property="isActive" />
-		<result column="DEL_FLAG" jdbcType="INT" property="delFlag" />
-		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
-		<result column="CREATE_DATE_TIME" jdbcType="DATETIME" property="createDateTime" />
-		<result column="CREATER" jdbcType="INT" property="creater" />
-		<result column="UPDATE_DATE_TIME" jdbcType="DATETIME" property="updateDateTime" />
-		<result column="UPDATER" jdbcType="INT" property="updater" />
-	</resultMap>
-	
-	<sql id="columnList" >
-		pu.ID,pu.LOGIN_NAME,pu.USER_PASSWORD,pu.USER_EMAIL,pu.USER_CODE,pu.USER_NICKNAME,pu.USER_RANK,pu.USER_TYPE,pu.USER_NAME_CN,pu.USER_NAME_EN,pu.USER_HEADURL,pu.USER_GENDER,pu.USER_PHONE,pu.USER_LOCATION,pu.USER_LOCATION_PROVINCE,pu.USER_LOCATION_CITY,pu.USER_LOCATION_ADDRESS,pu.USER_LOCATION_ZIPCODE,pu.PAY_CURRENCY,pu.USER_STATUS,pu.USER_IS_AUTO_LOGIN,pu.CHECK_TIME,pu.LASTLOGIN_TIME,pu.ACCOUNT_CODE,pu.ENTITY_ID,pu.GROUP_ID,pu.USER_UUID,pu.IS_ACTIVE,pu.DEL_FLAG,pu.REMARK,pu.CREATE_DATE_TIME,pu.CREATER,pu.UPDATE_DATE_TIME,pu.UPDATER
-	</sql>
-	
-	<select id="findById" resultMap="DqBaseBO" parameterType="java.lang.Integer" >
-		SELECT <include refid="columnList" /> 
-		FROM p_user pu 
-		WHERE pu.ID = #{id, jdbcType=INT} 
-	</select>
-	
-	<select id="listCount" resultType="java.lang.Integer" parameterType="map" >
-		SELECT count(*)
-		FROM p_user pu 
-	</select>
-	
-	<select id="listPage" resultMap="DqBaseBO" parameterType="map" >
-		SELECT <include refid="columnList" /> 
-		FROM p_user pu 
-		LIMIT #{maps.start},#{maps.pageSize}
-	</select>
-	
-	<select id="setColumnSql" >
-		<set>
-			<if test="loginName != null" >
-				pu.LOGIN_NAME = #{loginName, jdbcType=VARCHAR},
-			</if>
-			<if test="userPassword != null" >
-				pu.USER_PASSWORD = #{userPassword, jdbcType=VARCHAR},
-			</if>
-			<if test="userEmail != null" >
-				pu.USER_EMAIL = #{userEmail, jdbcType=VARCHAR},
-			</if>
-			<if test="userCode != null" >
-				pu.USER_CODE = #{userCode, jdbcType=VARCHAR},
-			</if>
-			<if test="userNickname != null" >
-				pu.USER_NICKNAME = #{userNickname, jdbcType=VARCHAR},
-			</if>
-			<if test="userRank != null" >
-				pu.USER_RANK = #{userRank, jdbcType=VARCHAR},
-			</if>
-			<if test="userType != null" >
-				pu.USER_TYPE = #{userType, jdbcType=INT},
-			</if>
-			<if test="userNameCn != null" >
-				pu.USER_NAME_CN = #{userNameCn, jdbcType=VARCHAR},
-			</if>
-			<if test="userNameEn != null" >
-				pu.USER_NAME_EN = #{userNameEn, jdbcType=VARCHAR},
-			</if>
-			<if test="userHeadurl != null" >
-				pu.USER_HEADURL = #{userHeadurl, jdbcType=VARCHAR},
-			</if>
-			<if test="userGender != null" >
-				pu.USER_GENDER = #{userGender, jdbcType=VARCHAR},
-			</if>
-			<if test="userPhone != null" >
-				pu.USER_PHONE = #{userPhone, jdbcType=VARCHAR},
-			</if>
-			<if test="userLocation != null" >
-				pu.USER_LOCATION = #{userLocation, jdbcType=INT},
-			</if>
-			<if test="userLocationProvince != null" >
-				pu.USER_LOCATION_PROVINCE = #{userLocationProvince, jdbcType=VARCHAR},
-			</if>
-			<if test="userLocationCity != null" >
-				pu.USER_LOCATION_CITY = #{userLocationCity, jdbcType=VARCHAR},
-			</if>
-			<if test="userLocationAddress != null" >
-				pu.USER_LOCATION_ADDRESS = #{userLocationAddress, jdbcType=VARCHAR},
-			</if>
-			<if test="userLocationZipcode != null" >
-				pu.USER_LOCATION_ZIPCODE = #{userLocationZipcode, jdbcType=VARCHAR},
-			</if>
-			<if test="payCurrency != null" >
-				pu.PAY_CURRENCY = #{payCurrency, jdbcType=INT},
-			</if>
-			<if test="userStatus != null" >
-				pu.USER_STATUS = #{userStatus, jdbcType=INT},
-			</if>
-			<if test="userIsAutoLogin != null" >
-				pu.USER_IS_AUTO_LOGIN = #{userIsAutoLogin, jdbcType=INT},
-			</if>
-			<if test="checkTime != null" >
-				pu.CHECK_TIME = #{checkTime, jdbcType=DATETIME},
-			</if>
-			<if test="lastloginTime != null" >
-				pu.LASTLOGIN_TIME = #{lastloginTime, jdbcType=DATETIME},
-			</if>
-			<if test="accountCode != null" >
-				pu.ACCOUNT_CODE = #{accountCode, jdbcType=VARCHAR},
-			</if>
-			<if test="entityId != null" >
-				pu.ENTITY_ID = #{entityId, jdbcType=INT},
-			</if>
-			<if test="groupId != null" >
-				pu.GROUP_ID = #{groupId, jdbcType=INT},
-			</if>
-			<if test="userUuid != null" >
-				pu.USER_UUID = #{userUuid, jdbcType=VARCHAR},
-			</if>
-			<if test="isActive != null" >
-				pu.IS_ACTIVE = #{isActive, jdbcType=INT},
-			</if>
-			<if test="delFlag != null" >
-				pu.DEL_FLAG = #{delFlag, jdbcType=INT},
-			</if>
-			<if test="remark != null" >
-				pu.REMARK = #{remark, jdbcType=VARCHAR},
-			</if>
-			<if test="createDateTime != null" >
-				pu.CREATE_DATE_TIME = #{createDateTime, jdbcType=DATETIME},
-			</if>
-			<if test="creater != null" >
-				pu.CREATER = #{creater, jdbcType=INT},
-			</if>
-			<if test="updateDateTime != null" >
-				pu.UPDATE_DATE_TIME = #{updateDateTime, jdbcType=DATETIME},
-			</if>
-			<if test="updater != null" >
-				pu.UPDATER = #{updater, jdbcType=INT},
-			</if>
-		</set>
-	</select>
-	
-	<insert id="save" useGeneratedKeys="true" parameterType="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO" >
-		INSERT INTO p_user <include refid="setColumnSql" />
-	</insert>
-	
-	<update id="update" parameterType="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO" >
-		UPDATE p_user <include refid="setColumnSql" />
+<mapper namespace="com.lxzl.payment.gateway.dataaccess.dao.mysql.customer.BusinessCustomerMapper">
+    <resultMap id="DqBaseBO" type="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO">
+        <id column="ID" jdbcType="INT" property="id" />
+        <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+        <result column="USER_PASSWORD" jdbcType="VARCHAR" property="userPassword" />
+        <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+        <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+        <result column="USER_NICKNAME" jdbcType="VARCHAR" property="userNickname" />
+        <result column="USER_RANK" jdbcType="VARCHAR" property="userRank" />
+        <result column="USER_TYPE" jdbcType="INT" property="userType" />
+        <result column="USER_NAME_CN" jdbcType="VARCHAR" property="userNameCn" />
+        <result column="USER_NAME_EN" jdbcType="VARCHAR" property="userNameEn" />
+        <result column="USER_HEADURL" jdbcType="VARCHAR" property="userHeadurl" />
+        <result column="USER_GENDER" jdbcType="VARCHAR" property="userGender" />
+        <result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+        <result column="USER_LOCATION" jdbcType="INT" property="userLocation" />
+        <result column="USER_LOCATION_PROVINCE" jdbcType="VARCHAR" property="userLocationProvince" />
+        <result column="USER_LOCATION_CITY" jdbcType="VARCHAR" property="userLocationCity" />
+        <result column="USER_LOCATION_ADDRESS" jdbcType="VARCHAR" property="userLocationAddress" />
+        <result column="USER_LOCATION_ZIPCODE" jdbcType="VARCHAR" property="userLocationZipcode" />
+        <result column="PAY_CURRENCY" jdbcType="INT" property="payCurrency" />
+        <result column="USER_STATUS" jdbcType="INT" property="userStatus" />
+        <result column="USER_IS_AUTO_LOGIN" jdbcType="INT" property="userIsAutoLogin" />
+        <result column="CHECK_TIME" jdbcType="DATETIME" property="checkTime" />
+        <result column="LASTLOGIN_TIME" jdbcType="DATETIME" property="lastloginTime" />
+        <result column="ACCOUNT_CODE" jdbcType="VARCHAR" property="accountCode" />
+        <result column="ENTITY_ID" jdbcType="INT" property="entityId" />
+        <result column="GROUP_ID" jdbcType="INT" property="groupId" />
+        <result column="USER_UUID" jdbcType="VARCHAR" property="userUuid" />
+        <result column="IS_ACTIVE" jdbcType="INT" property="isActive" />
+        <result column="DEL_FLAG" jdbcType="INT" property="delFlag" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="CREATE_DATE_TIME" jdbcType="DATETIME" property="createDateTime" />
+        <result column="CREATER" jdbcType="INT" property="creater" />
+        <result column="UPDATE_DATE_TIME" jdbcType="DATETIME" property="updateDateTime" />
+        <result column="UPDATER" jdbcType="INT" property="updater" />
+    </resultMap>
+    <sql id="columnList">pu.ID,pu.LOGIN_NAME,pu.USER_PASSWORD,pu.USER_EMAIL,pu.USER_CODE,pu.USER_NICKNAME,pu.USER_RANK,pu.USER_TYPE,pu.USER_NAME_CN,pu.USER_NAME_EN,pu.USER_HEADURL,pu.USER_GENDER,pu.USER_PHONE,pu.USER_LOCATION,pu.USER_LOCATION_PROVINCE,pu.USER_LOCATION_CITY,pu.USER_LOCATION_ADDRESS,pu.USER_LOCATION_ZIPCODE,pu.PAY_CURRENCY,pu.USER_STATUS,pu.USER_IS_AUTO_LOGIN,pu.CHECK_TIME,pu.LASTLOGIN_TIME,pu.ACCOUNT_CODE,pu.ENTITY_ID,pu.GROUP_ID,pu.USER_UUID,pu.IS_ACTIVE,pu.DEL_FLAG,pu.REMARK,pu.CREATE_DATE_TIME,pu.CREATER,pu.UPDATE_DATE_TIME,pu.UPDATER</sql>
+    <select id="findById" resultMap="DqBaseBO" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="columnList" />
+        FROM p_user pu 
 		WHERE pu.ID = #{id, jdbcType=INT}
-	</update>
-	
+    </select>
+    <select id="listCount" resultType="java.lang.Integer" parameterType="map">SELECT count(*)
+		FROM p_user pu</select>
+    <select id="listPage" resultMap="DqBaseBO" parameterType="map">
+        SELECT
+        <include refid="columnList" />
+        FROM p_user pu 
+		LIMIT #{maps.start},#{maps.pageSize}
+    </select>
+    <select id="setColumnSql">
+        <set>
+            <if test="id != null">pu.ID = #{id, jdbcType=INT}</if>
+            <if test="loginName != null">pu.LOGIN_NAME = #{loginName, jdbcType=VARCHAR}</if>
+            <if test="userPassword != null">pu.USER_PASSWORD = #{userPassword, jdbcType=VARCHAR}</if>
+            <if test="userEmail != null">pu.USER_EMAIL = #{userEmail, jdbcType=VARCHAR}</if>
+            <if test="userCode != null">pu.USER_CODE = #{userCode, jdbcType=VARCHAR}</if>
+            <if test="userNickname != null">pu.USER_NICKNAME = #{userNickname, jdbcType=VARCHAR}</if>
+            <if test="userRank != null">pu.USER_RANK = #{userRank, jdbcType=VARCHAR}</if>
+            <if test="userType != null">pu.USER_TYPE = #{userType, jdbcType=INT}</if>
+            <if test="userNameCn != null">pu.USER_NAME_CN = #{userNameCn, jdbcType=VARCHAR}</if>
+            <if test="userNameEn != null">pu.USER_NAME_EN = #{userNameEn, jdbcType=VARCHAR}</if>
+            <if test="userHeadurl != null">pu.USER_HEADURL = #{userHeadurl, jdbcType=VARCHAR}</if>
+            <if test="userGender != null">pu.USER_GENDER = #{userGender, jdbcType=VARCHAR}</if>
+            <if test="userPhone != null">pu.USER_PHONE = #{userPhone, jdbcType=VARCHAR}</if>
+            <if test="userLocation != null">pu.USER_LOCATION = #{userLocation, jdbcType=INT}</if>
+            <if test="userLocationProvince != null">pu.USER_LOCATION_PROVINCE = #{userLocationProvince, jdbcType=VARCHAR}</if>
+            <if test="userLocationCity != null">pu.USER_LOCATION_CITY = #{userLocationCity, jdbcType=VARCHAR}</if>
+            <if test="userLocationAddress != null">pu.USER_LOCATION_ADDRESS = #{userLocationAddress, jdbcType=VARCHAR}</if>
+            <if test="userLocationZipcode != null">pu.USER_LOCATION_ZIPCODE = #{userLocationZipcode, jdbcType=VARCHAR}</if>
+            <if test="payCurrency != null">pu.PAY_CURRENCY = #{payCurrency, jdbcType=INT}</if>
+            <if test="userStatus != null">pu.USER_STATUS = #{userStatus, jdbcType=INT}</if>
+            <if test="userIsAutoLogin != null">pu.USER_IS_AUTO_LOGIN = #{userIsAutoLogin, jdbcType=INT}</if>
+            <if test="checkTime != null">pu.CHECK_TIME = #{checkTime, jdbcType=DATETIME}</if>
+            <if test="lastloginTime != null">pu.LASTLOGIN_TIME = #{lastloginTime, jdbcType=DATETIME}</if>
+            <if test="accountCode != null">pu.ACCOUNT_CODE = #{accountCode, jdbcType=VARCHAR}</if>
+            <if test="entityId != null">pu.ENTITY_ID = #{entityId, jdbcType=INT}</if>
+            <if test="groupId != null">pu.GROUP_ID = #{groupId, jdbcType=INT}</if>
+            <if test="userUuid != null">pu.USER_UUID = #{userUuid, jdbcType=VARCHAR}</if>
+            <if test="isActive != null">pu.IS_ACTIVE = #{isActive, jdbcType=INT}</if>
+            <if test="delFlag != null">pu.DEL_FLAG = #{delFlag, jdbcType=INT}</if>
+            <if test="remark != null">pu.REMARK = #{remark, jdbcType=VARCHAR}</if>
+            <if test="createDateTime != null">pu.CREATE_DATE_TIME = #{createDateTime, jdbcType=DATETIME}</if>
+            <if test="creater != null">pu.CREATER = #{creater, jdbcType=INT}</if>
+            <if test="updateDateTime != null">pu.UPDATE_DATE_TIME = #{updateDateTime, jdbcType=DATETIME}</if>
+            <if test="updater != null">pu.UPDATER = #{updater, jdbcType=INT}</if>
+        </set>
+    </select>
+    <insert id="save" useGeneratedKeys="true" parameterType="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO">
+        INSERT INTO p_user
+        <include refid="setColumnSql" />
+    </insert>
+    <update id="update" parameterType="com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO">
+        UPDATE p_user
+        <include refid="setColumnSql" />
+        WHERE pu.ID = #{id, jdbcType=INT}
+    </update>
 </mapper>

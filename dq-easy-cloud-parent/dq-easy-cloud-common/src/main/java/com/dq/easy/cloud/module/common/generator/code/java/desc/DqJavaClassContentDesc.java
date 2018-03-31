@@ -32,11 +32,12 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * @author daiqi
  * @date 2018年3月24日 上午9:45:43
  */
+@SuppressWarnings({ "unchecked" })
 public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	/** 作者 */
 	private String author;
 	/** 继承的父类 */
-	private DqJavaContentBaseDesc extendsParentClass;
+	private DqJavaContentDesc extendsParentClass;
 	/** 实现的接口列表 */
 	private List<DqJavaImplInterfaceContentDesc> implementsInterfaces;
 	/** 构造函数列表 */
@@ -56,19 +57,54 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		super(generateRule);
 	}
 
-	public String getImplementsInterfacesStr() {
-		if (DqCollectionsUtils.isEmpty(implementsInterfaces)) {
-			return null;
-		}
-		StringBuilder implementsInterfaceBuild = DqStringUtils.newStringBuilderDefault();
-		for (int i = 0; i < implementsInterfaces.size(); ++i) {
-			DqJavaContentBaseDesc implementsInterface = implementsInterfaces.get(i);
-			implementsInterfaceBuild.append(implementsInterface.getSimpleClassType());
-			if (i < implementsInterfaces.size() - 1) {
-				implementsInterfaceBuild.append(DqSymbol.COMMA);
-			}
-		}
-		return implementsInterfaceBuild.toString();
+	@Override
+	public String getJavaContentSign() {
+		return getName();
+	}
+
+	public void addImplementsInterface(DqJavaImplInterfaceContentDesc implementsInterface) {
+		List<DqJavaImplInterfaceContentDesc> implementsInterfaces = new ArrayList<>();
+		implementsInterfaces.add(implementsInterface);
+		addImplementsInterfaces(implementsInterfaces);
+	}
+
+	public void addImplementsInterfaces(List<DqJavaImplInterfaceContentDesc> implementsInterfaces) {
+		// 增加过滤后的desc---过滤name重复的desc
+		this.implementsInterfaces = getFilterDesc(implementsInterfaces, this.implementsInterfaces);
+
+	}
+
+	public void addConstructor(DqJavaMethodContentDesc constructor) {
+		List<DqJavaMethodContentDesc> constructors = new ArrayList<>();
+		constructors.add(constructor);
+		addConstructors(constructors);
+	}
+
+	public void addConstructors(List<DqJavaMethodContentDesc> constructors) {
+		// 增加过滤后的desc---过滤name重复的desc
+		this.constructors = getFilterDesc(constructors, this.constructors);
+	}
+
+	public void addField(DqJavaFieldContentDesc field) {
+		List<DqJavaFieldContentDesc> fields = new ArrayList<>();
+		fields.add(field);
+		addFields(fields);
+	}
+
+	public void addFields(List<DqJavaFieldContentDesc> fields) {
+		// 增加过滤后的desc---过滤name重复的desc
+		this.fields = getFilterDesc(fields, this.fields);
+	}
+
+	public void addMethod(DqJavaMethodContentDesc method) {
+		List<DqJavaMethodContentDesc> methods = new ArrayList<>();
+		methods.add(method);
+		addMethods(methods);
+	}
+
+	public void addMethods(List<DqJavaMethodContentDesc> methods) {
+		// 增加过滤后的desc---过滤name重复的desc
+		this.methods = getFilterDesc(methods, this.methods);
 	}
 
 	/**
@@ -76,11 +112,6 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 	 * <p>
 	 * 遍历类中所有需要导入的完整的class类型
 	 * </p>
-	 *
-	 * <pre>
-	 *     所需参数示例及其说明
-	 *     参数名称 : 示例值 : 说明 : 是否必须
-	 * </pre>
 	 *
 	 * @author daiqi 创建时间 2018年3月26日 下午2:05:45
 	 */
@@ -93,16 +124,9 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 			}
 		}
 		// 新增继承的类需要导入的完整类类型
-		if (DqBaseUtils.isNotNull(extendsParentClass)
-				&& DqStringUtils.isNotEmpty(extendsParentClass.getFullClassType())) {
-			doAddImportFullClassTypes(extendsParentClass.getFullClassType());
-		}
+		addImportExtendsParentClassFullClassType();
 		// 新增实现的接口需要导入的完整类类型
-		if (DqCollectionsUtils.isNotEmpty(implementsInterfaces)) {
-			for (DqJavaContentBaseDesc implementsInterface : implementsInterfaces) {
-				doAddImportFullClassTypes(implementsInterface.getFullClassType());
-			}
-		}
+		addImportImplementsInterfacesFullClassType();
 		// 新增属性需要导入的完整类类型
 		addImportFieldsFullClassType();
 		// 新增方法需要导入的完整类类型
@@ -122,37 +146,48 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		StringBuilder classHeaderBuild = DqStringUtils.newStringBuilderDefault();
 		String modifersStr = getModifiersStr();
 		if (DqStringUtils.isNotEmpty(modifersStr)) {
-			classHeaderBuild.append(modifersStr).append(DqSymbol.EMPTY);
+			classHeaderBuild.append(modifersStr);
 		}
 		if (DqStringUtils.isNotEmpty(getName())) {
-			classHeaderBuild.append(getName()).append(DqSymbol.EMPTY);
+			classHeaderBuild.append(DqSymbol.EMPTY).append(getSimpleClassTypeFullStr());
 		}
 		if (DqBaseUtils.isNotNull(getExtendsParentClass())) {
-			classHeaderBuild.append("extends").append(DqSymbol.EMPTY)
-					.append(getExtendsParentClass().getSimpleClassType());
+			classHeaderBuild.append(DqSymbol.EMPTY).append("extends").append(DqSymbol.EMPTY)
+					.append(getExtendsParentClass().getSimpleClassTypeFullStr());
 		}
 		String implementsInterfacesStr = getImplementsInterfacesStr();
 		if (DqStringUtils.isNotEmpty(implementsInterfacesStr)) {
-			classHeaderBuild.append("implements").append(DqSymbol.EMPTY).append(implementsInterfacesStr)
-					.append(DqSymbol.EMPTY);
+			classHeaderBuild.append(DqSymbol.EMPTY).append("implements").append(DqSymbol.EMPTY).append(implementsInterfacesStr);
 		}
 		return classHeaderBuild.toString();
 	}
 
+	/** 获取实现接口的字符串 */
+	private String getImplementsInterfacesStr() {
+		if (DqCollectionsUtils.isEmpty(implementsInterfaces)) {
+			return null;
+		}
+		StringBuilder implementsInterfaceBuild = DqStringUtils.newStringBuilderDefault();
+		for (int i = 0; i < implementsInterfaces.size(); ++i) {
+			DqJavaImplInterfaceContentDesc implementsInterface = implementsInterfaces.get(i);
+			implementsInterfaceBuild.append(implementsInterface.getSimpleClassTypeFullStr());
+			if (i < implementsInterfaces.size() - 1) {
+				implementsInterfaceBuild.append(DqSymbol.COMMA);
+			}
+		}
+		return implementsInterfaceBuild.toString();
+	}
+
 	/** 根据属性列表构建构造函数 */
-	public DqJavaClassContentDesc buildConstructorsByFields() {
+	public DqJavaClassContentDesc buildConstructorsDataByFields() {
 		List<DqJavaMethodContentDesc> constructors = new ArrayList<>();
 		DqJavaMethodContentDesc constructor = new DqJavaMethodContentDesc();
-//		设置modifier
-		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
-		modifiers.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
-		constructor.setModifiers(modifiers);
-//		设置名称
+		// 设置名称
 		constructor.setName(this.getName());
 		constructor.setSimpleClassType(this.getSimpleClassType());
-//		设置形参列表
+		// 设置形参列表
 		constructor.setArgs(getFields());
-		
+
 		constructors.add(constructor);
 		this.constructors = constructors;
 		return this;
@@ -227,6 +262,30 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		return false;
 	}
 
+	/** add导入继承父类的完整类类型 */
+	private void addImportExtendsParentClassFullClassType() {
+		// 新增继承的类需要导入的完整类类型
+		if (DqBaseUtils.isNotNull(extendsParentClass)
+				&& DqStringUtils.isNotEmpty(extendsParentClass.getFullClassType())) {
+			doAddImportFullClassTypes(extendsParentClass.getFullClassType());
+		}
+		// 导入泛型完整类类型
+		addImportGenericityFullClassTypeByDesc(extendsParentClass);
+
+	}
+
+	/** add导入实现接口的完整类类型 */
+	private void addImportImplementsInterfacesFullClassType() {
+		// 新增实现的接口需要导入的完整类类型
+		if (DqCollectionsUtils.isNotEmpty(implementsInterfaces)) {
+			for (DqJavaContentBaseDesc implementsInterface : implementsInterfaces) {
+				// 导入泛型完整类类型
+				addImportGenericityFullClassTypeByDesc(implementsInterface);
+				doAddImportFullClassTypes(implementsInterface.getFullClassType());
+			}
+		}
+	}
+
 	/** add导入属性列表的完整类类型 */
 	private void addImportFieldsFullClassType() {
 		DqGenerateJavaClassRule javaClassRule = (DqGenerateJavaClassRule) getGenerateRule();
@@ -240,9 +299,30 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 			if (DqCollectionsUtils.isEmpty(field.getAnnotations())) {
 				continue;
 			}
-			for (DqJavaAnnotationDesc fileAnnotationDesc : field.getAnnotations()) {
-				doAddImportFullClassTypes(fileAnnotationDesc.getFullClassType());
-			}
+			// 导入注解完整类类型
+			addImportAnnotationFullClassTypeByDesc(field);
+			// 导入泛型完整类类型
+			addImportGenericityFullClassTypeByDesc(field);
+		}
+	}
+
+	/** 根据desc将该desc对应的注解类添加到类的importFullClassTypes中 */
+	private void addImportAnnotationFullClassTypeByDesc(DqJavaContentDesc desc) {
+		if (DqBaseUtils.isNull(desc) || DqCollectionsUtils.isEmpty(desc.getAnnotations())) {
+			return;
+		}
+		for (DqJavaAnnotationDesc fileAnnotationDesc : desc.getAnnotations()) {
+			doAddImportFullClassTypes(fileAnnotationDesc.getFullClassType());
+		}
+	}
+
+	/** 根据desc将该desc对应的泛型类添加到类的importFullClassTypes中 */
+	private void addImportGenericityFullClassTypeByDesc(DqJavaContentBaseDesc desc) {
+		if (DqBaseUtils.isNull(desc) || DqCollectionsUtils.isEmpty(desc.getGenericitys())) {
+			return;
+		}
+		for (DqJavaGenericityContentDesc genericity : desc.getGenericitys()) {
+			doAddImportFullClassTypes(genericity.getFullClassType());
 		}
 	}
 
@@ -268,6 +348,9 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 			}
 			for (DqJavaAnnotationDesc methodAnnotationDesc : method.getAnnotations()) {
 				doAddImportFullClassTypes(methodAnnotationDesc.getFullClassType());
+			}
+			for (DqJavaGenericityContentDesc genericity : method.getGenericitys()) {
+				doAddImportFullClassTypes(genericity.getFullClassType());
 			}
 		}
 	}
@@ -460,11 +543,11 @@ public class DqJavaClassContentDesc extends DqJavaContentDesc {
 		this.author = author;
 	}
 
-	public DqJavaContentBaseDesc getExtendsParentClass() {
+	public DqJavaContentDesc getExtendsParentClass() {
 		return extendsParentClass;
 	}
 
-	public void setExtendsParentClass(DqJavaContentBaseDesc extendsParentClass) {
+	public void setExtendsParentClass(DqJavaContentDesc extendsParentClass) {
 		this.extendsParentClass = extendsParentClass;
 	}
 

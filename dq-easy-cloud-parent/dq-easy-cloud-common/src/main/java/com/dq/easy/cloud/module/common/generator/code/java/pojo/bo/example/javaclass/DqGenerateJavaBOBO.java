@@ -1,8 +1,5 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
@@ -10,12 +7,8 @@ import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenera
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqSubModuleDefaultPackageName;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
@@ -37,17 +30,17 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getAnnotations() {
-		return null;
+	protected void buildAnnotations() {
+		
 	}
 
 	@Override
-	protected DqJavaContentBaseDesc getExtendsParentClass() {
-		DqJavaContentBaseDesc extendsParentClass = new DqJavaContentBaseDesc();
+	protected void buildExtendsParentClass() {
+		DqJavaContentDesc extendsParentClass = new DqJavaContentDesc();
 		extendsParentClass.setName(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseBO.class.getName());
-		return extendsParentClass;
+		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
@@ -56,40 +49,33 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildImplementsInterfaces() {
+		
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		return super.getConstructorsByFields();
+	protected void buildConstructors() {
+		super.javaClassContentDesc.addConstructors(super.getConstructorsByFields());
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
+	protected void buildFields() {
 		DqJavaFieldContentDesc fieldContentDesc = new DqJavaFieldContentDesc();
 		fieldContentDesc.setComment(DqClassCommentEndWith.POJO_DTO);
 
-		List<DqJavaModifierDesc> modifiers = new ArrayList<>();
-		DqJavaModifierDesc modifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
-		modifiers.add(modifierDesc);
-		fieldContentDesc.setModifiers(modifiers);
+		fieldContentDesc.addModifier(DqModifierMappingEnum.PRIVATE);
 
 		String dtoName = super.generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.POJO_DTO;
 		fieldContentDesc.setName(dtoName);
 		fieldContentDesc.setSimpleClassType(dtoName);
 		fieldContentDesc.setPackageName(getFullPackageName(DqSubModuleDefaultPackageName.POJO_DTO));
 		fieldContentDesc.buildFullClassType();
-		fieldContentDescs.add(fieldContentDesc);
-
-		return fieldContentDescs;
+		super.javaClassContentDesc.addField(fieldContentDesc);
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		return getMethodsByFields();
+	protected void buildMethods() {
+		super.javaClassContentDesc.addMethods(getMethodsByFields());
 	}
 
 	@Override

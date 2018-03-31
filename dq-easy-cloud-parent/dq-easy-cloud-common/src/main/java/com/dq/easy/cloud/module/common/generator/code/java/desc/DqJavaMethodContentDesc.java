@@ -95,4 +95,17 @@ public class DqJavaMethodContentDesc extends DqJavaContentDesc {
 		}
 		return argsBuild.toString();
 	}
+
+	@Override
+	public String getJavaContentSign() {
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		sb.append(getTypeDesc()).append(getName());
+		if (DqCollectionsUtils.isNotEmpty(args)) {
+			for (DqJavaFieldContentDesc arg : getArgs()) {
+				sb.append(arg.getFullClassType());
+			}
+			
+		}
+		return sb.toString();
+	}
 }

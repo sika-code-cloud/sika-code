@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
+import com.dq.easy.cloud.module.common.file.constant.DqFileConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
@@ -15,13 +15,9 @@ import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateR
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFileDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.log.utils.DqLogUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
@@ -32,15 +28,13 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	protected DqDatabaseAbstactConfig dataBaseConfig;
 	protected DqJavaClassContentDesc javaClassContentDesc;
 	protected DqDatabaseDataSources databaseDataSources;
-	private DqGenerateRule generateRule;
 
 	public DqGenerateJavaBaseBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
 			DqGenerateRule generateRule) {
 		this.generateJavaBaseDTO = generateJavaBaseDTO;
 		super.setTemplateDesc(templateDesc);
-		this.generateRule = generateRule;
 		javaClassContentDesc = new DqJavaClassContentDesc(generateRule);
-		
+
 		initData();
 	}
 
@@ -65,29 +59,31 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		javaClassContentDesc.setPackageName(getFullPackageName(generateJavaBaseDTO.getSubModulePackageName()));
 		// 设置注释
 		javaClassContentDesc.setComment(getClassComment());
-		// 设置类注解列表---begin
-		javaClassContentDesc.setAnnotations(getAnnotations());
-		// 设置类注解列表---end
+		// 构建类注解列表---begin
+		buildAnnotations();
+		// 构建类注解列表---end
 		// 设置类的modifier列表---begin
-		javaClassContentDesc.setModifiers(getModifiers());
+		buildModifiers();
 		// 设置类的modifier列表---end
 		// 设置类名称
 		javaClassContentDesc.setName(className);
 		javaClassContentDesc.setSimpleClassType(className);
+		// 设置类的泛型参数		
+		buildGenericitys();
 		// 设置继承父类---begin
-		javaClassContentDesc.setExtendsParentClass(getExtendsParentClass());
+		buildExtendsParentClass();
 		// 设置继承父类---end
 		// 设置实现的接口---begin
-		javaClassContentDesc.setImplementsInterfaces(getImplementsInterfaces());
+		buildImplementsInterfaces();
 		// 设置实现的接口---end
 		// 设置构造函数列表---begin
-		javaClassContentDesc.setConstructors(getConstructors());
+		buildConstructors();
 		// 设置构造函数列表---end
 		// 设置属性列表---begin
-		javaClassContentDesc.setFields(getFields());
+		buildFields();
 		// 设置属性列表---end
 		// 设置方法列表---begin
-		javaClassContentDesc.setMethods(getMethods());
+		buildMethods();
 		// 设置方法列表---end
 		javaClassContentDesc.addImportFullClassType();
 		// 调用真正的生成代码方法
@@ -116,26 +112,29 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	protected abstract String getClassCommentEndWith();
 
 	/** 获取类的注解列表 */
-	protected abstract List<DqJavaAnnotationDesc> getAnnotations();
+	protected abstract void buildAnnotations();
 
 	/** 获取类的Modifier列表 */
-	protected abstract List<DqJavaModifierDesc> getModifiers();
+	protected abstract void buildModifiers();
 
 	/** 获取继承父类的class */
-	protected abstract DqJavaContentBaseDesc getExtendsParentClass();
+	protected abstract void buildExtendsParentClass();
 
 	/** 获取实现的接口列表 */
-	protected abstract List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces();
+	protected abstract void buildImplementsInterfaces();
 
 	/** 获取构造函数列表 */
-	protected abstract List<DqJavaMethodContentDesc> getConstructors();
+	protected abstract void buildConstructors();
 
 	/** 获取属性列表 */
-	protected abstract List<DqJavaFieldContentDesc> getFields();
+	protected abstract void buildFields();
 
 	/** 获取方法列表 */
-	protected abstract List<DqJavaMethodContentDesc> getMethods();
+	protected abstract void buildMethods();
+	/** 获取类泛型参数列表 */
+	protected void buildGenericitys() {
 
+	}
 	/** 根据数据源构建属性列表 */
 	protected List<DqJavaFieldContentDesc> getFieldsByDatabaseDataSources() {
 		javaClassContentDesc.buildDataByDatabaseSources(databaseDataSources);
@@ -145,7 +144,7 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	/** 根据属性列表获取方法列表 */
 	protected List<DqJavaMethodContentDesc> getMethodsByFields() {
 		if (DqCollectionsUtils.isEmpty(javaClassContentDesc.getFields())) {
-			javaClassContentDesc.setFields(getFields());
+			buildFields();
 		}
 		return javaClassContentDesc.buildMethodsByFields().getMethods();
 	}
@@ -153,9 +152,9 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	/** 根据属性列表获取构造函数列表 */
 	protected List<DqJavaMethodContentDesc> getConstructorsByFields() {
 		if (DqCollectionsUtils.isEmpty(javaClassContentDesc.getFields())) {
-			javaClassContentDesc.setFields(getFields());
+			buildFields();
 		}
-		return javaClassContentDesc.buildConstructorsByFields().getConstructors();
+		return javaClassContentDesc.buildConstructorsDataByFields().getConstructors();
 	}
 
 	/** 获取类的注释 */
@@ -234,5 +233,5 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	public DqFileContentBaseDesc getFileContentDesc() {
 		return javaClassContentDesc;
 	}
-	
+
 }

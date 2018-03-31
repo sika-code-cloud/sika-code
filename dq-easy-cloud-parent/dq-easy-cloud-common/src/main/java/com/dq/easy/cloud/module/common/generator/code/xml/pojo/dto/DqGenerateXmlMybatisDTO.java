@@ -3,6 +3,7 @@ package com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto;
 import java.util.List;
 
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
+import com.dq.easy.cloud.module.common.file.constant.DqFileConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqTableColumnKey;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -87,9 +88,22 @@ public class DqGenerateXmlMybatisDTO extends DqGenerateXmlBaseDTO {
 	public String getMappersConfigName() {
 		return mappersConfigName;
 	}
-
+	
+	public String getFullMappersConfigName() {
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		sb.append(getMappersConfigName());
+		sb.append(DqSymbol.STOP).append(DqFileSuffix.XML);
+		return sb.toString();
+	}
 	public void setMappersConfigName(String mappersConfigName) {
 		this.mappersConfigName = mappersConfigName;
+	}
+	/** 获取表xml的相对路径 */
+	public String getTableXmlRelativePath() {
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		sb.append(getSubPath()).append(DqSymbol.FORWARD_SLASH);
+		sb.append(getTableName()).append(DqSymbol.STOP).append(DqFileSuffix.XML);
+		return sb.toString();
 	}
 
 	public DqGenerateXmlMybatisData getPrimaryKey() {

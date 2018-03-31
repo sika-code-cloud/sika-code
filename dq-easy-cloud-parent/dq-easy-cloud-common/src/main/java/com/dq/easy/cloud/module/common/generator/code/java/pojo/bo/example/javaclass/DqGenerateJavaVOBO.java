@@ -24,12 +24,12 @@ public class DqGenerateJavaVOBO extends DqGenerateJavaDOBO {
 	}
 
 	@Override
-	protected DqJavaClassContentDesc getExtendsParentClass() {
+	protected void buildExtendsParentClass() {
 		DqJavaClassContentDesc extendsParentClass = new DqJavaClassContentDesc();
 		extendsParentClass.setName(DqBaseVO.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseVO.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseVO.class.getName());
-		return extendsParentClass;
+		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
 	}
 
 	@Override

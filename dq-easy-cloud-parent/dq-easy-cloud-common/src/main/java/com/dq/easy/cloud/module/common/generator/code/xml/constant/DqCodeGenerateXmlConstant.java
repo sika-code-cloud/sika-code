@@ -60,6 +60,8 @@ public class DqCodeGenerateXmlConstant {
 		public static final String PARAMETER_TYPE = "parameterType";
 		public static final String REFID = "refid";
 		public static final String TEST = "test";
+		public static final String RESOURCE = "resource";
+		public static final String MAPPER = "mapper";
 	}
 
 	/** mybatis sql节点类型 */
@@ -122,11 +124,18 @@ public class DqCodeGenerateXmlConstant {
 		DELETE(6, "delete"),
 		/** mapper */
 		MAPPER(7, "mapper"), 
+		/** id */
 		ID(8, "id"), 
+		/** result */
 		RESULT(9, "result"),
+		/** include */
 		INCLUDE(10, "include"), 
+		/** set */
 		SET(11, "set"), 
-		IF(11, "if"), 
+		/** if */
+		IF(12, "if"), 
+		/** mappers */
+		MAPPERS(13, "mappers"), 
 		;
 		private Integer type;
 		private String desc;

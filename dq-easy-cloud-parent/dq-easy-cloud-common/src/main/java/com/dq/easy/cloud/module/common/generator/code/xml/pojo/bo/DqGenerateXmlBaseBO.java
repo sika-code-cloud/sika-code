@@ -2,7 +2,7 @@ package com.dq.easy.cloud.module.common.generator.code.xml.pojo.bo;
 
 import org.slf4j.LoggerFactory;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseConstant.DqFileSuffix;
+import com.dq.easy.cloud.module.common.file.constant.DqFileConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;

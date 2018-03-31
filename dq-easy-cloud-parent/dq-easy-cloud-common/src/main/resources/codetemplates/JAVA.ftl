@@ -10,6 +10,7 @@ import ${model};
 </#if>
 /**
  * 描述：<#if comment?exists>${comment}</#if>
+ * 
  * @author <#if author?exists>${author}</#if>
  * @date <#if createDateStr?exists>${createDateStr}</#if>
  */
@@ -18,7 +19,7 @@ import ${model};
 @${model.simpleClassType}<#if model.paramsStr?exists>(${model.paramsStr})</#if>
 	</#list>
 </#if>
-<#if classHeaderStr?exists>${classHeaderStr}</#if>{
+<#if classHeaderStr?exists>${classHeaderStr}</#if> {
 	<#if enum?exists && enum>
 	;
 	</#if>

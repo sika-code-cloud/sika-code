@@ -1,17 +1,11 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
 
-import java.util.List;
-
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqSubModuleDefaultPackageName;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
@@ -33,19 +27,19 @@ public class DqGenerateJavaDTOBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getAnnotations() {
-		return null;
+	protected void buildAnnotations() {
+		
 	}
 
 	@Override
-	protected DqJavaContentBaseDesc getExtendsParentClass() {
-		DqJavaContentBaseDesc extendsParentClass = new DqJavaContentBaseDesc();
+	protected void buildExtendsParentClass() {
+		DqJavaContentDesc extendsParentClass = new DqJavaContentDesc();
 		String parentName = generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.POJO_DO;
 		extendsParentClass.setPackageName(getFullPackageName(DqSubModuleDefaultPackageName.POJO_DO));
 		extendsParentClass.setName(parentName);
 		extendsParentClass.setSimpleClassType(parentName);
 		extendsParentClass.buildFullClassType();
-		return extendsParentClass;
+		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
@@ -54,27 +48,23 @@ public class DqGenerateJavaDTOBO extends DqGenerateJavaClassBO {
 	}
 
 	@Override
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildImplementsInterfaces() {
+		
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildConstructors() {
+
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildFields() {
+
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildMethods() {
+
 	}
 
 	@Override

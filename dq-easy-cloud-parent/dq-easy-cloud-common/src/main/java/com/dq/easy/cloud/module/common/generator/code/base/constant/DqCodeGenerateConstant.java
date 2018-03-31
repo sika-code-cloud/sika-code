@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.module.common.generator.code.base.constant;
 
+import com.dq.easy.cloud.module.common.file.constant.DqFileConstant;
+
 /**
  * 
  * <p>
@@ -27,7 +29,7 @@ public class DqCodeGenerateConstant {
 	 */
 	public static class DqCodeProject {
 		/** 项目根路径---基础路径---System.getProperty("user.dir") */
-		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = System.getProperty("user.dir");
+		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = DqFileConstant.USER_DIR;
 	}
 
 	/**

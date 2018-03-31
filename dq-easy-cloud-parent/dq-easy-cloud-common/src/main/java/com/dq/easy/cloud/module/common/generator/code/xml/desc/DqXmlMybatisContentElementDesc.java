@@ -121,7 +121,10 @@ public class DqXmlMybatisContentElementDesc extends DqXmlContentElementDesc {
 	
 	/** 获取where数据列表字符串格式 */
 	public String getWhereDatasStr() {
-		return DqGenerateCodeXmlUtils.getWhereDatasStr(whereDatas, mybatisDTO.getTableSimpleName());
+		if (DqBaseUtils.isNotNull(mybatisDTO)) {
+			return DqGenerateCodeXmlUtils.getWhereDatasStr(whereDatas, mybatisDTO.getTableSimpleName());
+		}
+		return null;
 	}
 	
 }

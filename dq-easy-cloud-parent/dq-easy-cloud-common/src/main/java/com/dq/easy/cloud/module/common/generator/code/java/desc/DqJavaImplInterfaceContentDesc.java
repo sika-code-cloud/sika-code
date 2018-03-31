@@ -12,5 +12,9 @@ package com.dq.easy.cloud.module.common.generator.code.java.desc;
  */
 public class DqJavaImplInterfaceContentDesc extends DqJavaContentBaseDesc{
 
+	@Override
+	public String getJavaContentSign() {
+		return getName();
+	}
 
 }

@@ -16,6 +16,8 @@ import org.jdom2.output.XMLOutputter;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.file.pojo.bo.DqFileBO;
+import com.dq.easy.cloud.module.common.file.utils.DqFileUtils;
+import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqDocType;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqIgnoreSetField;
@@ -59,8 +61,54 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 			updateMybatisXmlData(generateFile);
 		} else {
 			super.generateCode();
-			
+
 		}
+		updateMappingConfig();
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 更新映射配置文件
+	 * </p>
+	 *
+	 * @param generateFile
+	 * @author daiqi 创建时间 2018年3月31日 上午9:36:12
+	 * @throws Exception
+	 */
+	private void updateMappingConfig() throws Exception {
+		// 获取完整的文件名称
+		String mappingFileName = mybatisDTO.getFullMappersConfigName();
+		// 获取项目完整的路径		
+		String projectFullPath = DqFileUtils.getTargetProjectPath(null, mybatisDTO.getProjectName(),
+				DqCodeGenerateConfig.getNeedFilterDirectoryName());
+		// 获取mappingConfig文件		
+		File mappingConfigFile = DqFileUtils.getFileByFileName(projectFullPath, mappingFileName);
+		if (DqBaseUtils.isNull(mappingConfigFile)) {
+			throw new RuntimeException("映射集合文件未找到");
+		}
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(mappingConfigFile);
+		Element rootElement = doc.getRootElement(); // 获取根元素
+		// 更新mappers元素		
+		updateMappersElement(rootElement);
+		// 执行xml输出		
+		doXmlOutputter(doc, mappingConfigFile);
+	}
+	
+	/** 更新MappersElement元素 */
+	private void updateMappersElement(Element rootElement) {
+		Element mappsElement = rootElement.getChild(DqMyBatisElementNameEnum.MAPPERS.getDesc());
+		List<Element> mapperElements = mappsElement.getChildren();
+		String tableXmlRelativePath = mybatisDTO.getTableXmlRelativePath();
+		for (Element elment : mapperElements) {
+			if (DqStringUtils.equals(elment.getAttributeValue(DqMyBatisAttrKey.RESOURCE), tableXmlRelativePath)) {
+				return ;
+			}
+		}
+		Element mapperElement = new Element(DqMyBatisAttrKey.MAPPER);
+		mapperElement.setAttribute(DqMyBatisAttrKey.RESOURCE, tableXmlRelativePath);
+		mappsElement.addContent(mapperElement);
 		
 	}
 
@@ -74,27 +122,33 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = builder.build(generateFile);
 		Element rootElement = doc.getRootElement(); // 获取根元素
-//		操作更新的数据
+		// 操作更新的数据
 		doUpdateMybatisXmlData(rootElement);
-		Format format = Format.getPrettyFormat();
-        format.setIndent("    ");
-        format.setEncoding("UTF-8");
-        XMLOutputter out = new XMLOutputter(format);
-        out.output(doc, new FileWriter(generateFile)); //写文件
+		doXmlOutputter(doc, generateFile);
 	}
+	
+	private void doXmlOutputter (Document doc, File xmlFile) throws IOException {
+		Format format = Format.getPrettyFormat();
+		format.setIndent("    ");
+		format.setEncoding("UTF-8");
+		XMLOutputter out = new XMLOutputter(format);
+		out.output(doc, new FileWriter(xmlFile)); // 写文件
+	}
+
 	/** 操作更新的数据---子类可以重写此方法进行更新定制化 */
-	protected void doUpdateMybatisXmlData (Element rootElement) {
-		// 更新当前表对应的resultMap节点的子节点		
+	protected void doUpdateMybatisXmlData(Element rootElement) {
+		// 更新当前表对应的resultMap节点的子节点
 		updateReultMapChidren(rootElement);
 		// 更新当前表对应的id为ColumnList的Text
 		updateColumnListText(rootElement);
 		// 更新当前表对应的id为setColumnSql的子节点
 		updateSetColumnSqlChidren(rootElement);
 	}
-	
+
 	/** 更新id为setColumnSql的子节点 */
 	private void updateSetColumnSqlChidren(Element rootElement) {
-		Element setColumnSqlElement = findElementById(DqMyBatisSqlTypeEnum.SET_COLUMN_SQL.getDesc(), rootElement, DqMyBatisElementNameEnum.SELECT.getDesc());
+		Element setColumnSqlElement = findElementById(DqMyBatisSqlTypeEnum.SET_COLUMN_SQL.getDesc(), rootElement,
+				DqMyBatisElementNameEnum.SELECT.getDesc());
 		Element setElement = setColumnSqlElement.getChild(DqMyBatisElementNameEnum.SET.getDesc());
 		if (DqBaseUtils.isNull(setElement)) {
 			setElement = new Element(DqMyBatisElementNameEnum.SET.getDesc());
@@ -110,21 +164,25 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		setElement.removeContent();
 		setElement.setContent(ifElements);
 	}
+
 	/** 更新id为columnList的Text */
 	private void updateColumnListText(Element rootElement) {
-		Element columnListElement = findElementById(DqMyBatisSqlTypeEnum.COLUMN_LIST.getDesc(), rootElement, DqMyBatisElementNameEnum.SQL.getDesc());
+		Element columnListElement = findElementById(DqMyBatisSqlTypeEnum.COLUMN_LIST.getDesc(), rootElement,
+				DqMyBatisElementNameEnum.SQL.getDesc());
 		columnListElement.setText(mybatisDTO.buildDatasStr());
 	}
+
 	/** 更新resultMap的子节点 */
 	private void updateReultMapChidren(Element rootElement) {
-		Element currentDOResultMapElement = findElementById(mybatisDTO.getSimpleClassTypeDO(), rootElement, DqMyBatisElementNameEnum.RESULT_MAP.getDesc());
+		Element currentDOResultMapElement = findElementById(mybatisDTO.getSimpleClassTypeDO(), rootElement,
+				DqMyBatisElementNameEnum.RESULT_MAP.getDesc());
 		List<Element> currentResultMapElementChirden = currentDOResultMapElement.getChildren();
 		// 保存需要不需要替换的其他节点
 		List<Element> otherElements = new ArrayList<>();
 		for (Element element : currentResultMapElementChirden) {
 			boolean equelsResult = DqStringUtils.equals(element.getName(), DqMyBatisElementNameEnum.RESULT.getDesc());
 			boolean equelsId = DqStringUtils.equals(element.getName(), DqMyBatisElementNameEnum.ID.getDesc());
-			if (equelsResult || equelsId){
+			if (equelsResult || equelsId) {
 				continue;
 			}
 			otherElements.add(element);
@@ -139,26 +197,27 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 			} else {
 				elementName = DqMyBatisElementNameEnum.RESULT.getDesc();
 			}
-			Element element = new Element(elementName); 
+			Element element = new Element(elementName);
 			element.setAttribute(DqMyBatisAttrKey.COLUMN, data.getColunmName());
 			element.setAttribute(DqMyBatisAttrKey.JDBC_TYPE, data.getColunmType());
 			element.setAttribute(DqMyBatisAttrKey.PROPERTY, data.getPropertyName());
-			// 不是主键添加到result列表中			
+			// 不是主键添加到result列表中
 			if (DqTableColumnKey.isPrimary(data.getColumnKey())) {
 				idElement = element;
 				continue;
-			 }
+			}
 			resultElements.add(element);
 		}
-		// 构建新的ResultMapChildren节点列表	
+		// 构建新的ResultMapChildren节点列表
 		List<Element> newResultMapChildren = new ArrayList<>();
 		newResultMapChildren.add(idElement);
 		newResultMapChildren.addAll(resultElements);
 		newResultMapChildren.addAll(otherElements);
-		
+
 		currentDOResultMapElement.removeContent();
 		currentDOResultMapElement.addContent(newResultMapChildren);
 	}
+
 	/** 根据findIdValue从parentElement的子元素名称的列表中获取指定元素 */
 	private Element findElementById(String findIdValue, Element parentElement, String elementName) {
 		List<Element> resultMapElements = parentElement.getChildren(elementName);
@@ -176,10 +235,11 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 			}
 		}
 		if (DqBaseUtils.isNull(currentDOResultMapElement)) {
-			throw new RuntimeException("当前表对应的"+ elementName +"元素不存在");
+			throw new RuntimeException("当前表对应的" + elementName + "元素不存在");
 		}
 		return currentDOResultMapElement;
 	}
+
 	public DqGenerateXmlMybatisBO buildRootContentElementDesc() {
 		rootElement = new DqXmlMybatisContentElementDesc(mybatisDTO);
 		rootElement.setElementName(DqMyBatisElementNameEnum.MAPPER.getDesc());
