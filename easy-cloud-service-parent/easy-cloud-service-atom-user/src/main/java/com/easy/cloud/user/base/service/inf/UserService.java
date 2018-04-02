@@ -1,6 +1,6 @@
  package com.easy.cloud.user.base.service.inf;
 
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
@@ -40,7 +40,7 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月2日 下午4:56:31
 	 */
-	DqBaseServiceResult saveUser(UserDTO userDTO);
+	EcBaseServiceResult saveUser(UserDTO userDTO);
 	
 	/**
 	 * <p>
@@ -60,7 +60,7 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午8:43:06
 	 */
-	DqBaseServiceResult register(UserDTO userDTO);
+	EcBaseServiceResult register(UserDTO userDTO);
 	
 	/**
 	 * <p>
@@ -78,7 +78,7 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午8:49:30
 	 */
-	DqBaseServiceResult findByEmail(UserQuery userQuery);
+	EcBaseServiceResult findByEmail(UserQuery userQuery);
 	
 	/**
 	 * <p>
@@ -97,7 +97,7 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午8:43:06
 	 */
-	DqBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery);
+	EcBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery);
 	
 	/**
 	 * <p>
@@ -116,6 +116,6 @@ public interface UserService {
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午8:43:06
 	 */
-	DqBaseServiceResult loginByEmailAndPassword(UserQuery userQuery);
+	EcBaseServiceResult loginByEmailAndPassword(UserQuery userQuery);
 	
 }

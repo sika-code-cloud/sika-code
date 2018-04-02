@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.constant;
 
-import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
 
 /**
  * 
@@ -15,7 +15,7 @@ import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:25:50
  */
-public enum UserErrorCodeEnum implements DqBaseErrorCodeInf{
+public enum UserErrorCodeEnum implements EcBaseErrorCodeInf{
 	/** 用户不存在---U_000001 */
 	USER_NOT_EXIST ("U_000001", "用户不存在"),
 	/** 用户id不能为空 */

@@ -3,12 +3,12 @@ package com.easy.cloud.user.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeEnum;
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.module.basic.service.DqBaseService;
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.basic.service.EcBaseService;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
 import com.easy.cloud.user.base.constant.UserErrorCodeEnum;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.client.UserClient;
@@ -32,37 +32,37 @@ import com.easy.cloud.user.service.inf.UserService;
  */
 @Service
 
-public class UserServiceImpl extends DqBaseService implements UserService{
+public class UserServiceImpl extends EcBaseService implements UserService{
 	@Autowired
 	private UserClient userClient;
 	
 	@Override
-	public DqBaseServiceResult register(UserDTO userDTO) {
+	public EcBaseServiceResult register(UserDTO userDTO) {
 		return userClient.register(userDTO);
 	}
 	
 	@Override
-	public DqBaseServiceResult login(UserComposeQuery userComposeQuery) {
-		if(DqBaseUtils.isNull(userComposeQuery)){
-			throw DqBaseBusinessException.newInstance(DqBaseErrorCodeEnum.QUERY_OBJ_CANT_NULL);
+	public EcBaseServiceResult login(UserComposeQuery userComposeQuery) {
+		if(EcBaseUtils.isNull(userComposeQuery)){
+			throw EcBaseBusinessException.newInstance(EcBaseErrorCodeEnum.QUERY_OBJ_CANT_NULL);
 		}
-		if(DqStringUtils.isEmpty(userComposeQuery.getPassword())){
-			throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
+		if(EcStringUtils.isEmpty(userComposeQuery.getPassword())){
+			throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
 		}
 		Integer loginMode = userComposeQuery.getLoginMode();
 		if(LoginMode.isNotAvailableValue(LoginMode.class, loginMode)){
-			throw DqBaseBusinessException.newInstance(UserComposeErrorCodeEnum.LOGIN_MODE_WRONG);
+			throw EcBaseBusinessException.newInstance(UserComposeErrorCodeEnum.LOGIN_MODE_WRONG);
 		}
 		if(LoginMode.isLoginByEmailAndPassword(loginMode)){
-			if(DqStringUtils.isEmpty(userComposeQuery.getEmail())){
-				throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_EMAIL_CANT_EMPTY);	
+			if(EcStringUtils.isEmpty(userComposeQuery.getEmail())){
+				throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_EMAIL_CANT_EMPTY);	
 			}
 		}else if(LoginMode.isLoginByUsernameAndPassword(loginMode)){
-			if(DqStringUtils.isEmpty(userComposeQuery.getUserName())){
-				throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);	
+			if(EcStringUtils.isEmpty(userComposeQuery.getUserName())){
+				throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);	
 			}
 		}
-		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
+		EcBaseServiceResult dqBaseServiceResult = EcBaseServiceResult.newInstanceOfSuccess();
 		if(LoginMode.isLoginByEmailAndPassword(loginMode)){
 			dqBaseServiceResult = userClient.loginByEmailAndPassword(userComposeQuery);
 		}else if(LoginMode.isLoginByUsernameAndPassword(loginMode)){
@@ -73,7 +73,7 @@ public class UserServiceImpl extends DqBaseService implements UserService{
 
 	
 	@Override
-	public DqBaseServiceResult login(UserComposeQuery userComposeQuery, String userName) {
+	public EcBaseServiceResult login(UserComposeQuery userComposeQuery, String userName) {
 		return login(userComposeQuery);
 	}
 

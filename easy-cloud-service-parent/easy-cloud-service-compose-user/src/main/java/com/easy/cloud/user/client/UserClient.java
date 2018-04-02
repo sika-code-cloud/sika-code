@@ -4,8 +4,8 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
 import com.easy.cloud.base.constant.UserServiceName;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.client.constant.UserServiceReqMapping;
@@ -27,11 +27,11 @@ import com.easy.cloud.user.client.constant.UserServiceReqMapping;
 public interface UserClient {
 	
 	@RequestMapping(UserServiceReqMapping.REGISTER)
-    DqBaseServiceResult register(@RequestBody UserDTO userDTO);
+    EcBaseServiceResult register(@RequestBody UserDTO userDTO);
 	
 	@RequestMapping(UserServiceReqMapping.LOGIN_BY_USERNAME_AND_PASSWORD)
-	DqBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery);
+	EcBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery);
 	
 	@RequestMapping(UserServiceReqMapping.LOGIN_BY_EMAIL_AND_PASSWORD)
-	DqBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery);
+	EcBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery);
 }

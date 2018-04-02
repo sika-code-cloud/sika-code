@@ -1,6 +1,6 @@
 package com.easy.cloud.base.constant;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseServiceName;
+import com.easy.cloud.core.basic.constant.EcBaseServiceName;
 
 /**
  * 
@@ -15,6 +15,6 @@ import com.dq.easy.cloud.module.basic.constant.DqBaseServiceName;
  * @author daiqi
  * 创建时间    2018年2月5日 下午8:29:44
  */
-public class UserServiceName extends DqBaseServiceName{
+public class UserServiceName extends EcBaseServiceName{
 	
 }

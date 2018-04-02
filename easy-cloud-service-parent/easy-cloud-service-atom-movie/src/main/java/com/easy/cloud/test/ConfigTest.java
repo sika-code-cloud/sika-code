@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 
 @RestController
 @RequestMapping("test")
@@ -23,6 +23,6 @@ public class ConfigTest {
 	public String getFrom(){
 		Map<String, Object> retMap = new HashMap<>();
 		retMap.put("from", from);
-		return DqJSONUtils.parseObject(retMap, String.class);
+		return EcJSONUtils.parseObject(retMap, String.class);
 	}
 }

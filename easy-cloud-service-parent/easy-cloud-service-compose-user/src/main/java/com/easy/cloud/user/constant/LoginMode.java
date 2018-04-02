@@ -1,6 +1,6 @@
 package com.easy.cloud.user.constant;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseConstant;
+import com.easy.cloud.core.basic.constant.EcBaseConstant;
 
 /**
  * 
@@ -18,7 +18,7 @@ import com.dq.easy.cloud.module.basic.constant.DqBaseConstant;
  * @author daiqi
  * 创建时间    2018年2月6日 上午11:26:15
  */
-public class LoginMode extends DqBaseConstant{
+public class LoginMode extends EcBaseConstant{
 	/** 登录方式---使用用户名和密码---1 */
 	public static final int LOGIN_BY_USERNAME_AND_PASSWORD = 1;
 	/** 登录方式---使用用户名和密码---2 */

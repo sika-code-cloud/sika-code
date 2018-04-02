@@ -1,6 +1,6 @@
 package com.easy.cloud.user.service.inf;
 
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.pojo.query.UserComposeQuery;
 
@@ -26,11 +26,11 @@ public interface UserService {
 	 *     email : dq@163.com : 邮箱 : 是
 	 * </pre>
 	 * @param userDTO : UserDTO : 用户数据传输对象
-	 * @return DqBaseServiceResult
+	 * @return EcBaseServiceResult
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午7:39:10
 	 */
-	DqBaseServiceResult register(UserDTO userDTO);
+	EcBaseServiceResult register(UserDTO userDTO);
 	
 	/**
 	 * 
@@ -44,11 +44,11 @@ public interface UserService {
 	 *     password : 123456 : 密码 : 是
 	 * </pre>
 	 * @param userComposeQuery
-	 * @return DqBaseServiceResult
+	 * @return EcBaseServiceResult
 	 * @author daiqi
 	 * 创建时间    2018年2月5日 下午7:49:51
 	 */
-	DqBaseServiceResult login(UserComposeQuery userComposeQuery);
+	EcBaseServiceResult login(UserComposeQuery userComposeQuery);
 	
-	DqBaseServiceResult login(UserComposeQuery userComposeQuery, String userName);
+	EcBaseServiceResult login(UserComposeQuery userComposeQuery, String userName);
 }
