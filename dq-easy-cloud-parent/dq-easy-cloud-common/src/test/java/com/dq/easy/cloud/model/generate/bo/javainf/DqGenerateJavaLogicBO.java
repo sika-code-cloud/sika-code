@@ -1,13 +1,8 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf;
+package com.dq.easy.cloud.model.generate.bo.javainf;
 
-import java.util.List;
-
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaInfBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
@@ -22,20 +17,17 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaLogicBO extends DqGenerateJavaInfBO {
 
-	public DqGenerateJavaLogicBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaLogicBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getAnnotations() {
-		return null;
+	protected void buildAnnotations() {
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		return null;
+	protected void buildMethods() {
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc;
 
-import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 
-public class DqJavaModifierDesc {
+public class DqJavaModifierDesc extends DqJavaContentBaseDesc{
 	private Integer code;
 	private String desc;
 	
@@ -23,6 +23,10 @@ public class DqJavaModifierDesc {
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	@Override
+	public String getJavaContentSign() {
+		return getDesc();
 	}
 	
 	

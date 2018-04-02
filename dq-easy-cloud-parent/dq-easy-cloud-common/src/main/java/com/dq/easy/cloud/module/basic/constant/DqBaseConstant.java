@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.module.basic.constant;
 
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
 /**
  * 
@@ -93,20 +92,5 @@ public class DqBaseConstant {
 		public static final String PNG = "PNG";
 		public static final String TIFF = "TIFF";
 		public static final String PXR = "PXR";
-	}
-	/** 文件后缀 */
-	public static class DqFileSuffix {
-		/** 源代码后缀--- .java */
-		public static final String JAVA = "java";	
-		/** mybaties的mapper文件后缀--- .xml */
-		public static final String XML = "xml";
-		
-		public static boolean isJava(String fileSuffix) {
-			return DqStringUtils.equalsIgnoreCase(fileSuffix, JAVA);
-		}
-		
-		public static boolean isXml(String fileSuffix) {
-			return DqStringUtils.equalsIgnoreCase(fileSuffix, XML);
-		}
 	}
 }

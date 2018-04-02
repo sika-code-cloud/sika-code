@@ -1,16 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
-import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField.DqModifierMappingEnum;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
 public abstract class DqGenerateJavaInfBO extends DqGenerateJavaBaseBO {
@@ -20,33 +12,29 @@ public abstract class DqGenerateJavaInfBO extends DqGenerateJavaBaseBO {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
-	@Override
-	protected List<DqJavaModifierDesc> getModifiers() {
-		List<DqJavaModifierDesc> modifierDescs = new ArrayList<>();
-		modifierDescs.add(new DqJavaModifierDesc(DqModifierMappingEnum.PUBLIC));
-		modifierDescs.add(new DqJavaModifierDesc(DqModifierMappingEnum.INTERFACE));
-		return modifierDescs;
+	public DqGenerateJavaInfBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 	}
 
 	@Override
-	protected DqJavaContentBaseDesc getExtendsParentClass() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildModifiers() {
+		javaClassContentDesc.addModifier(DqModifierMappingEnum.PUBLIC);
+		javaClassContentDesc.addModifier(DqModifierMappingEnum.INTERFACE);
 	}
 
 	@Override
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildExtendsParentClass() {
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		return null;
+	protected void buildImplementsInterfaces() {
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		return null;
+	protected void buildConstructors() {
+	}
+
+	@Override
+	protected void buildFields() {
 	}
 }

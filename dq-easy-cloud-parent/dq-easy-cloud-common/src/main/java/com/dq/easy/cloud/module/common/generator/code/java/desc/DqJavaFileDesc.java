@@ -17,8 +17,6 @@ import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
  * @author daiqi 创建时间 2018年3月26日 下午2:29:40
  */
 public class DqJavaFileDesc extends DqFileDesc {
-	/** 项目名称 */
-	private String projectName;
 	/** 项目完整路径 */
 	private String projectFullPath;
 	/** 项目源代码的相对路径 */
@@ -32,19 +30,11 @@ public class DqJavaFileDesc extends DqFileDesc {
 
 	public DqJavaFileDesc(String projectName, String sourceCodeRelativePath,
 			String packageRelativePath, String fileName, String fileSuffix) {
-		this.projectName = projectName;
+		setProjectName(projectName);
 		this.sourceCodeRelativePath = sourceCodeRelativePath;
 		this.packageRelativePath = packageRelativePath;
 		setFileName(fileName);
 		setFileSuffix(fileSuffix);
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
 	}
 
 	public String getProjectFullPath() {
@@ -74,7 +64,7 @@ public class DqJavaFileDesc extends DqFileDesc {
 
 	@Override
 	public void initFileDescData() {
-		String projectFullPath = DqFileUtils.getTargetProjectPath(null, projectName, DqCodeGenerateConfig.getNeedFilterDirectoryName());
+		String projectFullPath = DqFileUtils.getTargetProjectPath(null, getProjectName(), DqCodeGenerateConfig.getNeedFilterDirectoryName());
 		if (DqStringUtils.isEmpty(projectFullPath)) {
 			throw new DqBaseBusinessException(DqCodeGenerateErrorCodeEnum.GET_PROJECT_PATH_FAIL);
 		}

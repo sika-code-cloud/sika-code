@@ -1,5 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.base.utils;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
 import com.dq.easy.cloud.module.common.map.utils.DqMapUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
@@ -10,7 +13,23 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqCodeGenerateUtils {
 
-
+	/**
+	 * 
+	 * <p>
+	 * 获取完整的类类型
+	 * </p>
+	 *
+	 * @param fullPackageName
+	 * @param simpleClassType
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年4月2日 上午9:47:17
+	 */
+	public static String getFullClassType(String fullPackageName, String simpleClassType) {
+		StringBuilder build = DqStringUtils.newStringBuilderDefault();
+		build.append(fullPackageName).append(DqSymbol.STOP).append(simpleClassType);
+		return build.toString();
+	}
 	/**
 	 * 
 	 * <p>
@@ -70,5 +89,55 @@ public class DqCodeGenerateUtils {
 	 */
 	public static String getCompleteClassName(String simpleClassName) {
 		return DqMapUtils.getString(DqCodeGenerateConfig.getClassNameSimpleMapping(), simpleClassName);
+	}
+	
+	public static String getJavaSimpleClassTypeOfMysql(String columnType) {
+		if (DqStringUtils.isEmpty(columnType)) {
+			return null;
+		}
+		String tempColumnType = DqStringUtils.lowerCase(columnType);
+		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
+			return Integer.class.getSimpleName();
+		} else if(tempColumnType.contains("float")) {
+			return Float.class.getSimpleName();
+		} else if(tempColumnType.contains("double")) {
+			return Double.class.getSimpleName();
+		} else if(tempColumnType.contains("bigint")) {
+			return Long.class.getSimpleName();
+		} else if(tempColumnType.contains("char") || tempColumnType.contains("text")) {
+			return String.class.getSimpleName();
+		} else if(tempColumnType.contains("datetime") || tempColumnType.contains("timestamp")) {
+			return Date.class.getSimpleName();
+		} else if(tempColumnType.contains("decimal")) {
+			return BigDecimal.class.getSimpleName();
+		} else if(tempColumnType.contains("blob")) {
+			return "Byte []";
+		}
+		return null;
+	}
+	
+	public static String getJavaFullClassTypeOfMysql(String columnType) {
+		if (DqStringUtils.isEmpty(columnType)) {
+			return null;
+		}
+		String tempColumnType = DqStringUtils.lowerCase(columnType);
+		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
+			return Integer.class.getName();
+		} else if(tempColumnType.contains("float")) {
+			return Float.class.getName();
+		} else if(tempColumnType.contains("double")) {
+			return Double.class.getName();
+		} else if(tempColumnType.contains("bigint")) {
+			return Long.class.getName();
+		} else if(tempColumnType.contains("char") || tempColumnType.contains("text")) {
+			return String.class.getName();
+		} else if(tempColumnType.contains("datetime") || tempColumnType.contains("timestamp")) {
+			return Date.class.getName();
+		} else if(tempColumnType.contains("decimal")) {
+			return BigDecimal.class.getName();
+		} else if(tempColumnType.contains("blob")) {
+			return "Byte []";
+		}
+		return null;
 	}
 }

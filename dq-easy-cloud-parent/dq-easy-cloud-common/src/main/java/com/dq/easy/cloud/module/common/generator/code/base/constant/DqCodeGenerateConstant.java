@@ -1,5 +1,7 @@
 package com.dq.easy.cloud.module.common.generator.code.base.constant;
 
+import com.dq.easy.cloud.module.common.file.constant.DqFileConstant;
+
 /**
  * 
  * <p>
@@ -27,7 +29,14 @@ public class DqCodeGenerateConstant {
 	 */
 	public static class DqCodeProject {
 		/** 项目根路径---基础路径---System.getProperty("user.dir") */
-		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = System.getProperty("user.dir");
+		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = DqFileConstant.USER_DIR;
+	}
+	
+	public static class DqTemplateName {
+		/** java文件的ftl */
+		public static final String JAVA = "JAVA.ftl";
+		/** mybatis.xml文件的ftl */
+		public static final String MYBATIS_XML = "MYBATIS.ftl";
 	}
 
 	/**
@@ -82,10 +91,6 @@ public class DqCodeGenerateConstant {
 		public static final String BYTE_ARRAY = "byte []";
 	}
 
-	public static class DqTemplateName {
-		public static final String JAVA = "JAVA.ftl";
-	}
-
 	/**
 	 * 
 	 * <p>
@@ -116,6 +121,7 @@ public class DqCodeGenerateConstant {
 		public static final String TYPE_NAME = "TYPE_NAME";
 		/** 数据库表的字段名标签---字段的备注---COLUMN_NAME */
 		public static final String REMARKS = "REMARKS";
+		/** 列的key---PRI:主键 --- UNI:唯一索引 */
+		public static final String COLUMN_KEY = "COLUMN_KEY";
 	}
-
 }

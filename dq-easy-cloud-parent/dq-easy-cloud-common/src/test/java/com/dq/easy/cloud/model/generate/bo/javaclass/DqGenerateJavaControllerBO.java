@@ -1,21 +1,13 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import org.springframework.stereotype.Controller;
 
 import com.dq.easy.cloud.module.basic.controller.DqBaseController;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
@@ -31,56 +23,50 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaControllerBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
-
+	public DqGenerateJavaControllerBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 	}
 
 	@Override
-	protected List<DqJavaAnnotationDesc> getAnnotations() {
-		List<DqJavaAnnotationDesc> annotationDescs = new ArrayList<>();
+	protected void buildAnnotations() {
 		DqJavaAnnotationDesc controllerAnnotation = new DqJavaAnnotationDesc();
 		controllerAnnotation.setName(Controller.class.getSimpleName());
 		controllerAnnotation.setSimpleClassType(Controller.class.getSimpleName());
 		controllerAnnotation.setFullClassType(Controller.class.getName());
 
-		List<DqJavaAnnotationParamDesc> controllerAnnotationParamDescs = new ArrayList<>();
 		String value = DqStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.CONTROLLER);
-		controllerAnnotationParamDescs.add(new DqJavaAnnotationParamDesc("value", value));
-		controllerAnnotation.setParams(controllerAnnotationParamDescs);
+		controllerAnnotation.addParam("value", value);
 
-		annotationDescs.add(controllerAnnotation);
-		return annotationDescs;
+		super.javaClassContentDesc.addAnnotation(controllerAnnotation);
 	}
 
 	@Override
-	protected DqJavaContentBaseDesc getExtendsParentClass() {
-		DqJavaContentBaseDesc extendsParentClass = new DqJavaContentBaseDesc();
+	protected void buildExtendsParentClass() {
+		DqJavaContentDesc extendsParentClass = new DqJavaContentDesc();
 		extendsParentClass.setName(DqBaseController.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseController.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseController.class.getName());
-		return extendsParentClass;
+		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		return null;
+	protected void buildImplementsInterfaces() {
+		
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getConstructors() {
-		return null;
+	protected void buildConstructors() {
+		
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		return null;
+	protected void buildFields() {
+		
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		return null;
+	protected void buildMethods() {
+		
 	}
 
 	@Override

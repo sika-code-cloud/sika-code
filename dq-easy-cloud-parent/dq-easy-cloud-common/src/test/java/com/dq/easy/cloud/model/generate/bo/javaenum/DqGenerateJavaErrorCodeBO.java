@@ -1,18 +1,12 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaenum;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.dq.easy.cloud.model.generate.bo.javaenum;
 
 import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
-import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqIgnoreField.DqModifierMappingEnum;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaEnumBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 
@@ -27,56 +21,45 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaErrorCodeBO extends DqGenerateJavaEnumBO {
 
-	public DqGenerateJavaErrorCodeBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaErrorCodeBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 
 	@Override
 	/** 获取实现的接口列表 */
-	protected List<DqJavaImplInterfaceContentDesc> getImplementsInterfaces() {
-		List<DqJavaImplInterfaceContentDesc> implInterfaceContentDescs = new ArrayList<>();
+	protected void buildImplementsInterfaces() {
 		DqJavaImplInterfaceContentDesc implInterfaceContentDesc = new DqJavaImplInterfaceContentDesc();
 		implInterfaceContentDesc.setSimpleClassType(DqBaseErrorCodeInf.class.getSimpleName());
 		implInterfaceContentDesc.setName(DqBaseErrorCodeInf.class.getSimpleName());
 		implInterfaceContentDesc.setFullClassType(DqBaseErrorCodeInf.class.getName());
-		implInterfaceContentDescs.add(implInterfaceContentDesc);
-		return implInterfaceContentDescs;
+		javaClassContentDesc.addImplementsInterface(implInterfaceContentDesc);
 	}
 
 	@Override
-	protected List<DqJavaFieldContentDesc> getFields() {
-		List<DqJavaFieldContentDesc> fieldContentDescs = new ArrayList<>();
+	protected void buildFields() {
 		DqJavaFieldContentDesc codeFieldContentDesc = new DqJavaFieldContentDesc();
 		codeFieldContentDesc.setComment("错误代码");
 		// 设置code属性的modifiers
-		List<DqJavaModifierDesc> codeModifiers = new ArrayList<>();
-		DqJavaModifierDesc codeModifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
-		codeModifiers.add(codeModifierDesc);
-		codeFieldContentDesc.setModifiers(codeModifiers);
+		codeFieldContentDesc.addModifier(DqModifierMappingEnum.PRIVATE);
 		// 设置code属性名称和类型
 		codeFieldContentDesc.setName("errorCode");
 		codeFieldContentDesc.setSimpleClassType(String.class.getSimpleName());
-		fieldContentDescs.add(codeFieldContentDesc);
+		javaClassContentDesc.addField(codeFieldContentDesc);
 
 		DqJavaFieldContentDesc msgFieldContentDesc = new DqJavaFieldContentDesc();
 		msgFieldContentDesc.setComment("错误信息");
 		// 设置msg属性的modifiers
-		List<DqJavaModifierDesc> msgModifiers = new ArrayList<>();
-		DqJavaModifierDesc modifierDesc = new DqJavaModifierDesc(DqModifierMappingEnum.PRIVATE);
-		msgModifiers.add(modifierDesc);
-		msgFieldContentDesc.setModifiers(msgModifiers);
+		msgFieldContentDesc.addModifier(DqModifierMappingEnum.PRIVATE);
 		// 设置code属性名称和类型
 		msgFieldContentDesc.setName("errorMsg");
 		msgFieldContentDesc.setSimpleClassType(String.class.getSimpleName());
-		fieldContentDescs.add(msgFieldContentDesc);
-		return fieldContentDescs;
+		javaClassContentDesc.addField(msgFieldContentDesc);
 	}
 
 	@Override
-	protected List<DqJavaMethodContentDesc> getMethods() {
-		return super.getMethodsByFields();
+	protected void buildMethods() {
+		javaClassContentDesc.addMethods(super.getMethodsByFields());
 	}
 
 	@Override

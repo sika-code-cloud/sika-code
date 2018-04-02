@@ -1,5 +1,6 @@
 package com.dq.easy.cloud.module.common.generator.code.java.desc.anno;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
@@ -25,6 +26,26 @@ public class DqJavaAnnotationDesc extends DqJavaContentBaseDesc {
 		this.params = params;
 	}
 
+	public void addParam(String name, Object value) {
+		if (DqCollectionsUtils.isEmpty(getParams())) {
+			this.params = new ArrayList<>();
+		}
+		getParams().add(new DqJavaAnnotationParamDesc(name, value));
+	}
+	public void addParam(DqJavaAnnotationParamDesc param) {
+		if (DqCollectionsUtils.isEmpty(getParams())) {
+			this.params = new ArrayList<>();
+		}
+		getParams().add(param);
+	}
+
+	public void addParams(List<DqJavaAnnotationParamDesc> params) {
+		if (DqCollectionsUtils.isEmpty(getParams())) {
+			this.params = new ArrayList<>();
+		}
+		getParams().addAll(params);
+	}
+
 	@Override
 	public String getName() {
 		if (DqStringUtils.isNotEmpty(super.getName())) {
@@ -36,7 +57,7 @@ public class DqJavaAnnotationDesc extends DqJavaContentBaseDesc {
 	public String getParamsStr() {
 		if (DqCollectionsUtils.isNotEmpty(params)) {
 			StringBuilder paramsBuild = DqStringUtils.newStringBuilderDefault();
-			for (int i = 0 ; i < params.size(); ++i) {
+			for (int i = 0; i < params.size(); ++i) {
 				DqJavaAnnotationParamDesc param = params.get(i);
 				Object value = param.getValue();
 				paramsBuild.append(param.getName());
@@ -54,5 +75,10 @@ public class DqJavaAnnotationDesc extends DqJavaContentBaseDesc {
 			return paramsBuild.toString();
 		}
 		return null;
+	}
+
+	@Override
+	public String getJavaContentSign() {
+		return getFullClassType();
 	}
 }

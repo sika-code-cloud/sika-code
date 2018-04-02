@@ -8,6 +8,8 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  * @date 2018年3月23日 下午11:46:21
  */
 public class DqFileConstant {
+	
+	public static final String USER_DIR = System.getProperty("user.dir");
 	/** 文件后缀 */
 	public static class DqFileSuffix {
 		/** 源代码后缀--- .java */

@@ -2,7 +2,7 @@ package com.dq.easy.cloud.module.common.file.pojo.desc;
 
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
 import com.dq.easy.cloud.module.common.file.constant.error.DqFileErrorCodeEnum;
-import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.module.common.file.utils.DqFileUtils;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
 
@@ -88,10 +88,7 @@ public class DqFileDesc {
 	 */
 	public void initFileDescData() {
 		if (DqStringUtils.isEmpty(getFileFullPath())) {
-			StringBuilder fileFullPathBuild = DqStringUtils.newStringBuilderDefault();
-			fileFullPathBuild.append(getFileDirectoryFullPath()).append(DqSymbol.BACK_SLASH);
-			fileFullPathBuild.append(getFileName()).append(DqSymbol.STOP).append(getFileSuffix());
-			setFileFullPath(fileFullPathBuild.toString());
+			setFileFullPath(DqFileUtils.getFullFilePath(this));
 		}
 	}
 

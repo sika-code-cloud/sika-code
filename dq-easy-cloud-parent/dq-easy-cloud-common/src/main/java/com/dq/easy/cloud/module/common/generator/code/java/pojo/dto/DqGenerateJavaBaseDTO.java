@@ -1,8 +1,11 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.dto;
 
-public class DqGenerateJavaBaseDTO {
-	/** 项目名称 */
-	private String projectName;
+import com.dq.easy.cloud.module.common.generator.code.base.pojo.dto.DqGenerateBaseDTO;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+
+public class DqGenerateJavaBaseDTO extends DqGenerateBaseDTO{
+
 	/** 基础包名称 */
 	private String basePackageName;
 	/** 模块名称 */
@@ -13,24 +16,15 @@ public class DqGenerateJavaBaseDTO {
 	private String classBodyName;
 	/** 类注释 */
 	private String classComment;
-	/** 文件覆盖开关---true---覆盖---false存在不覆盖 */
-	private boolean coverSwith;
+	
 	public DqGenerateJavaBaseDTO(String projectName, String basePackageName, String moduleName,
 			String subModulePackageName, String classBodyName, String classComment) {
-		this.projectName = projectName;
+		setProjectName(projectName);
 		this.basePackageName = basePackageName;
 		this.moduleName = moduleName;
 		this.subModulePackageName = subModulePackageName;
 		this.classBodyName = classBodyName;
 		this.classComment = classComment;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
 	}
 
 	public String getBasePackageName() {
@@ -72,13 +66,39 @@ public class DqGenerateJavaBaseDTO {
 	public void setClassComment(String classComment) {
 		this.classComment = classComment;
 	}
-
-	public boolean isCoverSwith() {
-		return coverSwith;
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据基础包名，模块名称，子模块名称构建完整包名
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
+	 */
+	public String buildFullPackageName(String subModulePackageName) {
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		if (DqStringUtils.isNotEmpty(getBasePackageName())) {
+			sb.append(getBasePackageName()).append(DqSymbol.STOP);
+		}
+		if (DqStringUtils.isNotEmpty(getModuleName())) {
+			sb.append(getModuleName()).append(DqSymbol.STOP);
+		}
+		if (DqStringUtils.isNotEmpty(subModulePackageName)) {
+			sb.append(subModulePackageName);
+		}
+		return sb.toString();
 	}
-
-	public void setCoverSwith(boolean coverSwith) {
-		this.coverSwith = coverSwith;
+	/**
+	 * 
+	 * <p>
+	 * 根据基础包名，模块名称，子模块名称构建完整包名
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
+	 */
+	public String buildFullPackageName() {
+		return buildFullPackageName(this.subModulePackageName);
 	}
-
 }

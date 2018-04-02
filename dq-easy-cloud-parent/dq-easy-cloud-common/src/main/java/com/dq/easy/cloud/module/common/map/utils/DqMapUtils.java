@@ -2,6 +2,7 @@ package com.dq.easy.cloud.module.common.map.utils;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -48,6 +49,20 @@ public class DqMapUtils {
 		return new Hashtable<>(INIT_SIZE);
 	}
 
+	/**
+	 * 
+	 * <p>创建含有初始化大小的LinkedHashMap对象</p>
+	 *
+	 * <pre>DqMapUtils.newLinkedHashMap()</pre>
+	 *
+	 * @return
+	 *
+	 * author daiqi
+	 * 创建时间  2018年3月18日 上午12:55:07
+	 */
+	public static <T, V> Map<T, V> newLinkedHashMap() {
+		return new LinkedHashMap<>(INIT_SIZE);
+	}
 	/**
 	 * 
 	 * <p>创建含有初始化大小的TreeMap对象</p>

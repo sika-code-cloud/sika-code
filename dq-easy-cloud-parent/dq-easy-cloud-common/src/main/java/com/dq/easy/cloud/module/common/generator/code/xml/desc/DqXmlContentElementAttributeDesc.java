@@ -8,9 +8,19 @@ package com.dq.easy.cloud.module.common.generator.code.xml.desc;
  *
  * @author daiqi 创建时间 2018年3月29日 上午10:03:20
  */
-public class DqXmlContentElementAttributeDesc extends DqXmlContentBaseDesc{
+public class DqXmlContentElementAttributeDesc extends DqXmlContentBaseDesc {
+
 	private String key;
 	private String value;
+
+	public DqXmlContentElementAttributeDesc() {
+
+	}
+
+	public DqXmlContentElementAttributeDesc(String key, String value) {
+		this.key = key;
+		this.value = value;
+	}
 
 	public String getKey() {
 		return key;
@@ -27,5 +37,5 @@ public class DqXmlContentElementAttributeDesc extends DqXmlContentBaseDesc{
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+	
 }

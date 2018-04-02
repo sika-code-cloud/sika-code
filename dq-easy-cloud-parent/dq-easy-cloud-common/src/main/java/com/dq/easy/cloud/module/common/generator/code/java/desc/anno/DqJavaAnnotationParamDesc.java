@@ -4,15 +4,16 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBas
 
 /**
  * 类的注解属性描述类
+ * 
  * @author daiqi
  * @date 2018年3月24日 上午1:48:58
  */
-public class DqJavaAnnotationParamDesc extends DqJavaContentBaseDesc{
-	
+public class DqJavaAnnotationParamDesc extends DqJavaContentBaseDesc {
+
 	private Object value;
 
-
 	public DqJavaAnnotationParamDesc() {
+		
 	}
 
 	public DqJavaAnnotationParamDesc(String name, Object value) {
@@ -27,5 +28,10 @@ public class DqJavaAnnotationParamDesc extends DqJavaContentBaseDesc{
 	public void setValue(Object value) {
 		this.value = value;
 	}
-	
+
+	@Override
+	public String getJavaContentSign() {
+		return getName();
+	}
+
 }
