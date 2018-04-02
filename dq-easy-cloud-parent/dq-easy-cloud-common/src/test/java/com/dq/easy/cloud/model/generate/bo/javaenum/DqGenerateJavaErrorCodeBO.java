@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaenum;
+package com.dq.easy.cloud.model.generate.bo.javaenum;
 
 import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;

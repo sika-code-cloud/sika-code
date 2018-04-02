@@ -1,6 +1,8 @@
 package com.dq.easy.cloud.module.common.generator.code.java.pojo.dto;
 
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.dto.DqGenerateBaseDTO;
+import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
+import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
 public class DqGenerateJavaBaseDTO extends DqGenerateBaseDTO{
 
@@ -63,5 +65,40 @@ public class DqGenerateJavaBaseDTO extends DqGenerateBaseDTO{
 
 	public void setClassComment(String classComment) {
 		this.classComment = classComment;
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 根据基础包名，模块名称，子模块名称构建完整包名
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
+	 */
+	public String buildFullPackageName(String subModulePackageName) {
+		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
+		if (DqStringUtils.isNotEmpty(getBasePackageName())) {
+			sb.append(getBasePackageName()).append(DqSymbol.STOP);
+		}
+		if (DqStringUtils.isNotEmpty(getModuleName())) {
+			sb.append(getModuleName()).append(DqSymbol.STOP);
+		}
+		if (DqStringUtils.isNotEmpty(subModulePackageName)) {
+			sb.append(subModulePackageName);
+		}
+		return sb.toString();
+	}
+	/**
+	 * 
+	 * <p>
+	 * 根据基础包名，模块名称，子模块名称构建完整包名
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
+	 */
+	public String buildFullPackageName() {
+		return buildFullPackageName(this.subModulePackageName);
 	}
 }

@@ -19,6 +19,7 @@ public class DqCodeGenerateJavaConstant {
 	/** 注释结尾 */
 	public static class DqClassCommentEndWith {
 		public static final String POJO_DO = "持久化类";
+		public static final String POJO_PO = "持久化类";
 		public static final String POJO_DTO = "数据传输类";
 		public static final String POJO_BO = "业务逻辑类";
 		public static final String POJO_QUERY = "查询类";
@@ -40,6 +41,7 @@ public class DqCodeGenerateJavaConstant {
 	/** 类名结尾 */
 	public static class DqClassNameEndWith {
 		public static final String POJO_DO = "Entity";
+		public static final String POJO_PO = "PO";
 		public static final String POJO_DTO = "DTO";
 		public static final String POJO_BO = "BO";
 		public static final String POJO_QUERY = "Query";
@@ -61,6 +63,7 @@ public class DqCodeGenerateJavaConstant {
 	/** 子模块默认的包名 */
 	public static class DqSubModuleDefaultPackageName {
 		public static final String POJO_DO = "pojo.entity";
+		public static final String POJO_PO = "pojo.po";
 		public static final String POJO_DTO = "pojo.dto";
 		public static final String POJO_BO = "pojo.bo";
 		public static final String POJO_QUERY = "pojo.query";
@@ -95,7 +98,10 @@ public class DqCodeGenerateJavaConstant {
 		/** 方法类型枚举---set---2 */
 		SET(2, "set"),
 		/** 方法类型枚举---build---3 */
-		BUILD(3, "build");
+		BUILD(3, "build"),
+		/** 方法类型枚举---抽象方法---3 */
+		ABSTRACT(4, "abstract"),
+		;
 
 		private Integer type;
 		private String typeDesc;

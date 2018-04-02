@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import org.springframework.stereotype.Controller;
 
@@ -49,7 +49,7 @@ public class DqGenerateJavaControllerBO extends DqGenerateJavaClassBO {
 		extendsParentClass.setName(DqBaseController.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseController.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseController.class.getName());
-		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override

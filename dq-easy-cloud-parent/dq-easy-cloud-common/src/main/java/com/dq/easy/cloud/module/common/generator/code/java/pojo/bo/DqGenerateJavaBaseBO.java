@@ -15,6 +15,7 @@ import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateR
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
 import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodContentDesc;
@@ -68,7 +69,7 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 		// 设置类名称
 		javaClassContentDesc.setName(className);
 		javaClassContentDesc.setSimpleClassType(className);
-		// 设置类的泛型参数		
+		// 设置类的泛型参数
 		buildGenericitys();
 		// 设置继承父类---begin
 		buildExtendsParentClass();
@@ -131,10 +132,12 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 
 	/** 获取方法列表 */
 	protected abstract void buildMethods();
+
 	/** 获取类泛型参数列表 */
 	protected void buildGenericitys() {
 
 	}
+
 	/** 根据数据源构建属性列表 */
 	protected List<DqJavaFieldContentDesc> getFieldsByDatabaseDataSources() {
 		javaClassContentDesc.buildDataByDatabaseSources(databaseDataSources);
@@ -216,17 +219,26 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	protected String getFullPackageName(String subModulePackageName) {
-		StringBuilder sb = DqStringUtils.newStringBuilderDefault();
-		if (DqStringUtils.isNotEmpty(generateJavaBaseDTO.getBasePackageName())) {
-			sb.append(generateJavaBaseDTO.getBasePackageName()).append(DqSymbol.STOP);
+		return generateJavaBaseDTO.buildFullPackageName(subModulePackageName);
+	}
+
+	/** 获取自定义的javaContent对象 */
+	protected <T extends DqJavaContentBaseDesc> T getCustomJavaContentByEndwith(String nameEndwith,
+			String subPackegeName, Class<T> clazz) {
+		try {
+			T customJavaClassObj = clazz.newInstance();
+			String customJavaClassName = generateJavaBaseDTO.getClassBodyName() + nameEndwith;
+			customJavaClassObj.setName(customJavaClassName);
+			customJavaClassObj.setSimpleClassType(customJavaClassName);
+			customJavaClassObj.setPackageName(getFullPackageName(subPackegeName));
+			customJavaClassObj.buildFullClassType();
+			return customJavaClassObj;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		if (DqStringUtils.isNotEmpty(generateJavaBaseDTO.getModuleName())) {
-			sb.append(generateJavaBaseDTO.getModuleName()).append(DqSymbol.STOP);
-		}
-		if (DqStringUtils.isNotEmpty(subModulePackageName)) {
-			sb.append(subModulePackageName);
-		}
-		return sb.toString();
+		return null;
 	}
 
 	@Override

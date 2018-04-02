@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf;
+package com.dq.easy.cloud.model.generate.bo.javainf;
 
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
@@ -16,9 +16,9 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  *
  * @author daiqi 创建时间 2018年3月27日 上午9:54:03
  */
-public class DqGenerateJavaLogicBO extends DqGenerateJavaInfBO {
+public class DqGenerateJavaServiceBO extends DqGenerateJavaInfBO {
 
-	public DqGenerateJavaLogicBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
+	public DqGenerateJavaServiceBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
 			DqGenerateRule generateRule) {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
 
@@ -34,11 +34,12 @@ public class DqGenerateJavaLogicBO extends DqGenerateJavaInfBO {
 
 	@Override
 	protected String getClassNameEndWith() {
-		return DqClassNameEndWith.LOGIC_INF;
+		return DqClassNameEndWith.SERVICE_INF;
 	}
 
 	@Override
 	protected String getClassCommentEndWith() {
-		return DqClassCommentEndWith.LOGIC_INF;
+		return DqClassCommentEndWith.SERVICE_INF;
 	}
+
 }

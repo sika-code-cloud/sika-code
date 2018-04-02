@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenera
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqSubModuleDefaultPackageName;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaFieldContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
@@ -52,12 +53,15 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 		extendsParentClass.setName(DqBaseService.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseService.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseService.class.getName());
-		javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
 	protected void buildImplementsInterfaces() {
-		
+		String nameEndwith = DqClassNameEndWith.SERVICE_INF;
+		String subModulePackageName = DqSubModuleDefaultPackageName.SERVICE_INF;
+		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, DqJavaImplInterfaceContentDesc.class);
+		super.javaClassContentDesc.addImplementsInterface(implementsInterface);
 	}
 
 	@Override

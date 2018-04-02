@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
@@ -40,7 +40,7 @@ public class DqGenerateJavaBOBO extends DqGenerateJavaClassBO {
 		extendsParentClass.setName(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseBO.class.getName());
-		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override

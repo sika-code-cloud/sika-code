@@ -13,7 +13,23 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqCodeGenerateUtils {
 
-
+	/**
+	 * 
+	 * <p>
+	 * 获取完整的类类型
+	 * </p>
+	 *
+	 * @param fullPackageName
+	 * @param simpleClassType
+	 * @return
+	 * @author daiqi
+	 * 创建时间    2018年4月2日 上午9:47:17
+	 */
+	public static String getFullClassType(String fullPackageName, String simpleClassType) {
+		StringBuilder build = DqStringUtils.newStringBuilderDefault();
+		build.append(fullPackageName).append(DqSymbol.STOP).append(simpleClassType);
+		return build.toString();
+	}
 	/**
 	 * 
 	 * <p>

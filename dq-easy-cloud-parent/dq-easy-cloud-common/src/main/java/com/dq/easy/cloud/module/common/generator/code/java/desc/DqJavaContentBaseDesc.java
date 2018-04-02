@@ -7,6 +7,7 @@ import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.DqDatabaseDataSources;
+import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
 import com.dq.easy.cloud.module.common.string.constant.DqStringConstant.DqSymbol;
 import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
 
@@ -84,9 +85,7 @@ public abstract class DqJavaContentBaseDesc extends DqFileContentBaseDesc {
 		boolean isBuild = DqStringUtils.isEmpty(fullClassType) && DqStringUtils.isNotEmpty(packageName)
 				&& DqStringUtils.isNotEmpty(simpleClassType);
 		if (isBuild) {
-			StringBuilder build = DqStringUtils.newStringBuilderDefault();
-			build.append(packageName).append(DqSymbol.STOP).append(simpleClassType);
-			setFullClassType(build.toString());
+			setFullClassType(DqCodeGenerateUtils.getFullClassType(packageName, simpleClassType));
 		}
 	}
 

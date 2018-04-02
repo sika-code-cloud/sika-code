@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import org.springframework.stereotype.Repository;
 
@@ -7,7 +7,9 @@ import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateD
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqSubModuleDefaultPackageName;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaContentDesc;
+import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaImplInterfaceContentDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.DqGenerateJavaClassBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
@@ -49,12 +51,15 @@ public class DqGenerateJavaDAOImplBO extends DqGenerateJavaClassBO {
 		extendsParentClass.setName(DqBaseRepository.class.getSimpleName());
 		extendsParentClass.setSimpleClassType(DqBaseRepository.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseRepository.class.getName());
-		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
 	protected void buildImplementsInterfaces() {
-
+		String nameEndwith = DqClassNameEndWith.DAO_INF;
+		String subModulePackageName = DqSubModuleDefaultPackageName.DAO_INF;
+		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, DqJavaImplInterfaceContentDesc.class);
+		super.javaClassContentDesc.addImplementsInterface(implementsInterface);
 	}
 
 	@Override

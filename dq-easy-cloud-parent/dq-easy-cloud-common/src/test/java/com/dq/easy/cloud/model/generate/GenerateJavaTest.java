@@ -12,6 +12,20 @@ import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaBOBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaControllerBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaDAOImplBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaDOBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaDTOBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaLogicImplBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaQueryBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaServiceImplBO;
+import com.dq.easy.cloud.model.generate.bo.javaclass.DqGenerateJavaVOBO;
+import com.dq.easy.cloud.model.generate.bo.javaenum.DqGenerateJavaErrorCodeBO;
+import com.dq.easy.cloud.model.generate.bo.javainf.DqGenerateJavaDAOBO;
+import com.dq.easy.cloud.model.generate.bo.javainf.DqGenerateJavaJpaDAOBO;
+import com.dq.easy.cloud.model.generate.bo.javainf.DqGenerateJavaLogicBO;
+import com.dq.easy.cloud.model.generate.bo.javainf.DqGenerateJavaServiceBO;
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
@@ -21,6 +35,8 @@ import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenera
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.mysql.DqMysqlDataSources;
+import com.dq.easy.cloud.module.common.generator.code.base.utils.DqCodeGenerateUtils;
+import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqModifierMappingEnum;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqSubModuleDefaultPackageName;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaClassContentDesc;
@@ -30,30 +46,21 @@ import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaMethodCont
 import com.dq.easy.cloud.module.common.generator.code.java.desc.DqJavaModifierDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationDesc;
 import com.dq.easy.cloud.module.common.generator.code.java.desc.anno.DqJavaAnnotationParamDesc;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaBOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaControllerBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaDAOImplBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaDOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaDTOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaLogicImplBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaQueryBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaServiceImplBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass.DqGenerateJavaVOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaenum.DqGenerateJavaErrorCodeBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaDAOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaJpaDAOBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaLogicBO;
-import com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javainf.DqGenerateJavaServiceBO;
 import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJavaBaseDTO;
 import com.dq.easy.cloud.module.common.generator.code.java.rule.DqGenerateJavaClassRule;
+import com.dq.easy.cloud.module.common.generator.code.xml.pojo.bo.mybatis.DqGenerateXmlMybatisBO;
+import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlMybatisDTO;
 
 /** 生成java代码测试类 */
 public class GenerateJavaTest {
 	// 数据库配置信息
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
-	// 模版描述对象
-	private DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH,
+	// java模版描述对象
+	private DqTemplateDesc javaTemplateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH,
 			"JAVA.ftl");;
+	// mybatis模版描述对象
+	private DqTemplateDesc mybatisTemplateDesc = new DqTemplateDesc(
+			DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, "MYBATIS.ftl");;
 	// pojo类所在的项目名称
 	private String projectNamePojo = "dq-easy-cloud-common";
 	// dao类所在的项目名称
@@ -62,13 +69,15 @@ public class GenerateJavaTest {
 	private String projectNameService = "dq-easy-cloud-common";
 	// controller类所在的项目名称
 	private String projectNameController = "dq-easy-cloud-common";
+	// mybatis配置文件所在的项目名称
+	private String projectNameMybatis = "dq-easy-cloud-common";
 	// 基础包名称
 	private String basePackageName = "com.dq.easy";
 
 	// 表名
-	private String tableName = "p_user";
+	private String tableName = "easy_user_info";
 	// 模块包名
-	private String moduleName = "user";
+	private String moduleName = "user1";
 	// 类主体名称
 	private String classBodyName = "User";
 	// 类的注释
@@ -99,9 +108,11 @@ public class GenerateJavaTest {
 		// 生成视图类
 		generateJavaVOByDataBase();
 		// 生成DAO类
-		generateJavaDAOByDataBase();
+//		generateJavaDAOByDataBase();
+		// 生成mybatis文件		
+		generateMybatis();
 		// 生成DAO类
-		generateJavaJpaDAOByDataBase();
+		 generateJavaJpaDAOByDataBase();
 		// 生成DAO实现类
 		generateJavaDAOImplByDataBase();
 		// 生成Service类
@@ -126,7 +137,7 @@ public class GenerateJavaTest {
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, true);
 		generateJavaBaseDTO.setCoverSwith(true);
 		try {
-			new DqGenerateJavaDOBO(generateJavaBaseDTO, templateDesc, generateRule)
+			new DqGenerateJavaDOBO(generateJavaBaseDTO, javaTemplateDesc, generateRule)
 					.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig)).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,7 +151,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaDTOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaDTOBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,7 +165,7 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, true);
 		try {
-			new DqGenerateJavaBOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaBOBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -167,7 +178,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaQueryBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaQueryBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -181,7 +192,7 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			DqGenerateJavaVOBO generateJavaVOBO = new DqGenerateJavaVOBO(generateJavaBaseDTO, templateDesc,
+			DqGenerateJavaVOBO generateJavaVOBO = new DqGenerateJavaVOBO(generateJavaBaseDTO, javaTemplateDesc,
 					generateRule);
 			generateJavaVOBO.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig)).generateCode();
 		} catch (Exception e) {
@@ -197,7 +208,54 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaDAOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaDAOBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/** 生成mybatis映射文件 */
+	@Test
+	public void generateMybatis(){
+		String daoSubModulePackageName = DqSubModuleDefaultPackageName.DAO_INF;
+		DqGenerateJavaBaseDTO daoDto = new DqGenerateJavaBaseDTO(projectNameDao, basePackageName, moduleName,
+				daoSubModulePackageName, classBodyName, classComment);
+		String fullPackageNameDAO = daoDto.buildFullPackageName();
+		String simpleClassTypeDAO = classBodyName + DqClassNameEndWith.DAO_INF;
+		String fullClsssTypeDAO = DqCodeGenerateUtils.getFullClassType(fullPackageNameDAO, simpleClassTypeDAO);
+
+		DqGenerateXmlMybatisDTO mybatisDTO = new DqGenerateXmlMybatisDTO();
+		mybatisDTO.setCoverSwith(true);
+		mybatisDTO.setNamespace(fullClsssTypeDAO);
+		mybatisDTO.setTableName(tableName);
+		mybatisDTO.setProjectName(projectNameMybatis);
+		mybatisDTO.setSubPath("mybatis");
+
+		String subModulePackageNameDO = DqSubModuleDefaultPackageName.POJO_DO;
+		DqGenerateJavaBaseDTO dtoDO = new DqGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
+				subModulePackageNameDO, classBodyName, classComment);
+		String fullPackageNameDO = dtoDO.buildFullPackageName();
+		String simpleClassTypeDO = classBodyName + DqClassNameEndWith.POJO_DO;
+		String fullClsssTypeDO = DqCodeGenerateUtils.getFullClassType(fullPackageNameDO, simpleClassTypeDO);
+
+		mybatisDTO.setSimpleClassTypeDO(simpleClassTypeDO);
+		mybatisDTO.setFullClassTypeDO(fullClsssTypeDO);
+		mybatisDTO.setMappersConfigName("sqlmap-config");
+
+		DqGenerateXmlMybatisBO mybatisBO = new DqGenerateXmlMybatisBO(mybatisTemplateDesc, mybatisDTO);
+		mybatisBO.initData();
+		mybatisBO.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig));
+
+		mybatisBO.buildRootContentElementDesc();
+		mybatisBO.buildResultMap();
+		mybatisBO.buildColumnList();
+		mybatisBO.buildFindById();
+		mybatisBO.buildListCount();
+		mybatisBO.buildListPage();
+		mybatisBO.buildSetColumnSql();
+		mybatisBO.buildSave();
+		mybatisBO.buildUpdate();
+		try {
+			mybatisBO.generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -211,7 +269,7 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaJpaDAOBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaJpaDAOBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -224,7 +282,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaDAOImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaDAOImplBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -237,7 +295,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaServiceBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaServiceBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -250,7 +308,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaServiceImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaServiceImplBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -263,7 +321,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaLogicBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaLogicBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -276,7 +334,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaLogicImplBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaLogicImplBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -289,7 +347,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, false, false, false);
 		try {
-			new DqGenerateJavaControllerBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaControllerBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -303,7 +361,7 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		DqGenerateRule generateRule = new DqGenerateJavaClassRule(true, true, true, false);
 		try {
-			new DqGenerateJavaErrorCodeBO(generateJavaBaseDTO, templateDesc, generateRule).generateCode();
+			new DqGenerateJavaErrorCodeBO(generateJavaBaseDTO, javaTemplateDesc, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -365,7 +423,7 @@ public class GenerateJavaTest {
 		extendsParentClass.setName("DqBaseDO");
 		extendsParentClass.setSimpleClassType(DqBaseBO.class.getSimpleName());
 		extendsParentClass.setFullClassType(DqBaseBO.class.getName());
-		javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 		// 设置继承父类---end
 
 		// 设置实现的接口--begin

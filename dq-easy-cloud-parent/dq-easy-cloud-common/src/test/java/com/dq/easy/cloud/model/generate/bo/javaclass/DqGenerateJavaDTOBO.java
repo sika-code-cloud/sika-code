@@ -1,4 +1,4 @@
-package com.dq.easy.cloud.module.common.generator.code.java.pojo.bo.example.javaclass;
+package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
@@ -33,13 +33,10 @@ public class DqGenerateJavaDTOBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected void buildExtendsParentClass() {
-		DqJavaContentDesc extendsParentClass = new DqJavaContentDesc();
-		String parentName = generateJavaBaseDTO.getClassBodyName() + DqClassNameEndWith.POJO_DO;
-		extendsParentClass.setPackageName(getFullPackageName(DqSubModuleDefaultPackageName.POJO_DO));
-		extendsParentClass.setName(parentName);
-		extendsParentClass.setSimpleClassType(parentName);
-		extendsParentClass.buildFullClassType();
-		super.javaClassContentDesc.setExtendsParentClass(extendsParentClass);
+		String nameEndwith = DqClassNameEndWith.POJO_DO;
+		String subModulePackageName = DqSubModuleDefaultPackageName.POJO_DO;
+		DqJavaContentDesc extendsParentClass = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, DqJavaContentDesc.class);
+		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
 	@Override
