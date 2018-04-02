@@ -4,15 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
+import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.user.base.constant.UserConstant;
 
 @Entity
 @Table(name = "easy_user_info")
-public class UserEntity extends DqBaseEntity {
+public class UserEntity extends EcBaseEntity {
 	private String userName;
 	private String password;
 	private Integer sex;
@@ -21,20 +21,20 @@ public class UserEntity extends DqBaseEntity {
 	
 	@PrePersist
 	public void userPrepersist(){
-		if(DqStringUtils.isEmpty(this.userName)){
-			this.userName = DqStringUtils.EMPTY;
+		if(EcStringUtils.isEmpty(this.userName)){
+			this.userName = EcStringUtils.EMPTY;
 		}
-		if(DqBaseUtils.isNull(this.sex)){
+		if(EcBaseUtils.isNull(this.sex)){
 			this.sex = UserConstant.SEX_MAN;
 		}
-		if(DqStringUtils.isEmpty(this.password)){
-			this.password = DqStringUtils.EMPTY;
+		if(EcStringUtils.isEmpty(this.password)){
+			this.password = EcStringUtils.EMPTY;
 		}
-		if(DqStringUtils.isEmpty(this.phoneNumber)){
-//			this.phoneNumber = DqStringUtils.EMPTY;
+		if(EcStringUtils.isEmpty(this.phoneNumber)){
+//			this.phoneNumber = EcStringUtils.EMPTY;
 		}
-		if(DqStringUtils.isEmpty(this.email)){
-//			this.email = DqStringUtils.EMPTY;
+		if(EcStringUtils.isEmpty(this.email)){
+//			this.email = EcStringUtils.EMPTY;
 		}
 	}
 	
@@ -91,6 +91,6 @@ public class UserEntity extends DqBaseEntity {
 
 	@Override
 	public String toString() {
-		return DqJSONUtils.parseObject(this, String.class);
+		return EcJSONUtils.parseObject(this, String.class);
 	}
 }

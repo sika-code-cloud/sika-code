@@ -5,21 +5,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dq.easy.cloud.module.basic.repository.DqBaseRepository;
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.module.jdbc.handler.DqJdbcTemplateHandler;
+import com.easy.cloud.core.basic.repository.EcBaseRepository;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
 import com.easy.cloud.user.base.repository.inf.UserRepository;
 
 @Repository(value="userRepository")
-public class UserRepositoryImpl extends DqBaseRepository implements UserRepository{
+public class UserRepositoryImpl extends EcBaseRepository implements UserRepository{
 
 	@Override
 	public UserEntity findUserById(Long id) {
-		return DqJdbcTemplateHandler.findOne(UserEntity.class, id);
+		return EcJdbcTemplateHandler.findOne(UserEntity.class, id);
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class UserRepositoryImpl extends DqBaseRepository implements UserReposito
 	 * 创建时间  2018年1月8日 下午8:01:36
 	 */
 	public UserEntity findUserByQuery(UserQuery userQuery){
-		StringBuilder sql = DqStringUtils.newStringBuilderDefault();
+		StringBuilder sql = EcStringUtils.newStringBuilderDefault();
 		List<Object> params = new ArrayList<>();
 //		实体对应的表名
-		String entityTableName = DqBaseUtils.getTableNameByEntityClass(UserEntity.class);
+		String entityTableName = EcBaseUtils.getTableNameByEntityClass(UserEntity.class);
 //		公共条件前缀
-		String commonConditionPrefix = DqStringUtils.newStringBuilderDefault().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
+		String commonConditionPrefix = EcStringUtils.newStringBuilderDefault().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
 		
 		sql.append("select ");
 		sql.append(getBaseResultSql(UserEntity.class));
@@ -52,28 +52,28 @@ public class UserRepositoryImpl extends DqBaseRepository implements UserReposito
 		sql.append(entityTableName);
 		sql.append(" where ");
 		sql.append(" version >= 0");
-		if(DqBaseUtils.isNotNull(userQuery.getUserId())){
+		if(EcBaseUtils.isNotNull(userQuery.getUserId())){
 			sql.append(commonConditionPrefix).append("id = ?");
 			params.add(userQuery.getUserId());
 		}
-		if(DqStringUtils.isNotEmpty(userQuery.getUserName())){
+		if(EcStringUtils.isNotEmpty(userQuery.getUserName())){
 			sql.append(commonConditionPrefix).append("user_name = ?");
 			params.add(userQuery.getUserName());
 		}
-		if(DqStringUtils.isNotEmpty(userQuery.getPassword())){
+		if(EcStringUtils.isNotEmpty(userQuery.getPassword())){
 			sql.append(commonConditionPrefix).append("password = ?");
 			params.add(userQuery.getPassword());
 		}
-		if(DqStringUtils.isNotEmpty(userQuery.getEmail())){
+		if(EcStringUtils.isNotEmpty(userQuery.getEmail())){
 			sql.append(commonConditionPrefix).append("email = ?");
 			params.add(userQuery.getEmail());
 		}
-		if(DqStringUtils.isNotEmpty(userQuery.getPhoneNumber())){
+		if(EcStringUtils.isNotEmpty(userQuery.getPhoneNumber())){
 			sql.append(commonConditionPrefix).append("phone_number = ?");
 			params.add(userQuery.getPhoneNumber());
 		}
 		sql.append(" limit 1");
-		return DqJdbcTemplateHandler.findTObj(sql, params, UserEntity.class);
+		return EcJdbcTemplateHandler.findTObj(sql, params, UserEntity.class);
 	}
 	
 	@Override

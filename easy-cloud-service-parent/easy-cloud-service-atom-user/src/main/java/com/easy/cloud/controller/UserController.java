@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dq.easy.cloud.module.basic.controller.DqBaseController;
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.easy.cloud.core.basic.controller.EcBaseController;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;
@@ -16,32 +16,32 @@ import com.easy.cloud.user.base.service.inf.UserService;
 
 @RestController
 @RequestMapping("user/")
-public class UserController extends DqBaseController{
+public class UserController extends EcBaseController{
 	@Autowired
 	private UserService userService;
 	
 	@RequestMapping("getUserInfoById")
-	public DqBaseServiceResult getUserInfoById(@RequestParam Long id){
+	public EcBaseServiceResult getUserInfoById(@RequestParam Long id){
 		UserEntity userEntity = userService.findUserById(id);
-		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
+		return EcBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 	
 	@RequestMapping("register")
-	public DqBaseServiceResult register(@RequestBody UserDTO userDTO){
+	public EcBaseServiceResult register(@RequestBody UserDTO userDTO){
 		return userService.register(userDTO);
 	}
 	
 	@RequestMapping("findByEmail")
-	public DqBaseServiceResult findUserByPhoneNumberAndPassword(@RequestBody UserQuery userQuery){
-		return DqBaseServiceResult.newInstanceOfSucResult(userService.findByEmail(userQuery));
+	public EcBaseServiceResult findUserByPhoneNumberAndPassword(@RequestBody UserQuery userQuery){
+		return EcBaseServiceResult.newInstanceOfSucResult(userService.findByEmail(userQuery));
 	}
 	@RequestMapping("loginByEmailAndPassword")
-	public DqBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery){
+	public EcBaseServiceResult loginByEmailAndPassword(@RequestBody UserQuery userQuery){
 		return userService.loginByEmailAndPassword(userQuery);
 	}
 	
 	@RequestMapping("loginByUserNameAndPassword")
-	public DqBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery){
+	public EcBaseServiceResult loginByUserNameAndPassword(@RequestBody UserQuery userQuery){
 		return userService.loginByUserNameAndPassword(userQuery);
 	}
 }

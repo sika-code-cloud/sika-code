@@ -3,7 +3,7 @@ package com.easy.cloud.movie.attention.user.vo;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
+import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
 
 /**
  * 用户关注电影实体
@@ -12,7 +12,7 @@ import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
  */
 @Entity
 @Table(name = "easy_user_attention_movie")
-public class UserAttentionMovieEntity extends DqBaseEntity{
+public class UserAttentionMovieEntity extends EcBaseEntity{
 	/** BIGINT(20) NOT NULL COMMENT '电影id 关联easy_movie_info表的id'*/
 	private Long movieId;
 	/** BIGINT(20) NOT NULL COMMENT '电影id 关联easy_user_id表的id'*/

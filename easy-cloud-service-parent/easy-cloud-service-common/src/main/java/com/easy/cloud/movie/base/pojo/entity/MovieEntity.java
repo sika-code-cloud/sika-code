@@ -3,7 +3,7 @@ package com.easy.cloud.movie.base.pojo.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
+import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
 
 /**
  * 电影实体类
@@ -12,7 +12,7 @@ import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
  */
 @Entity
 @Table(name = "easy_movie_info")
-public class MovieEntity extends DqBaseEntity {
+public class MovieEntity extends EcBaseEntity {
 	/** VARCHAR(31) NOT NULL DEFAULT '' COMMENT '电影名称'*/
 	private String movieName; 
 	/** VARCHAR(125) NOT NULL DEFAULT '' COMMENT '电影描述'*/

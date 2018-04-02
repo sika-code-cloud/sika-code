@@ -1,6 +1,6 @@
 package com.easy.cloud.base.constant;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseComponentScan;
+import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
 
 /**
  * 
@@ -18,7 +18,7 @@ import com.dq.easy.cloud.module.basic.constant.DqBaseComponentScan;
  * @author daiqi
  * 创建时间    2018年2月6日 上午10:29:40
  */
-public class EasyCloudComponentScan extends DqBaseComponentScan{
+public class EasyCloudComponentScan extends EcBaseComponentScan{
 	/** 扫描基础包名---com.easy.cloud */
 	public static final String COM_EASY_CLOUD = "com.easy.cloud";
 }

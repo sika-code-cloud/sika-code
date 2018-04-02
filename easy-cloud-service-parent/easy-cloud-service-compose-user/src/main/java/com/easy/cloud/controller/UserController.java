@@ -5,15 +5,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dq.easy.cloud.module.basic.controller.DqBaseController;
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
+import com.easy.cloud.core.basic.controller.EcBaseController;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.pojo.query.UserComposeQuery;
 import com.easy.cloud.user.service.inf.UserService;
 
 @RestController
 @RequestMapping("user")
-public class UserController extends DqBaseController{
+public class UserController extends EcBaseController{
 	@Autowired
 	private UserService userService;
 	
@@ -34,7 +34,7 @@ public class UserController extends DqBaseController{
 	 * 创建时间    2018年2月5日 下午7:44:23
 	 */
 	@RequestMapping("/register")
-	public DqBaseServiceResult register(@RequestBody UserDTO userDTO){
+	public EcBaseServiceResult register(@RequestBody UserDTO userDTO){
 		return userService.register(userDTO);
 	}
 	
@@ -54,7 +54,7 @@ public class UserController extends DqBaseController{
 	 * 创建时间    2018年2月5日 下午7:20:12
 	 */
 	@RequestMapping("/login")
-	public DqBaseServiceResult login(@RequestBody UserComposeQuery userComposeQuery){
+	public EcBaseServiceResult login(@RequestBody UserComposeQuery userComposeQuery){
 //		return userService.login(userComposeQuery);
 		return userService.login(userComposeQuery, userComposeQuery.getUserName());
 	}

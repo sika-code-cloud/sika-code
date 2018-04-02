@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.pojo.query;
 
-import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
+import com.easy.cloud.core.basic.pojo.query.EcBaseQuery;
 
 /**
  * 用户查询条件类
@@ -8,7 +8,7 @@ import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
  * @author daiqi
  * @date 2018年1月8日 下午6:32:51
  */
-public class UserQuery extends DqBaseQuery{
+public class UserQuery extends EcBaseQuery{
 	/** 用户Id */
 	private Long userId;
 	/** 用户名 */
