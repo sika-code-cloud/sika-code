@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.file.constant.DqFileConstant.DqFileSuffix;
 import com.dq.easy.cloud.module.common.file.pojo.desc.DqFileContentBaseDesc;
+import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqSourceCodeRelativePath;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqTemplateName;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.bo.DqGenerateBO;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
@@ -29,6 +31,11 @@ public abstract class DqGenerateJavaBaseBO extends DqGenerateBO {
 	protected DqDatabaseAbstactConfig dataBaseConfig;
 	protected DqJavaClassContentDesc javaClassContentDesc;
 	protected DqDatabaseDataSources databaseDataSources;
+
+	public DqGenerateJavaBaseBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		this(generateJavaBaseDTO, null, generateRule);
+		super.setTemplateDesc(new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, DqTemplateName.JAVA));
+	}
 
 	public DqGenerateJavaBaseBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
 			DqGenerateRule generateRule) {

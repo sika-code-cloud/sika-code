@@ -21,6 +21,10 @@ public abstract class DqGenerateJavaAnnotationBO extends DqGenerateJavaBaseBO {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
+	public DqGenerateJavaAnnotationBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
+	}
+
 	@Override
 	protected void buildModifiers() {
 		// 设置类的modifier列表---begin

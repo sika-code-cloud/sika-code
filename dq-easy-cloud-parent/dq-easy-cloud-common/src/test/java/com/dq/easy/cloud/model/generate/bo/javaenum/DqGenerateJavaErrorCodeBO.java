@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.model.generate.bo.javaenum;
 
 import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -22,9 +21,8 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaErrorCodeBO extends DqGenerateJavaEnumBO {
 
-	public DqGenerateJavaErrorCodeBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaErrorCodeBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 

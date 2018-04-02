@@ -6,7 +6,6 @@
         <setting name="aggressiveLazyLoading" value="false" />
     </settings>
     <mappers>
-        <mapper resource="mybatis/p_user.xml" />
         <mapper resource="mybatis/easy_user_info.xml" />
     </mappers>
 </configuration>

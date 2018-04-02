@@ -7,6 +7,10 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
 
 public abstract class DqGenerateJavaClassBO extends DqGenerateJavaBaseBO {
 
+	public DqGenerateJavaClassBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
+	}
+
 	public DqGenerateJavaClassBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
 			DqGenerateRule generateRule) {
 		super(generateJavaBaseDTO, templateDesc, generateRule);

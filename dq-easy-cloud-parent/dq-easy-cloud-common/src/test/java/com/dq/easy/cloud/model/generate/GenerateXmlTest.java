@@ -4,10 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.dq.easy.cloud.module.basic.pojo.bo.DqBaseBO;
-import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.DqDatabaseAbstactConfig;
 import com.dq.easy.cloud.module.common.generator.code.base.config.database.mysql.DqDataBaseMysqlConfig;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.sources.database.mysql.DqMysqlDataSources;
 import com.dq.easy.cloud.module.common.generator.code.xml.pojo.bo.mybatis.DqGenerateXmlMybatisBO;
 import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXmlMybatisDTO;
@@ -23,9 +21,6 @@ import com.dq.easy.cloud.module.common.generator.code.xml.pojo.dto.DqGenerateXml
 public class GenerateXmlTest {
 	// 数据库配置信息
 	private DqDatabaseAbstactConfig databaseAbstactConfig;
-	// 模版描述对象
-	private DqTemplateDesc templateDesc = new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH,
-			"MYBATIS.ftl");;
 	// pojo类所在的项目名称
 	private String projectNameMybatis = "dq-easy-cloud-common";
 
@@ -55,7 +50,7 @@ public class GenerateXmlTest {
 		mybatisDTO.setFullClassTypeDO(DqBaseBO.class.getName());
 		mybatisDTO.setMappersConfigName("sqlmap-config");
 
-		DqGenerateXmlMybatisBO mybatisBO = new DqGenerateXmlMybatisBO(templateDesc, mybatisDTO);
+		DqGenerateXmlMybatisBO mybatisBO = new DqGenerateXmlMybatisBO(mybatisDTO);
 		mybatisBO.initData();
 		mybatisBO.buildDatabaseDataSources(new DqMysqlDataSources(databaseAbstactConfig));
 

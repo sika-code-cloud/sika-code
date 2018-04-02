@@ -3,7 +3,6 @@ package com.dq.easy.cloud.model.generate.bo.javaclass;
 import org.springframework.stereotype.Repository;
 
 import com.dq.easy.cloud.module.basic.repository.DqBaseRepository;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -26,10 +25,9 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaDAOImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
 
+	public DqGenerateJavaDAOImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 	}
 
 	@Override

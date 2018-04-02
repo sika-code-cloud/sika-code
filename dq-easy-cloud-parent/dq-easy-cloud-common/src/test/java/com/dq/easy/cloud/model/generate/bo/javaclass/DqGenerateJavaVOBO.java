@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import com.dq.easy.cloud.module.basic.pojo.vo.DqBaseVO;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -18,9 +17,8 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaVOBO extends DqGenerateJavaDOBO {
 
-	public DqGenerateJavaVOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, 
-			DqTemplateDesc templateDesc, DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaVOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 	}
 
 	@Override

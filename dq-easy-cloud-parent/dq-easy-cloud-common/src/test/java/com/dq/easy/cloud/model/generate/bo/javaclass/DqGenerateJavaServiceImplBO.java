@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dq.easy.cloud.module.basic.service.DqBaseService;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -29,9 +28,8 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaServiceImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaServiceImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 
@@ -60,13 +58,14 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 	protected void buildImplementsInterfaces() {
 		String nameEndwith = DqClassNameEndWith.SERVICE_INF;
 		String subModulePackageName = DqSubModuleDefaultPackageName.SERVICE_INF;
-		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, DqJavaImplInterfaceContentDesc.class);
+		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith,
+				subModulePackageName, DqJavaImplInterfaceContentDesc.class);
 		super.javaClassContentDesc.addImplementsInterface(implementsInterface);
 	}
 
 	@Override
 	protected void buildConstructors() {
-		
+
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class DqGenerateJavaServiceImplBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected void buildMethods() {
-		
+
 	}
 
 	@Override

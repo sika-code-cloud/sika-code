@@ -18,6 +18,7 @@ import com.dq.easy.cloud.module.common.collections.utils.DqCollectionsUtils;
 import com.dq.easy.cloud.module.common.file.pojo.bo.DqFileBO;
 import com.dq.easy.cloud.module.common.file.utils.DqFileUtils;
 import com.dq.easy.cloud.module.common.generator.code.base.config.DqCodeGenerateConfig;
+import com.dq.easy.cloud.module.common.generator.code.base.constant.DqCodeGenerateConstant.DqTemplateName;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqDocType;
 import com.dq.easy.cloud.module.common.generator.code.xml.constant.DqCodeGenerateXmlConstant.DqIgnoreSetField;
@@ -52,6 +53,12 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		mybatisDTO = generateXmlBaseDTO;
 	}
 
+	public DqGenerateXmlMybatisBO(DqGenerateXmlMybatisDTO generateXmlBaseDTO) {
+		this(null, generateXmlBaseDTO);
+		super.setTemplateDesc(
+				new DqTemplateDesc(DqCodeGenerateConfig.CODE_TEMPLATE_BASE_PACKAGE_PATH, DqTemplateName.MYBATIS_XML));
+	}
+
 	@Override
 	public void generateCode() throws Exception {
 		// 生成的文件
@@ -79,10 +86,10 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 	private void updateMappingConfig() throws Exception {
 		// 获取完整的文件名称
 		String mappingFileName = mybatisDTO.getFullMappersConfigName();
-		// 获取项目完整的路径		
+		// 获取项目完整的路径
 		String projectFullPath = DqFileUtils.getTargetProjectPath(null, mybatisDTO.getProjectName(),
 				DqCodeGenerateConfig.getNeedFilterDirectoryName());
-		// 获取mappingConfig文件		
+		// 获取mappingConfig文件
 		File mappingConfigFile = DqFileUtils.getFileByFileName(projectFullPath, mappingFileName);
 		if (DqBaseUtils.isNull(mappingConfigFile)) {
 			throw new RuntimeException("映射集合文件未找到");
@@ -90,12 +97,12 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = builder.build(mappingConfigFile);
 		Element rootElement = doc.getRootElement(); // 获取根元素
-		// 更新mappers元素		
+		// 更新mappers元素
 		updateMappersElement(rootElement);
-		// 执行xml输出		
+		// 执行xml输出
 		doXmlOutputter(doc, mappingConfigFile);
 	}
-	
+
 	/** 更新MappersElement元素 */
 	private void updateMappersElement(Element rootElement) {
 		Element mappsElement = rootElement.getChild(DqMyBatisElementNameEnum.MAPPERS.getDesc());
@@ -103,13 +110,13 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		String tableXmlRelativePath = mybatisDTO.getTableXmlRelativePath();
 		for (Element elment : mapperElements) {
 			if (DqStringUtils.equals(elment.getAttributeValue(DqMyBatisAttrKey.RESOURCE), tableXmlRelativePath)) {
-				return ;
+				return;
 			}
 		}
 		Element mapperElement = new Element(DqMyBatisAttrKey.MAPPER);
 		mapperElement.setAttribute(DqMyBatisAttrKey.RESOURCE, tableXmlRelativePath);
 		mappsElement.addContent(mapperElement);
-		
+
 	}
 
 	/**
@@ -126,8 +133,8 @@ public class DqGenerateXmlMybatisBO extends DqGenerateXmlBaseBO {
 		doUpdateMybatisXmlData(rootElement);
 		doXmlOutputter(doc, generateFile);
 	}
-	
-	private void doXmlOutputter (Document doc, File xmlFile) throws IOException {
+
+	private void doXmlOutputter(Document doc, File xmlFile) throws IOException {
 		Format format = Format.getPrettyFormat();
 		format.setIndent("    ");
 		format.setEncoding("UTF-8");

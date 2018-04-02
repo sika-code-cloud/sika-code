@@ -1,7 +1,6 @@
 package com.dq.easy.cloud.model.generate.bo.javaclass;
 
 import com.dq.easy.cloud.module.basic.pojo.query.DqBaseQuery;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -20,15 +19,14 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaQueryBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaQueryBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaQueryBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 
 	@Override
 	protected void buildAnnotations() {
-		
+
 	}
 
 	@Override
@@ -47,22 +45,22 @@ public class DqGenerateJavaQueryBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected void buildImplementsInterfaces() {
-		
+
 	}
 
 	@Override
 	protected void buildConstructors() {
-		
+
 	}
 
 	@Override
 	protected void buildFields() {
-		
+
 	}
 
 	@Override
 	protected void buildMethods() {
-		
+
 	}
 
 	@Override

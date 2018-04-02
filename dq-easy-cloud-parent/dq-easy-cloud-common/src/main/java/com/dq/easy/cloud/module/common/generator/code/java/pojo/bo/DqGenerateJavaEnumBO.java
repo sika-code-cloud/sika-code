@@ -15,6 +15,10 @@ public abstract class DqGenerateJavaEnumBO extends DqGenerateJavaBaseBO {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
+	public DqGenerateJavaEnumBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
+	}
+
 	@Override
 	protected void buildConstructors() {
 		List<DqJavaMethodContentDesc> constructors = super.getConstructorsByFields();

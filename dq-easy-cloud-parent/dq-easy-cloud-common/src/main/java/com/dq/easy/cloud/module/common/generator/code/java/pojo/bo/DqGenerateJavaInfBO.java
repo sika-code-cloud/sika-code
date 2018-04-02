@@ -12,6 +12,10 @@ public abstract class DqGenerateJavaInfBO extends DqGenerateJavaBaseBO {
 		super(generateJavaBaseDTO, templateDesc, generateRule);
 	}
 
+	public DqGenerateJavaInfBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
+	}
+
 	@Override
 	protected void buildModifiers() {
 		javaClassContentDesc.addModifier(DqModifierMappingEnum.PUBLIC);

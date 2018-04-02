@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dq.easy.cloud.module.basic.logic.DqBaseLogic;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -29,9 +28,8 @@ import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
  */
 public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaLogicImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaLogicImplBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 
 	}
 
@@ -62,13 +60,14 @@ public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 	protected void buildImplementsInterfaces() {
 		String nameEndwith = DqClassNameEndWith.LOGIC_INF;
 		String subModulePackageName = DqSubModuleDefaultPackageName.LOGIC_INF;
-		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, DqJavaImplInterfaceContentDesc.class);
+		DqJavaImplInterfaceContentDesc implementsInterface = super.getCustomJavaContentByEndwith(nameEndwith,
+				subModulePackageName, DqJavaImplInterfaceContentDesc.class);
 		super.javaClassContentDesc.addImplementsInterface(implementsInterface);
 	}
 
 	@Override
 	protected void buildConstructors() {
-		
+
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class DqGenerateJavaLogicImplBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected void buildMethods() {
-		
+
 	}
 
 	@Override

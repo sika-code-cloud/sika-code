@@ -5,7 +5,6 @@ import javax.persistence.Table;
 
 import com.dq.easy.cloud.module.basic.pojo.entity.DqBaseEntity;
 import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.generator.code.base.pojo.desc.DqTemplateDesc;
 import com.dq.easy.cloud.module.common.generator.code.base.pojo.rule.DqGenerateRule;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassCommentEndWith;
 import com.dq.easy.cloud.module.common.generator.code.java.constant.DqCodeGenerateJavaConstant.DqClassNameEndWith;
@@ -24,15 +23,14 @@ import com.dq.easy.cloud.module.common.generator.code.java.pojo.dto.DqGenerateJa
  */
 public class DqGenerateJavaDOBO extends DqGenerateJavaClassBO {
 
-	public DqGenerateJavaDOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqTemplateDesc templateDesc,
-			DqGenerateRule generateRule) {
-		super(generateJavaBaseDTO, templateDesc, generateRule);
+	public DqGenerateJavaDOBO(DqGenerateJavaBaseDTO generateJavaBaseDTO, DqGenerateRule generateRule) {
+		super(generateJavaBaseDTO, generateRule);
 	}
 
 	@Override
 	protected void buildAnnotations() {
 		if (DqBaseUtils.isNull(dataBaseConfig)) {
-			return ;
+			return;
 		}
 
 		DqJavaAnnotationDesc tableAnnotationDesc = new DqJavaAnnotationDesc();
@@ -63,12 +61,12 @@ public class DqGenerateJavaDOBO extends DqGenerateJavaClassBO {
 
 	@Override
 	protected void buildImplementsInterfaces() {
-		
+
 	}
 
 	@Override
 	protected void buildConstructors() {
-		
+
 	}
 
 	@Override

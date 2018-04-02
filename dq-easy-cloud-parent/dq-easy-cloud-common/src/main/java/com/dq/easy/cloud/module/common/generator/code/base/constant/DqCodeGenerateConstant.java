@@ -31,6 +31,13 @@ public class DqCodeGenerateConstant {
 		/** 项目根路径---基础路径---System.getProperty("user.dir") */
 		public static final String PROJECT_ROOT_BASE_PATH_DEFAULT = DqFileConstant.USER_DIR;
 	}
+	
+	public static class DqTemplateName {
+		/** java文件的ftl */
+		public static final String JAVA = "JAVA.ftl";
+		/** mybatis.xml文件的ftl */
+		public static final String MYBATIS_XML = "MYBATIS.ftl";
+	}
 
 	/**
 	 * 
@@ -82,10 +89,6 @@ public class DqCodeGenerateConstant {
 		public static final String DATE = "Date";
 		/** 类名简称---引用类型---byte [] */
 		public static final String BYTE_ARRAY = "byte []";
-	}
-
-	public static class DqTemplateName {
-		public static final String JAVA = "JAVA.ftl";
 	}
 
 	/**
