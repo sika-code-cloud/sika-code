@@ -34,6 +34,10 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 	/** 数据列表 */
 	private List<EcGenerateXmlMybatisData> datas;
 
+	public EcGenerateXmlMybatisDTO() {
+		this.setCoverSwith(true);
+	}
+
 	public String getNamespace() {
 		return namespace;
 	}
