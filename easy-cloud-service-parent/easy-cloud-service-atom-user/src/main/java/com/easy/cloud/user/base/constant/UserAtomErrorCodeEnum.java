@@ -1,6 +1,6 @@
 package com.easy.cloud.user.base.constant;
 
-import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
 
 
 /**
@@ -16,7 +16,7 @@ import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月2日 下午4:25:50
  */
-public enum UserAtomErrorCodeEnum implements DqBaseErrorCodeInf{
+public enum UserAtomErrorCodeEnum implements EcBaseErrorCodeInf{
 	;
 
 	private String errorCode;

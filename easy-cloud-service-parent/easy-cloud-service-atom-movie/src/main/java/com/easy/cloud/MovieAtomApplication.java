@@ -19,7 +19,7 @@ import com.easy.cloud.base.constant.EasyCloudComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(basePackages={EasyCloudComponentScan.COM_DQ_EASY_CLOUD, EasyCloudComponentScan.COM_EASY_CLOUD})
+@ComponentScan(basePackages={EasyCloudComponentScan.COM_EASY_CLOUD, EasyCloudComponentScan.COM_EASY_CLOUD})
 public class MovieAtomApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MovieAtomApplication.class, args);

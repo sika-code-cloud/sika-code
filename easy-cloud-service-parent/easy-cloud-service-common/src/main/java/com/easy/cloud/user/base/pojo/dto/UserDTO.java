@@ -1,13 +1,13 @@
 package com.easy.cloud.user.base.pojo.dto;
 
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseDTO;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 
 /**
  * 用户数据传输对象 --- 为了实现字段复用 直接继承了UserEntity
  * @author daiqi
  * @date 2018年1月8日 下午6:29:01
  */
-public class UserDTO extends DqBaseDTO{
+public class UserDTO extends EcBaseDTO{
 	private String userName;
 	private String password;
 	private Integer sex;

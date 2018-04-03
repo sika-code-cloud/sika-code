@@ -1,6 +1,6 @@
 package com.easy.cloud.user.client.constant;
 
-import com.dq.easy.cloud.module.basic.constant.DqBaseServiceReqMapping;
+import com.easy.cloud.core.basic.constant.EcBaseServiceReqMapping;
 
 /**
  * 
@@ -18,7 +18,7 @@ import com.dq.easy.cloud.module.basic.constant.DqBaseServiceReqMapping;
  * @author daiqi
  * 创建时间    2018年2月6日 上午9:48:32
  */
-public class UserServiceReqMapping extends DqBaseServiceReqMapping{
+public class UserServiceReqMapping extends EcBaseServiceReqMapping{
 	/** 用户服务请求映射---用户注册---user/register */
 	public static final String REGISTER = "user/register";
 	/** 用户服务请求映射---通过用户邮箱获取用户信息---user/findByEmail */

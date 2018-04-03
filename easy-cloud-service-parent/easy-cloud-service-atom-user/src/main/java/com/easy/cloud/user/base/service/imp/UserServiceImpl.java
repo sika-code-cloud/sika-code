@@ -5,12 +5,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dq.easy.cloud.module.basic.pojo.dto.DqBaseServiceResult;
-import com.dq.easy.cloud.module.basic.service.DqBaseService;
-import com.dq.easy.cloud.module.basic.utils.DqBaseUtils;
-import com.dq.easy.cloud.module.common.json.utils.DqJSONUtils;
-import com.dq.easy.cloud.module.common.string.utils.DqStringUtils;
-import com.dq.easy.cloud.module.exception.bo.DqBaseBusinessException;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.basic.service.EcBaseService;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
 import com.easy.cloud.user.base.constant.UserErrorCodeEnum;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
@@ -19,7 +19,7 @@ import com.easy.cloud.user.base.repository.inf.UserRepository;
 import com.easy.cloud.user.base.service.inf.UserService;
 
 @Service(value="userService")
-public class UserServiceImpl extends DqBaseService implements UserService {
+public class UserServiceImpl extends EcBaseService implements UserService {
 	@Resource
 	private UserRepository userRepository;
 	
@@ -31,7 +31,7 @@ public class UserServiceImpl extends DqBaseService implements UserService {
 	@Override
 	@Transactional
 	public UserEntity saveUserInfo(UserEntity userEntity) {
-		if(DqBaseUtils.isNull(userEntity)){
+		if(EcBaseUtils.isNull(userEntity)){
 			return null;
 		}
 		return userRepository.saveUserInfo(userEntity);
@@ -49,69 +49,69 @@ public class UserServiceImpl extends DqBaseService implements UserService {
 
 	@Override
 	@Transactional
-	public DqBaseServiceResult saveUser(UserDTO userDTO) {
-		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
-		if(DqBaseUtils.isNull(userDTO)){
+	public EcBaseServiceResult saveUser(UserDTO userDTO) {
+		EcBaseServiceResult dqBaseServiceResult = EcBaseServiceResult.newInstanceOfSuccess();
+		if(EcBaseUtils.isNull(userDTO)){
 			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_CANT_NULL);
 			return dqBaseServiceResult;
 		}
-		if(DqStringUtils.isEmpty(userDTO.getUserName())){
+		if(EcStringUtils.isEmpty(userDTO.getUserName())){
 			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);
 			return dqBaseServiceResult;
 		}
-		if(DqStringUtils.isEmpty(userDTO.getPassword())){
+		if(EcStringUtils.isEmpty(userDTO.getPassword())){
 			dqBaseServiceResult.buildErrorCode(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
 			return dqBaseServiceResult;
 		}
-		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
+		UserEntity userEntity = userRepository.saveUserInfo(EcJSONUtils.parseObject(userDTO, UserEntity.class));
 		return dqBaseServiceResult.buildResult(userEntity);
 	}
 
 	@Override
 	@Transactional
-	public DqBaseServiceResult register(UserDTO userDTO) {
-		DqBaseServiceResult dqBaseServiceResult = DqBaseServiceResult.newInstanceOfSuccess();
-		if(DqBaseUtils.isNull(userDTO)){
-			throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_CANT_NULL);
+	public EcBaseServiceResult register(UserDTO userDTO) {
+		EcBaseServiceResult dqBaseServiceResult = EcBaseServiceResult.newInstanceOfSuccess();
+		if(EcBaseUtils.isNull(userDTO)){
+			throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_CANT_NULL);
 		}
-		if(DqStringUtils.isEmpty(userDTO.getUserName())){
-			throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);
+		if(EcStringUtils.isEmpty(userDTO.getUserName())){
+			throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_NAME_CANT_EMPTY);
 		}
-		if(DqStringUtils.isEmpty(userDTO.getPassword())){
-			throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
+		if(EcStringUtils.isEmpty(userDTO.getPassword())){
+			throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_PASSWOR_CANT_EMPTY);
 		}
-		if(DqStringUtils.isEmpty(userDTO.getEmail())){
-			throw DqBaseBusinessException.newInstance(UserErrorCodeEnum.USER_EMAIL_CANT_EMPTY);
+		if(EcStringUtils.isEmpty(userDTO.getEmail())){
+			throw EcBaseBusinessException.newInstance(UserErrorCodeEnum.USER_EMAIL_CANT_EMPTY);
 		}
-		UserEntity userEntity = userRepository.saveUserInfo(DqJSONUtils.parseObject(userDTO, UserEntity.class));
+		UserEntity userEntity = userRepository.saveUserInfo(EcJSONUtils.parseObject(userDTO, UserEntity.class));
 		return dqBaseServiceResult.buildResult(userEntity);
 	}
 
 	@Override
-	public DqBaseServiceResult findByEmail(UserQuery userQuery) {
+	public EcBaseServiceResult findByEmail(UserQuery userQuery) {
 		UserQuery userQueryOfFilter = new UserQuery();
 		userQueryOfFilter.setEmail(userQuery.getEmail());
 		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
-		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
+		return EcBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 
 	@Override
-	public DqBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery) {
+	public EcBaseServiceResult loginByUserNameAndPassword(UserQuery userQuery) {
 		UserQuery userQueryOfFilter = new UserQuery();
 		userQueryOfFilter.setUserName(userQuery.getUserName());
 		userQueryOfFilter.setPassword(userQuery.getPassword());
 		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
-		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
+		return EcBaseServiceResult.newInstanceOfSucResult(userEntity);
 		
 	}
 
 	@Override
-	public DqBaseServiceResult loginByEmailAndPassword(UserQuery userQuery) {
+	public EcBaseServiceResult loginByEmailAndPassword(UserQuery userQuery) {
 		UserQuery userQueryOfFilter = new UserQuery();
 		userQueryOfFilter.setEmail(userQuery.getEmail());
 		userQueryOfFilter.setPassword(userQuery.getPassword());
 		UserEntity userEntity = userRepository.findUserByQuery(userQueryOfFilter);
-		return DqBaseServiceResult.newInstanceOfSucResult(userEntity);
+		return EcBaseServiceResult.newInstanceOfSucResult(userEntity);
 	}
 	
 	

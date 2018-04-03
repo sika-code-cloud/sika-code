@@ -1,7 +1,7 @@
 package com.easy.cloud.user.constant;
 
 
-import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
 
 /**
  * 
@@ -12,7 +12,7 @@ import com.dq.easy.cloud.module.basic.constant.error.DqBaseErrorCodeInf;
  * @author daiqi
  * 创建时间    2018年2月6日 上午11:40:43
  */
-public enum UserComposeErrorCodeEnum implements DqBaseErrorCodeInf{
+public enum UserComposeErrorCodeEnum implements EcBaseErrorCodeInf{
 	/** 用户邮箱不能为空  */
 	LOGIN_MODE_WRONG ("UC_000001", "用户邮箱不能为空"),
 	;

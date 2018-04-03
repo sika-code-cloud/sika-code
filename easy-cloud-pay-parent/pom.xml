@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>easy.cloud</groupId>
+		<artifactId>easy-cloud-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath/>
+	</parent>
+	
+	<artifactId>easy-cloud-pay-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>easy-cloud-pay-parent</name>
+	<url>http://maven.apache.org</url>
+	
+	<!-- 子模块 -->
+	<modules>
+		<module>easy-cloud-pay-common</module>
+		<module>easy-cloud-pay-wx-service</module>
+		<module>easy-cloud-pay-zfb-service</module>
+	</modules>
+	
+	<dependencies>
+		<dependency>
+			<groupId>easy.cloud</groupId>
+			<artifactId>easy-cloud-pay-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+</project>

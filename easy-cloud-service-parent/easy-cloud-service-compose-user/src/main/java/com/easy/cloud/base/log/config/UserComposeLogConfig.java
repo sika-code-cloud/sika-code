@@ -2,8 +2,8 @@ package com.easy.cloud.base.log.config;
 
 import org.springframework.stereotype.Component;
 
-import com.dq.easy.cloud.module.common.log.config.DqLogConfig;
 import com.easy.cloud.controller.UserController;
+import com.easy.cloud.core.common.log.config.EcLogConfig;
 
 /**
  * 
@@ -22,7 +22,7 @@ import com.easy.cloud.controller.UserController;
  * 创建时间    2018年2月9日 下午8:01:52
  */
 @Component
-public class UserComposeLogConfig extends DqLogConfig{
+public class UserComposeLogConfig extends EcLogConfig{
 
 	static{
 		setLogSwitchFlag(false, UserController.class.getName());

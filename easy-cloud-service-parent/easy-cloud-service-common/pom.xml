@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<groupId>easy.cloud.service</groupId>
-	<artifactId>easy-cloud-service-common</artifactId>
+	<artifactId>easy-cloud-service-core</artifactId>
 	<version>1.0.0</version>
-	<name>easy-cloud-service-common</name>
-	<description>easy-cloud-service-common</description>
+	<name>easy-cloud-service-core</name>
+	<description>easy-cloud-service-core</description>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 	<modelVersion>4.0.0</modelVersion>
@@ -26,8 +26,8 @@
 	<dependencies>
 		<!-- spring框架相关依赖 end -->
 		<dependency>
-			<groupId>dq.easy.cloud</groupId>
-			<artifactId>dq-easy-cloud-common</artifactId>
+			<groupId>easy.cloud</groupId>
+			<artifactId>easy-cloud-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
