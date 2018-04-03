@@ -153,17 +153,17 @@ public class EcCodeGenerateJavaConstant {
 		/** 忽略属性---id属性---id */
 		public static final String ID = "id";
 		/** 忽略属性---创建时间属性---createDate */
-		// public static final String CREATE_DATE = "createdate";
+		 public static final String CREATE_DATE = "createDate";
 		/** 忽略属性---更新时间属性---updateDate */
-		public static final String UPDATE_DATE = "updatedate";
+		public static final String UPDATE_DATE = "updateDate";
 		/** 忽略属性---版本属性---version */
 		public static final String VERSION = "version";
 		/** 忽略属性---创建者属性---createBy */
-		public static final String CREATE_BY = "createby";
+		public static final String CREATE_BY = "createBy";
 		/** 忽略属性---更新者属性---updateBy */
-		public static final String UPDATE_BY = "updateby";
+		public static final String UPDATE_BY = "updateBy";
 		/** 忽略属性---删除属性---isDeleted */
-		public static final String IS_DELETED = "isdeleted";
+		public static final String IS_DELETED = "isDeleted";
 		/** 忽略属性---备注属性---remark */
 		public static final String REMARK = "remark";
 		/** 忽略属性---available属性---available */
@@ -180,11 +180,11 @@ public class EcCodeGenerateJavaConstant {
 		 * @return true
 		 * @author daiqi 创建时间 2018年3月21日 下午8:37:59
 		 */
-		public static final boolean isIgnoreField(String fieldName) {
+		public boolean isIgnoreField(String fieldName) {
 			// 移除下划线的小写字符串
 			String rmOnderLineLowerCaseStr = EcStringUtils
 					.lowerCase(EcStringUtils.replace(fieldName, EcSymbol.UNDER_LINE, EcStringUtils.EMPTY));
-			return EcBaseUtils.isExistConstantValue(EcIgnoreField.class, rmOnderLineLowerCaseStr);
+			return EcBaseUtils.isExistConstantValue(this.getClass(), rmOnderLineLowerCaseStr);
 		}
 	}
 	

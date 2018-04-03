@@ -42,11 +42,13 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 		this.generateJavaBaseDTO = generateJavaBaseDTO;
 		super.setTemplateDesc(templateDesc);
 		javaClassContentDesc = new EcJavaClassContentDesc(generateRule);
-
+		
 		initData();
 	}
 
 	private void initData() {
+		javaClassContentDesc.setIgnoreFields(this.generateJavaBaseDTO.getIgnoreFields());
+		
 		EcJavaFileDesc dqFileDesc = new EcJavaFileDesc();
 		dqFileDesc.setProjectName(generateJavaBaseDTO.getProjectName());
 		dqFileDesc.setFileName(getClassName());
@@ -119,27 +121,39 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 	/** 获取注释endWith */
 	protected abstract String getClassCommentEndWith();
 
-	/** 获取类的注解列表 */
-	protected abstract void buildAnnotations();
-
 	/** 获取类的Modifier列表 */
 	protected abstract void buildModifiers();
 
 	/** 获取继承父类的class */
-	protected abstract void buildExtendsParentClass();
+	protected void buildExtendsParentClass() {
+		
+	}
 
 	/** 获取实现的接口列表 */
-	protected abstract void buildImplementsInterfaces();
+	protected void buildImplementsInterfaces() {
+		
+	}
 
 	/** 获取构造函数列表 */
-	protected abstract void buildConstructors();
+	protected void buildConstructors() {
+		
+	}
 
 	/** 获取属性列表 */
-	protected abstract void buildFields();
+	protected void buildFields() {
+		
+	}
 
 	/** 获取方法列表 */
-	protected abstract void buildMethods();
+	protected void buildMethods() {
 
+	}
+
+	
+	/** 获取类的注解列表 */
+	protected void buildAnnotations() {
+		
+	}
 	/** 获取类泛型参数列表 */
 	protected void buildGenericitys() {
 

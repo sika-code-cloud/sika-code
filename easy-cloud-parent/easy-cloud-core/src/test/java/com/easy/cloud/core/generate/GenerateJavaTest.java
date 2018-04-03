@@ -1,4 +1,7 @@
-package testgenerate.bo;
+package com.easy.cloud.core.generate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +12,7 @@ import com.easy.cloud.core.common.generator.code.base.pojo.rule.EcGenerateRule;
 import com.easy.cloud.core.common.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.common.generator.code.base.utils.EcCodeGenerateUtils;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcClassNameEndWith;
+import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcIgnoreField;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcSubModuleDefaultPackageName;
 import com.easy.cloud.core.common.generator.code.java.pojo.dto.EcGenerateJavaBaseDTO;
 import com.easy.cloud.core.common.generator.code.java.rule.EcGenerateJavaClassRule;
@@ -34,17 +38,17 @@ public class GenerateJavaTest {
 	// 数据库配置信息
 	private EcDatabaseAbstactConfig databaseAbstactConfig;
 	// pojo类所在的项目名称
-	private String projectNamePojo = "easy_cloud_core";
+	private String projectNamePojo = "easy-cloud-core";
 	// dao类所在的项目名称
-	private String projectNameDao = "easy_cloud_core";
+	private String projectNameDao = "easy-cloud-core";
 	// service类所在的项目名称
-	private String projectNameService = "easy_cloud_core";
+	private String projectNameService = "easy-cloud-core";
 	// controller类所在的项目名称
-	private String projectNameController = "easy_cloud_core";
+	private String projectNameController = "easy-cloud-core";
 	// mybatis配置文件所在的项目名称
-	private String projectNameMybatis = "easy_cloud_core";
+	private String projectNameMybatis = "easy-cloud-core";
 	// 基础包名称
-	private String basePackageName = "com.dq.easy";
+	private String basePackageName = "com.easy";
 
 	// 表名
 	private String tableName = "easy_user_info";
@@ -54,13 +58,14 @@ public class GenerateJavaTest {
 	private String classBodyName = "User";
 	// 类的注释
 	private String classComment = "用户";
+	Map<String, Boolean> ignoreFields = new HashMap<>();
 
 	@Before
 	public void initData() {
 		// 数据库配置信息
 		databaseAbstactConfig = new EcDataBaseMysqlConfig();
 		// 设置数据库基础url
-		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://localhost");
+		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com");
 		// 设置数据库端口号
 		databaseAbstactConfig.buildDatabasePort("3306");
 		// 设置数据库名称
@@ -76,6 +81,14 @@ public class GenerateJavaTest {
 	/** 代码生成组建测试 */
 	@Test
 	public void testGenerateJavaCode() {
+		ignoreFields.put(EcIgnoreField.AVAILABLE, true);
+		ignoreFields.put(EcIgnoreField.CREATE_BY, true);
+		ignoreFields.put(EcIgnoreField.ID, true);
+		ignoreFields.put(EcIgnoreField.IS_DELETED, true);
+		ignoreFields.put(EcIgnoreField.REMARK, true);
+		ignoreFields.put(EcIgnoreField.UPDATE_BY, true);
+		ignoreFields.put(EcIgnoreField.UPDATE_DATE, true);
+		ignoreFields.put(EcIgnoreField.VERSION, true);
 		// 生成数据持久化类
 		generateJavaDOByDataBase();
 		// 生成数据传输类
@@ -115,6 +128,7 @@ public class GenerateJavaTest {
 				moduleName, subModulePackageName, classBodyName, classComment);
 		EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, true);
 		generateJavaBaseDTO.setCoverSwith(true);
+		generateJavaBaseDTO.setIgnoreFields(ignoreFields);
 		try {
 			new EcGenerateJavaDOBO(generateJavaBaseDTO, generateRule)
 					.buildDatabaseDataSources(new EcMysqlDataSources(databaseAbstactConfig)).generateCode();
@@ -169,6 +183,7 @@ public class GenerateJavaTest {
 		EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNamePojo, basePackageName,
 				moduleName, subModulePackageName, classBodyName, classComment);
 		generateJavaBaseDTO.setCoverSwith(true);
+		generateJavaBaseDTO.setIgnoreFields(ignoreFields);
 		EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
 		try {
 			EcGenerateJavaVOBO generateJavaVOBO = new EcGenerateJavaVOBO(generateJavaBaseDTO, generateRule);
@@ -195,7 +210,7 @@ public class GenerateJavaTest {
 	/** 生成mybatis映射文件 */
 	@Test
 	public void generateMybatis() {
-		// 获取dao子模块包名		
+		// 获取dao子模块包名
 		String daoSubModulePackageName = EcSubModuleDefaultPackageName.DAO_INF;
 		// 创建EcGenerateJavaBaseDTO对象
 		EcGenerateJavaBaseDTO daoDto = new EcGenerateJavaBaseDTO(projectNameDao, basePackageName, moduleName,
@@ -216,8 +231,8 @@ public class GenerateJavaTest {
 		mybatisDTO.setProjectName(projectNameMybatis);
 		// 设置子路径名称
 		mybatisDTO.setSubPath("mybatis");
-		
-		// 持久化对象的子模块包路径 
+
+		// 持久化对象的子模块包路径
 		String subModulePackageNameDO = EcSubModuleDefaultPackageName.POJO_PO;
 		// 创建EcGenerateJavaBaseDTO，持久化对象的数据传输对象
 		EcGenerateJavaBaseDTO dtoDO = new EcGenerateJavaBaseDTO(projectNamePojo, basePackageName, moduleName,
@@ -228,14 +243,14 @@ public class GenerateJavaTest {
 		String simpleClassTypeDO = classBodyName + EcClassNameEndWith.POJO_PO;
 		// 获取持久化对象的完整类类型
 		String fullClsssTypeDO = EcCodeGenerateUtils.getFullClassType(fullPackageNameDO, simpleClassTypeDO);
-		
+
 		// 设置持久化对象的简称类类型
 		mybatisDTO.setSimpleClassTypeDO(simpleClassTypeDO);
 		// 设置持久化对象的完整类类型
 		mybatisDTO.setFullClassTypeDO(fullClsssTypeDO);
 		// 设置保存mapper配置文件集合的配置文件名称（自动将mapping追加到该文件的mappers节点中）
 		mybatisDTO.setMappersConfigName("sqlmap-config");
-		
+
 		// 创建业务逻辑对象
 		EcGenerateXmlMybatisBO mybatisBO = new EcGenerateXmlMybatisBO(mybatisDTO);
 		// 数据初始化

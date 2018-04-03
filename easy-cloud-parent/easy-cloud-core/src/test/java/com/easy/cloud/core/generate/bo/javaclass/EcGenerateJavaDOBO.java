@@ -18,11 +18,29 @@ import com.easy.cloud.core.common.generator.code.java.pojo.dto.EcGenerateJavaBas
  * <p>
  * 生成持久化对象
  * </p>
- *
+ * 
+ * <pre>
+ * 生成java持久化类的业务逻辑处理类步骤
+ * 1、继承EcGenerateJavaClassBO抽象类（该抽象类为生成普通的java类需要继承的）
+ * 2、重写getClassNameEndWith方法（必须重写，若无返回空字符串）
+ * 3、重写getClassCommentEndWith方法（必须重写，若无返回空字符串）
+ * 4、使用EcGenerateJavaDOBO(EcGenerateJavaBaseDTO generateJavaBaseDTO, EcGenerateRule generateRule)构造函数  : 必选
+ * 5、重写构建类注解列表:buildAnnotations():方法,（若无注解，可以不重写） : 可选
+ * 6、重写构建类继承的父类列表:buildExtendsParentClass():方法（若无继承的父类 ，可以不重写） : 可选
+ * 7、重写构建类实现接口的列表:buildImplementsInterfaces():方法（若无实现的接口，可以不重写） : 可选
+ * 8、重写构建类构造函数列表:buildConstructors():方法（若只是需要默认构造 ，可以不重写） : 可选
+ * 9、重写构建类属性列表:buildFields():方法（若不需要属性，可以不重写） : 可选
+ * 10、重写构建类方法列表:buildMethods():方法（若不需要方法 ，可以不重写） : 可选
+ * 11、重写构建类泛型列表:buildGenericitys():方法（若不需要泛型 空实现即可） : 可选
+ * </pre>
  * @author daiqi 创建时间 2018年3月27日 上午9:49:06
  */
 public class EcGenerateJavaDOBO extends EcGenerateJavaClassBO {
-
+	/** 
+	 * 
+	 * @param generateJavaBaseDTO : EcGenerateJavaBaseDTO : 生成java的数据传输对象
+	 * @param generateRule : EcGenerateRule : 生成规则
+	 */
 	public EcGenerateJavaDOBO(EcGenerateJavaBaseDTO generateJavaBaseDTO, EcGenerateRule generateRule) {
 		super(generateJavaBaseDTO, generateRule);
 	}
@@ -60,16 +78,6 @@ public class EcGenerateJavaDOBO extends EcGenerateJavaClassBO {
 	}
 
 	@Override
-	protected void buildImplementsInterfaces() {
-
-	}
-
-	@Override
-	protected void buildConstructors() {
-
-	}
-
-	@Override
 	protected void buildFields() {
 		super.javaClassContentDesc.addFields(getFieldsByDatabaseDataSources());
 	}
@@ -81,12 +89,15 @@ public class EcGenerateJavaDOBO extends EcGenerateJavaClassBO {
 
 	@Override
 	protected String getClassCommentEndWith() {
-		return EcClassCommentEndWith.POJO_DO;
+		// 设置注释的endWith（如若传入的注释主体为User，则完整注释即为 commonBody+commentEndWith）	
+		return EcClassCommentEndWith.POJO_PO;
 	}
 
 	@Override
 	protected String getClassNameEndWith() {
-		return EcClassNameEndWith.POJO_DO;
+		// 类名的endWith（如传入的ClassNameBody为User，则类名即为（classNameBody+classNameEndWith）
+		// 如classNameBody = User ，则用户持久化实体类为UserEntity或者 UserPO或者UserDO
+		return EcClassNameEndWith.POJO_PO;
 	}
 
 }

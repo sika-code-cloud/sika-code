@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.easy.cloud.core.common.json.constant.EcJsonConstant.DqJsonConfigKey;
+import com.easy.cloud.core.common.json.constant.EcJsonConstant.EcJsonConfigKey;
 import com.easy.cloud.core.common.json.pojo.dto.EcJsonFilterDTO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 
@@ -32,7 +32,7 @@ public class EcJsonConfig {
 	private static Map<String, EcJsonFilterDTO>  JSON_FILTER_DTO_MAP = new HashMap<>();
 		
 	static {
-		setJsonFilterDTOMap(new EcJsonFilterDTO(DqJsonConfigKey.FILTER_BUFFER_IMAGE_KEY, EcLogDTO.class, "targetReturnValue", BufferedImage.class));
+		setJsonFilterDTOMap(new EcJsonFilterDTO(EcJsonConfigKey.FILTER_BUFFER_IMAGE_KEY, EcLogDTO.class, "targetReturnValue", BufferedImage.class));
 	}
 	
 	protected static void setJsonFilterDTOMap(EcJsonFilterDTO ecJsonFilterDTO){

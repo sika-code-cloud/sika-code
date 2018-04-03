@@ -31,8 +31,8 @@ public class EcGenerateJavaDTOBO extends EcGenerateJavaClassBO {
 
 	@Override
 	protected void buildExtendsParentClass() {
-		String nameEndwith = EcClassNameEndWith.POJO_DO;
-		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_DO;
+		String nameEndwith = EcClassNameEndWith.POJO_PO;
+		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_PO;
 		EcJavaContentDesc extendsParentClass = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, EcJavaContentDesc.class);
 		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
