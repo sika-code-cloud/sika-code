@@ -1,6 +1,7 @@
 package com.easy.cloud.core.common.string.utils;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -1016,5 +1017,10 @@ public class EcStringUtils {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(StringUtils.equals(null, null));
+		System.out.println(Objects.equals(null, null));
 	}
 }

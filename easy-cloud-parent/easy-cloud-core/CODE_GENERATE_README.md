@@ -23,6 +23,10 @@
    - sqlmap-config.xml
    - mybatis(容纳持久化对象与表映射的配置文件目录)
 
+4. 示例项目使用说明
+
+   - 解压《代码生成组件体验项目.rar》到指定文件目录下，使用开发工具导入示例的项目，然后找到test-generate-code项目下的GenerateJavaTest类执行testGenerateJavaCode()方法，即可在对应的项目里面看到以及生成好的java代码以及mybatis配置文件
+
 ### 使用教程
 
 一、单独创建代码生成项目
@@ -743,18 +747,18 @@
 2.    创建测试方法生成枚举类
 
       ```java
-         @Test
-         public void generateJavaErrorCodeByDataBase() {
-         	String subModulePackageName = EcSubModuleDefaultPackageName.ERROR_CODE;
-         	EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNameController, basePackageName,
-         			moduleName, subModulePackageName, classBodyName, classComment);
-         	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
-         	try {
-         		new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
-         	} catch (Exception e) {
-         		e.printStackTrace();
-         	}
-         }
+            @Test
+            public void generateJavaErrorCodeByDataBase() {
+            	String subModulePackageName = EcSubModuleDefaultPackageName.ERROR_CODE;
+            	EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNameController, basePackageName,
+            			moduleName, subModulePackageName, classBodyName, classComment);
+            	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
+            	try {
+            		new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
+            	} catch (Exception e) {
+            		e.printStackTrace();
+            	}
+            }
       ```
 
 
