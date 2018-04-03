@@ -6,7 +6,7 @@ package com.easy.cloud.core.common.json.constant;
  * @date 2018年2月28日 下午8:36:30
  */
 public class EcJsonConstant {
-	public static class DqJsonConfigKey {
+	public static class EcJsonConfigKey {
 		public static final String FILTER_BUFFER_IMAGE_KEY = "bufferImage";
 	}
 }

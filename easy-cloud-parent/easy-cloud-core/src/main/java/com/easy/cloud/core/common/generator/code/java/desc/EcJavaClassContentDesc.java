@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,12 +18,12 @@ import com.easy.cloud.core.common.generator.code.base.constant.EcCodeGenerateCon
 import com.easy.cloud.core.common.generator.code.base.pojo.rule.EcGenerateRule;
 import com.easy.cloud.core.common.generator.code.base.sources.database.EcDatabaseDataSources;
 import com.easy.cloud.core.common.generator.code.base.utils.EcCodeGenerateUtils;
-import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcIgnoreField;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcMethodTypeEnum;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcModifierMappingEnum;
 import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationDesc;
 import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationParamDesc;
 import com.easy.cloud.core.common.generator.code.java.rule.EcGenerateJavaClassRule;
+import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
@@ -48,7 +49,8 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	private List<EcJavaMethodContentDesc> methods;
 	/** 导入的完整的类类型 */
 	private Set<String> importFullClassTypes = new HashSet<>();
-
+	/** 忽略的属性集合 */
+	private Map<String, Boolean> ignoreFields;
 	public EcJavaClassContentDesc() {
 		super();
 	}
@@ -508,7 +510,8 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 				String name = EcStringUtils
 						.replaceUnderLineAndUpperCase(resultSet.getString(EcColumnLabel.COLUMN_NAME));
 				// id字段略过
-				if (EcIgnoreField.isIgnoreField(name)) {
+				Boolean ignoreField = EcMapUtils.getBoolean(ignoreFields, name);
+				if (EcBaseUtils.isNotNull(ignoreField) && ignoreField) {
 					continue;
 				}
 				EcJavaFieldContentDesc fieldContentDesc = new EcJavaFieldContentDesc();
@@ -630,5 +633,13 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 
 	public void setImportFullClassTypes(Set<String> importFullClassTypes) {
 		this.importFullClassTypes = importFullClassTypes;
+	}
+
+	public Map<String, Boolean> getIgnoreFields() {
+		return ignoreFields;
+	}
+
+	public void setIgnoreFields(Map<String, Boolean> ignoreFields) {
+		this.ignoreFields = ignoreFields;
 	}
 }

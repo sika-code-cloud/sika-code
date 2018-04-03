@@ -65,8 +65,8 @@ public class EcGenerateJavaJpaDAOBO extends EcGenerateJavaInfBO {
 	@Override
 	protected void buildMethods() {
 
-		String nameEndwith = EcClassNameEndWith.POJO_DO;
-		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_DO;
+		String nameEndwith = EcClassNameEndWith.POJO_PO;
+		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_PO;
 		EcJavaContentDesc doClass = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName,
 				EcJavaContentDesc.class);
 		// save

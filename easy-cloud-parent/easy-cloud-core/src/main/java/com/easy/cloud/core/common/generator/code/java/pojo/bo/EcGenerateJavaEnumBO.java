@@ -34,11 +34,4 @@ public abstract class EcGenerateJavaEnumBO extends EcGenerateJavaBaseBO {
 		javaClassContentDesc.addModifier(EcModifierMappingEnum.ENUM);
 	}
 
-	@Override
-	protected void buildAnnotations() {
-	}
-
-	@Override
-	protected void buildExtendsParentClass() {
-	}
 }

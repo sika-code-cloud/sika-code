@@ -22,19 +22,4 @@ public abstract class EcGenerateJavaInfBO extends EcGenerateJavaBaseBO {
 		javaClassContentDesc.addModifier(EcModifierMappingEnum.INTERFACE);
 	}
 
-	@Override
-	protected void buildExtendsParentClass() {
-	}
-
-	@Override
-	protected void buildImplementsInterfaces() {
-	}
-
-	@Override
-	protected void buildConstructors() {
-	}
-
-	@Override
-	protected void buildFields() {
-	}
 }

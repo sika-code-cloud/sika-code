@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.mq.amqp.constant.EcAmqpQueueName.DqAmqpQueueNameEnum;
+import com.easy.cloud.core.mq.amqp.constant.EcAmqpQueueName.EcAmqpQueueNameEnum;
 
 /**
  * amqp的消息 数据传输对象
@@ -24,20 +24,20 @@ public class EcAmqpBaseDTO {
 	}
 	/**
 	 * 使用枚举参数作为构造参数--使用默认的交换机
-	 * @param dqAmqpQueueNameEnum
+	 * @param ecAmqpQueueNameEnum
 	 * @param msg
 	 */
-	public EcAmqpBaseDTO(DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
-		buildQueueName(dqAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
+	public EcAmqpBaseDTO(EcAmqpQueueNameEnum ecAmqpQueueNameEnum, Object msg){
+		buildQueueName(ecAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
 	}
 	
 	/**
 	 * 使用枚举参数作为构造参数
-	 * @param dqAmqpQueueNameEnum
+	 * @param ecAmqpQueueNameEnum
 	 * @param msg
 	 */
-	public EcAmqpBaseDTO(String exchange, DqAmqpQueueNameEnum dqAmqpQueueNameEnum, Object msg){
-		buildExchange(exchange).buildQueueName(dqAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
+	public EcAmqpBaseDTO(String exchange, EcAmqpQueueNameEnum ecAmqpQueueNameEnum, Object msg){
+		buildExchange(exchange).buildQueueName(ecAmqpQueueNameEnum.getQueueName()).buildMsg(msg);
 	}
 	
 	public String getExchange() {

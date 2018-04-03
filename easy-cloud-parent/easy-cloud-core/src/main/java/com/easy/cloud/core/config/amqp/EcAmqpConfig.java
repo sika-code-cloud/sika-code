@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.easy.cloud.core.conditional.amqp.EcAmqpConditional;
 import com.easy.cloud.core.mq.amqp.constant.EcAmqpQueueName;
-import com.easy.cloud.core.mq.amqp.constant.EcAmqpQueueName.DqAmqpQueueNameEnum;
+import com.easy.cloud.core.mq.amqp.constant.EcAmqpQueueName.EcAmqpQueueNameEnum;
 import com.easy.cloud.core.mq.amqp.utils.EcAmqpUtils;
 
 
@@ -20,27 +20,27 @@ import com.easy.cloud.core.mq.amqp.utils.EcAmqpUtils;
 public class EcAmqpConfig {
 	@Bean
     public Queue queueTest() {
-        return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TEST);
+        return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_TEST);
     }
     
     @Bean
     public Queue queueTest1() {
-        return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TEST1);
+        return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_TEST1);
     }
     
     //===============以下是验证topic Exchange的队列==========
     @Bean
     public Queue queueTopicTest() {
-        return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TOPIC_TEST);
+        return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_TOPIC_TEST);
     }
 
     @Bean
     public Queue queueTopicTests() {
-        return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TOPIC_TESTS);
+        return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_TOPIC_TESTS);
     }
     @Bean
     public Queue queueTopicsTests() {
-    	return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_TOPICS);
+    	return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_TOPICS);
     }
   //===============以上是验证topic Exchange的队列==========
     
@@ -48,17 +48,17 @@ public class EcAmqpConfig {
     //===============以下是验证Fanout Exchange的队列==========
     @Bean
     public Queue queueFanoutA() {
-        return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTA);
+        return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTA);
     }
 
     @Bean
     public Queue queueFanoutB() {
-    	return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTB);
+    	return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTB);
     }
 
     @Bean
     public Queue queueFanoutC() {
-    	return EcAmqpUtils.createQueue(DqAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTC);
+    	return EcAmqpUtils.createQueue(EcAmqpQueueNameEnum.QUEUE_NAME_FANOUT_TESTC);
     }
     //===============以上是验证Fanout Exchange的队列==========
     

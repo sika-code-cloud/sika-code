@@ -40,7 +40,7 @@ public class EcGenerateJavaServiceImplBO extends EcGenerateJavaClassBO {
 		serviceAnnotation.setSimpleClassType(Service.class.getSimpleName());
 		serviceAnnotation.setFullClassType(Service.class.getName());
 
-		String value = EcStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + EcClassNameEndWith.DAO_INF);
+		String value = EcStringUtils.uncapitalize(generateJavaBaseDTO.getClassBodyName() + EcClassNameEndWith.SERVICE_INF);
 		serviceAnnotation.addParam("value", value);
 		javaClassContentDesc.addAnnotation(serviceAnnotation);
 	}
@@ -71,7 +71,7 @@ public class EcGenerateJavaServiceImplBO extends EcGenerateJavaClassBO {
 	@Override
 	protected void buildFields() {
 		EcJavaFieldContentDesc fieldContentDesc = new EcJavaFieldContentDesc();
-		fieldContentDesc.setComment(javaClassContentDesc.getComment() + EcClassCommentEndWith.DAO_INF);
+		fieldContentDesc.setComment(super.generateJavaBaseDTO.getClassComment() + EcClassCommentEndWith.DAO_INF);
 		// 设置属性注解
 		EcJavaAnnotationDesc annotationDesc = new EcJavaAnnotationDesc();
 		annotationDesc.setName(Autowired.class.getSimpleName());
