@@ -21,4 +21,5 @@ public class EcEasyCloudModelApplication {
 		SpringApplication.run(EcEasyCloudModelApplication.class, args);
 	}
 	
+	
 }
