@@ -266,7 +266,7 @@
 
 **java类结构分析**
 
-  ![类描述分析图](C:\Users\THINK\Desktop\类描述分析图.png)
+  ![类描述分析图](类描述分析图.png)
 
 **创建自定义规则的业务逻辑对象的步骤**
 
@@ -743,18 +743,18 @@
 2.    创建测试方法生成枚举类
 
       ```java
-      @Test
-      public void generateJavaErrorCodeByDataBase() {
-      	String subModulePackageName = EcSubModuleDefaultPackageName.ERROR_CODE;
-      	EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNameController, basePackageName,
-      			moduleName, subModulePackageName, classBodyName, classComment);
-      	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
-      	try {
-      		new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
-      	} catch (Exception e) {
-      		e.printStackTrace();
-      	}
-      }
+         @Test
+         public void generateJavaErrorCodeByDataBase() {
+         	String subModulePackageName = EcSubModuleDefaultPackageName.ERROR_CODE;
+         	EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNameController, basePackageName,
+         			moduleName, subModulePackageName, classBodyName, classComment);
+         	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
+         	try {
+         		new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
+         	} catch (Exception e) {
+         		e.printStackTrace();
+         	}
+         }
       ```
 
 
