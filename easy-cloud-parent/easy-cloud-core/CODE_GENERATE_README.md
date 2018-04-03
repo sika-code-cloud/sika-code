@@ -266,7 +266,7 @@
 
 **java类结构分析**
 
-  ![类描述分析图](C:\Users\THINK\Desktop\类描述分析图.png)
+  ![类描述分析图](类描述分析图.png)
 
 **创建自定义规则的业务逻辑对象的步骤**
 
@@ -378,53 +378,53 @@
    }
    ```
 
-2. **创建测试方法生成持久化对象**
+2.  **创建测试方法生成持久化对象**
 
-   ```java
-   @Test
-   public void generateJavaPOByDataBase() {
-       // 设置子模块包名---（使用组件自定义的持久化对象的子模块包名，可以自定义）
-   	String subModulePackageName = EcSubModuleDefaultPackageName.POJO_PO;
-     	// 创建生成java的基础数据传输对象(传入基础包名、模块名称、子模块包名、类主体名称、类注释主体)
-   	EcGenerateJavaBaseDTO generateDTO = new EcGenerateJavaBaseDTO(projectNamePojo, basePackageName,moduleName, subModulePackageName, classBodyName, classComment);
-     	// 创建生成规则（是否生成属性、是否生成get方法、是否生成set方法、是否生成build方法）
-   	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, true);
-     	// 设置覆盖开关（设置为true则表示每次执行该方法都会覆盖生成的目标类，否则将不覆盖）
-   	generateJavaBaseDTO.setCoverSwith(true);
-       // 设置需要忽略生成的属性列表的
-       Map<String, Boolean> ignoreFields = new HashMap<>();
-       ignoreFields.put("id", true);
-       generateJavaBaseDTO.setIgnoreFields(ignoreFields);
-   	try {
-         	// 创建数据源对象（此处使用mysql数据库做为数据源、如果为oracle（则为EcOracleDataSources）
-           // 若需要自定义以数据库数据源则可以通过继承EcDatabaseDataSources进行拓展
-         	// 若需要自定义非数据库数据源则可以通过继承EcBaseDataSources进行拓展
-   		EcDatabaseDataSources dataSources = new EcMysqlDataSources(databaseAbstactConfig);
-         	// 创建生成持久化类的业务逻辑对象
-   		EcGenerateJavaDOBO generateBO = new EcGenerateJavaDOBO(generateDTO, generateRule);
-           // 构建数据库数据源
-   		generateBO.buildDtabaseDataSources(dataSources);
-           // 调用生成代码的方法
-   		generateBO.generateCode();
-   	} catch (Exception e) {
-   		e.printStackTrace();
-   	}
-   }
-   ```
+    ```java
+    @Test
+    public void generateJavaPOByDataBase() {
+        // 设置子模块包名---（使用组件自定义的持久化对象的子模块包名，可以自定义）
+    	String subModulePackageName = EcSubModuleDefaultPackageName.POJO_PO;
+      	// 创建生成java的基础数据传输对象(传入基础包名、模块名称、子模块包名、类主体名称、类注释主体)
+    	EcGenerateJavaBaseDTO generateDTO = new EcGenerateJavaBaseDTO(projectNamePojo, basePackageName,moduleName, subModulePackageName, classBodyName, classComment);
+      	// 创建生成规则（是否生成属性、是否生成get方法、是否生成set方法、是否生成build方法）
+    	EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, true);
+      	// 设置覆盖开关（设置为true则表示每次执行该方法都会覆盖生成的目标类，否则将不覆盖）
+    	generateJavaBaseDTO.setCoverSwith(true);
+        // 设置需要忽略生成的属性列表的
+        Map<String, Boolean> ignoreFields = new HashMap<>();
+        ignoreFields.put("id", true);
+        generateJavaBaseDTO.setIgnoreFields(ignoreFields);
+    	try {
+          	// 创建数据源对象（此处使用mysql数据库做为数据源、如果为oracle（则为EcOracleDataSources）
+            // 若需要自定义以数据库数据源则可以通过继承EcDatabaseDataSources进行拓展
+          	// 若需要自定义非数据库数据源则可以通过继承EcBaseDataSources进行拓展
+    		EcDatabaseDataSources dataSources = new EcMysqlDataSources(databaseAbstactConfig);
+          	// 创建生成持久化类的业务逻辑对象
+    		EcGenerateJavaDOBO generateBO = new EcGenerateJavaDOBO(generateDTO, generateRule);
+            // 构建数据库数据源
+    		generateBO.buildDtabaseDataSources(dataSources);
+            // 调用生成代码的方法
+    		generateBO.generateCode();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+    ```
 
-3. **结果示例**
+3.  **结果示例**
 
-   ```java
-   package com.dq.easy.user.pojo.po;
-   import javax.persistence.Column;
-   import java.util.Date;
-   import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
-   /**
+    ```java
+    package com.dq.easy.user.pojo.po;
+    import javax.persistence.Column;
+    import java.util.Date;
+    import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
+    /**
     * 描述：用户持久化类
     * @author THINK
     * @date 2018-04-03 11:29:15
     */
-   public class UserPO extends EcBaseEntity {
+    public class UserPO extends EcBaseEntity {
      /** 创建日期 */
      @Column(name = "create_date")
      public Date createDate;
@@ -463,7 +463,8 @@
          this.userName = userName;
          return this;
      }
-   }
+    }
+    ```
    ```
 
    ​
@@ -636,7 +637,7 @@
 
    **2.创建测试方法生成DAO接口**
 
-   ```java
+```java
    @Test
    public void generateJavaJpaDAOByDataBase() {
    	String subModulePackageName = EcSubModuleDefaultPackageName.DAO_INF;
@@ -649,10 +650,10 @@
    		e.printStackTrace();
    	}
    }
-   ```
+```
    **3. 结果示例**
 
-   ```java
+```java
    package com.dq.easy.user.dao;
 
    import com.dq.easy.user.pojo.po.UserPO;
@@ -681,7 +682,7 @@
    	 List<UserPO> listPage(@Param(value = "maps") Map<String, Object> paramsMap);
    	
    }
-   ```
+```
 
    ​
 
@@ -691,38 +692,38 @@
 
 *  ##### 生成服务接口类：ServiceInf接口（示例）
 
-   参考生成生成数据处理接口类接口
+    参考生成生成数据处理接口类接口
 
 *  ##### 生成服务实现类：ServiceImpl类（示例）
 
-   参考生成持久化类的步骤
+    参考生成持久化类的步骤
 
 *  ##### 生成业务逻辑接口类：LogicInf接口（示例）
 
-   参考生成生成数据处理接口类接口
+    参考生成生成数据处理接口类接口
 
 *  ##### 生成业务逻辑实现类：LogicImpl类（示例）
 
-   参考生成持久化类的步骤
+    参考生成持久化类的步骤
 
 *  ##### 生成控制层类：Controller类（示例）
 
-   参考生成持久化类的步骤
+    参考生成持久化类的步骤
 
 *  ##### 生成错误代码枚举类：ErrorCode枚举（示例）
 
-1. **创建自定义规则业务逻辑对象**
+1.  **创建自定义规则业务逻辑对象**
 
-   ```java
-   package testgenerate.bo.javaenum;
-   import ***
-   /**
+    ```java
+    package testgenerate.bo.javaenum;
+    import ***
+    /**
     * <p>
     * 生成枚举类的业务逻辑类,默认会根据属性生成对应的私有的构造方法
     * </p>
     * @author daiqi 创建时间 2018年3月27日 上午9:54:03
     */
-   public class EcGenerateJavaErrorCodeBO extends EcGenerateJavaEnumBO {
+    public class EcGenerateJavaErrorCodeBO extends EcGenerateJavaEnumBO {
        public EcGenerateJavaErrorCodeBO(EcGenerateJavaBaseDTO generateJavaBaseDTO, EcGenerateRule generateRule) {
            super(generateJavaBaseDTO, generateRule);
        }
@@ -773,7 +774,8 @@
        protected String getClassNameEndWith() {
            return EcClassNameEndWith.ERROR_CODE;
        }
-   }
+    }
+    ```
    ```
 
 2. **创建测试方法生成枚举类**
@@ -793,51 +795,54 @@
    }
    ```
 
-3. **示例结果**
+3.  **示例结果**
 
-   ```java
-   package com.dq.easy.user.constant.error;
+    ```java
+    package com.dq.easy.user.constant.error;
 
-   import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
+    import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
 
-   /**
+    /**
     * 描述：用户错误代码枚举
     * 
     * @author THINK
     * @date 2018-04-03 11:29:15
     */
-   public enum UserErrorCodeEnum implements EcBaseErrorCodeInf {
-   	;
-   	/** 错误代码 */
-   	private String errorCode;
-   	/** 错误信息 */
-   	private String errorMsg;
-   		
-   	private UserErrorCodeEnum(String errorCode, String errorMsg) {
-   		this.errorCode = errorCode;
-   		this.errorMsg = errorMsg;
-   	}
-   	
-   	/** 获取错误代码 */
-   	public String getErrorCode() {
-   		return this.errorCode;
-   	}
+    public enum UserErrorCodeEnum implements EcBaseErrorCodeInf {
+    	;
+    	/** 错误代码 */
+    	private String errorCode;
+    	/** 错误信息 */
+    	private String errorMsg;
+    		
+    	private UserErrorCodeEnum(String errorCode, String errorMsg) {
+    		this.errorCode = errorCode;
+    		this.errorMsg = errorMsg;
+    	}
+    	
+    	/** 获取错误代码 */
+    	public String getErrorCode() {
+    		return this.errorCode;
+    	}
 
-   	/** 设置错误代码 */
-   	public void setErrorCode(String errorCode) {
-   		this.errorCode = errorCode;
-   	}
+    	/** 设置错误代码 */
+    	public void setErrorCode(String errorCode) {
+    		this.errorCode = errorCode;
+    	}
 
-   	/** 获取错误信息 */
-   	public String getErrorMsg() {
-   		return this.errorMsg;
-   	}
+    	/** 获取错误信息 */
+    	public String getErrorMsg() {
+    		return this.errorMsg;
+    	}
 
-   	/** 设置错误信息 */
-   	public void setErrorMsg(String errorMsg) {
-   		this.errorMsg = errorMsg;
-   	}
+    	/** 设置错误信息 */
+    	public void setErrorMsg(String errorMsg) {
+    		this.errorMsg = errorMsg;
+    	}
+    ```
 
    }
    ```
    ​
+
+   ```
