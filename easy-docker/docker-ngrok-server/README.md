@@ -2,6 +2,8 @@
 # docker image for ngrok server
 
  ngrok服务器的docker image，用来做内网穿透。
+ 
+ **可以直接下载附件中的ngrok客户端使用**
   
 ## 使用步骤：
 ----------------
@@ -26,7 +28,7 @@ docker run -d --name ngrok-server -p 80:80 -p 8082:8082 -p 443:443 jueying/ngrok
 docker logs ngrok-server
 ```
 当出现以下日志时表示启动成功
-![info](files/ngrokd_start.jpg)
+![info](https://raw.githubusercontent.com/jueying/docker-ngrok-server/master/files/ngrokd_start.jpg)
 
 ### 3. 从容器内拷贝ngrok客户端:
 ```
@@ -37,7 +39,7 @@ docker cp ngrok-server:/usr/local/ngrok/bin/ /tmp/
 ### 4. ngrok配置使用:
 
 1. 将你的独立域名泛解析到docker所在主机ip
-![info](files/domain.jpg)
+![info](https://raw.githubusercontent.com/jueying/docker-ngrok-server/master/files/domain.jpg)
 
 2. 从容器内拷贝出相应的ngrok客户端，然后在同级目录建立配置文件ngrok.cfg,内容如下：
 ```
