@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>easy.cloud</groupId>
+	<artifactId>easy-cloud-parent</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>easy-cloud-parent</name>
+	<description>easy.cloud.parent</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.8.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<!-- 子模块 -->
+	<modules>
+		<module>easy-cloud-core</module>
+		<module>easy-cloud-config-server</module>
+		<module>easy-cloud-config-client</module>
+		<module>easy-cloud-eureka-server</module>
+	</modules>
+
+
+	<!-- 设置属性 -->
+	<properties>
+		<!--设置字符编码及java版本 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+
+		<!-- 版本依赖管理 begin -->
+		<!-- easy所有版本依赖 -->
+		<!-- spring-cloud版本 -->
+		<dq.easy.cloud.version>1.0.0</dq.easy.cloud.version>
+		<spring.cloud.version>Edgware.RELEASE</spring.cloud.version>
+		
+		<skipTests>true</skipTests>
+	</properties>
+	<!-- 项目依赖 -->
+	<dependencies>
+		<!-- spring框架相关依赖 bigen -->
+
+		<!-- spring-boot-start-x依赖 begin -->
+		<!-- spring-boot-starter-web依赖包含springMvc -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-amqp -->
+		<dependency>  
+			<groupId>org.springframework.boot</groupId>  
+			<artifactId>spring-boot-starter-amqp</artifactId>  
+		</dependency>  
+		<!-- spring-boot-starter-test测试框架依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-boot-start-x依赖 end -->
+
+		<!-- spring-cloud-start-x依赖 begin -->
+		<!-- spring-cloud-starter-eureka服务注册中心 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		<!-- spring-cloud-starter-feign申明式调用 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+		</dependency>
+		<!-- spring-cloud-starter-ribbon负载均衡 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-ribbon</artifactId>
+		</dependency>
+		<!-- spring-cloud-starter-hystrix断路由 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-actuator断点监测 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!-- spring-cloud-start-x依赖 end -->
+		<!-- spring框架相关依赖 end -->
+		<dependency>
+			<groupId>easy.cloud</groupId>
+			<artifactId>easy-cloud-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+	<!--依赖管理，用于管理spring-cloud的依赖，其中spring.cloud.version是版本号 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-parent -->
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-parent</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- 构建插件 -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

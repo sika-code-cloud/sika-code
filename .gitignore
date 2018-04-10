@@ -12,3 +12,4 @@ logs
 target
 *.iml
 .idea
+.factorypath
