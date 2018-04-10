@@ -523,7 +523,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 
 				// 设置modifer列表信息
 				List<EcJavaModifierDesc> fieldModifierDescs = new ArrayList<>();
-				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PUBLIC));
+				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PRIVATE));
 				fieldContentDesc.setModifiers(fieldModifierDescs);
 
 				// 设置属性类型
@@ -553,7 +553,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 上午10:18:57
 	 * @throws SQLException
 	 */
-	private List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
+	protected List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
 		// 设置属性注解
 		List<EcJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		// 设置列注解描述
