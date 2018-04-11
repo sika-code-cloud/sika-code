@@ -194,6 +194,8 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getClassComment())) {
 			sb.append(generateJavaBaseDTO.getClassComment());
+		} else if (EcBaseUtils.isNotNull(databaseDataSources)){
+			sb.append(databaseDataSources.getTableComment());
 		}
 		if (EcStringUtils.isNotEmpty(getClassCommentEndWith())) {
 			sb.append(getClassCommentEndWith());
