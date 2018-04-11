@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.constant.EcFileConstant.EcFileSuffix;
 import com.easy.cloud.core.common.file.pojo.desc.EcFileContentBaseDesc;
@@ -44,6 +45,13 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 		javaClassContentDesc = new EcJavaClassContentDesc(generateRule);
 		
 		initData();
+	}
+	
+	public void buildEcJavaClassContentDesc(EcJavaClassContentDesc javaClassContentDesc) {
+		if (EcBaseUtils.isNotNull(this.javaClassContentDesc)) {
+			javaClassContentDesc.setGenerateRule(this.javaClassContentDesc.getGenerateRule());
+		}
+		this.javaClassContentDesc = javaClassContentDesc;
 	}
 
 	private void initData() {

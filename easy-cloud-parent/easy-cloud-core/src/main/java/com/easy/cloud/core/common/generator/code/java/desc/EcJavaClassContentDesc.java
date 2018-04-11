@@ -21,7 +21,6 @@ import com.easy.cloud.core.common.generator.code.base.utils.EcCodeGenerateUtils;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcMethodTypeEnum;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcModifierMappingEnum;
 import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationDesc;
-import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationParamDesc;
 import com.easy.cloud.core.common.generator.code.java.rule.EcGenerateJavaClassRule;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
@@ -523,7 +522,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 
 				// 设置modifer列表信息
 				List<EcJavaModifierDesc> fieldModifierDescs = new ArrayList<>();
-				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PUBLIC));
+				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PRIVATE));
 				fieldContentDesc.setModifiers(fieldModifierDescs);
 
 				// 设置属性类型
@@ -553,7 +552,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 上午10:18:57
 	 * @throws SQLException
 	 */
-	private List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
+	protected List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
 		// 设置属性注解
 		List<EcJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		// 设置列注解描述
@@ -562,11 +561,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		columnAnnotationDesc.setSimpleClassType(Column.class.getSimpleName());
 		columnAnnotationDesc.setName(Column.class.getSimpleName());
 		// 获取column参数描述列表
-		List<EcJavaAnnotationParamDesc> columnAnnotationParamDescs = new ArrayList<>();
-		columnAnnotationParamDescs
-				.add(new EcJavaAnnotationParamDesc("name", resultSet.getString(EcColumnLabel.COLUMN_NAME)));
-		columnAnnotationDesc.setParams(columnAnnotationParamDescs);
-
+		columnAnnotationDesc.addParam("name", resultSet.getString(EcColumnLabel.COLUMN_NAME));
 		annotationDescs.add(columnAnnotationDesc);
 		return annotationDescs;
 	}
