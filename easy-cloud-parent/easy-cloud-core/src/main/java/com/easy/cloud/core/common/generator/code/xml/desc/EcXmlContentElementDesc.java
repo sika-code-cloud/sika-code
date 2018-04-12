@@ -88,7 +88,7 @@ public class EcXmlContentElementDesc extends EcXmlContentBaseDesc {
 		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
 		for (EcXmlContentElementAttributeDesc attributeDesc : attributes) {
 			sb.append(attributeDesc.getKey()).append(EcSymbol.EQUAL).append(EcSymbol.DOUBLE_QUOTES);
-			sb.append(attributeDesc.getValue()).append(EcSymbol.DOUBLE_QUOTES).append(EcSymbol.EMPTY);
+			sb.append(attributeDesc.getValue()).append(EcSymbol.DOUBLE_QUOTES).append(EcSymbol.SPACE);
 		}
 		return sb.toString();
 	}

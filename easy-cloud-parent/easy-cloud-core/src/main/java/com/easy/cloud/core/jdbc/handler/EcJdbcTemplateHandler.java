@@ -2,11 +2,13 @@ package com.easy.cloud.core.jdbc.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Component;
 import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
+import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.conditional.datasource.EcDataSourceConditional;
 
 @Component
+@Conditional(EcDataSourceConditional.class)
 public class EcJdbcTemplateHandler {
 	  
     private static JdbcTemplate jdbcTemplate;  
@@ -229,12 +234,12 @@ public class EcJdbcTemplateHandler {
      */
     public static <T> String getEntityTableName(Class<T> entityClazz){
     	if(EcBaseUtils.isNull(entityClazz)){
-    		return EcStringUtils.EMPTY;
+    		return EcSymbol.EMPTY;
     	}
 //    	获取Table注解
     	Table tableAnno = entityClazz.getAnnotation(Table.class);
     	if(EcBaseUtils.isNull(tableAnno) || EcStringUtils.isEmpty(tableAnno.name())){
-    		return EcStringUtils.EMPTY;
+    		return EcSymbol.EMPTY;
     	}
     	return tableAnno.name();
     }

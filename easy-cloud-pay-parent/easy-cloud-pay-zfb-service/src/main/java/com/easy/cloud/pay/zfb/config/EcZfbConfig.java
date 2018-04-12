@@ -23,12 +23,12 @@ public class EcZfbConfig {
 
 	@Bean
 	@ConfigurationProperties(prefix="zfb", ignoreUnknownFields = false)  
-	public EcZfbPayConfigStorageDTO dqZfbPayConfigStorage(){
+	public EcZfbPayConfigStorageDTO ecZfbPayConfigStorage(){
 		return EcZfbPayConfigStorageDTO.newInstance();
 	}
 	
 	@Bean
 	public EcZfbPayService ecZfbPayService(){
-		return new EcZfbPayService(dqZfbPayConfigStorage());
+		return new EcZfbPayService(ecZfbPayConfigStorage());
 	}
 }

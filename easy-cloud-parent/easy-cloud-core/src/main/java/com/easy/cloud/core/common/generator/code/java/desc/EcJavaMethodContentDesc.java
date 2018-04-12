@@ -104,14 +104,14 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 					argsBuild.append(annotation.getName());
 					argsBuild.append(EcSymbol.LEFT_PARENTHESES);
 					argsBuild.append(annotation.getParamsStr());
-					argsBuild.append(EcSymbol.RIGHT_PARENTHESES).append(EcSymbol.EMPTY);
+					argsBuild.append(EcSymbol.RIGHT_PARENTHESES).append(EcSymbol.SPACE);
 				}
 			}
-			argsBuild.append(EcStringUtils.capitalize(arg.getSimpleClassType())).append(EcSymbol.EMPTY);
+			argsBuild.append(EcStringUtils.capitalize(arg.getSimpleClassType())).append(EcSymbol.SPACE);
 			argsBuild.append(EcStringUtils.uncapitalize(arg.getName()));
 
 			if (i < args.size() - 1) {
-				argsBuild.append(EcSymbol.COMMA).append(EcSymbol.EMPTY);
+				argsBuild.append(EcSymbol.COMMA).append(EcSymbol.SPACE);
 			}
 		}
 		return argsBuild.toString();

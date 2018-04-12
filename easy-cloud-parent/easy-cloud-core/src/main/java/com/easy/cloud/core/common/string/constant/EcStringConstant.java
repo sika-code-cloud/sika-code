@@ -13,8 +13,10 @@ public class EcStringConstant {
 	 * @date 2018年2月25日 下午8:44:33
 	 */
 	public static class EcSymbol {
-		/** 符号---空串--- " " */
-		public static final String EMPTY = " ";
+		/** 符号---空格--- " " */
+		public static final String SPACE = " ";
+		/** 符号---空串--- "" */
+		public static final String EMPTY = "";
 		/** 符号---单and符号--- & */
 		public static final String SINGLE_AND = "&";
 		/** 符号常量---英文冒号--- : */

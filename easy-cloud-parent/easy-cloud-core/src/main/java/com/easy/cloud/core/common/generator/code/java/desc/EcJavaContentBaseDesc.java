@@ -73,7 +73,7 @@ public abstract class EcJavaContentBaseDesc extends EcFileContentBaseDesc {
 				genericitysBuild.append(getGenericitys().get(i).getSimpleClassType());
 				if (i < getGenericitys().size() - 1) {
 					genericitysBuild.append(EcSymbol.COMMA);
-					genericitysBuild.append(EcSymbol.EMPTY);
+					genericitysBuild.append(EcSymbol.SPACE);
 				}
 			}
 			genericitysBuild.append(EcSymbol.GREATER_THAN);

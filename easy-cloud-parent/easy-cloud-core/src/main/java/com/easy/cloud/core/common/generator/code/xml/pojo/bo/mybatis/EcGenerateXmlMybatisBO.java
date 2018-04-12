@@ -404,7 +404,7 @@ public class EcGenerateXmlMybatisBO extends EcGenerateXmlBaseBO {
 		// 设置属性
 		StringBuilder testAttrValue = EcStringUtils.newStringBuilderDefault();
 		testAttrValue.append(data.getPropertyName());
-		testAttrValue.append(EcSymbol.EMPTY).append("!=").append(EcSymbol.EMPTY).append("null");
+		testAttrValue.append(EcSymbol.SPACE).append("!=").append(EcSymbol.SPACE).append("null");
 		return testAttrValue.toString();
 	}
 

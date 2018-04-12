@@ -14,7 +14,7 @@ import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
  * @author daiqi
  * @date 2018年3月18日 上午12:47:25
  */
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD})
 public class EcEasyCloudModelApplication {
 	public static void main(String[] args) {

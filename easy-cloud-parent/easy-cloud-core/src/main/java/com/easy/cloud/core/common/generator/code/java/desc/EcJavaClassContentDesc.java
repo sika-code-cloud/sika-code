@@ -162,16 +162,16 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 			classHeaderBuild.append(modifersStr);
 		}
 		if (EcStringUtils.isNotEmpty(getName())) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append(getSimpleClassTypeFullStr());
+			classHeaderBuild.append(EcSymbol.SPACE).append(getSimpleClassTypeFullStr());
 		}
 		// 设置继承的父类字符串		
 		String extendsParentClasssStr = getExtendsParentClasssStr();
 		if (EcStringUtils.isNotEmpty(extendsParentClasssStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("extends").append(EcSymbol.EMPTY).append(extendsParentClasssStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("extends").append(EcSymbol.SPACE).append(extendsParentClasssStr);
 		}
 		String implementsInterfacesStr = getImplementsInterfacesStr();
 		if (EcStringUtils.isNotEmpty(implementsInterfacesStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("implements").append(EcSymbol.EMPTY).append(implementsInterfacesStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("implements").append(EcSymbol.SPACE).append(implementsInterfacesStr);
 		}
 		return classHeaderBuild.toString();
 	}
