@@ -18,7 +18,7 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.conditional.datasource.EcDataSourceConditional;
+import com.easy.cloud.core.jdbc.conditional.EcDataSourceConditional;
 
 @Component
 @Conditional(EcDataSourceConditional.class)

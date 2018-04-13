@@ -30,8 +30,8 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
  * @author daiqi 创建时间 2018年2月7日 下午7:06:15
  */
 @Aspect
+@Order
 @Component
-@Order(99)
 public class EcLogAspect {
 
 	@Pointcut("@within(com.easy.cloud.core.common.log.annotation.EcLog)")

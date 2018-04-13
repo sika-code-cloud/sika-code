@@ -31,7 +31,9 @@ public enum EcBaseErrorCodeEnum implements EcBaseErrorCodeInf{
 	/** 异常---类型转换异常---A_000009 */
 	TYPE_CONVERT_EXCEPTION("A_000009", "类型转换异常"),
 	/** 异常---非法类型异常---A_000010 */
-	ILLICIT_TYPE_EXCEPTION("A_000010", "非法类型异常")
+	ILLICIT_TYPE_EXCEPTION("A_000010", "非法类型异常"),
+	/** 异常---对象不能为空异常---A_000011 */
+	OBJECT_CANT_NULL("A_000011", "对象不能为空")
 	;
 
 	private String errorCode;
