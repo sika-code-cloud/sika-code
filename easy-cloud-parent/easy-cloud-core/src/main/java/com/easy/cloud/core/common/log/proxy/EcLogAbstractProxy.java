@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.log.annotation.EcLog;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogMode;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogModeEnum;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogAnalysisBO;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogBO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogAnalysisDTO;
@@ -34,13 +35,13 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 
 	protected final Logger logger = LoggerFactory.getLogger(EcLogBaseProxy.class);
 	/** 日志数据传输对象 */
-	protected EcLogDTO ecLogDTO;
+	protected EcLogDTO logDTO;
 	/** 日志分析数据传输对象 */
-	protected EcLogAnalysisBO ecLogAnalysisBO;
+	protected EcLogAnalysisBO logAnalysisBO;
 	/** 日志注解 */
-	protected EcLog ecLog;
+	protected EcLog log;
 	/** 日志级别 */
-	protected int dqLogLevel;
+	protected EcLogLevelEnum logLevel;
 	/** 目标日志类 */
 	protected Logger targetLogger = logger;
 
@@ -49,17 +50,17 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 		try {
 			// 1：数据初始化
 			init(ecLogBO);
-//			获取日志开关
-			if (EcLogUtils.getLogSwitch(ecLog, ecLogDTO)){
-//				2：执行日志处理
+			// 获取日志开关
+			if (EcLogUtils.getLogSwitch(log, logDTO)){
+				// 2：执行日志处理
 				doLogHandle();
 			}
-//			获取日志分析开关
-			if (EcLogAnalysisUtils.getLogAnalysisSwitch(ecLog, ecLogDTO)){
-				if (EcBaseUtils.isNull(ecLogAnalysisBO)) {
+			// 获取日志分析开关
+			if (EcLogAnalysisUtils.getLogAnalysisSwitch(log, logDTO)){
+				if (EcBaseUtils.isNull(logAnalysisBO)) {
 					return ;
 				}
-//				执行方法分析处理
+				// 执行方法分析处理
 				doLogAnalysis();
 			}
 		} catch (Exception e) {
@@ -75,13 +76,13 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 		targetLogger.info("\r");
 		targetLogger.info("==============================================   start_logger:请求日志记录:start_logger    ==============================================");
 		logDataExtraPre();
-		log("请求的类名", ecLogDTO.getTargetClassName());
-		log("请求的方法名称", ecLogDTO.getTargetMethodName());
-		log("请求参数类型", ecLogDTO.getTargetParameterTypes());
-		log("请求参数值", ecLogDTO.getTargetParameterValues());
-		log("返回参数类型", ecLogDTO.getTargetReturnType().getName());
-		log("返回参数值", ecLogDTO.getTargetReturnValue());
-		log("方法运行时间", (ecLogDTO.getRunTimeMinllis()) +"ms");
+		log("请求的类名", logDTO.getTargetClassName());
+		log("请求的方法名称", logDTO.getTargetMethodName());
+		log("请求参数类型", logDTO.getTargetParameterTypes());
+		log("请求参数值", logDTO.getTargetParameterValues());
+		log("返回参数类型", logDTO.getTargetReturnType().getName());
+		log("返回参数值", logDTO.getTargetReturnValue());
+		log("方法运行时间", (logDTO.getRunTimeMinllis()) +"ms");
 		logDataExtraAfter();
 		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
 		targetLogger.info("\r\n");
@@ -132,7 +133,7 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	 * 创建时间  2018年2月21日 下午4:41:46
 	 */
 	protected final void log(String logTitle, Object logDetailInfo) {
-		EcLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger, false);
+		EcLogUtils.logByLogLevel(logLevel, logTitle,logDetailInfo, targetLogger, false);
 	}
 	
 	/**
@@ -148,7 +149,7 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	 * 创建时间  2018年2月21日 下午4:41:46
 	 */
 	protected final void logWrap(String logTitle, Object logDetailInfo) {
-		EcLogUtils.logByLogLevel(dqLogLevel, logTitle,logDetailInfo, targetLogger, true);
+		EcLogUtils.logByLogLevel(logLevel, logTitle,logDetailInfo, targetLogger, true);
 	}
 	/** 初始化数据 */
 	private void init(EcLogBO ecLogBO) {
@@ -160,42 +161,42 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 
 	/** 初始化基础数据 */
 	private void initBaseData(EcLogBO ecLogBO) {
-		this.ecLogDTO = ecLogBO.getDqLogDTO();
-		this.ecLog = ecLogBO.getDqLog();
-		dqLogLevel = ecLog.dqLogLevel();
-		this.ecLogDTO.setLogType(ecLog.dqLogType());
+		this.logDTO = ecLogBO.getDqLogDTO();
+		this.log = ecLogBO.getDqLog();
+		logLevel = log.logLevel();
+		this.logDTO.setLogType(log.logType());
 		
-		if (EcBaseUtils.isNotNull(ecLogDTO.getLogger())) {
-			targetLogger = ecLogDTO.getLogger();
+		if (EcBaseUtils.isNotNull(logDTO.getLogger())) {
+			targetLogger = logDTO.getLogger();
 		}
 	}
 
 	/** 初始化其他数据 */
 	private void initOtherData() {
 //		初始化日志分析数据
-		if (EcLogAnalysisUtils.getLogAnalysisSwitch(ecLog, ecLogDTO)){
+		if (EcLogAnalysisUtils.getLogAnalysisSwitch(log, logDTO)){
 			initDqLogAnalysisBOData();
-			ecLogAnalysisBO.buildDqLogAnalysisData();
+			logAnalysisBO.buildDqLogAnalysisData();
 		}
 	}
 	
 	/** 初始化日志分析业务逻辑对象数据---子类可以重写该方法进行数据初始化 */
 	protected void initDqLogAnalysisBOData() {
 //		初始化日志分析数据
-		Map<String, EcLogAnalysisDTO> dqLogAnalysisMap = EcLogAnalysisUtils.getLogAnalysisContainerByType(ecLogDTO.getLogType());
-		ecLogAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(dqLogAnalysisMap, ecLogDTO);
+		Map<String, EcLogAnalysisDTO> dqLogAnalysisMap = EcLogAnalysisUtils.getLogAnalysisContainerByType(logDTO.getLogType());
+		logAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(dqLogAnalysisMap, logDTO);
 	}
 	
 	/** 执行日志处理业务逻辑 */
 	private void doLogHandle() {
-		int dqLogMode = ecLog.dqLogMode();
-		if (EcLogMode.isConsole(dqLogMode)) {
+		EcLogModeEnum logMode = log.logMode();
+		if (EcLogModeEnum.isConsole(logMode)) {
 			doLogConsole();
-		} else if (EcLogMode.isFile(dqLogMode)) {
+		} else if (EcLogModeEnum.isFile(logMode)) {
 			doLogFile();
-		} else if (EcLogMode.isDatabase(dqLogMode)) {
+		} else if (EcLogModeEnum.isDatabase(logMode)) {
 			doLogDataBase();
-		} else if (EcLogMode.isMq(dqLogMode)) {
+		} else if (EcLogModeEnum.isMq(logMode)) {
 			doLogMq();
 		}
 	}
@@ -213,8 +214,8 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	 * 创建时间    2018年2月22日 下午2:47:31
 	 */
 	protected void doLogAnalysis(){
-		ecLogAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisUtils.getLogAnalysisContainerByType(ecLog.dqLogType()));
-		EcLogUtils.info("日志分析数据", ecLogAnalysisBO, logger);
+		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisUtils.getLogAnalysisContainerByType(log.logType()));
+		EcLogUtils.info("日志分析数据", logAnalysisBO, logger);
 	}
 
 	/** 日志记录方式---控制台 */

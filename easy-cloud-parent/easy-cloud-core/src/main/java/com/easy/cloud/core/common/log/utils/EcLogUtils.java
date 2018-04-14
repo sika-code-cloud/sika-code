@@ -7,8 +7,8 @@ import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.log.annotation.EcLog;
 import com.easy.cloud.core.common.log.config.EcLogConfig;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevel;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogType;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.proxy.EcLogProxy;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogBaseProxy;
@@ -67,7 +67,7 @@ public class EcLogUtils {
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
 	public static boolean getLogSwitch(EcLog ecLog, EcLogDTO ecLogDTO) {
-		boolean dqLogSwitch = ecLog.dqLogSwitch();
+		boolean dqLogSwitch = ecLog.logSwitch();
 		String className = ecLogDTO.getTargetClassName();
 		String methodName = ecLogDTO.getTargetMethodName();
 
@@ -112,20 +112,20 @@ public class EcLogUtils {
 		if (EcBaseUtils.isNull(ecLog)) {
 			return null;
 		}
-		if (EcBaseUtils.isNotNull(ecLog.dqLogProxyClass())
-				&& EcBaseUtils.notEquals(ecLog.dqLogProxyClass(), EcLogBaseProxy.class)) {
-			return (EcLogProxy) EcReflectionUtils.newInstance(ecLog.dqLogProxyClass());
+		if (EcBaseUtils.isNotNull(ecLog.logProxyClass())
+				&& EcBaseUtils.notEquals(ecLog.logProxyClass(), EcLogBaseProxy.class)) {
+			return (EcLogProxy) EcReflectionUtils.newInstance(ecLog.logProxyClass());
 		}
-		if (EcLogType.isController(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isController(ecLog.logType())) {
 			return EcReflectionUtils.newInstance(EcLogControllerProxy.class);
 		}
-		if (EcLogType.isLogic(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isLogic(ecLog.logType())) {
 			return EcReflectionUtils.newInstance(EcLogLogicProxy.class);
 		}
-		if (EcLogType.isService(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isService(ecLog.logType())) {
 			return EcReflectionUtils.newInstance(EcLogServiceProxy.class);
 		}
-		if (EcLogType.isRepository(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isRepository(ecLog.logType())) {
 			return EcReflectionUtils.newInstance(EcLogRepositoryProxy.class);
 		}
 		return EcReflectionUtils.newInstance(EcLogBaseProxy.class);
@@ -148,14 +148,14 @@ public class EcLogUtils {
 	 *            : boolean : 是否需要换行 true需要 false不需要
 	 * @author daiqi 创建时间 2018年2月9日 上午11:42:31
 	 */
-	public static void logByLogLevel(Integer logLevel, String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		if (EcLogLevel.isDebug(logLevel)) {
+	public static void logByLogLevel(EcLogLevelEnum logLevel, String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
+		if (EcLogLevelEnum.isDebug(logLevel)) {
 			debug(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isInfo(logLevel)) {
+		} else if (EcLogLevelEnum.isInfo(logLevel)) {
 			info(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isWarn(logLevel)) {
+		} else if (EcLogLevelEnum.isWarn(logLevel)) {
 			warn(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isError(logLevel)) {
+		} else if (EcLogLevelEnum.isError(logLevel)) {
 			error(logTitle, logDetail, logger, isNeedWrap);
 		}
 	}

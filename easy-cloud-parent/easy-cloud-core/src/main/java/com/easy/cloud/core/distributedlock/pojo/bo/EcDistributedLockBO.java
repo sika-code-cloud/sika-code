@@ -10,6 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.util.Assert;
 
 import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
+import com.easy.cloud.core.basic.factory.EcBeanFactory;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
@@ -17,7 +18,11 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.distributedlock.annotation.EcDistributedLock;
 import com.easy.cloud.core.distributedlock.callback.EcDistributedLockCallback;
+import com.easy.cloud.core.distributedlock.callback.result.EcDistributedLockResult;
+import com.easy.cloud.core.distributedlock.callback.result.processor.EcBaseDistributedLockResultProcessor;
+import com.easy.cloud.core.distributedlock.callback.result.processor.EcDefaultDistributedLockResultProcessor;
 import com.easy.cloud.core.distributedlock.constant.EcDistributedLockConstant.EcDistributedLockTemplateTypeEnum;
+import com.easy.cloud.core.distributedlock.constant.error.EcDistributedLockErrorCodeEnum;
 import com.easy.cloud.core.distributedlock.pojo.dto.EcDistributedLockDTO;
 import com.easy.cloud.core.distributedlock.template.EcDistributedLockTemplate;
 import com.easy.cloud.core.distributedlock.template.selector.EcDistributedLockTemplateSelector;
@@ -40,36 +45,42 @@ public class EcDistributedLockBO {
 	private EcDistributedLockTemplate lockTemplate;
 	/** 切点 */
 	private ProceedingJoinPoint joinPoint;
+	/** 目标方法 */
+	private Method targetMethod;
+	/** 分布式锁结果处理器 */
+	private EcBaseDistributedLockResultProcessor resultProcessor;
 
 	public EcDistributedLockBO(EcDistributedLockTemplateSelector lockTemplateSelector, ProceedingJoinPoint joinPoint) {
 		this.lockTemplateSelector = lockTemplateSelector;
-		this.joinPoint = joinPoint;
 		this.distributedLockDTO = new EcDistributedLockDTO();
+		this.joinPoint = joinPoint;
 	}
 
-	public EcDistributedLockBO(EcDistributedLockDTO distributedLockDTO,
-			EcDistributedLockTemplateSelector lockTemplateSelector) {
-		this.distributedLockDTO = distributedLockDTO;
-		this.lockTemplateSelector = lockTemplateSelector;
+	public EcDistributedLockBO() {
+		
 	}
 
 	public EcDistributedLockBO buidDistributedLockDTOData() {
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
-		Method targetMethod = methodSignature.getMethod();
+		targetMethod = methodSignature.getMethod();
 		Object[] args = joinPoint.getArgs();
 		// 构建注解
-		this.buildEcDistributedLock(targetMethod);
-		this.buildLockName(targetMethod, args);
-		this.buildLockTemplate(targetMethod);
+		this.buildEcDistributedLock();
+		this.buildLockName(args);
+		this.buildLockTemplate();
+		this.buildDistributedLockResultProcessor();
 		return this;
 	}
 
 	/** 根据方法构建数据传输对象的分布式注解 */
-	private EcDistributedLockBO buildEcDistributedLock(Method targetMethod) {
-		EcDistributedLock distributedLock = targetMethod.getAnnotation(EcDistributedLock.class);
-		Assert.notNull(distributedLock, "distributedLock注解不能为空");
-		this.distributedLockDTO.setDistributedLock(distributedLock);
+	private EcDistributedLockBO buildEcDistributedLock() {
+		// 注解为空先构建注解
+		if (EcBaseUtils.isNull(this.distributedLockDTO.getDistributedLock())) {
+			EcDistributedLock distributedLock = targetMethod.getAnnotation(EcDistributedLock.class);
+			Assert.notNull(distributedLock, "distributedLock注解不能为空");
+			this.distributedLockDTO.setDistributedLock(distributedLock);
+		}
 		return this;
 	}
 
@@ -79,20 +90,15 @@ public class EcDistributedLockBO {
 	 * 构建锁的名称
 	 * </p>
 	 *
-	 * @param targetMethod
 	 * @param args
 	 * @return
 	 * @author daiqi
 	 * @创建时间 2018年4月13日 上午11:37:42
 	 */
-	private EcDistributedLockBO buildLockName(Method targetMethod, Object[] args) {
+	private EcDistributedLockBO buildLockName( Object[] args) {
 		// 注解为空先构建注解
-		if (EcBaseUtils.isNull(this.distributedLockDTO.getDistributedLock())) {
-			buildEcDistributedLock(targetMethod);
-		}
-		EcDistributedLock distributedLock = this.distributedLockDTO.getDistributedLock();
-		Assert.notNull(distributedLock, "distributedLock注解不存在");
-
+		EcDistributedLock distributedLock = buildEcDistributedLock().distributedLockDTO.getDistributedLock();
+		
 		String lockName = distributedLock.lockName();
 		if (EcStringUtils.isEmpty(lockName)) {
 			if (EcArrayUtils.isEmpty(args)) {
@@ -108,24 +114,50 @@ public class EcDistributedLockBO {
 				lockName = getParamValue(arg, param);
 			}
 		}
+		if (EcStringUtils.isEmpty(lockName)) {
+			throw new EcBaseBusinessException(EcDistributedLockErrorCodeEnum.LOCK_NAME_CANT_EMPTY);
+		}
 		this.distributedLockDTO.setLockName(lockName);
 
 		return this;
 	}
 
-	private EcDistributedLockBO buildLockTemplate(Method targetMethod) {
-		// 注解为空先构建注解
-		if (EcBaseUtils.isNull(this.distributedLockDTO.getDistributedLock())) {
-			buildEcDistributedLock(targetMethod);
-		}
-		EcDistributedLock distributedLock = this.distributedLockDTO.getDistributedLock();
-		Assert.notNull(distributedLock, "distributedLock注解不存在");
+	private EcDistributedLockBO buildLockTemplate() {
+		// 先构建注解
+		EcDistributedLock distributedLock = buildEcDistributedLock().distributedLockDTO.getDistributedLock();
+		
 		// 根据类型选择分布式锁模板对象
 		EcDistributedLockTemplate lockTemplate = this.lockTemplateSelector.selectLockTemplateByType(distributedLock.templateType());
 		this.distributedLockDTO.setLockTemplate(lockTemplate);
 		return this;
 	}
-
+	
+	/**
+	 * 
+	 * <p>
+	 * 构建分布式锁结果处理对象
+	 * </p>
+	 * 
+	 * @return
+	 * @author daiqi
+	 * @创建时间 2018年4月14日 下午12:00:15
+	 */
+	private EcDistributedLockBO buildDistributedLockResultProcessor() {
+		// 先构建注解
+		EcDistributedLock distributedLock = buildEcDistributedLock().distributedLockDTO.getDistributedLock();
+		Class<? extends EcBaseDistributedLockResultProcessor> resultProcessorClass = distributedLock.resultProcessorClass();
+		// 结果处理类class为空 使用默认的结果处理类进行处理
+		if (EcBaseUtils.isNull(resultProcessorClass)) {
+			resultProcessorClass = EcDefaultDistributedLockResultProcessor.class;
+		}
+		// 根据class创建结果处理对象
+		resultProcessor = EcBeanFactory.newInstance(resultProcessorClass);
+		if (EcBaseUtils.isNull(resultProcessor)) {
+			throw new EcBaseBusinessException(EcDistributedLockErrorCodeEnum.RESULT_PROCESSOR_OBJ_CREATE_FAIL);
+		}
+		return this;
+	}
+	
 	/**
 	 * 
 	 * <p>
@@ -181,12 +213,10 @@ public class EcDistributedLockBO {
 
 	/** 执行锁操作 */
 	private Object doLock() {
-		final ProceedingJoinPoint joinPoint = this.joinPoint;
-		final EcDistributedLockDTO distributedLockDTO = this.distributedLockDTO;
 		return this.lockTemplate.lock(new EcDistributedLockCallback<Object>() {
 			@Override
-			public Object process() {
-				return proceed(joinPoint);
+			public Object process(EcDistributedLockResult lockResult) {
+				return resultProcessor.proceed(joinPoint, lockResult);
 			}
 
 			@Override
@@ -198,12 +228,10 @@ public class EcDistributedLockBO {
 
 	/** 执行try锁操作 */
 	private Object doTryLock() {
-		final ProceedingJoinPoint joinPoint = this.joinPoint;
-		final EcDistributedLockDTO distributedLockDTO = this.distributedLockDTO;
 		return this.lockTemplate.tryLock(new EcDistributedLockCallback<Object>() {
 			@Override
-			public Object process() {
-				return proceed(joinPoint);
+			public Object process(EcDistributedLockResult lockResult) {
+				return resultProcessor.proceed(joinPoint, lockResult);
 			}
 
 			@Override
@@ -213,13 +241,6 @@ public class EcDistributedLockBO {
 		});
 	}
 
-	private Object proceed(ProceedingJoinPoint pjp) {
-		try {
-			return pjp.proceed();
-		} catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
-		}
-	}
 
 	public EcDistributedLockDTO getDistributedLockDTO() {
 		return distributedLockDTO;

@@ -1,5 +1,7 @@
 package com.easy.cloud.core.distributedlock.aspect;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -9,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.distributedlock.pojo.bo.EcDistributedLockBO;
 import com.easy.cloud.core.distributedlock.template.selector.EcDistributedLockTemplateSelector;
+import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
+import com.easy.cloud.core.exception.dto.EcBaseServiceResultException;
 
 /**
  * 
@@ -21,27 +26,21 @@ import com.easy.cloud.core.distributedlock.template.selector.EcDistributedLockTe
  * @author daiqi 创建时间 2018年4月12日 下午1:51:49
  */
 @Aspect
-@Order(value = Integer.MIN_VALUE) // 锁的优先级最高
+@Order(value = 100) // 锁的优先级最高
 @Component
 public class EcDistributedLockAspect {
 	@Autowired
 	private EcDistributedLockTemplateSelector templateSelector;
 
-	@Pointcut("@annotation(com.easy.cloud.core.distributionlock.annotation.EcDistributedLock)")
+	@Pointcut("@annotation(com.easy.cloud.core.distributedlock.annotation.EcDistributedLock)")
 	public void distributedLockAspect() {
 		
 	}
 
 	@Around(value = "distributedLockAspect()")
-	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		try {
-			EcDistributedLockBO distributionLockBO = new EcDistributedLockBO(templateSelector, joinPoint);
-			distributionLockBO.buidDistributedLockDTOData();
-			return distributionLockBO.lock();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable{
+		EcDistributedLockBO distributionLockBO = new EcDistributedLockBO(templateSelector, joinPoint);
+		return distributionLockBO.buidDistributedLockDTOData().lock();
 	}
 
 	@AfterThrowing(value = "distributedLockAspect()", throwing = "ex")

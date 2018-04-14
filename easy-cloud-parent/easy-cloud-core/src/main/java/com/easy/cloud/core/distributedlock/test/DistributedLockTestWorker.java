@@ -1,4 +1,4 @@
-package com.easy.cloud.core.distributedlock.worker;
+package com.easy.cloud.core.distributedlock.test;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -6,8 +6,6 @@ import java.util.concurrent.CountDownLatch;
 import org.redisson.api.RedissonClient;
 
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
-import com.easy.cloud.core.distributedlock.service.DistributedLockTestService;
-
 public class DistributedLockTestWorker implements Runnable {
 
     private final CountDownLatch startSignal;

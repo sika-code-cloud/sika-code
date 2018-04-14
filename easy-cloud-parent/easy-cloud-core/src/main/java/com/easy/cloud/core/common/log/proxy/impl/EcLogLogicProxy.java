@@ -26,14 +26,14 @@ public class EcLogLogicProxy extends EcLogBaseProxy{
 
 	@Override
 	protected void initDqLogAnalysisBOData() {
-		ecLogAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerLogic(), ecLogDTO);
+		logAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerLogic(), logDTO);
 		super.logWrap("这是Logic的日志分析", "Logic日志分析数据初始化");
 	}
 
 	@Override
 	protected void doLogAnalysis() {
-		ecLogAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerLogic());
-		super.logWrap("这是Logic的日志分析", ecLogAnalysisBO.getDqLogAnalysisDTO());
+		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerLogic());
+		super.logWrap("这是Logic的日志分析", logAnalysisBO.getDqLogAnalysisDTO());
 	}
 	
 }

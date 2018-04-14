@@ -59,13 +59,13 @@ public class EcLogAspect {
 	 * @author daiqi 创建时间 2018年2月7日 下午7:21:56
 	 * @throws Throwable
 	 */
-	protected Object doLogLogic(ProceedingJoinPoint joinPoint) throws Throwable {
+	protected Object doLogLogic(ProceedingJoinPoint joinPoint) {
 		long beginTimeMillis = EcDateUtils.getCurrentTimeMillis();
 		Object targetReturnValue = null;
 		try {
 			targetReturnValue = joinPoint.proceed();
 		} catch (Throwable e) {
-			throw e;
+			throw new RuntimeException(e);
 		} finally {
 			long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
 //			构建日志逻辑对象--设置日志数据
@@ -73,7 +73,7 @@ public class EcLogAspect {
 			ecLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
 //			获取日志注解
 			EcLog ecLog = ecLogBO.getDqLog();
-			if (EcBaseUtils.isNotNull(ecLog) && EcBaseUtils.isNotNull(ecLog.dqLogProxyClass())){
+			if (EcBaseUtils.isNotNull(ecLog) && EcBaseUtils.isNotNull(ecLog.logProxyClass())){
 //				根据注解获取Log委托处理对象执行日志处理
 				EcLogUtils.getDqLogProxy(ecLog).handle(ecLogBO);
 			}

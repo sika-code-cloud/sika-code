@@ -1,4 +1,4 @@
-package com.easy.cloud.core.distributedlock.controller;
+package com.easy.cloud.core.distributedlock.test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,11 +9,11 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
-import com.easy.cloud.core.distributedlock.service.DistributedLockTestService;
-import com.easy.cloud.core.distributedlock.worker.DistributedLockTestWorker;
 
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
@@ -27,7 +27,8 @@ public class DistributedLockTestController {
     private DistributedLockTestService service;
 
     @RequestMapping(value = "distributedLockTest")
-    public String distributedLockTest(@RequestBody Map<String, Object> paramsMap) throws Exception {
+    @ResponseBody
+    public String distributedLockTest(@RequestParam Map<String, Object> paramsMap) throws Exception {
 
         RMap<String, Object> map = redissonClient.getMap("distributionTest");
         Map<String, Integer> countMap = (Map<String, Integer>) map.get("countMap");
@@ -48,9 +49,9 @@ public class DistributedLockTestController {
         person.put("id", Integer.parseInt(id));
         person.put("name", "张三");
         for (int i = 0; i < count; ++i) { // create and start threads
-        	Integer count1 = service.aspectTryLock(person);
-        	System.out.println("count:" + count1);
-//            new Thread(new DistributedLockTestWorker(startSignal, doneSignal, service, redissonClient,EcMapUtils.getString(paramsMap, "id"))).start();
+//        	Integer count1 = service.aspectTryLock(person);
+//        	System.out.println("count:" + count1);
+            new Thread(new DistributedLockTestWorker(startSignal, doneSignal, service, redissonClient,EcMapUtils.getString(paramsMap, "id"))).start();
         }
 //        new Thread(new Worker(startSignal, doneSignal, service, redissonClient,id)).start();
 

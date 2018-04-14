@@ -52,48 +52,28 @@ public class DistributedLockTest {
 	}
 
 	@Test
-	public void testDistributedLock() throws Exception {
-		JSONObject param = new JSONObject();
-		param.put("userId", "10");
-		String jsonstr = param.toString();
-		String uri = "/distributedLockTest/distributedLockTest"; 
-		System.out.println("================================请求入参：" + jsonstr);
-		RequestBuilder request = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.header("SESSIONNO", "").content(jsonstr);
-
-		MvcResult mvcResult = mockMvc.perform(request).andReturn();
-
-		int status = mvcResult.getResponse().getStatus();
-		String content = mvcResult.getResponse().getContentAsString();
-
-//		Assert.assertTrue("正确", status == 200);
-//		Assert.assertFalse("错误", status != 200);
-
-		System.out.println("返回结果：" + status);
-		System.out.println(content);
-
-	}
-	@Test
 	public void testDistributedLockParam() throws Exception {
 		JSONObject param = new JSONObject();
-		param.put("userId", "10");
+		param.put("id", "10");
 		String jsonstr = param.toString();
-		String userId = "10";
 		String uri = "/distributedLockTest/distributedLockTest"; 
 		System.out.println("================================请求入参：" + uri);
-		RequestBuilder request = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.header("SESSIONNO", "").content(jsonstr);
-
-		MvcResult mvcResult = mockMvc.perform(request).andReturn();
-
-		int status = mvcResult.getResponse().getStatus();
-		String content = mvcResult.getResponse().getContentAsString();
-
+		for (int i = 0 ; i < 3 ; ++i) {
+			Thread.sleep(3000);
+			RequestBuilder request = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_UTF8)
+					.header("SESSIONNO", "").content(jsonstr);
+			
+			MvcResult mvcResult = mockMvc.perform(request).andReturn();
+			
+			int status = mvcResult.getResponse().getStatus();
+			String content = mvcResult.getResponse().getContentAsString();
+			
 //		Assert.assertTrue("正确", status == 200);
 //		Assert.assertFalse("错误", status != 200);
-
-		System.out.println("返回结果：" + status);
-		System.out.println(content);
+			
+			System.out.println("返回结果：" + status);
+			System.out.println(content);
+		}
 		Thread.sleep(Long.MAX_VALUE);
 
 	}

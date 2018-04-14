@@ -1,4 +1,4 @@
-package com.easy.cloud.core.distributedlock.service;
+package com.easy.cloud.core.distributedlock.test;
 
 import java.util.Map;
 
@@ -12,11 +12,12 @@ import com.easy.cloud.core.common.log.annotation.EcLog;
 import com.easy.cloud.core.distributedlock.annotation.EcDistributedLock;
 import com.easy.cloud.core.distributedlock.callback.result.processor.EcDefaultDistributedLockResultProcessor;
 import com.easy.cloud.core.distributedlock.constant.EcDistributedLockConstant.EcDistributedLockNameDesc;
-import com.easy.cloud.core.distributedlock.processor.DistributedLockTestProcessor;
+import com.easy.cloud.core.distributedlock.constant.error.EcDistributedLockErrorCodeEnum;
+import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
 
 @Service(value = "distributedLockTestService1")
-@EcLog(logSwitch = false, logAnalysisSwitch = false)
-public class DistributedLockTestService extends EcBaseService{
+@EcLog(logSwitch = true, logAnalysisSwitch = false)
+public class DistributedLockTestService{
 	@Autowired
 	private RedissonClient redissonClient;
 
@@ -37,6 +38,9 @@ public class DistributedLockTestService extends EcBaseService{
 
 	@EcDistributedLock(param = "id",resultProcessorClass = EcDefaultDistributedLockResultProcessor.class, lockNamePre = EcDistributedLockNameDesc.LOCK_NAME_PRE_DEFAULT, tryLock = true)
 	public Integer aspectTryLock(Map<String, Object> person) {
+		if (true) {
+			throw new EcBaseBusinessException(EcDistributedLockErrorCodeEnum.LOCK_RESULT_CANT_NULL);
+		}
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 
 		Map<String, Integer> countMap = (Map<String, Integer>) map.get("countMap");

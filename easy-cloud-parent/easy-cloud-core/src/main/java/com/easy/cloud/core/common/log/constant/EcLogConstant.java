@@ -20,7 +20,7 @@ import com.easy.cloud.core.common.log.pojo.dto.EcLogAnalysisDTO;
  */
 public class EcLogConstant extends EcBaseConstant {
 	public static final Logger LOGGER = LoggerFactory.getLogger(EcLogConstant.class);
-
+	
 	/**
 	 * <p>
 	 * 日志记录方式静态常量类，包括控制台、文件、数据库、消息队列...
@@ -28,34 +28,49 @@ public class EcLogConstant extends EcBaseConstant {
 	 *
 	 * @author daiqi 创建时间 2018年2月7日 下午5:08:19
 	 */
-	public static class EcLogMode extends EcLogConstant {
+	public static enum EcLogModeEnum {
 		/** 日志记录方式---控制台---1 */
-		public static final int CONSOLE = 1;
+		CONSOLE(1, "控制台方式"),
 		/** 日志记录方式---文件---2 */
-		public static final int FILE = 2;
+		FILE(2, "控制台方式"),
 		/** 日志记录方式---数据库---3 */
-		public static final int DATABASE = 3;
+		DATABASE(3, "控制台方式"),
 		/** 日志记录方式---消息队列---4 */
-		public static final int MQ = 4;
+		MQ(4, "控制台方式"),;
+		private int type;
+		private String desc;
 
-		/** 日志记录方式是控制台 */
-		public static boolean isConsole(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, CONSOLE);
+		private EcLogModeEnum(int type, String desc) {
+			this.type = type;
+			this.desc = desc;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public String getDesc() {
+			return desc;
 		}
 
 		/** 日志记录方式是控制台 */
-		public static boolean isFile(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, FILE);
+		public static boolean isConsole(EcLogModeEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, CONSOLE);
+		}
+
+		/** 日志记录方式是控制台 */
+		public static boolean isFile(EcLogModeEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, FILE);
 		}
 
 		/** 日志记录方式是数据库 */
-		public static boolean isDatabase(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, DATABASE);
+		public static boolean isDatabase(EcLogModeEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, DATABASE);
 		}
 
 		/** 日志记录方式是消息队列 */
-		public static boolean isMq(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, MQ);
+		public static boolean isMq(EcLogModeEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, MQ);
 		}
 	}
 
@@ -66,34 +81,49 @@ public class EcLogConstant extends EcBaseConstant {
 	 *
 	 * @author daiqi 创建时间 2018年2月7日 下午5:08:19
 	 */
-	public static class EcLogLevel extends EcLogConstant {
+	public static enum EcLogLevelEnum {
 		/** 日志记录级别---debug---1 */
-		public static final int DEBUG = 1;
+		DEBUG(1, "控制台方式"),
 		/** 日志记录级别---info---2 */
-		public static final int INFO = 2;
+		INFO(2, "控制台方式"),
 		/** 日志记录级别---warn---3 */
-		public static final int WARN = 3;
+		WARN(3, "控制台方式"),
 		/** 日志记录级别---error---4 */
-		public static final int ERROR = 4;
+		ERROR(4, "控制台方式"),;
+		private int type;
+		private String desc;
 
-		/** 日志记录级别是debug */
-		public static boolean isDebug(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, DEBUG);
+		private EcLogLevelEnum(int type, String desc) {
+			this.type = type;
+			this.desc = desc;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public String getDesc() {
+			return desc;
 		}
 
 		/** 日志记录级别是debug */
-		public static boolean isInfo(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, INFO);
+		public static boolean isDebug(EcLogLevelEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, DEBUG);
+		}
+
+		/** 日志记录级别是debug */
+		public static boolean isInfo(EcLogLevelEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, INFO);
 		}
 
 		/** 日志记录级别是info */
-		public static boolean isWarn(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, WARN);
+		public static boolean isWarn(EcLogLevelEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, WARN);
 		}
 
 		/** 日志记录级别是error */
-		public static boolean isError(Integer dqLogLevel) {
-			return EcBaseUtils.equals(dqLogLevel, ERROR);
+		public static boolean isError(EcLogLevelEnum logLevel) {
+			return EcBaseUtils.equals(logLevel, ERROR);
 		}
 	}
 
@@ -104,42 +134,60 @@ public class EcLogConstant extends EcBaseConstant {
 	 *
 	 * @author daiqi 创建时间 2018年2月7日 下午5:08:19
 	 */
-	public static class EcLogType extends EcLogConstant {
+	public static enum EcLogTypeEnum {
+
 		/** 日志记录类型---其他---0 */
-		public static final int OTHER = 0;
+		OTHER(0, "其他"),
 		/** 日志记录类型---controller---1 */
-		public static final int CONTROLLER = 1;
+		CONTROLLER(1, "controller"),
 		/** 日志记录类型---logic---2 */
-		public static final int LOGIC = 2;
+		LOGIC(2, "logic"),
 		/** 日志记录类型---service---3 */
-		public static final int SERVICE = 3;
+		SERVICE(3, "service"),
 		/** 日志记录类型---repository---4 */
-		public static final int REPOSITORY = 4;
+		REPOSITORY(4, "repository");
+
+		private int type;
+		private String desc;
+
+		private EcLogTypeEnum(int type, String desc) {
+			this.type = type;
+			this.desc = desc;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
 		/** 记录日志是其他 */
-		public static boolean isOther(Integer dqLogType) {
-			return EcBaseUtils.equals(dqLogType, OTHER);
+		public static boolean isOther(EcLogTypeEnum logType) {
+			return EcBaseUtils.equals(logType, OTHER);
 		}
 
 		/** 记录日志类型是Controller */
-		public static boolean isController(Integer dqLogType) {
-			return EcBaseUtils.equals(dqLogType, CONTROLLER);
+		public static boolean isController(EcLogTypeEnum logType) {
+			return EcBaseUtils.equals(logType, CONTROLLER);
 		}
 
 		/** 记录日志类型是Logic */
-		public static boolean isLogic(Integer dqLogType) {
-			return EcBaseUtils.equals(dqLogType, LOGIC);
+		public static boolean isLogic(EcLogTypeEnum logType) {
+			return EcBaseUtils.equals(logType, LOGIC);
 		}
-		
+
 		/** 记录日志类型是Service */
-		public static boolean isService(Integer dqLogType) {
-			return EcBaseUtils.equals(dqLogType, SERVICE);
+		public static boolean isService(EcLogTypeEnum logType) {
+			return EcBaseUtils.equals(logType, SERVICE);
 		}
 
 		/** 记录日志类型是Repository */
-		public static boolean isRepository(Integer dqLogType) {
-			return EcBaseUtils.equals(dqLogType, REPOSITORY);
+		public static boolean isRepository(EcLogTypeEnum logType) {
+			return EcBaseUtils.equals(logType, REPOSITORY);
 		}
-		
+
 	}
 
 	/** 日志分析容器常量类 */
@@ -164,7 +212,7 @@ public class EcLogConstant extends EcBaseConstant {
 		public static Map<String, EcLogAnalysisDTO> getLogAnalysisContainerLogic() {
 			return DQ_LOG_ANALYSIS_CONTAINER_LOGIC;
 		}
-		
+
 		/** 获取日志分析容器---controller类型 */
 		public static Map<String, EcLogAnalysisDTO> getLogAnalysisContainerController() {
 			return DQ_LOG_ANALYSIS_CONTAINER_CONTROLLER;

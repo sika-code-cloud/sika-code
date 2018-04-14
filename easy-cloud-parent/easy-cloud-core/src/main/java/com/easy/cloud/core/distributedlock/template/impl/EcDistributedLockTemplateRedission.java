@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.distributedlock.annotation.EcDistributedLock;
 import com.easy.cloud.core.distributedlock.callback.EcDistributedLockCallback;
+import com.easy.cloud.core.distributedlock.callback.result.EcDistributedLockResult;
 import com.easy.cloud.core.distributedlock.constant.EcDistributedLockConstant.EcDistributedLockTypeEnum;
 import com.easy.cloud.core.distributedlock.constant.error.EcDistributedLockErrorCodeEnum;
 import com.easy.cloud.core.distributedlock.pojo.dto.EcDistributedLockDTO;
@@ -40,10 +41,11 @@ public class EcDistributedLockTemplateRedission implements EcDistributedLockTemp
 	public <T> T lock(EcDistributedLockCallback<T> callback) {
 		EcDistributedLockDTO distributedLockDTO = callback.getDistributedLockDTO();
 		EcDistributedLock distributedLock = distributedLockDTO.getDistributedLock();
+		EcLogUtils.info("锁的注解信息", distributedLock, logger);
 		RLock lock = getLock(distributedLockDTO.getLockNameFull(), distributedLock.lockType());
 		try {
 			lock.lock(distributedLock.leaseTime(), distributedLock.timeUnit());
-			return callback.process();
+			return callback.process(new EcDistributedLockResult(true));
 		} finally {
 			if (lock != null && lock.isLocked()) {
 				lock.unlock();
@@ -58,12 +60,8 @@ public class EcDistributedLockTemplateRedission implements EcDistributedLockTemp
 		RLock lock = getLock(distributedLockDTO.getLockNameFull(), distributedLock.lockType());
 		boolean isGainLock = false;
 		try {
-			isGainLock = lock.tryLock(distributedLock.leaseTime(), distributedLock.timeUnit()); 
-			if (isGainLock) {
-				return callback.process();
-			} else {
-				EcLogUtils.info("锁获取失败", isGainLock, logger);
-			}
+			isGainLock = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
+			return callback.process(new EcDistributedLockResult(isGainLock));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
