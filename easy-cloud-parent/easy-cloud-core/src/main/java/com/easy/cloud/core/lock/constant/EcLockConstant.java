@@ -93,8 +93,6 @@ public class EcLockConstant {
 	 * @author daiqi 创建时间 2018年4月13日 上午9:37:44
 	 */
 	public static enum EcLockTemplateTypeEnum {
-		/** 锁模板---jdk锁模板---提供内存锁处理方式 */
-		JDK(1, "jdk锁模板"),
 		/** 锁模板---redission锁模板 */
 		REDISSION(2, "redisson模板"),;
 
@@ -112,23 +110,6 @@ public class EcLockConstant {
 
 		public String getName() {
 			return name;
-		}
-
-		/**
-		 * 
-		 * <p>
-		 * 判断传入的枚举是否是JDK枚举
-		 * </p>
-		 *
-		 * @param lockTemplateTypeEnum
-		 * @return
-		 * @author daiqi 创建时间 2018年4月13日 上午9:45:26
-		 */
-		public static boolean isJdk(EcLockTemplateTypeEnum lockTemplateTypeEnum) {
-			if (EcBaseUtils.equals(JDK, lockTemplateTypeEnum)) {
-				return true;
-			}
-			return false;
 		}
 
 		/**
