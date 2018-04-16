@@ -20,7 +20,7 @@ public class EcStringConstant {
 		/** 符号---单and符号--- & */
 		public static final String SINGLE_AND = "&";
 		/** 符号常量---英文冒号--- : */
-	    public static final String SPLIT_COLON = ":";
+	    public static final String COLON = ":";
 	    /** 符号常量---英文小于号--- < */
 	    public static final String LESS_THAN = "<";
 	    /** 符号常量---英文大于号--- > */

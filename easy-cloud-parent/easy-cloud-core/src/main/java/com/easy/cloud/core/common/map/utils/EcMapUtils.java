@@ -5,9 +5,9 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.MapUtils;
-
 
 /**
  * 
@@ -18,32 +18,38 @@ public class EcMapUtils {
 
 	/** 初始化大小 */
 	private static final int INIT_SIZE = 128;
-	
+
 	/**
 	 * 
-	 * <p>创建含有初始化大小的HashMap对象</p>
+	 * <p>
+	 * 创建含有初始化大小的HashMap对象
+	 * </p>
 	 *
-	 * <pre>DqMapUtils.newHashMap()</pre>
+	 * <pre>
+	 * EcMapUtils.newHashMap()
+	 * </pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月18日 上午12:55:07
+	 * 		author daiqi 创建时间 2018年3月18日 上午12:55:07
 	 */
 	public static <T, V> Map<T, V> newHashMap() {
 		return new HashMap<>(INIT_SIZE);
 	}
-	
+
 	/**
 	 * 
-	 * <p>创建含有初始化大小的Hashtable对象</p>
+	 * <p>
+	 * 创建含有初始化大小的Hashtable对象
+	 * </p>
 	 *
-	 * <pre>DqMapUtils.newHashMap()</pre>
+	 * <pre>
+	 * EcMapUtils.newHashMap()
+	 * </pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月18日 上午12:55:07
+	 * 		author daiqi 创建时间 2018年3月18日 上午12:55:07
 	 */
 	public static <T, V> Map<T, V> newHashTable() {
 		return new Hashtable<>(INIT_SIZE);
@@ -51,28 +57,35 @@ public class EcMapUtils {
 
 	/**
 	 * 
-	 * <p>创建含有初始化大小的LinkedHashMap对象</p>
+	 * <p>
+	 * 创建含有初始化大小的LinkedHashMap对象
+	 * </p>
 	 *
-	 * <pre>DqMapUtils.newLinkedHashMap()</pre>
+	 * <pre>
+	 * EcMapUtils.newLinkedHashMap()
+	 * </pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月18日 上午12:55:07
+	 * 		author daiqi 创建时间 2018年3月18日 上午12:55:07
 	 */
 	public static <T, V> Map<T, V> newLinkedHashMap() {
 		return new LinkedHashMap<>(INIT_SIZE);
 	}
+
 	/**
 	 * 
-	 * <p>创建含有初始化大小的TreeMap对象</p>
+	 * <p>
+	 * 创建含有初始化大小的TreeMap对象
+	 * </p>
 	 *
-	 * <pre>DqMapUtils.newHashMap()</pre>
+	 * <pre>
+	 * EcMapUtils.newHashMap()
+	 * </pre>
 	 *
 	 * @return
 	 *
-	 * author daiqi
-	 * 创建时间  2018年3月18日 上午12:55:07
+	 * author daiqi 创建时间 2018年3月18日 上午12:55:07
 	 */
 	public static <T, V> Map<T, V> newTreeMap() {
 		return new TreeMap<>();
@@ -80,11 +93,25 @@ public class EcMapUtils {
 	/**
 	 * 
 	 * <p>
+	 * 创建含有初始化大小的ConcurrentHashMap对象
+	 * </p>
+	 *
+	 * @return
+	 * @author daiqi
+	 * @创建时间 2018年4月16日 上午10:32:36
+	 */
+	public static <T, V> Map<T, V> newConcurrentHashMap() {
+		return new ConcurrentHashMap<>(INIT_SIZE);
+	}
+	
+	/**
+	 * 
+	 * <p>
 	 * 判断map是否为空
 	 * </p>
 	 *
 	 * <pre>
-	 * DqMapUtils.isEmpty(null) = true
+	 * EcMapUtils.isEmpty(null) = true
 	 * </pre>
 	 *
 	 * @param map
@@ -108,8 +135,7 @@ public class EcMapUtils {
 	 * @param map
 	 * @param key
 	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年3月21日 下午8:33:51
+	 * @author daiqi 创建时间 2018年3月21日 下午8:33:51
 	 */
 	public static <T, V> boolean containsKey(Map<T, V> map, String key) {
 		if (isEmpty(map)) {
@@ -117,6 +143,7 @@ public class EcMapUtils {
 		}
 		return map.containsKey(key);
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -124,7 +151,7 @@ public class EcMapUtils {
 	 * </p>
 	 *
 	 * <pre>
-	 * DqMapUtils.isEmpty(null) = false
+	 * EcMapUtils.isEmpty(null) = false
 	 * </pre>
 	 *
 	 * @param map

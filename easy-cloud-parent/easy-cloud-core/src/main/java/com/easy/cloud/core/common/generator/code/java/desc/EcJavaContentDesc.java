@@ -64,7 +64,7 @@ public class EcJavaContentDesc extends EcJavaContentBaseDesc {
 
 	/** 获取Modifier列表的字符串 */
 	public String getModifiersStr() {
-		StringBuilder modifiersBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder modifiersBuild = EcStringUtils.newStringBuilder();
 		if (EcCollectionsUtils.isNotEmpty(getModifiers())) {
 			for (int i = 0; i < getModifiers().size(); ++i) {
 				modifiersBuild.append(getModifiers().get(i).getDesc());

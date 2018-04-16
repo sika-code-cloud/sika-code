@@ -93,7 +93,7 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(args)) {
 			return null;
 		}
-		StringBuilder argsBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder argsBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < args.size(); ++i) {
 			EcJavaFieldContentDesc arg = args.get(i);
 			if (EcBaseUtils.isNull(arg)) {
@@ -119,7 +119,7 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 
 	@Override
 	public String getJavaContentSign() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(getTypeDesc()).append(getName());
 		if (EcCollectionsUtils.isNotEmpty(args)) {
 			for (EcJavaFieldContentDesc arg : getArgs()) {

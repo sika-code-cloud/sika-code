@@ -191,7 +191,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的注释 */
 	protected String getClassComment() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getClassComment())) {
 			sb.append(generateJavaBaseDTO.getClassComment());
 		} else if (EcBaseUtils.isNotNull(databaseDataSources)){
@@ -205,7 +205,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的名称 */
 	protected String getClassName() {
-		StringBuilder classNameBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classNameBuild = EcStringUtils.newStringBuilder();
 		classNameBuild.append(EcStringUtils.capitalize(generateJavaBaseDTO.getClassBodyName()));
 		if (EcStringUtils.isNotEmpty(getClassNameEndWith())) {
 			classNameBuild.append(getClassNameEndWith());
@@ -223,7 +223,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	private String getPackageRelativePath() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getBasePackageName())) {
 			String basePackagePath = EcCodeGenerateUtils
 					.changePackageNameToPath(generateJavaBaseDTO.getBasePackageName());

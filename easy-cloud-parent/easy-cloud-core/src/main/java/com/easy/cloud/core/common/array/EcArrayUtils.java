@@ -76,7 +76,7 @@ public class EcArrayUtils {
 		if (EcArrayUtils.isEmpty(classArray)){
 			return null;
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append("[");
 		for(int i = 0 ; i < classArray.length ; ++i){
 			sb.append(classArray[i].getName());

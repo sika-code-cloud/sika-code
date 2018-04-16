@@ -23,7 +23,7 @@ public class EcGenerateCodeXmlUtils {
 	 * 创建时间    2018年3月30日 上午11:54:10
 	 */
 	public static String getMybatisColunmMappingPropertyByData(EcGenerateXmlMybatisData generateXmlMybatisData, String simpleTableName) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(simpleTableName).append(EcSymbol.STOP).append(generateXmlMybatisData.getColunmName());
 		sb.append(EcSymbol.SPACE).append(EcSymbol.EQUAL).append(EcSymbol.SPACE);
 		sb.append(EcSymbol.NUMBER).append(EcSymbol.LEFT_BRACES);
@@ -45,7 +45,7 @@ public class EcGenerateCodeXmlUtils {
 		if (EcCollectionsUtils.isEmpty(datas)) {
 			return null;
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < datas.size(); ++i) {
 			EcGenerateXmlMybatisData data = datas.get(i);
 			sb.append(EcGenerateCodeXmlUtils.getMybatisColunmMappingPropertyByData(data, tableSimpleName));

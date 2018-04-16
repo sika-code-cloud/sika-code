@@ -56,7 +56,7 @@ public class EcJavaAnnotationDesc extends EcJavaContentBaseDesc {
 
 	public String getParamsStr() {
 		if (EcCollectionsUtils.isNotEmpty(params)) {
-			StringBuilder paramsBuild = EcStringUtils.newStringBuilderDefault();
+			StringBuilder paramsBuild = EcStringUtils.newStringBuilder();
 			for (int i = 0; i < params.size(); ++i) {
 				EcJavaAnnotationParamDesc param = params.get(i);
 				Object value = param.getValue();

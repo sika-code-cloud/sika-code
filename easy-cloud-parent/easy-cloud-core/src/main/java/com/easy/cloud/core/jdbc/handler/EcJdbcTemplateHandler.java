@@ -171,7 +171,7 @@ public class EcJdbcTemplateHandler {
      */
     public static <T> List<T> findTList(StringBuilder sqlBuilder, List<Object> list, Class<T> clazz){
     	if(EcBaseUtils.isNull(sqlBuilder)){
-    		sqlBuilder = EcStringUtils.newStringBuilderDefault();
+    		sqlBuilder = EcStringUtils.newStringBuilder();
     	}
     	return findTList(sqlBuilder.toString(), list, clazz);
     }

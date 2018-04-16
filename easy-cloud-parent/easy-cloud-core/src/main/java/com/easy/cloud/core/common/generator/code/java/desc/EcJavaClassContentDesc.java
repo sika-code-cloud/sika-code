@@ -156,7 +156,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 下午2:11:31
 	 */
 	public String getClassHeaderStr() {
-		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilder();
 		String modifersStr = getModifiersStr();
 		if (EcStringUtils.isNotEmpty(modifersStr)) {
 			classHeaderBuild.append(modifersStr);
@@ -181,7 +181,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(extendsParentClasss)) {
 			return null;
 		}
-		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < extendsParentClasss.size(); ++i) {
 			EcJavaContentDesc extendsParentClass = extendsParentClasss.get(i);
 			extendsParentClassBuild.append(extendsParentClass.getSimpleClassTypeFullStr());
@@ -196,7 +196,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(implementsInterfaces)) {
 			return null;
 		}
-		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < implementsInterfaces.size(); ++i) {
 			EcJavaImplInterfaceContentDesc implementsInterface = implementsInterfaces.get(i);
 			implementsInterfaceBuild.append(implementsInterface.getSimpleClassTypeFullStr());

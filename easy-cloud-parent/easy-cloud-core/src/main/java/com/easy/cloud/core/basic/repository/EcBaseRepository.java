@@ -107,8 +107,8 @@ public class EcBaseRepository {
     public String getBaseResultSql(Class<?> entityClazz){
     	String tableName = EcBaseUtils.getTableNameByEntityClass(entityClazz);
     	
-    	StringBuilder sql = EcStringUtils.newStringBuilderDefault();
-    	String commonPrefix = EcStringUtils.newStringBuilderDefault().append(",").append(tableName).append(ORIGIN_STR).toString(); 
+    	StringBuilder sql = EcStringUtils.newStringBuilder();
+    	String commonPrefix = EcStringUtils.newStringBuilder().append(",").append(tableName).append(ORIGIN_STR).toString(); 
     	sql.append(tableName).append(ORIGIN_STR).append("id");
     	sql.append(commonPrefix).append("create_by createBy");
     	sql.append(commonPrefix).append("update_by updateBy");

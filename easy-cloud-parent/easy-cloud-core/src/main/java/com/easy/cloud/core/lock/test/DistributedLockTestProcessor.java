@@ -1,4 +1,4 @@
-package com.easy.cloud.core.distributedlock.processor;
+package com.easy.cloud.core.lock.test;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -15,7 +15,7 @@ public class DistributedLockTestProcessor extends EcBaseLockResultProcessor{
 
 	@Override
 	protected Object fail(ProceedingJoinPoint pjp, EcLockResult distributedLockResult) {
-		throw new RuntimeException("");
+		throw new RuntimeException("锁获取失败");
 	}
 
 }

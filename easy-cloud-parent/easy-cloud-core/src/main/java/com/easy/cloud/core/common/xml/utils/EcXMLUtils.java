@@ -132,7 +132,7 @@ public class EcXMLUtils {
 	 * @author daiqi 创建时间 2018年2月23日 下午12:51:44
 	 */
 	public static String getChildrenText(List<Element> children) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (!children.isEmpty()) {
 			Iterator<Element> it = children.iterator();
 			while (it.hasNext()) {
@@ -193,7 +193,7 @@ public class EcXMLUtils {
 	 * @author daiqi 创建时间 2018年2月23日 下午12:52:45
 	 */
 	public static String getXmlStrFromMap(Map<String, Object> parameters) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append("<xml>");
 		for (String key : parameters.keySet()) {
 			if (EcStringUtils.equalsIgnoreCase("attach", key) || EcStringUtils.equalsIgnoreCase("body", key)

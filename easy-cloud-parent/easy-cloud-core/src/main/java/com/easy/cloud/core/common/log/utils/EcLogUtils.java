@@ -43,15 +43,15 @@ public class EcLogUtils {
 		if (EcArrayUtils.isEmpty(keys)) {
 			return null;
 		}
-		StringBuilder keyBuilder = EcStringUtils.newStringBuilderDefault();
+		StringBuilder keyBuilder = EcStringUtils.newStringBuilder();
 
 		for (String key : keys) {
 			if (EcStringUtils.isNotEmpty(key)) {
-				keyBuilder.append(EcStringUtils.SPLIT_COLON).append(key);
+				keyBuilder.append(EcStringUtils.COLON).append(key);
 			}
 		}
 		String keyStr = keyBuilder.toString();
-		return EcStringUtils.substring(keyStr, EcStringUtils.indexOf(keyStr, EcStringUtils.SPLIT_COLON) + 1);
+		return EcStringUtils.substring(keyStr, EcStringUtils.indexOf(keyStr, EcStringUtils.COLON) + 1);
 	}
 	
 	/**
