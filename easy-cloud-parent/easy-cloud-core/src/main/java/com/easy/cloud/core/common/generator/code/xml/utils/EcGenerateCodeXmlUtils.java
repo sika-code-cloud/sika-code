@@ -23,11 +23,11 @@ public class EcGenerateCodeXmlUtils {
 	 * 创建时间    2018年3月30日 上午11:54:10
 	 */
 	public static String getMybatisColunmMappingPropertyByData(EcGenerateXmlMybatisData generateXmlMybatisData, String simpleTableName) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(simpleTableName).append(EcSymbol.STOP).append(generateXmlMybatisData.getColunmName());
-		sb.append(EcSymbol.EMPTY).append(EcSymbol.EQUAL).append(EcSymbol.EMPTY);
+		sb.append(EcSymbol.SPACE).append(EcSymbol.EQUAL).append(EcSymbol.SPACE);
 		sb.append(EcSymbol.NUMBER).append(EcSymbol.LEFT_BRACES);
-		sb.append(generateXmlMybatisData.getPropertyName()).append(EcSymbol.COMMA).append(EcSymbol.EMPTY);
+		sb.append(generateXmlMybatisData.getPropertyName()).append(EcSymbol.COMMA).append(EcSymbol.SPACE);
 		sb.append(EcMyBatisAttrKey.JDBC_TYPE).append(EcSymbol.EQUAL).append(generateXmlMybatisData.getColunmType());
 		sb.append(EcSymbol.RIGHT_BRACES);
 		return sb.toString();
@@ -45,7 +45,7 @@ public class EcGenerateCodeXmlUtils {
 		if (EcCollectionsUtils.isEmpty(datas)) {
 			return null;
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < datas.size(); ++i) {
 			EcGenerateXmlMybatisData data = datas.get(i);
 			sb.append(EcGenerateCodeXmlUtils.getMybatisColunmMappingPropertyByData(data, tableSimpleName));

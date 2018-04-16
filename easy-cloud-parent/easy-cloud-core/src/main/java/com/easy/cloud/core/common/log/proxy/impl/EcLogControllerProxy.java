@@ -21,20 +21,20 @@ public class EcLogControllerProxy extends EcLogBaseProxy{
 
 	@Override
 	protected void logDataExtraAfter() {
-		super.log("请求路径", ecLogDTO.getRequestPath());
+		super.log("请求路径", logDTO.getRequestPath());
 		super.log("这是控制层的日志哦", "啦啦啦啦这是控制层的日志哦之后啦");
 	}
 
 	@Override
 	protected void initDqLogAnalysisBOData() {
-		ecLogAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerController(), ecLogDTO);
+		logAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerController(), logDTO);
 		super.logWrap("这是controller的日志分析", "controller日志分析数据初始化");
 	}
 
 	@Override
 	protected void doLogAnalysis() {
-		ecLogAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerController());
-		super.logWrap("这是controller的日志分析", ecLogAnalysisBO.getDqLogAnalysisDTO());
+		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerController());
+		super.logWrap("这是controller的日志分析", logAnalysisBO.getDqLogAnalysisDTO());
 	}
 	
 	

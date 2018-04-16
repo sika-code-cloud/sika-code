@@ -156,22 +156,22 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 下午2:11:31
 	 */
 	public String getClassHeaderStr() {
-		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilder();
 		String modifersStr = getModifiersStr();
 		if (EcStringUtils.isNotEmpty(modifersStr)) {
 			classHeaderBuild.append(modifersStr);
 		}
 		if (EcStringUtils.isNotEmpty(getName())) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append(getSimpleClassTypeFullStr());
+			classHeaderBuild.append(EcSymbol.SPACE).append(getSimpleClassTypeFullStr());
 		}
 		// 设置继承的父类字符串		
 		String extendsParentClasssStr = getExtendsParentClasssStr();
 		if (EcStringUtils.isNotEmpty(extendsParentClasssStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("extends").append(EcSymbol.EMPTY).append(extendsParentClasssStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("extends").append(EcSymbol.SPACE).append(extendsParentClasssStr);
 		}
 		String implementsInterfacesStr = getImplementsInterfacesStr();
 		if (EcStringUtils.isNotEmpty(implementsInterfacesStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("implements").append(EcSymbol.EMPTY).append(implementsInterfacesStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("implements").append(EcSymbol.SPACE).append(implementsInterfacesStr);
 		}
 		return classHeaderBuild.toString();
 	}
@@ -181,7 +181,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(extendsParentClasss)) {
 			return null;
 		}
-		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < extendsParentClasss.size(); ++i) {
 			EcJavaContentDesc extendsParentClass = extendsParentClasss.get(i);
 			extendsParentClassBuild.append(extendsParentClass.getSimpleClassTypeFullStr());
@@ -196,7 +196,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(implementsInterfaces)) {
 			return null;
 		}
-		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < implementsInterfaces.size(); ++i) {
 			EcJavaImplInterfaceContentDesc implementsInterface = implementsInterfaces.get(i);
 			implementsInterfaceBuild.append(implementsInterface.getSimpleClassTypeFullStr());

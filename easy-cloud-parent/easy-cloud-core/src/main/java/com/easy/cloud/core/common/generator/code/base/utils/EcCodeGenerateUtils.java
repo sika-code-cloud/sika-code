@@ -26,7 +26,7 @@ public class EcCodeGenerateUtils {
 	 * 创建时间    2018年4月2日 上午9:47:17
 	 */
 	public static String getFullClassType(String fullPackageName, String simpleClassType) {
-		StringBuilder build = EcStringUtils.newStringBuilderDefault();
+		StringBuilder build = EcStringUtils.newStringBuilder();
 		build.append(fullPackageName).append(EcSymbol.STOP).append(simpleClassType);
 		return build.toString();
 	}
@@ -47,7 +47,7 @@ public class EcCodeGenerateUtils {
 	 */
 	public static String changePackageNameToPath(String packegeName) {
 		String[] packageNameArr = packegeName.split("\\.");
-		StringBuilder packagePathBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder packagePathBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0 ; i < packageNameArr.length; ++i) {
 			String tempModelBasePackageName = packageNameArr[i];
 			packagePathBuild.append(tempModelBasePackageName);
@@ -72,8 +72,8 @@ public class EcCodeGenerateUtils {
 	 * 创建时间    2018年3月22日 下午2:14:51
 	 */
 	public static String getDatabaseFullUrl(String baseUrl, String port, String databaseName) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
-		return sb.append(baseUrl).append(EcSymbol.SPLIT_COLON).append(port).append(EcSymbol.FORWARD_SLASH).append(databaseName).toString();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
+		return sb.append(baseUrl).append(EcSymbol.COLON).append(port).append(EcSymbol.FORWARD_SLASH).append(databaseName).toString();
 	}
 	
 	/**

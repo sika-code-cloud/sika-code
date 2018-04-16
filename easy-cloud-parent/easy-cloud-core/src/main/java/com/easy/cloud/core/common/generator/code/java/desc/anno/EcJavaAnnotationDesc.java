@@ -56,12 +56,12 @@ public class EcJavaAnnotationDesc extends EcJavaContentBaseDesc {
 
 	public String getParamsStr() {
 		if (EcCollectionsUtils.isNotEmpty(params)) {
-			StringBuilder paramsBuild = EcStringUtils.newStringBuilderDefault();
+			StringBuilder paramsBuild = EcStringUtils.newStringBuilder();
 			for (int i = 0; i < params.size(); ++i) {
 				EcJavaAnnotationParamDesc param = params.get(i);
 				Object value = param.getValue();
 				paramsBuild.append(param.getName());
-				paramsBuild.append(EcSymbol.EMPTY).append(EcSymbol.EQUAL).append(EcSymbol.EMPTY);
+				paramsBuild.append(EcSymbol.SPACE).append(EcSymbol.EQUAL).append(EcSymbol.SPACE);
 				if (param.getValue() instanceof String) {
 					paramsBuild.append(EcSymbol.DOUBLE_QUOTES).append(value).append(EcSymbol.DOUBLE_QUOTES);
 				} else {
@@ -69,7 +69,7 @@ public class EcJavaAnnotationDesc extends EcJavaContentBaseDesc {
 				}
 				if (i < params.size() - 1) {
 					paramsBuild.append(EcSymbol.COMMA);
-					paramsBuild.append(EcSymbol.EMPTY);
+					paramsBuild.append(EcSymbol.SPACE);
 				}
 			}
 			return paramsBuild.toString();

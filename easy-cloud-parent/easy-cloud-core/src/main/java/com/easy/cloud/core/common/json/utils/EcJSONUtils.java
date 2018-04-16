@@ -7,6 +7,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.config.EcJsonConfig;
 import com.easy.cloud.core.common.json.filter.EcJsonPropertyFilter;
@@ -21,6 +22,29 @@ import com.easy.cloud.core.common.string.utils.EcStringUtils;
  *
  */
 public class EcJSONUtils {
+	
+	/** 将Object对象转换为json字符串，若不能转换将String.valueOf(obj) */
+	public static String toJSONString(Object obj) {
+		if (EcBaseUtils.isNull(null)) {
+			return null;
+		}
+		if (obj instanceof String) {
+			return obj.toString();
+		}
+		EcJsonPropertyFilter propertyFilter = new EcJsonPropertyFilter(EcJsonConfig.getJsonFilterDTOMap());
+		try {
+			return JSONObject.toJSONString(obj, propertyFilter);
+		} catch (JSONException e) {
+			return String.valueOf(obj);
+		} catch (UnsupportedOperationException e) {
+			return String.valueOf(obj);
+		} catch (IllegalStateException e) {
+			return String.valueOf(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * 将obj转化为class对应的泛型对象
 	 * 

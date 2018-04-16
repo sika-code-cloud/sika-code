@@ -28,16 +28,17 @@ public class EcLogAnalysisBO {
 
 	private EcLogAnalysisDTO ecLogAnalysisDTO;
 
-	public static EcLogAnalysisBO newInstanceFromContainer(Map<String, EcLogAnalysisDTO> containerMap, EcLogDTO ecLogDTO) {
+	public static EcLogAnalysisBO newInstanceFromContainer(Map<String, EcLogAnalysisDTO> containerMap,
+			EcLogDTO ecLogDTO) {
 		EcLogAnalysisDTO ecLogAnalysisDTO = EcLogAnalysisUtils.getDqLogAnalysisDTOFromContainer(containerMap, ecLogDTO);
 		return newInstance(ecLogAnalysisDTO, ecLogDTO);
 	}
-	
+
 	public static EcLogAnalysisBO newInstanceFromRedis(EcLogDTO ecLogDTO) {
 		EcLogAnalysisDTO ecLogAnalysisDTO = EcLogAnalysisUtils.getDqLogAnalysisDTOFromRedis(ecLogDTO);
 		return newInstance(ecLogAnalysisDTO, ecLogDTO);
 	}
-	
+
 	public static EcLogAnalysisBO newInstance(EcLogAnalysisDTO ecLogAnalysisDTO, EcLogDTO ecLogDTO) {
 		if (EcBaseUtils.isNull(ecLogAnalysisDTO)) {
 			return new EcLogAnalysisBO(ecLogDTO);
@@ -60,30 +61,31 @@ public class EcLogAnalysisBO {
 
 	/** 构建日志分析数据---必须对dqLogAnalysisDTO中的dqLogDTO成员属性进行初始化后才能调用该方法 */
 	public EcLogAnalysisBO buildDqLogAnalysisData() {
-		if (EcBaseUtils.isNull(this.ecLogAnalysisDTO)) {
-
+		try {
+			EcLogDTO ecLogDTO = this.ecLogAnalysisDTO.getLogDTO();
+			if (EcBaseUtils.isNull(ecLogDTO)) {
+				throw new EcBaseBusinessException(EcLogErrorCodeEnum.DQ_LOG_DTO_CANT_NULL);
+			}
+			this.ecLogAnalysisDTO.buildRunTimeMinllisTotal().buildRunTimesTotal().buildRunTimeMinllisAvg();
+			this.ecLogAnalysisDTO.buildRunTimeMinllisMin().buildRunTimeMinllisMax().buildLogType();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		EcLogDTO ecLogDTO = this.ecLogAnalysisDTO.getDqLogDTO();
-		if (EcBaseUtils.isNull(ecLogDTO)) {
-			throw EcBaseBusinessException.newInstance(EcLogErrorCodeEnum.DQ_LOG_DTO_CANT_NULL);
-		}
-		this.ecLogAnalysisDTO.buildRunTimeMinllisTotal().buildRunTimesTotal().buildRunTimeMinllisAvg();
-		this.ecLogAnalysisDTO.buildRunTimeMinllisMin().buildRunTimeMinllisMax().buildLogType();
 		return this;
 	}
-	
-	public EcLogAnalysisBO setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer){
+
+	public EcLogAnalysisBO setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer) {
 		EcLogAnalysisUtils.setDqLogAnalysisDTOToContainer(dqLogAnalysisDTOContainer, ecLogAnalysisDTO);
 		return this;
 	}
-	
-	public EcLogAnalysisBO setDqLogAnalysisDTOToRedis(){
+
+	public EcLogAnalysisBO setDqLogAnalysisDTOToRedis() {
 		EcLogAnalysisUtils.setDqLogAnalysisDTOToRedis(ecLogAnalysisDTO);
 		return this;
 	}
-	
+
 	private EcLogAnalysisBO buildDqLogDTO(EcLogDTO ecLogDTO) {
-		this.ecLogAnalysisDTO.setDqLogDTO(ecLogDTO);
+		this.ecLogAnalysisDTO.setLogDTO(ecLogDTO);
 		return this;
 	}
 

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.log.annotation.EcLog;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevel;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogType;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
@@ -20,7 +20,7 @@ import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
  *
  */
 @Repository
-@EcLog(dqLogLevel = EcLogLevel.INFO, dqLogProxyClass = EcLogRepositoryProxy.class, dqLogType = EcLogType.REPOSITORY)
+@EcLog(logLevel = EcLogLevelEnum.INFO, logProxyClass = EcLogRepositoryProxy.class, logType = EcLogTypeEnum.REPOSITORY)
 public class EcBaseRepository {
 	/** 原点字符串*/
 	protected static final String ORIGIN_STR = ".";
@@ -107,8 +107,8 @@ public class EcBaseRepository {
     public String getBaseResultSql(Class<?> entityClazz){
     	String tableName = EcBaseUtils.getTableNameByEntityClass(entityClazz);
     	
-    	StringBuilder sql = EcStringUtils.newStringBuilderDefault();
-    	String commonPrefix = EcStringUtils.newStringBuilderDefault().append(",").append(tableName).append(ORIGIN_STR).toString(); 
+    	StringBuilder sql = EcStringUtils.newStringBuilder();
+    	String commonPrefix = EcStringUtils.newStringBuilder().append(",").append(tableName).append(ORIGIN_STR).toString(); 
     	sql.append(tableName).append(ORIGIN_STR).append("id");
     	sql.append(commonPrefix).append("create_by createBy");
     	sql.append(commonPrefix).append("update_by updateBy");
