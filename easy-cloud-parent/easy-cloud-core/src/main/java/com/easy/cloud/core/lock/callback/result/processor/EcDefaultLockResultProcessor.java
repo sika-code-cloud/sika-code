@@ -30,6 +30,7 @@ public class EcDefaultLockResultProcessor extends EcBaseLockResultProcessor {
 	 * @创建时间 2018年4月14日 上午10:31:40
 	 */
 	protected Object success(ProceedingJoinPoint pjp, EcLockResult distributedLockResult) {
+		System.out.println("=============调用默认的结果处理方法洛");
 		return super.doProceed(pjp);
 	}
 

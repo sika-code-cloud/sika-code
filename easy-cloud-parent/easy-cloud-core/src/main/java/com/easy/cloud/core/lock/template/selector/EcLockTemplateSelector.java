@@ -22,8 +22,6 @@ import com.easy.cloud.core.lock.template.EcLockTemplate;
 public class EcLockTemplateSelector {
 	@Resource(name = "redissionLockTemplate")
 	private EcLockTemplate redissionLockTemplate;
-	@Resource(name = "jdkLockTemplate")
-	private EcLockTemplate jdkLockTemplate;
 
 	/**
 	 * 

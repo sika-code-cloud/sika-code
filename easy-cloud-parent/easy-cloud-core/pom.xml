@@ -29,6 +29,7 @@
 		<zxing.version>3.3.1</zxing.version>
 		<!-- apache.commons包依赖 -->
 		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
+		<!-- redisson版本依赖 -->
 		<redisson.version>3.6.4</redisson.version>
 		
 		<!-- 版本依赖管理 end -->
