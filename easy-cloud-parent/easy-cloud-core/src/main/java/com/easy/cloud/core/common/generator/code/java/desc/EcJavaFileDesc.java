@@ -68,7 +68,7 @@ public class EcJavaFileDesc extends EcFileDesc {
 		if (EcStringUtils.isEmpty(projectFullPath)) {
 			throw new EcBaseBusinessException(EcCodeGenerateErrorCodeEnum.GET_PROJECT_PATH_FAIL);
 		}
-		StringBuilder targetPathBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder targetPathBuild = EcStringUtils.newStringBuilder();
 		targetPathBuild.append(projectFullPath).append(EcSymbol.BACK_SLASH);
 		targetPathBuild.append(sourceCodeRelativePath).append(EcSymbol.BACK_SLASH);
 		targetPathBuild.append(packageRelativePath).append(EcSymbol.BACK_SLASH);

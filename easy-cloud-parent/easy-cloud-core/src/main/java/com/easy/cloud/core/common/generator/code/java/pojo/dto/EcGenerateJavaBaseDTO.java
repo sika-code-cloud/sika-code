@@ -96,7 +96,7 @@ public class EcGenerateJavaBaseDTO extends EcGenerateBaseDTO{
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	public String buildFullPackageName(String subModulePackageName) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(getBasePackageName())) {
 			sb.append(getBasePackageName()).append(EcSymbol.STOP);
 		}

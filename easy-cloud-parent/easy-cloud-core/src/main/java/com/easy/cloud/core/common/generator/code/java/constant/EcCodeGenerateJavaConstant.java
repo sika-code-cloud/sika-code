@@ -183,7 +183,7 @@ public class EcCodeGenerateJavaConstant {
 		public boolean isIgnoreField(String fieldName) {
 			// 移除下划线的小写字符串
 			String rmOnderLineLowerCaseStr = EcStringUtils
-					.lowerCase(EcStringUtils.replace(fieldName, EcSymbol.UNDER_LINE, EcStringUtils.EMPTY));
+					.lowerCase(EcStringUtils.replace(fieldName, EcSymbol.UNDER_LINE, EcSymbol.EMPTY));
 			return EcBaseUtils.isExistConstantValue(this.getClass(), rmOnderLineLowerCaseStr);
 		}
 	}

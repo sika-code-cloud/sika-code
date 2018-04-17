@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.constant.EcFileConstant.EcFileSuffix;
 import com.easy.cloud.core.common.file.pojo.desc.EcFileContentBaseDesc;
@@ -44,6 +45,13 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 		javaClassContentDesc = new EcJavaClassContentDesc(generateRule);
 		
 		initData();
+	}
+	
+	public void buildEcJavaClassContentDesc(EcJavaClassContentDesc javaClassContentDesc) {
+		if (EcBaseUtils.isNotNull(this.javaClassContentDesc)) {
+			javaClassContentDesc.setGenerateRule(this.javaClassContentDesc.getGenerateRule());
+		}
+		this.javaClassContentDesc = javaClassContentDesc;
 	}
 
 	private void initData() {
@@ -183,9 +191,11 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的注释 */
 	protected String getClassComment() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getClassComment())) {
 			sb.append(generateJavaBaseDTO.getClassComment());
+		} else if (EcBaseUtils.isNotNull(databaseDataSources)){
+			sb.append(databaseDataSources.getTableComment());
 		}
 		if (EcStringUtils.isNotEmpty(getClassCommentEndWith())) {
 			sb.append(getClassCommentEndWith());
@@ -195,7 +205,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的名称 */
 	protected String getClassName() {
-		StringBuilder classNameBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classNameBuild = EcStringUtils.newStringBuilder();
 		classNameBuild.append(EcStringUtils.capitalize(generateJavaBaseDTO.getClassBodyName()));
 		if (EcStringUtils.isNotEmpty(getClassNameEndWith())) {
 			classNameBuild.append(getClassNameEndWith());
@@ -213,7 +223,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	private String getPackageRelativePath() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getBasePackageName())) {
 			String basePackagePath = EcCodeGenerateUtils
 					.changePackageNameToPath(generateJavaBaseDTO.getBasePackageName());

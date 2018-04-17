@@ -117,6 +117,9 @@ public class EcLogBO {
 	private EcLogBO buildRequestPath(){
 		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+        if (EcBaseUtils.isNull(sra)) {
+        	return this;
+        }
         HttpServletRequest request = sra.getRequest();
 
         String requestPath = request.getServletPath().toString();

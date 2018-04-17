@@ -55,7 +55,7 @@ public abstract class EcJavaContentBaseDesc extends EcFileContentBaseDesc {
 
 	/** 获取简称类类型的完整字符串包括泛型参数 */
 	public String getSimpleClassTypeFullStr() {
-		StringBuilder build = EcStringUtils.newStringBuilderDefault();
+		StringBuilder build = EcStringUtils.newStringBuilder();
 		build.append(this.getSimpleClassType());
 		String genericitysStr = getGenericitysStr();
 		if (EcStringUtils.isNotEmpty(genericitysStr)) {
@@ -66,14 +66,14 @@ public abstract class EcJavaContentBaseDesc extends EcFileContentBaseDesc {
 
 	/** 获取泛型列表字符串 */
 	public String getGenericitysStr() {
-		StringBuilder genericitysBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder genericitysBuild = EcStringUtils.newStringBuilder();
 		if (EcCollectionsUtils.isNotEmpty(getGenericitys())) {
 			genericitysBuild.append(EcSymbol.LESS_THAN);
 			for (int i = 0; i < getGenericitys().size(); ++i) {
 				genericitysBuild.append(getGenericitys().get(i).getSimpleClassType());
 				if (i < getGenericitys().size() - 1) {
 					genericitysBuild.append(EcSymbol.COMMA);
-					genericitysBuild.append(EcSymbol.EMPTY);
+					genericitysBuild.append(EcSymbol.SPACE);
 				}
 			}
 			genericitysBuild.append(EcSymbol.GREATER_THAN);

@@ -94,7 +94,7 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 	}
 	
 	public String getFullMappersConfigName() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(getMappersConfigName());
 		sb.append(EcSymbol.STOP).append(EcFileSuffix.XML);
 		return sb.toString();
@@ -104,7 +104,7 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 	}
 	/** 获取表xml的相对路径 */
 	public String getTableXmlRelativePath() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(getSubPath()).append(EcSymbol.FORWARD_SLASH);
 		sb.append(getTableName()).append(EcSymbol.STOP).append(EcFileSuffix.XML);
 		return sb.toString();
@@ -130,7 +130,7 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 		if (EcCollectionsUtils.isEmpty(datas)) {
 			return null;
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < datas.size(); ++i) {
 			EcGenerateXmlMybatisData data = datas.get(i);
 			sb.append(getTableSimpleName());

@@ -1,6 +1,7 @@
 package com.easy.cloud.core.basic.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -188,13 +189,51 @@ public class EcBaseUtils {
 		if (isNull(constantClazz) || isNull(constantValue)) {
 			return false;
 		}
-		Map<String, Object> nameAndValues = getFieldNameAndValues(constantClazz);
+		Map<String, Object> nameAndValues = null;
+		if (constantClazz.isEnum()) {
+			nameAndValues = getEnumsByEnumClass(constantClazz);
+		} else {
+			nameAndValues = getFieldNameAndValues(constantClazz);
+		}
+		if (EcMapUtils.isEmpty(nameAndValues)) {
+			return false;
+		}
 		for (Object value : nameAndValues.values()) {
 			if (EcBaseUtils.equals(value, constantValue)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 获取指定枚举class中所有的枚举类放入map中
+	 * </p>
+	 *
+	 * @param targetClass
+	 * @return
+	 * @author daiqi 创建时间 2018年4月13日 上午10:09:21
+	 */
+	public static Map<String, Object> getEnumsByEnumClass(Class<?> targetClass) {
+		Map<String, Object> eunmKeyAndValue = EcMapUtils.newHashMap();
+		// 不是枚举类型直接返回
+		if (!targetClass.isEnum()) {
+			return eunmKeyAndValue;
+		}
+		try {
+			// 这里是获得枚举的遍历方法 即:枚举对象.values();一样
+			Method method = targetClass.getMethod("values");
+			// 这里获取所有的枚举对象 method.invoke(null)也可写成method.invoke(null,null)
+			Enum<?> inter[] = (Enum[]) method.invoke(null);
+			for (Enum<?> enumMessage : inter) {
+				eunmKeyAndValue.put(enumMessage.toString(), enumMessage);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return eunmKeyAndValue;
 	}
 
 	/**

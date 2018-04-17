@@ -21,7 +21,6 @@ import com.easy.cloud.core.common.generator.code.base.utils.EcCodeGenerateUtils;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcMethodTypeEnum;
 import com.easy.cloud.core.common.generator.code.java.constant.EcCodeGenerateJavaConstant.EcModifierMappingEnum;
 import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationDesc;
-import com.easy.cloud.core.common.generator.code.java.desc.anno.EcJavaAnnotationParamDesc;
 import com.easy.cloud.core.common.generator.code.java.rule.EcGenerateJavaClassRule;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
@@ -157,22 +156,22 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 下午2:11:31
 	 */
 	public String getClassHeaderStr() {
-		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classHeaderBuild = EcStringUtils.newStringBuilder();
 		String modifersStr = getModifiersStr();
 		if (EcStringUtils.isNotEmpty(modifersStr)) {
 			classHeaderBuild.append(modifersStr);
 		}
 		if (EcStringUtils.isNotEmpty(getName())) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append(getSimpleClassTypeFullStr());
+			classHeaderBuild.append(EcSymbol.SPACE).append(getSimpleClassTypeFullStr());
 		}
 		// 设置继承的父类字符串		
 		String extendsParentClasssStr = getExtendsParentClasssStr();
 		if (EcStringUtils.isNotEmpty(extendsParentClasssStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("extends").append(EcSymbol.EMPTY).append(extendsParentClasssStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("extends").append(EcSymbol.SPACE).append(extendsParentClasssStr);
 		}
 		String implementsInterfacesStr = getImplementsInterfacesStr();
 		if (EcStringUtils.isNotEmpty(implementsInterfacesStr)) {
-			classHeaderBuild.append(EcSymbol.EMPTY).append("implements").append(EcSymbol.EMPTY).append(implementsInterfacesStr);
+			classHeaderBuild.append(EcSymbol.SPACE).append("implements").append(EcSymbol.SPACE).append(implementsInterfacesStr);
 		}
 		return classHeaderBuild.toString();
 	}
@@ -182,7 +181,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(extendsParentClasss)) {
 			return null;
 		}
-		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder extendsParentClassBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < extendsParentClasss.size(); ++i) {
 			EcJavaContentDesc extendsParentClass = extendsParentClasss.get(i);
 			extendsParentClassBuild.append(extendsParentClass.getSimpleClassTypeFullStr());
@@ -197,7 +196,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(implementsInterfaces)) {
 			return null;
 		}
-		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder implementsInterfaceBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < implementsInterfaces.size(); ++i) {
 			EcJavaImplInterfaceContentDesc implementsInterface = implementsInterfaces.get(i);
 			implementsInterfaceBuild.append(implementsInterface.getSimpleClassTypeFullStr());
@@ -523,7 +522,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 
 				// 设置modifer列表信息
 				List<EcJavaModifierDesc> fieldModifierDescs = new ArrayList<>();
-				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PUBLIC));
+				fieldModifierDescs.add(new EcJavaModifierDesc(EcModifierMappingEnum.PRIVATE));
 				fieldContentDesc.setModifiers(fieldModifierDescs);
 
 				// 设置属性类型
@@ -553,7 +552,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 	 * @author daiqi 创建时间 2018年3月26日 上午10:18:57
 	 * @throws SQLException
 	 */
-	private List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
+	protected List<EcJavaAnnotationDesc> getFieldsAnnotationsByResultSet(ResultSet resultSet) throws SQLException {
 		// 设置属性注解
 		List<EcJavaAnnotationDesc> annotationDescs = new ArrayList<>();
 		// 设置列注解描述
@@ -562,11 +561,7 @@ public class EcJavaClassContentDesc extends EcJavaContentDesc {
 		columnAnnotationDesc.setSimpleClassType(Column.class.getSimpleName());
 		columnAnnotationDesc.setName(Column.class.getSimpleName());
 		// 获取column参数描述列表
-		List<EcJavaAnnotationParamDesc> columnAnnotationParamDescs = new ArrayList<>();
-		columnAnnotationParamDescs
-				.add(new EcJavaAnnotationParamDesc("name", resultSet.getString(EcColumnLabel.COLUMN_NAME)));
-		columnAnnotationDesc.setParams(columnAnnotationParamDescs);
-
+		columnAnnotationDesc.addParam("name", resultSet.getString(EcColumnLabel.COLUMN_NAME));
 		annotationDescs.add(columnAnnotationDesc);
 		return annotationDescs;
 	}

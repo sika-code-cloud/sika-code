@@ -3,6 +3,7 @@ package com.easy.cloud.core.common.log.pojo.dto;
 import org.slf4j.Logger;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 
 /**
  * 
@@ -44,7 +45,7 @@ public class EcLogDTO {
 	@JSONField(serialize = false)
 	private Logger logger;
 	/** 日志类型---{@link} DqLogConstant.DqLogType */
-	private int logType;
+	private EcLogTypeEnum logType;
 	public EcLogDTO() {
 
 	}
@@ -164,11 +165,11 @@ public class EcLogDTO {
 		this.logger = logger;
 	}
 
-	public int getLogType() {
+	public EcLogTypeEnum getLogType() {
 		return logType;
 	}
 
-	public void setLogType(int logType) {
+	public void setLogType(EcLogTypeEnum logType) {
 		this.logType = logType;
 	}
 

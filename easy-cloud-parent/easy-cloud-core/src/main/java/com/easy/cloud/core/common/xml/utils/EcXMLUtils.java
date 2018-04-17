@@ -1,7 +1,6 @@
 package com.easy.cloud.core.common.xml.utils;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import org.jdom2.input.SAXBuilder;
 
 import com.easy.cloud.core.basic.constant.EcBaseConstant.EcCharset;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 /**
@@ -104,7 +104,7 @@ public class EcXMLUtils {
 			while (it.hasNext()) {
 				Element e = (Element) it.next();
 				String k = e.getName();
-				Object v = EcStringUtils.EMPTY;
+				Object v = EcSymbol.EMPTY;
 				List<Element> children = e.getChildren();
 				if (children.isEmpty()) {
 					v = e.getTextNormalize();
@@ -132,7 +132,7 @@ public class EcXMLUtils {
 	 * @author daiqi 创建时间 2018年2月23日 下午12:51:44
 	 */
 	public static String getChildrenText(List<Element> children) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (!children.isEmpty()) {
 			Iterator<Element> it = children.iterator();
 			while (it.hasNext()) {
@@ -193,7 +193,7 @@ public class EcXMLUtils {
 	 * @author daiqi 创建时间 2018年2月23日 下午12:52:45
 	 */
 	public static String getXmlStrFromMap(Map<String, Object> parameters) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append("<xml>");
 		for (String key : parameters.keySet()) {
 			if (EcStringUtils.equalsIgnoreCase("attach", key) || EcStringUtils.equalsIgnoreCase("body", key)

@@ -1,6 +1,7 @@
 package com.easy.cloud.core.common.generator.code.xml.constant;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.string.constant.EcStringConstant;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
@@ -186,7 +187,7 @@ public class EcCodeGenerateXmlConstant {
 		public static final boolean isIgnoreField(String fieldName) {
 			// 移除下划线的小写字符串
 			String rmOnderLineLowerCaseStr = EcStringUtils
-					.lowerCase(EcStringUtils.replace(fieldName, EcSymbol.UNDER_LINE, EcStringUtils.EMPTY));
+					.lowerCase(EcStringUtils.replace(fieldName, EcSymbol.UNDER_LINE, EcSymbol.EMPTY));
 			return EcBaseUtils.isExistConstantValue(EcIgnoreSetField.class, rmOnderLineLowerCaseStr);
 		}
 	}

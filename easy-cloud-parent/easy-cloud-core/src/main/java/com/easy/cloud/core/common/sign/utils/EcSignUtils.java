@@ -221,7 +221,7 @@ public enum EcSignUtils {
 		if (parameters == null) {
 			return "";
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (null != ignoreKey) {
 			Arrays.sort(ignoreKey);
 		}
@@ -283,7 +283,7 @@ public enum EcSignUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static String parameters2MD5Str(Object parameters, String separator) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 
 		if (parameters instanceof LinkedHashMap) {
 			Set<String> keys = (Set<String>) ((LinkedHashMap<String, ?>) parameters).keySet();
