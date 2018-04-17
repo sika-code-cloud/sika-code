@@ -140,11 +140,6 @@
 		    <artifactId>redisson</artifactId>
 		    <version>${redisson.version}</version>
 		</dependency>
-		<!-- commons-beanutils依赖 -->
-		<dependency>
-		    <groupId>commons-beanutils</groupId>
-		    <artifactId>commons-beanutils</artifactId>
-		</dependency>
 		<!-- 非spring项目的第三方依赖 end -->
 	</dependencies>
 	<!-- 构建插件 -->

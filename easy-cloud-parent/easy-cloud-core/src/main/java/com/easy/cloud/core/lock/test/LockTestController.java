@@ -16,7 +16,7 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
 public class LockTestController {
-	private int count = 10;
+	private int count = 400;
 	@Autowired
 	private RedissonClient redissonClient;
 
@@ -26,9 +26,9 @@ public class LockTestController {
 	@RequestMapping(value = "distributedLockTest")
 	@ResponseBody
 	public String distributedLockTest(@RequestParam Map<String, Object> paramsMap) throws Exception {
-
+		long startime = System.currentTimeMillis();
 		RMap<String, Integer> countMap = redissonClient.getMap("count");
-		countMap.put("count", count);
+		countMap.put("count", 800);
 		RMap<String, Integer> countMap1 = redissonClient.getMap("count1");
 		countMap1.put("count1", count);
 		CountDownLatch startSignal = new CountDownLatch(1);
@@ -40,6 +40,7 @@ public class LockTestController {
 
 		startSignal.countDown(); // let all threads proceed
 		doneSignal.await();
+		System.out.println("所用时间：" + (System.currentTimeMillis() - startime ));
 		System.out.println("All processors done. Shutdown connection");
 		return "finish";
 	}
