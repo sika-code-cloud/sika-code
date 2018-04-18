@@ -20,8 +20,10 @@ import com.easy.cloud.core.lock.template.EcLockTemplate;
  */
 @Component
 public class EcLockTemplateSelector {
-	@Resource(name = "redissionLockTemplate")
-	private EcLockTemplate redissionLockTemplate;
+	@Resource(name = "lockTemplateRedission")
+	private EcLockTemplate lockTemplateRedission;
+	@Resource(name = "lockTemplateJedis")
+	private EcLockTemplate lockTemplateJedis;
 
 	/**
 	 * 
@@ -39,7 +41,9 @@ public class EcLockTemplateSelector {
 			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.OBJECT_CANT_NULL);
 		}
 		if (EcLockTemplateTypeEnum.isRedission(lockTemplateTypeEnum)) {
-			return redissionLockTemplate;
+			return lockTemplateRedission;
+		} else if (EcLockTemplateTypeEnum.isJedis(lockTemplateTypeEnum)) {
+			return lockTemplateJedis;
 		}
 		return null;
 	}

@@ -33,7 +33,7 @@ import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface EcLock {
+public @interface EcLockAnnotation {
 	/**
 	 * 锁的名称主体。 如果nameBody可以确定，直接设置该属性。
 	 */

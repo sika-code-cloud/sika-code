@@ -3,7 +3,7 @@ package com.easy.cloud.core.lock.pojo.dto;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.lock.annotation.EcLock;
+import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.template.EcLockTemplate;
 
 /**
@@ -22,7 +22,7 @@ public class EcLockDTO {
 	/** 锁的模板对象 */
 	private EcLockTemplate lockTemplate;
 	/** 锁的注解对象 */
-	private EcLock lockAnnotation;
+	private EcLockAnnotation lockAnnotation;
 
 	public String getLockName() {
 		return lockName;
@@ -40,11 +40,11 @@ public class EcLockDTO {
 		this.lockTemplate = lockTemplate;
 	}
 
-	public EcLock getLockAnnotation() {
+	public EcLockAnnotation getLockAnnotation() {
 		return this.lockAnnotation;
 	}
 
-	public void setLock(EcLock lockAnnotation) {
+	public void setLock(EcLockAnnotation lockAnnotation) {
 		this.lockAnnotation = lockAnnotation;
 	}
 	

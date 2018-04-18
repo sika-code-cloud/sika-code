@@ -27,7 +27,7 @@ public class EcLockAspect {
 	@Autowired
 	private EcLockTemplateSelector templateSelector;
 
-	@Pointcut("@annotation(com.easy.cloud.core.lock.annotation.EcLock)")
+	@Pointcut("@annotation(com.easy.cloud.core.lock.annotation.EcLockAnnotation)")
 	public void distributedLockAspect() {
 		
 	}

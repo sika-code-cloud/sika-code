@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.easy.cloud.core.common.log.annotation.EcLog;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.lock.annotation.EcLock;
+import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTemplateTypeEnum;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
 
@@ -56,17 +56,49 @@ public class LockTestService {
 	 * @author daiqi
 	 * @创建时间 2018年4月16日 下午4:08:38
 	 */
-	@EcLock(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
-	public Integer pointAll(String userName, Map<String, Object> person) {
-		RMap<String, Integer> countMap = redissonClient.getMap("count");
-		Integer count = countMap.get("count");
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
+	public Integer pointAllUseRedisson(String userName, Map<String, Object> person) {
+		String countStr = "count";
+		if (person.get("id").equals("11")) {
+			countStr = "count1";
+		}
+		RMap<String, Integer> countMap = redissonClient.getMap(countStr);
+		Integer count = countMap.get(countStr);
 		if (count > 0) {
 			count = count - 1;
-			countMap.put("count", count);
+			countMap.put(countStr, count);
 		}
 		return count;
 	}
-	@EcLock(param = "id", argNum = 2, namePre = "lock",tryLock = true, resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.JEDIS)
+	public Integer pointAllUseJedis(String userName, Map<String, Object> person) {
+		String countStr = "count";
+		if (person.get("id").equals("11")) {
+			countStr = "count1";
+		}
+		RMap<String, Integer> countMap = redissonClient.getMap(countStr);
+		Integer count = countMap.get(countStr);
+		if (count > 0) {
+			count = count - 1;
+			countMap.put(countStr, count);
+		}
+		return count;
+	}
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.JEDIS)
+	public Integer pointAllUseJedis1(String userName, Map<String, Object> person) {
+		String countStr = "count";
+		if (person.get("id").equals("11")) {
+			countStr = "count1";
+		}
+		RMap<String, Integer> countMap = redissonClient.getMap(countStr);
+		Integer count = countMap.get(countStr);
+		if (count > 0) {
+			count = count - 1;
+			countMap.put(countStr, count);
+		}
+		return count;
+	}
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock",tryLock = true, resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
 	public Integer pointAllTry(String userName, Map<String, Object> person) {
 		RMap<String, Integer> countMap = redissonClient.getMap("count");
 		Integer count = countMap.get("count");
@@ -76,7 +108,7 @@ public class LockTestService {
 		}
 		return count;
 	}
-	@EcLock(param = "id")
+	@EcLockAnnotation(param = "id")
 	public Integer pointParam(Map<String, Object> person, String userName) {
 		
 		RMap<String, Integer> countMap = redissonClient.getMap("count");
@@ -88,7 +120,7 @@ public class LockTestService {
 		return count;
 	}
 	
-	@EcLock
+	@EcLockAnnotation
 	public Integer useDefault(String id, String userName) {
 		String key = "count";
 		if (EcStringUtils.equals(id, "11")) {

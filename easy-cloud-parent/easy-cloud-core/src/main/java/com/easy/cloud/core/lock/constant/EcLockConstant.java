@@ -93,6 +93,8 @@ public class EcLockConstant {
 	 * @author daiqi 创建时间 2018年4月13日 上午9:37:44
 	 */
 	public static enum EcLockTemplateTypeEnum {
+		/** 锁模板---jedis锁模板 */
+		JEDIS(1, "jedis模板"),
 		/** 锁模板---redission锁模板 */
 		REDISSION(2, "redisson模板"),;
 
@@ -112,6 +114,22 @@ public class EcLockConstant {
 			return name;
 		}
 
+		/**
+		 * 
+		 * <p>
+		 * 判断传入的枚举是否是JEDIS枚举
+		 * </p>
+		 *
+		 * @param lockTemplateTypeEnum
+		 * @return
+		 * @author daiqi 创建时间 2018年4月13日 上午9:45:26
+		 */
+		public static boolean isJedis(EcLockTemplateTypeEnum lockTemplateTypeEnum) {
+			if (EcBaseUtils.equals(JEDIS, lockTemplateTypeEnum)) {
+				return true;
+			}
+			return false;
+		}
 		/**
 		 * 
 		 * <p>

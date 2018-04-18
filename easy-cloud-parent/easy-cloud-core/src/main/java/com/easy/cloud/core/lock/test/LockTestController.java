@@ -1,3 +1,4 @@
+
 package com.easy.cloud.core.lock.test;
 
 import java.util.Map;
@@ -16,7 +17,8 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
 public class LockTestController {
-	private int count = 10;	@Autowired
+	private int count = 400;
+	@Autowired
 	private RedissonClient redissonClient;
 
 	@Autowired
@@ -25,6 +27,25 @@ public class LockTestController {
 	@RequestMapping(value = "distributedLockTest")
 	@ResponseBody
 	public String distributedLockTest(@RequestParam Map<String, Object> paramsMap) throws Exception {
+		long startime = System.currentTimeMillis();
+		CountDownLatch startSignal = new CountDownLatch(1);
+		CountDownLatch doneSignal = new CountDownLatch(count);
+		String id = EcMapUtils.getString(paramsMap, "id");
+		String countStr = "count";
+		if ("11".equals(id)) {
+			countStr = "count1";
+		}
+		RMap<String, Integer> countMap = redissonClient.getMap(countStr);
+		countMap.put(countStr, 2*count);
+		for (int i = 0; i < count; ++i) { // create and start threads
+			new Thread(new LockTestWorker(startSignal, doneSignal, service, redissonClient,id)).start();
+			new Thread(new LockTestWorker2(startSignal, doneSignal, service, redissonClient,id)).start();
+		}
+
+		startSignal.countDown(); // let all threads proceed
+		doneSignal.await();
+		System.out.println("所用时间：" + (System.currentTimeMillis() - startime ));
+		System.out.println("All processors done. Shutdown connection");
 		return "finish";
 	}
 }

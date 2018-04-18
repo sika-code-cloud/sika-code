@@ -17,7 +17,7 @@ import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
-import com.easy.cloud.core.lock.annotation.EcLock;
+import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.callback.EcLockCallback;
 import com.easy.cloud.core.lock.callback.result.EcLockResult;
 import com.easy.cloud.core.lock.callback.result.processor.EcBaseLockResultProcessor;
@@ -77,7 +77,7 @@ public class EcLockBO {
 	private EcLockBO buildEcDistributedLock() {
 		// 注解为空先构建注解
 		if (EcBaseUtils.isNull(this.lockDTO.getLockAnnotation())) {
-			EcLock distributedLock = targetMethod.getAnnotation(EcLock.class);
+			EcLockAnnotation distributedLock = targetMethod.getAnnotation(EcLockAnnotation.class);
 			Assert.notNull(distributedLock, "distributedLock注解不能为空");
 			this.lockDTO.setLock(distributedLock);
 		}
@@ -97,7 +97,7 @@ public class EcLockBO {
 	 */
 	private EcLockBO buildLockName( Object[] args) {
 		// 注解为空先构建注解
-		EcLock distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
+		EcLockAnnotation distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
 		
 		String lockName = distributedLock.nameBody();
 		if (EcStringUtils.isEmpty(lockName)) {
@@ -124,7 +124,7 @@ public class EcLockBO {
 
 	private EcLockBO buildLockTemplate() {
 		// 先构建注解
-		EcLock distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
+		EcLockAnnotation distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
 		
 		// 根据类型选择分布式锁模板对象
 		EcLockTemplate lockTemplate = this.lockTemplateSelector.selectLockTemplateByType(distributedLock.templateType());
@@ -144,7 +144,7 @@ public class EcLockBO {
 	 */
 	private EcLockBO buildDistributedLockResultProcessor() {
 		// 先构建注解
-		EcLock distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
+		EcLockAnnotation distributedLock = buildEcDistributedLock().lockDTO.getLockAnnotation();
 		Class<? extends EcBaseLockResultProcessor> resultProcessorClass = distributedLock.resultProcessorClass();
 		// 结果处理类class为空 使用默认的结果处理类进行处理
 		if (EcBaseUtils.isNull(resultProcessorClass)) {

@@ -21,10 +21,12 @@ singleServerConfig:
   clientName: null
   #地址
   address: "redis://120.25.126.231:6379"
+#  address: "redis://127.0.0.1:6379"
   #数据库编号
   database: 0
   #密码
   password: "daiqiredis"
+#  password: 
   #发布和订阅连接的最小空闲连接数
   subscriptionConnectionMinimumIdleSize: 1 
   #发布和订阅连接池大小

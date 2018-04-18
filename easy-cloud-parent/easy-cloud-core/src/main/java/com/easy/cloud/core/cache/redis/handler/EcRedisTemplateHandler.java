@@ -12,10 +12,8 @@ import javax.annotation.Resource;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -919,7 +917,13 @@ public class EcRedisTemplateHandler {
 		};
 		stringRedisTemplate.execute(pipelineCallback);
 	}
-
+	public static <T> T execute (RedisCallback<T> redisCallback) {
+		return stringRedisTemplate.execute(redisCallback);
+	}
+	/** 使用jedis管道测试用例 */
+	public static Jedis getJedis() {
+		return (Jedis) stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+	}
 	/**
 	 * 
 	 * <p>
