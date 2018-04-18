@@ -44,10 +44,7 @@ public class LockTestWorker implements Runnable {
 			id = UUID.randomUUID().toString();
 			// 不加注解锁测试
 //			Integer count = service.unLock(id, person);
-			// 指定注解锁所有的参数
-//			Integer count = service.pointAllTry(id, person);
-			Integer count = service.pointAll(id, person);
-			// 指定注解的param属性
+//			Integer count = service.pointAll(id, person);			// 指定注解的param属性
 //			 Integer count = service.pointParam(person, "张三");
 			// 使用注解的默认的参数
 //			 Integer count = service.useDefault(randomId, "张三");

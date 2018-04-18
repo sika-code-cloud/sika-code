@@ -166,7 +166,25 @@ public class EcRedisTemplateHandler {
 	public static void set(String key, Object obj, long timeOut) {
 		stringRedisTemplate.opsForValue().set(key, EcJSONUtils.toJSONString(obj), timeOut, TimeUnit.MILLISECONDS);
 	}
-
+	/**
+	 * 
+	 * <p>
+	 * 将obj保存到redis中的字符串对象
+	 * </p>
+	 *
+	 * <pre>
+	 * </pre>
+	 *
+	 * @param key
+	 *            : String : 主键
+	 * @param obj
+	 *            : Object : 保存的obj对象
+	 * @author daiqi
+	 * @date 2017年12月7日 下午6:26:10
+	 */
+	public static boolean setIfAbsent(String key, Object obj) {
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, EcJSONUtils.toJSONString(obj));
+	}
 	/**
 	 * 
 	 * <p>

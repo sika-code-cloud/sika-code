@@ -1,5 +1,8 @@
 package com.easy.cloud.core.lock.template.impl;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -29,7 +32,6 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 	/** 日志对象 */
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private RedissonClient redisson;
-
 	public EcLockTemplateRedission() {
 		
 	}
@@ -43,16 +45,36 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 		EcLockDTO lockDTO = callback.getDistributedLockDTO();
 		EcLock lockAnnotation = lockDTO.getLockAnnotation();
 		EcLogUtils.debug("锁的注解信息", lockAnnotation, logger);
-		RLock lock = getLock(lockDTO.getLockNameFull(), lockAnnotation.type());
+//		RLock lock = getLock(lockDTO.getLockNameFull(), lockAnnotation.type());
+		String name = Thread.currentThread().getName();
+		String lockNameFull = lockDTO.getLockNameFull();
+		
+		boolean flag = true;
 		try {
-			synchronized (lockDTO.getLockNameFull()){
-				lock.lock(lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
-				return callback.process(new EcLockResult(true));
+			System.out.println("--------------11-" + lockNameFull);
+			synchronized (this) {
+				while (true) {
+					flag = EcRedisTemplateHandler.setIfAbsent(lockNameFull, name);
+					String value = EcRedisTemplateHandler.get(lockNameFull, String.class);
+					if (flag && value.equals(name)) {
+						break;
+					}
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				EcRedisTemplateHandler.set(lockNameFull, name, 2000);
+				if (!flag) {
+					return callback.process(new EcLockResult(false));
+				}
 			}
+			return callback.process(new EcLockResult(true));
+//			lock.lock(lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
 		} finally {
-			if (lock != null && lock.isLocked()) {
-				lock.unlock();
-			}
+			EcRedisTemplateHandler.delete(lockNameFull);
 		}
 	}
 	
