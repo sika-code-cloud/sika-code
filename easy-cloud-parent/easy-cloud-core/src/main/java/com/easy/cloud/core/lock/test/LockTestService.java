@@ -66,7 +66,16 @@ public class LockTestService {
 		}
 		return count;
 	}
-	
+	@EcLock(param = "id", argNum = 2, namePre = "lock",tryLock = true, resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
+	public Integer pointAllTry(String userName, Map<String, Object> person) {
+		RMap<String, Integer> countMap = redissonClient.getMap("count");
+		Integer count = countMap.get("count");
+		if (count > 0) {
+			count = count - 1;
+			countMap.put("count", count);
+		}
+		return count;
+	}
 	@EcLock(param = "id")
 	public Integer pointParam(Map<String, Object> person, String userName) {
 		

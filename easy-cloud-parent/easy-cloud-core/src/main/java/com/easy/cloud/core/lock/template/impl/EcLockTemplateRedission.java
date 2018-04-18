@@ -5,6 +5,7 @@ import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
 import com.easy.cloud.core.lock.annotation.EcLock;
@@ -44,8 +45,10 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 		EcLogUtils.debug("锁的注解信息", lockAnnotation, logger);
 		RLock lock = getLock(lockDTO.getLockNameFull(), lockAnnotation.type());
 		try {
-			lock.lock(lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
-			return callback.process(new EcLockResult(true));
+			synchronized (lockDTO.getLockNameFull()){
+				lock.lock(lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
+				return callback.process(new EcLockResult(true));
+			}
 		} finally {
 			if (lock != null && lock.isLocked()) {
 				lock.unlock();

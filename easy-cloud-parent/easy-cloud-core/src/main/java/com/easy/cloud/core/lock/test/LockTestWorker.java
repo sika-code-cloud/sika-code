@@ -1,6 +1,7 @@
 package com.easy.cloud.core.lock.test;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import org.redisson.api.RedissonClient;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
@@ -38,17 +39,19 @@ public class LockTestWorker implements Runnable {
 			if (randomNum >= 15) {
 				randomId = "11";
 			}
-			person.put("id", randomId);
+			person.put("id", id);
 			person.put("name", "张三");
+			id = UUID.randomUUID().toString();
 			// 不加注解锁测试
 //			Integer count = service.unLock(id, person);
 			// 指定注解锁所有的参数
-//			Integer count = service.pointAll(id, person);
+//			Integer count = service.pointAllTry(id, person);
+			Integer count = service.pointAll(id, person);
 			// 指定注解的param属性
 //			 Integer count = service.pointParam(person, "张三");
 			// 使用注解的默认的参数
-			 Integer count = service.useDefault(randomId, "张三");
-			System.out.println(Thread.currentThread().getName() + ": count = " + count + " id :" + randomId);
+//			 Integer count = service.useDefault(randomId, "张三");
+			System.out.println(Thread.currentThread().getName() + ": count = " + count + " id :" + id);
 			doneSignal.countDown();
 
 		} catch (InterruptedException ex) {
