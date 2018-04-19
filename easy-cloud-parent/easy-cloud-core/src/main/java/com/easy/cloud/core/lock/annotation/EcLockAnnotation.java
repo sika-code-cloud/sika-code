@@ -76,7 +76,7 @@ public @interface EcLockAnnotation {
 	 * </p>
 	 *
 	 * @return
-	 * @author daiqi 
+	 * @author daiqi
 	 * @创建时间 2018年4月12日 下午2:32:25
 	 */
 	EcLockTypeEnum type() default EcLockTypeEnum.FAIR;
@@ -88,10 +88,10 @@ public @interface EcLockAnnotation {
 	 * </p>
 	 *
 	 * @return
-	 * @author daiqi 
+	 * @author daiqi
 	 * @创建时间 2018年4月13日 上午9:42:04
 	 */
-	EcLockTemplateTypeEnum templateType() default EcLockTemplateTypeEnum.REDISSION;
+	EcLockTemplateTypeEnum templateType() default EcLockTemplateTypeEnum.JEDIS;
 
 	/**
 	 * 是否使用尝试锁。
@@ -112,12 +112,13 @@ public @interface EcLockAnnotation {
 	 * 时间单位。默认为秒。
 	 */
 	TimeUnit timeUnit() default TimeUnit.SECONDS;
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 锁结果处理器类的class
 	 * </p>
+	 * 
 	 * <pre>
 	 * 通过传入不同的结果处理器的class从而对成功获取锁和失败获取锁进行定制化处理
 	 * </pre>

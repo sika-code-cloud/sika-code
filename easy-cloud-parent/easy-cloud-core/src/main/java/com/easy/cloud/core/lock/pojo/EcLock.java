@@ -2,9 +2,6 @@ package com.easy.cloud.core.lock.pojo;
 
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.StampedLock;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -12,12 +9,9 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
-import com.easy.cloud.core.lock.constant.error.EcLockErrorCodeEnum;
 
 import redis.clients.jedis.Jedis;
 
@@ -31,10 +25,6 @@ import redis.clients.jedis.Jedis;
  * @创建时间 2018年4月18日 上午9:43:29
  */
 public class EcLock {
-	private static ReentrantLock firaLock = new ReentrantLock(true);
-	private static ReentrantLock nonfairLock = new ReentrantLock();
-	private static Lock readLock = new StampedLock().asReadLock();
-	private static Lock writeLock = new StampedLock().asWriteLock();
 
 	private static final String LOCK_SUCCESS = "OK";
 	private static final String SET_IF_NOT_EXIST = "NX";
@@ -43,29 +33,14 @@ public class EcLock {
 	private static final Long RELEASE_SUCCESS = 1L;
 	private String lockName;
 	private String lockValue;
-	private Lock currentLock;
 	private StringRedisTemplate stringRedisTemplateLock;
 
 	public EcLock(StringRedisTemplate stringRedisTemplateLock, String lockName, EcLockTypeEnum lockType) {
 		this.stringRedisTemplateLock = stringRedisTemplateLock;
 		this.lockName = lockName;
-		this.currentLock = getLock(lockType);
 		lockValue = Thread.currentThread().getName();
 	}
 
-	/** 根据完整的锁名获取锁 */
-	private Lock getLock(EcLockTypeEnum lockType) {
-		if (EcLockTypeEnum.isFair(lockType)) {
-			return firaLock;
-		} else if (EcLockTypeEnum.isUnfair(lockType)) {
-			return nonfairLock;
-		} else if (EcLockTypeEnum.isRead(lockType)) {
-			return readLock;
-		} else if (EcLockTypeEnum.isWrite(lockType)) {
-			return writeLock;
-		}
-		throw new EcBaseBusinessException(EcLockErrorCodeEnum.LOCK_TYPE_NOT_SUPPORT);
-	}
 
 	/** 锁 */
 	public boolean lock(long leaseTime, TimeUnit timeUnit) {
@@ -74,10 +49,6 @@ public class EcLock {
 
 	/** 尝试锁 */
 	public boolean tryLock(long leaseTime, TimeUnit timeUnit) throws InterruptedException {
-		boolean getLock = currentLock.tryLock(leaseTime, timeUnit);
-		if (!getLock) {
-			return false;
-		}
 		return loopGainDistributedLock(leaseTime, timeUnit);
 	}
 
