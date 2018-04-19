@@ -1,17 +1,17 @@
 package com.easy.cloud.core.cache.redis.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.lang.reflect.Method;
+
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import com.easy.cloud.core.cache.redis.conditional.EcRedisConditional;
-import com.easy.cloud.core.cache.redis.constant.EcRedisConstant;
+
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * 
@@ -23,47 +23,47 @@ import com.easy.cloud.core.cache.redis.constant.EcRedisConstant;
  */
 @Configuration
 @Conditional(EcRedisConditional.class)
+@EnableCaching
 public class EcRedisConfig {
-	/**
-	 * 注入 RedisConnectionFactory
-	 */
-	@Autowired
-	RedisConnectionFactory redisConnectionFactory;
 
-	/**
-	 * <p>
-	 * 实例化 RedisTemplate 对象--保存的值为JSON字符串类型
-	 * </p>
-	 *
-	 * @return
-	 * @author daiqi
-	 * @date 2017年12月7日 下午5:19:59
-	 */
-	@Bean(value = EcRedisConstant.REDIS_TEMPLATE_VALUE_STR_NAME)
-	public StringRedisTemplate stringRedisTemplate() {
-		StringRedisTemplate redisTemplate = new StringRedisTemplate(redisConnectionFactory);
-		redisTemplate.setConnectionFactory(redisConnectionFactory);
-		return redisTemplate;
+	@Bean
+	public KeyGenerator keyGenerator() {
+		return new KeyGenerator() {
+			@Override
+			public Object generate(Object target, Method method, Object... params) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(target.getClass().getName());
+				sb.append(method.getName());
+				for (Object obj : params) {
+					sb.append(obj.toString());
+				}
+				return sb.toString();
+			}
+		};
 	}
 
 	/**
-	 * <p>
-	 * 实例化 RedisTemplate 对象--保存的值为对象经过jdk序列化后的对象
-	 * </p>
-	 *
+	 * 创建连接
+	 * 
+	 * @param host
+	 * @param port
+	 * @param timeout
 	 * @return
-	 * @author daiqi
-	 * @date 2017年12月7日 下午5:19:51
 	 */
-	@Bean(value = EcRedisConstant.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
-	public RedisTemplate<String, Object> redisTemlateValueSerializer() {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setConnectionFactory(redisConnectionFactory);
-		return redisTemplate;
+	public JedisConnectionFactory newJedisConnectionFactory(String host, int port, int timeout) {
+		JedisConnectionFactory factory = new JedisConnectionFactory();
+		factory.setHostName(host);
+		factory.setPort(port);
+		factory.setTimeout(timeout); // 设置连接超时时间
+
+		// testOnBorrow为true时，返回的连接是经过测试可用的
+		factory.setPoolConfig(jedisPoolConfig());
+
+		return factory;
+	}
+
+	public JedisPoolConfig jedisPoolConfig() {
+		return null;
 	}
 
 }

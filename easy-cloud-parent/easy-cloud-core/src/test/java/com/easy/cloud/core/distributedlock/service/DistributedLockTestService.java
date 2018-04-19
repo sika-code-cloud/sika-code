@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.common.log.annotation.EcLog;
 import com.easy.cloud.core.distributedlock.processor.DistributedLockTestProcessor;
-import com.easy.cloud.core.lock.annotation.EcLock;
+import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.callback.result.processor.EcDefaultLockResultProcessor;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockNameDesc;
 
@@ -20,7 +20,7 @@ public class DistributedLockTestService extends EcBaseService{
 	@Autowired
 	private RedissonClient redissonClient;
 
-	@EcLock(param = "id", namePre = EcLockNameDesc.LOCK_NAME_PRE_DEFAULT, resultProcessorClass = DistributedLockTestProcessor.class)
+	@EcLockAnnotation(param = "id", namePre = EcLockNameDesc.LOCK_NAME_PRE_DEFAULT, resultProcessorClass = DistributedLockTestProcessor.class)
 	public Integer aspect(Map<String, Object> person) {
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 
@@ -35,7 +35,7 @@ public class DistributedLockTestService extends EcBaseService{
 		return count;
 	}
 
-	@EcLock(param = "id",resultProcessorClass = EcDefaultLockResultProcessor.class, namePre = EcLockNameDesc.LOCK_NAME_PRE_DEFAULT, tryLock = true)
+	@EcLockAnnotation(param = "id",resultProcessorClass = EcDefaultLockResultProcessor.class, namePre = EcLockNameDesc.LOCK_NAME_PRE_DEFAULT, tryLock = true)
 	public Integer aspectTryLock(Map<String, Object> person) {
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 
@@ -50,7 +50,7 @@ public class DistributedLockTestService extends EcBaseService{
 		return count;
 	}
 
-	@EcLock
+	@EcLockAnnotation
 	public Integer aspect(String id, String userName) {
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 
@@ -65,7 +65,7 @@ public class DistributedLockTestService extends EcBaseService{
 		return count;
 	}
 
-	@EcLock(argNum = 2, param = "id", nameSuffix = ".lock")
+	@EcLockAnnotation(argNum = 2, param = "id", nameSuffix = ".lock")
 	public Integer aspect(String id, Map<String, Object> person) {
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 		Map<String, Integer> countMap = (Map<String, Integer>) map.get("countMap");
@@ -78,7 +78,7 @@ public class DistributedLockTestService extends EcBaseService{
 		return count;
 	}
 
-	@EcLock(argNum = 1, nameSuffix = ".lock", tryLock = true)
+	@EcLockAnnotation(argNum = 1, nameSuffix = ".lock", tryLock = true)
 	public Integer aspectTryLock(String i, String userName) {
 		RMap<String, Object> map = redissonClient.getMap("distributionTest");
 

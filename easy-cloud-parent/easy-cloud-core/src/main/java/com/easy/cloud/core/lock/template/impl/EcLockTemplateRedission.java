@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
-import com.easy.cloud.core.lock.annotation.EcLock;
+import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.callback.EcLockCallback;
 import com.easy.cloud.core.lock.callback.result.EcLockResult;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
@@ -28,7 +28,6 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 	/** 日志对象 */
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private RedissonClient redisson;
-
 	public EcLockTemplateRedission() {
 		
 	}
@@ -40,7 +39,7 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 	@Override
 	public <T> T lock(EcLockCallback<T> callback) {
 		EcLockDTO lockDTO = callback.getDistributedLockDTO();
-		EcLock lockAnnotation = lockDTO.getLockAnnotation();
+		EcLockAnnotation lockAnnotation = lockDTO.getLockAnnotation();
 		EcLogUtils.debug("锁的注解信息", lockAnnotation, logger);
 		RLock lock = getLock(lockDTO.getLockNameFull(), lockAnnotation.type());
 		try {
@@ -56,7 +55,7 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 	@Override
 	public <T> T tryLock(EcLockCallback<T> callback) {
 		EcLockDTO lockDTO = callback.getDistributedLockDTO();
-		EcLock lockAnnotation = lockDTO.getLockAnnotation();
+		EcLockAnnotation lockAnnotation = lockDTO.getLockAnnotation();
 		RLock lock = getLock(lockDTO.getLockNameFull(), lockAnnotation.type());
 		boolean isGainLock = false;
 		try {

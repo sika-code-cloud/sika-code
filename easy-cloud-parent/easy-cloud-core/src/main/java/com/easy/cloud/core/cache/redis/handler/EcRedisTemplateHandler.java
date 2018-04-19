@@ -10,6 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,8 @@ import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * 
@@ -159,7 +164,25 @@ public class EcRedisTemplateHandler {
 	public static void set(String key, Object obj, long timeOut) {
 		stringRedisTemplate.opsForValue().set(key, EcJSONUtils.toJSONString(obj), timeOut, TimeUnit.MILLISECONDS);
 	}
-
+	/**
+	 * 
+	 * <p>
+	 * 将obj保存到redis中的字符串对象
+	 * </p>
+	 *
+	 * <pre>
+	 * </pre>
+	 *
+	 * @param key
+	 *            : String : 主键
+	 * @param obj
+	 *            : Object : 保存的obj对象
+	 * @author daiqi
+	 * @date 2017年12月7日 下午6:26:10
+	 */
+	public static boolean setIfAbsent(String key, Object obj) {
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, EcJSONUtils.toJSONString(obj));
+	}
 	/**
 	 * 
 	 * <p>
@@ -881,6 +904,26 @@ public class EcRedisTemplateHandler {
 		return stringRedisTemplate.opsForSet().remove(key, removeListStr.toArray());
 	}
 
+	/** 使用jedis管道测试用例 */
+	public void pipelineSample() {
+		// pipeline
+		RedisCallback<Object> pipelineCallback = new RedisCallback<Object>() {
+			@Override
+			public Object doInRedis(RedisConnection connection) throws DataAccessException {
+				Jedis jedis = (Jedis) connection.getNativeConnection();
+				jedis.pipelined().lpush("", "");
+				return null;
+			}
+		};
+		stringRedisTemplate.execute(pipelineCallback);
+	}
+	public static <T> T execute (RedisCallback<T> redisCallback) {
+		return stringRedisTemplate.execute(redisCallback);
+	}
+	/** 使用jedis管道测试用例 */
+	public static Jedis getJedis() {
+		return (Jedis) stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+	}
 	/**
 	 * 
 	 * <p>

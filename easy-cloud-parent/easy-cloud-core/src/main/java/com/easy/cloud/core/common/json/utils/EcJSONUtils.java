@@ -25,7 +25,7 @@ public class EcJSONUtils {
 	
 	/** 将Object对象转换为json字符串，若不能转换将String.valueOf(obj) */
 	public static String toJSONString(Object obj) {
-		if (EcBaseUtils.isNull(null)) {
+		if (EcBaseUtils.isNull(obj)) {
 			return null;
 		}
 		if (obj instanceof String) {

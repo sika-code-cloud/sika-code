@@ -30,7 +30,7 @@
 		<!-- apache.commons包依赖 -->
 		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
 		<!-- redisson版本依赖 -->
-		<redisson.version>3.6.4</redisson.version>
+		<redisson.version>3.6.5</redisson.version>
 		
 		<!-- 版本依赖管理 end -->
 		<!-- 设置属性 -->
@@ -139,11 +139,6 @@
 		    <groupId>org.redisson</groupId>
 		    <artifactId>redisson</artifactId>
 		    <version>${redisson.version}</version>
-		</dependency>
-		<!-- commons-beanutils依赖 -->
-		<dependency>
-		    <groupId>commons-beanutils</groupId>
-		    <artifactId>commons-beanutils</artifactId>
 		</dependency>
 		<!-- 非spring项目的第三方依赖 end -->
 	</dependencies>

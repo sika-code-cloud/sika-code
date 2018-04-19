@@ -25,22 +25,21 @@ import com.easy.cloud.core.lock.template.impl.EcLockTemplateRedission;
  * @创建时间 2018年4月16日 上午9:52:48
  */
 @Configuration
-@Conditional(value = {EcRedisConditional.class})
+@Conditional(value = { EcRedisConditional.class })
 public class EcRedissonLockConfig {
 
 	@Value("classpath:redisson/redisson-conf.yml")
 	Resource configFile;
 
 	@Bean(destroyMethod = "shutdown")
-	RedissonClient redisson()
-	        throws IOException {
-	    Config config = Config.fromYAML(configFile.getInputStream());
-	    return Redisson.create(config);
+	RedissonClient redisson() throws IOException {
+		Config config = Config.fromYAML(configFile.getInputStream());
+		return Redisson.create(config);
 	}
 
-	@Bean
-	EcLockTemplate redissionLockTemplate(RedissonClient redissonClient) {
-	    return new EcLockTemplateRedission(redissonClient);
+	@Bean(name = "lockTemplateRedission")
+	EcLockTemplate lockTemplateRedission(RedissonClient redissonClient) {
+		return new EcLockTemplateRedission(redissonClient);
 	}
-	
+
 }
