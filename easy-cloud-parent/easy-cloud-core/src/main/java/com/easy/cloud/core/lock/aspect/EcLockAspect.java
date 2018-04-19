@@ -29,11 +29,11 @@ public class EcLockAspect {
 
 	@Pointcut("@annotation(com.easy.cloud.core.lock.annotation.EcLockAnnotation)")
 	public void distributedLockAspect() {
-		
+
 	}
 
 	@Around(value = "distributedLockAspect()")
-	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable{
+	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		EcLockBO distributionLockBO = new EcLockBO(templateSelector, joinPoint);
 		return distributionLockBO.buidDistributedLockDTOData().lock();
 	}
