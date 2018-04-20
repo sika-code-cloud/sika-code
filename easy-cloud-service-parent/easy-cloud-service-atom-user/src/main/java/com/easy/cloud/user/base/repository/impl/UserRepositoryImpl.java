@@ -37,12 +37,12 @@ public class UserRepositoryImpl extends EcBaseRepository implements UserReposito
 	 * 创建时间  2018年1月8日 下午8:01:36
 	 */
 	public UserEntity findUserByQuery(UserQuery userQuery){
-		StringBuilder sql = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sql = EcStringUtils.newStringBuilder();
 		List<Object> params = new ArrayList<>();
 //		实体对应的表名
 		String entityTableName = EcBaseUtils.getTableNameByEntityClass(UserEntity.class);
 //		公共条件前缀
-		String commonConditionPrefix = EcStringUtils.newStringBuilderDefault().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
+		String commonConditionPrefix = EcStringUtils.newStringBuilder().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
 		
 		sql.append("select ");
 		sql.append(getBaseResultSql(UserEntity.class));
