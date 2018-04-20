@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogModeEnum;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogAnalysisBO;
@@ -39,7 +39,7 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	/** 日志分析数据传输对象 */
 	protected EcLogAnalysisBO logAnalysisBO;
 	/** 日志注解 */
-	protected EcLog log;
+	protected EcLogAnnotation log;
 	/** 日志级别 */
 	protected EcLogLevelEnum logLevel;
 	/** 目标日志类 */
@@ -76,12 +76,12 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 		targetLogger.info("\r");
 		targetLogger.info("==============================================   start_logger:请求日志记录:start_logger    ==============================================");
 		logDataExtraPre();
-		log("请求的类名", logDTO.getTargetClassName());
-		log("请求的方法名称", logDTO.getTargetMethodName());
-		log("请求参数类型", logDTO.getTargetParameterTypes());
-		log("请求参数值", logDTO.getTargetParameterValues());
-		log("返回参数类型", logDTO.getTargetReturnType().getName());
-		log("返回参数值", logDTO.getTargetReturnValue());
+		log("请求的类名", logDTO.getBaseAspectDTO().getTargetClassName());
+		log("请求的方法名称", logDTO.getBaseAspectDTO().getTargetMethodName());
+		log("请求参数类型", logDTO.getBaseAspectDTO().getTargetParameterTypes());
+		log("请求参数值", logDTO.getBaseAspectDTO().getTargetParameterValues());
+		log("返回参数类型", logDTO.getBaseAspectDTO().getTargetReturnType().getName());
+		log("返回参数值", logDTO.getBaseAspectDTO().getTargetReturnValue());
 		log("方法运行时间", (logDTO.getRunTimeMinllis()) +"ms");
 		logDataExtraAfter();
 		targetLogger.info("==============================================   end_logger:请求日志记录:end_logger      =============================================");
@@ -163,8 +163,8 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	private void initBaseData(EcLogBO ecLogBO) {
 		this.logDTO = ecLogBO.getDqLogDTO();
 		this.log = ecLogBO.getDqLog();
-		logLevel = log.logLevel();
-		this.logDTO.setLogType(log.logType());
+		logLevel = log.level();
+		this.logDTO.setLogType(log.type());
 		
 		if (EcBaseUtils.isNotNull(logDTO.getLogger())) {
 			targetLogger = logDTO.getLogger();
@@ -189,7 +189,7 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	
 	/** 执行日志处理业务逻辑 */
 	private void doLogHandle() {
-		EcLogModeEnum logMode = log.logMode();
+		EcLogModeEnum logMode = log.model();
 		if (EcLogModeEnum.isConsole(logMode)) {
 			doLogConsole();
 		} else if (EcLogModeEnum.isFile(logMode)) {
@@ -214,7 +214,7 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	 * 创建时间    2018年2月22日 下午2:47:31
 	 */
 	protected void doLogAnalysis(){
-		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisUtils.getLogAnalysisContainerByType(log.logType()));
+		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisUtils.getLogAnalysisContainerByType(log.type()));
 		EcLogUtils.info("日志分析数据", logAnalysisBO, logger);
 	}
 

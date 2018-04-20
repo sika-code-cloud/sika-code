@@ -4,7 +4,7 @@ package com.easy.cloud.core.basic.repository;
 import org.springframework.stereotype.Repository;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
@@ -20,7 +20,7 @@ import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
  *
  */
 @Repository
-@EcLog(logLevel = EcLogLevelEnum.INFO, logProxyClass = EcLogRepositoryProxy.class, logType = EcLogTypeEnum.REPOSITORY)
+@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogRepositoryProxy.class, type = EcLogTypeEnum.REPOSITORY)
 public class EcBaseRepository {
 	/** 原点字符串*/
 	protected static final String ORIGIN_STR = ".";

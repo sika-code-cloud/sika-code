@@ -1,6 +1,5 @@
 package com.easy.cloud.core.common.log.pojo.dto;
 
-import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 /**
  * 
@@ -17,7 +16,7 @@ import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
  *
  * @author daiqi 创建时间 2018年2月22日 上午10:17:31
  */
-public class EcLogAnalysisDTO extends EcBaseDTO {
+public class EcLogAnalysisDTO {
 	private EcLogDTO logDTO;
 	/** 方法运行时间毫秒数---总运行时间 */
 	private long runTimeMinllisTotal;

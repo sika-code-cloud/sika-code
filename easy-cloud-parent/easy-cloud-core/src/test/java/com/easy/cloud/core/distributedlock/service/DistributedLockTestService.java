@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easy.cloud.core.basic.service.EcBaseService;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.distributedlock.processor.DistributedLockTestProcessor;
 import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
 import com.easy.cloud.core.lock.callback.result.processor.EcDefaultLockResultProcessor;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockNameDesc;
 
 @Service(value = "distributedLockTestService1")
-@EcLog(logSwitch = false, logAnalysisSwitch = false)
+@EcLogAnnotation(logSwitch = false, analysisSwitch = false)
 public class DistributedLockTestService extends EcBaseService{
 	@Autowired
 	private RedissonClient redissonClient;
