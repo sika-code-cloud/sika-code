@@ -78,7 +78,7 @@ public class EcLock {
 	}
 
 	/** 获取分布式锁 */
-	private boolean gainDistributedLock(long leaseTime, TimeUnit timeUnit) {
+	private boolean gainDistributedLock(final long leaseTime, final TimeUnit timeUnit) {
 		RedisCallback<String> redisCallback = new RedisCallback<String>() {
 			@Override
 			public String doInRedis(RedisConnection connection) throws DataAccessException {
