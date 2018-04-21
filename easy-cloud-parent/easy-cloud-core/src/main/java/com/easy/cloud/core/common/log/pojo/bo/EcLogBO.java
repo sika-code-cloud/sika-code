@@ -1,18 +1,19 @@
 package com.easy.cloud.core.common.log.pojo.bo;
 
 import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.easy.cloud.core.basic.pojo.bo.EcBaseAspectBO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
@@ -31,9 +32,13 @@ import com.easy.cloud.core.common.string.utils.EcStringUtils;
  *
  * @author daiqi 创建时间 2018年2月8日 上午10:22:06
  */
-public class EcLogBO {
+public class EcLogBO extends EcBaseAspectBO {
 	private EcLogDTO ecLogDTO;
-	private EcLog ecLog;
+	private EcLogAnnotation logAnnotation;
+
+	public EcLogBO() {
+		
+	}
 
 	private static EcLogBO newInstance() {
 		return new EcLogBO();
@@ -47,12 +52,15 @@ public class EcLogBO {
 		this.ecLogDTO = ecLogDTO;
 		return this;
 	}
-	
-	public EcLogBO buildDqLog(EcLog ecLog) {
-		this.ecLog = ecLog;
+
+	public EcLogBO buildLogAnnotation() {
+		this.logAnnotation = targetMethod.getAnnotation(EcLogAnnotation.class);
+		if (EcBaseUtils.isNull(this.logAnnotation)) {
+			this.logAnnotation = targetClass.getAnnotation(EcLogAnnotation.class);
+		}
 		return this;
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -61,49 +69,28 @@ public class EcLogBO {
 	 *
 	 * @param pjp
 	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年2月9日 上午11:14:51
+	 * @author daiqi 创建时间 2018年2月9日 上午11:14:51
 	 */
-	public EcLogBO buildDqLogData(ProceedingJoinPoint pjp){
-		Signature signature = pjp.getSignature();
-		MethodSignature methodSignature = (MethodSignature) signature;
-		Method targetMethod = methodSignature.getMethod();
-		Class<?> targetClass = pjp.getTarget().getClass();
+	public EcLogBO buildDqLogData(ProceedingJoinPoint pjp, Object targetReturnValue) {
+		super.buildBaseAspectData(pjp);
+		super.buildTargetReturnValue(targetReturnValue);
 		
-		this.buildTargetClassName(targetClass.getName()).buildTargetMethodName(targetMethod.getName());
-		this.buildTargetParameterTypes(targetMethod.getParameterTypes()).buildTargetParameterValues(pjp.getArgs());
-		this.buildTargetReturnType(targetMethod.getReturnType()).buildLogger(targetClass);
-		this.buildRequestPath().buildDqLog(targetClass, targetMethod);
-		
+		this.ecLogDTO.setBaseAspectDTO(baseAspectDTO);
+		this.buildLogger(super.targetClass);
+		this.buildRequestPath();
+		this.buildLogAnnotation();
 		return this;
 	}
-	/**
-	 * 
-	 * <p>
-	 * 根据切点获取日志注解
-	 * </p>
-	 *
-	 * @param joinPoint
-	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年2月9日 下午7:36:32
-	 */
-	private void buildDqLog(Class<?> targetClass, Method targetMethod){
-		EcLog ecLog = targetMethod.getAnnotation(EcLog.class);
-		if (EcBaseUtils.isNotNull(ecLog)){
-			buildDqLog(ecLog);
-		}else{
-			buildDqLog(targetClass.getAnnotation(EcLog.class));
-		}
-	}
+
 	/** 根据目标class构建日志记录对象 */
-	private EcLogBO buildLogger(Class<?> targetClass){
-		if(EcBaseUtils.isNull(targetClass)){
+	private EcLogBO buildLogger(Class<?> targetClass) {
+		if (EcBaseUtils.isNull(targetClass)) {
 			return this;
 		}
-		this.buildLogger( LoggerFactory.getLogger(targetClass));
+		this.buildLogger(LoggerFactory.getLogger(targetClass));
 		return this;
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -111,41 +98,24 @@ public class EcLogBO {
 	 * </p>
 	 *
 	 * @return
-	 * @author daiqi
-	 * 创建时间    2018年2月9日 下午4:46:14
+	 * @author daiqi 创建时间 2018年2月9日 下午4:46:14
 	 */
-	private EcLogBO buildRequestPath(){
+	private EcLogBO buildRequestPath() {
 		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
-        HttpServletRequest request = sra.getRequest();
+		ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+		if (EcBaseUtils.isNull(sra)) {
+			return this;
+		}
+		HttpServletRequest request = sra.getRequest();
 
-        String requestPath = request.getServletPath().toString();
-        if (EcStringUtils.isEmpty(requestPath)){
-        	requestPath = request.getPathInfo();
-        }
-        if (EcStringUtils.isEmpty(requestPath)){
-        	requestPath = request.getRequestURI();
-        }
-        return buildRequestPath(requestPath);
-	}
-	public EcLogBO buildTargetParameterValues(Object[] targetParameterValues) {
-		this.ecLogDTO.setTargetParameterValues(targetParameterValues);
-		return this;
-	}
-
-	public EcLogBO buildTargetParameterTypes(Class<?>[] targetParameterTypes) {
-		this.ecLogDTO.setTargetParameterTypes(targetParameterTypes);
-		return this;
-	}
-
-	public EcLogBO buildTargetMethodName(String targetMethodName) {
-		this.ecLogDTO.setTargetMethodName(targetMethodName);
-		return this;
-	}
-
-	public EcLogBO buildTargetClassName(String targetClassName) {
-		this.ecLogDTO.setTargetClassName(targetClassName);
-		return this;
+		String requestPath = request.getServletPath().toString();
+		if (EcStringUtils.isEmpty(requestPath)) {
+			requestPath = request.getPathInfo();
+		}
+		if (EcStringUtils.isEmpty(requestPath)) {
+			requestPath = request.getRequestURI();
+		}
+		return buildRequestPath(requestPath);
 	}
 
 	public EcLogBO buildRequestPath(String requestPath) {
@@ -163,25 +133,16 @@ public class EcLogBO {
 		return this;
 	}
 
-	public EcLogBO buildTargetReturnType(Class<?> targetReturnType) {
-		this.ecLogDTO.setTargetReturnType(targetReturnType);
-		return this;
-	}
-
-	public EcLogBO buildTargetReturnValue(Object targetReturnValue) {
-		this.ecLogDTO.setTargetReturnValue(targetReturnValue);
-		return this;
-	}
-	
 	public EcLogBO buildLogger(Logger logger) {
 		this.ecLogDTO.setLogger(logger);
 		return this;
 	}
-	
+
 	public EcLogDTO getDqLogDTO() {
 		return ecLogDTO;
 	}
-	public EcLog getDqLog() {
-		return ecLog;
+
+	public EcLogAnnotation getDqLog() {
+		return logAnnotation;
 	}
 }

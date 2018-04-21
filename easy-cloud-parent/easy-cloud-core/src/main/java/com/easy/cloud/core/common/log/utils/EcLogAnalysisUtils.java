@@ -5,10 +5,10 @@ import java.util.Map;
 import com.easy.cloud.core.basic.constant.EcBaseConstant;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.config.EcLogConfig;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogAnalysisContainer;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogType;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogAnalysisDTO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.properties.utils.EcPropertiesUtils;
@@ -36,15 +36,15 @@ public class EcLogAnalysisUtils {
 	 * 获取日志分析开关
 	 * </p>
 	 *
-	 * @param ecLog : DqLog : 日志注解
+	 * @param ecLogAnnotation : DqLog : 日志注解
 	 * @param ecLogDTO : DqLogDTO : 日志传输对象
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogAnalysisSwitch(EcLog ecLog, EcLogDTO ecLogDTO) {
-		boolean dqMethodAnalysisSwitch = ecLog.dqLogAnalysisSwitch();
-		String className = ecLogDTO.getTargetClassName();
-		String methodName = ecLogDTO.getTargetMethodName();
+	public static boolean getLogAnalysisSwitch(EcLogAnnotation ecLogAnnotation, EcLogDTO ecLogDTO) {
+		boolean dqMethodAnalysisSwitch = ecLogAnnotation.analysisSwitch();
+		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
+		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
 
 		// 类名为空直接返回true
 		if (EcStringUtils.isEmpty(className)) {
@@ -139,7 +139,7 @@ public class EcLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static void setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer, EcLogAnalysisDTO ecLogAnalysisDTO) {
-		String switchKey = getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getDqLogDTO());
+		String switchKey = getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getLogDTO());
 		dqLogAnalysisDTOContainer.put(switchKey, ecLogAnalysisDTO);
 	}
 	
@@ -164,7 +164,7 @@ public class EcLogAnalysisUtils {
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
 	public static void setDqLogAnalysisDTOToRedis(EcLogAnalysisDTO ecLogAnalysisDTO) {
-		getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getDqLogDTO());
+		getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getLogDTO());
 //		设置日志分析数据传输对象到redis中
 		// TODO 设置日志分析数据传输对象到redis中
 	}
@@ -172,9 +172,9 @@ public class EcLogAnalysisUtils {
 	/** 获取日志分析的key */
 	private static String getLogKeyOfDqLogAnalysis(EcLogDTO ecLogDTO) {
 		String applicationName = EcPropertiesUtils.getStringValue(EcBaseConstant.APPLICATION_NAME_KEY);
-		String className = ecLogDTO.getTargetClassName();
-		String methodName = ecLogDTO.getTargetMethodName();
-		String parameterTypes = EcArrayUtils.getClassArrayStr(ecLogDTO.getTargetParameterTypes());
+		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
+		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
+		String parameterTypes = EcArrayUtils.getClassArrayStr(ecLogDTO.getBaseAspectDTO().getTargetParameterTypes());
 		return EcLogUtils.getLogKey(applicationName, className, methodName, parameterTypes);
 	}
 	
@@ -184,18 +184,18 @@ public class EcLogAnalysisUtils {
 	 * 根据日志类型获取日志分析容器
 	 * </p>
 	 *
-	 * @param dqLogType
+	 * @param logType
 	 * @return
 	 * @author daiqi 创建时间 2018年2月22日 上午11:19:48
 	 */
-	public static Map<String, EcLogAnalysisDTO> getLogAnalysisContainerByType(int dqLogType) {
-		if (EcLogType.isController(dqLogType)) {
+	public static Map<String, EcLogAnalysisDTO> getLogAnalysisContainerByType(EcLogTypeEnum logType) {
+		if (EcLogTypeEnum.isController(logType)) {
 			return EcLogAnalysisContainer.getLogAnalysisContainerController();
-		} else if (EcLogType.isLogic(dqLogType)) {
+		} else if (EcLogTypeEnum.isLogic(logType)) {
 			return EcLogAnalysisContainer.getLogAnalysisContainerLogic();
-		} else if (EcLogType.isService(dqLogType)) {
+		} else if (EcLogTypeEnum.isService(logType)) {
 			return EcLogAnalysisContainer.getLogAnalysisContainerService();
-		} else if (EcLogType.isRepository(dqLogType)) {
+		} else if (EcLogTypeEnum.isRepository(logType)) {
 			return EcLogAnalysisContainer.getLogAnalysisContainerRepository();
 		} else {
 			return EcLogAnalysisContainer.getLogAnalysisContainerOther();

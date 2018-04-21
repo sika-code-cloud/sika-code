@@ -85,10 +85,10 @@ public class EcXmlContentElementDesc extends EcXmlContentBaseDesc {
 		if (EcCollectionsUtils.isEmpty(attributes)) {
 			return null;
 		}
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		for (EcXmlContentElementAttributeDesc attributeDesc : attributes) {
 			sb.append(attributeDesc.getKey()).append(EcSymbol.EQUAL).append(EcSymbol.DOUBLE_QUOTES);
-			sb.append(attributeDesc.getValue()).append(EcSymbol.DOUBLE_QUOTES).append(EcSymbol.EMPTY);
+			sb.append(attributeDesc.getValue()).append(EcSymbol.DOUBLE_QUOTES).append(EcSymbol.SPACE);
 		}
 		return sb.toString();
 	}

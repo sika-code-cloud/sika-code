@@ -1,6 +1,9 @@
 package com.easy.cloud.core.common.generator.code.java.pojo.dto;
 
+import java.util.Map;
+
 import com.easy.cloud.core.common.generator.code.base.pojo.dto.EcGenerateBaseDTO;
+import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
@@ -16,6 +19,8 @@ public class EcGenerateJavaBaseDTO extends EcGenerateBaseDTO{
 	private String classBodyName;
 	/** 类注释 */
 	private String classComment;
+	/** 忽略的属性集合 */
+	private Map<String, Boolean> ignoreFields;
 	
 	public EcGenerateJavaBaseDTO(String projectName, String basePackageName, String moduleName,
 			String subModulePackageName, String classBodyName, String classComment) {
@@ -67,6 +72,20 @@ public class EcGenerateJavaBaseDTO extends EcGenerateBaseDTO{
 		this.classComment = classComment;
 	}
 	
+	public Map<String, Boolean> getIgnoreFields() {
+		return ignoreFields;
+	}
+
+	public void setIgnoreFields(Map<String, Boolean> ignoreFields) {
+		this.ignoreFields = ignoreFields;
+	}
+	/** 增加忽略属性 */
+	public void addIgnoreField(String ignoreFieldName, boolean value) {
+		if (this.ignoreFields == null) {
+			ignoreFields = EcMapUtils.newHashMap();
+		}
+		ignoreFields.put(ignoreFieldName, value);
+	}
 	/**
 	 * 
 	 * <p>
@@ -77,7 +96,7 @@ public class EcGenerateJavaBaseDTO extends EcGenerateBaseDTO{
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	public String buildFullPackageName(String subModulePackageName) {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(getBasePackageName())) {
 			sb.append(getBasePackageName()).append(EcSymbol.STOP);
 		}

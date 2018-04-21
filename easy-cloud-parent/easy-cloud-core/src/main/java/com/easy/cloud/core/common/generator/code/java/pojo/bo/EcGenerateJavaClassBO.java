@@ -23,4 +23,5 @@ public abstract class EcGenerateJavaClassBO extends EcGenerateJavaBaseBO {
 		javaClassContentDesc.addModifier(EcModifierMappingEnum.CLASS);
 		// 设置类的modifier列表---end
 	}
+	
 }

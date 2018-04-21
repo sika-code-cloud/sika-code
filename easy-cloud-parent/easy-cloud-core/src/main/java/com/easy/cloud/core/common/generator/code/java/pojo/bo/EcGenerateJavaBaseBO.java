@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.constant.EcFileConstant.EcFileSuffix;
 import com.easy.cloud.core.common.file.pojo.desc.EcFileContentBaseDesc;
@@ -42,11 +43,20 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 		this.generateJavaBaseDTO = generateJavaBaseDTO;
 		super.setTemplateDesc(templateDesc);
 		javaClassContentDesc = new EcJavaClassContentDesc(generateRule);
-
+		
 		initData();
+	}
+	
+	public void buildEcJavaClassContentDesc(EcJavaClassContentDesc javaClassContentDesc) {
+		if (EcBaseUtils.isNotNull(this.javaClassContentDesc)) {
+			javaClassContentDesc.setGenerateRule(this.javaClassContentDesc.getGenerateRule());
+		}
+		this.javaClassContentDesc = javaClassContentDesc;
 	}
 
 	private void initData() {
+		javaClassContentDesc.setIgnoreFields(this.generateJavaBaseDTO.getIgnoreFields());
+		
 		EcJavaFileDesc dqFileDesc = new EcJavaFileDesc();
 		dqFileDesc.setProjectName(generateJavaBaseDTO.getProjectName());
 		dqFileDesc.setFileName(getClassName());
@@ -119,27 +129,39 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 	/** 获取注释endWith */
 	protected abstract String getClassCommentEndWith();
 
-	/** 获取类的注解列表 */
-	protected abstract void buildAnnotations();
-
 	/** 获取类的Modifier列表 */
 	protected abstract void buildModifiers();
 
 	/** 获取继承父类的class */
-	protected abstract void buildExtendsParentClass();
+	protected void buildExtendsParentClass() {
+		
+	}
 
 	/** 获取实现的接口列表 */
-	protected abstract void buildImplementsInterfaces();
+	protected void buildImplementsInterfaces() {
+		
+	}
 
 	/** 获取构造函数列表 */
-	protected abstract void buildConstructors();
+	protected void buildConstructors() {
+		
+	}
 
 	/** 获取属性列表 */
-	protected abstract void buildFields();
+	protected void buildFields() {
+		
+	}
 
 	/** 获取方法列表 */
-	protected abstract void buildMethods();
+	protected void buildMethods() {
 
+	}
+
+	
+	/** 获取类的注解列表 */
+	protected void buildAnnotations() {
+		
+	}
 	/** 获取类泛型参数列表 */
 	protected void buildGenericitys() {
 
@@ -169,9 +191,11 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的注释 */
 	protected String getClassComment() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getClassComment())) {
 			sb.append(generateJavaBaseDTO.getClassComment());
+		} else if (EcBaseUtils.isNotNull(databaseDataSources)){
+			sb.append(databaseDataSources.getTableComment());
 		}
 		if (EcStringUtils.isNotEmpty(getClassCommentEndWith())) {
 			sb.append(getClassCommentEndWith());
@@ -181,7 +205,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 
 	/** 获取类的名称 */
 	protected String getClassName() {
-		StringBuilder classNameBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder classNameBuild = EcStringUtils.newStringBuilder();
 		classNameBuild.append(EcStringUtils.capitalize(generateJavaBaseDTO.getClassBodyName()));
 		if (EcStringUtils.isNotEmpty(getClassNameEndWith())) {
 			classNameBuild.append(getClassNameEndWith());
@@ -199,7 +223,7 @@ public abstract class EcGenerateJavaBaseBO extends EcGenerateBO {
 	 * @author daiqi 创建时间 2018年3月26日 下午4:29:52
 	 */
 	private String getPackageRelativePath() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		if (EcStringUtils.isNotEmpty(generateJavaBaseDTO.getBasePackageName())) {
 			String basePackagePath = EcCodeGenerateUtils
 					.changePackageNameToPath(generateJavaBaseDTO.getBasePackageName());

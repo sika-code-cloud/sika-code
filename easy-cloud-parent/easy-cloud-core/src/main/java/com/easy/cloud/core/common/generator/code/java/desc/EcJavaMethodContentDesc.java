@@ -93,7 +93,7 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 		if (EcCollectionsUtils.isEmpty(args)) {
 			return null;
 		}
-		StringBuilder argsBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder argsBuild = EcStringUtils.newStringBuilder();
 		for (int i = 0; i < args.size(); ++i) {
 			EcJavaFieldContentDesc arg = args.get(i);
 			if (EcBaseUtils.isNull(arg)) {
@@ -104,14 +104,14 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 					argsBuild.append(annotation.getName());
 					argsBuild.append(EcSymbol.LEFT_PARENTHESES);
 					argsBuild.append(annotation.getParamsStr());
-					argsBuild.append(EcSymbol.RIGHT_PARENTHESES).append(EcSymbol.EMPTY);
+					argsBuild.append(EcSymbol.RIGHT_PARENTHESES).append(EcSymbol.SPACE);
 				}
 			}
-			argsBuild.append(EcStringUtils.capitalize(arg.getSimpleClassType())).append(EcSymbol.EMPTY);
+			argsBuild.append(EcStringUtils.capitalize(arg.getSimpleClassType())).append(EcSymbol.SPACE);
 			argsBuild.append(EcStringUtils.uncapitalize(arg.getName()));
 
 			if (i < args.size() - 1) {
-				argsBuild.append(EcSymbol.COMMA).append(EcSymbol.EMPTY);
+				argsBuild.append(EcSymbol.COMMA).append(EcSymbol.SPACE);
 			}
 		}
 		return argsBuild.toString();
@@ -119,7 +119,7 @@ public class EcJavaMethodContentDesc extends EcJavaContentDesc {
 
 	@Override
 	public String getJavaContentSign() {
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		sb.append(getTypeDesc()).append(getName());
 		if (EcCollectionsUtils.isNotEmpty(args)) {
 			for (EcJavaFieldContentDesc arg : getArgs()) {

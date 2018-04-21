@@ -155,7 +155,7 @@ public class EcFileUtils {
 	 * @author daiqi 创建时间 2018年3月31日 上午9:42:23
 	 */
 	public static String getFullFilePath(EcFileDesc fileDesc) {
-		StringBuilder fileFullPathBuild = EcStringUtils.newStringBuilderDefault();
+		StringBuilder fileFullPathBuild = EcStringUtils.newStringBuilder();
 		fileFullPathBuild.append(fileDesc.getFileDirectoryFullPath()).append(EcSymbol.BACK_SLASH);
 		fileFullPathBuild.append(fileDesc.getFileName()).append(EcSymbol.STOP).append(fileDesc.getFileSuffix());
 		return fileFullPathBuild.toString();

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogBO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
@@ -30,11 +30,11 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
  * @author daiqi 创建时间 2018年2月7日 下午7:06:15
  */
 @Aspect
+@Order
 @Component
-@Order(99)
 public class EcLogAspect {
 
-	@Pointcut("@within(com.easy.cloud.core.common.log.annotation.EcLog)")
+	@Pointcut("@within(com.easy.cloud.core.common.log.annotation.EcLogAnnotation)")
 	public void dqLogPointcut() {
 		
 	}
@@ -59,23 +59,23 @@ public class EcLogAspect {
 	 * @author daiqi 创建时间 2018年2月7日 下午7:21:56
 	 * @throws Throwable
 	 */
-	protected Object doLogLogic(ProceedingJoinPoint joinPoint) throws Throwable {
+	protected Object doLogLogic(ProceedingJoinPoint joinPoint) {
 		long beginTimeMillis = EcDateUtils.getCurrentTimeMillis();
 		Object targetReturnValue = null;
 		try {
 			targetReturnValue = joinPoint.proceed();
 		} catch (Throwable e) {
-			throw e;
+			throw new RuntimeException(e);
 		} finally {
 			long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
 //			构建日志逻辑对象--设置日志数据
 			EcLogBO ecLogBO = EcLogBO.newInstantce(EcLogDTO.newInstance(beginTimeMillis, endTimeMillis));
-			ecLogBO.buildDqLogData(joinPoint).buildTargetReturnValue(targetReturnValue);
+			ecLogBO.buildDqLogData(joinPoint, targetReturnValue);
 //			获取日志注解
-			EcLog ecLog = ecLogBO.getDqLog();
-			if (EcBaseUtils.isNotNull(ecLog) && EcBaseUtils.isNotNull(ecLog.dqLogProxyClass())){
+			EcLogAnnotation ecLogAnnotation = ecLogBO.getDqLog();
+			if (EcBaseUtils.isNotNull(ecLogAnnotation) && EcBaseUtils.isNotNull(ecLogAnnotation.proxyClass())){
 //				根据注解获取Log委托处理对象执行日志处理
-				EcLogUtils.getDqLogProxy(ecLog).handle(ecLogBO);
+				EcLogUtils.getDqLogProxy(ecLogAnnotation).handle(ecLogBO);
 			}
 		}
 		return targetReturnValue;

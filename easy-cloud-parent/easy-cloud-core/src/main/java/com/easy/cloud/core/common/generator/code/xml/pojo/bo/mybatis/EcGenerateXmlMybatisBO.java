@@ -402,9 +402,9 @@ public class EcGenerateXmlMybatisBO extends EcGenerateXmlBaseBO {
 	/** 获取test属性的值 */
 	private String getTestAttrValue(EcGenerateXmlMybatisData data) {
 		// 设置属性
-		StringBuilder testAttrValue = EcStringUtils.newStringBuilderDefault();
+		StringBuilder testAttrValue = EcStringUtils.newStringBuilder();
 		testAttrValue.append(data.getPropertyName());
-		testAttrValue.append(EcSymbol.EMPTY).append("!=").append(EcSymbol.EMPTY).append("null");
+		testAttrValue.append(EcSymbol.SPACE).append("!=").append(EcSymbol.SPACE).append("null");
 		return testAttrValue.toString();
 	}
 

@@ -3,8 +3,10 @@ package com.easy.cloud.core.common.string.utils;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 
 /**
@@ -22,10 +24,73 @@ public class EcStringUtils {
      */
     public static final String EMPTY = EcSymbol.EMPTY;
     /** 分割符---英文冒号---:*/
-    public static final String SPLIT_COLON = EcSymbol.SPLIT_COLON;
+    public static final String COLON = EcSymbol.COLON;
     /** 初始化相关String容器的容量--512 */
-    private static final int INIT_CAPACITY = 512;
+    private static final int INIT_CAPACITY = 128;
+    
+    /**
+     * 
+     * <p>
+     * 使用默认分隔符来生成统一规范的key
+     * </p>
+     *
+     * <pre>
+     * StringUtils.generateKeyDefault("arg1", "arg2", "arg3") = arg1:arg2:arg3
+     * StringUtils.generateKeyDefault(null) = null
+     * </pre>
+     * 
+     * @param args : String : key的可变列表,不包括分隔符
+     * @return 
+     * @author daiqi
+     * @创建时间 2018年4月16日 上午9:29:38
+     */
+    public static String generateKeyDefaultSeparator(String ...args) {
+    	return generateKey(EcSymbol.COLON, args);
+    }
 	
+    /**
+     * 
+     * <p>
+     * 生成统一规范key的公共方法，使用第一个参数做为分隔符
+     * </p>
+     *
+     * <pre>
+     * StringUtils.generateKey("-", "arg1", "arg2", "arg3") = arg1-arg2-arg3
+     * StringUtils.generateKey("", "arg1", "arg2", "arg3") = arg1:arg2:arg3
+     * StringUtils.generateKey(null, "arg1", "arg2", "arg3") = arg1:arg2:arg3
+     * StringUtils.generateKey(null) = null
+     * StringUtils.generateKey(null, null) = null
+     * </pre>
+     * 
+     * @param separator : String : key分隔符,为null或者""使用:
+     * @param args : String : key的可变列表
+     * @return 生成好的key
+     * @author daiqi
+     * @创建时间 2018年4月16日 上午9:26:53
+     */
+    public static String generateKey(final String separator, final String ...args) {
+    	if (EcArrayUtils.isEmpty(args)) {
+    		return null;
+    	}
+    	String separatorTemp = separator;
+    	if (EcStringUtils.isEmpty(separatorTemp)) {
+    		separatorTemp = EcSymbol.COLON;
+    	}
+    	
+    	StringBuilder keyStrBuild = newStringBuilder();
+    	int argsLength = args.length;
+    	for (int i = 0; i < argsLength ; ++i) {
+    		if (isEmpty(args[i])) {
+    			continue;
+    		}
+    		keyStrBuild.append(args[i]);
+    		if (i < argsLength - 1) {
+    			keyStrBuild.append(separatorTemp);
+    		}
+    	}
+    	return keyStrBuild.toString();
+    }
+    
 	/**
 	 * 将首字母大写
      * <p>Capitalizes a String changing the first letter to title case as
@@ -572,7 +637,7 @@ public class EcStringUtils {
 	 * author daiqi
 	 * 创建时间  2018年1月8日 下午6:06:21
 	 */
-	public static StringBuilder newStringBuilderDefault(){
+	public static StringBuilder newStringBuilder(){
 		return newStringBuilder(INIT_CAPACITY);
 	}
 	
@@ -1008,7 +1073,7 @@ public class EcStringUtils {
 			return null;
 		}
 		String[] tempStrArr = needRmLineStr.split(EcSymbol.UNDER_LINE);
-		StringBuilder sb = EcStringUtils.newStringBuilderDefault();
+		StringBuilder sb = EcStringUtils.newStringBuilder();
 		for (String str : tempStrArr) {
 			String strNotTrim = EcStringUtils.trimToEmpty(str);
 			if (strNotTrim.length() > 0) {
@@ -1017,4 +1082,5 @@ public class EcStringUtils {
 		}
 		return sb.toString();
 	}
+	
 }

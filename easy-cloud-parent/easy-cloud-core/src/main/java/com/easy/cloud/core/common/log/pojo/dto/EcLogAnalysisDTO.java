@@ -1,6 +1,6 @@
 package com.easy.cloud.core.common.log.pojo.dto;
 
-import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 /**
  * 
  * <p>
@@ -16,8 +16,8 @@ import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
  *
  * @author daiqi 创建时间 2018年2月22日 上午10:17:31
  */
-public class EcLogAnalysisDTO extends EcBaseDTO {
-	private EcLogDTO ecLogDTO;
+public class EcLogAnalysisDTO {
+	private EcLogDTO logDTO;
 	/** 方法运行时间毫秒数---总运行时间 */
 	private long runTimeMinllisTotal;
 	/** 方法运行次数---总运行次数 */
@@ -33,7 +33,7 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 	/** 是否构建了总运行时间数据 */
 	private boolean buildRunTimeMinllisTotal;
 	/** 日志类型---{@link} DqLogConstant.DqLogType */
-	private int logType;
+	private EcLogTypeEnum logType;
 	
 	public static EcLogAnalysisDTO newInstance(EcLogDTO ecLogDTO) {
 		return new EcLogAnalysisDTO(ecLogDTO);
@@ -44,12 +44,12 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 	}
 
 	private EcLogAnalysisDTO(EcLogDTO ecLogDTO) {
-		this.ecLogDTO = ecLogDTO;
+		this.logDTO = ecLogDTO;
 	}
 	
 	/** 构建运行时间戳---总运行时间 */
 	public EcLogAnalysisDTO buildRunTimeMinllisTotal() {
-		this.runTimeMinllisTotal += ecLogDTO.getRunTimeMinllis();
+		this.runTimeMinllisTotal += logDTO.getRunTimeMinllis();
 		this.buildRunTimeMinllisTotal = true;
 		return this;
 	}
@@ -75,7 +75,7 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 
 	/** 构建运行时间戳---最小运行时间 */
 	public EcLogAnalysisDTO buildRunTimeMinllisMin() {
-		long runTimeMinllis = this.ecLogDTO.getRunTimeMinllis();
+		long runTimeMinllis = this.logDTO.getRunTimeMinllis();
 
 		if (runTimeMinllisMin == 0) {
 			this.runTimeMinllisMin = runTimeMinllis;
@@ -90,7 +90,7 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 
 	/** 构建运行时间戳---最大运行时间 */
 	public EcLogAnalysisDTO buildRunTimeMinllisMax() {
-		long runTimeMinllis = this.ecLogDTO.getRunTimeMinllis();
+		long runTimeMinllis = this.logDTO.getRunTimeMinllis();
 
 		if (runTimeMinllisMax == 0) {
 			this.runTimeMinllisMax = runTimeMinllis;
@@ -105,15 +105,16 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 	
 	/** 构建日志类型 */
 	public EcLogAnalysisDTO buildLogType() {
-		this.logType = ecLogDTO.getLogType();
+		this.logType = logDTO.getLogType();
 		return this;
 	}
-	public EcLogDTO getDqLogDTO() {
-		return ecLogDTO;
+
+	public EcLogDTO getLogDTO() {
+		return logDTO;
 	}
-	
-	public void setDqLogDTO(EcLogDTO ecLogDTO) {
-		this.ecLogDTO = ecLogDTO;
+
+	public void setLogDTO(EcLogDTO logDTO) {
+		this.logDTO = logDTO;
 	}
 
 	public void setRunTimeMinllisAvg(long runTimeMinllisAvg) {
@@ -156,14 +157,14 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 		this.runTimesTotal = runTimesTotal;
 	}
 
-	public int getLogType() {
+	public EcLogTypeEnum getLogType() {
 		return logType;
 	}
 
-	public void setLogType(int logType) {
+	public void setLogType(EcLogTypeEnum logType) {
 		this.logType = logType;
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -175,7 +176,7 @@ public class EcLogAnalysisDTO extends EcBaseDTO {
 	 * 创建时间    2018年2月28日 下午2:13:42
 	 */
 	public EcLogAnalysisDTO emptyDqLogDTO(){
-		this.ecLogDTO = null;
+		this.logDTO = null;
 		return this;
 	}
 

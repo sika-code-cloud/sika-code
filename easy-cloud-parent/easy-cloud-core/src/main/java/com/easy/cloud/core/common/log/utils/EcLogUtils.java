@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.config.EcLogConfig;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevel;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogType;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.proxy.EcLogProxy;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogBaseProxy;
@@ -43,15 +43,15 @@ public class EcLogUtils {
 		if (EcArrayUtils.isEmpty(keys)) {
 			return null;
 		}
-		StringBuilder keyBuilder = EcStringUtils.newStringBuilderDefault();
+		StringBuilder keyBuilder = EcStringUtils.newStringBuilder();
 
 		for (String key : keys) {
 			if (EcStringUtils.isNotEmpty(key)) {
-				keyBuilder.append(EcStringUtils.SPLIT_COLON).append(key);
+				keyBuilder.append(EcStringUtils.COLON).append(key);
 			}
 		}
 		String keyStr = keyBuilder.toString();
-		return EcStringUtils.substring(keyStr, EcStringUtils.indexOf(keyStr, EcStringUtils.SPLIT_COLON) + 1);
+		return EcStringUtils.substring(keyStr, EcStringUtils.indexOf(keyStr, EcStringUtils.COLON) + 1);
 	}
 	
 	/**
@@ -59,17 +59,17 @@ public class EcLogUtils {
 	 * 获取日志开关
 	 * </p>
 	 *
-	 * @param ecLog
+	 * @param ecLogAnnotation
 	 *            : DqLog : 日志注解
 	 * @param ecLogDTO
 	 *            : DqLogDTO : 日志传输对象
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogSwitch(EcLog ecLog, EcLogDTO ecLogDTO) {
-		boolean dqLogSwitch = ecLog.dqLogSwitch();
-		String className = ecLogDTO.getTargetClassName();
-		String methodName = ecLogDTO.getTargetMethodName();
+	public static boolean getLogSwitch(EcLogAnnotation ecLogAnnotation, EcLogDTO ecLogDTO) {
+		boolean dqLogSwitch = ecLogAnnotation.logSwitch();
+		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
+		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
 
 		// 类名为空直接返回true
 		if (EcStringUtils.isEmpty(className)) {
@@ -104,28 +104,28 @@ public class EcLogUtils {
 	 *     dqLogType : int : 日志类型 : 否
 	 * </pre>
 	 *
-	 * @param ecLog
+	 * @param ecLogAnnotation
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午4:02:34
 	 */
-	public static EcLogProxy getDqLogProxy(EcLog ecLog) {
-		if (EcBaseUtils.isNull(ecLog)) {
+	public static EcLogProxy getDqLogProxy(EcLogAnnotation ecLogAnnotation) {
+		if (EcBaseUtils.isNull(ecLogAnnotation)) {
 			return null;
 		}
-		if (EcBaseUtils.isNotNull(ecLog.dqLogProxyClass())
-				&& EcBaseUtils.notEquals(ecLog.dqLogProxyClass(), EcLogBaseProxy.class)) {
-			return (EcLogProxy) EcReflectionUtils.newInstance(ecLog.dqLogProxyClass());
+		if (EcBaseUtils.isNotNull(ecLogAnnotation.proxyClass())
+				&& EcBaseUtils.notEquals(ecLogAnnotation.proxyClass(), EcLogBaseProxy.class)) {
+			return (EcLogProxy) EcReflectionUtils.newInstance(ecLogAnnotation.proxyClass());
 		}
-		if (EcLogType.isController(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isController(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogControllerProxy.class);
 		}
-		if (EcLogType.isLogic(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isLogic(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogLogicProxy.class);
 		}
-		if (EcLogType.isService(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isService(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogServiceProxy.class);
 		}
-		if (EcLogType.isRepository(ecLog.dqLogType())) {
+		if (EcLogTypeEnum.isRepository(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogRepositoryProxy.class);
 		}
 		return EcReflectionUtils.newInstance(EcLogBaseProxy.class);
@@ -148,14 +148,14 @@ public class EcLogUtils {
 	 *            : boolean : 是否需要换行 true需要 false不需要
 	 * @author daiqi 创建时间 2018年2月9日 上午11:42:31
 	 */
-	public static void logByLogLevel(Integer logLevel, String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
-		if (EcLogLevel.isDebug(logLevel)) {
+	public static void logByLogLevel(EcLogLevelEnum logLevel, String logTitle, Object logDetail, Logger logger, boolean isNeedWrap) {
+		if (EcLogLevelEnum.isDebug(logLevel)) {
 			debug(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isInfo(logLevel)) {
+		} else if (EcLogLevelEnum.isInfo(logLevel)) {
 			info(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isWarn(logLevel)) {
+		} else if (EcLogLevelEnum.isWarn(logLevel)) {
 			warn(logTitle, logDetail, logger, isNeedWrap);
-		} else if (EcLogLevel.isError(logLevel)) {
+		} else if (EcLogLevelEnum.isError(logLevel)) {
 			error(logTitle, logDetail, logger, isNeedWrap);
 		}
 	}

@@ -10,19 +10,20 @@ import com.easy.cloud.core.jdbc.vo.EcAbstractDataSourceBO;
 
 /**
  * 
- * @ClassName : DqDruidDataSourceBO 
+ * @ClassName : DqDruidDataSourceBO
  * @Description : druid的数据配置信息BO
  * @author daiqi
- * @date 2017年12月6日 上午10:09:13 
+ * @date 2017年12月6日 上午10:09:13
  *
  */
-public class EcDruidDataSourceBO extends EcAbstractDataSourceBO{
-	
+public class EcDruidDataSourceBO extends EcAbstractDataSourceBO {
+
 	private DruidDataSource druidDataSource;
-	
+
 	/**
 	 * 
-	 * <p></p>
+	 * <p>
+	 * </p>
 	 *
 	 * <pre>
 	 * </pre>
@@ -31,12 +32,15 @@ public class EcDruidDataSourceBO extends EcAbstractDataSourceBO{
 	 * @author daiqi
 	 * @date 2017年12月6日 上午11:29:52
 	 */
-	public static EcDruidDataSourceBO newInstance(){
+	public static EcDruidDataSourceBO newInstance() {
 		return new EcDruidDataSourceBO();
 	}
+
 	/**
 	 * 
-	 * <p>从传入的Environment中获取属性</p>
+	 * <p>
+	 * 从传入的Environment中获取属性
+	 * </p>
 	 *
 	 * <pre>
 	 * </pre>
@@ -46,44 +50,48 @@ public class EcDruidDataSourceBO extends EcAbstractDataSourceBO{
 	 * @author daiqi
 	 * @date 2017年12月6日 下午3:54:56
 	 */
-	private static EcDruidDataSourceBO newInstance(Environment environment){
+	private static EcDruidDataSourceBO newInstance(Environment environment) {
 		return new EcDruidDataSourceBO(environment);
 	}
-	
+
 	/**
 	 * 
-	 * <p>读取配置文件获取单例的数据源</p>
+	 * <p>
+	 * 读取配置文件获取单例的数据源
+	 * </p>
 	 *
 	 * <pre></pre>
 	 *
-	 * @param environment : 传入读取配置文件的对象
+	 * @param environment
+	 *            : 传入读取配置文件的对象
 	 * @return DataSource
 	 *
-	 * author daiqi
-	 * 创建时间  2018年1月6日 下午3:45:58
+	 *         author daiqi 创建时间 2018年1月6日 下午3:45:58
 	 */
-	public static DataSource getSingleDataSource(Environment environment){
+	public static DataSource getSingleDataSource(Environment environment) {
 		return newInstance(environment).getDataSource();
 	}
+
 	private EcDruidDataSourceBO(Environment environment) {
 		super(environment);
 	}
+
 	private EcDruidDataSourceBO() {
 		super();
 	}
+
 	@Override
 	protected void initActualDataSourceBean() {
 		this.druidDataSource = new DruidDataSource();
 	}
 
-
 	@Override
 	protected void initDataSourceLinkInfo() {
 		super.initDataSourceLinkInfo();
-		if(EcBaseUtils.isNull(this.druidDataSource)){
-			return ;
+		if (EcBaseUtils.isNull(this.druidDataSource)) {
+			return;
 		}
-		
+
 		this.druidDataSource.setUrl(url);
 		this.druidDataSource.setUsername(username);
 		this.druidDataSource.setPassword(password);
@@ -93,8 +101,8 @@ public class EcDruidDataSourceBO extends EcAbstractDataSourceBO{
 	@Override
 	protected void initDataSourceParamsInfo() {
 		super.initDataSourceParamsInfo();
-		if(EcBaseUtils.isNull(this.druidDataSource)){
-			return ;
+		if (EcBaseUtils.isNull(this.druidDataSource)) {
+			return;
 		}
 		this.druidDataSource.setInitialSize(initialSize);
 		this.druidDataSource.setMaxActive(maxActive);
@@ -105,7 +113,7 @@ public class EcDruidDataSourceBO extends EcAbstractDataSourceBO{
 		this.druidDataSource.setTestWhileIdle(testWhileIdle);
 		this.druidDataSource.setPoolPreparedStatements(poolPreparedStatements);
 	}
-	
+
 	@Override
 	public void initDataSourceBean() {
 		dataSource = druidDataSource;

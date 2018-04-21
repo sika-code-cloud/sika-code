@@ -39,7 +39,7 @@ public class EcAmqpQueueName {
 	 * @author daiqi
 	 * 创建日期 2017年12月20日 下午11:37:17
 	 */
-	public static enum DqAmqpQueueNameEnum {
+	public static enum EcAmqpQueueNameEnum {
 		// --------------------使用默认的交换机的队列名称 begin----------------
 		QUEUE_NAME_TEST(EcAmqpQueueName.QUEUE_NAME_TEST), 
 		QUEUE_NAME_TEST1(EcAmqpQueueName.QUEUE_NAME_TEST1),
@@ -58,7 +58,7 @@ public class EcAmqpQueueName {
 		// --------------------验证Fanout Exchange机制的队列名称 end--------------
 		;
 
-		private DqAmqpQueueNameEnum(String queueName) {
+		private EcAmqpQueueNameEnum(String queueName) {
 			this.queueName = queueName;
 		}
 

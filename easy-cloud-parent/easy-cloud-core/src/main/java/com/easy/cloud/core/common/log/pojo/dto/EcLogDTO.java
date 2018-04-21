@@ -3,6 +3,8 @@ package com.easy.cloud.core.common.log.pojo.dto;
 import org.slf4j.Logger;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
+import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 
 /**
  * 
@@ -20,18 +22,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @author daiqi 创建时间 2018年2月8日 上午9:25:57
  */
 public class EcLogDTO {
-	/** 目标参数值列表 */
-	private Object[] targetParameterValues;
-	/** 目标参数类型列表 */
-	private Class<?>[] targetParameterTypes;
-	/** 目标方法的返回值 */
-	private Object targetReturnValue;
-	/** 目标方法的返回类型 */
-	private Class<?> targetReturnType;
-	/** 目标方法名称 */
-	private String targetMethodName;
-	/** 目标类名名称 */
-	private String targetClassName;
+	private EcBaseAspectDTO baseAspectDTO;
 	/** 请求路径 */
 	private String requestPath;
 	/** 开始时间毫秒数 */
@@ -40,11 +31,12 @@ public class EcLogDTO {
 	private Long endTimeMillis;
 	/** 方法运行时间毫秒数 */
 	private long runTimeMinllis;
-	/** 日志记录对象 -- 该对象来源于目标class中的Logger属性*/
+	/** 日志记录对象 -- 该对象来源于目标class中的Logger属性 */
 	@JSONField(serialize = false)
 	private Logger logger;
 	/** 日志类型---{@link} DqLogConstant.DqLogType */
-	private int logType;
+	private EcLogTypeEnum logType;
+
 	public EcLogDTO() {
 
 	}
@@ -76,36 +68,12 @@ public class EcLogDTO {
 		return this;
 	}
 
-	public Object[] getTargetParameterValues() {
-		return targetParameterValues;
+	public EcBaseAspectDTO getBaseAspectDTO() {
+		return baseAspectDTO;
 	}
 
-	public void setTargetParameterValues(Object[] targetParameterValues) {
-		this.targetParameterValues = targetParameterValues;
-	}
-
-	public Class<?>[] getTargetParameterTypes() {
-		return targetParameterTypes;
-	}
-
-	public void setTargetParameterTypes(Class<?>[] targetParameterTypes) {
-		this.targetParameterTypes = targetParameterTypes;
-	}
-
-	public String getTargetMethodName() {
-		return targetMethodName;
-	}
-
-	public void setTargetMethodName(String targetMethodName) {
-		this.targetMethodName = targetMethodName;
-	}
-
-	public String getTargetClassName() {
-		return targetClassName;
-	}
-
-	public void setTargetClassName(String targetClassName) {
-		this.targetClassName = targetClassName;
+	public void setBaseAspectDTO(EcBaseAspectDTO baseAspectDTO) {
+		this.baseAspectDTO = baseAspectDTO;
 	}
 
 	public String getRequestPath() {
@@ -132,22 +100,6 @@ public class EcLogDTO {
 		this.endTimeMillis = endTimeMillis;
 	}
 
-	public Object getTargetReturnValue() {
-		return targetReturnValue;
-	}
-
-	public void setTargetReturnValue(Object targetReturnValue) {
-		this.targetReturnValue = targetReturnValue;
-	}
-
-	public Class<?> getTargetReturnType() {
-		return targetReturnType;
-	}
-
-	public void setTargetReturnType(Class<?> targetReturnType) {
-		this.targetReturnType = targetReturnType;
-	}
-
 	public Long getRunTimeMinllis() {
 		return runTimeMinllis;
 	}
@@ -164,11 +116,11 @@ public class EcLogDTO {
 		this.logger = logger;
 	}
 
-	public int getLogType() {
+	public EcLogTypeEnum getLogType() {
 		return logType;
 	}
 
-	public void setLogType(int logType) {
+	public void setLogType(EcLogTypeEnum logType) {
 		this.logType = logType;
 	}
 

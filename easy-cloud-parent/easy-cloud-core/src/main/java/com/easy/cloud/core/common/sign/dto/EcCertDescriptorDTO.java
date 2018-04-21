@@ -182,6 +182,7 @@ public class EcCertDescriptorDTO {
 	 * @param keyStore
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private String getCertIdIdByStore(KeyStore keyStore) {
 		Enumeration<String> aliasenum = null;
 		try {

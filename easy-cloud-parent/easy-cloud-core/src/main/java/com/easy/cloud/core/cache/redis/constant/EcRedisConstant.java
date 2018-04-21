@@ -13,4 +13,6 @@ public class EcRedisConstant {
 	public static final String REDIS_TEMPLATE_VALUE_STR_NAME = "stringRedisTemplate";
 	/**容器注入RedisTemplate类对象的名称---值为序列化对象的redisTemplate---redisTemlateValueSerializer*/
 	public static final String REDIS_TEMPLATE_VALUE_SERIALIZER_NAME = "redisTemlateValueSerializer";
+	/**容器注入RedisTemplate类锁对象的名称---值为字符串的stringRedisTemplateLock---stringRedisTemplateLock*/
+	public static final String REDIS_TEMPLATE_VALUE_STR_LOCK_NAME = "stringRedisTemplateLock";
 }
