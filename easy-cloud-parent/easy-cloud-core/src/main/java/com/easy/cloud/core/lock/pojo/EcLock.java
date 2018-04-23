@@ -61,7 +61,7 @@ public class EcLock {
 		boolean gainLock = false;
 		long startTimestamp = EcDateUtils.getCurrentTimeMillis();
 		while (true) {
-			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp < 0) {
+			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp >= leaseTime) {
 				break;
 			}
 			if (gainDistributedLock(leaseTime, timeUnit)) {
