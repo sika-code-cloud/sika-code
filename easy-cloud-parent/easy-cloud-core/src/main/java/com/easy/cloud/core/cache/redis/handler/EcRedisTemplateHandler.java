@@ -61,9 +61,6 @@ public class EcRedisTemplateHandler {
 	 * 删除key列表
 	 * </p>
 	 *
-	 * <pre>
-	 * </pre>
-	 *
 	 * @param keys
 	 * @author daiqi
 	 * @date 2017年12月13日 下午12:56:01

@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.config.EcLogConfig;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
@@ -59,17 +59,17 @@ public class EcLogUtils {
 	 * 获取日志开关
 	 * </p>
 	 *
-	 * @param ecLog
+	 * @param ecLogAnnotation
 	 *            : DqLog : 日志注解
 	 * @param ecLogDTO
 	 *            : DqLogDTO : 日志传输对象
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogSwitch(EcLog ecLog, EcLogDTO ecLogDTO) {
-		boolean dqLogSwitch = ecLog.logSwitch();
-		String className = ecLogDTO.getTargetClassName();
-		String methodName = ecLogDTO.getTargetMethodName();
+	public static boolean getLogSwitch(EcLogAnnotation ecLogAnnotation, EcLogDTO ecLogDTO) {
+		boolean dqLogSwitch = ecLogAnnotation.logSwitch();
+		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
+		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
 
 		// 类名为空直接返回true
 		if (EcStringUtils.isEmpty(className)) {
@@ -104,28 +104,28 @@ public class EcLogUtils {
 	 *     dqLogType : int : 日志类型 : 否
 	 * </pre>
 	 *
-	 * @param ecLog
+	 * @param ecLogAnnotation
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午4:02:34
 	 */
-	public static EcLogProxy getDqLogProxy(EcLog ecLog) {
-		if (EcBaseUtils.isNull(ecLog)) {
+	public static EcLogProxy getDqLogProxy(EcLogAnnotation ecLogAnnotation) {
+		if (EcBaseUtils.isNull(ecLogAnnotation)) {
 			return null;
 		}
-		if (EcBaseUtils.isNotNull(ecLog.logProxyClass())
-				&& EcBaseUtils.notEquals(ecLog.logProxyClass(), EcLogBaseProxy.class)) {
-			return (EcLogProxy) EcReflectionUtils.newInstance(ecLog.logProxyClass());
+		if (EcBaseUtils.isNotNull(ecLogAnnotation.proxyClass())
+				&& EcBaseUtils.notEquals(ecLogAnnotation.proxyClass(), EcLogBaseProxy.class)) {
+			return (EcLogProxy) EcReflectionUtils.newInstance(ecLogAnnotation.proxyClass());
 		}
-		if (EcLogTypeEnum.isController(ecLog.logType())) {
+		if (EcLogTypeEnum.isController(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogControllerProxy.class);
 		}
-		if (EcLogTypeEnum.isLogic(ecLog.logType())) {
+		if (EcLogTypeEnum.isLogic(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogLogicProxy.class);
 		}
-		if (EcLogTypeEnum.isService(ecLog.logType())) {
+		if (EcLogTypeEnum.isService(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogServiceProxy.class);
 		}
-		if (EcLogTypeEnum.isRepository(ecLog.logType())) {
+		if (EcLogTypeEnum.isRepository(ecLogAnnotation.type())) {
 			return EcReflectionUtils.newInstance(EcLogRepositoryProxy.class);
 		}
 		return EcReflectionUtils.newInstance(EcLogBaseProxy.class);

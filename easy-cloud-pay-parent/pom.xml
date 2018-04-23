@@ -15,7 +15,7 @@
 	
 	<!-- 子模块 -->
 	<modules>
-		<module>easy-cloud-pay-common</module>
+		<module>easy-cloud-pay-core</module>
 		<module>easy-cloud-pay-wx-service</module>
 		<module>easy-cloud-pay-zfb-service</module>
 	</modules>

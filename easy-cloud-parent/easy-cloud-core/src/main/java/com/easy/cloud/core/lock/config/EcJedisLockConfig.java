@@ -15,6 +15,11 @@ import com.easy.cloud.core.lock.template.impl.EcLockTemplateJedis;
 
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * 实用jedis作为分布式锁的解决方案
+ * @author daiqi
+ * @date 2018年4月20日 下午9:14:04
+ */
 @Configuration
 @Conditional(value = { EcRedisConditional.class })
 @PropertySource("classpath:config/redis-lock.properties")

@@ -1,6 +1,6 @@
 package com.easy.cloud.core.basic.logic;
 
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogLogicProxy;
@@ -21,7 +21,7 @@ import com.easy.cloud.core.common.log.proxy.impl.EcLogLogicProxy;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-@EcLog(logLevel = EcLogLevelEnum.INFO, logProxyClass = EcLogLogicProxy.class, logType = EcLogTypeEnum.LOGIC)
+@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogLogicProxy.class, type = EcLogTypeEnum.LOGIC)
 public class EcBaseLogic {
 
 }

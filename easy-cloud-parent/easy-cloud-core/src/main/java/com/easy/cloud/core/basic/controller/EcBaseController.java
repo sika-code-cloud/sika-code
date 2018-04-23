@@ -10,7 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import com.easy.cloud.core.common.date.utils.EcDateFormatUtils;
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogControllerProxy;
@@ -22,7 +22,7 @@ import com.easy.cloud.core.exception.handler.EcBaseExceptionHandle;
  * @date 2018年3月18日 上午12:48:58
  */
 @Controller
-@EcLog(logLevel = EcLogLevelEnum.INFO, logProxyClass = EcLogControllerProxy.class, logType = EcLogTypeEnum.CONTROLLER)
+@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogTypeEnum.CONTROLLER)
 public class EcBaseController extends EcBaseExceptionHandle{
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
