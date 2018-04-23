@@ -43,13 +43,13 @@ public class EcLock {
 
 
 	/** 锁 */
-	public boolean lock(long leaseTime, TimeUnit timeUnit) {
-		return loopGainDistributedLock(leaseTime, timeUnit);
+	public boolean lock(long waitTime, long leaseTime, TimeUnit timeUnit) {
+		return loopGainDistributedLock(waitTime, leaseTime, timeUnit);
 	}
 
 	/** 尝试锁 */
-	public boolean tryLock(long leaseTime, TimeUnit timeUnit) throws InterruptedException {
-		return loopGainDistributedLock(leaseTime, timeUnit);
+	public boolean tryLock(long waitTime, long leaseTime, TimeUnit timeUnit) throws InterruptedException {
+		return loopGainDistributedLock(waitTime, leaseTime, timeUnit);
 	}
 
 	public void unlock() {
@@ -57,11 +57,11 @@ public class EcLock {
 	}
 
 	/** 循环获取分布式锁 */
-	private boolean loopGainDistributedLock(long leaseTime, TimeUnit timeUnit) {
+	private boolean loopGainDistributedLock(long waitTime, long leaseTime, TimeUnit timeUnit) {
 		boolean gainLock = false;
 		long startTimestamp = EcDateUtils.getCurrentTimeMillis();
 		while (true) {
-			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp >= leaseTime) {
+			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp >= waitTime) {
 				break;
 			}
 			if (gainDistributedLock(leaseTime, timeUnit)) {
@@ -69,7 +69,7 @@ public class EcLock {
 				break;
 			}
 			try {
-				Thread.sleep(20);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
