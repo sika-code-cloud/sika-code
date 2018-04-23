@@ -44,7 +44,7 @@ public class EcLockTemplateJedis implements EcLockTemplate {
 		EcLock ecLock = new EcLock(stringRedisTemplateLock, lockNameFull, lockAnnotation.type());
 		try {
 			System.out.println("--------------redis锁-" + lockNameFull);
-			boolean gainLock = ecLock.lock(lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
+			boolean gainLock = ecLock.lock(lockAnnotation.waitTime(), lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
 			;
 			if (gainLock) {
 				return callback.process(new EcLockResult(true));
@@ -62,7 +62,7 @@ public class EcLockTemplateJedis implements EcLockTemplate {
 		EcLock ecLock = new EcLock(stringRedisTemplateLock, lockDTO.getLockNameFull(), lockAnnotation.type());
 		boolean isGainLock = false;
 		try {
-			isGainLock = ecLock.tryLock(lockAnnotation.waitTime(), lockAnnotation.timeUnit());
+			isGainLock = ecLock.tryLock(lockAnnotation.waitTime(), lockAnnotation.leaseTime(), lockAnnotation.timeUnit());
 			return callback.process(new EcLockResult(isGainLock));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
