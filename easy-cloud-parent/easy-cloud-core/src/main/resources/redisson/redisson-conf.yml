@@ -34,7 +34,7 @@ singleServerConfig:
   #最小空闲连接数
   connectionMinimumIdleSize: 32
   #连接池大小
-  connectionPoolSize: 200
+  connectionPoolSize: 1000
   #是否启用DNS监测
   dnsMonitoring: false
   #DNS监测时间间隔，单位：毫秒
@@ -57,21 +57,22 @@ singleServerConfig:
 #  database: 0
   
 # redis集群服务配置
-clusterServersConfig: 
-  nodeAddresses: ["redis://120.78.74.169:6479","redis://120.78.74.169:6480","redis://120.78.74.169:6481"]
-  idleConnectionTimeout: 10000
-  pingTimeout: 1000
-  connectTimeout: 10000
-  timeout: 3000
-  retryAttempts: 3
-  retryInterval: 1500
-  reconnectionTimeout: 3000
-  failedAttempts: 3
-  password: 
-  subscriptionsPerConnection: 50
-  clientName: null
-  subscriptionConnectionMinimumIdleSize: 50
-  subscriptionConnectionPoolSize: 1000
+#clusterServersConfig: 
+#  nodeAddresses: ["redis://120.78.74.169:6479","redis://120.78.74.169:6480","redis://120.78.74.169:6481"]
+#  idleConnectionTimeout: 10000
+#  pingTimeout: 1000
+#  connectTimeout: 10000
+#  timeout: 3000
+#  retryAttempts: 3
+#  retryInterval: 1500
+#  reconnectionTimeout: 3000
+#  failedAttempts: 3
+#  password: 
+#  subscriptionsPerConnection: 50
+#  clientName: null
+#  subscriptionConnectionMinimumIdleSize: 50
+#  subscriptionConnectionPoolSize: 1000
+#  masterConnectionPoolSize: 1000
 
 threads: 0
 nettyThreads: 0
