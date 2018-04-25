@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EcRedisAspect {
 
-	@Pointcut("@com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation)")
+	@Pointcut("@annotation(com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation)")
 	public void redisAspect() {
 
 	}
