@@ -7,7 +7,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.easy.cloud.core.common.log.annotation.EcLog;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.lock.annotation.EcLockAnnotation;
@@ -15,7 +15,7 @@ import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTemplateTypeEnum;
 import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
 
 @Service(value = "distributedLockTestService1")
-@EcLog(logSwitch = false, logAnalysisSwitch = false, logLevel = EcLogLevelEnum.INFO)
+@EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogLevelEnum.INFO)
 public class LockTestService {
 	@Autowired
 	private RedissonClient redissonClient;

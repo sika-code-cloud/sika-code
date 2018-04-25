@@ -21,7 +21,7 @@ import com.easy.cloud.core.lock.template.selector.EcLockTemplateSelector;
  * @author daiqi 创建时间 2018年4月12日 下午1:51:49
  */
 @Aspect
-@Order(value = 100) // 锁的优先级最高
+@Order(value = 100)
 @Component
 public class EcLockAspect {
 	@Autowired

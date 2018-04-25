@@ -15,7 +15,7 @@
 	<description>easy-cloud-service-parent</description>
 	<!-- 子模块 -->
 	<modules>
-		<module>easy-cloud-service-common</module>
+		<module>easy-cloud-service-core</module>
 		<module>easy-cloud-service-atom-user</module>
 		<module>easy-cloud-service-atom-movie</module>
 		<module>easy-cloud-service-compose-user</module>
