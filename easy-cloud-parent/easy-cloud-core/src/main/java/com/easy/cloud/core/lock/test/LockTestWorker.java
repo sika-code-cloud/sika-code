@@ -43,8 +43,8 @@ public class LockTestWorker implements Runnable {
 			person.put("name", "张三");
 			// 不加注解锁测试
 //			Integer count = service.unLock(id, person);
-//			Integer count = service.pointAllUseRedisson(id, person);			// 指定注解的param属性
-			Integer count = service.pointAllUseJedis(id, person);			// 指定注解的param属性
+			Integer count = service.pointAllUseRedisson(id, person);			// 指定注解的param属性
+//			Integer count = service.pointAllUseJedis(id, person);			// 指定注解的param属性
 //			 Integer count = service.pointParam(person, "张三");
 			// 使用注解的默认的参数
 //			 Integer count = service.useDefault(randomId, "张三");

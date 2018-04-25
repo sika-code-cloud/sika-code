@@ -41,7 +41,6 @@ public class EcLock {
 		lockValue = Thread.currentThread().getName();
 	}
 
-
 	/** 锁 */
 	public boolean lock(long waitTime, long leaseTime, TimeUnit timeUnit) {
 		return loopGainDistributedLock(waitTime, leaseTime, timeUnit);
@@ -59,9 +58,10 @@ public class EcLock {
 	/** 循环获取分布式锁 */
 	private boolean loopGainDistributedLock(long waitTime, long leaseTime, TimeUnit timeUnit) {
 		boolean gainLock = false;
+		long waitTimeMills = waitTime * 1000;
 		long startTimestamp = EcDateUtils.getCurrentTimeMillis();
 		while (true) {
-			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp >= waitTime) {
+			if (EcDateUtils.getCurrentTimeMillis() - startTimestamp >= waitTimeMills) {
 				break;
 			}
 			if (gainDistributedLock(leaseTime, timeUnit)) {
@@ -78,7 +78,7 @@ public class EcLock {
 	}
 
 	/** 获取分布式锁 */
-	private boolean gainDistributedLock(long leaseTime, TimeUnit timeUnit) {
+	private boolean gainDistributedLock(final long leaseTime, final TimeUnit timeUnit) {
 		RedisCallback<String> redisCallback = new RedisCallback<String>() {
 			@Override
 			public String doInRedis(RedisConnection connection) throws DataAccessException {
