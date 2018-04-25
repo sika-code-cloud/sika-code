@@ -63,9 +63,9 @@ public class EcLockConstant {
 	 * @author daiqi 创建时间 2018年4月12日 下午12:02:00
 	 */
 	public static class EcLockTime {
-		/** 默认最长等待时间---30---单位秒 */
+		/** 默认最长等待时间---30---单位根据TimeUnit进行选择 */
 		public static final long WAIT_TIME_DEFAULT = 30;
-		/** 默认锁超时时间---5---单位秒 */
+		/** 默认锁超时时间---5---单位根据TimeUnit进行选择 */
 		public static final long LEASE_TIME_DEFAULT = 5;
 	}
 

@@ -18,7 +18,7 @@ public class LockTestProcessor extends EcBaseLockResultProcessor{
 
 	@Override
 	protected Object success(ProceedingJoinPoint pjp, EcLockResult distributedLockResult) {
-		System.out.println("-----------------自定义的结果处理方法洛");
+//		System.out.println("-----------------自定义的结果处理方法洛");
 		return super.doProceed(pjp);
 	}
 

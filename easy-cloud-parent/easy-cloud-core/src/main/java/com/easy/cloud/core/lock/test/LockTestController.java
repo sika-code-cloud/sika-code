@@ -1,6 +1,8 @@
 
 package com.easy.cloud.core.lock.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -17,7 +19,7 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
 public class LockTestController {
-	private int count = 400;
+	private int count = 200;
 	@Autowired
 	private RedissonClient redissonClient;
 
@@ -27,7 +29,6 @@ public class LockTestController {
 	@RequestMapping(value = "distributedLockTest")
 	@ResponseBody
 	public String distributedLockTest(@RequestParam Map<String, Object> paramsMap) throws Exception {
-		long startime = System.currentTimeMillis();
 		CountDownLatch startSignal = new CountDownLatch(1);
 		CountDownLatch doneSignal = new CountDownLatch(count);
 		String id = EcMapUtils.getString(paramsMap, "id");
@@ -36,10 +37,16 @@ public class LockTestController {
 			countStr = "count1";
 		}
 		RMap<String, Integer> countMap = redissonClient.getMap(countStr);
-		countMap.put(countStr, 2*count);
+		countMap.put(countStr, count);
+		List<Thread> list = new ArrayList<>();
+		// 创建线程
 		for (int i = 0; i < count; ++i) { // create and start threads
-			new Thread(new LockTestWorker(startSignal, doneSignal, service, redissonClient,id)).start();
-			new Thread(new LockTestWorker2(startSignal, doneSignal, service, redissonClient,id)).start();
+			list.add(new Thread(new LockTestWorker(startSignal, doneSignal, service, redissonClient,id)));
+		}
+		long startime = System.currentTimeMillis();
+		// 开始线程
+		for (int i = 0; i < list.size(); ++i) { // create and start threads
+			list.get(i).start();
 		}
 
 		startSignal.countDown(); // let all threads proceed
