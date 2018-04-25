@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant;
+import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateName;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
@@ -45,12 +46,12 @@ public class EcRedisTemplateHandler {
 	 */
 	private static RedisTemplate<String, Object> redisTemlateValueSerializer;
 
-	@Resource(name = EcRedisConstant.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
+	@Resource(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
 	public void setRedisTemlateValueSerializer(RedisTemplate<String, Object> redisTemlateValueSerializer) {
 		EcRedisTemplateHandler.redisTemlateValueSerializer = redisTemlateValueSerializer;
 	}
 
-	@Resource(name = EcRedisConstant.REDIS_TEMPLATE_VALUE_STR_NAME)
+	@Resource(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_NAME)
 	public void setStringRedisTemplate(StringRedisTemplate stringRedisTemplate) {
 		EcRedisTemplateHandler.stringRedisTemplate = stringRedisTemplate;
 	}

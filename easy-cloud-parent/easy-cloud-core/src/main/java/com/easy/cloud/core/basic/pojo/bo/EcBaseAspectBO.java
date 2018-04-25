@@ -18,6 +18,7 @@ public class EcBaseAspectBO {
 	protected EcBaseAspectDTO baseAspectDTO;
 	protected Method targetMethod;
 	protected Class<?> targetClass;
+	protected ProceedingJoinPoint joinPoint;
 	public EcBaseAspectBO() {
 		this.baseAspectDTO = new EcBaseAspectDTO();
 	}
@@ -26,15 +27,15 @@ public class EcBaseAspectBO {
 		this.baseAspectDTO = baseAspectDTO;
 	}
 	
-	protected void buildBaseAspectData(ProceedingJoinPoint pjp) {
-		Signature signature = pjp.getSignature();
+	protected void buildBaseAspectData(final ProceedingJoinPoint pjp) {
+		this.joinPoint = pjp;
+		Signature signature = this.joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
-		Method targetMethod = methodSignature.getMethod();
-		Class<?> targetClass = pjp.getTarget().getClass();
-		
+		this.targetMethod = methodSignature.getMethod();
+		Class<?> targetClass = this.joinPoint.getTarget().getClass();
 		this.buildTargetClass(targetClass).buildTargetMethod(targetMethod);
 		this.buildTargetClassName(targetClass.getName()).buildTargetMethodName(targetMethod.getName());
-		this.buildTargetParameterTypes(targetMethod.getParameterTypes()).buildTargetParameterValues(pjp.getArgs());
+		this.buildTargetParameterTypes(targetMethod.getParameterTypes()).buildTargetParameterValues(this.joinPoint.getArgs());
 		this.buildTargetReturnType(targetMethod.getReturnType()).buildTargetClass(targetClass);
 		
 	}
@@ -80,6 +81,22 @@ public class EcBaseAspectBO {
 
 	public EcBaseAspectDTO getBaseAspectDTO() {
 		return baseAspectDTO;
+	}
+	
+	public Object process() throws Throwable {
+		return joinPoint.proceed();
+	}
+
+	public Method getTargetMethod() {
+		return targetMethod;
+	}
+
+	public Class<?> getTargetClass() {
+		return targetClass;
+	}
+
+	public ProceedingJoinPoint getJoinPoint() {
+		return joinPoint;
 	}
 	
 }

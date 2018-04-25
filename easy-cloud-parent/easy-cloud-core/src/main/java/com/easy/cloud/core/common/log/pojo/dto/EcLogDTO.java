@@ -3,7 +3,6 @@ package com.easy.cloud.core.common.log.pojo.dto;
 import org.slf4j.Logger;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 
 /**
@@ -22,7 +21,6 @@ import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
  * @author daiqi 创建时间 2018年2月8日 上午9:25:57
  */
 public class EcLogDTO {
-	private EcBaseAspectDTO baseAspectDTO;
 	/** 请求路径 */
 	private String requestPath;
 	/** 开始时间毫秒数 */
@@ -66,14 +64,6 @@ public class EcLogDTO {
 	private EcLogDTO buildRunTimeMillis() {
 		this.runTimeMinllis = this.endTimeMillis - this.beginTimeMillis;
 		return this;
-	}
-
-	public EcBaseAspectDTO getBaseAspectDTO() {
-		return baseAspectDTO;
-	}
-
-	public void setBaseAspectDTO(EcBaseAspectDTO baseAspectDTO) {
-		this.baseAspectDTO = baseAspectDTO;
 	}
 
 	public String getRequestPath() {

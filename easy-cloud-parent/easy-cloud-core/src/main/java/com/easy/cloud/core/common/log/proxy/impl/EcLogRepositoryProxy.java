@@ -26,13 +26,13 @@ public class EcLogRepositoryProxy extends EcLogBaseProxy{
 
 	@Override
 	protected void initDqLogAnalysisBOData() {
-		logAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerRepository(), logDTO);
+		logAnalysisBO = EcLogAnalysisBO.newInstanceFromContainer(EcLogAnalysisContainer.getLogAnalysisContainerRepository(), logBO);
 		super.logWrap("这是repository的日志分析", "repository日志分析数据初始化");
 	}
 
 	@Override
 	protected void doLogAnalysis() {
-		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerRepository());
+		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisContainer.getLogAnalysisContainerRepository(), logBO.getBaseAspectDTO());
 		super.log("这是repository的日志分析", logAnalysisBO.getDqLogAnalysisDTO());
 	}
 	

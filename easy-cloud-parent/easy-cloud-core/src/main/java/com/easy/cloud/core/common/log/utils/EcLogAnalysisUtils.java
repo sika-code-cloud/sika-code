@@ -3,6 +3,7 @@ package com.easy.cloud.core.common.log.utils;
 import java.util.Map;
 
 import com.easy.cloud.core.basic.constant.EcBaseConstant;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
@@ -41,10 +42,10 @@ public class EcLogAnalysisUtils {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogAnalysisSwitch(EcLogAnnotation ecLogAnnotation, EcLogDTO ecLogDTO) {
+	public static boolean getLogAnalysisSwitch(EcLogAnnotation ecLogAnnotation, EcBaseAspectDTO baseAspectDTO) {
 		boolean dqMethodAnalysisSwitch = ecLogAnnotation.analysisSwitch();
-		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
-		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
+		String className = baseAspectDTO.getTargetClassName();
+		String methodName = baseAspectDTO.getTargetMethodName();
 
 		// 类名为空直接返回true
 		if (EcStringUtils.isEmpty(className)) {
@@ -82,13 +83,14 @@ public class EcLogAnalysisUtils {
 	 *     dqLogDTO.parameterTypes : Object[] : 参数类型数组 : 是
 	 * </pre>
 	 * 
-	 * @param ecLogDTO : DqLogDTO ：日志数据传输对象
+	 * @param containerMap : Map<String, EcLogAnalysisDTO> ：日志分析容器
+	 * @param baseAspectDTO : EcBaseAspectDTO ：切面数据传输对象
 	 * @return
 	 * @author daiqi
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
-	public static EcLogAnalysisDTO getDqLogAnalysisDTOFromContainer(Map<String, EcLogAnalysisDTO> containerMap,EcLogDTO ecLogDTO) {
-		return containerMap.get(getLogKeyOfDqLogAnalysis(ecLogDTO));
+	public static EcLogAnalysisDTO getDqLogAnalysisDTOFromContainer(Map<String, EcLogAnalysisDTO> containerMap,EcBaseAspectDTO baseAspectDTO) {
+		return containerMap.get(getLogKeyOfDqLogAnalysis(baseAspectDTO));
 	}
 	
 	/**
@@ -133,14 +135,16 @@ public class EcLogAnalysisUtils {
 	 *     dqLogDTO.dqLogType : int : 日志类型 : 是
 	 * </pre>
 	 * 
+	 * @param logAnalysisDTOContainer : Map<String, EcLogAnalysisDTO> ：日志分析容器
 	 * @param ecLogAnalysisDTO : DqLogAnalysisDTO ：日志分析数据传输对象
+	 * @param baseAspectDTO : EcBaseAspectDTO ：切面数据传输对象
 	 * @return
 	 * @author daiqi
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
-	public static void setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer, EcLogAnalysisDTO ecLogAnalysisDTO) {
-		String switchKey = getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getLogDTO());
-		dqLogAnalysisDTOContainer.put(switchKey, ecLogAnalysisDTO);
+	public static void setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> logAnalysisDTOContainer, EcLogAnalysisDTO ecLogAnalysisDTO, EcBaseAspectDTO baseAspectDTO) {
+		String switchKey = getLogKeyOfDqLogAnalysis(baseAspectDTO);
+		logAnalysisDTOContainer.put(switchKey, ecLogAnalysisDTO);
 	}
 	
 	/**
@@ -163,18 +167,18 @@ public class EcLogAnalysisUtils {
 	 * @author daiqi
 	 * 创建时间    2018年2月22日 上午11:25:33
 	 */
-	public static void setDqLogAnalysisDTOToRedis(EcLogAnalysisDTO ecLogAnalysisDTO) {
-		getLogKeyOfDqLogAnalysis(ecLogAnalysisDTO.getLogDTO());
+	public static void setDqLogAnalysisDTOToRedis(EcLogAnalysisDTO ecLogAnalysisDTO, EcBaseAspectDTO baseAspectDTO) {
+		getLogKeyOfDqLogAnalysis(baseAspectDTO);
 //		设置日志分析数据传输对象到redis中
 		// TODO 设置日志分析数据传输对象到redis中
 	}
 	
 	/** 获取日志分析的key */
-	private static String getLogKeyOfDqLogAnalysis(EcLogDTO ecLogDTO) {
+	private static String getLogKeyOfDqLogAnalysis(EcBaseAspectDTO baseAspectDTO) {
 		String applicationName = EcPropertiesUtils.getStringValue(EcBaseConstant.APPLICATION_NAME_KEY);
-		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
-		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
-		String parameterTypes = EcArrayUtils.getClassArrayStr(ecLogDTO.getBaseAspectDTO().getTargetParameterTypes());
+		String className = baseAspectDTO.getTargetClassName();
+		String methodName = baseAspectDTO.getTargetMethodName();
+		String parameterTypes = EcArrayUtils.getClassArrayStr(baseAspectDTO.getTargetParameterTypes());
 		return EcLogUtils.getLogKey(applicationName, className, methodName, parameterTypes);
 	}
 	

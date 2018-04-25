@@ -2,6 +2,7 @@ package com.easy.cloud.core.common.log.utils;
 
 import org.slf4j.Logger;
 
+import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
@@ -9,7 +10,6 @@ import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.config.EcLogConfig;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
-import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.proxy.EcLogProxy;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogBaseProxy;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogControllerProxy;
@@ -61,15 +61,15 @@ public class EcLogUtils {
 	 *
 	 * @param ecLogAnnotation
 	 *            : DqLog : 日志注解
-	 * @param ecLogDTO
-	 *            : DqLogDTO : 日志传输对象
+	 * @param EcBaseAspectDTO
+	 *            : baseAspectDTO : 切面数据传输对象
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午6:05:15
 	 */
-	public static boolean getLogSwitch(EcLogAnnotation ecLogAnnotation, EcLogDTO ecLogDTO) {
+	public static boolean getLogSwitch(EcLogAnnotation ecLogAnnotation, EcBaseAspectDTO baseAspectDTO) {
 		boolean dqLogSwitch = ecLogAnnotation.logSwitch();
-		String className = ecLogDTO.getBaseAspectDTO().getTargetClassName();
-		String methodName = ecLogDTO.getBaseAspectDTO().getTargetMethodName();
+		String className = baseAspectDTO.getTargetClassName();
+		String methodName = baseAspectDTO.getTargetMethodName();
 
 		// 类名为空直接返回true
 		if (EcStringUtils.isEmpty(className)) {

@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
+
 /**
  * 
  * <p>
@@ -28,6 +30,9 @@ public class EcRedisAspect {
 
 	@Around(value = "redisAspect()")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+		EcRedisBO redisBO = new EcRedisBO();
+		redisBO.buildRedisData(joinPoint);
+		redisBO.handle();
 		return null;
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.easy.cloud.core.cache.redis.conditional.EcRedisConditional;
 import com.easy.cloud.core.cache.redis.config.EcRedisConfig;
+import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateName;
 import com.easy.cloud.core.lock.template.EcLockTemplate;
 import com.easy.cloud.core.lock.template.impl.EcLockTemplateJedis;
 
@@ -99,7 +100,7 @@ public class EcJedisLockConfig extends EcRedisConfig {
 		return new StringRedisTemplate(jedisConnectionFactoryLcok());
 	}
 
-	@Bean(name = "lockTemplateJedis")
+	@Bean(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_LOCK_NAME)
 	public EcLockTemplate lockTemplateJedis() {
 		StringRedisTemplate redisTemplate = stringRedisTemplateLock();
 		return new EcLockTemplateJedis(redisTemplate);

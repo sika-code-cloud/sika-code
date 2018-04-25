@@ -7,4 +7,5 @@ package com.easy.cloud.core.cache.redis.pojo.dto;
  */
 public class EcRedisDTO {
 	
+	
 }

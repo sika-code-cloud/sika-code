@@ -1,7 +1,5 @@
 package com.easy.cloud.core.common.log.pojo.bo;
 
-import java.lang.reflect.Method;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,11 +31,11 @@ import com.easy.cloud.core.common.string.utils.EcStringUtils;
  * @author daiqi 创建时间 2018年2月8日 上午10:22:06
  */
 public class EcLogBO extends EcBaseAspectBO {
-	private EcLogDTO ecLogDTO;
+	private EcLogDTO logDTO;
 	private EcLogAnnotation logAnnotation;
 
 	public EcLogBO() {
-		
+
 	}
 
 	private static EcLogBO newInstance() {
@@ -49,7 +47,7 @@ public class EcLogBO extends EcBaseAspectBO {
 	}
 
 	public EcLogBO buildDqLogDTO(EcLogDTO ecLogDTO) {
-		this.ecLogDTO = ecLogDTO;
+		this.logDTO = ecLogDTO;
 		return this;
 	}
 
@@ -74,8 +72,6 @@ public class EcLogBO extends EcBaseAspectBO {
 	public EcLogBO buildDqLogData(ProceedingJoinPoint pjp, Object targetReturnValue) {
 		super.buildBaseAspectData(pjp);
 		super.buildTargetReturnValue(targetReturnValue);
-		
-		this.ecLogDTO.setBaseAspectDTO(baseAspectDTO);
 		this.buildLogger(super.targetClass);
 		this.buildRequestPath();
 		this.buildLogAnnotation();
@@ -119,30 +115,30 @@ public class EcLogBO extends EcBaseAspectBO {
 	}
 
 	public EcLogBO buildRequestPath(String requestPath) {
-		this.ecLogDTO.setRequestPath(requestPath);
+		this.logDTO.setRequestPath(requestPath);
 		return this;
 	}
 
 	public EcLogBO buildBeginTimeMillis(Long beginTimeMillis) {
-		this.ecLogDTO.setBeginTimeMillis(beginTimeMillis);
+		this.logDTO.setBeginTimeMillis(beginTimeMillis);
 		return this;
 	}
 
 	public EcLogBO buildEndTimeMillis(Long endTimeMillis) {
-		this.ecLogDTO.setEndTimeMillis(endTimeMillis);
+		this.logDTO.setEndTimeMillis(endTimeMillis);
 		return this;
 	}
 
 	public EcLogBO buildLogger(Logger logger) {
-		this.ecLogDTO.setLogger(logger);
+		this.logDTO.setLogger(logger);
 		return this;
 	}
 
-	public EcLogDTO getDqLogDTO() {
-		return ecLogDTO;
+	public EcLogDTO getLogDTO() {
+		return logDTO;
 	}
 
-	public EcLogAnnotation getDqLog() {
+	public EcLogAnnotation getLogAnnotation() {
 		return logAnnotation;
 	}
 }

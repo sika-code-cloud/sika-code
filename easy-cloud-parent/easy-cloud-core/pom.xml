@@ -141,6 +141,10 @@
 		    <version>${redisson.version}</version>
 		</dependency>
 		<!-- 非spring项目的第三方依赖 end -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+		</dependency>
 	</dependencies>
 	<!-- 构建插件 -->
 	<build>

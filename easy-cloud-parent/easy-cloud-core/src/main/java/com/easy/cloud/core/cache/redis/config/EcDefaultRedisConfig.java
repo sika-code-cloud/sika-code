@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.easy.cloud.core.cache.redis.conditional.EcRedisConditional;
-import com.easy.cloud.core.cache.redis.constant.EcRedisConstant;
+import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateName;
 
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -102,7 +102,7 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @author daiqi
 	 * @date 2017年12月7日 下午5:19:59
 	 */
-	@Bean(name = EcRedisConstant.REDIS_TEMPLATE_VALUE_STR_NAME)
+	@Bean(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_NAME)
 	public StringRedisTemplate stringRedisTemplate() {
 		StringRedisTemplate redisTemplate = new StringRedisTemplate(defaultRedisConnectionFactory());
 		return redisTemplate;
@@ -117,7 +117,7 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @author daiqi
 	 * @date 2017年12月7日 下午5:19:51
 	 */
-	@Bean(value = EcRedisConstant.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
+	@Bean(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
 	public RedisTemplate<String, Object> redisTemlateValueSerializer() {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());

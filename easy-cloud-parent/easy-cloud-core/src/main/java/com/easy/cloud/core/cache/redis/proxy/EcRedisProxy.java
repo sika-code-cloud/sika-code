@@ -8,5 +8,5 @@ import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
  * @date 2018年4月20日 下午9:31:49
  */
 public interface EcRedisProxy {
-	Object handle(EcRedisBO redisBO);
+	Object handle(EcRedisBO redisBO) throws Throwable;
 }

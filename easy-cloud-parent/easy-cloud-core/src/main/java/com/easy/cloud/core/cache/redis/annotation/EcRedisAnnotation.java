@@ -1,5 +1,6 @@
 package com.easy.cloud.core.cache.redis.annotation;
 
+import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.cache.redis.proxy.EcRedisProxy;
 
 /**
@@ -18,7 +19,18 @@ import com.easy.cloud.core.cache.redis.proxy.EcRedisProxy;
  * @date 2018年4月20日 下午9:12:55
  */
 public @interface EcRedisAnnotation {
-
+	/**
+	 * 
+	 * <p>redis执行的动作---包括增删改查等</p>
+	 *
+	 * <pre>详情参考EcRedisActionType枚举类</pre>
+	 *
+	 * @return EcRedisActionType
+	 *
+	 * author daiqi
+	 * 创建时间  2018年4月26日 上午12:00:21
+	 */
+	EcRedisActionType actionType(); 
 	/**
 	 * 
 	 * <p>
@@ -33,6 +45,6 @@ public @interface EcRedisAnnotation {
 	 * @author daiqi
 	 * @创建时间 2018年4月14日 上午10:48:19
 	 */
-	Class<? extends EcRedisProxy> proxyClass() default EcRedisProxy.class;
+	Class<? extends EcRedisProxy> proxyClass();
 
 }

@@ -2,6 +2,7 @@ package com.easy.cloud.core.common.log.pojo.bo;
 
 import java.util.Map;
 
+import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.log.constant.EcLogErrorCodeEnum;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogAnalysisDTO;
@@ -29,9 +30,9 @@ public class EcLogAnalysisBO {
 	private EcLogAnalysisDTO ecLogAnalysisDTO;
 
 	public static EcLogAnalysisBO newInstanceFromContainer(Map<String, EcLogAnalysisDTO> containerMap,
-			EcLogDTO ecLogDTO) {
-		EcLogAnalysisDTO ecLogAnalysisDTO = EcLogAnalysisUtils.getDqLogAnalysisDTOFromContainer(containerMap, ecLogDTO);
-		return newInstance(ecLogAnalysisDTO, ecLogDTO);
+			EcLogBO logBO) {
+		EcLogAnalysisDTO ecLogAnalysisDTO = EcLogAnalysisUtils.getDqLogAnalysisDTOFromContainer(containerMap, logBO.getBaseAspectDTO());
+		return newInstance(ecLogAnalysisDTO, logBO.getLogDTO());
 	}
 
 	public static EcLogAnalysisBO newInstanceFromRedis(EcLogDTO ecLogDTO) {
@@ -74,13 +75,13 @@ public class EcLogAnalysisBO {
 		return this;
 	}
 
-	public EcLogAnalysisBO setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer) {
-		EcLogAnalysisUtils.setDqLogAnalysisDTOToContainer(dqLogAnalysisDTOContainer, ecLogAnalysisDTO);
+	public EcLogAnalysisBO setDqLogAnalysisDTOToContainer(Map<String, EcLogAnalysisDTO> dqLogAnalysisDTOContainer,EcBaseAspectDTO baseAspectDTO) {
+		EcLogAnalysisUtils.setDqLogAnalysisDTOToContainer(dqLogAnalysisDTOContainer, ecLogAnalysisDTO, baseAspectDTO);
 		return this;
 	}
 
-	public EcLogAnalysisBO setDqLogAnalysisDTOToRedis() {
-		EcLogAnalysisUtils.setDqLogAnalysisDTOToRedis(ecLogAnalysisDTO);
+	public EcLogAnalysisBO setDqLogAnalysisDTOToRedis(EcBaseAspectDTO baseAspectDTO) {
+		EcLogAnalysisUtils.setDqLogAnalysisDTOToRedis(ecLogAnalysisDTO, baseAspectDTO);
 		return this;
 	}
 

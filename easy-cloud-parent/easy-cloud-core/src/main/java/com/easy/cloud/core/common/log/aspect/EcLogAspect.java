@@ -72,7 +72,7 @@ public class EcLogAspect {
 			EcLogBO ecLogBO = EcLogBO.newInstantce(EcLogDTO.newInstance(beginTimeMillis, endTimeMillis));
 			ecLogBO.buildDqLogData(joinPoint, targetReturnValue);
 //			获取日志注解
-			EcLogAnnotation ecLogAnnotation = ecLogBO.getDqLog();
+			EcLogAnnotation ecLogAnnotation = ecLogBO.getLogAnnotation();
 			if (EcBaseUtils.isNotNull(ecLogAnnotation) && EcBaseUtils.isNotNull(ecLogAnnotation.proxyClass())){
 //				根据注解获取Log委托处理对象执行日志处理
 				EcLogUtils.getDqLogProxy(ecLogAnnotation).handle(ecLogBO);
