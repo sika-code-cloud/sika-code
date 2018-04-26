@@ -18,7 +18,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.cache.redis.constant.EcRedisConstant;
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateName;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;

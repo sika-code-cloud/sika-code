@@ -19,29 +19,32 @@ public class EcRedisBO extends EcBaseAspectBO {
 	private EcRedisDTO redisDTO;
 	/** redis注解对象 */
 	private EcRedisAnnotation redisAnnotation;
-	
+
 	public EcRedisBO() {
-		
+
 	}
+
 	public EcRedisBO(EcRedisDTO redisDTO) {
 		this.redisDTO = redisDTO;
 	}
 
+	/** 构建redis传输数据 */
 	public EcRedisBO buildRedisData(ProceedingJoinPoint pjp) {
 		super.buildBaseAspectData(pjp);
 		this.buildRedisAnnotation();
 		return this;
 	}
-	
-	public Object handle() throws Throwable {
+
+	/** redis切面通过调用此方法进行对redis进行处理 */
+	public Object handle() {
 		Class<? extends EcRedisProxy> handleClass = redisAnnotation.proxyClass();
 		EcRedisProxy redisProxy = EcBeanFactory.newInstance(handleClass);
 		if (redisProxy == null) {
-			return super.process();
+			return super.proceed();
 		}
 		return redisProxy.handle(this);
 	}
-	
+
 	private EcRedisBO buildRedisAnnotation() {
 		this.redisAnnotation = super.targetMethod.getAnnotation(EcRedisAnnotation.class);
 		return this;
