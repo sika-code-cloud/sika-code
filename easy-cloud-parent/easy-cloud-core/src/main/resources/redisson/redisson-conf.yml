@@ -1,44 +1,44 @@
 # redis单点服务配置
-singleServerConfig:
-  #连接空闲超时，单位：毫秒
-  idleConnectionTimeout: 10000
-  pingTimeout: 1000
-  #连接超时，单位：毫秒
-  connectTimeout: 10000
-  #命令等待超时，单位：毫秒
-  timeout: 3000
-  #命令失败重试次数
-  retryAttempts: 3
-  #命令重试发送时间间隔，单位：毫秒
-  retryInterval: 1500
-  #重新连接时间间隔，单位：毫秒
-  reconnectionTimeout: 3000
-  #执行失败最大次数
-  failedAttempts: 3
-  #单个连接最大订阅数量
-  subscriptionsPerConnection: 5
-  #客户端名称
-  clientName: null
-  #地址
-#  address: "redis://120.25.126.231:6379"
-  address: "redis://127.0.0.1:6379"
-  #数据库编号
-  database: 0
-  #密码
-#  password: "daiqiredis"
-  password: 
-  #发布和订阅连接的最小空闲连接数
-  subscriptionConnectionMinimumIdleSize: 50 
-  #发布和订阅连接池大小
-  subscriptionConnectionPoolSize: 1000
-  #最小空闲连接数
-  connectionMinimumIdleSize: 32
-  #连接池大小
-  connectionPoolSize: 1000
-  #是否启用DNS监测
-  dnsMonitoring: false
-  #DNS监测时间间隔，单位：毫秒
-  dnsMonitoringInterval: 5000
+#singleServerConfig:
+#  #连接空闲超时，单位：毫秒
+#  idleConnectionTimeout: 10000
+#  pingTimeout: 1000
+#  #连接超时，单位：毫秒
+#  connectTimeout: 10000
+#  #命令等待超时，单位：毫秒
+#  timeout: 3000
+#  #命令失败重试次数
+#  retryAttempts: 3
+#  #命令重试发送时间间隔，单位：毫秒
+#  retryInterval: 1500
+#  #重新连接时间间隔，单位：毫秒
+#  reconnectionTimeout: 3000
+#  #执行失败最大次数
+#  failedAttempts: 3
+#  #单个连接最大订阅数量
+#  subscriptionsPerConnection: 5
+#  #客户端名称
+#  clientName: null
+#  #地址
+##  address: "redis://120.25.126.231:6379"
+#  address: "redis://127.0.0.1:6379"
+#  #数据库编号
+#  database: 0
+#  #密码
+##  password: "daiqiredis"
+#  password: 
+#  #发布和订阅连接的最小空闲连接数
+#  subscriptionConnectionMinimumIdleSize: 50 
+#  #发布和订阅连接池大小
+#  subscriptionConnectionPoolSize: 1000
+#  #最小空闲连接数
+#  connectionMinimumIdleSize: 32
+#  #连接池大小
+#  connectionPoolSize: 1000
+#  #是否启用DNS监测
+#  dnsMonitoring: false
+#  #DNS监测时间间隔，单位：毫秒
+#  dnsMonitoringInterval: 5000
 
 # redis主从服务配置
 #masterSlaveServersConfig:
@@ -57,22 +57,23 @@ singleServerConfig:
 #  database: 0
   
 # redis集群服务配置
-#clusterServersConfig: 
+clusterServersConfig: 
 #  nodeAddresses: ["redis://120.78.74.169:6479","redis://120.78.74.169:6480","redis://120.78.74.169:6481"]
-#  idleConnectionTimeout: 10000
-#  pingTimeout: 1000
-#  connectTimeout: 10000
-#  timeout: 3000
-#  retryAttempts: 3
-#  retryInterval: 1500
-#  reconnectionTimeout: 3000
-#  failedAttempts: 3
-#  password: 
-#  subscriptionsPerConnection: 50
-#  clientName: null
-#  subscriptionConnectionMinimumIdleSize: 50
-#  subscriptionConnectionPoolSize: 1000
-#  masterConnectionPoolSize: 1000
+  nodeAddresses: ["redis://127.0.0.1:6479","redis://127.0.0.1:6480","redis://127.0.0.1:6481"]
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+  reconnectionTimeout: 3000
+  failedAttempts: 3
+  password: 
+  subscriptionsPerConnection: 50
+  clientName: null
+  subscriptionConnectionMinimumIdleSize: 50
+  subscriptionConnectionPoolSize: 1000
+  masterConnectionPoolSize: 2000
 
 threads: 0
 nettyThreads: 0

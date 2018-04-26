@@ -69,7 +69,7 @@ public class EcLock {
 				break;
 			}
 			try {
-				Thread.sleep(200);
+				Thread.sleep(80);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
