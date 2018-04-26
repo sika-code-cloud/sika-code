@@ -19,7 +19,7 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
 public class LockTestController {
-	private int count = 3800;
+	private int count = 1800;
 	@Autowired
 	private RedissonClient redissonClient;
 
