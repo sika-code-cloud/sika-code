@@ -1,5 +1,11 @@
 package com.easy.cloud.core.cache.redis.annotation;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.cache.redis.proxy.EcRedisProxy;
 
@@ -18,6 +24,9 @@ import com.easy.cloud.core.cache.redis.proxy.EcRedisProxy;
  * @author daiqi
  * @date 2018年4月20日 下午9:12:55
  */
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface EcRedisAnnotation {
 	/**
 	 * 

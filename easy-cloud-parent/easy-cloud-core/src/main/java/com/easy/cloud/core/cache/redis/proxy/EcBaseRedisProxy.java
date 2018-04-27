@@ -1,14 +1,7 @@
 package com.easy.cloud.core.cache.redis.proxy;
 
-import java.lang.reflect.Method;
-
-import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
 import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
-import com.easy.cloud.core.cache.redis.pojo.dto.EcRedisDTO;
-import com.easy.cloud.core.common.array.EcArrayUtils;
-import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 
 /**
  * redis基础代理类---子类通过继承此类实现相关功能
@@ -61,44 +54,6 @@ public abstract class EcBaseRedisProxy implements EcRedisProxy {
 		}
 	}
 	
-	/** 获取目标方法执行的返回值---转换为范型class对应的对象 */
-	protected final <T> T getTReturnValue(Class<T> clazz) {
-		if (EcBaseUtils.isNull(clazz)) {
-			return null;
-		}
-		Object returnValue = redisBO.proceed();
-		return EcJSONUtils.parseObject(returnValue, clazz);
-	}
-	/**
-	 * 
-	 * <p>获取方法参数中范型class对应的值</p>
-	 *
-	 * <pre>若方法行参列表存在多个同类型的参数则默认取第一个</pre>
-	 *
-	 * @param clazz
-	 * @return
-	 *
-	 * @author daiqi
-	 * @创建时间  2018年4月26日 下午11:46:47
-	 */
-	protected final <T> T getTParam(Class<T> clazz) {
-		if (EcBaseUtils.isNull(clazz)) {
-			return null;
-		}
-		Object [] args = redisBO.getBaseAspectDTO().getTargetParameterValues();
-		if (EcArrayUtils.isEmpty(args)) {
-			return null;
-		}
-		for (Object arg : args) {
-			if (EcBaseUtils.isNull(arg)) {
-				continue;
-			}
-			if (EcBaseUtils.equals(arg.getClass(), clazz)) {
-				return EcJSONUtils.parseObject(arg, clazz);
-			}
-		}
-		return null;
-	}
 	/** 查询---子类通过重写此方法实现查询业务逻辑 */
 	protected Object query() {
 		return redisBO.proceed();

@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
-public class LockTestController {
+public class LockTestController extends EcBaseController{
 	private int count = 1800;
 	@Autowired
 	private RedissonClient redissonClient;
@@ -41,7 +42,7 @@ public class LockTestController {
 		List<Thread> list = new ArrayList<>();
 		// 创建线程
 		for (int i = 0; i < count; ++i) { // create and start threads
-			list.add(new Thread(new LockTestWorker(startSignal, doneSignal, service, redissonClient,id)));
+			list.add(new Thread(new LockTestWorker(startSignal, doneSignal, service, redissonClient, id)));
 		}
 		long startime = System.currentTimeMillis();
 		// 开始线程
@@ -51,7 +52,7 @@ public class LockTestController {
 
 		startSignal.countDown(); // let all threads proceed
 		doneSignal.await();
-		System.out.println("所用时间：" + (System.currentTimeMillis() - startime ));
+		System.out.println("所用时间：" + (System.currentTimeMillis() - startime));
 		System.out.println("All processors done. Shutdown connection");
 		return "finish";
 	}

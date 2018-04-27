@@ -31,13 +31,8 @@ public class EcRedisAspect {
 	@Around(value = "redisAspect()")
 	public Object doAround(ProceedingJoinPoint joinPoint) {
 		EcRedisBO redisBO = new EcRedisBO();
-		try {
-			redisBO.buildRedisData(joinPoint);
-			return redisBO.handle();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return redisBO.proceed();
-		}
+		redisBO.buildRedisData(joinPoint);
+		return redisBO.handle();
 	}
 
 	@AfterThrowing(value = "redisAspect()", throwing = "ex")

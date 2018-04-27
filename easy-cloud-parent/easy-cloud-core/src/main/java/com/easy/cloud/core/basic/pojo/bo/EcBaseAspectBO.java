@@ -39,14 +39,14 @@ public class EcBaseAspectBO {
 		Class<?> targetClass = this.joinPoint.getTarget().getClass();
 		this.buildTargetClass(targetClass).buildTargetMethod(targetMethod);
 		this.buildTargetClassName(targetClass.getName()).buildTargetMethodName(targetMethod.getName());
-		this.buildTargetParameterTypes(targetMethod.getParameterTypes())
-				.buildTargetParameterValues(this.joinPoint.getArgs());
+		this.buildTargetParameterTypes(targetMethod.getParameterTypes());
+		this.buildTargetParameterValues(this.joinPoint.getArgs());
 		this.buildTargetReturnType(targetMethod.getReturnType()).buildTargetClass(targetClass);
 
 	}
 
 	/** 获取目标方法执行的返回值---转换为范型class对应的对象 */
-	public final <T> T getTReturnValue(Class<T> clazz) {
+	public final <T> T getTReturnValue(final Class<T> clazz) {
 		if (EcBaseUtils.isNull(clazz)) {
 			return null;
 		}
@@ -70,7 +70,7 @@ public class EcBaseAspectBO {
 	 * @author daiqi
 	 * @创建时间 2018年4月26日 下午11:46:47
 	 */
-	public final <T> T getTParam(Class<T> clazz) {
+	public final <T> T getTParam(final Class<T> clazz) {
 		if (EcBaseUtils.isNull(clazz)) {
 			return null;
 		}
@@ -87,6 +87,21 @@ public class EcBaseAspectBO {
 			}
 		}
 		return null;
+	}
+
+	/** 根据形参位置获取泛型参数值 */
+	@SuppressWarnings("unchecked")
+	public final <T> T getTParam(final int paramPosition) {
+		int tempPosition = paramPosition;
+		Object[] args = joinPoint.getArgs();
+		if (tempPosition <= 0) {
+			tempPosition = 1;
+		}
+		if (paramPosition > args.length) {
+			throw new IndexOutOfBoundsException(
+					"redis指定参数的位置越界:paramPosition = " + paramPosition + ",argsLengh = " + args.length);
+		}
+		return (T) args[paramPosition - 1];
 	}
 
 	private EcBaseAspectBO buildTargetParameterValues(Object[] targetParameterValues) {
@@ -137,6 +152,7 @@ public class EcBaseAspectBO {
 		try {
 			return joinPoint.proceed();
 		} catch (Throwable e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

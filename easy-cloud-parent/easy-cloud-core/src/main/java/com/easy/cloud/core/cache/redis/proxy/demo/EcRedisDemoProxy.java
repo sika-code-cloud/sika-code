@@ -1,4 +1,4 @@
-package com.easy.cloud.core.cache.redis.proxy.impl;
+package com.easy.cloud.core.cache.redis.proxy.demo;
 
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.cache.redis.proxy.EcBaseRedisProxy;
@@ -17,7 +17,7 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 	@Override
 	protected void initOtherData() {
 		super.initOtherData();
-		String keyBody = redisBO.getTParam(String.class);
+		String keyBody = redisBO.getTParam(1);
 		if (EcStringUtils.isEmpty(keyBody)) {
 			keyBody = "123";
 		}
@@ -37,9 +37,9 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 	protected Object update() {
 		EcLogDTO logDTO = EcRedisTemplateHandler.get(key, EcLogDTO.class);
 		if (logDTO != null) {
-			logDTO.setRequestPath("www.update.com");
-		}
-		EcRedisTemplateHandler.set(key, logDTO);
+			logDTO.setRequestPath("更行的数据www.update.com");
+			EcRedisTemplateHandler.set(key, logDTO);
+		} 
 		return super.update();
 	}
 
@@ -47,7 +47,7 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 	protected Object save() {
 		EcLogDTO logDTO = redisBO.getTReturnValue(EcLogDTO.class);
 		EcRedisTemplateHandler.set(key, logDTO);
-		return super.save();
+		return logDTO;
 	}
 
 	@Override

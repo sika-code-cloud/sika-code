@@ -47,6 +47,9 @@ public class EcRedisBO extends EcBaseAspectBO {
 
 	private EcRedisBO buildRedisAnnotation() {
 		this.redisAnnotation = super.targetMethod.getAnnotation(EcRedisAnnotation.class);
+		if (this.redisAnnotation == null) {
+			throw new RuntimeException("redisAnnotation注解对象为空");
+		}
 		return this;
 	}
 
