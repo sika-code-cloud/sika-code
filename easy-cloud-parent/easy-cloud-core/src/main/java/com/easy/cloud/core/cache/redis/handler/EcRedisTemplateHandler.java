@@ -25,6 +25,7 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ShardedJedis;
 
 /**
  * 
@@ -829,11 +830,30 @@ public class EcRedisTemplateHandler {
 		}
 		return EcJSONUtils.parseObject(stringRedisTemplate.opsForHash().entries(key), HashMap.class);
 	}
-
-	/**
-	 * -----------------------------set-----------------------------------------
-	 * ------------
-	 */
+	
+	// TODO 设置hmap的field的有效时间
+	public static long hset(final String key, final String field, final Object value, int seconds) {
+		stringRedisTemplate.opsForHash().put(key, field, value);
+		return run(key, seconds);
+	}
+	
+	// TODO 给hmap的field添加有效时间
+	private static Long run(String key,final int seconds, boolean... expired) {
+		RedisCallback<Long> redisCallback = new RedisCallback<Long>() {
+			@Override
+			public Long doInRedis(RedisConnection connection) throws DataAccessException {
+				Jedis jedis = (Jedis) connection.getNativeConnection();
+				if (jedis.exists(key) && expired == null) {
+					return jedis.expire(key, seconds);
+				}
+				return 0L;
+			}
+		};
+		return stringRedisTemplate.execute(redisCallback);
+	}
+	
+	/** -----------------------------set----------------------------------------- */
+	 
 	/**
 	 * 
 	 * <p>
