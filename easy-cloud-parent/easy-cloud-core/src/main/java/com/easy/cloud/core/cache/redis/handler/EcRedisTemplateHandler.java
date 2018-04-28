@@ -838,7 +838,7 @@ public class EcRedisTemplateHandler {
 	}
 	
 	// TODO 给hmap的field添加有效时间
-	private static Long run(String key,final int seconds, boolean... expired) {
+	private static Long run(final String key,final int seconds, final boolean... expired) {
 		RedisCallback<Long> redisCallback = new RedisCallback<Long>() {
 			@Override
 			public Long doInRedis(RedisConnection connection) throws DataAccessException {
