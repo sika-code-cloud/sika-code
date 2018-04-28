@@ -19,7 +19,7 @@ import com.easy.cloud.core.lock.constant.EcLockConstant.EcLockTypeEnum;
 public class LockTestService {
 	@Autowired
 	private RedissonClient redissonClient;
-	
+
 	/**
 	 * 
 	 * <p>
@@ -35,6 +35,7 @@ public class LockTestService {
 		}
 		return count;
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -56,7 +57,7 @@ public class LockTestService {
 	 * @author daiqi
 	 * @创建时间 2018年4月16日 下午4:08:38
 	 */
-	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class, type = EcLockTypeEnum.UNFAIR, templateType = EcLockTemplateTypeEnum.REDISSION)
 	public Integer pointAllUseRedisson(String userName, Map<String, Object> person) {
 		String countStr = "count";
 		if (person.get("id").equals("11")) {
@@ -70,7 +71,8 @@ public class LockTestService {
 		}
 		return count;
 	}
-	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.JEDIS)
+
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class, type = EcLockTypeEnum.UNFAIR, templateType = EcLockTemplateTypeEnum.JEDIS)
 	public Integer pointAllUseJedis(String userName, Map<String, Object> person) {
 		String countStr = "count";
 		if (person.get("id").equals("11")) {
@@ -84,7 +86,8 @@ public class LockTestService {
 		}
 		return count;
 	}
-	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.JEDIS)
+
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", resultProcessorClass = LockTestProcessor.class, type = EcLockTypeEnum.UNFAIR, templateType = EcLockTemplateTypeEnum.JEDIS)
 	public Integer pointAllUseJedis1(String userName, Map<String, Object> person) {
 		String countStr = "count";
 		if (person.get("id").equals("11")) {
@@ -98,7 +101,8 @@ public class LockTestService {
 		}
 		return count;
 	}
-	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock",tryLock = true, resultProcessorClass = LockTestProcessor.class,type = EcLockTypeEnum.UNFAIR , templateType = EcLockTemplateTypeEnum.REDISSION)
+
+	@EcLockAnnotation(param = "id", argNum = 2, namePre = "lock", tryLock = true, resultProcessorClass = LockTestProcessor.class, type = EcLockTypeEnum.UNFAIR, templateType = EcLockTemplateTypeEnum.REDISSION)
 	public Integer pointAllTry(String userName, Map<String, Object> person) {
 		RMap<String, Integer> countMap = redissonClient.getMap("count");
 		Integer count = countMap.get("count");
@@ -108,9 +112,10 @@ public class LockTestService {
 		}
 		return count;
 	}
+
 	@EcLockAnnotation(param = "id")
 	public Integer pointParam(Map<String, Object> person, String userName) {
-		
+
 		RMap<String, Integer> countMap = redissonClient.getMap("count");
 		Integer count = countMap.get("count");
 		if (count > 0) {
@@ -119,7 +124,7 @@ public class LockTestService {
 		}
 		return count;
 	}
-	
+
 	@EcLockAnnotation
 	public Integer useDefault(String id, String userName) {
 		String key = "count";
@@ -134,5 +139,5 @@ public class LockTestService {
 		}
 		return count;
 	}
-	
+
 }

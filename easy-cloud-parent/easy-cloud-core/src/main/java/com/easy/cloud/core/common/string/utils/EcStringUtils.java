@@ -31,7 +31,7 @@ public class EcStringUtils {
     /**
      * 
      * <p>
-     * 使用默认分隔符来生成统一规范的key
+     * 使用英文冒号:分隔符来生成统一规范的key
      * </p>
      *
      * <pre>
@@ -44,7 +44,7 @@ public class EcStringUtils {
      * @author daiqi
      * @创建时间 2018年4月16日 上午9:29:38
      */
-    public static String generateKeyDefaultSeparator(String ...args) {
+    public static String generateKeyUseColonSeparator(String ...args) {
     	return generateKey(EcSymbol.COLON, args);
     }
 	

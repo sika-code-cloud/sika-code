@@ -29,11 +29,10 @@ public class EcRedisAspect {
 	}
 
 	@Around(value = "redisAspect()")
-	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object doAround(ProceedingJoinPoint joinPoint) {
 		EcRedisBO redisBO = new EcRedisBO();
 		redisBO.buildRedisData(joinPoint);
-		redisBO.handle();
-		return null;
+		return redisBO.handle();
 	}
 
 	@AfterThrowing(value = "redisAspect()", throwing = "ex")

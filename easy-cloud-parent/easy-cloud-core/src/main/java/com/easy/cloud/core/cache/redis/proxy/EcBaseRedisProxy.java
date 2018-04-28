@@ -1,12 +1,7 @@
 package com.easy.cloud.core.cache.redis.proxy;
 
-import java.lang.reflect.Method;
-
-import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
-import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
-import com.easy.cloud.core.cache.redis.pojo.dto.EcRedisDTO;
 
 /**
  * redis基础代理类---子类通过继承此类实现相关功能
@@ -15,15 +10,11 @@ import com.easy.cloud.core.cache.redis.pojo.dto.EcRedisDTO;
  * @date 2018年4月20日 下午10:49:57
  */
 public abstract class EcBaseRedisProxy implements EcRedisProxy {
-	private EcRedisDTO redisDTO;
-	private EcRedisAnnotation redisAnnotation;
-	private EcBaseAspectDTO baseAspectDTO;
-	private Method targetMethod;
-	private Class<?> targetClass;
-	private EcRedisBO redisBO;
+	protected EcRedisBO redisBO;
+	protected EcRedisAnnotation redisAnnotation;
 
 	@Override
-	public Object handle(EcRedisBO redisBO) throws Throwable {
+	public final Object handle(EcRedisBO redisBO) {
 		// 1 数据初始化
 		init(redisBO);
 		// 执行处理
@@ -32,16 +23,23 @@ public abstract class EcBaseRedisProxy implements EcRedisProxy {
 
 	/** 数据初始化 */
 	protected final void init(EcRedisBO redisBO) {
+		initCoreData(redisBO);
+		initOtherData();
+	}
+
+	/** 初始化核心数据 */
+	private final void initCoreData(EcRedisBO redisBO) {
 		this.redisBO = redisBO;
-		this.redisDTO = redisBO.geRedisDTO();
 		this.redisAnnotation = redisBO.getRedisAnnotation();
-		this.targetClass = redisBO.getTargetClass();
-		this.targetMethod = redisBO.getTargetMethod();
-		this.baseAspectDTO = redisBO.getBaseAspectDTO();
+	}
+
+	/** 初始化其他数据---子类可以通过重写此方法来初始化自己的数据 */
+	protected void initOtherData() {
+
 	}
 
 	/** 执行处理 */
-	protected final Object doHandle() throws Throwable {
+	protected final Object doHandle() {
 		switch (this.redisAnnotation.actionType()) {
 		case QUERY:
 			return query();
@@ -52,16 +50,28 @@ public abstract class EcBaseRedisProxy implements EcRedisProxy {
 		case DELETE:
 			return delete();
 		default:
-			return redisBO.process();
+			return redisBO.proceed();
 		}
 	}
+	
+	/** 查询---子类通过重写此方法实现查询业务逻辑 */
+	protected Object query() {
+		return redisBO.proceed();
+	}
 
-	/** 查询 */
-	protected abstract Object query();
-	/** 更新 */
-	protected abstract Object update();
-	/** 保存 */
-	protected abstract Object save();
-	/** 删除 */
-	protected abstract Object delete();
+	/** 更新---子类通过重写此方法实现更新业务逻辑 */
+	protected Object update() {
+		return redisBO.proceed();
+	}
+
+	/** 保存---子类通过重写此方法实现保存业务逻辑 */
+	protected Object save() {
+		return redisBO.proceed();
+	}
+
+	/** 删除---子类通过重写此方法实现删除业务逻辑 */
+	protected Object delete() {
+		return redisBO.proceed();
+	}
+	
 }

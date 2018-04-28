@@ -24,6 +24,8 @@ import com.easy.cloud.core.exception.handler.EcBaseExceptionHandle;
 @Controller
 @EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogTypeEnum.CONTROLLER)
 public class EcBaseController extends EcBaseExceptionHandle{
+	
+	@EcLogAnnotation(logSwitch = false, analysisSwitch = false)
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		DateFormat dateFormat = new SimpleDateFormat(EcDateFormatUtils.FORMAT_NORMAL_DAY);
