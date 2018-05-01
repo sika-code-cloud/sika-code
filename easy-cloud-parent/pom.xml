@@ -19,7 +19,6 @@
 	</parent>
 	<!-- 子模块 -->
 	<modules>
-		<module>easy-cloud-core</module>
 		<module>easy-cloud-config-server</module>
 		<module>easy-cloud-config-client</module>
 		<module>easy-cloud-eureka-server</module>
@@ -100,7 +99,7 @@
 		<!-- spring-cloud-start-x依赖 end -->
 		<!-- spring框架相关依赖 end -->
 		<dependency>
-			<groupId>easy.cloud</groupId>
+			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
@@ -126,6 +125,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                	<source>1.8</source>
+	                <target>1.8</target>
+                </configuration>
 				<executions>
 					<execution>
 						<goals>

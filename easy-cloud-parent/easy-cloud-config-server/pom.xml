@@ -20,7 +20,7 @@
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>easy.cloud</groupId>
+			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
 			<version>1.0.0</version>
 			<scope>test</scope>
