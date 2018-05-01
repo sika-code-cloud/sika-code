@@ -22,7 +22,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>easy.cloud</groupId>
+			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-pay-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
