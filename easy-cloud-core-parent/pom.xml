@@ -22,12 +22,23 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<skipTests>true</skipTests>
+		<easy.cloud.core.version>1.0.0</easy.cloud.core.version>
 	</properties>
 	
 	<modules>
 		<module>easy-cloud-core</module>
 		<module>easy-cloud-core-search</module>
 	</modules>
+	
+	<dependencies>
+		<!-- spring-boot-starter-test测试框架依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
             <plugin>

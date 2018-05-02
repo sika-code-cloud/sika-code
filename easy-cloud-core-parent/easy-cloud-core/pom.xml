@@ -32,10 +32,6 @@
 		
 		<!-- 版本依赖管理 end -->
 		<!-- 设置属性 -->
-		<!--设置字符编码及java版本 -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-		<skipTests>true</skipTests>
 		
 	</properties>
 	<dependencies>
@@ -66,12 +62,7 @@
 			<groupId>org.springframework.boot</groupId>  
 			<artifactId>spring-boot-starter-amqp</artifactId>  
 		</dependency>  
-		<!-- spring-boot-starter-test测试框架依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		
 		<!-- spring-boot-starter-aop依赖 -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
