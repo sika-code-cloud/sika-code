@@ -5,7 +5,6 @@
 		<groupId>easy.cloud.service</groupId>
 		<artifactId>easy-cloud-service-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath/>
 	</parent>
 
 	<groupId>easy.cloud.service.atom</groupId>
