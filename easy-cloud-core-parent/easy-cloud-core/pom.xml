@@ -63,11 +63,6 @@
 			<artifactId>spring-boot-starter-amqp</artifactId>  
 		</dependency>  
 		
-		<!-- spring-boot-starter-aop依赖 -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
 		<!-- spring-boot-start-x依赖 end -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

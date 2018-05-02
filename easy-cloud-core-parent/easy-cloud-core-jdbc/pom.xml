@@ -2,23 +2,28 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>easy-cloud-core-mq</artifactId>
+	<artifactId>easy-cloud-core-jdbc</artifactId>
 	<packaging>jar</packaging>
 
-	<name>easy-cloud-core-mq</name>
+	<name>easy-cloud-core-jdbc</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
 		<groupId>easy.cloud.core</groupId>
 		<artifactId>easy-cloud-core-parent</artifactId>
-		<version>1.0.0</version>
+		<version>${easy.cloud.core.version}</version>
 	</parent>
 
 	<dependencies>
-		<!-- spring-boot-starter-amqp -->
+		<!-- spring-boot-starter-jdbc 模块 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-data-jpa 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
