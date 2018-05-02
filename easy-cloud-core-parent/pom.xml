@@ -27,6 +27,10 @@
 
 	<modules>
 		<module>easy-cloud-core</module>
+		<module>easy-cloud-core-cache</module>
+		<module>easy-cloud-core-jdbc</module>
+		<module>easy-cloud-core-lock</module>
+		<module>easy-cloud-core-mq</module>
 		<module>easy-cloud-core-search</module>
 	</modules>
 

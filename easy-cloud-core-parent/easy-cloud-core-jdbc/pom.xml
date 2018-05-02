@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>easy.cloud.core</groupId>
 		<artifactId>easy-cloud-core-parent</artifactId>
-		<version>${easy.cloud.core.version}</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<dependencies>
