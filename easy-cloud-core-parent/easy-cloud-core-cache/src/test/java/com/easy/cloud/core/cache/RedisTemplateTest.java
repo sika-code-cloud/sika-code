@@ -1,4 +1,4 @@
-package com.easy.cloud.core.redis;
+package com.easy.cloud.core.cache;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,6 @@ import com.easy.cloud.EcCoreApplication;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
-import com.easy.cloud.core.user.entity.UserEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
