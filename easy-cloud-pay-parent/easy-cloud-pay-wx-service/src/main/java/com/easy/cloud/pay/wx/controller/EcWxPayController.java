@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.pay.common.payment.pojo.dto.EcPayOrderDTO;
-import com.easy.cloud.pay.common.payment.pojo.query.EcOrderAbstractQuery;
-import com.easy.cloud.pay.common.transaction.pojo.dto.EcTransferOrderDTO;
+import com.easy.cloud.pay.core.payment.pojo.dto.EcPayOrderDTO;
+import com.easy.cloud.pay.core.payment.pojo.query.EcOrderAbstractQuery;
+import com.easy.cloud.pay.core.transaction.pojo.dto.EcTransferOrderDTO;
 import com.easy.cloud.pay.wx.logic.EcWxPayLogic;
 import com.easy.cloud.pay.wx.pojo.bo.EcWxTransactionType;
 import com.easy.cloud.pay.wx.pojo.dto.EcWxRefundOrderDTO;

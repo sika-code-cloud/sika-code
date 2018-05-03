@@ -1,8 +1,8 @@
 package com.easy.cloud.pay.wx.pojo.dto;
 
-import com.easy.cloud.pay.common.payment.config.dto.EcPayConfigStorageInf;
-import com.easy.cloud.pay.common.refund.dto.EcRefundOrderAbstractDTO;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.config.dto.EcPayConfigStorageInf;
+import com.easy.cloud.pay.core.refund.dto.EcRefundOrderAbstractDTO;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 
 /**
  * 

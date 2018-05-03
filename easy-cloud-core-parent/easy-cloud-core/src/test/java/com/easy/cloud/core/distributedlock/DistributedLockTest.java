@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import com.alibaba.fastjson.JSONObject;
-import com.easy.cloud.EcEasyCloudCoreApplication;
+import com.easy.cloud.EcCoreApplication;
 import com.easy.cloud.core.distributedlock.controller.DistributedLockTestController;
 
 /**
@@ -29,7 +29,7 @@ import com.easy.cloud.core.distributedlock.controller.DistributedLockTestControl
  * @创建时间 2018年4月13日 下午7:24:28
  */
 @RunWith(SpringJUnit4ClassRunner.class) // SpringJUnit支持，由此引入Spring-Test框架支持！
-@SpringBootTest(classes = EcEasyCloudCoreApplication.class) // 指定我们SpringBoot工程的Application启动类
+@SpringBootTest(classes = EcCoreApplication.class) // 指定我们SpringBoot工程的Application启动类
 public class DistributedLockTest {
 	// @Autowired
 	private MockMvc mockMvc;

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.pay.common.payment.pojo.dto.EcPayOrderDTO;
-import com.easy.cloud.pay.common.payment.pojo.query.EcOrderAbstractQuery;
-import com.easy.cloud.pay.common.transaction.pojo.dto.EcTransferOrderDTO;
+import com.easy.cloud.pay.core.payment.pojo.dto.EcPayOrderDTO;
+import com.easy.cloud.pay.core.payment.pojo.query.EcOrderAbstractQuery;
+import com.easy.cloud.pay.core.transaction.pojo.dto.EcTransferOrderDTO;
 import com.easy.cloud.pay.zfb.logic.EcZfbPayLogic;
 import com.easy.cloud.pay.zfb.pojo.bo.EcZfbTransactionType;
 import com.easy.cloud.pay.zfb.pojo.dto.EcZfbRefundOrderDTO;

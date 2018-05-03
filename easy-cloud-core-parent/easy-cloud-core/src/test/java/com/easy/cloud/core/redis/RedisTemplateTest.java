@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.easy.cloud.EcEasyCloudCoreApplication;
+import com.easy.cloud.EcCoreApplication;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.common.generator.primarykey.pojo.bo.EcSnowflakeIdWorkerBO;
@@ -21,7 +21,7 @@ import com.easy.cloud.core.user.entity.UserEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = EcEasyCloudCoreApplication.class) // 指定spring-boot的启动类
+@SpringBootTest(classes = EcCoreApplication.class) // 指定spring-boot的启动类
 public class RedisTemplateTest {
 	private EcSnowflakeIdWorkerBO snowflakeIdWorker= EcSnowflakeIdWorkerBO.singleInstance(0, 0);
 	
