@@ -3,7 +3,7 @@ package com.easy.cloud.movie.attention.user.vo;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
+import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
 
 /**
  * 用户关注电影实体

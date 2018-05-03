@@ -37,16 +37,6 @@
 	<dependencies>
 		<!-- spring框架相关依赖 bigen -->
 		<!-- spring-boot-start-x依赖 begin -->
-		<!-- spring-boot-starter-jdbc 模块 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-		<!-- spring-boot-starter-data-jpa 依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 		<!-- spring-boot-starter-data-redis 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,12 +53,6 @@
 			<artifactId>spring-boot-starter-amqp</artifactId>  
 		</dependency>  
 		
-		<!-- spring-boot-start-x依赖 end -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
 		<!-- spring框架相关依赖 end -->
 
 		<!-- 非spring项目的第三方依赖 begin -->
@@ -102,17 +86,6 @@
               <artifactId>core</artifactId>
               <version>${zxing.version}</version>
           </dependency>
-		<!-- mysql连接依赖 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<!-- druid连接池依赖 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>${druid.version}</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
 		<dependency>
 		    <groupId>org.freemarker</groupId>
@@ -125,9 +98,5 @@
 		    <version>${redisson.version}</version>
 		</dependency>
 		<!-- 非spring项目的第三方依赖 end -->
-		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-		</dependency>
 	</dependencies>
 </project>

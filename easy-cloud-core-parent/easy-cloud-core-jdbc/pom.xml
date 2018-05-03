@@ -13,12 +13,23 @@
 		<artifactId>easy-cloud-core-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
-
+	
+	<properties>
+		<!-- druid依赖 -->
+		<druid.version>1.1.6</druid.version>
+	</properties>
+	
 	<dependencies>
 		<!-- spring-boot-starter-jdbc 模块 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<!-- spring-boot-starter-data-jpa 依赖 -->
 		<dependency>
@@ -26,10 +37,35 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<!-- druid连接池依赖 -->
+		<!-- <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+
+		<!-- mysql连接依赖 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
+		
 	</dependencies>
 </project>
