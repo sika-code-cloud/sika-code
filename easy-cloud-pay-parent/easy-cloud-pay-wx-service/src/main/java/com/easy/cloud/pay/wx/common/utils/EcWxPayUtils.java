@@ -1,7 +1,7 @@
 package com.easy.cloud.pay.wx.common.utils;
 
-import com.easy.cloud.pay.common.payment.utils.EcPayUtils.EcOrderNoGenerator;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.utils.EcPayUtils.EcOrderNoGenerator;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 import com.easy.cloud.pay.wx.pojo.bo.EcWxTransactionType;
 
 public class EcWxPayUtils {

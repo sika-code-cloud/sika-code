@@ -1,6 +1,6 @@
 package com.easy.cloud.pay.zfb.config.dto;
 
-import com.easy.cloud.pay.common.payment.config.dto.EcPayConfigStorageAbstract;
+import com.easy.cloud.pay.core.payment.config.dto.EcPayConfigStorageAbstract;
 
 /**
  * 

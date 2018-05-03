@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easy.cloud.EcEasyCloudCoreApplication;
+import com.easy.cloud.EcCoreApplication;
 import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
 import com.easy.cloud.core.user.entity.UserEntity;
 import com.easy.cloud.core.user.service.UserService;
@@ -18,7 +18,7 @@ import com.easy.cloud.core.user.service.UserService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = EcEasyCloudCoreApplication.class) // 指定spring-boot的启动类
+@SpringBootTest(classes = EcCoreApplication.class) // 指定spring-boot的启动类
 public class JdbcTemplateTests {
 	@Autowired
 	UserService userService;

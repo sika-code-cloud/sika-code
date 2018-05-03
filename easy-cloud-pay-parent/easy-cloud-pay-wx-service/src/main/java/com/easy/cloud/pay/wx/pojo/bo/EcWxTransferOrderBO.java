@@ -1,8 +1,8 @@
 package com.easy.cloud.pay.wx.pojo.bo;
 
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.pay.common.transaction.pojo.bo.EcTransferOrderBO;
-import com.easy.cloud.pay.common.transaction.pojo.dto.EcTransferOrderDTO;
+import com.easy.cloud.pay.core.transaction.pojo.bo.EcTransferOrderBO;
+import com.easy.cloud.pay.core.transaction.pojo.dto.EcTransferOrderDTO;
 import com.easy.cloud.pay.wx.common.utils.EcWxPayUtils.EcWxOrderNoGenerator;
 
 /**

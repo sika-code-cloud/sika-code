@@ -6,6 +6,7 @@
 	<packaging>jar</packaging>
 
 	<name>easy-cloud-core-mq</name>
+	<description>easy-cloud-core-mq</description>
 	<url>http://maven.apache.org</url>
 
 	<parent>

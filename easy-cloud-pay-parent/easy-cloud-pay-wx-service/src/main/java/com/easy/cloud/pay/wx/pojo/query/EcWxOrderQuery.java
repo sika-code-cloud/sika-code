@@ -1,8 +1,8 @@
 package com.easy.cloud.pay.wx.pojo.query;
 
-import com.easy.cloud.pay.common.payment.config.dto.EcPayConfigStorageInf;
-import com.easy.cloud.pay.common.payment.pojo.query.EcOrderAbstractQuery;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.config.dto.EcPayConfigStorageInf;
+import com.easy.cloud.pay.core.payment.pojo.query.EcOrderAbstractQuery;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 
 public class EcWxOrderQuery extends EcOrderAbstractQuery{
 

@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.easy.cloud.core.common.http.constant.EcHttpConstant.EcRequestHeaderKey;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.pay.common.payment.pojo.bo.EcPayOrderBO;
-import com.easy.cloud.pay.common.payment.pojo.dto.EcPayOrderDTO;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.pojo.bo.EcPayOrderBO;
+import com.easy.cloud.pay.core.payment.pojo.dto.EcPayOrderDTO;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 import com.easy.cloud.pay.wx.common.utils.EcWxPayUtils.EcWxOrderNoGenerator;
 
 /**

@@ -9,10 +9,10 @@ import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.sign.utils.EcSignUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
-import com.easy.cloud.pay.common.payment.config.dto.EcPayConfigStorageInf;
-import com.easy.cloud.pay.common.payment.constant.EcZfbPayConstant.EcZfbPayKey;
-import com.easy.cloud.pay.common.payment.utils.EcPayUtils.EcOrderNoGenerator;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.config.dto.EcPayConfigStorageInf;
+import com.easy.cloud.pay.core.payment.constant.EcZfbPayConstant.EcZfbPayKey;
+import com.easy.cloud.pay.core.payment.utils.EcPayUtils.EcOrderNoGenerator;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 import com.easy.cloud.pay.zfb.pojo.bo.EcZfbTransactionType;
 
 public class EcZfbPayUtils {
