@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.easy.cloud.EcCoreApplication;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
-import com.easy.cloud.core.common.generator.primarykey.pojo.bo.EcSnowflakeIdWorkerBO;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.user.entity.UserEntity;
 
@@ -23,7 +22,6 @@ import com.easy.cloud.core.user.entity.UserEntity;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = EcCoreApplication.class) // 指定spring-boot的启动类
 public class RedisTemplateTest {
-	private EcSnowflakeIdWorkerBO snowflakeIdWorker= EcSnowflakeIdWorkerBO.singleInstance(0, 0);
 	
 	@Test
 	public void testSet(){
@@ -33,7 +31,7 @@ public class RedisTemplateTest {
 			userEntity.setCreateBy(11111L);
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("passwoearew");
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			lists.add(userEntity);
 		}
 		EcRedisTemplateHandler.set("user1List", lists);
@@ -50,7 +48,7 @@ public class RedisTemplateTest {
 			userEntity.setCreateBy(11111L);
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("passwoearew");
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			lists.add(userEntity);
 		}
 		EcRedisTemplateHandler.set("user1ListOffSet", lists);
@@ -65,7 +63,7 @@ public class RedisTemplateTest {
 		List<String> keys = new ArrayList<>();
 		for(int i = 0 ; i < 3;++i){
 			UserEntity userEntity = new UserEntity();
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			userEntity.setCreateBy(userEntity.getId());
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("password" + i);
@@ -85,7 +83,7 @@ public class RedisTemplateTest {
 		List<String> keys = new ArrayList<>();
 		for(int i = 0 ; i < 3;++i){
 			UserEntity userEntity = new UserEntity();
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			userEntity.setCreateBy(userEntity.getId());
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("password" + i);
@@ -104,7 +102,7 @@ public class RedisTemplateTest {
 		UserEntity [] userEntities = new UserEntity[3];
 		for(int i = 0 ; i < 3;++i){
 			UserEntity userEntity = new UserEntity();
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			userEntity.setCreateBy(userEntity.getId());
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("password" + i);
@@ -125,7 +123,7 @@ public class RedisTemplateTest {
 		UserEntity [] userEntities = new UserEntity[3];
 		for(int i = 0 ; i < 3;++i){
 			UserEntity userEntity = new UserEntity();
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			userEntity.setCreateBy(userEntity.getId());
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("password" + i);
@@ -156,7 +154,7 @@ public class RedisTemplateTest {
 		userEntity.setCreateBy(11111L);
 		userEntity.setCreateDate(new Date());
 		userEntity.setPassword("passwoearew");
-		userEntity.setId(snowflakeIdWorker.nextId());
+		
 		EcRedisTemplateHandler.setSerializer("user1Serializer", userEntity);
 		System.out.println("------------------" + EcRedisTemplateHandler.getSerializer("user", UserEntity.class));
 	}
@@ -177,7 +175,7 @@ public class RedisTemplateTest {
 		UserEntity [] userEntities = new UserEntity[3];
 		for(int i = 0 ; i < 3;++i){
 			UserEntity userEntity = new UserEntity();
-			userEntity.setId(snowflakeIdWorker.nextId());
+			
 			userEntity.setCreateBy(userEntity.getId());
 			userEntity.setCreateDate(new Date());
 			userEntity.setPassword("password" + i);

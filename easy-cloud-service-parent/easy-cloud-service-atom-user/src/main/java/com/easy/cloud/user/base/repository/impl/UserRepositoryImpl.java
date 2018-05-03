@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.easy.cloud.core.basic.repository.EcBaseRepository;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.jdbc.base.repository.EcBaseRepository;
+import com.easy.cloud.core.jdbc.base.utils.EcBaseJdbcUtils;
 import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
@@ -40,7 +41,7 @@ public class UserRepositoryImpl extends EcBaseRepository implements UserReposito
 		StringBuilder sql = EcStringUtils.newStringBuilder();
 		List<Object> params = new ArrayList<>();
 //		实体对应的表名
-		String entityTableName = EcBaseUtils.getTableNameByEntityClass(UserEntity.class);
+		String entityTableName = EcBaseJdbcUtils.getTableNameByEntityClass(UserEntity.class);
 //		公共条件前缀
 		String commonConditionPrefix = EcStringUtils.newStringBuilder().append(" and ").append(entityTableName).append(ORIGIN_STR).toString();
 		

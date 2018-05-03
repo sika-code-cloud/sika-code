@@ -5,13 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Table;
-
 import com.alibaba.fastjson.JSONObject;
-import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
-import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 /**
  * 
@@ -58,24 +54,6 @@ public class EcBaseUtils {
 	/**
 	 * 
 	 * <p>
-	 * 判断DqBaseEntity类是否为空
-	 * </p>
-	 *
-	 * @param baseEntity
-	 * @return <code>true</code> 若baseEntity为null 或者 baseEntity.id为null
-	 * @author daiqi
-	 * @date 2017年12月6日 下午1:51:09
-	 */
-	public static boolean isNullEntity(EcBaseEntity baseEntity) {
-		if (isNull(baseEntity) || isNull(baseEntity.getId())) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * <p>
 	 * 将fromObj中对象中的非空数据拷贝到targetObj对象中
 	 * </p>
 	 *
@@ -111,34 +89,6 @@ public class EcBaseUtils {
 		return EcJSONUtils.parseObject(targetObjMap, clazz);
 	}
 
-	/**
-	 * 
-	 * <p>
-	 * 根据实体类的Class获取其对应的tableName
-	 * </p>
-	 *
-	 * <pre></pre>
-	 *
-	 * @param clazz
-	 * @return
-	 *
-	 * 		author daiqi 创建时间 2018年1月8日 下午7:47:40
-	 */
-	public static String getTableNameByEntityClass(final Class<?> entityClazz) {
-		if (isNull(entityClazz)) {
-			throw new RuntimeException("entityClazz is null");
-		}
-		// 获取javax.persistence.Table注解
-		Table tableAnnotation = entityClazz.getAnnotation(Table.class);
-		if (isNull(tableAnnotation)) {
-			throw new RuntimeException("实体类没有javax.persistence.Table注解");
-		}
-		String tableName = tableAnnotation.name();
-		if (EcStringUtils.isEmpty(tableName)) {
-			throw new RuntimeException("javax.persistence.Table注解name属性为空");
-		}
-		return tableName;
-	}
 
 	/**
 	 * <p>

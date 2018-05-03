@@ -34,7 +34,8 @@
 		<!-- 版本依赖管理 begin -->
 		<!-- easy所有版本依赖 -->
 		<!-- spring-cloud版本 -->
-		<dq.easy.cloud.version>1.0.0</dq.easy.cloud.version>
+		<easy.cloud.version>1.0.0</easy.cloud.version>
+		<easy.cloud.core.version>1.0.0</easy.cloud.core.version>
 		<spring.cloud.version>Edgware.RELEASE</spring.cloud.version>
 		
 		<skipTests>true</skipTests>
