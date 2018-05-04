@@ -66,6 +66,11 @@
 			<optional>true</optional>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>bsf</groupId>
+			<artifactId>bsf</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 	</dependencies>
 </project>
