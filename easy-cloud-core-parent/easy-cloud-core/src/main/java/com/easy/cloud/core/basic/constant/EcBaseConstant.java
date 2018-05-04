@@ -25,8 +25,6 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
  */
 public class EcBaseConstant {
 	
-	/** 应用名称的key */
-	public static final String APPLICATION_NAME_KEY = "spring.application.name";
 	/**
 	 * 
 	 * <p>

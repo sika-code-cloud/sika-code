@@ -16,6 +16,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 
@@ -32,7 +33,7 @@ import com.easy.cloud.core.common.date.utils.EcDateUtils;
 public class EcBaseEntity {
 	@Id
 	@GeneratedValue(generator = "idGenerator")  
-    @GenericGenerator(name = "idGenerator", strategy = "com.easy.cloud.core.jdbc.base.primarykey.EcKeyGeneratSnowflakeldWorlker") 
+    @GenericGenerator(name = "idGenerator", strategy = EcBaseConfigConstant.SNOW_FLAKELD_WORLKER_NAME) 
 	private Long id;
 	@CreatedDate
 	private Date createDate;
