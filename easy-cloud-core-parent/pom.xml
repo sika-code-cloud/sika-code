@@ -28,7 +28,6 @@
 	<modules>
 		<module>easy-cloud-core</module>
 		<module>easy-cloud-core-cache</module>
-		<module>easy-cloud-core-generator</module>
 		<module>easy-cloud-core-jdbc</module>
 		<module>easy-cloud-core-lock</module>
 		<module>easy-cloud-core-mq</module>
@@ -36,6 +35,10 @@
 	</modules>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<!-- spring-boot-starter-aop依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,9 +58,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

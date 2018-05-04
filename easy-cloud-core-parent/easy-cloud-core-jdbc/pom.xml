@@ -31,6 +31,12 @@
                 </exclusion>
             </exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
 		<!-- spring-boot-starter-data-jpa 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,13 +54,6 @@
 			<artifactId>HikariCP</artifactId>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-		<dependency>
-		    <groupId>org.mybatis.spring.boot</groupId>
-		    <artifactId>mybatis-spring-boot-starter</artifactId>
-		    <version>1.1.1</version>
-		</dependency>
-
 		<!-- mysql连接依赖 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -64,6 +63,7 @@
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
+			<optional>true</optional>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
 		
