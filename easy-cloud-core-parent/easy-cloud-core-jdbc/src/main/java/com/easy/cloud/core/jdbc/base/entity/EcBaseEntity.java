@@ -34,21 +34,21 @@ public class EcBaseEntity {
 	@Id
 	@GeneratedValue(generator = "idGenerator")  
     @GenericGenerator(name = "idGenerator", strategy = EcBaseConfigConstant.SNOW_FLAKELD_WORLKER_NAME) 
-	private Long id;
+	protected Long id;
 	@CreatedDate
-	private Date createDate;
+	protected Date createDate;
 	@LastModifiedDate
-	private Date updateDate;
+	protected Date updateDate;
 	@Version
-	private Integer version;
+	protected Integer version;
 	@CreatedBy
-	private Long createBy;
+	protected Long createBy;
 	@LastModifiedBy
-	private Long updateBy;
+	protected Long updateBy;
 	/** 删除标志  */
-	private Integer isDeleted;
+	protected Integer isDeleted;
 	/** 备注 */
-	private String remark;
+	protected String remark;
 	@PrePersist
 	public void basePrePersist(){
 		if(EcBaseUtils.isNull(createBy)){
