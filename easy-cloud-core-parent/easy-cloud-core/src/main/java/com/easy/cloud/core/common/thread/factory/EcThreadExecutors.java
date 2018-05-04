@@ -2,10 +2,7 @@ package com.easy.cloud.core.common.thread.factory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import org.redisson.Redisson;
 
 import com.easy.cloud.core.common.thread.pool.EcThreadPoolExecutor;
 
