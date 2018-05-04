@@ -10,6 +10,7 @@ import org.hibernate.id.AbstractUUIDGenerator;
 import org.hibernate.id.Configurable;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
 
@@ -22,7 +23,9 @@ import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
  *
  */
 public class EcKeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implements Configurable {
-	private static EcSnowflakeIdWorkerBO snowflakeIdWorker;
+	@Autowired
+	private EcSnowflakeIdWorkerBO snowflakeIdWorker;
+	
 	@Override
 	public Serializable generate(SessionImplementor arg0, Object arg1) throws HibernateException {
 		if(arg1 != null && arg1 instanceof EcBaseEntity){
@@ -36,7 +39,7 @@ public class EcKeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implem
 
 	@Override
 	public void configure(Type arg0, Properties properties, ServiceRegistry arg2) throws MappingException {
-		snowflakeIdWorker = EcSnowflakeIdWorkerBO.singleInstance(0, 0);
+		
 	}
 
 }
