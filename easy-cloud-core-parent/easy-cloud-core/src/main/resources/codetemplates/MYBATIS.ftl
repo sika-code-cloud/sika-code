@@ -85,7 +85,7 @@ ${docType}
 		<#if model.sqlType?exists && model.sqlType=7>
 	<!-- 更新对象 -->
 	<${model.elementName}<#if model.attributesStr?exists> ${model.attributesStr}</#if>>
-		UPDATE ${model.mybatisDTO.tableName} <#if model.childrenElements?exists><#list model.childrenElements as model><${model.elementName} ${model.attributesStr}/></#list></#if>
+		UPDATE ${model.mybatisDTO.tableName} ${model.mybatisDTO.tableSimpleName} <#if model.childrenElements?exists><#list model.childrenElements as model><${model.elementName} ${model.attributesStr}/></#list></#if>
 		<#if model.whereDatasStr?exists>WHERE ${model.whereDatasStr}</#if>
 	</${model.elementName}>
 		</#if>

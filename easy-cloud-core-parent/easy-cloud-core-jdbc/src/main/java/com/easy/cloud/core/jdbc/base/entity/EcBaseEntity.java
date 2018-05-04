@@ -1,6 +1,7 @@
 package com.easy.cloud.core.jdbc.base.entity;
 
 import java.util.Date;
+
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,7 +10,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -32,8 +32,7 @@ import com.easy.cloud.core.common.date.utils.EcDateUtils;
 public class EcBaseEntity {
 	@Id
 	@GeneratedValue(generator = "idGenerator")  
-    @GenericGenerator(name = "idGenerator", strategy = "com.easy.cloud.core.jdbc.base.primarykey.EcKeyGeneratSnowflakeldWorlker",  
-    parameters = { @Parameter(name = "workerId", value = "0") ,@Parameter(name = "datacenterId", value = "0")}) 
+    @GenericGenerator(name = "idGenerator", strategy = "com.easy.cloud.core.jdbc.base.primarykey.EcKeyGeneratSnowflakeldWorlker") 
 	private Long id;
 	@CreatedDate
 	private Date createDate;
