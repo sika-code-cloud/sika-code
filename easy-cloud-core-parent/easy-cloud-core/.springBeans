@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.easy.cloud.EcEasyCloudCoreApplication</config>
+		<config>java:com.easy.cloud.EcCoreApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

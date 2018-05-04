@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSONObject;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.constant.EcFileConstant;
 import com.easy.cloud.core.common.file.constant.error.EcFileErrorCodeEnum;
 import com.easy.cloud.core.common.file.pojo.desc.EcFileDesc;
-import com.easy.cloud.core.common.generator.code.base.constant.EcCodeGenerateConstant.EcSourceCodeRelativePath;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
@@ -225,22 +223,5 @@ public class EcFileUtils {
 			return null;
 		}
 		return files.get(0);
-	}
-	public static void main(String[] args) throws Exception {
-		File file = getFileByFileName(EcFileConstant.USER_DIR + "\\" + EcSourceCodeRelativePath.RESOURCES, "test.xml");
-		if (file != null) {
-			System.out.println(JSONObject.toJSONString(file));
-		}
-//		System.out.println(JSONObject.toJSONString(getFilesByFileName(
-//				new File(DqFileConstant.USER_DIR + "\\" + DqSourceCodeRelativePath.RESOURCES), "test.xml")));
-		// System.out.println(getTargetProjectPath(null,
-		// "dq-easy-cloud-pay-common",
-		// DqCodeGenerateConfig.getNeedFilterDirectoryName()));
-		// System.out.println(getTargetFile(new File("C:\\Users\\THINK\\git\\"),
-		// "dq-easy-cloud-config-client"));
-		// List<String> list = new ArrayList<>();
-		// findFiles("C:\\Users\\THINK\\git\\", "dq-easy-cloud-config-client",
-		// list);
-		// System.out.println(list.size());
 	}
 }

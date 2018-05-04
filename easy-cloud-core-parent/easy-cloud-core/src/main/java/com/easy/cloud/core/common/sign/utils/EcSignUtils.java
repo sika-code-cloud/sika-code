@@ -1,5 +1,21 @@
 package com.easy.cloud.core.common.sign.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.UUID;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.http.message.BasicNameValuePair;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
@@ -11,13 +27,6 @@ import com.easy.cloud.core.common.encrypt.sha.utils.EcSHA256Utils;
 import com.easy.cloud.core.common.sign.constant.EcSignErrorCodeEnum;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
 
 /**
  * 

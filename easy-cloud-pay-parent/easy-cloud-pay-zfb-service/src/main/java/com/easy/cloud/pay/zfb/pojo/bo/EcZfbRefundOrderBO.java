@@ -1,7 +1,7 @@
 package com.easy.cloud.pay.zfb.pojo.bo;
 
-import com.easy.cloud.pay.common.payment.pojo.bo.EcRefundOrderBO;
-import com.easy.cloud.pay.common.refund.dto.EcRefundOrderAbstractDTO;
+import com.easy.cloud.pay.core.payment.pojo.bo.EcRefundOrderBO;
+import com.easy.cloud.pay.core.refund.dto.EcRefundOrderAbstractDTO;
 import com.easy.cloud.pay.zfb.common.utils.EcZfbPayUtils.EcZfbOrderNoGenerator;
 
 /**
