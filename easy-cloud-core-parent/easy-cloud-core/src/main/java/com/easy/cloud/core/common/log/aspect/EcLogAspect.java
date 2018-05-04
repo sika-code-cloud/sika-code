@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
@@ -34,7 +35,7 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
 @Component
 public class EcLogAspect {
 
-	@Pointcut("@within(com.easy.cloud.core.common.log.annotation.EcLogAnnotation)")
+	@Pointcut("@within("+EcBaseConfigConstant.LOG_ANNOTATION_NAME+")")
 	public void dqLogPointcut() {
 		
 	}

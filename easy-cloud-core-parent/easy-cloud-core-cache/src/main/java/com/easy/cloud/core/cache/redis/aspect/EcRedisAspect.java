@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
 
 /**
@@ -23,7 +24,7 @@ import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
 @Component
 public class EcRedisAspect {
 
-	@Pointcut("@annotation(com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation)")
+	@Pointcut("@annotation("+EcBaseConfigConstant.REDIS_ANNOTATION_NAME+")")
 	public void redisAspect() {
 
 	}

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.lock.pojo.bo.EcLockBO;
 import com.easy.cloud.core.lock.template.selector.EcLockTemplateSelector;
 
@@ -27,7 +28,7 @@ public class EcLockAspect {
 	@Autowired
 	private EcLockTemplateSelector templateSelector;
 
-	@Pointcut("@annotation(com.easy.cloud.core.lock.annotation.EcLockAnnotation)")
+	@Pointcut("@annotation("+EcBaseConfigConstant.LOCK_ANNOTATION_NAME+")")
 	public void distributedLockAspect() {
 
 	}
