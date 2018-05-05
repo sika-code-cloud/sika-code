@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -15,8 +14,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.common.date.utils.EcDateUtils;
 
 /**
  * 
@@ -46,24 +43,7 @@ public class EcBaseEntity {
 	private Integer isDeleted;
 	/** 备注 */
 	private String remark;
-	@PrePersist
-	public void basePrePersist(){
-		if(EcBaseUtils.isNull(createBy)){
-			this.createBy = -1L;
-		}
-		if(EcBaseUtils.isNull(updateBy)){
-			this.updateBy = -1L;
-		}
-		if(EcBaseUtils.isNull(createDate)){
-			this.createDate = EcDateUtils.getCurrentDate();
-		}
-		if(EcBaseUtils.isNull(updateDate)){
-			this.updateDate = EcDateUtils.getCurrentDate();
-		}
-		if(EcBaseUtils.isNull(isDeleted)){
-			this.isDeleted = 0;
-		}
-	}
+	
 	public Long getId() {
 		return id;
 	}

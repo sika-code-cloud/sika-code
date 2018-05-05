@@ -18,8 +18,6 @@
 	<properties>
 		<!-- alibaba.fastjson依赖 -->
 		<fastjson.version>1.2.39</fastjson.version>
-		<!-- druid依赖 -->
-		<druid.version>1.1.6</druid.version>
 		
 		<!-- jom依赖 -->
 		<org.jdom.version>2.0.2</org.jdom.version>
