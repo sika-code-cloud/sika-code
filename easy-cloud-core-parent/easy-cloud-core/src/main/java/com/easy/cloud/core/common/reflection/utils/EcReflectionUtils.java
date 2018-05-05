@@ -1,5 +1,10 @@
 package com.easy.cloud.core.common.reflection.utils;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 
 /**
@@ -8,6 +13,30 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
  * @date 2018年1月8日 下午7:46:12
  */
 public class EcReflectionUtils {
+	
+	/**
+	 * 
+	 * <p>获取指定class类及其继承的所有父类除了Object类的属性</p>
+	 *
+	 * <pre></pre>
+	 *
+	 * @param targetClass
+	 * @return
+	 *
+	 * @author daiqi
+	 * @创建时间  2018年5月4日 下午10:14:33
+	 */
+	public static List<Field> getDeclaredFieldsIncSup(final Class<?> targetClass) {
+		List<Field> fieldList = new ArrayList<>() ;
+		Class<?> tempClass = targetClass;
+		//当父类为null的时候说明到达了最上层的父类(Object类).
+		while (EcBaseUtils.isNotNull(tempClass)) {
+		      fieldList.addAll(Arrays.asList(tempClass .getDeclaredFields()));
+		      tempClass = tempClass.getSuperclass(); //得到父类,然后赋给自己
+		}
+		return fieldList;
+	}
+	
 	/**
 	 * 
 	 * <p>

@@ -30,18 +30,23 @@ public class EcCoreJdbcController {
 
 	@RequestMapping(value = "save")
 	public UserEntity save() {
-		for (int i= 0 ; i < 2000; ++i) {
-			executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					String userName = "username11111111";
-					String password = "password333333333";
-					Integer status = 2;
-					userService.saveUserEntity(new UserEntity(userName, password, status));
-				}
-			});
-		}
-		return new UserEntity();
+//		for (int i= 0 ; i < 1; ++i) {
+//			executorService.submit(new Runnable() {
+//				@Override
+//				public void run() {
+//					String userName = "username11111111";
+//					String password = "password333333333";
+//					Integer status = 2;
+//					userService.saveUserEntity(new UserEntity(userName, password, status));
+//				}
+//			});
+//		}
+		String userName = "username11111111";
+		String password = "password333333333";
+		Integer status = 2;
+		UserEntity userEntity = new UserEntity(userName, password, status);
+		userService.saveUserEntity(userEntity);
+		return userEntity;
 	}
 	@RequestMapping(value = "update")
 	public UserEntity update(Long id) {

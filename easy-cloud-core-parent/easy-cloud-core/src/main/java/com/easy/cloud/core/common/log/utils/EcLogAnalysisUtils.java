@@ -2,7 +2,7 @@ package com.easy.cloud.core.common.log.utils;
 
 import java.util.Map;
 
-import com.easy.cloud.core.basic.constant.EcBaseConstant;
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
@@ -175,7 +175,7 @@ public class EcLogAnalysisUtils {
 	
 	/** 获取日志分析的key */
 	private static String getLogKeyOfDqLogAnalysis(EcBaseAspectDTO baseAspectDTO) {
-		String applicationName = EcPropertiesUtils.getStringValue(EcBaseConstant.APPLICATION_NAME_KEY);
+		String applicationName = EcPropertiesUtils.getStringValue(EcBaseConfigConstant.APPLICATION_NAME_KEY);
 		String className = baseAspectDTO.getTargetClassName();
 		String methodName = baseAspectDTO.getTargetMethodName();
 		String parameterTypes = EcArrayUtils.getClassArrayStr(baseAspectDTO.getTargetParameterTypes());

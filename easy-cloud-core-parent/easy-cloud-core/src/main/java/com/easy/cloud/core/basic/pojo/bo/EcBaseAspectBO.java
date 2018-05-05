@@ -53,7 +53,7 @@ public class EcBaseAspectBO {
 		Object returnValue = proceed();
 		return EcJSONUtils.parseObject(returnValue, clazz);
 	}
-
+	
 	/**
 	 * 
 	 * <p>
@@ -70,6 +70,7 @@ public class EcBaseAspectBO {
 	 * @author daiqi
 	 * @创建时间 2018年4月26日 下午11:46:47
 	 */
+	@SuppressWarnings("unchecked")
 	public final <T> T getTParam(final Class<T> clazz) {
 		if (EcBaseUtils.isNull(clazz)) {
 			return null;
@@ -82,13 +83,13 @@ public class EcBaseAspectBO {
 			if (EcBaseUtils.isNull(arg)) {
 				continue;
 			}
-			if (EcBaseUtils.equals(arg.getClass(), clazz)) {
-				return EcJSONUtils.parseObject(arg, clazz);
+			if (clazz.isAssignableFrom(arg.getClass())) {
+				return (T) arg;
 			}
 		}
 		return null;
 	}
-
+	
 	/** 根据形参位置获取泛型参数值 */
 	@SuppressWarnings("unchecked")
 	public final <T> T getTParam(final int paramPosition) {

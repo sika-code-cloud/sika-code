@@ -1,11 +1,16 @@
 package com.easy.cloud.core.jdbc.generator.key;
 
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.hibernate.mapping.Map;
 import org.junit.Test;
 
+import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
 import com.easy.cloud.core.jdbc.base.primarykey.EcSnowflakeIdWorkerBO;
+import com.easy.cloud.core.jdbc.user.entity.UserEntity;
 
 public class GeneretorKeyTest {
 	ExecutorService executorService = Executors.newFixedThreadPool(2000);
@@ -30,5 +35,8 @@ public class GeneretorKeyTest {
 	public void testGeneratorKey1() {
 		System.out.println(3|5);
 		System.out.println(7^5);
+		UserEntity u = new UserEntity();
+		System.out.println(u instanceof EcBaseEntity);
+		System.out.println(EcBaseEntity.class.isAssignableFrom(EcBaseEntity.class));
 	}
 }
