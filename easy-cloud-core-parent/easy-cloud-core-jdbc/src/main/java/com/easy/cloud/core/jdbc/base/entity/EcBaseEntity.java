@@ -2,7 +2,6 @@ package com.easy.cloud.core.jdbc.base.entity;
 
 import java.util.Date;
 
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -14,7 +13,6 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
@@ -29,26 +27,25 @@ import com.easy.cloud.core.common.date.utils.EcDateUtils;
  *
  */
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public class EcBaseEntity {
 	@Id
 	@GeneratedValue(generator = "idGenerator")  
     @GenericGenerator(name = "idGenerator", strategy = EcBaseConfigConstant.SNOW_FLAKELD_WORLKER_NAME) 
-	protected Long id;
+	private Long id;
 	@CreatedDate
-	protected Date createDate;
+	private Date createDate;
 	@LastModifiedDate
-	protected Date updateDate;
+	private Date updateDate;
 	@Version
-	protected Integer version;
+	private Integer version;
 	@CreatedBy
-	protected Long createBy;
+	private Long createBy;
 	@LastModifiedBy
-	protected Long updateBy;
+	private Long updateBy;
 	/** 删除标志  */
-	protected Integer isDeleted;
+	private Integer isDeleted;
 	/** 备注 */
-	protected String remark;
+	private String remark;
 	@PrePersist
 	public void basePrePersist(){
 		if(EcBaseUtils.isNull(createBy)){

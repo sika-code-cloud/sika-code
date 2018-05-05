@@ -45,8 +45,8 @@ import com.easy.cloud.core.generator.code.xml.utils.EcGenerateCodeXmlUtils;
  * @author daiqi 创建时间 2018年3月29日 上午11:27:36
  */
 public class EcGenerateXmlMybatisBO extends EcGenerateXmlBaseBO {
-	private EcGenerateXmlMybatisDTO mybatisDTO;
-	private EcXmlContentElementDesc rootElement;
+	protected EcGenerateXmlMybatisDTO mybatisDTO;
+	protected EcXmlContentElementDesc rootElement;
 
 	public EcGenerateXmlMybatisBO(EcTemplateDesc templateDesc, EcGenerateXmlMybatisDTO generateXmlBaseDTO) {
 		super(null, templateDesc);
@@ -423,6 +423,7 @@ public class EcGenerateXmlMybatisBO extends EcGenerateXmlBaseBO {
 		saveElement.addAttribute(EcMyBatisAttrKey.ID, getSave());
 		saveElement.addAttribute(EcMyBatisAttrKey.USE_GENERATED_KEYS, "true");
 		saveElement.addAttribute(EcMyBatisAttrKey.PARAMETER_TYPE, mybatisDTO.getFullClassTypeDO());
+		saveElement.addAttribute(EcMyBatisAttrKey.KEY_PROPERTY, mybatisDTO.getPrimaryKey().getPropertyName());
 		// 构建include子节点
 		EcXmlMybatisContentElementDesc includeElement = new EcXmlMybatisContentElementDesc();
 		includeElement.setElementName(EcMyBatisElementNameEnum.INCLUDE.getDesc());

@@ -44,8 +44,9 @@ public class EcCoreJdbcController {
 		String userName = "username11111111";
 		String password = "password333333333";
 		Integer status = 2;
-		userService.saveUserEntity(new UserEntity(userName, password, status));
-		return new UserEntity();
+		UserEntity userEntity = new UserEntity(userName, password, status);
+		userService.saveUserEntity(userEntity);
+		return userEntity;
 	}
 	@RequestMapping(value = "update")
 	public UserEntity update(Long id) {
