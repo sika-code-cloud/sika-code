@@ -18,7 +18,7 @@ public class UserService {
 	private UserDAO userDAO;
 	@Transactional
 	public UserEntity saveUserEntity(UserEntity userEntity){
-		userDAO.save(userEntity);
+		System.out.println(userDAO.save(userEntity));
 		return userEntity;
 	}
 	@Transactional

@@ -9,8 +9,8 @@ import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD, "com.easy.cloud.core.jdbc"})
-@MapperScan("com.easy.cloud.core.jdbc.**.dao")
+@ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD})
+@MapperScan({"**.dao"})
 public class EcCoreJdbcApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcCoreJdbcApplication.class, args);

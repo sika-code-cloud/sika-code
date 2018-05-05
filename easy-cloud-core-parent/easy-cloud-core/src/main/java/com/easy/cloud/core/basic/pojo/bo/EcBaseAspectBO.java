@@ -31,7 +31,7 @@ public class EcBaseAspectBO {
 		this.baseAspectDTO = baseAspectDTO;
 	}
 
-	public void buildBaseAspectData(final ProceedingJoinPoint pjp) {
+	protected void buildBaseAspectData(final ProceedingJoinPoint pjp) {
 		this.joinPoint = pjp;
 		Signature signature = this.joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
@@ -53,7 +53,7 @@ public class EcBaseAspectBO {
 		Object returnValue = proceed();
 		return EcJSONUtils.parseObject(returnValue, clazz);
 	}
-
+	
 	/**
 	 * 
 	 * <p>
@@ -89,7 +89,7 @@ public class EcBaseAspectBO {
 		}
 		return null;
 	}
-
+	
 	/** 根据形参位置获取泛型参数值 */
 	@SuppressWarnings("unchecked")
 	public final <T> T getTParam(final int paramPosition) {

@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
+import com.easy.cloud.core.jdbc.auditor.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcActionType;
+import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcType;
 
 /**
  * 
@@ -20,7 +22,6 @@ import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
  * @date 2017年12月6日 下午4:41:16 
  *
  */
-@Repository
 @EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogRepositoryProxy.class, type = EcLogTypeEnum.REPOSITORY)
 public interface EcBaseDAO<T> {
 	
@@ -45,6 +46,7 @@ public interface EcBaseDAO<T> {
      * @author daiqi
      * @date 2017年12月6日 下午1:41:26
      */
+	@EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
     public int save(final T obj);
     /**
      * 
@@ -67,6 +69,7 @@ public interface EcBaseDAO<T> {
      * @author daiqi
      * @date 2017年12月6日 下午1:41:26
      */
+	@EcAuditAnnotation(actionType = EcActionType.UPDATE, type = EcType.UPDATE)
 	public int update(final T obj);
 	 /**
      * 
