@@ -5,6 +5,11 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.easy.cloud.core.common.log.utils.EcLogUtils;
+
 /**
  * 
  * <p>
@@ -22,6 +27,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @创建时间 2018年5月7日 下午2:31:53
  */
 public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final ThreadLocal<Long> startTime = new ThreadLocal<>();
 	private final AtomicLong numTasks = new AtomicLong();
 	private final AtomicLong totalTime = new AtomicLong();
@@ -42,23 +48,30 @@ public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 	public EcScheduledThreadPoolExecutor(int corePoolSize) {
 		super(corePoolSize);
 	}
-
+	
+	@Override
+	protected void afterExecute(Runnable r, Throwable t) {
+		try {
+			long endTime = System.currentTimeMillis();
+			long start = startTime.get();
+			long useTime = endTime - start;
+			numTasks.incrementAndGet();
+			totalTime.addAndGet(useTime);
+			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
+		} finally {
+			super.afterExecute(r, t);
+		}
+	}
 	@Override
 	protected void beforeExecute(Thread t, Runnable r) {
 		super.beforeExecute(t, r);
-		System.out.println("beforeExecute " + r);
 		startTime.set(System.currentTimeMillis());
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	protected void terminated() {
 		try {
-			System.out.println("terminated avg time " + totalTime.get() + " " + numTasks.get());
+			EcLogUtils.debug("terminated", "terminated avg time " + totalTime.get() + " " + numTasks.get(), logger);
 		} finally {
 			super.terminated();
 		}

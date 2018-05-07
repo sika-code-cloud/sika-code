@@ -36,7 +36,7 @@ public class EcAuditAspect {
 	}
 
 	@Around(value = "auditAspect()")
-	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object doAround(ProceedingJoinPoint joinPoint) {
 		EcAuditBO auditBO = new EcAuditBO();
 		auditBO.buildAuditorData(joinPoint).buildAuditor(auditorAware.getCurrentAuditor());
 		return auditBO.procced();

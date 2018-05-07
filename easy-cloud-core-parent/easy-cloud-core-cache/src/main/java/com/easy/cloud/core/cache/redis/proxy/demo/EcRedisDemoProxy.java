@@ -3,6 +3,7 @@ package com.easy.cloud.core.cache.redis.proxy.demo;
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
 import com.easy.cloud.core.cache.redis.proxy.EcBaseRedisProxy;
 import com.easy.cloud.core.cache.redis.utils.EcRedisUtils;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
@@ -17,7 +18,7 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 	@Override
 	protected void initOtherData() {
 		super.initOtherData();
-		String keyBody = redisBO.getTParam(1);
+		String keyBody = redisBO.getTParam(1).toString();
 		if (EcStringUtils.isEmpty(keyBody)) {
 			keyBody = "123";
 		}
@@ -26,11 +27,14 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 
 	@Override
 	protected Object query() {
-		EcLogDTO logDTO = EcRedisTemplateHandler.get(key, EcLogDTO.class);
-		if (logDTO != null) {
-			return logDTO;
+		Object obj = EcRedisTemplateHandler.get(key, Object.class);
+		System.out.println("获取的数据为：" + EcJSONUtils.toJSONString(obj));
+		if (obj != null) {
+			return obj;
 		}
-		return super.query();
+		obj = super.query();
+		EcRedisTemplateHandler.set(key, obj);
+		return obj;
 	}
 
 	@Override
@@ -45,9 +49,10 @@ public class EcRedisDemoProxy extends EcBaseRedisProxy{
 
 	@Override
 	protected Object save() {
-		EcLogDTO logDTO = redisBO.getTReturnValue(EcLogDTO.class);
-		EcRedisTemplateHandler.set(key, logDTO);
-		return logDTO;
+		Object obj = redisBO.getTReturnValue(Object.class);
+		EcRedisTemplateHandler.set(key, obj);
+		System.out.println("Baocun luo ");
+		return obj;
 	}
 
 	@Override

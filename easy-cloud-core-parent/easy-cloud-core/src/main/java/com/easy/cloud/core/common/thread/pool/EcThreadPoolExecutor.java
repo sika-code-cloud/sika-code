@@ -56,7 +56,6 @@ public class EcThreadPoolExecutor extends ThreadPoolExecutor {
 			numTasks.incrementAndGet();
 			totalTime.addAndGet(useTime);
 			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
-			System.out.println("startTime:" +start + "afterExecute " + r);
 		} finally {
 			super.afterExecute(r, t);
 		}
@@ -71,7 +70,7 @@ public class EcThreadPoolExecutor extends ThreadPoolExecutor {
 	@Override
 	protected void terminated() {
 		try {
-			System.out.println("terminated avg time " + totalTime.get() + " " + numTasks.get());
+			EcLogUtils.debug("terminated", "terminated avg time " + totalTime.get() + " " + numTasks.get(), logger);
 		} finally {
 			super.terminated();
 		}
