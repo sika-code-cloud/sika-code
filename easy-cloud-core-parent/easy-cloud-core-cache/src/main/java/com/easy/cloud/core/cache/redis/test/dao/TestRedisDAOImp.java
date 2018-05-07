@@ -1,4 +1,4 @@
-package com.easy.cloud.core.cache.redis.test;
+package com.easy.cloud.core.cache.redis.test.dao;
 
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,9 @@ public class TestRedisDAOImp implements TestRedisDAO{
 
 	@Override
 	public EcLogDTO queryRequestPath(String id) {
-		return null;
+		EcLogDTO logDTO = new EcLogDTO();
+		logDTO.setRequestPath("dao下的对象");
+		return logDTO;
 	}
 	
 }

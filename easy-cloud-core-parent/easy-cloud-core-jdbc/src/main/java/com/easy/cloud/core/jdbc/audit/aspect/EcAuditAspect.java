@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.jdbc.audit.aware.EcAuditorAware;
 import com.easy.cloud.core.jdbc.audit.conditional.EcAuditConditional;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
@@ -29,7 +30,7 @@ public class EcAuditAspect {
 	@Autowired
 	private EcAuditorAware<?> auditorAware;
 
-	@Pointcut("execution(* *..dao..*.*(..)) or execution(* *..mapper..*.*(..)) or execution(* *..repository..*.*(..))")
+	@Pointcut(EcBaseConfigConstant.DAO_EXECUTION)
 	public void auditAspect() {
 
 	}

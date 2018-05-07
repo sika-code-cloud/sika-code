@@ -26,6 +26,8 @@ public class EcBaseConfigConstant {
 	public static final String LOCK_ANNOTATION_NAME = "com.easy.cloud.core.lock.annotation.EcLockAnnotation";
 	/** redis注解完整类名 */
 	public static final String REDIS_ANNOTATION_NAME = "com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation";
+	/** 数据处理层的切点 */
+	public static final String DAO_EXECUTION = "execution(* *..dao..*.*(..)) or execution(* *..mapper..*.*(..)) or execution(* *..repository..*.*(..))";
 	/** 雪花算法主键生成器所在完整类名 */
 	public static final String SNOW_FLAKELD_WORLKER_NAME = "com.easy.cloud.core.jdbc.base.primarykey.EcKeyGeneratSnowflakeldWorlker";
 	

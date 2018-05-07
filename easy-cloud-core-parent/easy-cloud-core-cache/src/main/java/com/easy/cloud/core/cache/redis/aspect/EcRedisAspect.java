@@ -24,10 +24,11 @@ import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
 @Component
 public class EcRedisAspect {
 
-	@Pointcut("@annotation("+EcBaseConfigConstant.REDIS_ANNOTATION_NAME+")")
+	@Pointcut("@annotation(" + EcBaseConfigConstant.REDIS_ANNOTATION_NAME + ") or " + EcBaseConfigConstant.DAO_EXECUTION + "")
 	public void redisAspect() {
 
 	}
+	
 
 	@Around(value = "redisAspect()")
 	public Object doAround(ProceedingJoinPoint joinPoint) {

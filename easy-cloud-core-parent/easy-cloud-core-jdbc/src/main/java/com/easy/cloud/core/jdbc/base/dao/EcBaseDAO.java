@@ -6,10 +6,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
-import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
-import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
@@ -22,7 +18,6 @@ import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
  * @date 2017年12月6日 下午4:41:16 
  *
  */
-@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogRepositoryProxy.class, type = EcLogTypeEnum.REPOSITORY)
 public interface EcBaseDAO<T> {
 	
 	/**

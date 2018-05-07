@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.cache.redis.proxy.demo.EcRedisDemoProxy;
+import com.easy.cloud.core.cache.redis.test.dao.TestRedisDAO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 

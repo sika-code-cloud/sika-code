@@ -1,4 +1,4 @@
-package com.easy.cloud.core.cache.redis.test;
+package com.easy.cloud.core.cache.redis.test.dao;
 
 import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
