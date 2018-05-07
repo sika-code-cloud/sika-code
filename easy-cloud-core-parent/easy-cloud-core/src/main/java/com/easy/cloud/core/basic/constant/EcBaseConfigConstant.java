@@ -28,4 +28,26 @@ public class EcBaseConfigConstant {
 	public static final String REDIS_ANNOTATION_NAME = "com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation";
 	/** 雪花算法主键生成器所在完整类名 */
 	public static final String SNOW_FLAKELD_WORLKER_NAME = "com.easy.cloud.core.jdbc.base.primarykey.EcKeyGeneratSnowflakeldWorlker";
+	
+	/**
+	 * 
+	 * <p>
+	 * ec条件注解的开关key
+	 * </p>
+	 *
+	 * @author daiqi
+	 * @创建时间 2018年5月7日 下午5:13:37
+	 */
+	public static class EcConditionalSwitchKey {
+		/** 日志开关key---ec.log.switch */
+		public static final String LOG_SWITCH = "ec.log.switch";
+		/** 审计开关key---ec.audit.switch */
+		public static final String AUDIT_SWITCH = "ec.audit.switch";
+		/** jdbc开关key---ec.jdbc.switch */
+		public static final String JDBC_SWITCH = "ec.jdbc.switch";
+		/** redis开关key---ec.redis.switch */
+		public static final String REDIS_SWITCH = "ec.redis.switch";
+		/** lock开关key---ec.lock.switch */
+		public static final String LOCK_SWITCH = "ec.lock.switch";
+	}
 }

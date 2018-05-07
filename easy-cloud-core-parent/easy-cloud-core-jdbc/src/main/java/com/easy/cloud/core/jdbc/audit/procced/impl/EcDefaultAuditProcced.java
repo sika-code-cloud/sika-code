@@ -1,6 +1,6 @@
-package com.easy.cloud.core.jdbc.auditor.procced.impl;
+package com.easy.cloud.core.jdbc.audit.procced.impl;
 
-import com.easy.cloud.core.jdbc.auditor.procced.EcBaseAuditProcced;
+import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
 
 /**
  * 

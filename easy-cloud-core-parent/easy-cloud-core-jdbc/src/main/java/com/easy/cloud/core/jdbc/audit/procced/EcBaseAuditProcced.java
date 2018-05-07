@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.procced;
+package com.easy.cloud.core.jdbc.audit.procced;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -12,11 +12,11 @@ import org.springframework.util.Assert;
 
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
-import com.easy.cloud.core.jdbc.auditor.annotation.EcAuditAnnotation;
-import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcActionType;
-import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcType;
-import com.easy.cloud.core.jdbc.auditor.pojo.bo.EcAuditBO;
-import com.easy.cloud.core.jdbc.auditor.pojo.dto.EcAuditDTO;
+import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
+import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
+import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
 
 /**
  * 

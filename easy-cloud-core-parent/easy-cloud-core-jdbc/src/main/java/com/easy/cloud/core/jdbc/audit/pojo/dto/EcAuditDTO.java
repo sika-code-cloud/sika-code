@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.pojo.dto;
+package com.easy.cloud.core.jdbc.audit.pojo.dto;
 
 import java.lang.reflect.Field;
 import java.util.List;

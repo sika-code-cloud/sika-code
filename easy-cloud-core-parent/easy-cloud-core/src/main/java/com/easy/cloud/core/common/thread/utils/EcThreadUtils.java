@@ -12,7 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
-import com.easy.cloud.core.common.thread.factory.EcThreadExecutors;
+import com.easy.cloud.core.common.thread.factory.EcExecutors;
+import com.easy.cloud.core.common.thread.factory.EcThreadFactory;
 
 /**
  * 
@@ -25,11 +26,11 @@ import com.easy.cloud.core.common.thread.factory.EcThreadExecutors;
  */
 public class EcThreadUtils {
 	private static int count = Runtime.getRuntime().availableProcessors();
-	static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(count);
-	static ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-	static ExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(count);
-	static ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-	static ExecutorService singleThreadScheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+	static ExecutorService fixedThreadPool = EcExecutors.newFixedThreadPool(count, new EcThreadFactory("测试"));
+	static ExecutorService cachedThreadPool = EcExecutors.newCachedThreadPool();
+	static ExecutorService scheduledThreadPool = EcExecutors.newScheduledThreadPool(count);
+	static ExecutorService singleThreadExecutor = EcExecutors.newSingleThreadExecutor();
+	static ExecutorService singleThreadScheduledExecutor = EcExecutors.newSingleThreadScheduledExecutor();
 	static ExecutorService workStealingPool = Executors.newWorkStealingPool(count);
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
@@ -40,7 +41,6 @@ public class EcThreadUtils {
 		// 进行异步任务列表
 		List<FutureTask<Map<String, Object>>> futureTasks = new ArrayList<FutureTask<Map<String, Object>>>();
 		// 线程池 初始化十个线程 和JDBC连接池是一个意思 实现重用
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		long start = System.currentTimeMillis();
 		// 类似与run方法的实现 Callable是一个接口，在call中手写逻辑代码
 		Callable<Map<String, Object>> callable = getCall();
@@ -51,7 +51,7 @@ public class EcThreadUtils {
 			futureTasks.add(futureTask);
 			// 提交异步任务到线程池，让线程池管理任务 特爽把。
 			// 由于是异步并行任务，所以这里并不会阻塞
-			executorService.submit(futureTask);
+			fixedThreadPool.submit(futureTask);
 			Map<String, Object> result = futureTask.get();
 			count += EcMapUtils.getInteger(result, "result");
 		}
@@ -67,7 +67,7 @@ public class EcThreadUtils {
 		System.out.println("线程池的任务全部完成:结果为:" + count + "，main线程关闭，进行线程的清理");
 		System.out.println("使用时间：" + (end - start) + "ms");
 		// 清理线程池
-		executorService.shutdown();
+		fixedThreadPool.shutdown();
 
 	}
 	public static Callable<Map<String, Object>> getCall() {
@@ -84,7 +84,7 @@ public class EcThreadUtils {
 	}
 	public static void testExecuteCachedThreadPool() {
 		// 清理线程池
-		ExecutorService executorService = EcThreadExecutors.newCachedThreadPool();
+		ExecutorService executorService = EcExecutors.newCachedThreadPool();
 		for (int i = 0; i < 2; i++) {
 			final int index = i;
 			
