@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.annotation;
+package com.easy.cloud.core.jdbc.audit.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,8 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.easy.cloud.core.jdbc.auditor.procced.EcBaseAuditProcced;
-import com.easy.cloud.core.jdbc.auditor.procced.impl.EcDefaultAuditProcced;
+import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
+import com.easy.cloud.core.jdbc.audit.procced.impl.EcDefaultAuditProcced;
 
 /**
  * 

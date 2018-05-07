@@ -10,9 +10,9 @@ import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogRepositoryProxy;
-import com.easy.cloud.core.jdbc.auditor.annotation.EcAuditAnnotation;
-import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcActionType;
-import com.easy.cloud.core.jdbc.auditor.constant.EcAuditConstant.EcType;
+import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
+import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
 
 /**
  * 

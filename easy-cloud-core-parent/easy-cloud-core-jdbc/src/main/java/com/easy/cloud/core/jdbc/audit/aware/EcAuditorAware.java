@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.aware;
+package com.easy.cloud.core.jdbc.audit.aware;
 
 import org.springframework.data.domain.AuditorAware;
 

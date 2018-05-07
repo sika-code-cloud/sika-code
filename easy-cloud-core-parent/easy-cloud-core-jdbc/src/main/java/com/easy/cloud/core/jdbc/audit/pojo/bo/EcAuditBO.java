@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.pojo.bo;
+package com.easy.cloud.core.jdbc.audit.pojo.bo;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import com.easy.cloud.core.basic.pojo.bo.EcBaseAspectBO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.reflection.utils.EcReflectionUtils;
-import com.easy.cloud.core.jdbc.auditor.annotation.EcAuditAnnotation;
-import com.easy.cloud.core.jdbc.auditor.pojo.dto.EcAuditDTO;
-import com.easy.cloud.core.jdbc.auditor.procced.EcBaseAuditProcced;
+import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
+import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
 
 /**
  * jdbc组件逻辑类

@@ -2,7 +2,10 @@ package com.easy.cloud.core.lock.conditional;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant.EcConditionalSwitchKey;
 
 /**
  * 
@@ -17,7 +20,12 @@ public class EcRedissonLockCondition implements Condition {
 
 	@Override
 	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-		return true;
+		Environment env = context.getEnvironment();// 获取上下文环境
+		Boolean lockSwitch = env.getProperty(EcConditionalSwitchKey.LOCK_SWITCH, Boolean.class);
+		if (lockSwitch == null) {
+			return true;
+		}
+		return lockSwitch;
 	}
 
 }

@@ -7,7 +7,22 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.easy.cloud.core.common.log.utils.EcLogUtils;
+
+/**
+ * 
+ * <p>
+ * 自定义线程池
+ * </p>
+ *
+ * @author daiqi
+ * @创建时间 2018年5月7日 下午3:41:34
+ */
 public class EcThreadPoolExecutor extends ThreadPoolExecutor {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final ThreadLocal<Long> startTime = new ThreadLocal<>();
 	private final AtomicLong numTasks = new AtomicLong();
 	private final AtomicLong totalTime = new AtomicLong();
@@ -40,8 +55,8 @@ public class EcThreadPoolExecutor extends ThreadPoolExecutor {
 			long useTime = endTime - start;
 			numTasks.incrementAndGet();
 			totalTime.addAndGet(useTime);
+			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
 			System.out.println("startTime:" +start + "afterExecute " + r);
-			System.out.println();
 		} finally {
 			super.afterExecute(r, t);
 		}
@@ -50,13 +65,7 @@ public class EcThreadPoolExecutor extends ThreadPoolExecutor {
 	@Override
 	protected void beforeExecute(Thread t, Runnable r) {
 		super.beforeExecute(t, r);
-		System.out.println("beforeExecute " + r);
 		startTime.set(System.currentTimeMillis());
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

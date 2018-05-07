@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.constant;
+package com.easy.cloud.core.jdbc.audit.constant;
 
 /**
  * 

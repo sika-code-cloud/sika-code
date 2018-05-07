@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.auditor.aspect;
+package com.easy.cloud.core.jdbc.audit.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
-import com.easy.cloud.core.jdbc.auditor.aware.EcAuditorAware;
-import com.easy.cloud.core.jdbc.auditor.conditional.EcAuditConditional;
-import com.easy.cloud.core.jdbc.auditor.pojo.bo.EcAuditBO;
+import com.easy.cloud.core.jdbc.audit.aware.EcAuditorAware;
+import com.easy.cloud.core.jdbc.audit.conditional.EcAuditConditional;
+import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 
 /**
  * 
