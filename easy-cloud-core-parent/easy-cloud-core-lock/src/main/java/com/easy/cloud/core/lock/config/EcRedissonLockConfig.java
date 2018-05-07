@@ -28,7 +28,7 @@ import com.easy.cloud.core.lock.template.impl.EcLockTemplateRedission;
 @Conditional(value = { EcRedisConditional.class })
 public class EcRedissonLockConfig {
 
-	@Value("classpath:redisson/redisson-conf.yml")
+	@Value("classpath:config/redisson-conf.yml")
 	Resource configFile;
 
 	@Bean(destroyMethod = "shutdown")

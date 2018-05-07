@@ -32,4 +32,8 @@ public class UserService {
 		maps.put("pageSize", pageSize);
 		return userDAO.listPage(maps);
 	}
+	
+	public UserEntity findById(Long id){
+		return userDAO.findById(id);
+	}
 }

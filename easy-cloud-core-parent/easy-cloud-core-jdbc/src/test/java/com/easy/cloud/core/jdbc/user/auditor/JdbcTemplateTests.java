@@ -46,5 +46,8 @@ public class JdbcTemplateTests {
 		userEntity.setId(406871890473258206L);
 		userService.updateUserEntity(userEntity);
 	}
-
+	@Test
+	public void findById() {
+		userService.findById(406871890473258225L);
+	}
 }

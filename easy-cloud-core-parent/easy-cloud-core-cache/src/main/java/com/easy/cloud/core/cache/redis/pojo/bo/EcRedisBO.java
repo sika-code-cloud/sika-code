@@ -45,7 +45,12 @@ public class EcRedisBO extends EcBaseAspectBO {
 		if (redisProxy == null) {
 			return super.proceed();
 		}
-		return redisProxy.handle(this);
+		try {
+			return redisProxy.handle(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return super.proceed();
+		}
 	}
 
 	private EcRedisBO buildRedisAnnotation() {

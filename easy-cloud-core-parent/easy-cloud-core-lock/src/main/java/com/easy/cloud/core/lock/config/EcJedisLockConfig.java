@@ -80,7 +80,6 @@ public class EcJedisLockConfig extends EcRedisConfig {
 		jedisPoolConfig.setTestWhileIdle(testWhileIdle);
 		return jedisPoolConfig;
 	}
-
 	@Bean(name = "jedisConnectionFactoryLcok")
 	public JedisConnectionFactory jedisConnectionFactoryLcok() {
 		return newJedisConnectionFactory(hostName, port, 5000);

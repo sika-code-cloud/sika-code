@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -87,8 +88,8 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 		return jedisPoolConfig;
 	}
 
-	@Primary
-	@Bean
+//	@Primary
+//	@Bean(name = "defaultRedisConnectionFactory")
 	public JedisConnectionFactory defaultRedisConnectionFactory() {
 		return newJedisConnectionFactory(hostName, port, 5000);
 	}
@@ -103,8 +104,8 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @date 2017年12月7日 下午5:19:59
 	 */
 	@Bean(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_NAME)
-	public StringRedisTemplate stringRedisTemplate() {
-		StringRedisTemplate redisTemplate = new StringRedisTemplate(defaultRedisConnectionFactory());
+	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+		StringRedisTemplate redisTemplate = new StringRedisTemplate(redisConnectionFactory);
 		return redisTemplate;
 	}
 
@@ -118,13 +119,13 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @date 2017年12月7日 下午5:19:51
 	 */
 	@Bean(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
-	public RedisTemplate<String, Object> redisTemlateValueSerializer() {
+	public RedisTemplate<String, Object> redisTemlateValueSerializer(RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
 		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setConnectionFactory(defaultRedisConnectionFactory());
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		return redisTemplate;
 	}
 

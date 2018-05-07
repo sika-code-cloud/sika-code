@@ -49,13 +49,18 @@ public class EcAuditBO extends EcBaseAspectBO {
 	}
 
 	/** 处理方法 */
-	public final Object procced() throws Throwable {
+	public final Object procced() {
 		if (EcBaseUtils.isNull(auditAnnotation)) {
-			return super.joinPoint.proceed();
+			return super.proceed();
 		}
 		Class<? extends EcBaseAuditProcced> clazz = auditAnnotation.proccedClass();
 		EcBaseAuditProcced auditProcced = EcBeanFactory.newInstance(clazz);
-		return auditProcced.procced(this);
+		try {
+			return auditProcced.procced(this);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return super.proceed();
+		}
 	}
 
 	/** 构建实体数据 */

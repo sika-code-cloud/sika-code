@@ -51,7 +51,7 @@ public class EcBaseAspectBO {
 			return null;
 		}
 		Object returnValue = proceed();
-		return EcJSONUtils.parseObject(returnValue, clazz);
+		return (T) returnValue;
 	}
 	
 	/**

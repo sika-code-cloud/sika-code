@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
+import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
+import com.easy.cloud.core.cache.redis.proxy.demo.EcRedisDemoProxy;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
@@ -82,6 +85,7 @@ public interface EcBaseDAO<T> {
      * @author daiqi
      * @date 2017年12月6日 下午5:31:34
      */
+	@EcRedisAnnotation(actionType=EcRedisActionType.QUERY, proxyClass = EcRedisDemoProxy.class)
     public T findById(@Param(value = "id") Object id);
     
     /** 分页计数 */
