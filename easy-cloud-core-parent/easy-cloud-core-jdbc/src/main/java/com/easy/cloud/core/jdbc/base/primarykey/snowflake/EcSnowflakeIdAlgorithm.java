@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.base.primarykey;
+package com.easy.cloud.core.jdbc.base.primarykey.snowflake;
 
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 
@@ -22,11 +22,18 @@ import com.easy.cloud.core.common.date.utils.EcDateUtils;
  * 
  * 使用EcKeyGeneratorConfig配置类生成EcSnowflakeIdWorkerBO示例
  */
-public class EcSnowflakeIdWorkerBO {
-
-	public EcSnowflakeIdWorkerBO() {
+public class EcSnowflakeIdAlgorithm {
+	
+	private static class LazyHolder{
+		private static final EcSnowflakeIdAlgorithm SNOWFLAKE_ALGORITHM  = new EcSnowflakeIdAlgorithm();	
+		
+	}
+	private EcSnowflakeIdAlgorithm() {
 
 	}
+	public static final EcSnowflakeIdAlgorithm getInstance(long workerId, long datacenterId) {    
+        return LazyHolder.SNOWFLAKE_ALGORITHM.buidWorkerIdAndDatacenterId(workerId, datacenterId);    
+     } 
 
 	// ==============================Fields===========================================
 	/** 开始时间截 (2015-01-01) */
@@ -73,7 +80,7 @@ public class EcSnowflakeIdWorkerBO {
 
 	// ==============================Constructors=====================================
 
-	public EcSnowflakeIdWorkerBO buidWorkerIdAndDatacenterId(long workerId, long datacenterId) {
+	private EcSnowflakeIdAlgorithm buidWorkerIdAndDatacenterId(long workerId, long datacenterId) {
 		if (workerId > maxWorkerId || workerId < 0) {
 			throw new IllegalArgumentException(
 					String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));

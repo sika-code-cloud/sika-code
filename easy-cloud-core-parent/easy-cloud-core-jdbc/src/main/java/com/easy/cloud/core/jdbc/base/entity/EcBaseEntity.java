@@ -2,20 +2,17 @@ package com.easy.cloud.core.jdbc.base.entity;
 
 import java.util.Date;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
+import com.easy.cloud.core.jdbc.audit.annotation.EcGenericGenerator;
+import com.easy.cloud.core.jdbc.base.primarykey.snowflake.EcPrimaryKeySnowflakeGenerator;
 
 /**
  * 
@@ -26,11 +23,9 @@ import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
  *
  */
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public class EcBaseEntity {
 	@Id
-	@GeneratedValue(generator = "idGenerator")  
-    @GenericGenerator(name = "idGenerator", strategy = EcBaseConfigConstant.SNOW_FLAKELD_WORLKER_NAME) 
+    @EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
 	private Long id;
 	@CreatedDate
 	private Date createDate;
