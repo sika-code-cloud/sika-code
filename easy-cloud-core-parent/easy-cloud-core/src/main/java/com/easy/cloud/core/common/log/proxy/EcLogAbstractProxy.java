@@ -1,6 +1,7 @@
 package com.easy.cloud.core.common.log.proxy;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogBaseProxy;
 import com.easy.cloud.core.common.log.utils.EcLogAnalysisUtils;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
+import com.easy.cloud.core.common.thread.factory.EcExecutors;
+import com.easy.cloud.core.common.thread.factory.EcThreadFactory;
 
 /**
  * 
@@ -35,6 +38,7 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
 public abstract class EcLogAbstractProxy implements EcLogProxy {
 
 	protected final Logger logger = LoggerFactory.getLogger(EcLogBaseProxy.class);
+	private static ExecutorService logExecutorService = EcExecutors.newCachedThreadPool(new EcThreadFactory("logAspect"));
 	/** 日志数据传输对象 */
 	protected EcLogDTO logDTO;
 	/** 日志分析数据传输对象 */
@@ -53,23 +57,29 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 		try {
 			// 1：数据初始化
 			init(logBO);
-			// 获取日志开关
-			if (EcLogUtils.getLogSwitch(log, logBO.getBaseAspectDTO())) {
-				// 2：执行日志处理
-				doLogHandle();
+			boolean logSwitch = EcLogUtils.getLogSwitch(log, logBO.getBaseAspectDTO());
+			boolean logAnalysisSwitch = EcLogAnalysisUtils.getLogAnalysisSwitch(log, logBO.getBaseAspectDTO());
+			if (!logSwitch && !logAnalysisSwitch) {
+				return ;
 			}
-			// 获取日志分析开关
-			if (EcLogAnalysisUtils.getLogAnalysisSwitch(log, logBO.getBaseAspectDTO())) {
-				if (EcBaseUtils.isNull(logAnalysisBO)) {
-					return;
+			logExecutorService.execute(new Runnable() {
+				@Override
+				public void run() {
+					// 获取日志开关
+					if (logSwitch) {
+						// 2：执行日志处理
+						doLogHandle();
+					}
+					// 获取日志分析开关
+					if (EcLogAnalysisUtils.getLogAnalysisSwitch(log, logBO.getBaseAspectDTO())) {
+						// 执行方法分析处理
+						doLogAnalysis();
+					}
 				}
-				// 执行方法分析处理
-				doLogAnalysis();
-			}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/** 日志模板类 */
@@ -230,6 +240,9 @@ public abstract class EcLogAbstractProxy implements EcLogProxy {
 	 * @author daiqi 创建时间 2018年2月22日 下午2:47:31
 	 */
 	protected void doLogAnalysis() {
+		if (EcBaseUtils.isNull(logAnalysisBO)) {
+			return;
+		}
 		logAnalysisBO.setDqLogAnalysisDTOToContainer(EcLogAnalysisUtils.getLogAnalysisContainerByType(log.type()), logBO.getBaseAspectDTO());
 		EcLogUtils.info("日志分析数据", logAnalysisBO, logger);
 	}
