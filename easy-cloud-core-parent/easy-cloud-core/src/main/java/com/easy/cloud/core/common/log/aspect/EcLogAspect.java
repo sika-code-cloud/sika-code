@@ -1,7 +1,5 @@
 package com.easy.cloud.core.common.log.aspect;
 
-import java.util.concurrent.ExecutorService;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,8 +12,6 @@ import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.common.log.conditional.EcLogConditional;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogBO;
-import com.easy.cloud.core.common.thread.factory.EcExecutors;
-import com.easy.cloud.core.common.thread.factory.EcThreadFactory;
 
 /**
  * 
@@ -37,7 +33,6 @@ import com.easy.cloud.core.common.thread.factory.EcThreadFactory;
 @Component
 @Conditional(value = EcLogConditional.class)
 public class EcLogAspect {
-	private ExecutorService logExecutorService = EcExecutors.newCachedThreadPool(new EcThreadFactory("logAspect"));
 
 	@Pointcut("@within(" + EcBaseConfigConstant.LOG_ANNOTATION_NAME + ")")
 	public void logPointcut() {
@@ -74,16 +69,11 @@ public class EcLogAspect {
 	 * @throws Throwable
 	 */
 	protected void doLogLogic(final ProceedingJoinPoint joinPoint, final long beginTimeMillis, final Object targetReturnValue) {
-		logExecutorService.execute(new Runnable() {
-			@Override
-			public void run() {
-				long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
-				// 构建日志逻辑对象--设置日志数据
-				EcLogBO ecLogBO = new EcLogBO(beginTimeMillis, endTimeMillis);
-				ecLogBO.buildLogData(joinPoint, targetReturnValue);
-				ecLogBO.handle();
-			}
-		});
+		long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
+		// 构建日志逻辑对象--设置日志数据
+		EcLogBO ecLogBO = new EcLogBO(beginTimeMillis, endTimeMillis);
+		ecLogBO.buildLogData(joinPoint, targetReturnValue);
+		ecLogBO.handle();
 	}
 
 }
