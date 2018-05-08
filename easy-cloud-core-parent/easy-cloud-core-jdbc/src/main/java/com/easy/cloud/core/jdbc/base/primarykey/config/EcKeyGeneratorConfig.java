@@ -26,6 +26,7 @@ public class EcKeyGeneratorConfig {
 	/** 数据中心id */
 	@Value("${snowflakeIdWorker.datacenterId}")
 	private Long datacenterId;
+
 	@Bean
 	public EcSnowflakeIdWorkerBO snowflakeIdWorker() {
 		return new EcSnowflakeIdWorkerBO().buidWorkerIdAndDatacenterId(workerId, datacenterId);

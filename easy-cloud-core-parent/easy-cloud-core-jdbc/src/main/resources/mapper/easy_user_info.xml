@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.easy.cloud.core.jdbc.user.dao.UserDAO" >
+<mapper namespace="com.easy.cloud.core.jdbc.test.dao.UserDAO" >
 	<!-- 根节点 -->
 	<!-- 设置resultMap -->
-	<resultMap id="UserEntity" type="com.easy.cloud.core.jdbc.user.entity.UserEntity" >
+	<resultMap id="UserEntity" type="com.easy.cloud.core.jdbc.test.UserEntity" >
 		<id column="id" jdbcType="BIGINT" property="id" />
 		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
 		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
@@ -73,11 +73,11 @@
 		</set>
 	</sql>
 	<!-- 保存对象 -->
-	<insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.jdbc.user.entity.UserEntity" keyProperty="id" >
+	<insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.jdbc.test.UserEntity" keyProperty="id" >
 		INSERT INTO easy_user_info <include refid="setColumnSql" />
 	</insert>
 	<!-- 更新对象 -->
-	<update id="update" parameterType="com.easy.cloud.core.jdbc.user.entity.UserEntity" >
+	<update id="update" parameterType="com.easy.cloud.core.jdbc.test.UserEntity" >
 		UPDATE easy_user_info eui <include refid="setColumnSql" />
 		WHERE eui.id = #{id, jdbcType=BIGINT}
 	</update>

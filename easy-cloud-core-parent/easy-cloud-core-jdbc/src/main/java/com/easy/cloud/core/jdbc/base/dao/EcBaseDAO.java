@@ -34,7 +34,6 @@ public interface EcBaseDAO<T> {
 	 * @date 2017年12月6日 下午1:41:26
 	 */
 	@EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
-	@EcRedisAnnotation(actionType = EcRedisActionType.SAVE, proxyClass = EcJdbcRedisDemoProxy.class)
 	public int save(final T obj);
 
 	/**

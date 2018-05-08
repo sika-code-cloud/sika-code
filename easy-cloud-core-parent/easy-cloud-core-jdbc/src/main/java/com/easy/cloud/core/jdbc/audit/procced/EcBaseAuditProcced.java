@@ -17,6 +17,7 @@ import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
+import com.easy.cloud.core.jdbc.base.primarykey.EcSnowflakeIdWorkerBO;
 
 /**
  * 
@@ -32,6 +33,7 @@ public abstract class EcBaseAuditProcced {
 	protected EcAuditDTO auditDTO;
 	protected EcAuditAnnotation auditAnnotation;
 	protected ProceedingJoinPoint joinPoint;
+	private static EcSnowflakeIdWorkerBO snowflakeIdWorkerBO = new EcSnowflakeIdWorkerBO().buidWorkerIdAndDatacenterId(1, 1);
 
 	/** 处理方法 */
 	public final Object procced(EcAuditBO auditBO) throws Throwable {
@@ -138,7 +140,10 @@ public abstract class EcBaseAuditProcced {
 		for (Field field : auditDTO.getEntityFields()) {
 			field.setAccessible(true);
 			boolean isSaveType = auditAnnotation.type() == EcType.SAVE;
-			if (field.isAnnotationPresent(CreatedBy.class) && isSaveType) {
+			if (isSaveType && field.getName() == "id") {
+				field.set(entity, snowflakeIdWorkerBO.nextId() );
+			} 
+			else if (field.isAnnotationPresent(CreatedBy.class) && isSaveType) {
 				field.set(entity, auditDTO.getAuditor());
 			} else if (field.isAnnotationPresent(CreatedDate.class) && isSaveType) {
 				field.set(entity, currentDate);

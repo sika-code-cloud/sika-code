@@ -21,7 +21,7 @@ import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
  */
 @Aspect
 @Order
-@Component
+//@Component
 public class EcRedisAspect {
 
 	@Pointcut("@annotation(" + EcBaseConfigConstant.REDIS_ANNOTATION_NAME + ")")
