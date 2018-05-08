@@ -1,7 +1,10 @@
 package com.easy.cloud.core.jdbc.audit.procced;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
+
+import javax.persistence.Id;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,14 +13,17 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.util.Assert;
 
+import com.easy.cloud.core.basic.factory.EcBeanFactory;
+import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.audit.annotation.EcGenericGenerator;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
-import com.easy.cloud.core.jdbc.base.primarykey.EcSnowflakeIdWorkerBO;
+import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
 
 /**
  * 
@@ -33,7 +39,6 @@ public abstract class EcBaseAuditProcced {
 	protected EcAuditDTO auditDTO;
 	protected EcAuditAnnotation auditAnnotation;
 	protected ProceedingJoinPoint joinPoint;
-	private static EcSnowflakeIdWorkerBO snowflakeIdWorkerBO = new EcSnowflakeIdWorkerBO().buidWorkerIdAndDatacenterId(1, 1);
 
 	/** 处理方法 */
 	public final Object procced(EcAuditBO auditBO) throws Throwable {
@@ -140,10 +145,16 @@ public abstract class EcBaseAuditProcced {
 		for (Field field : auditDTO.getEntityFields()) {
 			field.setAccessible(true);
 			boolean isSaveType = auditAnnotation.type() == EcType.SAVE;
-			if (isSaveType && field.getName() == "id") {
-				field.set(entity, snowflakeIdWorkerBO.nextId() );
-			} 
-			else if (field.isAnnotationPresent(CreatedBy.class) && isSaveType) {
+			// 主键生成器
+			if (isSaveType && field.isAnnotationPresent(Id.class)) {
+				Serializable primaryKey = getPrimarykey(entity, field, isSaveType);
+				if (EcBaseUtils.isNotNull(primaryKey)) {
+					field.set(entity, primaryKey);
+					continue;
+				}
+			}
+			// 审计设置
+			if (field.isAnnotationPresent(CreatedBy.class) && isSaveType) {
 				field.set(entity, auditDTO.getAuditor());
 			} else if (field.isAnnotationPresent(CreatedDate.class) && isSaveType) {
 				field.set(entity, currentDate);
@@ -154,5 +165,30 @@ public abstract class EcBaseAuditProcced {
 			}
 		}
 		return entity;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 获取主键
+	 * </p>
+	 *
+	 * @param entity
+	 * @param field
+	 * @param isSaveType
+	 * @return
+	 * @author daiqi
+	 * @创建时间 2018年5月8日 下午8:51:18
+	 */
+	private final Serializable getPrimarykey(Object entity, Field field, boolean isSaveType) {
+		EcGenericGenerator generatorAnnotation = field.getAnnotation(EcGenericGenerator.class);
+		if (generatorAnnotation == null) {
+			return null;
+		}
+		Class<? extends EcBasePrimaryKeyGenerator> clazz = generatorAnnotation.primaryKeyGeneratorClass();
+		Assert.notNull(clazz, "primaryKeyGeneratorClass cant null");
+		EcBasePrimaryKeyGenerator basePrimaryKeyGenerator = EcBeanFactory.newInstance(clazz);
+		Assert.notNull(clazz, "primaryKeyGenerator obj create fail");
+		return basePrimaryKeyGenerator.generate(entity);
 	}
 }

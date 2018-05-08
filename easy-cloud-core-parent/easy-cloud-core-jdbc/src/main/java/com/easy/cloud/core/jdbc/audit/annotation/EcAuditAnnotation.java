@@ -32,6 +32,7 @@ public @interface EcAuditAnnotation {
 	/** 类型 1：保存，2：更新---参考EcAuditConstant.EcType */
 	int type();
 
-	/** 处理审计的class 默认使用EcAuditBO */
+	/** 处理审计的class 默认使用EcDefaultAuditProcced */
 	Class<? extends EcBaseAuditProcced> proccedClass() default EcDefaultAuditProcced.class;
+	
 }

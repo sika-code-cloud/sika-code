@@ -30,6 +30,7 @@ public class EcPropUtils {
 			props.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"));
 			return props;
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

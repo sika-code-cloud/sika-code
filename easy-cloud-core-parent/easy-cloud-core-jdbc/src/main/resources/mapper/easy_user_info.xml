@@ -50,6 +50,7 @@
 	<!-- 设置column -->
 	<sql id="setColumnSql" >
 		<set>
+			<if test="id != null" >id = #{id, jdbcType=BIGINT},</if>
 			<if test="updateDate != null" >update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
 			<if test="createBy != null" >create_by = #{createBy, jdbcType=VARCHAR},</if>
 			<if test="createDate != null" >create_date = #{createDate, jdbcType=TIMESTAMP},</if>
