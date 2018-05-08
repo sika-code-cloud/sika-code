@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -77,4 +78,15 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 		return redisTemplate;
 	}
 
+	/**
+	 * 设置RedisCacheManager 使用cache注解管理redis缓存
+	 *
+	 * @return
+	 */
+    @Bean(name = "stringCacheManager")
+    public RedisCacheManager stringCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager(stringRedisTemplate());
+        return redisCacheManager;
+    }
+    
 }

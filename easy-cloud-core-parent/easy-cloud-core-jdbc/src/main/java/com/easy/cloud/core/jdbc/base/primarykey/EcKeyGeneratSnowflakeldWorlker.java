@@ -39,7 +39,7 @@ public class EcKeyGeneratSnowflakeldWorlker extends AbstractUUIDGenerator implem
 
 	@Override
 	public void configure(Type arg0, Properties properties, ServiceRegistry arg2) throws MappingException {
-		
+		System.out.println("======================加载主键生成策略=====================");
 	}
 
 }

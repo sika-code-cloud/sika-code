@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.user.service;
+package com.easy.cloud.core.jdbc.test;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easy.cloud.core.jdbc.user.dao.UserDAO;
-import com.easy.cloud.core.jdbc.user.entity.UserEntity;
+import com.easy.cloud.core.jdbc.test.dao.UserDAO;
 
 @Service
 public class UserService {
