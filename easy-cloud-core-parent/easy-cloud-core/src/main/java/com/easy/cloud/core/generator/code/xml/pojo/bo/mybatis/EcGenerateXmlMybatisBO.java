@@ -17,13 +17,13 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.pojo.bo.EcFileBO;
 import com.easy.cloud.core.common.file.utils.EcFileUtils;
+import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.generator.code.base.config.EcCodeGenerateConfig;
 import com.easy.cloud.core.generator.code.base.constant.EcCodeGenerateConstant.EcTemplateName;
 import com.easy.cloud.core.generator.code.base.pojo.desc.EcTemplateDesc;
 import com.easy.cloud.core.generator.code.xml.constant.EcCodeGenerateXmlConstant.EcDocType;
-import com.easy.cloud.core.generator.code.xml.constant.EcCodeGenerateXmlConstant.EcIgnoreSetField;
 import com.easy.cloud.core.generator.code.xml.constant.EcCodeGenerateXmlConstant.EcMyBatisAttrKey;
 import com.easy.cloud.core.generator.code.xml.constant.EcCodeGenerateXmlConstant.EcMyBatisElementNameEnum;
 import com.easy.cloud.core.generator.code.xml.constant.EcCodeGenerateXmlConstant.EcMyBatisSqlTypeEnum;
@@ -383,7 +383,8 @@ public class EcGenerateXmlMybatisBO extends EcGenerateXmlBaseBO {
 		EcXmlMybatisContentElementDesc setElement = new EcXmlMybatisContentElementDesc();
 		setElement.setElementName(EcMyBatisElementNameEnum.SET.getDesc());
 		for (EcGenerateXmlMybatisData data : mybatisDTO.getDatas()) {
-			if (EcIgnoreSetField.isIgnoreField(data.getPropertyName())) {
+			Boolean ignoreField = EcMapUtils.getBoolean(mybatisDTO.getIgnoreFields(), data.getPropertyName());
+			if (ignoreField != null && ignoreField) {
 				continue;
 			}
 			EcXmlMybatisContentElementDesc ifElement = new EcXmlMybatisContentElementDesc();

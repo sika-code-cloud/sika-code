@@ -1,5 +1,9 @@
 package com.easy.cloud.core.jdbc.generator.code;
 
+import java.sql.JDBCType;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,9 +31,11 @@ public class GenerateXmlTest {
 
 	// 表名
 	private String tableName = "easy_user_info";
+	Map<String, Boolean> ignoreFields = new HashMap<>();
 
 	@Before
 	public void initData() {
+		
 		databaseAbstactConfig = new EcDataBaseMysqlConfig();
 		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com");
 		databaseAbstactConfig.buildDatabasePort("3306");
@@ -43,6 +49,7 @@ public class GenerateXmlTest {
 	public void generateMybatis() throws Exception {
 		EcGenerateXmlMybatisDTO mybatisDTO = new EcGenerateXmlMybatisDTO();
 		mybatisDTO.setCoverSwith(true);
+		mybatisDTO.setIgnoreFields(ignoreFields);
 		mybatisDTO.setNamespace(UserDAO.class.getName());
 		mybatisDTO.setTableName(tableName);
 		mybatisDTO.setProjectName(projectNameMybatis);

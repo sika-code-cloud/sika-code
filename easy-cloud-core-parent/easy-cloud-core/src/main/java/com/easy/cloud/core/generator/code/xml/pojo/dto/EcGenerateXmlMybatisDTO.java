@@ -1,6 +1,7 @@
 package com.easy.cloud.core.generator.code.xml.pojo.dto;
 
 import java.util.List;
+import java.util.Map;
 
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.file.constant.EcFileConstant.EcFileSuffix;
@@ -33,6 +34,8 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 	private EcGenerateXmlMybatisData primaryKey;
 	/** 数据列表 */
 	private List<EcGenerateXmlMybatisData> datas;
+	/** 忽略的属性 */
+	private Map<String, Boolean> ignoreFields;
 
 	public EcGenerateXmlMybatisDTO() {
 		this.setCoverSwith(true);
@@ -124,6 +127,15 @@ public class EcGenerateXmlMybatisDTO extends EcGenerateXmlBaseDTO {
 
 	public void setPrimaryKey(EcGenerateXmlMybatisData primaryKey) {
 		this.primaryKey = primaryKey;
+	}
+
+
+	public Map<String, Boolean> getIgnoreFields() {
+		return ignoreFields;
+	}
+
+	public void setIgnoreFields(Map<String, Boolean> ignoreFields) {
+		this.ignoreFields = ignoreFields;
 	}
 
 	public String buildDatasStr() {

@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.audit.annotation;
+package com.easy.cloud.core.jdbc.base.primarykey.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,7 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
-import com.easy.cloud.core.jdbc.base.primarykey.snowflake.EcPrimaryKeySnowflakeGenerator;
 
 /**
  * 
@@ -23,5 +22,6 @@ import com.easy.cloud.core.jdbc.base.primarykey.snowflake.EcPrimaryKeySnowflakeG
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface EcGenericGenerator {
+	/** 主键生成器class */
 	Class<? extends EcBasePrimaryKeyGenerator> primaryKeyGeneratorClass();
 }
