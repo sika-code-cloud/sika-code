@@ -1,6 +1,5 @@
 package com.easy.cloud.core.jdbc.generator.code;
 
-import java.sql.JDBCType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +11,8 @@ import com.easy.cloud.core.generator.code.base.config.database.mysql.EcDataBaseM
 import com.easy.cloud.core.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.generator.code.xml.pojo.bo.mybatis.EcGenerateXmlMybatisBO;
 import com.easy.cloud.core.generator.code.xml.pojo.dto.EcGenerateXmlMybatisDTO;
-import com.easy.cloud.core.jdbc.user.dao.UserDAO;
-import com.easy.cloud.core.jdbc.user.entity.UserEntity;
+import com.easy.cloud.core.jdbc.test.UserEntity;
+import com.easy.cloud.core.jdbc.test.dao.UserDAO;
 
 /**
  * 

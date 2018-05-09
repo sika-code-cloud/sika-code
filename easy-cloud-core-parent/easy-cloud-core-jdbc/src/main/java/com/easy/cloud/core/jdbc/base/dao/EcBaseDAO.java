@@ -5,12 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
-import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
-import com.easy.cloud.core.jdbc.user.proxy.EcJdbcRedisDemoProxy;
 
 /**
  * 
@@ -36,6 +33,19 @@ public interface EcBaseDAO<T> {
 	@EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
 	public int save(final T obj);
 
+	/**
+	 * 
+	 * <p>
+	 * 批量保存
+	 * </p>
+	 *
+	 * @param entitys
+	 * @return
+	 * @author daiqi
+	 * @创建时间 2018年5月9日 下午3:50:17
+	 */
+	@EcAuditAnnotation(actionType = EcActionType.SAVE_BATCH, type = EcType.SAVE)
+	public int saveBatch(@Param("entitys") final List<T> entitys);
 	/**
 	 * 
 	 * <p>
@@ -68,7 +78,6 @@ public interface EcBaseDAO<T> {
 	 * @author daiqi
 	 * @date 2017年12月6日 下午5:31:34
 	 */
-	@EcRedisAnnotation(actionType = EcRedisActionType.QUERY, proxyClass = EcJdbcRedisDemoProxy.class)
 	public T findById(@Param(value = "id") Object id);
 
 	/** 分页计数 */
