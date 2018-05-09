@@ -11,7 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.easy.cloud.core.jdbc.audit.annotation.EcGenericGenerator;
+import com.easy.cloud.core.jdbc.base.primarykey.annotation.EcGenericGenerator;
 import com.easy.cloud.core.jdbc.base.primarykey.snowflake.EcPrimaryKeySnowflakeGenerator;
 
 /**
