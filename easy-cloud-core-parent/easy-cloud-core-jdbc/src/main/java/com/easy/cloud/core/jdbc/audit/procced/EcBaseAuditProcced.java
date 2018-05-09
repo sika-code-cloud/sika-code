@@ -17,6 +17,7 @@ import com.easy.cloud.core.basic.factory.EcBeanFactory;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
@@ -124,6 +125,7 @@ public abstract class EcBaseAuditProcced {
 		for (Object entity : auditDTO.getEntitys()) {
 			buildNewEntity(entity);
 		}
+		System.out.println(EcJSONUtils.toJSONString(auditDTO.getEntitys()));
 		Object[] args = joinPoint.getArgs();
 		args[0] = auditDTO.getEntitys();
 		return args;
@@ -178,9 +180,14 @@ public abstract class EcBaseAuditProcced {
 	 * @param isSaveType
 	 * @return
 	 * @author daiqi
+	 * @throws Exception 
 	 * @创建时间 2018年5月8日 下午8:51:18
 	 */
-	private final Serializable getPrimarykey(Object entity, Field field, boolean isSaveType) {
+	private final Serializable getPrimarykey(Object entity, Field field, boolean isSaveType) throws Exception {
+		// 主键生成器
+		if (!isSaveType || !field.isAnnotationPresent(Id.class)) {
+			return null;
+		}
 		EcGenericGenerator generatorAnnotation = field.getAnnotation(EcGenericGenerator.class);
 		if (generatorAnnotation == null) {
 			return null;

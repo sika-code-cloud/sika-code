@@ -27,6 +27,11 @@ public class UserService {
 		userDAO.update(userEntity);
 		return userEntity;
 	}
+	@Transactional
+	public List<UserEntity> saveBatch(List<UserEntity> userEntitys) {
+		userDAO.saveBatch(userEntitys);
+		return userEntitys;
+	}
 
 	public List<UserEntity> listPage(int start, int pageSize) {
 		Map<String, Object> maps = new HashMap<>();
