@@ -64,31 +64,21 @@ public class UserController extends EcBaseController {
 		String userName = "username11111111";
 		String password = "password333333333";
 		Integer status = 2;
-		List<UserEntity> entitys = new ArrayList<>();
-		for (int i = 0 ; i < 1 ; ++i) {
-			entitys.add(new UserEntity(userName+i, password+i, status));
-		}
-		
 		ExecutorService threadPoolExecutor = EcExecutors.newFixedThreadPool(10);
 		CountDownLatch startSignal = new CountDownLatch(1);
 		long startime = System.currentTimeMillis();
-		for (int i = 0 ;i < 2000; ++i) {
-//			threadPoolExecutor.execute(new Runnable() {
-//				@Override
-//				public void run() {
-//					userService.saveUserEntity(new UserEntity(userName, password, status));
-//				}
-//			});
-			new Thread(new Runnable() {
-				
+		for (int i = 0 ;i < 20; ++i) {
+			threadPoolExecutor.execute(new Runnable() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
+					List<UserEntity> entitys = new ArrayList<>();
+					for (int i = 0 ; i < 500 ; ++i) {
+						entitys.add(new UserEntity(userName+i, password+i, status));
+					}
 					userService.saveBatch(entitys);
 				}
-			}).start();
+			});
 		}
-		
 		startSignal.countDown(); // let all threads proceed
 		System.out.println("所用时间：" + (System.currentTimeMillis() - startime));
 	}

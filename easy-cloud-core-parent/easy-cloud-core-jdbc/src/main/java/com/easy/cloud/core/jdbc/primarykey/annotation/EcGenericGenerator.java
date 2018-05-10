@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.base.primarykey.annotation;
+package com.easy.cloud.core.jdbc.primarykey.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
+import com.easy.cloud.core.jdbc.primarykey.EcBasePrimaryKeyGenerator;
 
 /**
  * 

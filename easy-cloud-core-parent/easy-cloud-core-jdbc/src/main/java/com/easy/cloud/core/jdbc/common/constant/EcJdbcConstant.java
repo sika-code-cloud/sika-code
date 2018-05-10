@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.constant;
+package com.easy.cloud.core.jdbc.common.constant;
 
 /**
  * 

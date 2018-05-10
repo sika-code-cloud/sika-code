@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.base.primarykey;
+package com.easy.cloud.core.jdbc.primarykey;
 
 import java.io.Serializable;
 
