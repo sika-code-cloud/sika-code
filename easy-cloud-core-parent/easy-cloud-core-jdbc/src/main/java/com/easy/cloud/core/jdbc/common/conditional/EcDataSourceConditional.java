@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.conditional;
+package com.easy.cloud.core.jdbc.common.conditional;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;

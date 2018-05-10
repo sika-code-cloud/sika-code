@@ -108,3 +108,7 @@
    其他步骤与基础教程的步骤一致
 
    至此就实现了对mybatis的审计功能
+
+### 快速关闭主键生成策略和审计功能
+
+​	在application.properties或者application.yml等主配置文件中添加**ec.audit.switch=false**即可关闭

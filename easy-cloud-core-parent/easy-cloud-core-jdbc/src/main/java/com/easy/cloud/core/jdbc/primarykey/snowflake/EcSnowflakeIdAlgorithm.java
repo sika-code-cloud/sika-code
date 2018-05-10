@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.base.primarykey.snowflake;
+package com.easy.cloud.core.jdbc.primarykey.snowflake;
 
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 
@@ -76,7 +76,7 @@ public class EcSnowflakeIdAlgorithm {
 	private long sequence = 0L;
 
 	/** 上次生成ID的时间截 */
-	private long lastTimestamp = -1L;
+	private volatile long lastTimestamp = -1L;
 
 	// ==============================Constructors=====================================
 
@@ -142,5 +142,6 @@ public class EcSnowflakeIdAlgorithm {
 		}
 		return timestamp;
 	}
+	
 
 }

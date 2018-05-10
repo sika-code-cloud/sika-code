@@ -43,6 +43,13 @@ public class UserEntity extends EcBaseEntity {
 	public UserEntity() {
 		super();
 	}
+	public UserEntity(Long id , String userName, String password, Integer status) {
+		super();
+		super.setId(id);
+		this.userName = userName;
+		this.password = password;
+		super.setIsDeleted(status);
+	}
 
 	public UserEntity(String userName, String password, Integer status) {
 		super();

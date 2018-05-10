@@ -23,8 +23,8 @@ import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
-import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
-import com.easy.cloud.core.jdbc.base.primarykey.annotation.EcGenericGenerator;
+import com.easy.cloud.core.jdbc.primarykey.EcBasePrimaryKeyGenerator;
+import com.easy.cloud.core.jdbc.primarykey.annotation.EcGenericGenerator;
 
 /**
  * 
@@ -125,7 +125,6 @@ public abstract class EcBaseAuditProcced {
 		for (Object entity : auditDTO.getEntitys()) {
 			buildNewEntity(entity);
 		}
-		System.out.println(EcJSONUtils.toJSONString(auditDTO.getEntitys()));
 		Object[] args = joinPoint.getArgs();
 		args[0] = auditDTO.getEntitys();
 		return args;

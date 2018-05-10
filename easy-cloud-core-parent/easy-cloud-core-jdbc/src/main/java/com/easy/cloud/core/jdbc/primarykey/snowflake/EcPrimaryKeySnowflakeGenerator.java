@@ -1,10 +1,13 @@
-package com.easy.cloud.core.jdbc.base.primarykey.snowflake;
+package com.easy.cloud.core.jdbc.primarykey.snowflake;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.easy.cloud.core.common.properties.utils.EcPropUtils;
 import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
-import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
+import com.easy.cloud.core.jdbc.primarykey.EcBasePrimaryKeyGenerator;
 
 /**
  * 
@@ -24,14 +27,23 @@ import com.easy.cloud.core.jdbc.base.primarykey.EcBasePrimaryKeyGenerator;
  */
 
 public class EcPrimaryKeySnowflakeGenerator implements EcBasePrimaryKeyGenerator {
-	private static Long workerId;
-	private static Long datacenterId;
+	private static volatile Long workerId;
+	private static volatile Long datacenterId;
+	private static final Logger LOGGER = LoggerFactory.getLogger(EcPrimaryKeySnowflakeGenerator.class);
 	static {
-		workerId = EcPropUtils.getLong("config/snowflake", "snowflakeIdWorker.workerId");
+		initData();
+	}
+	
+	private static void initData() {
+		try {
+			workerId = EcPropUtils.getLong("config/snowflake", "snowflakeIdWorker.workerId");
+			datacenterId = EcPropUtils.getLong("config/snowflake", "snowflakeIdWorker.datacenterId");
+		} catch (Exception e) {
+			LOGGER.warn(e.getMessage(), e);
+		}
 		if (workerId == null) {
 			workerId = 0L;
 		}
-		datacenterId = EcPropUtils.getLong("config/snowflake", "snowflakeIdWorker.datacenterId");
 		if (datacenterId == null) {
 			datacenterId = 0L;
 		}

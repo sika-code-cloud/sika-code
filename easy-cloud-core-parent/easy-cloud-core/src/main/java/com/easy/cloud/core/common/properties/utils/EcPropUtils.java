@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.constant.EcStringConstant.EcSymbol;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
@@ -21,7 +24,7 @@ import com.easy.cloud.core.common.string.utils.EcStringUtils;
  * @创建时间 2018年5月7日 下午4:37:32
  */
 public class EcPropUtils {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(EcPropUtils.class);
 	private static Properties load(String configFileName) {
 		try {
 			URL url = EcPropUtils.class.getClassLoader().getResource(configFileName);
@@ -30,7 +33,7 @@ public class EcPropUtils {
 			props.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"));
 			return props;
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.warn("加载文件失败", e);
 			throw new RuntimeException(e);
 		}
 	}
