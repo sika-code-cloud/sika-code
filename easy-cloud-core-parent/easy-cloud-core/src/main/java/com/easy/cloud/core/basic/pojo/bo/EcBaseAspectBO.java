@@ -100,7 +100,7 @@ public class EcBaseAspectBO {
 		}
 		if (paramPosition > args.length) {
 			throw new IndexOutOfBoundsException(
-					"redis指定参数的位置越界:paramPosition = " + paramPosition + ",argsLengh = " + args.length);
+					"指定参数的位置越界:paramPosition = " + paramPosition + ",argsLengh = " + args.length);
 		}
 		return (T) args[paramPosition - 1];
 	}

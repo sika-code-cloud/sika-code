@@ -1,7 +1,6 @@
 package com.easy.cloud.core.jdbc.audit.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -42,8 +41,4 @@ public class EcAuditAspect {
 		return auditBO.procced();
 	}
 
-	@AfterThrowing(value = "auditAspect()", throwing = "ex")
-	public void afterThrowing(Throwable ex) {
-		throw new RuntimeException(ex);
-	}
 }
