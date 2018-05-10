@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import com.easy.cloud.core.basic.factory.EcBeanFactory;
 import com.easy.cloud.core.basic.pojo.bo.EcBaseAspectBO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.reflection.utils.EcReflectionUtils;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
@@ -51,7 +52,7 @@ public class EcAuditBO extends EcBaseAspectBO {
 	/** 处理方法 */
 	public final Object procced() {
 		if (EcBaseUtils.isNull(auditAnnotation)) {
-			return super.proceed();
+			return null;
 		}
 		Class<? extends EcBaseAuditProcced> clazz = auditAnnotation.proccedClass();
 		EcBaseAuditProcced auditProcced = EcBeanFactory.newInstance(clazz);
@@ -59,12 +60,15 @@ public class EcAuditBO extends EcBaseAspectBO {
 			return auditProcced.procced(this);
 		} catch (Throwable e) {
 			e.printStackTrace();
-			return super.proceed();
+			return null;
 		}
 	}
 
 	/** 构建实体数据 */
 	private void buildEntityData() {
+		if (EcArrayUtils.isEmpty(super.baseAspectDTO.getTargetParameterValues())) {
+			return;
+		}
 		Object arg = super.getTParam(1);
 		Assert.notNull(arg, "save or update obj cant null");
 		Class<?> entityClass = null;
