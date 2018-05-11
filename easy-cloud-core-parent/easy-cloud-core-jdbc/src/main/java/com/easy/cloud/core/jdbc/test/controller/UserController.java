@@ -45,14 +45,7 @@ public class UserController extends EcBaseController {
 		ExecutorService threadPoolExecutor = EcExecutors.newFixedThreadPool(10);
 		CountDownLatch startSignal = new CountDownLatch(1);
 		long startime = System.currentTimeMillis();
-		for (int i = 0 ;i < 1000; ++i) {
-			threadPoolExecutor.execute(new Runnable() {
-				@Override
-				public void run() {
-					userService.saveUserEntity(new UserEntity(userName, password, status));
-				}
-			});
-		}
+		userService.saveUserEntity(new UserEntity(userName, password, status));
 		
 		startSignal.countDown(); // let all threads proceed
 		System.out.println("所用时间：" + (System.currentTimeMillis() - startime));
