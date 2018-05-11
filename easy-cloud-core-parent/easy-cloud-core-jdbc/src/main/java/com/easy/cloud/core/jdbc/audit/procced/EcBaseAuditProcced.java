@@ -17,9 +17,9 @@ import com.easy.cloud.core.basic.factory.EcBeanFactory;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
-import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
+import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
 import com.easy.cloud.core.jdbc.primarykey.EcBasePrimaryKeyGenerator;
@@ -37,7 +37,7 @@ import com.easy.cloud.core.jdbc.primarykey.annotation.EcGenericGenerator;
 public abstract class EcBaseAuditProcced {
 	protected EcAuditBO auditBO;
 	protected EcAuditDTO auditDTO;
-	protected EcAuditAnnotation auditAnnotation;
+	protected EcAuditConfigDTO auditConfigDTO;
 	protected ProceedingJoinPoint joinPoint;
 
 	/** 处理方法 */
@@ -58,12 +58,12 @@ public abstract class EcBaseAuditProcced {
 		this.auditBO = auditBO;
 		this.auditDTO = auditBO.getAuditDTO();
 		this.joinPoint = auditBO.getJoinPoint();
-		this.auditAnnotation = auditBO.getAuditAnnotation();
+		this.auditConfigDTO = auditBO.getAuditConfigDTO();
 	}
 
 	/** 构建新的参数 */
 	protected final Object[] buildNewArgs() throws Exception {
-		int actionType = auditAnnotation.actionType();
+		int actionType = auditConfigDTO.getActionType();
 		Assert.notNull(actionType, "actionTypeEnum cant null");
 		switch (actionType) {
 		case EcActionType.SAVE:
@@ -144,7 +144,7 @@ public abstract class EcBaseAuditProcced {
 		Date currentDate = EcDateUtils.getCurrentDate();
 		for (Field field : auditDTO.getEntityFields()) {
 			field.setAccessible(true);
-			boolean isSaveType = auditAnnotation.type() == EcType.SAVE;
+			boolean isSaveType = auditConfigDTO.getType() == EcType.SAVE;
 			// 主键生成器
 			if (isSaveType && field.isAnnotationPresent(Id.class)) {
 				Serializable primaryKey = getPrimarykey(entity, field, isSaveType);

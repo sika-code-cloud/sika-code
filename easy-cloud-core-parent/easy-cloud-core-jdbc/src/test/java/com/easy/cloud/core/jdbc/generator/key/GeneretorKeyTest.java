@@ -15,7 +15,7 @@ public class GeneretorKeyTest {
 
 	@Test
 	public void testGeneratorKey() {
-		EcSnowflakeIdAlgorithm snowflakeIdWorkerBO = EcSnowflakeIdAlgorithm.getInstance(0, 1);
+		EcSnowflakeIdAlgorithm snowflakeIdWorkerBO = EcSnowflakeIdAlgorithm.getSingleInstance(0, 1);
 		CountDownLatch startSignal = new CountDownLatch(1);
 		long startime = System.currentTimeMillis();
 

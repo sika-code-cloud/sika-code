@@ -12,6 +12,8 @@ import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.reflection.utils.EcReflectionUtils;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
+import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
+import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
 import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
 
@@ -23,7 +25,7 @@ import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
  */
 public class EcAuditBO extends EcBaseAspectBO {
 	private EcAuditDTO auditDTO;
-	private EcAuditAnnotation auditAnnotation;
+	private EcAuditConfigDTO auditConfigDTO;
 
 	public EcAuditBO() {
 		this(new EcAuditDTO());
@@ -42,8 +44,8 @@ public class EcAuditBO extends EcBaseAspectBO {
 	public final EcAuditBO buildAuditorData(ProceedingJoinPoint joinPoint) {
 		// 构建基础切面数据
 		super.buildBaseAspectData(joinPoint);
-		// 构建注解
-		auditAnnotation = super.targetMethod.getAnnotation(EcAuditAnnotation.class);
+		// 构建配置数据传输对象
+		buildAuditConfigDTO();
 		// 构建实体数据
 		buildEntityData();
 		return this;
@@ -51,17 +53,41 @@ public class EcAuditBO extends EcBaseAspectBO {
 
 	/** 处理方法 */
 	public final Object procced() {
-		if (EcBaseUtils.isNull(auditAnnotation)) {
-			return null;
+		if (EcBaseUtils.isNull(auditConfigDTO)) {
+			return super.proceed();
 		}
-		Class<? extends EcBaseAuditProcced> clazz = auditAnnotation.proccedClass();
+		Class<? extends EcBaseAuditProcced> clazz = auditConfigDTO.getProccedClass();
 		EcBaseAuditProcced auditProcced = EcBeanFactory.newInstance(clazz);
 		try {
 			return auditProcced.procced(this);
 		} catch (Throwable e) {
 			e.printStackTrace();
-			return null;
+			return super.proceed();
 		}
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * 构建审计配置数据传输对象
+	 * </p>
+	 *
+	 * @author daiqi
+	 * @创建时间 2018年5月11日 上午10:44:36
+	 */
+	private final void buildAuditConfigDTO() {
+		String auditMethodName = super.baseAspectDTO.getTargetMethodName();
+		// 从配置容器中获取配置数据传输对象
+		auditConfigDTO = EcAuditConfig.get(auditMethodName);
+		// 获取注解
+		EcAuditAnnotation auditAnnotation = super.targetMethod.getAnnotation(EcAuditAnnotation.class);
+		if (EcBaseUtils.isNull(auditAnnotation) && EcBaseUtils.isNull(auditConfigDTO)) {
+			return ;
+		}
+		if (EcBaseUtils.isNotNull(auditConfigDTO)) {
+			return ;
+		}
+		auditConfigDTO = new EcAuditConfigDTO(auditMethodName, auditAnnotation.actionType(), auditAnnotation.type(), auditAnnotation.proccedClass());
 	}
 
 	/** 构建实体数据 */
@@ -86,11 +112,12 @@ public class EcAuditBO extends EcBaseAspectBO {
 		this.auditDTO.setEntityFields(EcReflectionUtils.getDeclaredFieldsIncSup(entityClass));
 	}
 
-	public EcAuditAnnotation getAuditAnnotation() {
-		return auditAnnotation;
-	}
-
 	public EcAuditDTO getAuditDTO() {
 		return auditDTO;
 	}
+
+	public EcAuditConfigDTO getAuditConfigDTO() {
+		return auditConfigDTO;
+	}
+	
 }

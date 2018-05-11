@@ -52,15 +52,39 @@
    private Long updateBy;
    ```
 
-2. 在保存和更新的接口上添加EcAuditAnnotation注解，如：详情见源码说明
+2. 配置方式
 
-   ```java
-   @EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
-   public int save(final T obj);
+   1. ***注解方式***    在保存和更新的接口上添加EcAuditAnnotation注解，如：详情见源码说明
 
-   @EcAuditAnnotation(actionType = EcActionType.UPDATE, type = EcType.UPDATE)
-   public int update(final T obj);
-   ```
+      ```java
+      @EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
+      public int save(final T obj);
+
+      @EcAuditAnnotation(actionType = EcActionType.UPDATE, type = EcType.UPDATE)
+      public int update(final T obj);
+      ```
+
+   2.  ***配置类方式***     编写自己的配置类继承EcAuditConfig类,必须使用@Component等注解注入为bean
+
+      ```java
+      import org.springframework.stereotype.Component;
+
+      import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
+      import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
+      import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
+      import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+
+      @Component
+      public class EcUserConfig extends EcAuditConfig{
+      	static {
+      		put(new EcAuditConfigDTO("save", EcActionType.SAVE, EcType.SAVE));
+      		put(new EcAuditConfigDTO("saveBatch", EcActionType.SAVE_BATCH, EcType.SAVE));
+      		
+      		put(new EcAuditConfigDTO("update", EcActionType.UPDATE, EcType.UPDATE));
+      		put(new EcAuditConfigDTO("updateBatch", EcActionType.UPDATE_BATCH, EcType.UPDATE));
+      	}
+      }
+      ```
 
 3. 创建自己的AuditorAware类实现EcAuditorAware接口重写getCurrentAuditor()方法获取当前审计者
 
@@ -95,15 +119,40 @@
    }
    ```
 
-2. 需要在方法的添加一个新的注解参数proccedClass值为自己定义审计处理类的class
+2. 配置方式 
 
-   ```java
-   @EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE, proccedClass = EcMyselfAuditProcced.class)
-   public int save(final T obj);
+   1. ***注解方式***     需要在方法的添加一个新的注解参数proccedClass值为自己定义审计处理类的class
 
-   @EcAuditAnnotation(actionType = EcActionType.UPDATE, type = EcType.UPDATE, proccedClass = EcMyselfAuditProcced.class)
-   public int update(final T obj);
-   ```
+      ```java
+      @EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE, proccedClass = EcMyselfAuditProcced.class)
+      public int save(final T obj);
+
+      @EcAuditAnnotation(actionType = EcActionType.UPDATE, type = EcType.UPDATE, proccedClass = EcMyselfAuditProcced.class)
+      public int update(final T obj);
+      ```
+
+   2. ***配置类方式***     编写自己的配置类继承EcAuditConfig类,必须使用@Component等注解注入为bean
+
+      ```java
+      import org.springframework.stereotype.Component;
+
+      import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
+      import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
+      import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
+      import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+      import com.easy.cloud.core.jdbc.audit.procced.impl.EcDefaultAuditProcced;
+
+      @Component
+      public class EcUserConfig extends EcAuditConfig{
+      	static {
+      		put(new EcAuditConfigDTO("save", EcActionType.SAVE, EcType.SAVE, EcMyselfAuditProcced.class));
+      		put(new EcAuditConfigDTO("saveBatch", EcActionType.SAVE_BATCH, EcType.SAVE, EcMyselfAuditProcced.class));
+      		
+      		put(new EcAuditConfigDTO("update", EcActionType.UPDATE, EcType.UPDATE, EcMyselfAuditProcced.class));
+      		put(new EcAuditConfigDTO("updateBatch", EcActionType.UPDATE_BATCH, EcType.UPDATE, EcMyselfAuditProcced.class));
+      	}
+      }
+      ```
 
    其他步骤与基础教程的步骤一致
 

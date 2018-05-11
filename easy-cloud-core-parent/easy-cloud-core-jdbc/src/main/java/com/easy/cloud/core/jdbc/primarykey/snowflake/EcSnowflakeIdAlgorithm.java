@@ -31,7 +31,7 @@ public class EcSnowflakeIdAlgorithm {
 	private EcSnowflakeIdAlgorithm() {
 
 	}
-	public static final EcSnowflakeIdAlgorithm getInstance(long workerId, long datacenterId) {    
+	public static final EcSnowflakeIdAlgorithm getSingleInstance(long workerId, long datacenterId) {    
         return LazyHolder.SNOWFLAKE_ALGORITHM.buidWorkerIdAndDatacenterId(workerId, datacenterId);    
      } 
 
