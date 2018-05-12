@@ -56,16 +56,12 @@ public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 	
 	@Override
 	protected void afterExecute(Runnable r, Throwable t) {
-		try {
-			long endTime = System.currentTimeMillis();
-			long start = startTime.get();
-			long useTime = endTime - start;
-			numTasks.incrementAndGet();
-			totalTime.addAndGet(useTime);
+		long endTime = System.currentTimeMillis();
+		long start = startTime.get();
+		long useTime = endTime - start;
+		numTasks.incrementAndGet();
+		totalTime.addAndGet(useTime);
 //			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
-		} finally {
-			super.afterExecute(r, t);
-		}
 	}
 	@Override
 	protected void beforeExecute(Thread t, Runnable r) {
@@ -75,10 +71,6 @@ public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 
 	@Override
 	protected void terminated() {
-		try {
-			EcLogUtils.debug("terminated", "terminated avg time " + totalTime.get() + " " + numTasks.get(), logger);
-		} finally {
-			super.terminated();
-		}
+		EcLogUtils.debug("terminated", "terminated avg time " + totalTime.get() + " " + numTasks.get(), logger);
 	}
 }
