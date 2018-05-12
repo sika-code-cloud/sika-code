@@ -1,15 +1,13 @@
 package com.easy.cloud.core.jdbc.generator.key;
 
-import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.hibernate.mapping.Map;
 import org.junit.Test;
 
 import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
-import com.easy.cloud.core.jdbc.base.primarykey.EcSnowflakeIdWorkerBO;
+import com.easy.cloud.core.jdbc.primarykey.snowflake.EcSnowflakeIdAlgorithm;
 import com.easy.cloud.core.jdbc.user.entity.UserEntity;
 
 public class GeneretorKeyTest {
@@ -17,7 +15,7 @@ public class GeneretorKeyTest {
 
 	@Test
 	public void testGeneratorKey() {
-		EcSnowflakeIdWorkerBO snowflakeIdWorkerBO = new EcSnowflakeIdWorkerBO().buidWorkerIdAndDatacenterId(0, 1);
+		EcSnowflakeIdAlgorithm snowflakeIdWorkerBO = EcSnowflakeIdAlgorithm.getSingleInstance(0, 1);
 		CountDownLatch startSignal = new CountDownLatch(1);
 		long startime = System.currentTimeMillis();
 

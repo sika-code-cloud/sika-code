@@ -108,7 +108,7 @@ public class EcLogUtils {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 下午4:02:34
 	 */
-	public static EcLogProxy getDqLogProxy(EcLogAnnotation ecLogAnnotation) {
+	public static EcLogProxy getLogProxy(EcLogAnnotation ecLogAnnotation) {
 		if (EcBaseUtils.isNull(ecLogAnnotation)) {
 			return null;
 		}

@@ -2,21 +2,17 @@ package com.easy.cloud.core.jdbc.base.entity;
 
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.common.date.utils.EcDateUtils;
+import com.easy.cloud.core.jdbc.primarykey.annotation.EcGenericGenerator;
+import com.easy.cloud.core.jdbc.primarykey.snowflake.EcPrimaryKeySnowflakeGenerator;
 
 /**
  * 
@@ -29,8 +25,7 @@ import com.easy.cloud.core.common.date.utils.EcDateUtils;
 @MappedSuperclass
 public class EcBaseEntity {
 	@Id
-	@GeneratedValue(generator = "idGenerator")  
-    @GenericGenerator(name = "idGenerator", strategy = EcBaseConfigConstant.SNOW_FLAKELD_WORLKER_NAME) 
+    @EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
 	private Long id;
 	@CreatedDate
 	private Date createDate;
@@ -46,24 +41,7 @@ public class EcBaseEntity {
 	private Integer isDeleted;
 	/** 备注 */
 	private String remark;
-	@PrePersist
-	public void basePrePersist(){
-		if(EcBaseUtils.isNull(createBy)){
-			this.createBy = -1L;
-		}
-		if(EcBaseUtils.isNull(updateBy)){
-			this.updateBy = -1L;
-		}
-		if(EcBaseUtils.isNull(createDate)){
-			this.createDate = EcDateUtils.getCurrentDate();
-		}
-		if(EcBaseUtils.isNull(updateDate)){
-			this.updateDate = EcDateUtils.getCurrentDate();
-		}
-		if(EcBaseUtils.isNull(isDeleted)){
-			this.isDeleted = 0;
-		}
-	}
+	
 	public Long getId() {
 		return id;
 	}

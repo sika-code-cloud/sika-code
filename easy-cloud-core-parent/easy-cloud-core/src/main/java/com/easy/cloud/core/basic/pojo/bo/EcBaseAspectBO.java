@@ -9,7 +9,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseAspectDTO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.array.EcArrayUtils;
-import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 
 /**
  * 切面业务逻辑对象类
@@ -46,12 +45,13 @@ public class EcBaseAspectBO {
 	}
 
 	/** 获取目标方法执行的返回值---转换为范型class对应的对象 */
+	@SuppressWarnings("unchecked")
 	public final <T> T getTReturnValue(final Class<T> clazz) {
 		if (EcBaseUtils.isNull(clazz)) {
 			return null;
 		}
 		Object returnValue = proceed();
-		return EcJSONUtils.parseObject(returnValue, clazz);
+		return (T) returnValue;
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class EcBaseAspectBO {
 		}
 		if (paramPosition > args.length) {
 			throw new IndexOutOfBoundsException(
-					"redis指定参数的位置越界:paramPosition = " + paramPosition + ",argsLengh = " + args.length);
+					"指定参数的位置越界:paramPosition = " + paramPosition + ",argsLengh = " + args.length);
 		}
 		return (T) args[paramPosition - 1];
 	}

@@ -39,17 +39,9 @@ public class EcLogDTO {
 
 	}
 
-	private EcLogDTO(Long beginTimeMillis, Long endTimeMillis) {
+	public EcLogDTO(Long beginTimeMillis, Long endTimeMillis) {
 		this.beginTimeMillis = beginTimeMillis;
 		this.endTimeMillis = endTimeMillis;
-	}
-
-	public static EcLogDTO newInstance() {
-		return new EcLogDTO();
-	}
-
-	public static EcLogDTO newInstance(Long beginTimeMillis, Long endTimeMillis) {
-		return new EcLogDTO(beginTimeMillis, endTimeMillis).buildRunTimeMillis();
 	}
 
 	public EcLogDTO buildExecuteTimeMillis(Long beginTimeMillis, Long endTimeMillis) {
@@ -61,7 +53,7 @@ public class EcLogDTO {
 		return this;
 	}
 
-	private EcLogDTO buildRunTimeMillis() {
+	public EcLogDTO buildRunTimeMillis() {
 		this.runTimeMinllis = this.endTimeMillis - this.beginTimeMillis;
 		return this;
 	}

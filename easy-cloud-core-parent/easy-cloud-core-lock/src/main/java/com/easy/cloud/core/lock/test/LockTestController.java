@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 
 @RestController(value = "distributedLockTestController1")
 @RequestMapping("/distributedLockTest")
+@EcLogAnnotation(logSwitch=false ,analysisSwitch = false)
 public class LockTestController extends EcBaseController{
-	private int count = 1800;
+	private int count = 1500;
 	@Autowired
 	private RedissonClient redissonClient;
 

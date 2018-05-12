@@ -1,5 +1,8 @@
 package com.easy.cloud.core.jdbc.generator.code;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,8 +11,8 @@ import com.easy.cloud.core.generator.code.base.config.database.mysql.EcDataBaseM
 import com.easy.cloud.core.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.generator.code.xml.pojo.bo.mybatis.EcGenerateXmlMybatisBO;
 import com.easy.cloud.core.generator.code.xml.pojo.dto.EcGenerateXmlMybatisDTO;
-import com.easy.cloud.core.jdbc.user.dao.UserDAO;
-import com.easy.cloud.core.jdbc.user.entity.UserEntity;
+import com.easy.cloud.core.jdbc.test.UserEntity;
+import com.easy.cloud.core.jdbc.test.dao.UserDAO;
 
 /**
  * 
@@ -27,9 +30,11 @@ public class GenerateXmlTest {
 
 	// 表名
 	private String tableName = "easy_user_info";
+	Map<String, Boolean> ignoreFields = new HashMap<>();
 
 	@Before
 	public void initData() {
+		
 		databaseAbstactConfig = new EcDataBaseMysqlConfig();
 		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com");
 		databaseAbstactConfig.buildDatabasePort("3306");
@@ -43,6 +48,7 @@ public class GenerateXmlTest {
 	public void generateMybatis() throws Exception {
 		EcGenerateXmlMybatisDTO mybatisDTO = new EcGenerateXmlMybatisDTO();
 		mybatisDTO.setCoverSwith(true);
+		mybatisDTO.setIgnoreFields(ignoreFields);
 		mybatisDTO.setNamespace(UserDAO.class.getName());
 		mybatisDTO.setTableName(tableName);
 		mybatisDTO.setProjectName(projectNameMybatis);

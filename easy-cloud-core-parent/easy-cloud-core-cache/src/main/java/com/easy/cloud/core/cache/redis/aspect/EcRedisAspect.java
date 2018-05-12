@@ -20,16 +20,30 @@ import com.easy.cloud.core.cache.redis.pojo.bo.EcRedisBO;
  * @author daiqi 创建时间 2018年4月12日 下午1:51:49
  */
 @Aspect
-@Order(value = 50)
-@Component
+@Order
+//@Component
 public class EcRedisAspect {
 
-	@Pointcut("@annotation("+EcBaseConfigConstant.REDIS_ANNOTATION_NAME+")")
+	@Pointcut("@annotation(" + EcBaseConfigConstant.REDIS_ANNOTATION_NAME + ")")
 	public void redisAspect() {
 
 	}
 
+	@Pointcut(EcBaseConfigConstant.DAO_EXECUTION)
+	public void daoAspect() {
+
+	}
+
 	@Around(value = "redisAspect()")
+	public Object annotationAround(ProceedingJoinPoint joinPoint) {
+		return doAround(joinPoint);
+	}
+
+	@Around(value = "daoAspect()")
+	public Object daoAround(ProceedingJoinPoint joinPoint) {
+		return doAround(joinPoint);
+	}
+
 	public Object doAround(ProceedingJoinPoint joinPoint) {
 		EcRedisBO redisBO = new EcRedisBO();
 		redisBO.buildRedisData(joinPoint);
