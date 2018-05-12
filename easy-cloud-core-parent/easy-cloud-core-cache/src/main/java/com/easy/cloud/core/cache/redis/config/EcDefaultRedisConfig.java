@@ -38,7 +38,7 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	private Integer port;
 
 	@Primary
-	@Bean(value = "defaultRedisConnectionFactory")
+	@Bean(value = "defaultRedisConnectionFactory", destroyMethod = "destroy")
 	public RedisConnectionFactory defaultRedisConnectionFactory() {
 		return newRedisConnectionFactory(hostName, port, password, 5000);
 	}

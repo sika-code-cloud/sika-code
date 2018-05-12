@@ -60,12 +60,12 @@ public class UserController extends EcBaseController {
 		ExecutorService threadPoolExecutor = EcExecutors.newFixedThreadPool(10);
 		CountDownLatch startSignal = new CountDownLatch(1);
 		long startime = System.currentTimeMillis();
-		for (int i = 0 ;i < 20; ++i) {
+		for (int i = 0 ;i < 30; ++i) {
 			threadPoolExecutor.execute(new Runnable() {
 				@Override
 				public void run() {
 					List<UserEntity> entitys = new ArrayList<>();
-					for (int i = 0 ; i < 500 ; ++i) {
+					for (int i = 0 ; i < 200 ; ++i) {
 						entitys.add(new UserEntity(userName+i, password+i, status));
 					}
 					userService.saveBatch(entitys);

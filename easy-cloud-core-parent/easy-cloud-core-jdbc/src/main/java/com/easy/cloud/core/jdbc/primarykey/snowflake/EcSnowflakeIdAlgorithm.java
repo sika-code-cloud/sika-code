@@ -1,6 +1,11 @@
 package com.easy.cloud.core.jdbc.primarykey.snowflake;
 
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
+import com.easy.cloud.core.common.map.utils.EcMapUtils;
 
 /**
  * Twitter_Snowflake<br>
@@ -40,40 +45,40 @@ public class EcSnowflakeIdAlgorithm {
 	private final long twepoch = 1420041600000L;
 
 	/** 机器id所占的位数 */
-	private final long workerIdBits = 5L;
+	private final long workerIdBits = 4L;
 
 	/** 数据标识id所占的位数 */
-	private final long datacenterIdBits = 5L;
+	private final long datacenterIdBits = 4L;
 
-	/** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
-	private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+	/** 支持的最大机器id，结果是16 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
+	private final long maxWorkerId = -1L ^ (-1L << (workerIdBits));
 
-	/** 支持的最大数据标识id，结果是31 */
-	private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+	/** 支持的最大数据标识id，结果是16 */
+	private final long maxDatacenterId = -1L ^ (-1L << (datacenterIdBits));
 
 	/** 序列在id中占的位数 */
-	private final long sequenceBits = 12L;
+	private final long sequenceBits = 14L;
 
-	/** 机器ID向左移12位 */
+	/** 机器ID向左移14位 */
 	private final long workerIdShift = sequenceBits;
 
-	/** 数据标识id向左移17位(12+5) */
+	/** 数据标识id向左移18位(14+4) */
 	private final long datacenterIdShift = sequenceBits + workerIdBits;
 
-	/** 时间截向左移22位(5+5+12) */
+	/** 时间截向左移22位(3+3+16) */
 	private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
 
-	/** 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095) */
+	/** 生成序列的掩码，这里为2的14次方 (0b11111111111111=0xfff=16384) */
 	private final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
-	/** 工作机器ID(0~31) */
+	/** 工作机器ID(0~15) */
 	private long workerId;
 
-	/** 数据中心ID(0~31) */
+	/** 数据中心ID(0~15) */
 	private long datacenterId;
 
-	/** 毫秒内序列(0~4095) */
-	private long sequence = 0L;
+	/** 毫秒内序列(0~16383) */
+	private volatile long sequence = 0L;
 
 	/** 上次生成ID的时间截 */
 	private volatile long lastTimestamp = -1L;
@@ -104,15 +109,15 @@ public class EcSnowflakeIdAlgorithm {
 		long timestamp = EcDateUtils.getCurrentTimeMillis();
 		// 如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
 		if (timestamp < lastTimestamp) {
-			throw new RuntimeException(String.format(
-					"Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+		throw new RuntimeException(String.format(
+				"Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
 		}
 		// 如果是同一时间生成的，则进行毫秒内序列
 		if (lastTimestamp == timestamp) {
 			sequence = (sequence + 1) & sequenceMask;
 			// 毫秒内序列溢出
 			if (sequence == 0) {
-				// 阻塞到下一个毫秒,获得新的时间戳
+//					// 阻塞到下一个毫秒,获得新的时间戳
 				timestamp = tilNextMillis(lastTimestamp);
 			}
 		} else {
@@ -127,7 +132,8 @@ public class EcSnowflakeIdAlgorithm {
 				| (workerId << workerIdShift) //
 				| sequence;
 	}
-
+	
+	
 	/**
 	 * 阻塞到下一个毫秒，直到获得新的时间戳
 	 * 
@@ -143,5 +149,41 @@ public class EcSnowflakeIdAlgorithm {
 		return timestamp;
 	}
 	
-
+	// 算法测试
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		Map<Long, Long> nextIdContainer = EcMapUtils.newConcurrentHashMap();
+		EcSnowflakeIdAlgorithm snowflakeIdAlgorithm = EcSnowflakeIdAlgorithm.getSingleInstance(0, 0);
+		for (int j = 0 ; j < 3 ; ++j) {
+			int threadNumber = 1000;
+			final CountDownLatch countDownLatch = new CountDownLatch(threadNumber);
+			long beginTime = System.currentTimeMillis();
+			for (int i = 0; i < threadNumber; i++) {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						for (int j = 0 ; j < 5000; ++j) {
+//							System.out.println(snowflakeIdAlgorithm.nextIdNew());
+//							System.out.println(snowflakeIdAlgorithm.nextId());
+//							nextIdContainer.put(snowflakeIdAlgorithm.nextIdNew(), 1l);
+//							nextIdContainer.put(snowflakeIdAlgorithm.nextId(), 1l);
+							snowflakeIdAlgorithm.nextId();
+//							snowflakeIdAlgorithm.nextIdNew();
+						}
+						countDownLatch.countDown();
+					}
+				}).start();
+			}
+			
+			countDownLatch.await();
+			System.out.println("nextIdContainer的数量为" + nextIdContainer.size());
+//			System.out.println("atomicLastTimestamp的为" + atomicLastTimestamp.get());
+//			System.out.println("atomicSequence的为" + atomicSequence.get());
+			System.out.println("lastTimestamp的值为：" + snowflakeIdAlgorithm.lastTimestamp);
+			System.out.println("sequence的值为：" + snowflakeIdAlgorithm.sequence);
+			System.out.println("main thread finished!!时间为：" + (System.currentTimeMillis() - beginTime));
+			System.out.println(EcDateUtils.getCurrentTimeMillis());
+		}
+		System.out.println(Math.pow(2, 14));
+	}
 }

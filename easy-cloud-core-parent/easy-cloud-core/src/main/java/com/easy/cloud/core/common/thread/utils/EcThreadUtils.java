@@ -34,7 +34,7 @@ public class EcThreadUtils {
 	static ExecutorService workStealingPool = Executors.newWorkStealingPool(count);
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		testSubmitCachedThreadPool();
+		testThread();
 	}
 
 	public static void testSubmitCachedThreadPool() throws InterruptedException, ExecutionException {
@@ -97,5 +97,18 @@ public class EcThreadUtils {
 		}
 		// 清理线程池
 		executorService.shutdown();
+	}
+	
+	public static void testThread() {
+		ExecutorService executorService = EcExecutors.newFixedThreadPool(4, new EcThreadFactory("测试线程"));
+		executorService.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				System.out.println("执行啦");
+				
+			}
+		});
+		
 	}
 }
