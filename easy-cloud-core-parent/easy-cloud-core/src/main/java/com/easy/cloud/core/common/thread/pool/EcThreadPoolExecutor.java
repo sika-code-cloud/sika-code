@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
+import com.easy.cloud.core.common.thread.factory.EcExecutors;
 
 /**
  * 
@@ -26,25 +27,29 @@ public class EcThreadPoolExecutor extends ThreadPoolExecutor {
 	private final ThreadLocal<Long> startTime = new ThreadLocal<>();
 	private final AtomicLong numTasks = new AtomicLong();
 	private final AtomicLong totalTime = new AtomicLong();
-
+	
 	public EcThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	@Override

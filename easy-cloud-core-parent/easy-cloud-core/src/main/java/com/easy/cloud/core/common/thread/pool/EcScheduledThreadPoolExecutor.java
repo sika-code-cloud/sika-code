@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
+import com.easy.cloud.core.common.thread.factory.EcExecutors;
 
 /**
  * 
@@ -34,19 +35,23 @@ public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 
 	public EcScheduledThreadPoolExecutor(int corePoolSize, RejectedExecutionHandler handler) {
 		super(corePoolSize, handler);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory,
 			RejectedExecutionHandler handler) {
 		super(corePoolSize, threadFactory, handler);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory) {
 		super(corePoolSize, threadFactory);
+		EcExecutors.addCreateThreadPool(this);
 	}
 
 	public EcScheduledThreadPoolExecutor(int corePoolSize) {
 		super(corePoolSize);
+		EcExecutors.addCreateThreadPool(this);
 	}
 	
 	@Override
