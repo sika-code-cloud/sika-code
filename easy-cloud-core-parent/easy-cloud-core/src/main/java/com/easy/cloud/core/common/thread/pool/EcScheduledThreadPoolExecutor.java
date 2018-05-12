@@ -57,7 +57,7 @@ public class EcScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 			long useTime = endTime - start;
 			numTasks.incrementAndGet();
 			totalTime.addAndGet(useTime);
-			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
+//			EcLogUtils.info(Thread.currentThread().getName() + "线程执行时间", useTime, logger);
 		} finally {
 			super.afterExecute(r, t);
 		}

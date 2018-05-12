@@ -32,7 +32,7 @@ public class EcDataSourceConfig {
 	@Value(value = "${mybatis.mapper-locations}")
 	private String mapperLocations;
 
-	@Bean(name = "dataSource")
+	@Bean(name = "dataSource" , destroyMethod = "close")
 	@ConfigurationProperties(prefix = "ec.hikari.datasource")
 	public DataSource dataSourece() {
 		HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
