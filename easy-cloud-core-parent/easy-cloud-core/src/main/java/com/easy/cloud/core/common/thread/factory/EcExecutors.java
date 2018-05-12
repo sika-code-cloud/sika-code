@@ -1,5 +1,6 @@
 package com.easy.cloud.core.common.thread.factory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.AbstractExecutorService;
@@ -29,6 +30,25 @@ public class EcExecutors {
 	private static final long KEEP_ALIVE_TIME_DEFAULT = 60;
 	/** 核心线程池的大小---0 */
 	private static final int CORE_POOL_SIZE_ZERO = 0;
+
+	private static final List<ExecutorService> CREATE_THREADPOOL_LIST = new ArrayList<ExecutorService>();
+
+	public static void addCreateThreadPool(ExecutorService executorService) {
+		CREATE_THREADPOOL_LIST.add(executorService);
+	}
+
+	public static void shutDownAllExecutorService() {
+		for (ExecutorService executorService : CREATE_THREADPOOL_LIST) {
+			executorService.shutdown();
+		}
+		System.out.println("总共停止的线程数为： " + CREATE_THREADPOOL_LIST.size());
+	}
+
+	public static void shutDownNowAllExecutorService() {
+		for (ExecutorService executorService : CREATE_THREADPOOL_LIST) {
+			executorService.shutdownNow();
+		}
+	}
 
 	/**
 	 * 
@@ -149,7 +169,7 @@ public class EcExecutors {
 		return new FinalizableDelegatedExecutorService(
 				new EcThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>()));
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -166,10 +186,10 @@ public class EcExecutors {
 	 * @创建时间 2018年5月7日 下午2:44:12
 	 */
 	public static ExecutorService newSingleThreadExecutor(ThreadFactory threadFactory) {
-		return new FinalizableDelegatedExecutorService(
-				new EcThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), threadFactory));
+		return new FinalizableDelegatedExecutorService(new EcThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
+				new LinkedBlockingQueue<Runnable>(), threadFactory));
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -186,9 +206,9 @@ public class EcExecutors {
 	 * @创建时间 2018年5月7日 下午2:46:19
 	 */
 	public static ExecutorService newSingleThreadScheduledExecutor() {
-		return new DelegatedScheduledExecutorService
-	            (new EcScheduledThreadPoolExecutor(1));
+		return new DelegatedScheduledExecutorService(new EcScheduledThreadPoolExecutor(1));
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -205,9 +225,9 @@ public class EcExecutors {
 	 * @创建时间 2018年5月7日 下午2:46:19
 	 */
 	public static ExecutorService newSingleThreadScheduledExecutor(ThreadFactory threadFactory) {
-		return new DelegatedScheduledExecutorService
-	            (new EcScheduledThreadPoolExecutor(1, threadFactory));
+		return new DelegatedScheduledExecutorService(new EcScheduledThreadPoolExecutor(1, threadFactory));
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -259,8 +279,10 @@ public class EcExecutors {
 	 *     执行结束后重新设置任务的到期时间，再次放回DelayQueue
 	 * </pre>
 	 *
-	 * @param corePoolSize : int 线程池的大小
-	 * @param threadFactory : ThreadFactory : 线程工厂
+	 * @param corePoolSize
+	 *            : int 线程池的大小
+	 * @param threadFactory
+	 *            : ThreadFactory : 线程工厂
 	 * @return
 	 * @author daiqi
 	 * @创建时间 2018年5月7日 下午2:38:08
@@ -268,52 +290,74 @@ public class EcExecutors {
 	public static ExecutorService newScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory) {
 		return new EcScheduledThreadPoolExecutor(corePoolSize, threadFactory);
 	}
-	
+
 	/**
-     * A wrapper class that exposes only the ExecutorService methods
-     * of an ExecutorService implementation.
-     */
-    static class DelegatedExecutorService extends AbstractExecutorService {
-        private final ExecutorService e;
-        DelegatedExecutorService(ExecutorService executor) { e = executor; }
-        public void execute(Runnable command) { e.execute(command); }
-        public void shutdown() { e.shutdown(); }
-        public List<Runnable> shutdownNow() { return e.shutdownNow(); }
-        public boolean isShutdown() { return e.isShutdown(); }
-        public boolean isTerminated() { return e.isTerminated(); }
-        public boolean awaitTermination(long timeout, TimeUnit unit)
-            throws InterruptedException {
-            return e.awaitTermination(timeout, unit);
-        }
-        public Future<?> submit(Runnable task) {
-            return e.submit(task);
-        }
-        public <T> Future<T> submit(Callable<T> task) {
-            return e.submit(task);
-        }
-        public <T> Future<T> submit(Runnable task, T result) {
-            return e.submit(task, result);
-        }
-        public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
-            throws InterruptedException {
-            return e.invokeAll(tasks);
-        }
-        public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks,
-                                             long timeout, TimeUnit unit)
-            throws InterruptedException {
-            return e.invokeAll(tasks, timeout, unit);
-        }
-        public <T> T invokeAny(Collection<? extends Callable<T>> tasks)
-            throws InterruptedException, ExecutionException {
-            return e.invokeAny(tasks);
-        }
-        public <T> T invokeAny(Collection<? extends Callable<T>> tasks,
-                               long timeout, TimeUnit unit)
-            throws InterruptedException, ExecutionException, TimeoutException {
-            return e.invokeAny(tasks, timeout, unit);
-        }
-    }
-    
+	 * A wrapper class that exposes only the ExecutorService methods of an
+	 * ExecutorService implementation.
+	 */
+	static class DelegatedExecutorService extends AbstractExecutorService {
+		private final ExecutorService e;
+
+		DelegatedExecutorService(ExecutorService executor) {
+			e = executor;
+		}
+
+		public void execute(Runnable command) {
+			e.execute(command);
+		}
+
+		public void shutdown() {
+			e.shutdown();
+		}
+
+		public List<Runnable> shutdownNow() {
+			return e.shutdownNow();
+		}
+
+		public boolean isShutdown() {
+			return e.isShutdown();
+		}
+
+		public boolean isTerminated() {
+			return e.isTerminated();
+		}
+
+		public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+			return e.awaitTermination(timeout, unit);
+		}
+
+		public Future<?> submit(Runnable task) {
+			return e.submit(task);
+		}
+
+		public <T> Future<T> submit(Callable<T> task) {
+			return e.submit(task);
+		}
+
+		public <T> Future<T> submit(Runnable task, T result) {
+			return e.submit(task, result);
+		}
+
+		public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException {
+			return e.invokeAll(tasks);
+		}
+
+		public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+				throws InterruptedException {
+			return e.invokeAll(tasks, timeout, unit);
+		}
+
+		public <T> T invokeAny(Collection<? extends Callable<T>> tasks)
+				throws InterruptedException, ExecutionException {
+			return e.invokeAny(tasks);
+		}
+
+		public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+				throws InterruptedException, ExecutionException, TimeoutException {
+			return e.invokeAny(tasks, timeout, unit);
+		}
+	}
+
 	static class FinalizableDelegatedExecutorService extends DelegatedExecutorService {
 		FinalizableDelegatedExecutorService(ExecutorService executor) {
 			super(executor);
@@ -323,30 +367,36 @@ public class EcExecutors {
 			super.shutdown();
 		}
 	}
-	
-	 /**
-     * A wrapper class that exposes only the ScheduledExecutorService
-     * methods of a ScheduledExecutorService implementation.
-     */
-    static class DelegatedScheduledExecutorService
-            extends DelegatedExecutorService
-            implements ScheduledExecutorService {
-        private final ScheduledExecutorService e;
-        DelegatedScheduledExecutorService(ScheduledExecutorService executor) {
-            super(executor);
-            e = executor;
-        }
-        public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) {
-            return e.schedule(command, delay, unit);
-        }
-        public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
-            return e.schedule(callable, delay, unit);
-        }
-        public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
-            return e.scheduleAtFixedRate(command, initialDelay, period, unit);
-        }
-        public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
-            return e.scheduleWithFixedDelay(command, initialDelay, delay, unit);
-        }
-    }
+
+	/**
+	 * A wrapper class that exposes only the ScheduledExecutorService methods of
+	 * a ScheduledExecutorService implementation.
+	 */
+	static class DelegatedScheduledExecutorService extends DelegatedExecutorService
+			implements ScheduledExecutorService {
+		private final ScheduledExecutorService e;
+
+		DelegatedScheduledExecutorService(ScheduledExecutorService executor) {
+			super(executor);
+			e = executor;
+		}
+
+		public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) {
+			return e.schedule(command, delay, unit);
+		}
+
+		public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
+			return e.schedule(callable, delay, unit);
+		}
+
+		public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
+			return e.scheduleAtFixedRate(command, initialDelay, period, unit);
+		}
+
+		public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay,
+				TimeUnit unit) {
+			return e.scheduleWithFixedDelay(command, initialDelay, delay, unit);
+		}
+	}
+
 }
