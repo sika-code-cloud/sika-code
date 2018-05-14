@@ -3,6 +3,7 @@ package com.easy.cloud.core.common.thread.factory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -30,18 +31,18 @@ public class EcExecutors {
 	private static final long KEEP_ALIVE_TIME_DEFAULT = 60;
 	/** 核心线程池的大小---0 */
 	private static final int CORE_POOL_SIZE_ZERO = 0;
-
-	private static final List<ExecutorService> CREATE_THREADPOOL_LIST = new ArrayList<ExecutorService>();
+	/** 保存创建的线程池对象的容器 */
+	private static final List<ExecutorService> CREATE_THREADPOOL_LIST = new Vector<>();
 
 	public static void addCreateThreadPool(ExecutorService executorService) {
 		CREATE_THREADPOOL_LIST.add(executorService);
 	}
 
-	public static void shutDownAllExecutorService() {
+	public synchronized static void shutDownAllExecutorService() {
 		for (ExecutorService executorService : CREATE_THREADPOOL_LIST) {
 			executorService.shutdown();
 		}
-		System.out.println("总共停止的线程数为： " + CREATE_THREADPOOL_LIST.size());
+		System.out.println("总共停止的线程池数为： " + CREATE_THREADPOOL_LIST.size());
 	}
 
 	public static void shutDownNowAllExecutorService() {
