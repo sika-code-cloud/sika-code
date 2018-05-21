@@ -63,9 +63,9 @@ ClientDetailsServiceConfigurer(来自您的AuthorizationServerConfigurer的回�
 
 * 默认的`InMemoryTokenStore`对于单个服务器来说是完美的(例如，在失败的情况下，低流量和没有热交换到备份服务器)。大多数项目都可以从这里开始，并可能在开发模式中使用这种方式，从而能很容易的启动一个没有依赖关系的服务器。
 
-*  `JdbcTokenStore`和JDBC版本是同一种东西，它使用关系数据库来存储令牌数据。如果您可以在服务器之间共享一个数据库，那么可以使用JDBC版本，如果只有一个服务器，则可以扩展相同服务器的实例，如果有多个组件，则可以使用授权和资源服务器。为了使用 `JdbcTokenStore` ，您需要将 "spring-jdbc" 配置到classpath中.
+* `JdbcTokenStore`和JDBC版本是同一种东西，它使用关系数据库来存储令牌数据。如果您可以在服务器之间共享一个数据库，那么可以使用JDBC版本，如果只有一个服务器，则可以扩展相同服务器的实例，如果有多个组件，则可以使用授权和资源服务器。为了使用 `JdbcTokenStore` ，您需要将 "spring-jdbc" 配置到classpath中.
 
-*  [JSON Web Token (JWT) version](`JwtTokenStore`) 将所有关于grant的数据编码到令牌本身(因此没有任何后端存储，这是一个重要的优势)。 一个缺点是，您不能很容易地撤销访问令牌，因此它们通常在短时间内被授予，而撤销则在刷新令牌中处理。 另一个缺点是，如果您在其中存储了大量用户凭证信息，则令牌可以变得相当大。 `JwtTokenStore`并不是真正的“存储”，因为它没有保存任何数据，但是它在`DefaultTokenServices`中扮演了转换betweeen令牌值和身份验证信息的角色。
+* [JSON Web Token (JWT) version](`JwtTokenStore`) 将所有关于grant的数据编码到令牌本身(因此没有任何后端存储，这是一个重要的优势)。 一个缺点是，您不能很容易地撤销访问令牌，因此它们通常在短时间内被授予，而撤销则在刷新令牌中处理。 另一个缺点是，如果您在其中存储了大量用户凭证信息，则令牌可以变得相当大。 `JwtTokenStore`并不是真正的“存储”，因为它没有保存任何数据，但是它在`DefaultTokenServices`中扮演了转换betweeen令牌值和身份验证信息的角色。
 
 > 注意：JDBC服务的模式并没有与库一起打包（因为在实践中可能会用到太多的变体），但是有一个示例可以从github的 [test code in github开始。确保`@EnableTransactionManagement` 能够防止客户端应用程序在创建令牌时争用相同的行。 还要注意，示例模式有显式的主键声明——在并发环境中这些声明也是必需的。
 
@@ -112,48 +112,48 @@ protected void configure(HttpSecurity http) throws Exception {
 
 > 注意:如果您的授权服务器也是一个资源服务器，那么还有另一个安全过滤器链，它的优先级较低，控制了API资源。 对于那些需要通过访问令牌来保护的请求，您需要它们的路径不能与主用户所面对的过滤器链中的那些相匹配，所以一定要包含一个请求matcher，它只挑选出上面的`WebSecurityConfigurer`中的非Api资源。
 
-The token endpoint is protected for you by default by Spring OAuth in the `@Configuration` support using HTTP Basic authentication of the client secret. This is not the case in XML (so it should be protected explicitly).
+在`@Configuration`支持中，使用客户端机密的HTTP基本身份验证，Spring OAuth默认为您保护令牌端点。这不是XML中的情况(因此应该明确地保护它)。
 
-In XML the `<authorization-server/>` element has some attributes that can be used to change the default endpoint URLs in a similar way. The `/check_token` endpoint has to be explicitly enabled (with the `check-token-enabled` attribute).
+在XML中，`<authorization-server/>` 元素有一些属性可用于以类似的方式更改缺省端点url。必须显式地启用`/check_token` 端点(使用`check-token-enabled` 的属性)。
 
-## Customizing the UI
+## 定制用户界面
 
-Most of the Authorization Server endpoints are used primarily by machines, but there are a couple of resource that need a UI and those are the GET for `/oauth/confirm_access` and the HTML response from `/oauth/error`. They  are provided using whitelabel implementations in the framework, so most real-world instances of the Authorization Server will want to provide their own so they can control the styling and content. All you need to do is provide a Spring MVC controller with `@RequestMappings` for those endpoints, and the framework defaults will take a lower priority in the dispatcher. In the `/oauth/confirm_access` endpoint you can expect an `AuthorizationRequest` bound to the session carrying all the data needed to seek approval from the user (the default implementation is `WhitelabelApprovalEndpoint` so look there for a starting point to copy). You can grab all the data from that request and render it however you like, and then all the user needs to do is POST back to `/oauth/authorize` with information about approving or denying the grant. The request parameters are passed directly to a `UserApprovalHandler` in the `AuthorizationEndpoint` so you can interpret the data more or less as you please. The default `UserApprovalHandler` depends on whether or not you have supplied an `ApprovalStore` in your `AuthorizationServerEndpointsConfigurer` (in which case it is an `ApprovalStoreUserApprovalHandler`) or not (in which case it is a `TokenStoreUserApprovalHandler`). The standard approval handlers accept the following:
+大多数授权服务器端点主要是由机器使用的，但是有一些资源需要一个UI，而这些资源是GET for `/oauth/confirm_access`和 `/oauth/error`的HTML响应。 它们在框架中使用了whitelabel实现，因此授权服务器的大多数真实实例都希望提供自己的实现，这样它们就可以控制样式和内容。 您所需要做的就是为这些端点提供一个带有`@RequestMappings`的Spring MVC控制器，而框架默认值将在调度程序中降低优先级。 在`/oauth/confirm_access`端点中，您可以预期一个`AuthorizationRequest`绑定到会话，该请求将携带需要获得用户批准的所有数据(默认的实现是`AuthorizationRequest`，因此要查看那里的起始点以复制)。您可以从该请求中获取所有的数据，并按您喜欢的方式呈现它，然后所有用户需要做的就是将批准或拒绝授予的信息发布回 `/oauth/authorize`。请求参数直接传递给`AuthorizationEndpoint`中的`UserApprovalHandler`，这样您就可以随意地解释数据了。 默认的`UserApprovalHandler`取决于您是否在`AuthorizationServerEndpointsConfigurer`中提供了`ApprovalStore`（在这种情况下，它是`ApprovalStoreUserApprovalHandler`）或not（在这种情况下，它是一个`TokenStoreUserApprovalHandler`）。标准审批处理程序接受以下内容:
 
-* `TokenStoreUserApprovalHandler`: a simple yes/no decision via `user_oauth_approval` equals to "true" or "false".
+* `TokenStoreUserApprovalHandler`: 通过`user_oauth_approval`的一个简单的yes/no决策等于“true”或“false”。
 
-* `ApprovalStoreUserApprovalHandler`: a set of `scope.*` parameter keys with "*" equal to the scopes being requested. The value of the parameter can be "true" or "approved" (if the user approved the grant) else the user is deemed to have rejected that scope. A grant is successful if at least one scope is approved.
+* `ApprovalStoreUserApprovalHandler`: 一组`scope.*` 参数键与所请求的作用域相等。 参数的值可以是“true”或“approved”（如果用户批准了授权），则用户被认为拒绝了该范围。 如果至少有一个范围被批准，那么授权是成功的。
 
-> NOTE: don't forget to include CSRF protection in your form that you render for the user. Spring Security is expecting a request parameter called "_csrf" by default (and it provides the value in a request attribute). See the Spring Security user guide for more information on that, or look at the whitelabel implementation for guidance.
+> 注意:不要忘记将CSRF保护包含在您为用户呈现的表单中。Spring Security在默认情况下期望一个名为“_csrf”的请求参数(它提供了请求属性中的值)。 请参阅Spring安全用户指南以获得更多信息，或者查看whitelabel实现以获得指导。
 
-### Enforcing SSL
+### 执行SSL
 
-Plain HTTP is fine for testing but an Authorization Server should only be used over SSL in production. You can run the app in a secure container or behind a proxy and it should work fine if you set the proxy and the container up correctly (which is nothing to do with OAuth2). You might also want to secure the endpoints using Spring Security `requiresChannel()` constraints. For the `/authorize` endpoint is up to you to do that as part of your normal application security. For the `/token` endpoint there is a flag in the `AuthorizationServerSecurityConfigurer` that you can set using the `sslOnly()` method. In both cases the secure channel setting is optional but will cause Spring Security to redirect to what it thinks is a secure channel if it detects a request on an insecure channel.
+普通HTTP可以用于测试，但是授权服务器只能在生产中使用SSL。 您可以在一个安全的容器或代理的后面运行该应用程序，如果您正确地设置了代理和容器(这与OAuth2无关)，那么它应该可以正常工作。 您还可能希望使用Spring Security `requiresChannel()`约束来保护端点。 对于`/authorize`端点，你要做的是作为你正常的应用程序安全的一部分。对于`/token`端点，在`AuthorizationServerSecurityConfigurer` 中有一个标记，您可以使用`sslOnly()`方法进行设置。在这两种情况下，安全通道设置都是可选的，但如果它在不安全的通道上检测到请求，则会导致Spring Security重定向到它认为是安全通道的安全通道。
 
-## Customizing the Error Handling
+## 自定义错误处理
 
-Error handling in an Authorization Server uses standard Spring MVC features, namely `@ExceptionHandler` methods in the endpoints themselves. Users can also provide a `WebResponseExceptionTranslator` to the endpoints themselves which is the best way to change the content of the responses as opposed to the way they are rendered. The rendering of exceptions delegates to `HttpMesssageConverters` (which can be added to the MVC configuration) in the case of token endpoint and to the OAuth error view (`/oauth/error`) in the case of the authorization endpoint. The whitelabel error endpoint is provided for HTML responses, but users probably need to provide a custom implementation (e.g. just add a `@Controller` with `@RequestMapping("/oauth/error")`).
+授权服务器中的错误处理使用标准的Spring MVC特性，即端点中的`@ExceptionHandler`方法。 用户还可以为端点本身提供一个`WebResponseExceptionTranslator`，这是改变响应内容的最佳方式，而不是改变响应的方式。在授权端点的情况下，在令牌端点和OAuth错误视图(`/oauth/error`)的情况下，将异常委托委托给`HttpMesssageConverters`(可以添加到MVC配置)。为HTML响应提供了whitelabel错误端点，但是用户可能需要提供一个自定义实现(例如，只需添加一个`@RequestMapping("/oauth/error")`的 `@Controller`)。
 
-## Mapping User Roles to Scopes
+## 将用户角色映射到作用域。
 
-It is sometimes useful to limit the scope of tokens not only by the scopes assigned to the client, but also according to the user's own permissions. If you use a `DefaultOAuth2RequestFactory` in your `AuthorizationEndpoint` you can set a flag `checkUserScopes=true` to restrict permitted scopes to only those that match the user's roles. You can also inject an `OAuth2RequestFactory` into the `TokenEndpoint` but that only works (i.e. with password grants) if you also install a `TokenEndpointAuthenticationFilter` - you just need to add that filter after the HTTP `BasicAuthenticationFilter`. Of course, you can also implement your own rules for mapping scopes to roles and install your own version of the `OAuth2RequestFactory`. The `AuthorizationServerEndpointsConfigurer` allows you to inject a custom `OAuth2RequestFactory` so you can use that feature to set up a factory if you use `@EnableAuthorizationServer`.
+有时，限制令牌的范围不仅限于分配给客户端的作用域，还可以根据用户自己的权限来限制令牌的范围。 如果您在`AuthorizationEndpoint`中使用`DefaultOAuth2RequestFactory` ，那么您可以设置一个flag  `checkUserScopes=true` ，从而将允许范围限制为与用户角色相匹配的范围。 您还可以将`OAuth2RequestFactory`注入到`TokenEndpoint`中，但是如果您还安装了一个`TokenEndpointAuthenticationFilter`(也就是使用密码授权)，那么您只需要在HTTP `BasicAuthenticationFilter`之后添加那个过滤器。当然，您也可以实现自己的规则，将范围映射到角色，并安装您自己的`OAuth2RequestFactory`版本。如果您使用`@EnableAuthorizationServer`,则`AuthorizationServerEndpointsConfigurer`允许您注入自定义的`OAuth2RequestFactory` ，这样您就可以使用该特性来设置一个工厂。
 
-## Resource Server Configuration
+## 资源服务器配置
 
-A Resource Server (can be the same as the Authorization Server or a separate application) serves resources that are protected by the OAuth2 token. Spring OAuth provides a Spring Security authentication filter that implements this protection. You can switch it on with `@EnableResourceServer` on an `@Configuration` class, and configure it (as necessary) using a `ResourceServerConfigurer`. The following features can be configured:
+资源服务器(可以与授权服务器或单独的应用程序相同)提供由OAuth2令牌保护的资源。 Spring OAuth提供了一个实现此保护的Spring安全身份验证过滤器。您可以在 `@Configuration`类上使用`@EnableResourceServer` 来切换它，并使用`ResourceServerConfigurer`配置它（必要时）。他可以配置以下功能:
 
-* `tokenServices`: the bean that defines the token services (instance of `ResourceServerTokenServices`).
-* `resourceId`: the id for the resource (optional, but recommended and will be validated by the auth server if present).
-* other extension points for the resources server (e.g. `tokenExtractor` for extracting the tokens from incoming requests)
-* request matchers for protected resources (defaults to all)
-* access rules for protected resources (defaults to plain "authenticated")
-* other customizations for the protected resources permitted by the `HttpSecurity` configurer in Spring Security
+* `tokenServices`: 定义令牌服务的bean (ResourceServerTokenServices实例)。
+* `resourceId`: 资源的id(可选，如果存在推荐并将由auth服务器验证)。
+* 资源服务器的其他扩展点(例如从传入请求中提取令牌的`tokenExtractor`)。
+* 请求受保护资源的请求者(默认为所有)
+* 受保护资源的访问规则(默认为“已验证”)
+* Spring Security中`HttpSecurity`配置程序允许的受保护资源的其他定制。
 
-The `@EnableResourceServer` annotation adds a filter of type `OAuth2AuthenticationProcessingFilter` automatically to the Spring Security filter chain.
+ `@EnableResourceServer`注解自动将`OAuth2AuthenticationProcessingFilter`类型的过滤器添加到Spring Security过滤器链中。
 
-In XML there is a `<resource-server/>` element with an `id` attribute - this is the bean id for a servlet `Filter` that can then be added manually to the standard Spring Security chain.
+在XML中有一个带有id属性的`<resource-server/>`元素——这是servlet过滤器的bean id，然后可以手工添加到标准Spring Security链中。
 
-Your `ResourceServerTokenServices` is the other half of a contract with the Authorization Server. If the Resource Server and Authorization Server are in the same application and you use `DefaultTokenServices` then you don't have to think too hard about this because it implements all the necessary interfaces so it is automatically consistent. If your Resource Server is a separate application then you have to make sure you match the capabilities of the Authorization Server and provide a `ResourceServerTokenServices` that knows how to decode the tokens correctly. As with the Authorization Server, you can often use the `DefaultTokenServices` and the choices are mostly expressed through the `TokenStore` (backend storage or local encoding). An alternative is the `RemoteTokenServices` which is a Spring OAuth features (not part of the spec) allowing Resource Servers to decode tokens through an HTTP resource on the Authorization Server (`/oauth/check_token`). `RemoteTokenServices` are convenient if there is not a huge volume of traffic in the Resource Servers (every request has to be verified with the Authorization Server), or if you can afford to cache the results. To use the `/oauth/check_token` endpoint you need to expose it by changing its access rule (default is "denyAll()") in the `AuthorizationServerSecurityConfigurer`, e.g.
+您的`ResourceServerTokenServices`是与授权服务器的契约的另一半。如果资源服务器和授权服务器都在同一个应用程序中，并且使用`DefaultTokenServices` ，那么您就不必对此进行过多的思考，因为它实现了所有必要的接口，因此它是自动一致的。 如果您的资源服务器是一个单独的应用程序，那么您必须确保与授权服务器的功能相匹配，并提供一个知道如何正确解码`ResourceServerTokenServices`。与授权服务器一样，您可以经常使用 `DefaultTokenServices`，而选择主要通过`TokenStore`(后端存储或本地编码)来表示。另一种选择是`RemoteTokenServices` ，它是一个Spring OAuth特性(不是规范的一部分)，允许资源服务器通过授权服务器上的HTTP资源(`/oauth/check_token`)来解码令牌。如果资源服务器中没有大量的流量(每个请求都必须与授权服务器进行验证)，或者如果您有能力缓存结果，那么`RemoteTokenServices`是很方便的。 要使用`/oauth/check_token`端点，您需要在`AuthorizationServerSecurityConfigurer`中通过更改它的访问规则来公开它(默认为“denyAll()”)。例如
 
 ```
 @Override
@@ -161,56 +161,47 @@ public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws 
 	oauthServer.tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")
 	.checkTokenAccess("hasAuthority('ROLE_TRUSTED_CLIENT')");
 }
-
 ```
 
-In this example we are configuring both the `/oauth/check_token` endpoint and the `/oauth/token_key` endpoint (so trusted resources can obtain the public key for JWT verification). These two endpoints are protected by HTTP Basic authentication using client credentials.
+在这个例子中，我们配置了`/oauth/check_token` 端点和`/oauth/token_key`端点（因此可信资源可以获得JWT验证的公钥）。这两个端点通过使用客户端凭证的HTTP基本身份验证保护。
 
-### Configuring An OAuth-Aware Expression Handler
+### 配置一个oauthaware表达式处理程序。
 
-You may want to take advantage of Spring Security's [expression-based access control][expressions]. An expression handler will be registered by default in the `@EnableResourceServer` setup. The expressions include _#oauth2.clientHasRole_, _#oauth2.clientHasAnyRole_, and _#oath2.denyClient_ which can be used to provide access based on the role of the oauth client (see `OAuth2SecurityExpressionMethods` for a comprehensive list). In XML you can register a oauth-aware expression handler with the `expression-handler` element of the regular `<http/>` security configuration.
+您可能想要利用Spring Security的基于表达式的访问控制。表达式处理程序将默认在@enableresourceserver设置中注册。 表达式包括 _#oauth2.clientHasRole_, _#oauth2.clientHasAnyRole_, 和_#oath2.denyClient_ 可以根据oauth客户端的角色来提供访问(请参阅完整列表的 `OAuth2SecurityExpressionMethods` )。在XML中，您可以使用常规的`<http/>`安全配置的 `expression-handler`程序元素注册一个oauth-aware表达式处理程序。
 
-## OAuth 2.0 Client
+## OAuth 2.0客户端
 
-The OAuth 2.0 client mechanism is responsible for access the OAuth 2.0 protected resources of other servers. The configuration involves establishing the relevant protected resources to which users might have access. The client may also need to be supplied with mechanisms for storing authorization codes and access tokens for users.
+OAuth 2.0客户端机制负责访问其他服务器的OAuth 2.0保护资源。 该配置涉及到建立用户可能访问的相关保护资源。 客户端还可能需要为用户提供存储授权代码和访问令牌的机制。
 
-### Protected Resource Configuration
+### 受保护的资源配置
 
-Protected resources (or "remote resources") can be defined using bean definitions of type [`OAuth2ProtectedResourceDetails`][OAuth2ProtectedResourceDetails]. A protected resource has the following properties:
+可以使用[`OAuth2ProtectedResourceDetails的bean定义来定义受保护的资源(或“远程资源”)。受保护的资源具有以下属性:
 
-* `id`: The id of the resource. The id is only used by the client to lookup the resource; it's never used in the OAuth protocol. It's also used as the id of the bean.
-* `clientId`: The OAuth client id. This is the id by which the OAuth provider identifies your client.
-* `clientSecret`: The secret associated with the resource. By default, no secret is empty.
-* `accessTokenUri`: The URI of the provider OAuth endpoint that provides the access token.
-* `scope`: Comma-separted list of strings specifying the scope of the access to the resource. By default, no scope will be specified.
-* `clientAuthenticationScheme`: The scheme used by your client to authenticate to the access token endpoint. Suggested values: "http\_basic" and "form". Default: "http\_basic". See section 2.1 of the OAuth 2 spec.
+* `id`: 资源的id。该id仅供客户端用于查找资源;在OAuth协议中从未使用过。它还被用作bean的id。
+* `clientId`: OAuth客户端id。这是OAuth提供者识别您的客户端的id。
+* `clientSecret`: 与资源有关的secret。默认情况下，没有secret是空的。
+* `accessTokenUri`: 提供访问令牌的提供者OAuth端点的URI。
+* `scope`: 逗号分隔的字符串列表，指定访问资源的范围。默认情况下，没有指定范围。
+* `clientAuthenticationScheme`: 客户端用于验证访问令牌端点的方案。建议值:“http_basic”和“form”。默认值:“http_basic”。见OAuth 2规范第2.1节。
 
-Different grant types have different concrete implementations  of `OAuth2ProtectedResourceDetails` (e.g. `ClientCredentialsResource` for "client_credentials" grant type).  For grant types that require user authorization there is a further property:
+不同的grant类型有不同的`OAuth2ProtectedResourceDetails`的具体实现(例如，`ClientCredentialsResource` 用于“client_credentials”授权类型)。对于需要用户授权的授权类型，还有一个属性:
 
-* `userAuthorizationUri`: The uri to which the user will be redirected if the user is ever needed to authorize access to the resource. Note that this is not always required, depending on which OAuth 2 profiles are supported.
+* `userAuthorizationUri`: 如果用户需要授权访问该资源，则将重定向用户的uri。注意，这并不总是必需的，这取决于所支持的OAuth 2配置文件。
 
-In XML there is a `<resource/>` element that can be used to create a bean of type `OAuth2ProtectedResourceDetails`. It has attributes matching all the properties above.
+在XML中，有一个`<resource/>`元素，可以用来创建一个`OAuth2ProtectedResourceDetails`的bean。它具有匹配上述所有属性的属性。
 
 
-### Client Configuration
+### 客户端配置
 
-For the OAuth 2.0 client, configuration is simplified using `@EnableOAuth2Client`. This does 2 things:
+对于OAuth 2.0客户端，配置是使用`@EnableOAuth2Client`简化的。它做了两件事:
 
-* Creates a filter bean (with ID `oauth2ClientContextFilter`) to store the current
-  request and context. In the case of needing to authenticate during a
-  request it manages the redirection to and from the OAuth
-  authentication uri.
+* 创建一个过滤器bean(带有ID `oauth2ClientContextFilter`)来存储当前请求和上下文。在需要进行身份验证的情况下，它管理对OAuth身份验证uri的重定向。
 
-* Creates a bean of type `AccessTokenRequest` in request scope. This
-  can be used by authorization code (or implicit) grant clients to keep
-  state related to individual users from colliding.
+* 在请求范围内创建一个类型`AccessTokenRequest`的bean。这可以通过授权代码(或隐式)授予客户端来保持与单个用户之间的冲突。
 
-The filter has to be wired into the application (e.g. using a Servlet
-initializer or `web.xml` configuration for a `DelegatingFilterProxy`
-with the same name).
+过滤器必须连接到应用程序中(例如，使用Servlet初始化器或使用相同名称的`DelegatingFilterProxy`的`web.xml`配置)。
 
-The `AccessTokenRequest` can be used in an
-`OAuth2RestTemplate` like this:
+`AccessTokenRequest`可用于以下的`OAuth2RestTemplate`:
 
 ```
 @Autowired
@@ -222,25 +213,21 @@ public OAuth2RestTemplate sparklrRestTemplate() {
 }
 ```
 
-The OAuth2ClientContext is placed (for you) in session scope to keep
-the state for different users separate. Without that you would have to
-manage the equivalent data structure yourself on the server, mapping
-incoming requests to users, and associating each user with a separate
-instance of the `OAuth2ClientContext`.
+OAuth2ClientContext在会话范围内(为您)放置，以保持状态不同的用户分开。如果不这样做，您将不得不在服务器上管理等效的数据结构，将传入的请求映射到用户，并将每个用户与`OAuth2ClientContext`的单独实例关联起来。
 
-In XML there is a `<client/>` element with an `id` attribute - this is the bean id for a servlet `Filter` that must be mapped as in the `@Configuration` case to a `DelegatingFilterProxy` (with the same name).
+在XML中，有一个带有id属性的`<client/>`元素—这是一个servlet过滤器的bean id，必须在`@Configuration`案例中映射到`DelegatingFilterProxy`(具有相同的名称)。
 
 
-### Accessing Protected Resources
+### 访问受保护的资源
 
-Once you've supplied all the configuration for the resources, you can now access those resources. The suggested method for accessing those resources is by using [the `RestTemplate` introduced in Spring 3][restTemplate]. OAuth for Spring Security has provided [an extension of RestTemplate][OAuth2RestTemplate] that only needs to be supplied an instance of [`OAuth2ProtectedResourceDetails`][OAuth2ProtectedResourceDetails].  To use it with user-tokens (authorization code grants) you should consider using the `@EnableOAuth2Client` configuration (or the XML equivalent `<oauth:rest-template/>`) which creates some request and session scoped context objects so that requests for different users do not collide at runtime.
+一旦您提供了资源的所有配置，现在就可以访问这些资源了。访问这些资源的建议方法是使用Spring 3中引入的[RestTemplate][restTemplate]。Spring Security的OAuth提供了一个扩展的RestTemplate，它只需要提供 [`OAuth2ProtectedResourceDetails`][OAuth2ProtectedResourceDetails]的实例。要使用用户令牌(授权代码授权)，您应该考虑使用`@EnableOAuth2Client`配置(或XML等效的`<oauth:rest-template/>`)，它创建一些请求和会话范围的上下文对象，以便不同用户的请求在运行时不会发生冲突。
 
-As a general rule, a web application should not use password grants, so avoid using `ResourceOwnerPasswordResourceDetails` if you can in favour of `AuthorizationCodeResourceDetails`. If you desparately need password grants to work from a Java client, then use the same mechanism to configure your `OAuth2RestTemplate` and add the credentials to the `AccessTokenRequest` (which is a `Map` and is ephemeral) not the `ResourceOwnerPasswordResourceDetails` (which is shared between all access tokens).
+一般来说，web应用程序不应该使用密码授予，因此，如果您能够支持 `AuthorizationCodeResourceDetails`，请避免使用`ResourceOwnerPasswordResourceDetails`。如果您需要从Java客户端获得工作密码，那么使用相同的机制来配置`OAuth2RestTemplate`并将凭证添加到`AccessTokenRequest`(这是一个映射，并且是临时的)，而不是`ResourceOwnerPasswordResourceDetails` (它在所有访问令牌之间共享)。
 
-### Persisting Tokens in a Client
+### 在客户端持久化令牌
 
-A client does not *need* to persist tokens, but it can be nice for users to not be required to approve a new token grant every time the client app is restarted. The [`ClientTokenServices`](/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/ClientTokenServices.java) interface defines the operations that are necessary to persist OAuth 2.0 tokens for specific users. There is a JDBC implementation provided, but you can if you prefer implement your own service for storing the access tokens and associated authentication instances in a persistent database.
-If you want to use this feature you need provide a specially configured `AccessTokenProvider` to the `OAuth2RestTemplate` e.g.
+客户端不需要存留令牌，但对于用户来说，在每次重启客户端应用程序时都不需要批准新的令牌授权，这对用户来说是件好事。ClientTokenServices接口定义了为特定用户保存OAuth 2.0令牌所需的操作。这里提供了JDBC实现，但是如果您喜欢实现您自己的服务，以便在持久性数据库中存储存取令牌和相关的认证实例，您可以这样做。
+如果您想使用这个特性，您需要为`OAuth2RestTemplate`提供一个特殊配置的`AccessTokenProvider`。
 
 ```java
 @Bean
@@ -254,30 +241,10 @@ public OAuth2RestOperations restTemplate() {
 }
 ```
 
-## Customizations for Clients of External OAuth2 Providers
+## 为外部OAuth2提供者的客户定制。
 
-Some external OAuth2 providers (e.g. [Facebook][Facebook]) do not quite implement the specification correctly, or else they are just stuck on an older version of the spec than Spring Security OAuth. To use those providers in your client application you might need to adapt various parts of the client-side infrastructure.
+一些外部的OAuth2提供者（例如Facebook）并没有正确地实现该规范，或者他们只是被困在一个较旧版本的规范中，而不是Spring Security OAuth。要在客户端应用程序中使用这些提供者，您可能需要调整客户端基础结构的各个部分。
 
-To use Facebook as an example, there is a Facebook feature in the `tonr2` application (you need to change the configuration to add your own, valid, client id and secret - they are easy to generate on the Facebook website).
+以Facebook为例，在tonr2应用程序中有一个Facebook特性（您需要更改配置以添加您自己的、有效的、客户id和secret——它们在Facebook的网站上很容易生成）。
 
-Facebook token responses also contain a non-compliant JSON entry for the expiry time of the token (they use `expires` instead of `expires_in`), so if you want to use the expiry time in your application you will have to decode it manually using a custom `OAuth2SerializationService`.
-
-[AuthorizationEndpoint]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/endpoint/AuthorizationEndpoint.html	"AuthorizationEndpoint"
-[TokenEndpoint]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/endpoint/TokenEndpoint.html	"TokenEndpoint"
-[DefaultTokenServices]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/DefaultTokenServices.html	"DefaultTokenServices"
-[InMemoryTokenStore]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/store/InMemoryTokenStore.html	"InMemoryTokenStore"
-[JdbcTokenStore]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.html	"JdbcTokenStore"
-[ClientDetailsService]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/ClientDetailsService.html	"ClientDetailsService"
-[ClientDetails]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/ClientDetails.html	"ClientDetails"
-[InMemoryClientDetailsService]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/InMemoryClientDetailsService.html	"InMemoryClientDetailsService"
-[BaseClientDetails]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/BaseClientDetails.html	"BaseClientDetails"
-[AuthorizationServerTokenServices]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/AuthorizationServerTokenServices.html	"AuthorizationServerTokenServices"
-[OAuth2AuthenticationProcessingFilter]: http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/authentication/OAuth2AuthenticationProcessingFilter.html	"OAuth2AuthenticationProcessingFilter"
-[oauth2.xsd]: http://www.springframework.org/schema/security/spring-security-oauth2.xsd	"oauth2.xsd"
-[expressions]: http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/#el-access	"Expression Access Control"
-
-[AccessTokenProviderChain]: /spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/AccessTokenProviderChain.java
-[OAuth2RestTemplate]: /spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/OAuth2RestTemplate.java
-[OAuth2ProtectedResourceDetails]: /spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/resource/OAuth2ProtectedResourceDetails.java
-[restTemplate]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html	"RestTemplate"
-[Facebook]: http://developers.facebook.com/docs/authentication	"Facebook"
+Facebook令牌响应也包含一个不兼容的JSON条目，用于令牌的失效时间（它们使用`expires`而不是`expires_in`），因此，如果您想在应用程序中使用过期时间，您将不得不使用定制的`OAuth2SerializationService`来手动解码它。
