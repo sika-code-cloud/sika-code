@@ -1,7 +1,6 @@
 package com.easy.cloud.core.cache.redis.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,6 @@ import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateN
  */
 @Configuration
 @Conditional(EcRedisConditional.class)
-@EnableCaching
 @PropertySource("classpath:config/redis-default.properties")
 public class EcDefaultRedisConfig extends EcRedisConfig {
 	@Value("${ec.redis.hostName}")
@@ -36,7 +34,8 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	private String password;
 	@Value("${ec.redis.port}")
 	private Integer port;
-
+	
+	
 	@Primary
 	@Bean(value = "defaultRedisConnectionFactory", destroyMethod = "destroy")
 	public RedisConnectionFactory defaultRedisConnectionFactory() {
