@@ -33,17 +33,17 @@ public class EcDataSourceConfig {
 	private String mapperLocations;
 
 	@Bean(name = "dataSource" , destroyMethod = "close")
-	@ConfigurationProperties(prefix = "ec.hikari.datasource")
+	@ConfigurationProperties(prefix = "ec.hikari.dataSource")
 	public DataSource dataSourece() {
 		HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
 		return dataSource;
 	}
 
 	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSourece());
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSourece) throws Exception {
 		// 添加XML目录
+		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSourece);
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		try {
 			sessionFactory.setMapperLocations(resolver.getResources(mapperLocations));

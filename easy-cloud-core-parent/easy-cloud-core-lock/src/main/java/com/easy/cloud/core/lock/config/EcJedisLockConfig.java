@@ -1,11 +1,13 @@
 package com.easy.cloud.core.lock.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.easy.cloud.core.cache.redis.conditional.EcRedisConditional;
@@ -24,16 +26,11 @@ import com.easy.cloud.core.lock.template.impl.EcLockTemplateJedis;
 @Conditional(value = { EcRedisConditional.class })
 @PropertySource("classpath:config/redis-lock.properties")
 public class EcJedisLockConfig extends EcRedisConfig {
-	@Value("${ec.redis.hostName}")
-	private String hostName;
-	@Value("${ec.redis.password}")
-	private String password;
-	@Value("${ec.redis.port}")
-	private Integer port;
-
-	@Bean(name = "redisConnectionFactoryLcok")
+	
+	@Bean(value = "redisConnectionFactoryLcok", destroyMethod = "destroy")
+	@ConfigurationProperties(prefix = "ec.redis")
 	public RedisConnectionFactory redisConnectionFactoryLcok() {
-		return newRedisConnectionFactory(hostName, port, password, 5000);
+		return new JedisConnectionFactory(redisProperties);
 	}
 
 	/**
@@ -45,14 +42,13 @@ public class EcJedisLockConfig extends EcRedisConfig {
 	 * @author daiqi
 	 * @date 2017年12月7日 下午5:19:59
 	 */
-	@Bean
-	public StringRedisTemplate stringRedisTemplateLock() {
-		return new StringRedisTemplate(redisConnectionFactoryLcok());
+	@Bean(value = "stringRedisTemplateLock")
+	public StringRedisTemplate stringRedisTemplateLock(@Qualifier(value = "redisConnectionFactoryLcok") RedisConnectionFactory redisConnectionFactory) {
+		return new StringRedisTemplate(redisConnectionFactory);
 	}
 
 	@Bean(name = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_LOCK_NAME)
-	public EcLockTemplate lockTemplateJedis() {
-		StringRedisTemplate redisTemplate = stringRedisTemplateLock();
-		return new EcLockTemplateJedis(redisTemplate);
+	public EcLockTemplate lockTemplateJedis(@Qualifier(value = "stringRedisTemplateLock") StringRedisTemplate stringRedisTemplate) {
+		return new EcLockTemplateJedis(stringRedisTemplate);
 	}
 }

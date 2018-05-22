@@ -1,7 +1,7 @@
 package com.easy.cloud.core.cache.redis.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
@@ -27,20 +28,14 @@ import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateN
  */
 @Configuration
 @Conditional(EcRedisConditional.class)
-@EnableCaching
 @PropertySource("classpath:config/redis-default.properties")
 public class EcDefaultRedisConfig extends EcRedisConfig {
-	@Value("${ec.redis.hostName}")
-	private String hostName;
-	@Value("${ec.redis.password}")
-	private String password;
-	@Value("${ec.redis.port}")
-	private Integer port;
-
+	
 	@Primary
 	@Bean(value = "defaultRedisConnectionFactory", destroyMethod = "destroy")
+	@ConfigurationProperties(prefix = "ec.redis")
 	public RedisConnectionFactory defaultRedisConnectionFactory() {
-		return newRedisConnectionFactory(hostName, port, password, 5000);
+		return new JedisConnectionFactory(redisProperties);
 	}
 
 	/**
@@ -53,8 +48,8 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @date 2017年12月7日 下午5:19:59
 	 */
 	@Bean(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_NAME)
-	public StringRedisTemplate stringRedisTemplate() {
-		StringRedisTemplate redisTemplate = new StringRedisTemplate(defaultRedisConnectionFactory());
+	public StringRedisTemplate stringRedisTemplate(@Qualifier(value = "defaultRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
+		StringRedisTemplate redisTemplate = new StringRedisTemplate(redisConnectionFactory);
 		return redisTemplate;
 	}
 
@@ -68,13 +63,13 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @date 2017年12月7日 下午5:19:51
 	 */
 	@Bean(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
-	public RedisTemplate<String, Object> redisTemlateValueSerializer() {
+	public RedisTemplate<String, Object> redisTemlateValueSerializer(@Qualifier(value = "defaultRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
 		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setConnectionFactory(defaultRedisConnectionFactory());
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		return redisTemplate;
 	}
 
@@ -84,8 +79,8 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @return
 	 */
     @Bean(name = "stringCacheManager")
-    public RedisCacheManager stringCacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager(stringRedisTemplate());
+    public RedisCacheManager stringCacheManager(@Qualifier(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_STR_NAME) StringRedisTemplate stringRedisTemplate) {
+        RedisCacheManager redisCacheManager = new RedisCacheManager(stringRedisTemplate);
         return redisCacheManager;
     }
     
