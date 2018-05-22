@@ -13,7 +13,7 @@ import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
  * 
  * 不自动注入数据源
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+@SpringBootApplication
 @ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD})
 public class EcCoreMqApplication {
 	public static void main(String[] args) {

@@ -1,6 +1,5 @@
 package com.easy.cloud.core.common.thread.factory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -17,6 +16,10 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.common.thread.pool.EcScheduledThreadPoolExecutor;
 import com.easy.cloud.core.common.thread.pool.EcThreadPoolExecutor;
 
@@ -27,6 +30,7 @@ import com.easy.cloud.core.common.thread.pool.EcThreadPoolExecutor;
  * @date 2018年4月28日 下午10:33:18
  */
 public class EcExecutors {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EcExecutors.class);
 	/** 保持有效时间---默认---60 */
 	private static final long KEEP_ALIVE_TIME_DEFAULT = 60;
 	/** 核心线程池的大小---0 */
@@ -42,7 +46,7 @@ public class EcExecutors {
 		for (ExecutorService executorService : CREATE_THREADPOOL_LIST) {
 			executorService.shutdown();
 		}
-		System.out.println("总共停止的线程池数为： " + CREATE_THREADPOOL_LIST.size());
+		EcLogUtils.info("总共停止的线程池数为", CREATE_THREADPOOL_LIST.size(), LOGGER);
 	}
 
 	public static void shutDownNowAllExecutorService() {
