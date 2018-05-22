@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,7 @@ import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 @Aspect
 @Component
 @Conditional(value = EcAuditConditional.class)
+@ConditionalOnBean(value = EcAuditorAware.class)
 public class EcAuditAspect {
 	@Autowired
 	private EcAuditorAware<?> auditorAware;
