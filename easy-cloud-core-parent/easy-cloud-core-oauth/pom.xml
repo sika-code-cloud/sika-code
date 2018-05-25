@@ -14,30 +14,46 @@
 		<version>1.0.0</version>
 	</parent>
 
+	<properties>
+
+		<shiro.version>1.4.0</shiro.version>
+		<shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
+	</properties>
+
 	<dependencies>
-		<!-- 注意是starter,自动配置 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<!-- 不是starter,手动配置 -->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- 将token存储在redis中 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.crazycake</groupId>
+			<artifactId>shiro-redis</artifactId>
+			<version>${shiro-redis.version}</version>
+		</dependency>
+		<!-- 导入easy-cloud-core相关依赖 -->
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
+			<version>${easy.cloud.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>easy.cloud.core</groupId>
+			<artifactId>easy-cloud-core-cache</artifactId>
+			<version>${easy.cloud.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>easy.cloud.core</groupId>
+			<artifactId>easy-cloud-core-jdbc</artifactId>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
 	</dependencies>
