@@ -50,4 +50,5 @@ public class EcSessionManager extends DefaultWebSessionManager {
 			return super.getSessionId(request, response);
 		}
 	}
+	
 }
