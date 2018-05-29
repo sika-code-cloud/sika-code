@@ -4,15 +4,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.basic.constant.EcBaseConfigConstant;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
-import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
+import com.easy.cloud.core.common.log.conditional.EcLogConditional;
 import com.easy.cloud.core.common.log.pojo.bo.EcLogBO;
-import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
-import com.easy.cloud.core.common.log.utils.EcLogUtils;
 
 /**
  * 
@@ -32,11 +31,12 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
 @Aspect
 @Order
 @Component
+@Conditional(value = EcLogConditional.class)
 public class EcLogAspect {
 
-	@Pointcut("@within(com.easy.cloud.core.common.log.annotation.EcLogAnnotation)")
-	public void dqLogPointcut() {
-		
+	@Pointcut("@within(" + EcBaseConfigConstant.LOG_ANNOTATION_NAME + ")")
+	public void logPointcut() {
+
 	}
 
 	/**
@@ -44,9 +44,18 @@ public class EcLogAspect {
 	 * 
 	 * @param joinPoint
 	 */
-	@Around("dqLogPointcut()")
-	public Object dqLogAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-		return doLogLogic(proceedingJoinPoint);
+	@Around("logPointcut()")
+	public Object dqLogAround(ProceedingJoinPoint joinPoint) throws Throwable {
+		long beginTimeMillis = EcDateUtils.getCurrentTimeMillis();
+		Object targetReturnValue = null;
+		try {
+			targetReturnValue = joinPoint.proceed();
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		} finally {
+			doLogLogic(joinPoint, beginTimeMillis, targetReturnValue);
+		}
+		return targetReturnValue;
 	}
 
 	/**
@@ -59,27 +68,12 @@ public class EcLogAspect {
 	 * @author daiqi 创建时间 2018年2月7日 下午7:21:56
 	 * @throws Throwable
 	 */
-	protected Object doLogLogic(ProceedingJoinPoint joinPoint) {
-		long beginTimeMillis = EcDateUtils.getCurrentTimeMillis();
-		Object targetReturnValue = null;
-		try {
-			targetReturnValue = joinPoint.proceed();
-		} catch (Throwable e) {
-			throw new RuntimeException(e);
-		} finally {
-			long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
-//			构建日志逻辑对象--设置日志数据
-			EcLogBO ecLogBO = EcLogBO.newInstantce(EcLogDTO.newInstance(beginTimeMillis, endTimeMillis));
-			ecLogBO.buildDqLogData(joinPoint, targetReturnValue);
-//			获取日志注解
-			EcLogAnnotation ecLogAnnotation = ecLogBO.getLogAnnotation();
-			if (EcBaseUtils.isNotNull(ecLogAnnotation) && EcBaseUtils.isNotNull(ecLogAnnotation.proxyClass())){
-//				根据注解获取Log委托处理对象执行日志处理
-				EcLogUtils.getDqLogProxy(ecLogAnnotation).handle(ecLogBO);
-			}
-		}
-		return targetReturnValue;
+	protected void doLogLogic(final ProceedingJoinPoint joinPoint, final long beginTimeMillis, final Object targetReturnValue) {
+		long endTimeMillis = EcDateUtils.getCurrentTimeMillis();
+		// 构建日志逻辑对象--设置日志数据
+		EcLogBO ecLogBO = new EcLogBO(beginTimeMillis, endTimeMillis);
+		ecLogBO.buildLogData(joinPoint, targetReturnValue);
+		ecLogBO.handle();
 	}
-	
-	
+
 }

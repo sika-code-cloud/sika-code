@@ -12,6 +12,7 @@
 	<packaging>pom</packaging>
 	<name>easy-cloud-pay-parent</name>
 	<url>http://maven.apache.org</url>
+	<description>easy-cloud-pay-parent</description>
 	
 	<!-- 子模块 -->
 	<modules>

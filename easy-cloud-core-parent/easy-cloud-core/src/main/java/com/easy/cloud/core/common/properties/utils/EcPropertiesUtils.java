@@ -150,4 +150,5 @@ public class EcPropertiesUtils {
 	public static Float getFloutValue(String key){
 		return getProperty(key, Float.class);
 	}
+	
 }

@@ -1,6 +1,6 @@
 package com.easy.cloud.pay.zfb.pojo.bo;
 
-import com.easy.cloud.pay.common.base.inf.EcBank;
+import com.easy.cloud.pay.core.base.inf.EcBank;
 
 /**
  * 

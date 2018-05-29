@@ -25,7 +25,6 @@ import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ShardedJedis;
 
 /**
  * 

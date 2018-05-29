@@ -16,7 +16,17 @@
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
-			<version>1.0.0</version>
+			<version>${easy.cloud.core.version}</version>
 		</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>
+
+        <dependency>  
+            <groupId>io.searchbox</groupId>  
+            <artifactId>jest</artifactId>  
+        </dependency>  
 	</dependencies>
 </project>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.easy.cloud.core.cache.redis.annotation.EcRedisAnnotation;
 import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisActionType;
 import com.easy.cloud.core.cache.redis.proxy.demo.EcRedisDemoProxy;
+import com.easy.cloud.core.cache.redis.test.dao.TestRedisDAO;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 
@@ -21,9 +22,7 @@ import com.easy.cloud.core.common.log.utils.EcLogUtils;
  * @创建时间 2018年4月27日 下午2:03:50
  */
 @Service
-public class TestRedisService {
-	@Autowired
-	private TestRedisDAO testRedisDAO;
+public class TestRedisService extends TestBaseRedisService{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@EcRedisAnnotation(actionType = EcRedisActionType.SAVE, proxyClass = EcRedisDemoProxy.class)

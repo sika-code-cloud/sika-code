@@ -13,6 +13,7 @@ import com.easy.cloud.core.basic.pojo.bo.EcBaseAspectBO;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.pojo.dto.EcLogDTO;
+import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 /**
@@ -35,30 +36,31 @@ public class EcLogBO extends EcBaseAspectBO {
 	private EcLogAnnotation logAnnotation;
 
 	public EcLogBO() {
-
+		this(new EcLogDTO());
 	}
 
-	private static EcLogBO newInstance() {
-		return new EcLogBO();
+	public EcLogBO(EcLogDTO logDTO) {
+		this.logDTO = logDTO;
 	}
 
-	public static EcLogBO newInstantce(EcLogDTO ecLogDTO) {
-		return newInstance().buildDqLogDTO(ecLogDTO);
+	public EcLogBO(long beginTimeMillis, long endTimeMillis) {
+		this.logDTO = new EcLogDTO(beginTimeMillis, endTimeMillis);
 	}
 
-	public EcLogBO buildDqLogDTO(EcLogDTO ecLogDTO) {
-		this.logDTO = ecLogDTO;
-		return this;
+	/**
+	 * 
+	 * <p>
+	 * 处理方法---调用该方法进行日志处理
+	 * </p>
+	 *
+	 * @author daiqi
+	 * @创建时间 2018年5月7日 下午3:39:35
+	 */
+	public void handle() {
+//		根据注解获取Log委托处理对象执行日志处理
+		EcLogUtils.getLogProxy(logAnnotation).handle(this);
 	}
-
-	public EcLogBO buildLogAnnotation() {
-		this.logAnnotation = targetMethod.getAnnotation(EcLogAnnotation.class);
-		if (EcBaseUtils.isNull(this.logAnnotation)) {
-			this.logAnnotation = targetClass.getAnnotation(EcLogAnnotation.class);
-		}
-		return this;
-	}
-
+	
 	/**
 	 * 
 	 * <p>
@@ -69,12 +71,21 @@ public class EcLogBO extends EcBaseAspectBO {
 	 * @return
 	 * @author daiqi 创建时间 2018年2月9日 上午11:14:51
 	 */
-	public EcLogBO buildDqLogData(ProceedingJoinPoint pjp, Object targetReturnValue) {
+	public EcLogBO buildLogData(ProceedingJoinPoint pjp, Object targetReturnValue) {
 		super.buildBaseAspectData(pjp);
 		super.buildTargetReturnValue(targetReturnValue);
+		this.logDTO.buildRunTimeMillis();
 		this.buildLogger(super.targetClass);
 		this.buildRequestPath();
 		this.buildLogAnnotation();
+		return this;
+	}
+	
+	private EcLogBO buildLogAnnotation() {
+		this.logAnnotation = targetMethod.getAnnotation(EcLogAnnotation.class);
+		if (EcBaseUtils.isNull(this.logAnnotation)) {
+			this.logAnnotation = targetClass.getAnnotation(EcLogAnnotation.class);
+		}
 		return this;
 	}
 

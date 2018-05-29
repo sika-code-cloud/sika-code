@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import com.easy.cloud.core.basic.pojo.entity.EcBaseEntity;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
 import com.easy.cloud.user.base.constant.UserConstant;
 
 @Entity

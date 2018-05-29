@@ -19,11 +19,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<!-- 分布式锁解决方案redisson依赖 -->
+		<dependency>
+		    <groupId>org.redisson</groupId>
+		    <artifactId>redisson</artifactId>
+		    <version>3.6.5</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
-			<version>1.0.0</version>
+			<optional>true</optional>
+			<version>${easy.cloud.core.version}</version>
 		</dependency>
+		
 	</dependencies>
 </project>

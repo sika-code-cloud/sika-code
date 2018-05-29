@@ -3,9 +3,9 @@ package com.easy.cloud.pay.zfb.pojo.bo;
 import java.util.Map;
 
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.pay.common.payment.pojo.dto.EcPayOrderDTO;
-import com.easy.cloud.pay.common.payment.utils.EcPayUtils;
-import com.easy.cloud.pay.common.transaction.inf.EcTransactionType;
+import com.easy.cloud.pay.core.payment.pojo.dto.EcPayOrderDTO;
+import com.easy.cloud.pay.core.payment.utils.EcPayUtils;
+import com.easy.cloud.pay.core.transaction.inf.EcTransactionType;
 
 /**
  * 
