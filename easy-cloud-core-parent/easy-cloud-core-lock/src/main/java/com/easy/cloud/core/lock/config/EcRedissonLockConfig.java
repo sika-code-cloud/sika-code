@@ -30,7 +30,6 @@ public class EcRedissonLockConfig {
 
 	@Value("classpath:config/redisson-conf.yml")
 	Resource configFile;
-	
 	@Bean(destroyMethod = "shutdown")
 	RedissonClient redisson() throws IOException {
 		Config config = Config.fromYAML(configFile.getInputStream());
