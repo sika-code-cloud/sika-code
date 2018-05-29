@@ -17,14 +17,17 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.crazycake.shiro.SerializeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import com.easy.cloud.core.authority.config.properties.EcFilterChainDefinitionProperties;
 import com.easy.cloud.core.authority.manager.EcRedisManager;
 import com.easy.cloud.core.authority.manager.EcSessionManager;
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
 import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 
 /**
  * 
@@ -36,7 +39,7 @@ import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
  * @创建时间 2018年5月25日 下午2:15:56
  */
 @Configuration
-@PropertySource("classpath:config/redis-default.properties")
+@PropertySource({"classpath:config/redis-default.properties", "classpath:config/shiro-url.yml"})
 public class EcAuthorityConfig {
 	@Value("${ec.redis.hostName}")
 	private String host;
@@ -46,29 +49,30 @@ public class EcAuthorityConfig {
 	private int timeout;
 	@Value("${ec.redis.password}")
 	private String password;
+	
 	@Autowired
 	private EcRedisProperties redisProperties;
-
+	@Autowired
+	private EcFilterChainDefinitionProperties filterChainDefinitionProperties;
+	
+	public LinkedHashMap<String, String > filterChainDefinitionMap() {
+		LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
+		return linkedHashMap;
+	}
 	@Bean
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-		// 注意过滤器配置顺序 不能颠倒
-		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
-		filterChainDefinitionMap.put("/logout", "logout");
-		// 配置不会被拦截的链接 顺序判断
-		filterChainDefinitionMap.put("/static/**", "anon");
-		filterChainDefinitionMap.put("/ajaxLogin", "anon");
-		filterChainDefinitionMap.put("/login", "anon");
-		filterChainDefinitionMap.put("/**", "authc");
 		// 配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
 		shiroFilterFactoryBean.setLoginUrl("/unauth");
 		// 登录成功后要跳转的链接
 		// shiroFilterFactoryBean.setSuccessUrl("/index");
 		// 未授权界面;
 		// shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+		filterChainDefinitionMap = filterChainDefinitionProperties.getFilter();
+		System.out.println(EcJSONUtils.toJSONString(filterChainDefinitionMap));
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
