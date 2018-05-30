@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easy.cloud.core.operator.sysresource.dao.SysResourceDAO">
+	<!-- 根节点 -->
+	<!-- 设置resultMap -->
+	<resultMap id="SysResourceEntity"
+		type="com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="version" jdbcType="INTEGER" property="version" />
+		<result column="available" jdbcType="INTEGER" property="available" />
+		<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+		<result column="resource_no" jdbcType="INTEGER" property="resourceNo" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="parent_no" jdbcType="INTEGER" property="parentNo" />
+		<result column="parent_nos" jdbcType="VARCHAR" property="parentNos" />
+		<result column="permission" jdbcType="VARCHAR" property="permission" />
+	</resultMap>
+	<!-- 设置columnList -->
+	<sql id="columnList">
+		sr.id,sr.create_by,sr.update_by,sr.create_date,sr.update_date,sr.version,sr.available,sr.is_deleted,sr.resource_no,sr.name,sr.type,sr.url,sr.parent_no,sr.parent_nos,sr.permission
+	</sql>
+	<!-- 根据id获取对象信息 -->
+	<select id="findById" resultMap="SysResourceEntity"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="columnList" />
+		FROM sys_resource sr
+		WHERE sr.id = #{id, jdbcType=BIGINT}
+	</select>
+	<!-- 统计列表数量 -->
+	<select id="listCount" resultType="java.lang.Integer"
+		parameterType="map">
+		SELECT count(*)
+		FROM sys_resource sr
+	</select>
+	<!-- 获取列表分页信息 -->
+	<select id="listPage" resultMap="SysResourceEntity"
+		parameterType="map">
+		SELECT
+		<include refid="columnList" />
+		FROM sys_resource sr
+		LIMIT #{maps.start},#{maps.pageSize}
+	</select>
+	<!-- 设置column -->
+	<sql id="setColumnSql">
+		<set>
+			<if test="id != null">id = #{id, jdbcType=BIGINT},</if>
+			<if test="createBy != null">create_by = #{createBy,
+				jdbcType=BIGINT},</if>
+			<if test="updateBy != null">update_by = #{updateBy,
+				jdbcType=BIGINT},</if>
+			<if test="createDate != null">create_date = #{createDate,
+				jdbcType=TIMESTAMP},</if>
+			<if test="updateDate != null">update_date = #{updateDate,
+				jdbcType=TIMESTAMP},</if>
+			<if test="version != null">version = #{version, jdbcType=INTEGER},</if>
+			<if test="available != null">available = #{available,
+				jdbcType=INTEGER},</if>
+			<if test="isDeleted != null">is_deleted = #{isDeleted,
+				jdbcType=INTEGER},</if>
+			<if test="resourceNo != null">resource_no = #{resourceNo,
+				jdbcType=INTEGER},</if>
+			<if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+			<if test="type != null">type = #{type, jdbcType=VARCHAR},</if>
+			<if test="url != null">url = #{url, jdbcType=VARCHAR},</if>
+			<if test="parentNo != null">parent_no = #{parentNo,
+				jdbcType=INTEGER},</if>
+			<if test="parentNos != null">parent_nos = #{parentNos,
+				jdbcType=VARCHAR},</if>
+			<if test="permission != null">permission = #{permission,
+				jdbcType=VARCHAR},</if>
+		</set>
+	</sql>
+	<!-- 保存对象 -->
+	<insert id="save" useGeneratedKeys="true"
+		parameterType="com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity"
+		keyProperty="id">
+		INSERT INTO sys_resource
+		<include refid="setColumnSql" />
+	</insert>
+	<!-- 更新对象 -->
+	<update id="update"
+		parameterType="com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity">
+		UPDATE sys_resource sr
+		<include refid="setColumnSql" />
+		WHERE sr.id = #{id, jdbcType=BIGINT}
+	</update>
+
+	<!-- 根据查询获取资源列表信息 -->
+	<select id="listByQuery" resultMap="SysResourceEntity"
+		parameterType="com.easy.cloud.core.operator.sysresource.pojo.query.SysResourceQuery">
+		SELECT
+		<include refid="columnList" />
+		FROM sys_resource sr, sys_role_resource srr
+		WHERE
+		sr.available = 1
+		AND sr.resource_no = srr.resource_no
+		<if test="query.resourceNo != null">
+			AND sr.resource_no = #{query.resourceNo}
+		</if>
+		<if test="query.roleNo != null">
+			AND srr.role_no = #{query.roleNo}
+		</if>
+		<if test="query.roleNos != null">
+			AND srr.role_no IN
+			<foreach item="roleNo" index="index" collection="query.roleNos"
+				open="(" separator="," close=")">
+				#{roleNo}
+			</foreach>
+		</if>
+	</select>
+</mapper>

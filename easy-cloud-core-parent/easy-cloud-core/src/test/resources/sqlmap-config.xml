@@ -7,5 +7,6 @@
     </settings>
     <mappers>
         <mapper resource="mybatis/easy_user_info.xml" />
+        <mapper resource="mybatis/sys_user.xml" />
     </mappers>
 </configuration>
