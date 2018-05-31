@@ -7,6 +7,11 @@ unauthorizedUrl: "/403"
 # 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
 filterChainDefinitionMap:
     /logout: "logout"
+    /sysUser/**: "anon"
+#    /sysUserRole/**: "anon"
+#    /sysRoleResource/**: "anon"
+#    /sysRole/**: "anon"
+#    /sysResource/**: "anon"
     /static/**: "anon"
     /ajaxLogin: "anon"
     /login: "anon"

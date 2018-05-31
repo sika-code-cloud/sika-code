@@ -9,6 +9,7 @@ import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
  * @date 2018-05-30 16:23:53
  */
 public class SysUserEntity extends EcBaseEntity {
+	private static final long serialVersionUID = 4765498790472345358L;
 	/** 手机号 */
 	private String phone;
 	/** 用户名 */
@@ -19,7 +20,7 @@ public class SysUserEntity extends EcBaseEntity {
 	private String salt;
 	/** 锁定标志 1 锁定 0 未锁 */
 	private Integer locked;
-		
+
 	/** 获取手机号 */
 	public String getPhone() {
 		return this.phone;

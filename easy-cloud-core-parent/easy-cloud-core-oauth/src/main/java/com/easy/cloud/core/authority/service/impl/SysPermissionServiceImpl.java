@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.easy.cloud.core.authority.dao.SysPermissionDAO;
+import com.easy.cloud.core.authority.dao.SysPermissionDAO1;
 import com.easy.cloud.core.authority.pojo.SysPermission;
 import com.easy.cloud.core.authority.pojo.UserInfo;
 import com.easy.cloud.core.authority.service.SysPermissionService;
@@ -21,10 +21,10 @@ import com.easy.cloud.core.authority.service.SysPermissionService;
 @Service
 public class SysPermissionServiceImpl implements SysPermissionService {
 	@Autowired
-	private SysPermissionDAO sysPermissionDAO;
+	private SysPermissionDAO1 sysPermissionDAO1;
 	
     @Override
     public List<SysPermission> selectPermByUser(UserInfo userInfo) throws Exception {
-        return sysPermissionDAO.listPage(null);
+        return null;
     }
 }

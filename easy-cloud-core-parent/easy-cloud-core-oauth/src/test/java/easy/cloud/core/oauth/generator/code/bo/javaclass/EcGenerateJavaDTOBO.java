@@ -1,9 +1,9 @@
 package easy.cloud.core.oauth.generator.code.bo.javaclass;
 
+import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 import com.easy.cloud.core.generator.code.base.pojo.rule.EcGenerateRule;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcClassCommentEndWith;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcClassNameEndWith;
-import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcSubModuleDefaultPackageName;
 import com.easy.cloud.core.generator.code.java.desc.EcJavaContentDesc;
 import com.easy.cloud.core.generator.code.java.pojo.bo.EcGenerateJavaClassBO;
 import com.easy.cloud.core.generator.code.java.pojo.dto.EcGenerateJavaBaseDTO;
@@ -31,9 +31,10 @@ public class EcGenerateJavaDTOBO extends EcGenerateJavaClassBO {
 
 	@Override
 	protected void buildExtendsParentClass() {
-		String nameEndwith = EcClassNameEndWith.POJO_PO;
-		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_PO;
-		EcJavaContentDesc extendsParentClass = super.getCustomJavaContentByEndwith(nameEndwith, subModulePackageName, EcJavaContentDesc.class);
+		EcJavaContentDesc extendsParentClass = new EcJavaContentDesc();
+		extendsParentClass.setSimpleClassType(EcBaseDTO.class.getSimpleName());
+		extendsParentClass.setName(EcBaseDTO.class.getSimpleName());
+		extendsParentClass.setFullClassType(EcBaseDTO.class.getName());
 		super.javaClassContentDesc.addExtendsParentClass(extendsParentClass);
 	}
 
@@ -54,12 +55,12 @@ public class EcGenerateJavaDTOBO extends EcGenerateJavaClassBO {
 
 	@Override
 	protected void buildFields() {
-
+		super.javaClassContentDesc.setFields(getFieldsByDatabaseDataSources());
 	}
 
 	@Override
 	protected void buildMethods() {
-
+		super.javaClassContentDesc.setMethods(getMethodsByFields());
 	}
 
 	@Override

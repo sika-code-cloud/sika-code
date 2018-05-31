@@ -69,7 +69,7 @@ public class GenerateJavaTest {
 		// 生成数据持久化类
 		generateJavaDOByDataBase();
 		// 生成数据传输类
-		// generateJavaDTOByDataBase();
+		 generateJavaDTOByDataBase();
 		// 生成业务逻辑类
 		// generateJavaBOByDataBase();
 		// 生成查询类
@@ -154,9 +154,13 @@ public class GenerateJavaTest {
 		String subModulePackageName = EcSubModuleDefaultPackageName.POJO_DTO;
 		EcGenerateJavaBaseDTO generateJavaBaseDTO = new EcGenerateJavaBaseDTO(projectNamePojo, basePackageName,
 				moduleName, subModulePackageName, classBodyName, classComment);
-		EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, false, false, false);
+		generateJavaBaseDTO.setIgnoreFields(ignoreFields);
+		generateJavaBaseDTO.setCoverSwith(true);
+		EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
 		try {
-			new EcGenerateJavaDTOBO(generateJavaBaseDTO, generateRule).generateCode();
+			EcGenerateJavaDTOBO generateJavaDTOBO = new EcGenerateJavaDTOBO(generateJavaBaseDTO, generateRule);
+			generateJavaDTOBO.buildDatabaseDataSources(new EcMysqlDataSources(databaseAbstactConfig));
+			generateJavaDTOBO.generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

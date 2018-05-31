@@ -15,7 +15,7 @@ import com.easy.cloud.core.jdbc.base.dao.EcBaseDAO;
  * @author huitu123
  * @since 2018-01-23
  */
-public interface SysPermissionDAO extends EcBaseDAO<SysPermission> {
+public interface SysPermissionDAO1 extends EcBaseDAO<SysPermission> {
 
     List<SysPermission> selectPermByUser(UserInfo userInfo);
 

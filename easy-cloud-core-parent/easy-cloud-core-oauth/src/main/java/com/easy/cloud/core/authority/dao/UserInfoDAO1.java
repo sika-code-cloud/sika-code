@@ -11,6 +11,6 @@ import com.easy.cloud.core.jdbc.base.dao.EcBaseDAO;
  * @author huitu123
  * @since 2018-01-23
  */
-public interface UserInfoDAO extends EcBaseDAO<UserInfo> {
+public interface UserInfoDAO1 {
 
 }

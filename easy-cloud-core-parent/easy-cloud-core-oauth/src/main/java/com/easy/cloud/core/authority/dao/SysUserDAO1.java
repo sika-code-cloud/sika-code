@@ -7,5 +7,5 @@ import com.easy.cloud.core.jdbc.base.dao.EcBaseDAO;
 /**
  * Created by Administrator on 2018/1/10.
  */
-public interface SysUserDAO extends EcBaseDAO<SysUser> {
+public interface SysUserDAO1{
 }

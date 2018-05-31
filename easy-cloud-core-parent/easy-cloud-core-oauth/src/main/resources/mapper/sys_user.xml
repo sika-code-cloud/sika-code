@@ -100,13 +100,13 @@
 		<include refid="columnList" />
 		FROM sys_user su
 		WHERE available = 1
-		<if test="query.username != null">
+		<if test="query.phone != null">
 			AND su.phone = #{query.phone}
 		</if>
 		<if test="query.username != null">
 			AND su.username = #{query.username}
 		</if>
-		<if test="password != null">
+		<if test="query.password != null">
 			AND su.password = #{query.password}
 		</if>
 	</select>

@@ -1,6 +1,7 @@
 package com.easy.cloud.core.common.string.utils;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -27,6 +28,20 @@ public class EcStringUtils {
     public static final String COLON = EcSymbol.COLON;
     /** 初始化相关String容器的容量--512 */
     private static final int INIT_CAPACITY = 128;
+    
+    /**
+     * 
+     * <p>
+     * 生成uuid的字符串---默认32位
+     * </p>
+     *
+     * @return
+     * @author daiqi
+     * @创建时间 2018年5月31日 上午10:44:56
+     */
+    public static String generateUUID() {
+    	return UUID.randomUUID().toString().replace("-", "");
+    }
     
     /**
      * 
