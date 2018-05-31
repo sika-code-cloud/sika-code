@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easy.cloud.core.authority.dao.SysUserDAO;
+import com.easy.cloud.core.authority.dao.SysUserDAO1;
 import com.easy.cloud.core.authority.pojo.SysUser;
 import com.easy.cloud.core.authority.service.SysUserService;
 
@@ -19,7 +19,7 @@ import com.easy.cloud.core.authority.service.SysUserService;
 public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
-    private SysUserDAO sysUserDAO;
+    private SysUserDAO1 sysUserDAO1;
 
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
@@ -29,7 +29,7 @@ public class SysUserServiceImpl implements SysUserService {
 //        user.setId(UUID.randomUUID().toString());
         user.setUsername("alice");
         user.setPassword("123456");
-        sysUserDAO.save(user);
+//        sysUserDAO.save(user);
 //        user.insert();
 //        Aatest aatest = new Aatest();
 //        aatest.setProid("123");
@@ -49,10 +49,11 @@ public class SysUserServiceImpl implements SysUserService {
         user.setUsername("alice");
         user.setPassword("123");
 //        user.setId(UUID.randomUUID().toString());
-        sysUserDAO.save(user);
+//        sysUserDAO.save(user);
         System.err.println("查询插入结果：" + user.getUsername());
         user.setUsername("mybatis-plus-ar");
-        System.err.println("更新：" + sysUserDAO.update(user));
-        return sysUserDAO.listPage(null);
+//        System.err.println("更新：" + sysUserDAO.update(user));
+//        return sysUserDAO.listPage(null);
+        return null;
     }
 }

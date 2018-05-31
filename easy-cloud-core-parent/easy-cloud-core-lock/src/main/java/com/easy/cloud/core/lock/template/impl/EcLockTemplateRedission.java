@@ -74,9 +74,9 @@ public class EcLockTemplateRedission implements EcLockTemplate {
 	/** 根据完整的锁名获取锁 */
 	private RLock getLock(String lockNameFull, EcLockTypeEnum lockType) {
 		if (EcLockTypeEnum.isFair(lockType)) {
-			return redisson.getLock(lockNameFull);
-		} else if (EcLockTypeEnum.isUnfair(lockType)){
 			return redisson.getFairLock(lockNameFull);
+		} else if (EcLockTypeEnum.isUnfair(lockType)){
+			return redisson.getLock(lockNameFull);
 		} else if (EcLockTypeEnum.isRead(lockType)) {
 			return redisson.getReadWriteLock(lockNameFull).readLock();
 		} else if (EcLockTypeEnum.isWrite(lockType)) {

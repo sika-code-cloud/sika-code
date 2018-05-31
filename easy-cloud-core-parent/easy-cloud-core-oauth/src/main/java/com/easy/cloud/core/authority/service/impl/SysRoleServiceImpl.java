@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.easy.cloud.core.authority.dao.SysRoleDAO;
+import com.easy.cloud.core.authority.dao.SysRoleDAO1;
 import com.easy.cloud.core.authority.pojo.SysRole;
 import com.easy.cloud.core.authority.pojo.UserInfo;
 import com.easy.cloud.core.authority.service.SysRoleService;
@@ -19,9 +19,9 @@ import com.easy.cloud.core.authority.service.SysRoleService;
  */
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
-	private SysRoleDAO sysRoleDAO;
+	private SysRoleDAO1 sysRoleDAO1;
     @Override
     public List<SysRole> selectRoleByUser(UserInfo userInfo) throws Exception{
-        return sysRoleDAO.listPage(null);
+        return null;
     }
 }

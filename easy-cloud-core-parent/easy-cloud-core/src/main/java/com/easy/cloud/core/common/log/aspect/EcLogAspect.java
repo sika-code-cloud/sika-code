@@ -51,7 +51,7 @@ public class EcLogAspect {
 		try {
 			targetReturnValue = joinPoint.proceed();
 		} catch (Throwable e) {
-			throw new RuntimeException(e);
+			throw e;
 		} finally {
 			doLogLogic(joinPoint, beginTimeMillis, targetReturnValue);
 		}

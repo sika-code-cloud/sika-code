@@ -1,5 +1,6 @@
 package com.easy.cloud.core.jdbc.base.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
@@ -16,16 +17,18 @@ import com.easy.cloud.core.jdbc.primarykey.snowflake.EcPrimaryKeySnowflakeGenera
 
 /**
  * 
- * @ClassName : DqBaseDO 
+ * @ClassName : DqBaseDO
  * @Description : 所有持久化实体的基础类 --阿里规范手册建议实用DO为后缀--但是若包已do后缀结尾将报错--因此使用entity作为后缀
  * @author daiqi
- * @date 2017年12月4日 下午12:47:39 
+ * @date 2017年12月4日 下午12:47:39
  *
  */
 @MappedSuperclass
-public class EcBaseEntity {
+public class EcBaseEntity implements Serializable {
+
+	private static final long serialVersionUID = 5783615695698815587L;
 	@Id
-    @EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
+	@EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
 	private Long id;
 	@CreatedDate
 	private Date createDate;
@@ -37,11 +40,13 @@ public class EcBaseEntity {
 	private Long createBy;
 	@LastModifiedBy
 	private Long updateBy;
-	/** 删除标志  */
+	/** 删除标志 */
 	private Integer isDeleted;
+	/** 可用标志 */
+	private Integer available;
 	/** 备注 */
 	private String remark;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -89,17 +94,29 @@ public class EcBaseEntity {
 	public void setUpdateBy(Long updateBy) {
 		this.updateBy = updateBy;
 	}
+
 	public Integer getIsDeleted() {
 		return isDeleted;
 	}
+
 	public void setIsDeleted(Integer isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
+	public Integer getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Integer available) {
+		this.available = available;
+	}
+
 	public String getRemark() {
 		return remark;
 	}
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+
 }
