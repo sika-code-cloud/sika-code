@@ -10,22 +10,22 @@ import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
  */
 public class SysUserRoleEntity extends EcBaseEntity {
 	/** 用户id */
-	private String userId;
+	private Long userId;
 	/** 角色编号 */
 	private String roleNo;
 		
 	/** 获取用户id */
-	public String getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
 	/** 设置用户id */
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
 	/** 构建用户id */
-	public SysUserRoleEntity buildUserId(String userId) {
+	public SysUserRoleEntity buildUserId(Long userId) {
 		this.userId = userId;
 		return this;
 	}

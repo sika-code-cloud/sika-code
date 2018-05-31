@@ -1,5 +1,7 @@
 package com.easy.cloud.core.authority.realm;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,26 +14,24 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.easy.cloud.core.authority.pojo.SysPermission;
-import com.easy.cloud.core.authority.pojo.SysRole;
-import com.easy.cloud.core.authority.pojo.UserInfo;
+import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
+import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.service.SysUserService;
 
 public class EcAuthorityRealm extends AuthorizingRealm {
 	@Autowired
 	private SysUserService sysUserService;
-
+	@Autowired
+	private SysRoleService sysRoleService;
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		UserInfo userInfo = (UserInfo) principals.getPrimaryPrincipal();
-		for (SysRole role : userInfo.getRoleList()) {
-			authorizationInfo.addRole(role.getRole());
-			for (SysPermission p : role.getPermissions()) {
-				authorizationInfo.addStringPermission(p.getPermission());
-			}
+		SysUserDTO sysUserDTO = (SysUserDTO) principals.getPrimaryPrincipal();
+		List<SysRoleDTO> roleList = sysRoleService.findByUserId(sysUserDTO.getId());
+		for (SysRoleDTO role : roleList) {
+			authorizationInfo.addRole(role.getName());
 		}
 		return authorizationInfo;
 	}

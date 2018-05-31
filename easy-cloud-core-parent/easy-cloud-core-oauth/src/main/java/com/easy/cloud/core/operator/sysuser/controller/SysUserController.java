@@ -34,8 +34,8 @@ public class SysUserController extends EcBaseController {
 	@RequestMapping(value = "login")
 	public EcBaseServiceResult login(@RequestBody SysUserDTO sysUserDTO) {
 		return sysUserService.login(sysUserDTO);
-
 	}
+
 	@RequestMapping(value = "getCurrentUser")
 	public EcBaseServiceResult getCurrentUser() {
 		Subject subject = SecurityUtils.getSubject();

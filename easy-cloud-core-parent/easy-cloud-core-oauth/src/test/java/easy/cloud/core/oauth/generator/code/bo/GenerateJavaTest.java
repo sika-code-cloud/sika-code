@@ -53,7 +53,7 @@ public class GenerateJavaTest {
 	private String basePackageName = "com.easy.cloud.core.operator";
 
 	// 表名
-	private String tableName = "sys_role_resource";
+	private String tableName = "sys_role";
 	// 模块包名
 	private String moduleName;
 	// 类主体名称
@@ -108,15 +108,15 @@ public class GenerateJavaTest {
 		// 数据库配置信息
 		databaseAbstactConfig = new EcDataBaseMysqlConfig();
 		// 设置数据库基础url
-		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://localhost");
+		databaseAbstactConfig.buildDatabaseBaseUrl("jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com");
 		// 设置数据库端口号
 		databaseAbstactConfig.buildDatabasePort("3306");
 		// 设置数据库名称
 		databaseAbstactConfig.buildDatabaseName("dq_easy_cloud");
 		// 设置数据库用户名
-		databaseAbstactConfig.buildDatabaseUserName("root");
+		databaseAbstactConfig.buildDatabaseUserName("dq_easy_cloud");
 		// 设置数据库密码
-		databaseAbstactConfig.buildDatabasePassword("123456");
+		databaseAbstactConfig.buildDatabasePassword("dq_easy_cloud123");
 		// 设置数据库表名
 		databaseAbstactConfig.buildTableName(tableName);
 

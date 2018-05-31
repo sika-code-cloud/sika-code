@@ -31,11 +31,11 @@ public class SysRoleServiceImpl extends EcBaseService implements SysRoleService 
 		sysRoleDAO.save(roleEntity);
 		return EcBaseServiceResult.newInstanceOfSucResult(roleEntity);
 	}
-
-	public List<SysRoleEntity> findByUserId(Long userId) {
+	
+	public List<SysRoleDTO> findByUserId(Long userId) {
 		SysRoleQuery query = new SysRoleQuery();
 		query.setUserId(userId);
-		return sysRoleDAO.listByQuery(query);
+		return EcJSONUtils.parseArray(sysRoleDAO.listByQuery(query), SysRoleDTO.class);
 	}
 
 }

@@ -15,5 +15,5 @@ import com.easy.cloud.core.operator.sysrole.pojo.entity.SysRoleEntity;
 public interface SysRoleService {
 	public EcBaseServiceResult save(SysRoleDTO roleDTO);
 
-	public List<SysRoleEntity> findByUserId(Long userId);
+	public List<SysRoleDTO> findByUserId(Long userId);
 }
