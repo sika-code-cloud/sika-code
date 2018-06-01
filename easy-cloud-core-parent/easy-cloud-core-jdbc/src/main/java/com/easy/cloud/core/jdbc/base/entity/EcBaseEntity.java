@@ -1,6 +1,5 @@
 package com.easy.cloud.core.jdbc.base.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
@@ -24,9 +23,8 @@ import com.easy.cloud.core.jdbc.primarykey.snowflake.EcPrimaryKeySnowflakeGenera
  *
  */
 @MappedSuperclass
-public class EcBaseEntity implements Serializable {
+public class EcBaseEntity {
 
-	private static final long serialVersionUID = 5783615695698815587L;
 	@Id
 	@EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
 	private Long id;

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -13,7 +12,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.crazycake.shiro.SerializeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +20,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.yaml.snakeyaml.Yaml;
 
-import com.easy.cloud.core.authority.manager.EcRedisManager;
 import com.easy.cloud.core.authority.manager.EcSessionManager;
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
 import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
@@ -122,14 +119,13 @@ public class EcAuthorityConfig {
 	 * @return
 	 */
 	public RedisManager redisManager() {
-		EcRedisManager redisManager = new EcRedisManager(redisProperties);
+		RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host);
 		redisManager.setPort(port);
 		// 配置缓存过期时间
-		redisManager.setExpire(1800);
 		redisManager.setTimeout(timeout);
-		redisManager.setPassword(password);
-		redisManager.init();
+//		redisManager.setPassword(password);
+		redisManager.setJedisPoolConfig(redisProperties);
 		return redisManager;
 	}
 
@@ -173,11 +169,9 @@ public class EcAuthorityConfig {
 	}
 
 	public static void main(String[] args) {
-		EcRedisManager redisManager = new EcRedisManager();
+		RedisManager redisManager = new RedisManager();
 		redisManager.setHost("120.78.74.169");
 		redisManager.setPort(6379);
 		byte[] b = redisManager.get("d353c7b9-7425-4818-a4b7-5641183074a7".getBytes());
-		Session s = (Session) SerializeUtils.deserialize(b);
-		System.out.println(s.getId());
 	}
 }

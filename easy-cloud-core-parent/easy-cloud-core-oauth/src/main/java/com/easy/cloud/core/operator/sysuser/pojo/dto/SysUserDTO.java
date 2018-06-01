@@ -1,5 +1,7 @@
 package com.easy.cloud.core.operator.sysuser.pojo.dto;
 
+import java.io.Serializable;
+
 import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 
 public class SysUserDTO extends EcBaseDTO {
