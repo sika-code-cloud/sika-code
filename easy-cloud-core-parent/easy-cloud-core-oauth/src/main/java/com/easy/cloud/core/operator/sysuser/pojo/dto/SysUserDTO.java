@@ -1,10 +1,10 @@
 package com.easy.cloud.core.operator.sysuser.pojo.dto;
 
-import java.io.Serializable;
+import org.crazycake.shiro.AuthCachePrincipal;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 
-public class SysUserDTO extends EcBaseDTO {
+public class SysUserDTO extends EcBaseDTO implements AuthCachePrincipal{
 	
 	private static final long serialVersionUID = -4233594150543768075L;
 	/** 手机号 */
@@ -56,5 +56,10 @@ public class SysUserDTO extends EcBaseDTO {
 
 	public void setLocked(Integer locked) {
 		this.locked = locked;
+	}
+
+	@Override
+	public String getAuthCacheKey() {
+		return username;
 	}
 }
