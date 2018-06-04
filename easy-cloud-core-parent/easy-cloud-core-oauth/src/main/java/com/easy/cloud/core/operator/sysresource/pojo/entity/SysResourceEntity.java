@@ -23,7 +23,23 @@ public class SysResourceEntity extends EcBaseEntity {
 	private String parentNos;
 	/** 权限字符串 */
 	private String permission;
-		
+
+	public SysResourceEntity() {
+		super();
+	}
+
+	public SysResourceEntity(Integer resourceNo, String name, String type, String url, Integer parentNo,
+			String parentNos, String permission) {
+		super();
+		this.resourceNo = resourceNo;
+		this.name = name;
+		this.type = type;
+		this.url = url;
+		this.parentNo = parentNo;
+		this.parentNos = parentNos;
+		this.permission = permission;
+	}
+
 	/** 获取资源编号 */
 	public Integer getResourceNo() {
 		return this.resourceNo;

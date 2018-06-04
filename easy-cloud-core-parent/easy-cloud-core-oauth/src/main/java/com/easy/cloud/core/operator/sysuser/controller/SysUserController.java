@@ -39,6 +39,6 @@ public class SysUserController extends EcBaseController {
 	@RequestMapping(value = "getCurrentUser")
 	public EcBaseServiceResult getCurrentUser() {
 		Subject subject = SecurityUtils.getSubject();
-		return EcBaseServiceResult.newInstanceOfSucResult(subject.getSession().getAttribute("user"));
+		return EcBaseServiceResult.newInstanceOfSucResult(subject.getPrincipal());
 	}
 }

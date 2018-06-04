@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
-import com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity;
 
 /**
  * 描述：服务接口
@@ -15,5 +14,5 @@ import com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity;
 public interface SysResourceService {
 	EcBaseServiceResult save(SysResourceDTO resourceDTO);
 	
-	List<SysResourceEntity> findByRoleNos(List<Integer> roleNos);
+	List<SysResourceDTO> findByRoleNos(List<Integer> roleNos);
 }

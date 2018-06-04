@@ -44,7 +44,7 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
 	@Autowired
 	private SysUserDAO sysUserDAO;
 	
-	@Transactional(readOnly = false, isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
+	@Transactional(readOnly = false, isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
 	public EcBaseServiceResult register(SysUserDTO sysUserDTO) {
 		sysUserDTO.setSalt(EcStringUtils.generateUUID());
 		Object obj = new SimpleHash("MD5", sysUserDTO.getPassword(), sysUserDTO.getSalt(), 2);
@@ -61,8 +61,8 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
         Map<String, Object> retMap = new HashMap<>();
         try {
             subject.login(token);
-            subject.getSession().setAttribute("user", subject.getPrincipal());
             retMap.put("token", subject.getSession().getId());
+            retMap.put("user", subject.getPrincipal());
             retMap.put("msg", "登录成功");
         } catch (IncorrectCredentialsException e) {
         	e.printStackTrace();

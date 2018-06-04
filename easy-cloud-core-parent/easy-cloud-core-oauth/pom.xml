@@ -17,7 +17,7 @@
 	<properties>
 
 		<shiro.version>1.4.0</shiro.version>
-		<shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
+		<shiro-redis.version>3.0.0</shiro-redis.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +35,15 @@
 			<artifactId>shiro-redis</artifactId>
 			<version>${shiro-redis.version}</version>
 		</dependency>
+		 <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+    	</dependency>
+
+				
 		<!-- 导入easy-cloud-core相关依赖 -->
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
@@ -50,14 +59,6 @@
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core-jdbc</artifactId>
 			<version>${easy.cloud.core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jta-narayana</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jta-narayana</artifactId>
 		</dependency>
 	</dependencies>
 </project>
