@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.annotation.Attr;
 import com.geccocrawler.gecco.annotation.Gecco;
-import com.geccocrawler.gecco.annotation.Href;
 import com.geccocrawler.gecco.annotation.HtmlField;
 import com.geccocrawler.gecco.annotation.PipelineName;
 import com.geccocrawler.gecco.annotation.Request;
@@ -167,7 +166,6 @@ public class SinaList implements HtmlBean, Pipeline<SinaList> {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -177,12 +175,14 @@ public class SinaList implements HtmlBean, Pipeline<SinaList> {
 	public static void main(String[] args) {
 		GeccoEngine.create()
 		.classpath("easy.cloud.core.reptile.sina")
-		.start("http://tl.cyg.changyou.com?page_num=1")
+		.start("http://tl.cyg.changyou.com?page_num=1", "http://tl.cyg.changyou.com/goods/char_detail?serial_num=201805281738313284")
 		.thread(1)
 		// 单个爬虫每次抓取完一个请求后的间隔时间
 		.interval(1000)
 		.loop(true)
 		// 使用pc端userAgent
-		.mobile(false).start();
+		.mobile(false)
+		.debug(false)
+		.start();
 	}
 }

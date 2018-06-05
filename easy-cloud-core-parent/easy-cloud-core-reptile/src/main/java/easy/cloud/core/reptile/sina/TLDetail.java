@@ -2,14 +2,11 @@ package easy.cloud.core.reptile.sina;
 
 import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.annotation.Gecco;
 import com.geccocrawler.gecco.annotation.HtmlField;
 import com.geccocrawler.gecco.annotation.PipelineName;
 import com.geccocrawler.gecco.annotation.RequestParameter;
-import com.geccocrawler.gecco.annotation.Text;
 import com.geccocrawler.gecco.pipeline.Pipeline;
 import com.geccocrawler.gecco.spider.HtmlBean;
 import com.geccocrawler.gecco.spring.SpringPipelineFactory;
@@ -58,8 +55,7 @@ public class TLDetail implements HtmlBean, Pipeline<TLDetail> {
 	public static void main(String[] args) {
 		GeccoEngine.create()
 		.classpath("easy.cloud.core.reptile.sina")
-		.start("http://tl.cyg.changyou.com/goods/char_detail?serial_num=201805011110284536")
-		.pipelineFactory(new SpringPipelineFactory())
+		.start("http://tl.cyg.changyou.com/goods/char_detail?serial_num=201805281738313284")
 		.run();
 	}
 

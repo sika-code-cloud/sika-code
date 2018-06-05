@@ -1,39 +1,25 @@
 package easy.cloud.core.reptile;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.geccocrawler.gecco.GeccoEngine;
-import com.geccocrawler.gecco.spring.SpringGeccoEngine;
+import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
+
+import easy.cloud.core.reptile.dynamic.DynamicRuleTest;
 
 /**
  * Hello world!
  *
  */
 @SpringBootApplication
+@ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD})
 @Configuration
 public class EcCoreReptileApplication {
-	@Autowired
-	private static SpringGeccoEngine sge;
-	public static void main(String[] args) {
-		System.out.println("Hello World!");
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(EcCoreReptileApplication.class, args);
+		DynamicRuleTest.init();
 	}
 	
-	@Bean
-	public SpringGeccoEngine initGecco() {
-		return new SpringGeccoEngine() {
-			@Override
-			public void init() {
-				GeccoEngine.create()
-				.pipelineFactory(springPipelineFactory)
-				.classpath("easy.cloud.core.reptile")
-				.start("https://github.com/xtuhcy/gecco")
-				.interval(3000)
-				.loop(true)
-				.start();
-			}
-		};
-	}
 }
