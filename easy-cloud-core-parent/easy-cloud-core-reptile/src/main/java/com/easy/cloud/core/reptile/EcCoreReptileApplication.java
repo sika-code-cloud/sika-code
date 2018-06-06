@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
-import com.easy.cloud.core.reptile.dynamic.DynamicRuleTest;
 
 /**
  * 爬虫启动类
@@ -18,7 +17,5 @@ import com.easy.cloud.core.reptile.dynamic.DynamicRuleTest;
 public class EcCoreReptileApplication {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(EcCoreReptileApplication.class, args);
-		DynamicRuleTest.init();
 	}
-	
 }

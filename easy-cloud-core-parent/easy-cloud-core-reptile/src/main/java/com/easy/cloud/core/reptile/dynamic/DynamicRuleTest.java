@@ -2,9 +2,13 @@ package com.easy.cloud.core.reptile.dynamic;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.xalan.xsltc.compiler.sym;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.easy.cloud.core.reptile.constant.EcReptileConstant;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.dynamic.DynamicGecco;
 import com.geccocrawler.gecco.dynamic.JavassistDynamicBean;
@@ -28,7 +32,7 @@ import javassist.NotFoundException;
 public class DynamicRuleTest {
 
 	public static void main(String[] args) throws Exception {
-		init();
+		new DynamicRuleTest().init();
 //		makeclass("HelloController", "hello", "name", "");	
 	}
 	private static GeccoEngine geccoEngine;
@@ -37,7 +41,8 @@ public class DynamicRuleTest {
 	public void setGeccoEngine(GeccoEngine geccoEngine) {
 		DynamicRuleTest.geccoEngine = geccoEngine;
 	}
-	public static void init() throws Exception {
+	@PostConstruct
+	public void init() {
 		// 初始化爬虫引擎，此时由于没有初始请求，爬虫引擎会阻塞初始队列，直到获取到初始请求
 		//初始化爬虫引擎，此时由于没有初始请求，爬虫引擎会阻塞初始队列，直到获取到初始请求
 //		GeccoEngine ge = GeccoEngine.create("com.easy.cloud.core.reptile.pipeline")		
@@ -49,15 +54,18 @@ public class DynamicRuleTest {
 		//定义爬取规则
 		Class<?> rule = DynamicGecco
 		.html()
-		.gecco(new String []{"http://tl.cyg.changyou.com/goods/char_detail?serial_num={code}", "http://tl.cyg.changyou.com"}, "ecPipelineTest")
-		.stringField("title").csspath(".repository-meta-content").text(false).build()
-		.stringField("star").csspath(".pagehead-actions li:nth-child(2) .social-count").text(false).build()
-		.intField("fork").csspath(".pagehead-actions > li:nth-child(3) > a:nth-child(2)").text().build()
+		.gecco(new String []{EcReptileConstant.MATCH_URL_DETAIL, EcReptileConstant.MATCH_URL_INDEX}, "ecPipelineTest")
+		.stringField("menpai").csspath("div#goods-detail.goods-detail div.tab-cont-item.role div.left.w323 div.role-show span.fn-other-menpai").text(false).build()
+		.stringField("roleName").csspath("div#goods-detail.goods-detail div.tab-cont-item.role div.right.w222.fn-clearfix div.box2.h422 div.row2 span.span.fn-mr20").text(false).build()
+		.stringField("service").csspath("div.goods-info ul.info-list li p.server-info.J-message").attr("title").build()
 		.stringField("price").csspath("div.goods-info ul.info-list li p span.ui-money-color.ui-money-size").text().build()
 		.loadClass();
-		geccoEngine.getScheduler().into(new HttpGetRequest("http://tl.cyg.changyou.com"));
-				
-
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		geccoEngine.getScheduler().into(new HttpGetRequest(EcReptileConstant.MATCH_URL_INDEX));
 		// 注册规则
 		geccoEngine.register(rule);
 		// 定义爬取规则
