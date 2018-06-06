@@ -23,7 +23,6 @@ public class EcReptileConfig {
 	
 	@Autowired
 	private EcReptileEngineProperties reptileEngineProperties;
-	
 	@Bean
 	public GeccoEngine geccoEngine() {
 		GeccoEngine ge = GeccoEngine.create();
@@ -37,4 +36,5 @@ public class EcReptileConfig {
 		ge.engineStart();
 		return ge;
 	}
+	
 }
