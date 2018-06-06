@@ -1,4 +1,4 @@
-package easy.cloud.core.reptile.common;
+package com.easy.cloud.core.reptile.common;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.annotation.HtmlField;

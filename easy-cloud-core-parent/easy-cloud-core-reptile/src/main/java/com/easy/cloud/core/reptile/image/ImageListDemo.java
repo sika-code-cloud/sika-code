@@ -1,4 +1,4 @@
-package easy.cloud.core.reptile.image;
+package com.easy.cloud.core.reptile.image;
 
 import java.util.List;
 

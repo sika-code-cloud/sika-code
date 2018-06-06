@@ -12,6 +12,10 @@
 		<artifactId>easy-cloud-core-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
+	<properties>
+		<elasticsearch.version>5.5.0</elasticsearch.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,35 +43,45 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-elasticsearch</artifactId>
 			<version>3.0.7.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.elasticsearch</groupId>
-					<artifactId>elasticsearch</artifactId>
-				</exclusion>
-				<exclusion>
-                    <groupId>org.elasticsearch.client</groupId>
-                    <artifactId>transport</artifactId>
-				</exclusion>
-			</exclusions>
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.elasticsearch</groupId>-->
+					<!--<artifactId>elasticsearch</artifactId>-->
+				<!--</exclusion>-->
+				<!--<exclusion>-->
+                    <!--<groupId>org.elasticsearch.client</groupId>-->
+                    <!--<artifactId>transport</artifactId>-->
+				<!--</exclusion>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.elasticsearch.plugin</groupId>-->
+					<!--<artifactId>transport-netty4-client</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
 		</dependency>
 
-		<dependency>
-			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>transport</artifactId>
-			<version>6.2.4</version>
-		</dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.elasticsearch.plugin</groupId>-->
+            <!--<artifactId>transport-netty4-client</artifactId>-->
+            <!--<version>6.2.4</version>-->
+        <!--</dependency>-->
 
-		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
-			<version>6.2.4</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.elasticsearch.client</groupId>-->
+			<!--<artifactId>transport</artifactId>-->
+			<!--<version>6.2.4</version>-->
+		<!--</dependency>-->
 
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId>
-            <version>6.2.4</version>
-        </dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.elasticsearch</groupId>-->
+			<!--<artifactId>elasticsearch</artifactId>-->
+			<!--<version>6.2.4</version>-->
+		<!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.elasticsearch.client</groupId>-->
+            <!--<artifactId>elasticsearch-rest-client</artifactId>-->
+            <!--<version>6.2.4</version>-->
+        <!--</dependency>-->
 
 		<!--<dependency>-->
 			<!--<groupId>com.sun.jna</groupId>-->
@@ -75,9 +89,19 @@
 		<!--</dependency>-->
 
         <dependency>
-            <groupId>io.searchbox</groupId>  
-            <artifactId>jest</artifactId>  
-        </dependency>  
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+        </dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.data</groupId>-->
+			<!--<artifactId>spring-data-commons</artifactId>-->
+			<!--<version>2.0.5.RELEASE</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.elasticsearch</groupId>-->
+			<!--<artifactId>elasticsearch</artifactId>-->
+			<!--<version>5.5.0</version>-->
+		<!--</dependency>-->
 	</dependencies>
 
 </project>

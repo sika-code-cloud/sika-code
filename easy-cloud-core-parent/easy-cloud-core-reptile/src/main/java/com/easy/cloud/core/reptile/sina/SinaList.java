@@ -1,4 +1,4 @@
-package easy.cloud.core.reptile.sina;
+package com.easy.cloud.core.reptile.sina;
 
 import java.util.List;
 
