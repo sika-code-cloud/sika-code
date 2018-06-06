@@ -1,4 +1,4 @@
-package easy.cloud.core.reptile.github;
+package com.easy.cloud.core.reptile.github;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.annotation.Gecco;
