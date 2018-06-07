@@ -153,7 +153,13 @@ public class EcCodeGenerateUtils {
 		}
 		String tempColumnType = EcStringUtils.lowerCase(columnType);
 		JdbcType jdbcType = null;
-		if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
+		if (tempColumnType.contains("bit")) {
+			jdbcType = JdbcType.BIT;
+		} else if (tempColumnType.contains("tinyint")) {
+			jdbcType = JdbcType.TINYINT;
+		} else if (tempColumnType.contains("smallint")) {
+			jdbcType = JdbcType.SMALLINT;
+		} else if (tempColumnType.contains("int") && !tempColumnType.contains("bigint")) {
 			jdbcType = JdbcType.INTEGER;
 		} else if (tempColumnType.contains("float")) {
 			jdbcType = JdbcType.FLOAT;

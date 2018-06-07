@@ -45,7 +45,7 @@ public class EcGenerateXmlMybatisData {
 	}
 	
 	public String getJdbcType() {
-		return EcCodeGenerateUtils.getIbatisJdbcTypeOfMysql(colunmType);
+ 		return EcCodeGenerateUtils.getIbatisJdbcTypeOfMysql(colunmType);
 	}
 	
 	public String getPropertyFullType() {

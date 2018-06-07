@@ -21,7 +21,7 @@ import com.easy.cloud.core.common.log.proxy.impl.EcLogServiceProxy;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogServiceProxy.class, type = EcLogTypeEnum.SERVICE)
+@EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogLevelEnum.INFO, proxyClass = EcLogServiceProxy.class, type = EcLogTypeEnum.SERVICE)
 public class EcBaseService {
 
 }
