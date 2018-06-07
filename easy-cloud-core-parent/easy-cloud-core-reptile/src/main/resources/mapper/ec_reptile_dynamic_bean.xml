@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easy.cloud.core.reptile.dynamicbean.dao.EcReptileDynamicBeanDAO">
+    <!-- 根节点 -->
+    <!-- 设置resultMap -->
+    <resultMap id="EcReptileDynamicBeanEntity" type="com.easy.cloud.core.reptile.dynamicbean.pojo.entity.EcReptileDynamicBeanEntity">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="create_by" jdbcType="BIGINT" property="createBy" />
+        <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="available" jdbcType="INTEGER" property="available" />
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+        <result column="bean_type" jdbcType="INTEGER" property="beanType" />
+        <result column="match_url" jdbcType="VARCHAR" property="matchUrl" />
+        <result column="match_url_type" jdbcType="INTEGER" property="matchUrlType" />
+        <result column="dynamic_bean_no" jdbcType="INTEGER" property="dynamicBeanNo" />
+        <result column="dynamic_bean_parent_no" jdbcType="VARCHAR" property="dynamicBeanParentNo" />
+        <result column="pipeline_name" jdbcType="VARCHAR" property="pipelineName" />
+        <result column="bean_name_body" jdbcType="VARCHAR" property="beanNameBody" />
+        <result column="bean_name_suffix" jdbcType="VARCHAR" property="beanNameSuffix" />
+    </resultMap>
+    <!-- 设置columnList -->
+    <sql id="columnList">erdb.id,erdb.create_by,erdb.update_by,erdb.create_date,erdb.update_date,erdb.version,erdb.available,erdb.is_deleted,erdb.bean_type,erdb.match_url,erdb.match_url_type,erdb.dynamic_bean_no,erdb.dynamic_bean_parent_no,erdb.pipeline_name,erdb.bean_name_body,erdb.bean_name_suffix</sql>
+    <!-- 根据id获取对象信息 -->
+    <select id="findById" resultMap="EcReptileDynamicBeanEntity" parameterType="java.lang.Long">
+        SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_dynamic_bean erdb 
+		WHERE erdb.id = #{id, jdbcType=BIGINT}
+    </select>
+    <!-- 统计列表数量 -->
+    <select id="listCount" resultType="java.lang.Integer" parameterType="map">SELECT count(*)
+		FROM ec_reptile_dynamic_bean erdb</select>
+    <!-- 获取列表分页信息 -->
+    <select id="listPage" resultMap="EcReptileDynamicBeanEntity" parameterType="map">
+        SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_dynamic_bean erdb 
+		LIMIT #{maps.start},#{maps.pageSize}
+    </select>
+    <!-- 设置column -->
+    <sql id="setColumnSql">
+        <set>
+            <if test="id != null">id = #{id, jdbcType=BIGINT},</if>
+            <if test="createBy != null">create_by = #{createBy, jdbcType=BIGINT},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="version != null">version = #{version, jdbcType=INTEGER},</if>
+            <if test="available != null">available = #{available, jdbcType=INTEGER},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
+            <if test="beanType != null">bean_type = #{beanType, jdbcType=INTEGER},</if>
+            <if test="matchUrl != null">match_url = #{matchUrl, jdbcType=VARCHAR},</if>
+            <if test="matchUrlType != null">match_url_type = #{matchUrlType, jdbcType=INTEGER},</if>
+            <if test="dynamicBeanNo != null">dynamic_bean_no = #{dynamicBeanNo, jdbcType=INTEGER},</if>
+            <if test="dynamicBeanParentNo != null">dynamic_bean_parent_no = #{dynamicBeanParentNo, jdbcType=VARCHAR},</if>
+            <if test="pipelineName != null">pipeline_name = #{pipelineName, jdbcType=VARCHAR},</if>
+            <if test="beanNameBody != null">bean_name_body = #{beanNameBody, jdbcType=VARCHAR},</if>
+            <if test="beanNameSuffix != null">bean_name_suffix = #{beanNameSuffix, jdbcType=VARCHAR},</if>
+        </set>
+    </sql>
+    <!-- 保存对象 -->
+    <insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.reptile.dynamicbean.pojo.entity.EcReptileDynamicBeanEntity" keyProperty="id">
+        INSERT INTO ec_reptile_dynamic_bean
+        <include refid="setColumnSql" />
+    </insert>
+    <!-- 更新对象 -->
+    <update id="update" parameterType="com.easy.cloud.core.reptile.dynamicbean.pojo.entity.EcReptileDynamicBeanEntity">
+        UPDATE ec_reptile_dynamic_bean erdb
+        <include refid="setColumnSql" />
+        WHERE erdb.id = #{id, jdbcType=BIGINT}
+    </update>
+    
+    <!-- 获取列表分页信息 -->
+    <select id="listByQuery" resultMap="EcReptileDynamicBeanEntity" parameterType="com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery">
+        SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_dynamic_bean erdb 
+		WHERE 
+		<if test="query.beanType != null">
+			erdb.bean_type = #{query.beanType, jdbcType=INTEGER}
+		</if>
+		<if test="query.reptileDynamicBeanId != null">
+			AND erdb.reptile_dynamic_bean_id = #{query.reptileDynamicBeanId, jdbcType=INTEGER}
+		</if>
+    </select>
+</mapper>
