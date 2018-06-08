@@ -3,6 +3,7 @@ package com.easy.cloud.core.reptile.dynamicbean.pojo.dto;
 import java.util.List;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
+import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.reptile.datafield.pojo.dto.EcReptileDataFieldDTO;
 
@@ -30,7 +31,8 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	private String beanNameBody;
 	/** beanName后缀 */
 	private String beanNameSuffix;
-
+	/** 匹配的url列表 */
+	private List<String> matchUrls;
 	/** 获取爬虫动态bean的类型 */
 	public Integer getBeanType() {
 		return this.beanType;
@@ -122,8 +124,15 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 		this.reptileDataFieldDTOs = reptileDataFieldDTOs;
 	}
 
+	public void setMatchUrls(List<String> matchUrls) {
+		this.matchUrls = matchUrls;
+	}
+
 	public List<String> getMatchUrls() {
-		return EcJSONUtils.parseArray(matchUrl, String.class);
+		if (EcCollectionsUtils.isEmpty(matchUrls)) {
+			matchUrls = EcJSONUtils.parseArray(matchUrl, String.class);
+		}
+		return matchUrls;
 	}
 
 	public String getBeanNameFull() {

@@ -12,7 +12,7 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
 public class EcReptileDataFieldDTO extends EcBaseDTO {
 	private static final long serialVersionUID = -8515203586926585098L;
 	/** 爬虫动态beanid */
-	private Long reptileDynamicBeanId;
+	private Integer dynamicBeanNo;
 	/** 属性对应的路径若valueSource为ajax则为请求的url，否则为cssPath */
 	private String path;
 	/** 值的来源 1:text 2:html 3:href 4:image 5:attr 6:ajax 7: ... */
@@ -30,14 +30,12 @@ public class EcReptileDataFieldDTO extends EcBaseDTO {
 	/** 生成bean的属性类型 支持string、int、long、float、double、list、ref类型 */
 	private String fieldType;
 		
-	/** 获取爬虫动态beanid */
-	public Long getReptileDynamicBeanId() {
-		return this.reptileDynamicBeanId;
+	public Integer getDynamicBeanNo() {
+		return dynamicBeanNo;
 	}
 
-	/** 设置爬虫动态beanid */
-	public void setReptileDynamicBeanId(Long reptileDynamicBeanId) {
-		this.reptileDynamicBeanId = reptileDynamicBeanId;
+	public void setDynamicBeanNo(Integer dynamicBeanNo) {
+		this.dynamicBeanNo = dynamicBeanNo;
 	}
 
 	/** 获取属性对应的路径若valueSource为ajax则为请求的url，否则为cssPath */
