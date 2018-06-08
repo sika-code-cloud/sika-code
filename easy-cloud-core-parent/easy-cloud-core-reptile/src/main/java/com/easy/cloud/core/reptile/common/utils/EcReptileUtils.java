@@ -147,9 +147,7 @@ public class EcReptileUtils {
 				dynamicField = buildDynamicValueSource(dynamicField, dynamicBean, dataFieldDTO);
 				dynamicField.build();
 			} else {
-				if (dynamicBean.existField(dataFieldDTO.getFieldName()) != null) {
-					dynamicBean.removeField(dataFieldDTO.getFieldName());
-				}
+				dynamicBean.removeField(dataFieldDTO.getFieldName());
 			}
 		}
 	}
