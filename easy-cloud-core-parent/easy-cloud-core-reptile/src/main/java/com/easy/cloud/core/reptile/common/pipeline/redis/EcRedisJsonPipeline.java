@@ -10,7 +10,7 @@ import com.geccocrawler.gecco.annotation.PipelineName;
 public class EcRedisJsonPipeline extends EcBaseJsonPipeline{
 
 	@Override
-	public void process(JSONObject jo) {
+	public void doProcess(JSONObject jo) {
 		System.out.println(Thread.currentThread().getName() + "---redis获取到的数据：" + JSONObject.toJSONString(jo));
 		JSONArray jsonArray = jo.getJSONArray("roleDetail");
 		JSONArray newJsonArray = new JSONArray();
