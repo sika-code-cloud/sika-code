@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.easy.cloud.core.reptile.common.constant.EcReptileConstant;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.dynamic.DynamicGecco;
+import com.geccocrawler.gecco.request.HttpGetRequest;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -36,7 +37,7 @@ public class DynamicRuleTest {
 	@Autowired
 	private GeccoEngine geccoEngine;
 
-	@PostConstruct
+//	@PostConstruct
 	public void init() {
 		// 初始化爬虫引擎，此时由于没有初始请求，爬虫引擎会阻塞初始队列，直到获取到初始请求
 		// 初始化爬虫引擎，此时由于没有初始请求，爬虫引擎会阻塞初始队列，直到获取到初始请求
@@ -50,14 +51,9 @@ public class DynamicRuleTest {
 		// 定义爬取规则
 		Class<?> rule = DynamicGecco.html()
 				.gecco(new String[]{EcReptileConstant.MATCH_URL_DETAIL, EcReptileConstant.MATCH_URL_INDEX},"ecPipelineTest")
-				.stringField("menpai")
-				.csspath(
-						"div#goods-detail.goods-detail div.tab-cont-item.role div.left.w323 div.role-show span.fn-other-menpai")
-				.text(false).build().stringField("roleName")
-				.csspath(
-						"div#goods-detail.goods-detail div.tab-cont-item.role div.right.w222.fn-clearfix div.box2.h422 div.row2 span.span.fn-mr20")
-				.text(false).build().stringField("service")
-				.csspath("div.goods-info ul.info-list li p.server-info.J-message").attr("title").build()
+				.stringField("menpai").csspath("div#goods-detail.goods-detail div.tab-cont-item.role div.left.w323 div.role-show span.fn-other-menpai").text(false).build()
+				.stringField("roleName").csspath("div#goods-detail.goods-detail div.tab-cont-item.role div.right.w222.fn-clearfix div.box2.h422 div.row2 span.span.fn-mr20").text(false).build()
+				.stringField("service").csspath("div.goods-info ul.info-list li p.server-info.J-message").attr("title").build()
 				.stringField("price").csspath("div.goods-info ul.info-list li p span.ui-money-color.ui-money-size")
 				.text().build().loadClass();
 		try {
@@ -70,44 +66,24 @@ public class DynamicRuleTest {
 		// 注册规则
 		geccoEngine.register(rule);
 		// 定义爬取规则
-		// Class<?> rule1 = DynamicGecco.html()
-		// .gecco(new String[] { "https://github.com/dqeasycloud/easy-cloud" },
-		// "testPipeline1")
-		// .stringField("title").csspath(".repository-meta-content").text(false).build()
-		// .stringField("star").csspath(".pagehead-actions li:nth-child(2)
-		// .social-count").text(false).build()
-		// .intField("fork").csspath(".pagehead-actions > li:nth-child(3) >
-		// a:nth-child(2)").text().build()
-		// .loadClass();
-		//
-		// // 注册规则
-		// ge.register(rule1);
-		// // 加入初始请求，爬虫引擎开始工作
-		// ge.getScheduler().into(new
-		// HttpGetRequest("https://github.com/dqeasycloud/easy-cloud"));
-		//
-		// Thread.sleep(5000);
-		//
-		// System.out.println("修改规则");
-		// Class<?> newRule = null;
-		// try {
-		// // 开始更新规则
-		// ge.beginUpdateRule();
-		// // 修改规则
-		// newRule =
-		// DynamicGecco.html(rule.getName()).gecco("https://github.com/xtuhcy/gecco",
-		// "consolePipeline")
-		// // .intField("fork").csspath(".pagehead-actions
-		// // li:nth-child(3) .social-count").text().build()
-		// .removeField("star").loadClass();
-		// // 注册新规则
-		// ge.register(newRule);
-		// } catch (Exception ex) {
-		// ex.printStackTrace();
-		// } finally {
-		// // 规则更新完毕
-		// ge.endUpdateRule();
-		// }
+		 System.out.println("修改规则");
+		 Class<?> newRule = null;
+		 try {
+		 // 开始更新规则
+			 geccoEngine.beginUpdateRule();
+		 // 修改规则
+		 newRule = DynamicGecco.html(rule.getName()).gecco("https://github.com/xtuhcy/gecco", "consolePipeline")
+		 // .intField("fork").csspath(".pagehead-actions
+		 // li:nth-child(3) .social-count").text().build()
+		 .removeField("star").loadClass();
+		 // 注册新规则
+		 geccoEngine.register(newRule);
+		 } catch (Exception ex) {
+		 ex.printStackTrace();
+		 } finally {
+		 // 规则更新完毕
+			 geccoEngine.endUpdateRule();
+		 }
 		//
 		// Thread.sleep(5000);
 		//

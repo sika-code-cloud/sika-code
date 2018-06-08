@@ -12,7 +12,7 @@
 		<result column="version" jdbcType="INTEGER" property="version" />
 		<result column="available" jdbcType="INTEGER" property="available" />
 		<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
-		<result column="reptile_dynamic_bean_id" jdbcType="BIGINT" property="reptileDynamicBeanId" />
+		<result column="dynamic_bean_no" jdbcType="BIGINT" property="dynamicBeanNo" />
 		<result column="path" jdbcType="VARCHAR" property="path" />
 		<result column="value_source" jdbcType="INTEGER" property="valueSource" />
 		<result column="value_source_type" jdbcType="INTEGER" property="valueSourceType" />
@@ -24,7 +24,7 @@
 	</resultMap>
 	<!-- 设置columnList -->
 	<sql id="columnList" >
-		erdf.id,erdf.create_by,erdf.update_by,erdf.create_date,erdf.update_date,erdf.version,erdf.available,erdf.is_deleted,erdf.reptile_dynamic_bean_id,erdf.path,erdf.value_source,erdf.value_source_type,erdf.download_path,erdf.field_value,erdf.value_flag,erdf.field_name,erdf.field_type
+		erdf.id,erdf.create_by,erdf.update_by,erdf.create_date,erdf.update_date,erdf.version,erdf.available,erdf.is_deleted,erdf.dynamic_bean_no,erdf.path,erdf.value_source,erdf.value_source_type,erdf.download_path,erdf.field_value,erdf.value_flag,erdf.field_name,erdf.field_type
 	</sql>
 	<!-- 根据id获取对象信息 -->
 	<select id="findById" resultMap="EcReptileDataFieldEntity" parameterType="java.lang.Long" >
@@ -54,7 +54,7 @@
 			<if test="version != null" >version = #{version, jdbcType=INTEGER},</if>
 			<if test="available != null" >available = #{available, jdbcType=INTEGER},</if>
 			<if test="isDeleted != null" >is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
-			<if test="reptileDynamicBeanId != null" >reptile_dynamic_bean_id = #{reptileDynamicBeanId, jdbcType=BIGINT},</if>
+			<if test="dynamicBeanNo != null" >dynamic_bean_no = #{dynamicBeanNo, jdbcType=BIGINT},</if>
 			<if test="path != null" >path = #{path, jdbcType=VARCHAR},</if>
 			<if test="valueSource != null" >value_source = #{valueSource, jdbcType=INTEGER},</if>
 			<if test="valueSourceType != null" >value_source_type = #{valueSourceType, jdbcType=INTEGER},</if>
@@ -74,4 +74,21 @@
 		UPDATE ec_reptile_data_field erdf <include refid="setColumnSql" />
 		WHERE erdf.id = #{id, jdbcType=BIGINT}
 	</update>
+	 <!-- 获取列表分页信息 -->
+    <select id="listByQuery" resultMap="EcReptileDataFieldEntity" parameterType="com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery">
+        SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_data_field erdf 
+		WHERE erdf.is_deleted = 0
+		<if test="query.dynamicBeanNos != null">
+			AND erdf.dynamic_bean_no IN
+			<foreach item="dynamicBeanNo" index="index" collection="query.dynamicBeanNos"
+				open="(" separator="," close=")">
+				#{dynamicBeanNo}
+			</foreach>
+		</if>
+		<if test="query.available != null">
+			AND erdf.available = #{query.available, jdbcType=INTEGER}
+		</if>
+    </select>
 </mapper>

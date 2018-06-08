@@ -78,12 +78,12 @@
         SELECT
         <include refid="columnList" />
         FROM ec_reptile_dynamic_bean erdb 
-		WHERE 
+		WHERE erdb.is_deleted = 0
 		<if test="query.beanType != null">
-			erdb.bean_type = #{query.beanType, jdbcType=INTEGER}
+			AND erdb.bean_type = #{query.beanType, jdbcType=INTEGER}
 		</if>
-		<if test="query.reptileDynamicBeanId != null">
-			AND erdb.reptile_dynamic_bean_id = #{query.reptileDynamicBeanId, jdbcType=INTEGER}
+		<if test="query.dynamicBeanNo != null">
+			AND erdb.dynamic_bean_no = #{query.dynamicBeanNo, jdbcType=INTEGER}
 		</if>
     </select>
 </mapper>

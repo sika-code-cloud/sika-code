@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.reptile.common.pojo.dto.EcReptileDataDTO;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.dto.EcReptileDynamicBeanDTO;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery;
 import com.easy.cloud.core.reptile.dynamicbean.service.EcReptileDynamicBeanService;
@@ -22,13 +23,19 @@ import com.easy.cloud.core.reptile.dynamicbean.service.EcReptileDynamicBeanServi
 public class EcReptileDynamicBeanController extends EcBaseController {
 	@Autowired
 	private EcReptileDynamicBeanService reptileDynamicBeanService;
-	
-	public EcBaseServiceResult saveReptileDynamicBean(EcReptileDynamicBeanDTO dynamicBeanDTO) {
+
+	@RequestMapping(value = "saveReptileDynamicBean")
+	public EcBaseServiceResult saveReptileDynamicBean(@RequestBody EcReptileDynamicBeanDTO dynamicBeanDTO) {
 		return reptileDynamicBeanService.saveReptileDynamicBean(dynamicBeanDTO);
 	}
-	
+
 	@RequestMapping(value = "registerToGeccoEngine")
 	public EcBaseServiceResult registerToGeccoEngine(@RequestBody EcReptileDynamicBeanQuery dynamicBeanQuery) {
 		return reptileDynamicBeanService.registerToGeccoEngine(dynamicBeanQuery);
+	}
+	
+	@RequestMapping(value = "reptileData")
+	public EcBaseServiceResult reptileData(@RequestBody EcReptileDataDTO reptileDataDTO) {
+		return reptileDynamicBeanService.reptileData(reptileDataDTO);
 	}
 }

@@ -10,7 +10,7 @@ import com.easy.cloud.core.basic.pojo.query.EcBaseQuery;
  */
 public class EcReptileDynamicBeanQuery extends EcBaseQuery {
 	private Integer beanType;
-	private Long reptileDynamicBeanId;
+	private Integer dynamicBeanNo;
 
 	public Integer getBeanType() {
 		return beanType;
@@ -20,12 +20,12 @@ public class EcReptileDynamicBeanQuery extends EcBaseQuery {
 		this.beanType = beanType;
 	}
 
-	public Long getReptileDynamicBeanId() {
-		return reptileDynamicBeanId;
+	public Integer getDynamicBeanNo() {
+		return dynamicBeanNo;
 	}
 
-	public void setReptileDynamicBeanId(Long reptileDynamicBeanId) {
-		this.reptileDynamicBeanId = reptileDynamicBeanId;
+	public void setDynamicBeanNo(Integer dynamicBeanNo) {
+		this.dynamicBeanNo = dynamicBeanNo;
 	}
-	
+
 }

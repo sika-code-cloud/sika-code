@@ -30,9 +30,7 @@ public class EcReptileController extends EcBaseController{
 		String tempUrl = EcReptileConstant.MATCH_URL_DETAIL;
 		tempUrl = tempUrl.replace(reptileKeyValueDTO.getKey(), reptileKeyValueDTO.getValue());
 		String fullUrl = tempUrl.replace("{", "").replace("}", "");
-		for (int i = 0 ;i < 10; ++i) {
-			geccoEngine.getScheduler().into(new HttpGetRequest(fullUrl));
-		}
+		geccoEngine.getScheduler().into(new HttpGetRequest(fullUrl));
 		return EcBaseServiceResult.newInstanceOfSuccess();
 	}
 }

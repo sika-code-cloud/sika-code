@@ -5,7 +5,7 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
 /**
  * 
  * <p>
- * 	基础常量类
+ * 基础常量类
  * </p>
  *
  * <pre>
@@ -24,15 +24,17 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
  * @author daiqi 创建时间 2018年2月6日 下午1:46:21
  */
 public class EcBaseConstant {
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 校验当前值在clazz类中是否是可用的值 是返回true、否则返回false
 	 * </p>
 	 *
-	 * @param clazz : Class : 校验的类
-	 * @param value : Object : 校验的值
+	 * @param clazz
+	 *            : Class : 校验的类
+	 * @param value
+	 *            : Object : 校验的值
 	 * @return boolean
 	 * @author daiqi 创建时间 2018年2月6日 下午1:41:47
 	 */
@@ -42,30 +44,84 @@ public class EcBaseConstant {
 		}
 		return EcBaseUtils.isExistConstantValue(clazz, value);
 	}
-	
+
 	/**
 	 * 
 	 * <p>
 	 * 校验当前值在clazz类中是否是不可用的值 是不可用返回true、否则返回false
 	 * </p>
 	 *
-	 * @param clazz : Class : 校验的类
-	 * @param value : Object : 校验的值
+	 * @param clazz
+	 *            : Class : 校验的类
+	 * @param value
+	 *            : Object : 校验的值
 	 * @return boolean
 	 * @author daiqi 创建时间 2018年2月6日 下午1:41:47
 	 */
 	public static <T extends EcBaseConstant> boolean isNotAvailableValue(Class<T> clazz, Object value) {
 		return !isAvailableValue(clazz, value);
 	}
-	
+
+	/**
+	 * 
+	 * <p>
+	 * 删除枚举类
+	 * </p>
+	 *
+	 * @author daiqi
+	 * @创建时间 2018年6月8日 上午11:42:53
+	 */
+	public static enum EcIsDeletedEnum {
+		/** 删除状态---0---未删 */
+		NO(0, "未删"),
+		/** 删除状态---1---已删 */
+		YES(1, "已删");
+		private int type;
+		private String desc;
+
+		private EcIsDeletedEnum(int type, String desc) {
+			this.type = type;
+			this.desc = desc;
+		}
+
+		public int type() {
+			return type;
+		}
+
+		public String desc() {
+			return desc;
+		}
+	}
+
+	public static enum EcAvailableEnum {
+		/** 可用状态---0---不可用 */
+		NO(0, "不可用"),
+		/** 可用状态---0---可用 */
+		YES(1, "可用");
+		private int type;
+		private String desc;
+
+		private EcAvailableEnum(int type, String desc) {
+			this.type = type;
+			this.desc = desc;
+		}
+
+		public int type() {
+			return type;
+		}
+
+		public String desc() {
+			return desc;
+		}
+	}
+
 	/**
 	 * 
 	 * <p>
 	 * 字符集类型常量类
 	 * </p>
 	 *
-	 * @author daiqi
-	 * 创建时间    2018年2月23日 下午2:08:00
+	 * @author daiqi 创建时间 2018年2月23日 下午2:08:00
 	 */
 	public static class EcCharset {
 		public static final String UTF_8 = "UTF-8";
@@ -75,7 +131,7 @@ public class EcBaseConstant {
 		public static final String UNICODE = "UNICODE";
 		public static final String ASCII = "ASCII";
 	}
-	
+
 	/** 图片格式常量类 */
 	public static class EcImageFormat {
 		public static final String BMP = "BMP";
