@@ -13,6 +13,8 @@ import com.easy.cloud.core.reptile.common.pojo.dto.EcReptileKeyValueDTO;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.request.HttpGetRequest;
 
+import javassist.bytecode.annotation.Annotation;
+
 @RestController
 @RequestMapping(value = "reptile")
 @EcLogAnnotation(analysisSwitch = false, logSwitch = false)

@@ -18,21 +18,24 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	/** 爬虫动态bean的类型 */
 	private Integer beanType;
 	/** 模糊匹配的{}可以匹配任意非空白字符串但是不包含斜杠(/) 详情参考gecco */
-	private String matchUrl;
+	private String matchUrls;
 	/** 匹配的url类型 */
 	private Integer matchUrlType;
 	/** 动态bean的编号 */
 	private Integer dynamicBeanNo;
 	/** 动态bean的父编号 */
 	private String dynamicBeanParentNo;
-	/** 处理数据的管道名称 */
-	private String pipelineName;
+	/** 处理数据的管道名称(json数组字符串) */
+	private String pipelineNames;
+	/** 处理数据的管道名称列表 */
+	private List<String> pipelineNameList;
 	/** 动态bean名称主体 */
 	private String beanNameBody;
 	/** beanName后缀 */
 	private String beanNameSuffix;
 	/** 匹配的url列表 */
-	private List<String> matchUrls;
+	private List<String> matchUrlList;
+
 	/** 获取爬虫动态bean的类型 */
 	public Integer getBeanType() {
 		return this.beanType;
@@ -47,13 +50,13 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	private List<EcReptileDataFieldDTO> reptileDataFieldDTOs;
 
 	/** 获取模糊匹配的{}可以匹配任意非空白字符串但是不包含斜杠(/) 详情参考gecco */
-	public String getMatchUrl() {
-		return this.matchUrl;
+	public String getMatchUrls() {
+		return this.matchUrls;
 	}
 
 	/** 设置模糊匹配的{}可以匹配任意非空白字符串但是不包含斜杠(/) 详情参考gecco */
-	public void setMatchUrl(String matchUrl) {
-		this.matchUrl = matchUrl;
+	public void setMatchUrls(String matchUrls) {
+		this.matchUrls = matchUrls;
 	}
 
 	/** 获取匹配的url类型 */
@@ -87,13 +90,13 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	}
 
 	/** 获取处理数据的管道名称 */
-	public String getPipelineName() {
-		return this.pipelineName;
+	public String getPipelineNames() {
+		return this.pipelineNames;
 	}
 
 	/** 设置处理数据的管道名称 */
-	public void setPipelineName(String pipelineName) {
-		this.pipelineName = pipelineName;
+	public void setPipelineNames(String pipelineNames) {
+		this.pipelineNames = pipelineNames;
 	}
 
 	/** 获取动态bean名称主体 */
@@ -124,15 +127,22 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 		this.reptileDataFieldDTOs = reptileDataFieldDTOs;
 	}
 
-	public void setMatchUrls(List<String> matchUrls) {
-		this.matchUrls = matchUrls;
+	public List<String> getMatchUrlList() {
+		if (EcCollectionsUtils.isEmpty(matchUrlList)) {
+			matchUrlList = EcJSONUtils.parseArray(matchUrls, String.class);
+		}
+		return matchUrlList;
 	}
 
-	public List<String> getMatchUrls() {
-		if (EcCollectionsUtils.isEmpty(matchUrls)) {
-			matchUrls = EcJSONUtils.parseArray(matchUrl, String.class);
+	public void setMatchUrlList(List<String> matchUrlList) {
+		this.matchUrlList = matchUrlList;
+	}
+
+	public List<String> getPipelineNameList() {
+		if (EcCollectionsUtils.isEmpty(pipelineNameList)) {
+			pipelineNameList = EcJSONUtils.parseArray(pipelineNames, String.class);
 		}
-		return matchUrls;
+		return pipelineNameList;
 	}
 
 	public String getBeanNameFull() {

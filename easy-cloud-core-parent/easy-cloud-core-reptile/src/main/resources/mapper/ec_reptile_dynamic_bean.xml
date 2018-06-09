@@ -13,16 +13,16 @@
         <result column="available" jdbcType="INTEGER" property="available" />
         <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
         <result column="bean_type" jdbcType="INTEGER" property="beanType" />
-        <result column="match_url" jdbcType="VARCHAR" property="matchUrl" />
+        <result column="match_urls" jdbcType="VARCHAR" property="matchUrls" />
         <result column="match_url_type" jdbcType="INTEGER" property="matchUrlType" />
         <result column="dynamic_bean_no" jdbcType="INTEGER" property="dynamicBeanNo" />
         <result column="dynamic_bean_parent_no" jdbcType="VARCHAR" property="dynamicBeanParentNo" />
-        <result column="pipeline_name" jdbcType="VARCHAR" property="pipelineName" />
+        <result column="pipeline_names" jdbcType="VARCHAR" property="pipelineNames" />
         <result column="bean_name_body" jdbcType="VARCHAR" property="beanNameBody" />
         <result column="bean_name_suffix" jdbcType="VARCHAR" property="beanNameSuffix" />
     </resultMap>
     <!-- 设置columnList -->
-    <sql id="columnList">erdb.id,erdb.create_by,erdb.update_by,erdb.create_date,erdb.update_date,erdb.version,erdb.available,erdb.is_deleted,erdb.bean_type,erdb.match_url,erdb.match_url_type,erdb.dynamic_bean_no,erdb.dynamic_bean_parent_no,erdb.pipeline_name,erdb.bean_name_body,erdb.bean_name_suffix</sql>
+    <sql id="columnList">erdb.id,erdb.create_by,erdb.update_by,erdb.create_date,erdb.update_date,erdb.version,erdb.available,erdb.is_deleted,erdb.bean_type,erdb.match_urls,erdb.match_url_type,erdb.dynamic_bean_no,erdb.dynamic_bean_parent_no,erdb.pipeline_names,erdb.bean_name_body,erdb.bean_name_suffix</sql>
     <!-- 根据id获取对象信息 -->
     <select id="findById" resultMap="EcReptileDynamicBeanEntity" parameterType="java.lang.Long">
         SELECT
@@ -52,11 +52,11 @@
             <if test="available != null">available = #{available, jdbcType=INTEGER},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
             <if test="beanType != null">bean_type = #{beanType, jdbcType=INTEGER},</if>
-            <if test="matchUrl != null">match_url = #{matchUrl, jdbcType=VARCHAR},</if>
+            <if test="matchUrls != null">match_urls = #{matchUrls, jdbcType=VARCHAR},</if>
             <if test="matchUrlType != null">match_url_type = #{matchUrlType, jdbcType=INTEGER},</if>
             <if test="dynamicBeanNo != null">dynamic_bean_no = #{dynamicBeanNo, jdbcType=INTEGER},</if>
             <if test="dynamicBeanParentNo != null">dynamic_bean_parent_no = #{dynamicBeanParentNo, jdbcType=VARCHAR},</if>
-            <if test="pipelineName != null">pipeline_name = #{pipelineName, jdbcType=VARCHAR},</if>
+            <if test="pipelineNames != null">pipeline_names = #{pipelineNames, jdbcType=VARCHAR},</if>
             <if test="beanNameBody != null">bean_name_body = #{beanNameBody, jdbcType=VARCHAR},</if>
             <if test="beanNameSuffix != null">bean_name_suffix = #{beanNameSuffix, jdbcType=VARCHAR},</if>
         </set>

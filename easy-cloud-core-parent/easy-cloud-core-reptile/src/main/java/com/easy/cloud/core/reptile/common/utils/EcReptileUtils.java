@@ -3,6 +3,7 @@ package com.easy.cloud.core.reptile.common.utils;
 import java.util.List;
 
 import com.easy.cloud.core.basic.constant.EcBaseConstant.EcAvailableEnum;
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
@@ -19,6 +20,7 @@ import com.geccocrawler.gecco.dynamic.DynamicField;
 import com.geccocrawler.gecco.dynamic.DynamicGecco;
 import com.geccocrawler.gecco.dynamic.JavassistDynamicBean;
 import com.geccocrawler.gecco.request.HttpGetRequest;
+import com.geccocrawler.gecco.utils.UrlMatcher;
 
 /**
  * 
@@ -30,7 +32,7 @@ import com.geccocrawler.gecco.request.HttpGetRequest;
  * @创建时间 2018年6月7日 下午6:44:00
  */
 public class EcReptileUtils {
-	
+
 	/**
 	 * 
 	 * <p>
@@ -42,14 +44,18 @@ public class EcReptileUtils {
 	 *     参数名称 : 示例值 : 说明 : 是否必须
 	 * </pre>
 	 *
-	 * @param geccoEngine : GeccoEngine : 爬虫引擎
-	 * @param dynamicBeanDTO : EcReptileDynamicBeanDTO : 爬虫动态bean数据传输对象
-	 * @param dataDTO : EcReptileDataDTO : 爬虫数据的数据传输对象由业务系统传入
+	 * @param geccoEngine
+	 *            : GeccoEngine : 爬虫引擎
+	 * @param dynamicBeanDTO
+	 *            : EcReptileDynamicBeanDTO : 爬虫动态bean数据传输对象
+	 * @param dataDTO
+	 *            : EcReptileDataDTO : 爬虫数据的数据传输对象由业务系统传入
 	 * @author daiqi
 	 * @创建时间 2018年6月8日 下午3:07:08
 	 */
-	public static void intoScheduler(GeccoEngine geccoEngine, EcReptileDynamicBeanDTO dynamicBeanDTO, EcReptileDataDTO  dataDTO) {
-		List<String> matchUrls = dynamicBeanDTO.getMatchUrls();
+	public static void intoScheduler(GeccoEngine geccoEngine, EcReptileDynamicBeanDTO dynamicBeanDTO,
+			EcReptileDataDTO dataDTO) {
+		List<String> matchUrls = dynamicBeanDTO.getMatchUrlList();
 		if (EcCollectionsUtils.isEmpty(matchUrls)) {
 			throw new EcBaseBusinessException("设置异常", "待设置异常");
 		}
@@ -60,13 +66,12 @@ public class EcReptileUtils {
 				continue;
 			}
 			for (EcReptileKeyValueDTO keyValueDTO : dataDTO.getUrlKeyValueDTOs()) {
-				intoUrl = intoUrl.replace(keyValueDTO.getKey(), keyValueDTO.getValue());
+				intoUrl = UrlMatcher.replaceParams(intoUrl, keyValueDTO.getKey(), keyValueDTO.getValue());
 			}
-			intoUrl = intoUrl.replace("{", "").replace("}", "");
 			geccoEngine.getScheduler().into(new HttpGetRequest(intoUrl));
 		}
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -96,7 +101,7 @@ public class EcReptileUtils {
 			geccoEngine.endUpdateRule();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -151,7 +156,7 @@ public class EcReptileUtils {
 			}
 		}
 	}
-	
+
 	private static DynamicField buildDynamicValueSourceType(DynamicField dynamicField, JavassistDynamicBean dynamicBean,
 			EcReptileDataFieldDTO dataFieldDTO) {
 		if (EcBaseUtils.equals(dataFieldDTO.getValueSourceType(), EcDataFieldValueSourceTypeEnum.CSS_PATH.type())) {
@@ -161,6 +166,7 @@ public class EcReptileUtils {
 		}
 		return dynamicField;
 	}
+
 	private static DynamicField buildDynamicValueSource(DynamicField dynamicField, JavassistDynamicBean dynamicBean,
 			EcReptileDataFieldDTO dataFieldDTO) {
 		int valueSourceType = dataFieldDTO.getValueSource();
@@ -183,6 +189,7 @@ public class EcReptileUtils {
 		}
 		return dynamicField;
 	}
+
 	/**
 	 * 
 	 * <p>
@@ -244,14 +251,11 @@ public class EcReptileUtils {
 	 * @创建时间 2018年6月7日 下午7:14:00
 	 */
 	private static JavassistDynamicBean buildJavassistDynamicBean(EcReptileDynamicBeanDTO dynamicBeanDTO) {
-		if (EcStringUtils.isEmpty(dynamicBeanDTO.getMatchUrl())
-				|| EcCollectionsUtils.isEmpty(dynamicBeanDTO.getMatchUrls())) {
-			// TODO 抛出异常
-			throw new EcBaseBusinessException("", "");
+		if (EcCollectionsUtils.isEmpty(dynamicBeanDTO.getMatchUrlList())) {
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "matchUrl");
 		}
-		if (EcStringUtils.isEmpty(dynamicBeanDTO.getPipelineName())) {
-			// TODO 抛出异常
-			throw new EcBaseBusinessException("", "");
+		if (EcCollectionsUtils.isEmpty(dynamicBeanDTO.getPipelineNameList())) {
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "pipelineName");
 		}
 		JavassistDynamicBean dynamicBean = null;
 		if (EcStringUtils.isNotEmpty(dynamicBeanDTO.getBeanNameBody())
@@ -260,10 +264,12 @@ public class EcReptileUtils {
 		} else {
 			dynamicBean = DynamicGecco.html();
 		}
-		List<String> matchUrls = dynamicBeanDTO.getMatchUrls();
+		List<String> matchUrls = dynamicBeanDTO.getMatchUrlList();
 		// 获取matchUrl
 		String[] matchUrlArrays = new String[matchUrls.size()];
-		dynamicBean.gecco(matchUrls.toArray(matchUrlArrays), dynamicBeanDTO.getPipelineName());
+		List<String> pipelineNameList = dynamicBeanDTO.getPipelineNameList();
+		String[] pipelineNameArrays = new String[pipelineNameList.size()];
+		dynamicBean.gecco(matchUrls.toArray(matchUrlArrays), pipelineNameList.toArray(pipelineNameArrays));
 		return dynamicBean;
 	}
 }
