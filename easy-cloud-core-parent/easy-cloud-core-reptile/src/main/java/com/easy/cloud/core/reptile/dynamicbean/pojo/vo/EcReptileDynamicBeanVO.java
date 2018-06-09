@@ -18,7 +18,7 @@ public class EcReptileDynamicBeanVO extends EcBaseVO {
 	/** 动态bean的父编号 */
 	private String dynamicBeanParentNo;
 	/** 处理数据的管道名称 */
-	private String pipelineName;
+	private String pipelineNames;
 	/** 动态bean名称主体 */
 	private Integer beanNameBody;
 	/** beanName后缀 */
@@ -65,13 +65,13 @@ public class EcReptileDynamicBeanVO extends EcBaseVO {
 	}
 
 	/** 获取处理数据的管道名称 */
-	public String getPipelineName() {
-		return this.pipelineName;
+	public String getPipelineNames() {
+		return this.pipelineNames;
 	}
 
 	/** 设置处理数据的管道名称 */
-	public void setPipelineName(String pipelineName) {
-		this.pipelineName = pipelineName;
+	public void setPipelineNames(String pipelineNames) {
+		this.pipelineNames = pipelineNames;
 	}
 
 	/** 获取动态bean名称主体 */

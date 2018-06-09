@@ -10,20 +10,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
+import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
-import com.easy.cloud.core.reptile.common.constant.EcReptileErrorCodeEnum;
 import com.easy.cloud.core.reptile.common.pojo.dto.EcReptileDataDTO;
 import com.easy.cloud.core.reptile.common.utils.EcReptileUtils;
 import com.easy.cloud.core.reptile.datafield.pojo.dto.EcReptileDataFieldDTO;
 import com.easy.cloud.core.reptile.datafield.service.EcReptileDataFieldService;
 import com.easy.cloud.core.reptile.dynamicbean.dao.EcReptileDynamicBeanDAO;
+import com.easy.cloud.core.reptile.dynamicbean.pojo.bo.EcReptileDynamicBeanBO;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.dto.EcReptileDynamicBeanDTO;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.entity.EcReptileDynamicBeanEntity;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery;
@@ -54,10 +56,7 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 		EcReptileDynamicBeanQuery dynamicBeanQuery = new EcReptileDynamicBeanQuery();
 		dynamicBeanQuery.setDynamicBeanNo(reptileDataDTO.getDynamicBeanNo());
 		List<EcReptileDynamicBeanEntity> dynamicBeanEntities = reptileDynamicBeanDAO.listByQuery(dynamicBeanQuery);
-		if (EcCollectionsUtils.isEmpty(dynamicBeanEntities)) {
-			// TODO 待添加
-			throw new EcBaseBusinessException("", "");
-		}
+		EcAssert.verifyListEmpty(dynamicBeanEntities, "dynamicBeanEntities");
 		EcReptileDynamicBeanDTO dynamicBeanDTO = EcJSONUtils.parseObject(dynamicBeanEntities.get(0), EcReptileDynamicBeanDTO.class);
 		EcReptileUtils.intoScheduler(geccoEngine, dynamicBeanDTO, reptileDataDTO);
 		return EcBaseServiceResult.newInstanceOfSuccess();
@@ -65,32 +64,50 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 
 	@Override
 	public EcBaseServiceResult saveReptileDynamicBean(EcReptileDynamicBeanDTO dynamicBeanDTO) {
-		EcReptileDynamicBeanEntity dynamicBeanEntity = EcJSONUtils.parseObject(dynamicBeanDTO,
+		// 1 创建爬虫动态bean逻辑对象
+		EcReptileDynamicBeanBO dynamicBeanBO = new EcReptileDynamicBeanBO(dynamicBeanDTO);
+		// 2 初始化
+		dynamicBeanBO.initSaveReptileDynamicBeanData();
+		// 3 数据校验
+		dynamicBeanBO.verifySaveReptileDynamicBeanData();
+		// 4 数据转换
+		EcReptileDynamicBeanEntity dynamicBeanEntity = EcJSONUtils.parseObject(dynamicBeanBO.getReptileDynamicBeanDTO(),
 				EcReptileDynamicBeanEntity.class);
-		dynamicBeanEntity.setBeanNameSuffix(String.valueOf(EcDateUtils.getCurrentTimeSec()));
-		dynamicBeanEntity.setMatchUrl(EcJSONUtils.toJSONString(dynamicBeanDTO.getMatchUrls()));
+		// 保存
 		reptileDynamicBeanDAO.save(dynamicBeanEntity);
+		// 返回结果
 		return EcBaseServiceResult.newInstanceOfSucResult(dynamicBeanEntity);
 	}
 
 	@Override
 	public EcBaseServiceResult updateReptileDynamicBean(EcReptileDynamicBeanDTO dynamicBeanDTO) {
+		// 1 创建爬虫动态bean逻辑对象
+		EcReptileDynamicBeanBO dynamicBeanBO = new EcReptileDynamicBeanBO(dynamicBeanDTO);
+		// 2 初始化
+		dynamicBeanBO.initUpdateReptileDynamicBeanData();
+		// 3 数据校验
+		dynamicBeanBO.verifyUpdateReptileDynamicBeanData();
 		EcReptileDynamicBeanEntity reptileDynamicBeanEntity = reptileDynamicBeanDAO.findById(dynamicBeanDTO.getId());
-		reptileDynamicBeanEntity.setMatchUrl(dynamicBeanDTO.getMatchUrl());
+		// 校验
+		EcAssert.verifyDataNotExistent(reptileDynamicBeanEntity, "reptileDynamicBeanEntity");
+		// 设置
+		reptileDynamicBeanEntity.setMatchUrls(dynamicBeanDTO.getMatchUrls());
+		// 更新
 		reptileDynamicBeanDAO.update(reptileDynamicBeanEntity);
+		// 返回结果
 		return EcBaseServiceResult.newInstanceOfSucResult(reptileDynamicBeanEntity);
 	}
-
+	
 	@Override
 	public EcBaseServiceResult registerToGeccoEngine(EcReptileDynamicBeanQuery dynamicBeanQuery) {
 		// 1 从数据库中获取dynamicBeanEntity列表
 		List<EcReptileDynamicBeanEntity> dynamicBeanEntities = reptileDynamicBeanDAO.listByQuery(dynamicBeanQuery);
 		if (EcCollectionsUtils.isEmpty(dynamicBeanEntities)) {
-			throw new EcBaseBusinessException(EcReptileErrorCodeEnum.REPTILE_DYNAMIC_BEAN_DATAS_CANT_NULL);
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "爬虫动态bean");
 		}
 		// 2 根据爬虫动态bean持久化对象列表构建reptileDynamicBeanDTO列表
 		List<EcReptileDynamicBeanDTO> dynamicBeanDTOs = buildDynamicBeanDTOs(dynamicBeanEntities);
-		EcLogUtils.info("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
+		EcLogUtils.debug("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
 		// 3 构建获取spiderBeanClazzs列表
 		List<Class<?>> spiderBeanClazzs = new ArrayList<>();
 		for (EcReptileDynamicBeanDTO dynamicBeanDTO : dynamicBeanDTOs) {
@@ -129,9 +146,7 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 		// 3 根据dynamicBeanIds获取数据属性数据传输对象列表
 		List<EcReptileDataFieldDTO> dataFieldDTOs = reptileDynamicBeanService.findDataFieldsByDynamicBeanNos(dynamicBeanNos);
 		EcLogUtils.info("buildDynamicBeanDTOs获取到的属性数据为", dataFieldDTOs, logger);
-		if (EcCollectionsUtils.isEmpty(dataFieldDTOs)) {
-			throw new EcBaseBusinessException(EcReptileErrorCodeEnum.REPTILE_DATA_FIELD_DATAS_CANT_NULL);
-		}
+		EcAssert.verifyListEmpty(dataFieldDTOs, "reptileDataField");
 		// 4 将数据属性对象列表放置到对应的dynamicBeanDTO中
 		for (EcReptileDynamicBeanDTO dynamicBeanDTO : dynamicBeanDTOs) {
 			List<EcReptileDataFieldDTO> dataFieldDTOsTemp = new ArrayList<>();
