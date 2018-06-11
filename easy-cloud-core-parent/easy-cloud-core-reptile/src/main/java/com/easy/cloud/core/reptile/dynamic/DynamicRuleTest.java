@@ -34,7 +34,7 @@ public class DynamicRuleTest {
 		// makeclass("HelloController", "hello", "name", "");
 	}
 
-	@Autowired
+//	@Autowired
 	private GeccoEngine geccoEngine;
 
 //	@PostConstruct

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easy.cloud.core.reptile.engine.dao.EcReptileEngineDAO" >
+	<!-- 根节点 -->
+	<!-- 设置resultMap -->
+	<resultMap id="EcReptileEngineEntity" type="com.easy.cloud.core.reptile.engine.pojo.entity.EcReptileEngineEntity" >
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="version" jdbcType="INTEGER" property="version" />
+		<result column="available" jdbcType="INTEGER" property="available" />
+		<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+		<result column="reptile_engine_no" jdbcType="INTEGER" property="reptileEngineNo" />
+		<result column="classpath" jdbcType="VARCHAR" property="classpath" />
+		<result column="interval" jdbcType="INTEGER" property="interval" />
+		<result column="loop" jdbcType="INTEGER" property="loop" />
+		<result column="thread" jdbcType="INTEGER" property="thread" />
+		<result column="debug" jdbcType="INTEGER" property="debug" />
+		<result column="mobile" jdbcType="INTEGER" property="mobile" />
+		<result column="retry" jdbcType="INTEGER" property="retry" />
+	</resultMap>
+	<!-- 设置columnList -->
+	<sql id="columnList" >
+		ere.id,ere.create_by,ere.update_by,ere.create_date,ere.update_date,ere.version,ere.available,ere.is_deleted,ere.reptile_engine_no,ere.classpath,ere.interval,ere.loop,ere.thread,ere.debug,ere.mobile,ere.retry
+	</sql>
+	<!-- 根据id获取对象信息 -->
+	<select id="findById" resultMap="EcReptileEngineEntity" parameterType="java.lang.Long" >
+		SELECT <include refid="columnList" /> 
+		FROM ec_reptile_engine ere 
+		WHERE ere.id = #{id, jdbcType=BIGINT} 
+	</select>
+	<!-- 统计列表数量 -->
+	<select id="listCount" resultType="java.lang.Integer" parameterType="map" >
+		SELECT count(*)
+		FROM ec_reptile_engine ere 
+	</select>
+	<!-- 获取列表分页信息 -->
+	<select id="listPage" resultMap="EcReptileEngineEntity" parameterType="map" >
+		SELECT <include refid="columnList" /> 
+		FROM ec_reptile_engine ere 
+		LIMIT #{maps.start},#{maps.pageSize}
+	</select>
+	<!-- 设置column -->
+	<sql id="setColumnSql" >
+		<set>
+			<if test="id != null" >id = #{id, jdbcType=BIGINT},</if>
+			<if test="createBy != null" >create_by = #{createBy, jdbcType=BIGINT},</if>
+			<if test="updateBy != null" >update_by = #{updateBy, jdbcType=BIGINT},</if>
+			<if test="createDate != null" >create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+			<if test="updateDate != null" >update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+			<if test="version != null" >version = #{version, jdbcType=INTEGER},</if>
+			<if test="available != null" >available = #{available, jdbcType=INTEGER},</if>
+			<if test="isDeleted != null" >is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
+			<if test="reptileEngineNo != null" >reptile_engine_no = #{reptileEngineNo, jdbcType=INTEGER},</if>
+			<if test="classpath != null" >classpath = #{classpath, jdbcType=VARCHAR},</if>
+			<if test="interval != null" >interval = #{interval, jdbcType=INTEGER},</if>
+			<if test="loop != null" >loop = #{loop, jdbcType=INTEGER},</if>
+			<if test="thread != null" >thread = #{thread, jdbcType=INTEGER},</if>
+			<if test="debug != null" >debug = #{debug, jdbcType=INTEGER},</if>
+			<if test="mobile != null" >mobile = #{mobile, jdbcType=INTEGER},</if>
+			<if test="retry != null" >retry = #{retry, jdbcType=INTEGER},</if>
+		</set>
+	</sql>
+	<!-- 保存对象 -->
+	<insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.reptile.engine.pojo.entity.EcReptileEngineEntity" keyProperty="id" >
+		INSERT INTO ec_reptile_engine <include refid="setColumnSql" />
+	</insert>
+	<!-- 更新对象 -->
+	<update id="update" parameterType="com.easy.cloud.core.reptile.engine.pojo.entity.EcReptileEngineEntity" >
+		UPDATE ec_reptile_engine ere <include refid="setColumnSql" />
+		WHERE ere.id = #{id, jdbcType=BIGINT}
+	</update>
+	<!-- 根据id获取对象信息 -->
+	<select id="queryGeccoEngineByNo" resultMap="EcReptileEngineEntity" parameterType="com.easy.cloud.core.reptile.engine.pojo.query.EcReptileEngineQuery">
+		SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_engine ere 
+		WHERE ere.is_deleted = 0
+		<if test="query.reptileEngineNo != null">
+			AND ere.reptile_engine_no = #{query.reptileEngineNo, jdbcType=INTEGER}
+		</if>
+	</select>
+</mapper>

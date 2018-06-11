@@ -10,7 +10,7 @@ public class EcJdbcJsonPipeline extends EcBaseJsonPipeline {
 
 	@Override
 	public void doProcess(JSONObject jo) {
-		EcReptileSelector.getReptileDynamicBeanService().reptileData(null);
+//		EcReptileSelector.getReptileDynamicBeanService().reptileData(null);
 		System.out.println(Thread.currentThread().getName() + "---jdbc获取到的数据：" + JSONObject.toJSONString(jo));
 	}
 

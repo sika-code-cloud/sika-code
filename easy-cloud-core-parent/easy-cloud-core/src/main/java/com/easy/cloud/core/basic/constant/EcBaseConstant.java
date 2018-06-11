@@ -61,7 +61,7 @@ public class EcBaseConstant {
 	public static <T extends EcBaseConstant> boolean isNotAvailableValue(Class<T> clazz, Object value) {
 		return !isAvailableValue(clazz, value);
 	}
-
+	
 	/**
 	 * 
 	 * <p>
@@ -96,7 +96,7 @@ public class EcBaseConstant {
 	public static enum EcAvailableEnum {
 		/** 可用状态---0---不可用 */
 		NO(0, "不可用"),
-		/** 可用状态---0---可用 */
+		/** 可用状态---1---可用 */
 		YES(1, "可用");
 		private int type;
 		private String desc;

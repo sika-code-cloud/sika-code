@@ -8,8 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 import com.easy.cloud.core.basic.constant.EcBaseComponentScan;
 
 /**
+ * <p>
  * 爬虫启动类
- *
+ * </p>
+ * @author daiqi
+ * @date 2018/6/11 14:22
+ * @return
  */
 @SpringBootApplication
 @ComponentScan(basePackages = { EcBaseComponentScan.COM_EASY_CLOUD})

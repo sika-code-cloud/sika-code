@@ -1,25 +1,15 @@
 package com.easy.cloud.core.reptile.dynamicbean.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
-import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.log.utils.EcLogUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
+import com.easy.cloud.core.reptile.common.config.EcReptileConfig;
 import com.easy.cloud.core.reptile.common.pojo.dto.EcReptileDataDTO;
 import com.easy.cloud.core.reptile.common.utils.EcReptileUtils;
 import com.easy.cloud.core.reptile.datafield.pojo.dto.EcReptileDataFieldDTO;
@@ -30,7 +20,18 @@ import com.easy.cloud.core.reptile.dynamicbean.pojo.dto.EcReptileDynamicBeanDTO;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.entity.EcReptileDynamicBeanEntity;
 import com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery;
 import com.easy.cloud.core.reptile.dynamicbean.service.EcReptileDynamicBeanService;
+import com.easy.cloud.core.reptile.engine.pojo.query.EcReptileEngineQuery;
+import com.easy.cloud.core.reptile.engine.service.EcReptileEngineService;
 import com.geccocrawler.gecco.GeccoEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 描述：服务实现类
@@ -45,19 +46,22 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 	private EcReptileDynamicBeanDAO reptileDynamicBeanDAO;
 	@Autowired
 	private EcReptileDataFieldService reptileDynamicBeanService;
-	/** 导入数据引擎 */
 	@Autowired
-	private GeccoEngine geccoEngine;
-	
+	private EcReptileEngineService reptileEngineService;
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public EcBaseServiceResult reptileData(EcReptileDataDTO reptileDataDTO) {
 		EcReptileDynamicBeanQuery dynamicBeanQuery = new EcReptileDynamicBeanQuery();
 		dynamicBeanQuery.setDynamicBeanNo(reptileDataDTO.getDynamicBeanNo());
+		// 从数据库中获取爬虫数据
 		List<EcReptileDynamicBeanEntity> dynamicBeanEntities = reptileDynamicBeanDAO.listByQuery(dynamicBeanQuery);
 		EcAssert.verifyListEmpty(dynamicBeanEntities, "dynamicBeanEntities");
 		EcReptileDynamicBeanDTO dynamicBeanDTO = EcJSONUtils.parseObject(dynamicBeanEntities.get(0), EcReptileDynamicBeanDTO.class);
+		// 获取爬虫引擎
+		GeccoEngine geccoEngine = EcReptileConfig.getGeccoEngineByReptileEngineNo(dynamicBeanDTO.getReptileEngineNo());
+		EcAssert.verifyDataNotExistent(geccoEngine, "缓存中geccoEngine");
 		EcReptileUtils.intoScheduler(geccoEngine, dynamicBeanDTO, reptileDataDTO);
 		return EcBaseServiceResult.newInstanceOfSuccess();
 	}
@@ -99,7 +103,7 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 	}
 	
 	@Override
-	public EcBaseServiceResult registerToGeccoEngine(EcReptileDynamicBeanQuery dynamicBeanQuery) {
+	public synchronized EcBaseServiceResult registerToGeccoEngine(EcReptileDynamicBeanQuery dynamicBeanQuery) {
 		// 1 从数据库中获取dynamicBeanEntity列表
 		List<EcReptileDynamicBeanEntity> dynamicBeanEntities = reptileDynamicBeanDAO.listByQuery(dynamicBeanQuery);
 		if (EcCollectionsUtils.isEmpty(dynamicBeanEntities)) {
@@ -109,12 +113,15 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 		List<EcReptileDynamicBeanDTO> dynamicBeanDTOs = buildDynamicBeanDTOs(dynamicBeanEntities);
 		EcLogUtils.debug("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
 		// 3 构建获取spiderBeanClazzs列表
-		List<Class<?>> spiderBeanClazzs = new ArrayList<>();
 		for (EcReptileDynamicBeanDTO dynamicBeanDTO : dynamicBeanDTOs) {
-			spiderBeanClazzs.add(EcReptileUtils.buildSpiderBeanClass(dynamicBeanDTO));
+			Class<?> spiderBeanClazz = EcReptileUtils.buildSpiderBeanClass(dynamicBeanDTO);
+			// 获取爬虫引擎
+			EcReptileEngineQuery reptileEngineQuery = new EcReptileEngineQuery();
+			reptileEngineQuery.setReptileEngineNo(dynamicBeanDTO.getReptileEngineNo());
+			GeccoEngine geccoEngine = reptileEngineService.loadReptileEngineByCore(reptileEngineQuery);
+			// 4 将spiderBeanClazzs注册到爬虫引擎中
+			EcReptileUtils.registerToReptileEngine(geccoEngine, spiderBeanClazz);
 		}
-		// 4 将spiderBeanClazzs注册到爬虫引擎中
-		EcReptileUtils.registerToReptileEngine(geccoEngine, spiderBeanClazzs);
 		return EcBaseServiceResult.newInstanceOfSuccess();
 	}
 

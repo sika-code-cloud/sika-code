@@ -1,18 +1,11 @@
 package com.easy.cloud.core.reptile.generator.code;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.generator.code.base.config.database.EcDatabaseAbstactConfig;
 import com.easy.cloud.core.generator.code.base.config.database.mysql.EcDataBaseMysqlConfig;
 import com.easy.cloud.core.generator.code.base.pojo.rule.EcGenerateRule;
 import com.easy.cloud.core.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.generator.code.base.utils.EcCodeGenerateUtils;
-import com.easy.cloud.core.generator.code.bo.javaenum.EcGenerateJavaErrorCodeBO;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcClassNameEndWith;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcIgnoreField;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcSubModuleDefaultPackageName;
@@ -20,19 +13,17 @@ import com.easy.cloud.core.generator.code.java.pojo.dto.EcGenerateJavaBaseDTO;
 import com.easy.cloud.core.generator.code.java.rule.EcGenerateJavaClassRule;
 import com.easy.cloud.core.generator.code.xml.pojo.bo.mybatis.EcGenerateXmlMybatisBO;
 import com.easy.cloud.core.generator.code.xml.pojo.dto.EcGenerateXmlMybatisDTO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaBOBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaControllerBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaDAOImplBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaDOBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaDTOBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaLogicImplBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaQueryBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaServiceImplBO;
-import com.easy.cloud.core.reptile.generator.code.bo.javaclass.EcGenerateJavaVOBO;
+import com.easy.cloud.core.reptile.generator.code.bo.javaclass.*;
+import com.easy.cloud.core.reptile.generator.code.bo.javaenum.EcGenerateJavaErrorCodeBO;
 import com.easy.cloud.core.reptile.generator.code.bo.javainf.EcGenerateJavaDAOBO;
 import com.easy.cloud.core.reptile.generator.code.bo.javainf.EcGenerateJavaJpaDAOBO;
 import com.easy.cloud.core.reptile.generator.code.bo.javainf.EcGenerateJavaLogicBO;
 import com.easy.cloud.core.reptile.generator.code.bo.javainf.EcGenerateJavaServiceBO;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** 生成java代码测试类 */
 public class GenerateJavaTest {
@@ -52,9 +43,9 @@ public class GenerateJavaTest {
 	private String basePackageName = "com.easy.cloud.core.reptile";
 
 	// 表名
-	private String tableName = "ec_reptile_dynamic_bean";
+	private String tableName = "ec_reptile_engine";
 	// 模块包名
-	private String moduleName = "dynamicbean";
+	private String moduleName = "engine";
 	// 类主体名称
 	private String classBodyName;
 	// 类的注释
