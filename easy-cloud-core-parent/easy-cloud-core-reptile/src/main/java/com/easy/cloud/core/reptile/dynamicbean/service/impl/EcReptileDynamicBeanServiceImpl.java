@@ -111,7 +111,7 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
 		}
 		// 2 根据爬虫动态bean持久化对象列表构建reptileDynamicBeanDTO列表
 		List<EcReptileDynamicBeanDTO> dynamicBeanDTOs = buildDynamicBeanDTOs(dynamicBeanEntities);
-		EcLogUtils.debug("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
+		EcLogUtils.info("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
 		// 3 构建获取spiderBeanClazzs列表
 		for (EcReptileDynamicBeanDTO dynamicBeanDTO : dynamicBeanDTOs) {
 			Class<?> spiderBeanClazz = EcReptileUtils.buildSpiderBeanClass(dynamicBeanDTO);

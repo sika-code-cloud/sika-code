@@ -10,7 +10,7 @@ public class EcReptileConstant {
 	public static final String MATCH_URL_DETAIL = "http://tl.cyg.changyou.com/goods/char_detail?serial_num={code}";
 	public static final String MATCH_URL_INDEX = "http://tl.cyg.changyou.com";
 
-	public static enum EcDataFieldValueSourceEnum {
+	public enum EcDataFieldValueSourceEnum {
 		TEXT(1, "text来源"), 
 		HTML(2, "html来源"), 
 		HREF(3, "href来源"), 
@@ -22,7 +22,7 @@ public class EcReptileConstant {
 		private int type;
 		private String desc;
 
-		private EcDataFieldValueSourceEnum(int type, String desc) {
+		EcDataFieldValueSourceEnum(int type, String desc) {
 			this.type = type;
 			this.desc = desc;
 		}
@@ -35,7 +35,7 @@ public class EcReptileConstant {
 			return desc;
 		}
 	}
-	public static enum EcDataFieldValueSourceTypeEnum {
+	public enum EcDataFieldValueSourceTypeEnum {
 		CSS_PATH(1, "cssPath类型"), 
 		JSON_PATH(2, "jsonPath类型"), 
 		;
@@ -43,7 +43,7 @@ public class EcReptileConstant {
 		private int type;
 		private String desc;
 		
-		private EcDataFieldValueSourceTypeEnum(int type, String desc) {
+		EcDataFieldValueSourceTypeEnum(int type, String desc) {
 			this.type = type;
 			this.desc = desc;
 		}
@@ -58,7 +58,7 @@ public class EcReptileConstant {
 	}
 
 	/** 数据属性类型枚举类 */
-	public static enum EcDataFieldTypeEnum {
+	public enum EcDataFieldTypeEnum {
 		STRING("string", "字符串类型"), 
 		INTEGER("int", "整型类型"), 
 		LONG("long", "长整型类型"), 
@@ -70,7 +70,7 @@ public class EcReptileConstant {
 		private String type;
 		private String desc;
 
-		private EcDataFieldTypeEnum(String type, String desc) {
+		EcDataFieldTypeEnum(String type, String desc) {
 			this.type = type;
 			this.desc = desc;
 		}

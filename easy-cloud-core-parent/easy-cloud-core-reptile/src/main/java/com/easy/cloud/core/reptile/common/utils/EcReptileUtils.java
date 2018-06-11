@@ -183,21 +183,21 @@ public class EcReptileUtils {
     private static DynamicField buildDynamicValueSource(DynamicField dynamicField, JavassistDynamicBean dynamicBean,
                                                         EcReptileDataFieldDTO dataFieldDTO) {
         int valueSourceType = dataFieldDTO.getValueSource();
-        if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.TEXT)) {
+        if (valueSourceType == EcDataFieldValueSourceEnum.TEXT.type()) {
             dynamicField.text(dataFieldDTO.isValueTrue());
-        } else if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.HTML)) {
+        } else if (valueSourceType == EcDataFieldValueSourceEnum.HTML.type()) {
             dynamicField.html(dataFieldDTO.isValueTrue());
-        } else if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.HREF)) {
+        } else if (valueSourceType == EcDataFieldValueSourceEnum.HREF.type()) {
             dynamicField.href(dataFieldDTO.isValueTrue());
-        } else if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.IMAGE)) {
+        } else if (valueSourceType == EcDataFieldValueSourceEnum.IMAGE.type()) {
             if (EcStringUtils.isNotEmpty(dataFieldDTO.getDownloadPath())) {
                 dynamicField.image(dataFieldDTO.getDownloadPath(), dataFieldDTO.getFieldValue());
             } else {
                 dynamicField.image();
             }
-        } else if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.ATTR)) {
+        } else if (valueSourceType == EcDataFieldValueSourceEnum.ATTR.type()) {
             dynamicField.attr(dataFieldDTO.getFieldValue());
-        } else if (EcBaseUtils.equals(valueSourceType, EcDataFieldValueSourceEnum.AJAX)) {
+        } else if (valueSourceType == EcDataFieldValueSourceEnum.AJAX.type()) {
             dynamicField.ajax(dataFieldDTO.getFieldValue());
         }
         return dynamicField;
