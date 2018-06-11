@@ -9,6 +9,8 @@ import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
  * @date 2018-06-07 21:08:48
  */
 public class EcReptileDynamicBeanEntity extends EcBaseEntity {
+	/** 爬虫引擎编号 */
+	private Integer reptileEngineNo;
 	/** 爬虫动态bean的类型 */
 	private Integer beanType;
 	/** 模糊匹配的{}可以匹配任意非空白字符串但是不包含斜杠(/) json数组的格式 详情参考gecco */
@@ -26,6 +28,15 @@ public class EcReptileDynamicBeanEntity extends EcBaseEntity {
 	/** beanName后缀 */
 	private String beanNameSuffix;
 		
+	
+	public Integer getReptileEngineNo() {
+		return reptileEngineNo;
+	}
+
+	public void setReptileEngineNo(Integer reptileEngineNo) {
+		this.reptileEngineNo = reptileEngineNo;
+	}
+
 	/** 获取爬虫动态bean的类型 */
 	public Integer getBeanType() {
 		return this.beanType;

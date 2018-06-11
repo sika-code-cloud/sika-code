@@ -33,6 +33,8 @@
 		<module>easy-cloud-core-lock</module>
 		<module>easy-cloud-core-mq</module>
 		<module>easy-cloud-core-search</module>
+		<module>easy-cloud-core-oauth</module>
+		<module>easy-cloud-core-reptile</module>
 	</modules>
 
 	<dependencies>

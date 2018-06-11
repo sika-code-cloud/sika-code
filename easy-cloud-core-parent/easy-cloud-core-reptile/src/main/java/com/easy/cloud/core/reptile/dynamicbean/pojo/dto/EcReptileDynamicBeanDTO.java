@@ -15,6 +15,8 @@ import com.easy.cloud.core.reptile.datafield.pojo.dto.EcReptileDataFieldDTO;
  */
 public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	private static final long serialVersionUID = -3702458028118977841L;
+	/** 爬虫引擎编号 */
+	private Integer reptileEngineNo;
 	/** 爬虫动态bean的类型 */
 	private Integer beanType;
 	/** 模糊匹配的{}可以匹配任意非空白字符串但是不包含斜杠(/) 详情参考gecco */
@@ -35,6 +37,14 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	private String beanNameSuffix;
 	/** 匹配的url列表 */
 	private List<String> matchUrlList;
+
+	public Integer getReptileEngineNo() {
+		return reptileEngineNo;
+	}
+
+	public void setReptileEngineNo(Integer reptileEngineNo) {
+		this.reptileEngineNo = reptileEngineNo;
+	}
 
 	/** 获取爬虫动态bean的类型 */
 	public Integer getBeanType() {

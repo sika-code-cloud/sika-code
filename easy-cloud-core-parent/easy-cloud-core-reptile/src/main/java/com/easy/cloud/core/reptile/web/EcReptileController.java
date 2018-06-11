@@ -1,10 +1,5 @@
 package com.easy.cloud.core.reptile.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
@@ -12,14 +7,15 @@ import com.easy.cloud.core.reptile.common.constant.EcReptileConstant;
 import com.easy.cloud.core.reptile.common.pojo.dto.EcReptileKeyValueDTO;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.request.HttpGetRequest;
-
-import javassist.bytecode.annotation.Annotation;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "reptile")
 @EcLogAnnotation(analysisSwitch = false, logSwitch = false)
 public class EcReptileController extends EcBaseController{
-	@Autowired
+//	@Autowired
 	private GeccoEngine geccoEngine;
 	@RequestMapping(value = "addReptileUrl")
 	public EcBaseServiceResult addReptileUrl(@RequestParam(name = "serialNum") String serialNum) {
