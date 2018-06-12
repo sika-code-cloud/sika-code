@@ -37,7 +37,9 @@ public class EcReptileConstant {
 	}
 	public enum EcDataFieldValueSourceTypeEnum {
 		CSS_PATH(1, "cssPath类型"), 
-		JSON_PATH(2, "jsonPath类型"), 
+		JSON_PATH(2, "jsonPath类型"),
+		REQUEST_PARAMETER(3, "url请求参数类型"),
+		REQUEST(4, "Request类型"),
 		;
 		
 		private int type;
@@ -64,7 +66,8 @@ public class EcReptileConstant {
 		LONG("long", "长整型类型"), 
 		FLOAT("float", "Float类型"), 
 		DOUBLE("double", "Double类型"), 
-		LIST("list", "列表类型"), 
+		LIST("list", "列表类型"),
+		REQUEST("request", "Request类型"),
 		REF("ref", "引用类型"),
 		;
 		private String type;

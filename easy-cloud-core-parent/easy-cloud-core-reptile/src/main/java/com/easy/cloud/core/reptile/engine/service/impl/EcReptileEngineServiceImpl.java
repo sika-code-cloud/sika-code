@@ -40,6 +40,6 @@ public class EcReptileEngineServiceImpl extends EcBaseService implements EcRepti
         // 校验
         EcAssert.verifyDataNotExistent(reptileEngineEntity);
         EcReptileEngineDTO reptileEngineDTO = EcJSONUtils.parseObject(reptileEngineEntity, EcReptileEngineDTO.class);
-        return EcReptileEngineUtils.loadReptileEngine(reptileEngineDTO);
+        return EcReptileEngineUtils.loadReptileEngine(reptileEngineDTO, reptileEngineQuery.getReptileDynamicBeanDTO());
     }
 }

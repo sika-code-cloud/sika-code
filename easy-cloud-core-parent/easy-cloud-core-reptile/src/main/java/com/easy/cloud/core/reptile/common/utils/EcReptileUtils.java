@@ -6,6 +6,7 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
+import com.easy.cloud.core.reptile.common.config.EcReptileConfig;
 import com.easy.cloud.core.reptile.common.constant.EcReptileConstant.EcDataFieldTypeEnum;
 import com.easy.cloud.core.reptile.common.constant.EcReptileConstant.EcDataFieldValueSourceEnum;
 import com.easy.cloud.core.reptile.common.constant.EcReptileConstant.EcDataFieldValueSourceTypeEnum;
@@ -31,7 +32,6 @@ import java.util.List;
  * @创建时间 2018年6月7日 下午6:44:00
  */
 public class EcReptileUtils {
-
 
     /**
      * <p>
@@ -70,7 +70,33 @@ public class EcReptileUtils {
 
     /**
      * <p>
-     * 将spiderBeanClass注册到爬虫引擎
+     * 更新爬虫引擎的规则
+     * </p>
+     * <pre>
+     *     所需参数示例及其说明
+     *     参数名称 : 示例值 : 说明 : 是否必须
+     * </pre>
+     *
+     * @param geccoEngine
+     * @param spiderBeanClazzs
+     * @return void
+     * @author daiqi
+     * @date 2018/6/12 17:05
+     */
+    public synchronized static void updateReptileEngineRules(GeccoEngine geccoEngine, List<Class<?>> spiderBeanClazzs) {
+        try {
+            geccoEngine.beginUpdateRule();
+            unRegisterReptileEngineRule(geccoEngine);
+            registerReptileEngineRules(geccoEngine, spiderBeanClazzs);
+        } finally {
+            geccoEngine.endUpdateRule();
+        }
+
+    }
+
+    /**
+     * <p>
+     * 注册引擎规则
      * </p>
      * <p>
      * <pre>
@@ -83,38 +109,29 @@ public class EcReptileUtils {
      * @author daiqi
      * @创建时间 2018年6月7日 下午8:37:16
      */
-    public static void registerToReptileEngine(GeccoEngine geccoEngine, List<Class<?>> spiderBeanClazzs) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private synchronized static void registerReptileEngineRules(GeccoEngine geccoEngine, List<Class<?>> spiderBeanClazzs) {
         for (Class<?> spiderBeanClass : spiderBeanClazzs) {
-            registerToReptileEngine(geccoEngine, spiderBeanClass);
+            geccoEngine.register(spiderBeanClass);
         }
+        EcReptileConfig.setSpiderBeanClazzs(spiderBeanClazzs);
     }
 
     /**
      * <p>
-     * 将spiderBeanClass注册到爬虫引擎
+     * 从引擎中下线相关规则
      * </p>
-     * <p>
-     * <pre>
-     *     所需参数示例及其说明
-     *     参数名称 : 示例值 : 说明 : 是否必须
-     * </pre>
      *
      * @param geccoEngine
-     * @param spiderBeanClazz
+     * @return void
      * @author daiqi
-     * @创建时间 2018年6月7日 下午8:37:16
+     * @date 2018/6/12 17:04
      */
-    public static void registerToReptileEngine(GeccoEngine geccoEngine, Class<?> spiderBeanClazz) {
-        try {
-            geccoEngine.beginUpdateRule();
-            geccoEngine.register(spiderBeanClazz);
-        } finally {
-            geccoEngine.endUpdateRule();
+    private synchronized static void unRegisterReptileEngineRule(GeccoEngine geccoEngine) {
+        if (EcCollectionsUtils.isNotEmpty(EcReptileConfig.getSpiderBeanClazzs())) {
+            for (Class<?> spiderBeanClass : EcReptileConfig.getSpiderBeanClazzs()) {
+                geccoEngine.unregister(spiderBeanClass);
+            }
+            EcReptileConfig.clearSpiderBeanClazzs();
         }
     }
 
@@ -133,7 +150,7 @@ public class EcReptileUtils {
      * @author daiqi
      * @创建时间 2018年6月7日 下午6:45:26
      */
-    public static Class<?> buildSpiderBeanClass(EcReptileDynamicBeanDTO dynamicBeanDTO) {
+    public static Class<?> loadSpiderBeanClass(EcReptileDynamicBeanDTO dynamicBeanDTO) {
         // 构建JavassistDynamicBean
         JavassistDynamicBean dynamicBean = buildJavassistDynamicBean(dynamicBeanDTO);
         // 构建规则属性列表
@@ -174,6 +191,10 @@ public class EcReptileUtils {
                                                             EcReptileDataFieldDTO dataFieldDTO) {
         if (EcBaseUtils.equals(dataFieldDTO.getValueSourceType(), EcDataFieldValueSourceTypeEnum.CSS_PATH.type())) {
             dynamicField.csspath(dataFieldDTO.getPath());
+        } else if (EcBaseUtils.equals(dataFieldDTO.getValueSourceType(), EcDataFieldValueSourceTypeEnum.REQUEST_PARAMETER.type())) {
+            dynamicField.requestParameter();
+        } else if (EcBaseUtils.equals(dataFieldDTO.getValueSourceType(), EcDataFieldValueSourceTypeEnum.REQUEST.type())) {
+            dynamicField.request();
         } else {
             dynamicField.ajax(dataFieldDTO.getPath());
         }
@@ -225,7 +246,7 @@ public class EcReptileUtils {
                                                       EcReptileDataFieldDTO dataFieldDTO) {
         String fieldName = dataFieldDTO.getFieldName();
         String fieldType = dataFieldDTO.getFieldType();
-        DynamicField dynamicField = null;
+        DynamicField dynamicField;
         if (EcStringUtils.equalsIgnoreCase(fieldType, EcDataFieldTypeEnum.STRING.type())) {
             dynamicField = dynamicBean.stringField(fieldName);
         } else if (EcStringUtils.equalsIgnoreCase(fieldType, EcDataFieldTypeEnum.INTEGER.type())) {
@@ -238,6 +259,8 @@ public class EcReptileUtils {
             dynamicField = dynamicBean.doubleField(fieldName);
         } else if (EcStringUtils.equalsIgnoreCase(fieldType, EcDataFieldTypeEnum.LIST.type())) {
             dynamicField = dynamicBean.listField(fieldName, Object.class);
+        } else if (EcStringUtils.equalsIgnoreCase(fieldType, EcDataFieldTypeEnum.REQUEST.type())) {
+            dynamicField = dynamicBean.requestField(fieldName);
         } else {
             dynamicField = dynamicBean.field(fieldName, Object.class);
         }
@@ -266,7 +289,7 @@ public class EcReptileUtils {
         if (EcCollectionsUtils.isEmpty(dynamicBeanDTO.getPipelineNameList())) {
             throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "pipelineName");
         }
-        JavassistDynamicBean dynamicBean = null;
+        JavassistDynamicBean dynamicBean;
         if (EcStringUtils.isNotEmpty(dynamicBeanDTO.getBeanNameBody())
                 && EcStringUtils.isNotEmpty(dynamicBeanDTO.getBeanNameFull())) {
             dynamicBean = DynamicGecco.html(dynamicBeanDTO.getBeanNameFull());
