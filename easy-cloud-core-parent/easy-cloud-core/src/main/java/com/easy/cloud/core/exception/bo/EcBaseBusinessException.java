@@ -67,6 +67,9 @@ public class EcBaseBusinessException extends RuntimeException {
 
 	/** 构建需要替换msg中参数的值 */
 	private EcBaseBusinessException buildFormatValues(Object... formatValues) {
+		if (EcArrayUtils.isEmpty(formatValues)) {
+			formatValues = new String [] {"数据"};
+		}
 		this.formatValues = formatValues;
 		return this;
 	}

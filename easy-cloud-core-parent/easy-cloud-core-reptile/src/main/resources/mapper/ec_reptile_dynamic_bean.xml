@@ -82,5 +82,6 @@
 		WHERE erdb.is_deleted = 0
         <if test="query.beanType != null">AND erdb.bean_type = #{query.beanType, jdbcType=INTEGER}</if>
         <if test="query.dynamicBeanNo != null">AND erdb.dynamic_bean_no = #{query.dynamicBeanNo, jdbcType=INTEGER}</if>
+        ORDER BY erdb.dynamic_bean_parent_no ASC
     </select>
 </mapper>

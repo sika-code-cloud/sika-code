@@ -3,9 +3,11 @@ package com.easy.cloud.core.reptile.engine.utils;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.reptile.common.config.EcReptileConfig;
+import com.easy.cloud.core.reptile.dynamicbean.pojo.dto.EcReptileDynamicBeanDTO;
 import com.easy.cloud.core.reptile.engine.constant.EcReptileEngineConstant.EcDebugEnum;
 import com.easy.cloud.core.reptile.engine.constant.EcReptileEngineConstant.EcLoopEnum;
 import com.easy.cloud.core.reptile.engine.constant.EcReptileEngineConstant.EcMobileEnum;
+import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineBeanClassDTO;
 import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineDTO;
 import com.geccocrawler.gecco.GeccoEngine;
 
@@ -27,15 +29,19 @@ public class EcReptileEngineUtils {
      * @author daiqi
      * @创建时间 2018年6月11日 上午11:25:52
      */
-    public synchronized static GeccoEngine loadReptileEngine(EcReptileEngineDTO reptileEngineDTO) {
+    public synchronized static GeccoEngine loadReptileEngine(EcReptileEngineDTO reptileEngineDTO, EcReptileDynamicBeanDTO reptileDynamicBeanDTO) {
         EcAssert.verifyObjNull(reptileEngineDTO, "reptileEngineDTO");
-        GeccoEngine geccoEngine1FromCache = EcReptileConfig.getGeccoEngineByReptileEngineNo(reptileEngineDTO.getReptileEngineNo());
+        GeccoEngine geccoEngine1FromCache = null;
+        EcReptileEngineBeanClassDTO reptileEngineBeanClassDTO = EcReptileConfig.getReptileEngineBeanClassDTO();
+        if (reptileEngineBeanClassDTO != null) {
+            geccoEngine1FromCache = reptileEngineBeanClassDTO.getGeccoEngine();
+        }
         GeccoEngine geccoEngine = convertFromEnginDTO(reptileEngineDTO, geccoEngine1FromCache);
         if (EcBaseUtils.isNull(geccoEngine1FromCache)) {
             geccoEngine.run();
         }
         geccoEngine.loop(false);
-        EcReptileConfig.putGeccoEngineToMapping(reptileEngineDTO.getReptileEngineNo(), geccoEngine);
+        EcReptileConfig.loadReptileEngineBeanClassDTO(reptileDynamicBeanDTO, geccoEngine);
         return geccoEngine;
     }
 
