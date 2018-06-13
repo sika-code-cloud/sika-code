@@ -21,10 +21,11 @@
 		<result column="value_flag" jdbcType="INTEGER" property="valueFlag" />
 		<result column="field_name" jdbcType="VARCHAR" property="fieldName" />
 		<result column="field_type" jdbcType="VARCHAR" property="fieldType" />
+		<result column="sub_field_class_name" jdbcType="VARCHAR" property="subFieldClassName" />
 	</resultMap>
 	<!-- 设置columnList -->
 	<sql id="columnList" >
-		erdf.id,erdf.create_by,erdf.update_by,erdf.create_date,erdf.update_date,erdf.version,erdf.available,erdf.is_deleted,erdf.dynamic_bean_no,erdf.path,erdf.value_source,erdf.value_source_type,erdf.download_path,erdf.field_value,erdf.value_flag,erdf.field_name,erdf.field_type
+		erdf.id,erdf.create_by,erdf.update_by,erdf.create_date,erdf.update_date,erdf.version,erdf.available,erdf.is_deleted,erdf.dynamic_bean_no,erdf.path,erdf.value_source,erdf.value_source_type,erdf.download_path,erdf.field_value,erdf.value_flag,erdf.field_name,erdf.field_type,erdf.sub_field_class_name
 	</sql>
 	<!-- 根据id获取对象信息 -->
 	<select id="findById" resultMap="EcReptileDataFieldEntity" parameterType="java.lang.Long" >
@@ -63,6 +64,7 @@
 			<if test="valueFlag != null" >value_flag = #{valueFlag, jdbcType=INTEGER},</if>
 			<if test="fieldName != null" >field_name = #{fieldName, jdbcType=VARCHAR},</if>
 			<if test="fieldType != null" >field_type = #{fieldType, jdbcType=VARCHAR},</if>
+			<if test="subFieldClassName != null" >sub_field_class_name = #{subFieldClassName, jdbcType=VARCHAR},</if>
 		</set>
 	</sql>
 	<!-- 保存对象 -->

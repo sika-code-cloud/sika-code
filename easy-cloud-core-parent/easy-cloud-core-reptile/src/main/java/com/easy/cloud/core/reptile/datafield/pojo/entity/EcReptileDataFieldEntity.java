@@ -27,7 +27,9 @@ public class EcReptileDataFieldEntity extends EcBaseEntity {
 	private String fieldName;
 	/** 生成bean的属性类型 支持string、int、long、float、double、list、ref类型 */
 	private String fieldType;
-		
+	/** 子属性的完整class名称，如List<Object> 则 List的子属性class名称为Object.class.getName() */
+	private String subFieldClassName;
+
 
 	public Integer getDynamicBeanNo() {
 		return dynamicBeanNo;
@@ -117,4 +119,11 @@ public class EcReptileDataFieldEntity extends EcBaseEntity {
 		this.fieldType = fieldType;
 	}
 
+	public String getSubFieldClassName() {
+		return subFieldClassName;
+	}
+
+	public void setSubFieldClassName(String subFieldClassName) {
+		this.subFieldClassName = subFieldClassName;
+	}
 }

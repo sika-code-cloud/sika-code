@@ -5,6 +5,8 @@ import java.util.List;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.common.string.constant.EcStringConstant;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.reptile.datafield.pojo.dto.EcReptileDataFieldDTO;
 
 /**
@@ -26,15 +28,17 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	/** 动态bean的编号 */
 	private Integer dynamicBeanNo;
 	/** 动态bean的父编号 */
-	private String dynamicBeanParentNo;
+	private Integer dynamicBeanParentNo;
 	/** 处理数据的管道名称(json数组字符串) */
 	private String pipelineNames;
 	/** 处理数据的管道名称列表 */
 	private List<String> pipelineNameList;
-	/** 动态bean名称主体 */
-	private String beanNameBody;
-	/** beanName后缀 */
-	private String beanNameSuffix;
+	/** 动态bean所在的包名 */
+	private String beanClassPackageName;
+	/** bean的类名主体 */
+	private String beanClassNameBody;
+	/** bean完整类名 */
+	private String beanClassFullName;
 	/** 匹配的url列表 */
 	private List<String> matchUrlList;
 
@@ -90,12 +94,12 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 	}
 
 	/** 获取动态bean的父编号 */
-	public String getDynamicBeanParentNo() {
+	public Integer getDynamicBeanParentNo() {
 		return this.dynamicBeanParentNo;
 	}
 
 	/** 设置动态bean的父编号 */
-	public void setDynamicBeanParentNo(String dynamicBeanParentNo) {
+	public void setDynamicBeanParentNo(Integer dynamicBeanParentNo) {
 		this.dynamicBeanParentNo = dynamicBeanParentNo;
 	}
 
@@ -109,24 +113,20 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 		this.pipelineNames = pipelineNames;
 	}
 
-	/** 获取动态bean名称主体 */
-	public String getBeanNameBody() {
-		return this.beanNameBody;
+	public String getBeanClassPackageName() {
+		return beanClassPackageName;
 	}
 
-	/** 设置动态bean名称主体 */
-	public void setBeanNameBody(String beanNameBody) {
-		this.beanNameBody = beanNameBody;
+	public void setBeanClassPackageName(String beanClassPackageName) {
+		this.beanClassPackageName = beanClassPackageName;
 	}
 
-	/** 获取beanName后缀 */
-	public String getBeanNameSuffix() {
-		return this.beanNameSuffix;
+	public String getBeanClassNameBody() {
+		return beanClassNameBody;
 	}
 
-	/** 设置beanName后缀 */
-	public void setBeanNameSuffix(String beanNameSuffix) {
-		this.beanNameSuffix = beanNameSuffix;
+	public void setBeanClassNameBody(String beanClassNameBody) {
+		this.beanClassNameBody = beanClassNameBody;
 	}
 
 	public List<EcReptileDataFieldDTO> getReptileDataFieldDTOs() {
@@ -155,7 +155,10 @@ public class EcReptileDynamicBeanDTO extends EcBaseDTO {
 		return pipelineNameList;
 	}
 
-	public String getBeanNameFull() {
-		return beanNameBody + beanNameSuffix;
+	public String getBeanClassFullName() {
+		if (EcStringUtils.isEmpty(this.beanClassFullName)) {
+			this.beanClassFullName = EcStringUtils.generateKey(EcStringConstant.EcSymbol.STOP,beanClassPackageName, beanClassNameBody);
+		}
+		return this.beanClassFullName;
 	}
 }

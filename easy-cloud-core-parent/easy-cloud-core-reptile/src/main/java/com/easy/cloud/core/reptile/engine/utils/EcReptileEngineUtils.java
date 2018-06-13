@@ -11,6 +11,9 @@ import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineBeanClassDTO;
 import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineDTO;
 import com.geccocrawler.gecco.GeccoEngine;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 爬虫引擎工具类
@@ -31,18 +34,42 @@ public class EcReptileEngineUtils {
      */
     public synchronized static GeccoEngine loadReptileEngine(EcReptileEngineDTO reptileEngineDTO, EcReptileDynamicBeanDTO reptileDynamicBeanDTO) {
         EcAssert.verifyObjNull(reptileEngineDTO, "reptileEngineDTO");
-        GeccoEngine geccoEngine1FromCache = null;
-        EcReptileEngineBeanClassDTO reptileEngineBeanClassDTO = EcReptileConfig.getReptileEngineBeanClassDTO();
-        if (reptileEngineBeanClassDTO != null) {
-            geccoEngine1FromCache = reptileEngineBeanClassDTO.getGeccoEngine();
-        }
-        GeccoEngine geccoEngine = convertFromEnginDTO(reptileEngineDTO, geccoEngine1FromCache);
-        if (EcBaseUtils.isNull(geccoEngine1FromCache)) {
+        GeccoEngine geccoEngineFromCache = EcReptileConfig.getReptileEngineBeanClassDTO().getGeccoEngine();
+        GeccoEngine geccoEngine = convertFromEnginDTO(reptileEngineDTO, geccoEngineFromCache);
+        if (EcBaseUtils.isNull(geccoEngineFromCache)) {
             geccoEngine.run();
         }
         geccoEngine.loop(false);
         EcReptileConfig.loadReptileEngineBeanClassDTO(reptileDynamicBeanDTO, geccoEngine);
+        // 注册ruleClass到爬虫引擎
+        registerRuleClassToReptileEngine();
         return geccoEngine;
+    }
+
+    /**  
+     * <p>
+     * 注册规则class到爬虫引擎中
+     * </p>
+     * <pre>
+     *     所需参数示例及其说明
+     *     参数名称 : 示例值 : 说明 : 是否必须
+     * </pre>
+     * @author daiqi  
+     * @date 2018/6/13 17:20  
+     * @param
+     * @return void  
+     */  
+    private static void registerRuleClassToReptileEngine() {
+        GeccoEngine geccoEngine = EcReptileConfig.getReptileEngineBeanClassDTO().getGeccoEngine();
+        Map<String, Class<?>> ruleBeanClazzs = EcReptileConfig.getReptileEngineBeanClassDTO().getRuleBeanClazzs();
+        try {
+            geccoEngine.beginUpdateRule();
+            for (String ruleBeanClazzName : ruleBeanClazzs.keySet()) {
+                geccoEngine.register(ruleBeanClazzs.get(ruleBeanClazzName));
+            }
+        } finally {
+            geccoEngine.endUpdateRule();
+        }
     }
 
     /**

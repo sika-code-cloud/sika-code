@@ -22,7 +22,7 @@ public class DynamicGeccoTest {
                 .floatField("menpai").csspath("div#goods-detail.goods-detail div.tab-cont-item.role div.left.w323 div.role-show span.fn-other-menpai").text().build()
                 .register();
 
-        Class<?> listInfo = DynamicGecco.html()
+        Class<?> listInfo = DynamicGecco.html().gecco("*")
                 .stringField("url").csspath("dt.title a").href(false).build()
                 .stringField("roleName").csspath("dt.title a span.name").text().build()
                 .stringField("service").csspath("dd.server-and-time span.server-info").text().build()
@@ -31,7 +31,6 @@ public class DynamicGeccoTest {
         //对应ProductDetail类
         DynamicGecco.html().gecco("http://tl.cyg.changyou.com/goods/public?world_id=0&order_by=remaintime-desc&have_chosen=&page_num={pageNum}", "jdbcJsonPipeline")
                 .stringField("pageNum").requestParameter().build()
-                .stringField("serialNum").requestParameter().build()
                 .requestField("request").request().build()
                 .listField("list", listInfo).csspath("div.jGoodsList ul#J_good_list.pg-goods-list li.role-item").build()
                 .register();
