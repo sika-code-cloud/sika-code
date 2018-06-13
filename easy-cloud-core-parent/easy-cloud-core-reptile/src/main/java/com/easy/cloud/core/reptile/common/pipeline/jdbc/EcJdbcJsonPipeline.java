@@ -18,7 +18,7 @@ public class EcJdbcJsonPipeline extends EcBaseJsonPipeline {
 		HttpRequest currRequest = HttpGetRequest.fromJson(jo.getJSONObject("request"));
 		String currentUrl = currRequest.getUrl();
 		Integer currentNum = Integer.parseInt(currRequest.getParameter("pageNum"));
-		if (currentUrl != null && currentNum <= 20) {
+		if (currentUrl != null && currentNum <= 200) {
 			Integer nextNum = currentNum + 1;
 			String nextUrl = EcStringUtils.replace(currentUrl, "page_num="+currentNum, "page_num="+nextNum);
 			DeriveSchedulerContext.into(currRequest.subRequest(nextUrl));
