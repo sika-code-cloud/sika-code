@@ -29,5 +29,5 @@ public class EcReptileEngineQuery extends EcBaseQuery {
 	public void setReptileEngineNo(Integer reptileEngineNo) {
 		this.reptileEngineNo = reptileEngineNo;
 	}
-	
+
 }

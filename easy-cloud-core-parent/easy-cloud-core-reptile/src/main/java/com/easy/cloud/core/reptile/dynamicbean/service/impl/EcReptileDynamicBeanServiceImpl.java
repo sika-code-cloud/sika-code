@@ -24,15 +24,13 @@ import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineBeanClassDTO;
 import com.easy.cloud.core.reptile.engine.pojo.query.EcReptileEngineQuery;
 import com.easy.cloud.core.reptile.engine.service.EcReptileEngineService;
 import com.geccocrawler.gecco.GeccoEngine;
+import com.geccocrawler.gecco.dynamic.JavassistDynamicBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 描述：服务实现类
@@ -111,15 +109,18 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
         }
         // 2 根据爬虫动态bean持久化对象列表构建reptileDynamicBeanDTO列表
         List<EcReptileDynamicBeanDTO> dynamicBeanDTOs = buildDynamicBeanDTOs(dynamicBeanEntities);
+        // 3 对dynamicBeanDTOs列表排序
+        Collections.sort(dynamicBeanDTOs, new Comparator<EcReptileDynamicBeanDTO>() {
+            @Override
+            public int compare(EcReptileDynamicBeanDTO o1, EcReptileDynamicBeanDTO o2) {
+                return o2.getDynamicBeanParentNo() - o1.getDynamicBeanParentNo();
+            }
+        });
         EcLogUtils.info("registerToGeccoEngine动态bean数据传输对象", dynamicBeanDTOs, logger);
-        // 3 加载beanClass到内存
-        List<Class<?>> spiderBeanClazzs = new ArrayList<>();
-        for (EcReptileDynamicBeanDTO dynamicBeanDTO : dynamicBeanDTOs) {
-            // 加载爬虫beanClass类到内存
-            spiderBeanClazzs.add(EcReptileUtils.loadSpiderBeanClass(dynamicBeanDTO));
-        }
-        // 4 更新爬虫引擎规则
-        updateReptileEngineRules(dynamicBeanDTOs, spiderBeanClazzs);
+        // 3 更新beanClass到内存
+        EcReptileUtils.updateReptileEngineRule(dynamicBeanDTOs);
+        // 4 加载爬虫引擎
+        loadReptileEngine(dynamicBeanDTOs);
         return EcBaseServiceResult.newInstanceOfSuccess();
     }
 
@@ -132,26 +133,45 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
      * @author daiqi
      * @date 2018/6/12 17:14
      */
-    private synchronized void updateReptileEngineRules(List<EcReptileDynamicBeanDTO> dynamicBeanDTOs, List<Class<?>> spiderBeanClazzs) {
+    private synchronized void loadReptileEngine(List<EcReptileDynamicBeanDTO> dynamicBeanDTOs) {
         // 顶级父动态bean数据传输对象需要加载爬虫引擎
-        EcReptileDynamicBeanDTO topParentDynamicBeanDTO = dynamicBeanDTOs.get(0);
+        EcReptileDynamicBeanDTO topParentDynamicBeanDTO = findTopParentDynamicBeanDTO(dynamicBeanDTOs);
         if (topParentDynamicBeanDTO != null) {
             // 获取爬虫引擎
             EcReptileEngineQuery reptileEngineQuery = new EcReptileEngineQuery();
             reptileEngineQuery.setReptileEngineNo(topParentDynamicBeanDTO.getReptileEngineNo());
             reptileEngineQuery.setReptileDynamicBeanDTO(topParentDynamicBeanDTO);
             // 加载爬虫引擎
-            GeccoEngine geccoEngine = reptileEngineService.loadReptileEngineByCore(reptileEngineQuery);
-            // 更新爬虫引擎规则列表
-            EcReptileUtils.updateReptileEngineRules(geccoEngine, spiderBeanClazzs);
+            reptileEngineService.loadReptileEngineByCore(reptileEngineQuery);
         }
+    }
+
+    /**
+     * <p>
+     * 从爬虫动态bean列表中获取顶级父bean---即dynamicBeanParentNo最小的对象,列表数据为空将抛出异常
+     * </p>
+     *
+     * @param dynamicBeanDTOs
+     * @return com.easy.cloud.core.reptile.dynamicbean.pojo.dto.EcReptileDynamicBeanDTO
+     * @author daiqi
+     * @date 2018/6/13 10:50
+     */
+    private EcReptileDynamicBeanDTO findTopParentDynamicBeanDTO(List<EcReptileDynamicBeanDTO> dynamicBeanDTOs) {
+        EcAssert.verifyListEmpty(dynamicBeanDTOs, "dynamicBeanDTOs");
+        EcReptileDynamicBeanDTO topParentDynamicBeanDTO = dynamicBeanDTOs.get(0);
+        for (EcReptileDynamicBeanDTO reptileDynamicBeanDTO : dynamicBeanDTOs) {
+            if (reptileDynamicBeanDTO.getDynamicBeanParentNo() < topParentDynamicBeanDTO.getDynamicBeanParentNo()) {
+                topParentDynamicBeanDTO = reptileDynamicBeanDTO;
+            }
+        }
+        return topParentDynamicBeanDTO;
     }
 
     /**
      * <p>
      * 根据dynamicBeanEntities列表构建EcReptileDynamicBeanDTO列表
      * </p>
-     * <p>
+     *
      * <pre>
      *     所需参数示例及其说明
      *     参数名称 : 示例值 : 说明 : 是否必须

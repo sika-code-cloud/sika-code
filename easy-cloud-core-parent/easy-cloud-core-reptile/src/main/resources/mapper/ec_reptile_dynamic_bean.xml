@@ -19,11 +19,11 @@
         <result column="dynamic_bean_no" jdbcType="INTEGER" property="dynamicBeanNo" />
         <result column="dynamic_bean_parent_no" jdbcType="VARCHAR" property="dynamicBeanParentNo" />
         <result column="pipeline_names" jdbcType="VARCHAR" property="pipelineNames" />
-        <result column="bean_name_body" jdbcType="VARCHAR" property="beanNameBody" />
-        <result column="bean_name_suffix" jdbcType="VARCHAR" property="beanNameSuffix" />
+        <result column="bean_class_package_name" jdbcType="VARCHAR" property="beanClassPackageName" />
+        <result column="bean_class_name_body" jdbcType="VARCHAR" property="beanClassNameBody" />
     </resultMap>
     <!-- 设置columnList -->
-    <sql id="columnList">erdb.id,erdb.create_by,erdb.update_by,erdb.create_date,erdb.update_date,erdb.version,erdb.available,erdb.is_deleted,erdb.reptile_engine_no,erdb.bean_type,erdb.match_urls,erdb.match_url_type,erdb.dynamic_bean_no,erdb.dynamic_bean_parent_no,erdb.pipeline_names,erdb.bean_name_body,erdb.bean_name_suffix</sql>
+    <sql id="columnList">erdb.id,erdb.create_by,erdb.update_by,erdb.create_date,erdb.update_date,erdb.version,erdb.available,erdb.is_deleted,erdb.reptile_engine_no,erdb.bean_type,erdb.match_urls,erdb.match_url_type,erdb.dynamic_bean_no,erdb.dynamic_bean_parent_no,erdb.pipeline_names,erdb.bean_class_package_name,erdb.bean_class_name_body</sql>
     <!-- 根据id获取对象信息 -->
     <select id="findById" resultMap="EcReptileDynamicBeanEntity" parameterType="java.lang.Long">
         SELECT
@@ -59,8 +59,8 @@
             <if test="dynamicBeanNo != null">dynamic_bean_no = #{dynamicBeanNo, jdbcType=INTEGER},</if>
             <if test="dynamicBeanParentNo != null">dynamic_bean_parent_no = #{dynamicBeanParentNo, jdbcType=VARCHAR},</if>
             <if test="pipelineNames != null">pipeline_names = #{pipelineNames, jdbcType=VARCHAR},</if>
-            <if test="beanNameBody != null">bean_name_body = #{beanNameBody, jdbcType=VARCHAR},</if>
-            <if test="beanNameSuffix != null">bean_name_suffix = #{beanNameSuffix, jdbcType=VARCHAR},</if>
+            <if test="beanClassPackageName != null">bean_class_package_name = #{beanClassPackageName, jdbcType=VARCHAR},</if>
+            <if test="beanClassNameBody != null">bean_class_name_body = #{beanClassNameBody, jdbcType=VARCHAR},</if>
         </set>
     </sql>
     <!-- 保存对象 -->
@@ -82,6 +82,6 @@
 		WHERE erdb.is_deleted = 0
         <if test="query.beanType != null">AND erdb.bean_type = #{query.beanType, jdbcType=INTEGER}</if>
         <if test="query.dynamicBeanNo != null">AND erdb.dynamic_bean_no = #{query.dynamicBeanNo, jdbcType=INTEGER}</if>
-        ORDER BY erdb.dynamic_bean_parent_no ASC
+        ORDER BY erdb.dynamic_bean_parent_no DESC
     </select>
 </mapper>

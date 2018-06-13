@@ -20,13 +20,13 @@ public class EcReptileDynamicBeanEntity extends EcBaseEntity {
 	/** 动态bean的编号 */
 	private Integer dynamicBeanNo;
 	/** 动态bean的父编号 */
-	private String dynamicBeanParentNo;
+	private Integer dynamicBeanParentNo;
 	/** 处理数据的管道名称 */
 	private String pipelineNames;
-	/** 动态bean名称主体 */
-	private String beanNameBody;
-	/** beanName后缀 */
-	private String beanNameSuffix;
+	/** 动态bean所在的包名 */
+	private String beanClassPackageName;
+	/** bean的类名主体 */
+	private String beanClassNameBody;
 		
 	
 	public Integer getReptileEngineNo() {
@@ -78,12 +78,12 @@ public class EcReptileDynamicBeanEntity extends EcBaseEntity {
 	}
 
 	/** 获取动态bean的父编号 */
-	public String getDynamicBeanParentNo() {
+	public Integer getDynamicBeanParentNo() {
 		return this.dynamicBeanParentNo;
 	}
 
 	/** 设置动态bean的父编号 */
-	public void setDynamicBeanParentNo(String dynamicBeanParentNo) {
+	public void setDynamicBeanParentNo(Integer dynamicBeanParentNo) {
 		this.dynamicBeanParentNo = dynamicBeanParentNo;
 	}
 
@@ -97,24 +97,19 @@ public class EcReptileDynamicBeanEntity extends EcBaseEntity {
 		this.pipelineNames = pipelineNames;
 	}
 
-	/** 获取动态bean名称主体 */
-	public String getBeanNameBody() {
-		return this.beanNameBody;
+	public String getBeanClassPackageName() {
+		return beanClassPackageName;
 	}
 
-	/** 设置动态bean名称主体 */
-	public void setBeanNameBody(String beanNameBody) {
-		this.beanNameBody = beanNameBody;
+	public void setBeanClassPackageName(String beanClassPackageName) {
+		this.beanClassPackageName = beanClassPackageName;
 	}
 
-	/** 获取beanName后缀 */
-	public String getBeanNameSuffix() {
-		return this.beanNameSuffix;
+	public String getBeanClassNameBody() {
+		return beanClassNameBody;
 	}
 
-	/** 设置beanName后缀 */
-	public void setBeanNameSuffix(String beanNameSuffix) {
-		this.beanNameSuffix = beanNameSuffix;
+	public void setBeanClassNameBody(String beanClassNameBody) {
+		this.beanClassNameBody = beanClassNameBody;
 	}
-
 }

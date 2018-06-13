@@ -4,6 +4,8 @@ import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.reptile.common.config.EcReptileConfig;
+import com.easy.cloud.core.reptile.common.utils.EcReptileUtils;
 import com.easy.cloud.core.reptile.engine.dao.EcReptileEngineDAO;
 import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineDTO;
 import com.easy.cloud.core.reptile.engine.pojo.entity.EcReptileEngineEntity;
@@ -40,6 +42,7 @@ public class EcReptileEngineServiceImpl extends EcBaseService implements EcRepti
         // 校验
         EcAssert.verifyDataNotExistent(reptileEngineEntity);
         EcReptileEngineDTO reptileEngineDTO = EcJSONUtils.parseObject(reptileEngineEntity, EcReptileEngineDTO.class);
+        // 更新爬虫引擎规则列表
         return EcReptileEngineUtils.loadReptileEngine(reptileEngineDTO, reptileEngineQuery.getReptileDynamicBeanDTO());
     }
 }
