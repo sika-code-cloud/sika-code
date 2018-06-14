@@ -13,7 +13,6 @@
 		<artifactId>easy-cloud-core-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
-
 	<properties>
 
 		<shiro.version>1.4.0</shiro.version>
@@ -42,14 +41,13 @@
             <scope>system</scope>
             <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
     	</dependency>
-
-				
 		<!-- 导入easy-cloud-core相关依赖 -->
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core-cache</artifactId>
@@ -60,5 +58,6 @@
 			<artifactId>easy-cloud-core-jdbc</artifactId>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
+
 	</dependencies>
 </project>

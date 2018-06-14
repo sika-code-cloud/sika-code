@@ -24,9 +24,9 @@ import com.easy.cloud.core.jdbc.primarykey.snowflake.EcPrimaryKeySnowflakeGenera
  */
 @MappedSuperclass
 public class EcBaseEntity {
-
 	@Id
 	@EcGenericGenerator(primaryKeyGeneratorClass = EcPrimaryKeySnowflakeGenerator.class)
+
 	private Long id;
 	@CreatedDate
 	private Date createDate;
