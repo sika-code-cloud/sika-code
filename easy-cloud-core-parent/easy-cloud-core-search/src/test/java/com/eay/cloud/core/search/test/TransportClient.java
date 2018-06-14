@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -688,6 +689,7 @@ public class TransportClient {
 		highlightBuilder.preTags("<em>").postTags("</em>");// 高亮标签
 		highlightBuilder.fragmentSize(500);// 高亮内容长度
 //		searchSourceBuilder.highlight(highlightBuilder);
+
 
 		System.out.println(searchSourceBuilder.toString());
 

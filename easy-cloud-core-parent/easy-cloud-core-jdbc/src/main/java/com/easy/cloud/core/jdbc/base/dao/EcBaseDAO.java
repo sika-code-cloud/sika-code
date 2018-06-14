@@ -30,7 +30,8 @@ public interface EcBaseDAO<T> {
 	 * @author daiqi
 	 * @date 2017年12月6日 下午1:41:26
 	 */
-//	@EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
+
+	@EcAuditAnnotation(actionType = EcActionType.SAVE, type = EcType.SAVE)
 	public int save(final T obj);
 
 	/**
