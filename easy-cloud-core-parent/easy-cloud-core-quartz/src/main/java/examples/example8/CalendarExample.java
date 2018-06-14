@@ -14,7 +14,7 @@
  * under the License.
  * 
  */
- 
+
 package examples.example8;
 
 import org.quartz.*;
@@ -55,7 +55,7 @@ public class CalendarExample {
     AnnualCalendar holidays = new AnnualCalendar();
 
     // fourth of July (July 4)
-    Calendar fourthOfJuly = new GregorianCalendar(2005, 6, 4);
+    Calendar fourthOfJuly = new GregorianCalendar(2018, 6, 14);
     holidays.setDayExcluded(fourthOfJuly, true);
     // halloween (Oct 31)
     Calendar halloween = new GregorianCalendar(2005, 9, 31);
@@ -70,11 +70,11 @@ public class CalendarExample {
     // schedule a job to run hourly, starting on halloween
     // at 10 am
     Date runDate = dateOf(0, 0, 10, 31, 10);
-
+    runDate = new Date();
     JobDetail job = newJob(SimpleJob.class).withIdentity("job1", "group1").build();
 
     SimpleTrigger trigger = newTrigger().withIdentity("trigger1", "group1").startAt(runDate)
-        .withSchedule(simpleSchedule().withIntervalInHours(1).repeatForever()).modifiedByCalendar("holidays").build();
+        .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever()).modifiedByCalendar("holidays").build();
 
     // schedule the job and print the first run date
     Date firstRunTime = sched.scheduleJob(job, trigger);
@@ -90,12 +90,12 @@ public class CalendarExample {
     log.info("------- Starting Scheduler ----------------");
     sched.start();
 
-    // wait 30 seconds:
+    // wait 5 seconds:
     // note: nothing will run
     log.info("------- Waiting 30 seconds... --------------");
     try {
       // wait 30 seconds to show jobs
-      Thread.sleep(30L * 1000L);
+      Thread.sleep(5L * 1000L);
       // executing...
     } catch (Exception e) {
       //

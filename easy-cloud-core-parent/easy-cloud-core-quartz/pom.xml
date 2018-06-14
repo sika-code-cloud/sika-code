@@ -36,6 +36,17 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>easy.cloud.core</groupId>
+            <artifactId>easy-cloud-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>easy.cloud.core</groupId>
+            <artifactId>easy-cloud-core-jdbc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
