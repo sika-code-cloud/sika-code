@@ -22,7 +22,7 @@ import com.easy.cloud.core.exception.handler.EcBaseExceptionHandle;
  * @date 2018年3月18日 上午12:48:58
  */
 @Controller
-@EcLogAnnotation(level = EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogTypeEnum.CONTROLLER)
+@EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogTypeEnum.CONTROLLER)
 public class EcBaseController extends EcBaseExceptionHandle{
 	
 	@EcLogAnnotation(logSwitch = false, analysisSwitch = false)

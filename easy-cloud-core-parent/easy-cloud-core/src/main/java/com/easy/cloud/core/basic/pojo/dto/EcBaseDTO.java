@@ -19,6 +19,8 @@ public class EcBaseDTO implements Serializable {
 	private Long updateBy;
 	/** 删除标志 */
 	private Integer isDeleted;
+	/** 可用标志 */
+	private Integer available;
 	/** 备注 */
 	private String remark;
 
@@ -76,6 +78,14 @@ public class EcBaseDTO implements Serializable {
 
 	public void setIsDeleted(Integer isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public Integer getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Integer available) {
+		this.available = available;
 	}
 
 	public String getRemark() {
