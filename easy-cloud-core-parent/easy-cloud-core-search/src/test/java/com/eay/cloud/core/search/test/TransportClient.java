@@ -10,7 +10,8 @@ import java.util.Map;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -581,9 +582,6 @@ public class TransportClient {
 	/**
 	 * 更新Document
 	 * 
-	 * @param index
-	 * @param type
-	 * @param id
 	 * @throws Exception
 	 */
 	@Test
@@ -611,9 +609,6 @@ public class TransportClient {
 	/**
 	 * 删除Document
 	 * 
-	 * @param index
-	 * @param type
-	 * @param id
 	 * @throws Exception
 	 */
 	@Test
@@ -627,9 +622,6 @@ public class TransportClient {
 	/**
 	 * 获取Document
 	 * 
-	 * @param index
-	 * @param type
-	 * @param id
 	 * @throws Exception
 	 */
 	@Test
@@ -696,7 +688,8 @@ public class TransportClient {
 		highlightBuilder.field("view");// 高亮title
 		highlightBuilder.preTags("<em>").postTags("</em>");// 高亮标签
 		highlightBuilder.fragmentSize(500);// 高亮内容长度
-		searchSourceBuilder.highlight(highlightBuilder);
+//		searchSourceBuilder.highlight(highlightBuilder);
+
 
 		System.out.println(searchSourceBuilder.toString());
 
