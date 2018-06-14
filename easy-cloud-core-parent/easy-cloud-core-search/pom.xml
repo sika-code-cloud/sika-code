@@ -14,19 +14,70 @@
 	</parent>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>easy.cloud.core</groupId>
 			<artifactId>easy-cloud-core</artifactId>
 			<version>${easy.cloud.core.version}</version>
 		</dependency>
 	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.springframework.data</groupId>-->
+					<!--<artifactId>spring-data-elasticsearch</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
+		<!--</dependency>-->
+
 		<dependency>
-		  <groupId>org.springframework.boot</groupId>
-		  <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>3.0.7.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.elasticsearch</groupId>
+					<artifactId>elasticsearch</artifactId>
+				</exclusion>
+				<exclusion>
+                    <groupId>org.elasticsearch.client</groupId>
+                    <artifactId>transport</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-        <dependency>  
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>6.2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>6.2.4</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>6.2.4</version>
+        </dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>com.sun.jna</groupId>-->
+			<!--<artifactId>jna</artifactId>-->
+		<!--</dependency>-->
+
+        <dependency>
             <groupId>io.searchbox</groupId>  
             <artifactId>jest</artifactId>  
         </dependency>  
 	</dependencies>
+
 </project>
