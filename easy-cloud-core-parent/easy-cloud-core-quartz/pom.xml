@@ -36,7 +36,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
-
         <dependency>
             <groupId>easy.cloud.core</groupId>
             <artifactId>easy-cloud-core</artifactId>
