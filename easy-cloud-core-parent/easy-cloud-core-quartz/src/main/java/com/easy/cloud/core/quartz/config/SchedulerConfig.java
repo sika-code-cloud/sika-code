@@ -1,6 +1,7 @@
 package com.easy.cloud.core.quartz.config;
 
 import com.easy.cloud.core.quartz.job.SampleJob;
+import com.easy.cloud.core.quartz.job.SampleJob2;
 import com.easy.cloud.core.quartz.spring.AutowiringSpringBeanJobFactory;
 import org.quartz.*;
 import org.quartz.impl.calendar.AnnualCalendar;
@@ -13,10 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -34,32 +32,32 @@ public class SchedulerConfig {
         jobFactory.setApplicationContext(applicationContext);
         return jobFactory;
     }
+//    @Bean
+    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean, @Qualifier("cronJobTrigger") Trigger cronJobTrigger) throws Exception {
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        scheduler.addCalendar("holidays", getAnnualCalendar(), false, false);
 
-    @Bean
-    public Scheduler schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory,
-                                          @Qualifier("cronJobTrigger") Trigger cronJobTrigger) throws Exception {
-        SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        // this allows to update triggers in DB when updating settings in config file:
-        factory.setOverwriteExistingJobs(true);
-        factory.setDataSource(dataSource);
-        factory.setJobFactory(jobFactory);
-
-        factory.setQuartzProperties(quartzProperties());
-        factory.afterPropertiesSet();
-
-        Scheduler scheduler = factory.getScheduler();
-//        scheduler.addCalendar("holidays1", getAnnualCalendar(), false, false);
-
-        scheduler.setJobFactory(jobFactory);
         scheduler.scheduleJob(cronJobDetail(), cronJobTrigger);
 
         scheduler.start();
         return scheduler;
     }
 
+    @Bean(name = "schedulerFactoryBean")
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory) throws Exception {
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        factory.setDataSource(dataSource);
+        factory.setJobFactory(jobFactory);
+        factory.setQuartzProperties(quartzProperties());
+        factory.afterPropertiesSet();
+        factory.setStartupDelay(10);
+        factory.setAutoStartup(true);
+        return factory;
+    }
+
     private AnnualCalendar getAnnualCalendar() {
         AnnualCalendar holidays = new AnnualCalendar();
-        Calendar calendar = new GregorianCalendar(2018, 5, 15);
+        Calendar calendar = new GregorianCalendar(2018, 5, 11);
         holidays.setDayExcluded(calendar, true);
         return holidays;
     }
@@ -72,59 +70,21 @@ public class SchedulerConfig {
         return propertiesFactoryBean.getObject();
     }
 
-//    @Bean
-//    public JobDetailFactoryBean cronJobDetail() {
-//        return createJobDetail(SampleJob.class, "cron");
-//    }
 
     @Bean
     public JobDetail cronJobDetail() {
         return JobBuilder.newJob(SampleJob.class)
-                .withIdentity("test_cron1", "test_cron_group1")
+                .withIdentity("test_cron１", "test_cron_group１")
                 .build();
     }
 
     @Bean(name = "cronJobTrigger")
     public Trigger cronJobTrigger(@Value("${cronjob.cronExpression}") String cronExpression) {
         return TriggerBuilder.newTrigger()
-                .withIdentity("cronTrigger1", "cronTriggerGroup1")
+                .withIdentity("cronTrigger3", "cronTriggerGroup3")
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
-                .modifiedByCalendar("holidays")
+//                .modifiedByCalendar("holidays")
                 .build();
-    }
-
-//    @Bean(name = "cronJobTrigger")
-//    public CronTriggerFactoryBean cronJobTrigger(@Qualifier("cronJobDetail") JobDetail jobDetail,
-//                                                 @Value("${cronjob.cronExpression}") String cronExpression) {
-//        return createCronTrigger(jobDetail, cronExpression);
-//    }
-
-    private static JobDetailFactoryBean createJobDetail(Class jobClass, String name) {
-        JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(jobClass);
-        factoryBean.setName(name);
-        // job has to be durable to be stored in DB:
-        factoryBean.setDurability(true);
-        return factoryBean;
-    }
-
-    private static SimpleTriggerFactoryBean createTrigger(JobDetail jobDetail, long pollFrequencyMs) {
-        SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
-        factoryBean.setJobDetail(jobDetail);
-        factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(pollFrequencyMs);
-        factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-        // in case of misfire, ignore all missed triggers and continue :
-        factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
-        return factoryBean;
-    }
-
-    private static CronTriggerFactoryBean createCronTrigger(JobDetail jobDetail, String cronExpression) {
-        CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
-        factoryBean.setJobDetail(jobDetail);
-        factoryBean.setCronExpression(cronExpression);
-        factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
-        return factoryBean;
     }
 
 }
