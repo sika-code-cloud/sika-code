@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easy.cloud.core.task.executor.dao.EcTaskExecutorDAO">
+    <!-- 根节点 -->
+    <!-- 设置resultMap -->
+    <resultMap id="EcTaskExecutorEntity" type="com.easy.cloud.core.task.executor.pojo.entity.EcTaskExecutorEntity">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="create_by" jdbcType="BIGINT" property="createBy" />
+        <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="available" jdbcType="INTEGER" property="available" />
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+        <result column="job_group" jdbcType="VARCHAR" property="jobGroup" />
+        <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+        <result column="trigger_group" jdbcType="VARCHAR" property="triggerGroup" />
+        <result column="trigger_name" jdbcType="VARCHAR" property="triggerName" />
+        <result column="retry_count" jdbcType="INTEGER" property="retryCount" />
+        <result column="retry_interval" jdbcType="INTEGER" property="retryInterval" />
+        <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+        <result column="execute_result" jdbcType="VARCHAR" property="executeResult" />
+        <result column="task_executor_no" jdbcType="CHAR" property="taskExecutorNo" />
+        <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+        <result column="request_body" jdbcType="LONGVARCHAR" property="requestBody" />
+    </resultMap>
+    <!-- 设置columnList -->
+    <sql id="columnList">te.id,te.create_by,te.update_by,te.create_date,te.update_date,te.version,te.available,te.is_deleted,te.job_group,te.job_name,te.trigger_group,te.trigger_name,te.retry_count,te.retry_interval,te.request_url,te.execute_result,te.task_executor_no,te.request_method,te.request_body</sql>
+    <!-- 根据id获取对象信息 -->
+    <select id="findById" resultMap="EcTaskExecutorEntity" parameterType="java.lang.Long">
+        SELECT
+        <include refid="columnList" />
+        FROM task_executor te 
+		WHERE te.id = #{id, jdbcType=BIGINT}
+    </select>
+    <!-- 统计列表数量 -->
+    <select id="listCount" resultType="java.lang.Integer" parameterType="map">SELECT count(*)
+		FROM task_executor te</select>
+    <!-- 获取列表分页信息 -->
+    <select id="listPage" resultMap="EcTaskExecutorEntity" parameterType="map">
+        SELECT
+        <include refid="columnList" />
+        FROM task_executor te 
+		LIMIT #{maps.start},#{maps.pageSize}
+    </select>
+    <!-- 设置column -->
+    <sql id="setColumnSql">
+        <set>
+            <if test="id != null">id = #{id, jdbcType=BIGINT},</if>
+            <if test="createBy != null">create_by = #{createBy, jdbcType=BIGINT},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="version != null">version = #{version, jdbcType=INTEGER},</if>
+            <if test="available != null">available = #{available, jdbcType=INTEGER},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
+            <if test="jobGroup != null">job_group = #{jobGroup, jdbcType=VARCHAR},</if>
+            <if test="jobName != null">job_name = #{jobName, jdbcType=VARCHAR},</if>
+            <if test="triggerGroup != null">trigger_group = #{triggerGroup, jdbcType=VARCHAR},</if>
+            <if test="triggerName != null">trigger_name = #{triggerName, jdbcType=VARCHAR},</if>
+            <if test="retryCount != null">retry_count = #{retryCount, jdbcType=INTEGER},</if>
+            <if test="retryInterval != null">retry_interval = #{retryInterval, jdbcType=INTEGER},</if>
+            <if test="requestUrl != null">request_url = #{requestUrl, jdbcType=VARCHAR},</if>
+            <if test="executeResult != null">execute_result = #{executeResult, jdbcType=VARCHAR},</if>
+            <if test="taskExecutorNo != null">task_executor_no = #{taskExecutorNo, jdbcType=CHAR},</if>
+            <if test="requestMethod != null">request_method = #{requestMethod, jdbcType=VARCHAR},</if>
+            <if test="requestBody != null">request_body = #{requestBody, jdbcType=LONGVARCHAR},</if>
+        </set>
+    </sql>
+    <!-- 保存对象 -->
+    <insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.task.executor.pojo.entity.EcTaskExecutorEntity" keyProperty="id">
+        INSERT INTO task_executor
+        <include refid="setColumnSql" />
+    </insert>
+    <!-- 更新对象 -->
+    <update id="update" parameterType="com.easy.cloud.core.task.executor.pojo.entity.EcTaskExecutorEntity">
+        UPDATE task_executor te
+        <include refid="setColumnSql" />
+        WHERE te.id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <!-- 获取列表分页信息 -->
+    <select id="listByQuery" resultMap="EcTaskExecutorEntity" parameterType="com.easy.cloud.core.task.executor.pojo.query.EcTaskExecutorQuery">
+        SELECT
+        <include refid="columnList" />
+        FROM task_executor te
+        WHERE te.is_deleted = 0
+        <if test="query.jobGroup != null">AND te.job_group = #{query.jobGroup, jdbcType=VARCHAR}</if>
+        <if test="query.jobName != null">AND te.job_name = #{query.jobName, jdbcType=VARCHAR}</if>
+        <if test="query.triggerGroup != null">AND te.trigger_group = #{query.triggerGroup, jdbcType=VARCHAR}</if>
+        <if test="query.triggerName != null">AND te.trigger_name = #{query.triggerName, jdbcType=VARCHAR}</if>
+        <if test="query.taskExecutorNo != null">AND te.task_executor_no = #{query.taskExecutorNo, jdbcType=VARCHAR}</if>
+    </select>
+</mapper>

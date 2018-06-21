@@ -1,6 +1,6 @@
 #
 # In your Quartz properties file, you'll need to set 
-# org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+# org.task.jobStore.driverDelegateClass = org.task.impl.jdbcjobstore.StdJDBCDelegate
 #
 #
 # By: Ron Cordell - roncordell

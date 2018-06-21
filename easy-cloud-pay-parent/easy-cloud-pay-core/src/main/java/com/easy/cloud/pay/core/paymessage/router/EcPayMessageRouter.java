@@ -26,11 +26,11 @@ import java.util.concurrent.Future;
  * 使用方法：
  * PayMessageRouter router = new PayMessageRouter();
  * router
- *   .rule()
+ *   .executor()
  *       .msgType("MSG_TYPE").event("EVENT").eventKey("EVENT_KEY").content("CONTENT")
  *       .interceptor(interceptor, ...).handler(handler, ...)
  *   .end()
- *   .rule()
+ *   .executor()
  *       // 另外一个匹配规则
  *   .end()
  * ;
