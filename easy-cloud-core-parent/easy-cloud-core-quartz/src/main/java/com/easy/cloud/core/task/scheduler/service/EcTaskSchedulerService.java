@@ -28,6 +28,9 @@ public interface EcTaskSchedulerService {
      *     taskSchedulerDTO.taskExecutor.requestMethod : post : 请求的方法统一使用post : 否
      *     taskSchedulerDTO.taskExecutor.requestBody : {"name": "zhangsan"} : 请求的主体内容[json对象字符串] : 否
      *     taskSchedulerDTO.taskExecutor.taskExecutorNo : 1213131 : 任务执行者编号 : 否
+     *     taskSchedulerDTO.taskExecutor.jobCallbackClassName : com.easy.cloud.core.task.job.callback.impl.EcDefaultJobCallBackHandler : 异步回调执行handler : 否
+     *     taskSchedulerDTO.taskExecutor.jobType : 1 : 工作类型 @see EcJobType常量类 : 否
+     *     taskSchedulerDTO.taskExecutor.asyn : 1 : 是否为异步执行job 0同步 1为异步  默认异步: 否
      * </pre>
      *
      * @param taskSchedulerDTO

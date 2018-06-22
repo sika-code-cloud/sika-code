@@ -39,7 +39,7 @@ import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
  * date 2017/3/4 17:56
  *  </pre>
  */
-public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase implements  org.apache.http.client.ResponseHandler<T>{
+public class EcClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase implements  org.apache.http.client.ResponseHandler<T>{
 
     public static final ContentType APPLICATION_FORM_URLENCODED_UTF_8 = ContentType.create("application/x-www-form-urlencoded", Consts.UTF_8);;
 
@@ -54,7 +54,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
     private Class<T> responseType;
 
 
-    public EcDqClientHttpRequestBO<T> setResponseType(Class<T> responseType) {
+    public EcClientHttpRequestBO<T> setResponseType(Class<T> responseType) {
         this.responseType = responseType;
         return this;
     }
@@ -62,7 +62,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
     /**
      * 空构造
      */
-    public EcDqClientHttpRequestBO() {
+    public EcClientHttpRequestBO() {
     }
 
     /**
@@ -71,7 +71,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param method  请求方法
      * @param request 请求内容
      */
-    public EcDqClientHttpRequestBO(URI uri, EcMethodType method, Object request) {
+    public EcClientHttpRequestBO(URI uri, EcMethodType method, Object request) {
        this(uri, method);
         setParameters(request);
     }
@@ -80,7 +80,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param uri 请求地址
      * @param method  请求方法
      */
-    public EcDqClientHttpRequestBO(URI uri, EcMethodType method) {
+    public EcClientHttpRequestBO(URI uri, EcMethodType method) {
         this.setURI(uri);
         this.methodType = method;
     }
@@ -89,14 +89,14 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * 根据请求地址
      * @param uri  请求地址
      */
-    public EcDqClientHttpRequestBO(URI uri) {
+    public EcClientHttpRequestBO(URI uri) {
         this.setURI(uri);
     }
     /**
      * 根据请求地址
      * @param uri  请求地址
      */
-    public EcDqClientHttpRequestBO(String uri) {
+    public EcClientHttpRequestBO(String uri) {
         this.setURI(URI.create(uri));
     }
     /**
@@ -104,7 +104,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param uri 请求地址
      * @param method  请求方法
      */
-    public EcDqClientHttpRequestBO(String uri, EcMethodType method) {
+    public EcClientHttpRequestBO(String uri, EcMethodType method) {
         this.setURI(URI.create(uri));
         this.methodType = method;
     }
@@ -114,7 +114,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param method  请求方法
      * @param request 请求内容
      */
-    public EcDqClientHttpRequestBO(String uri, EcMethodType method, Object request) {
+    public EcClientHttpRequestBO(String uri, EcMethodType method, Object request) {
         this(uri, method);
         setParameters(request);
     }
@@ -143,7 +143,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @param httpProxy http代理配置信息
      * @return 当前HTTP请求的客户端
      */
-    public EcDqClientHttpRequestBO<T> setProxy(HttpHost httpProxy){
+    public EcClientHttpRequestBO<T> setProxy(HttpHost httpProxy){
         if (httpProxy != null) {
             RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
             setConfig(config);
@@ -159,7 +159,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
      * @return 当前HTTP请求的客户端
      */
     @SuppressWarnings("unchecked")
-	public EcDqClientHttpRequestBO<T> setParameters(Object request) {
+	public EcClientHttpRequestBO<T> setParameters(Object request) {
         if (null == request){
             return this;
         }
@@ -186,10 +186,7 @@ public class EcDqClientHttpRequestBO<T> extends HttpEntityEnclosingRequestBase i
             StringEntity entity = new StringEntity(EcUriVariables.getParameters((Map<String, Object>) request), APPLICATION_FORM_URLENCODED_UTF_8);
             setEntity(entity);
         } else if (request instanceof String) {
-            StringEntity entity = new StringEntity((String) request,  APPLICATION_FORM_URLENCODED_UTF_8);
-            setEntity(entity);
-        } else {
-            StringEntity entity = new StringEntity(EcJSONUtils.parseObject(request, String.class), ContentType.APPLICATION_JSON);
+            StringEntity entity = new StringEntity((String) request,  ContentType.APPLICATION_JSON);
             setEntity(entity);
         }
 

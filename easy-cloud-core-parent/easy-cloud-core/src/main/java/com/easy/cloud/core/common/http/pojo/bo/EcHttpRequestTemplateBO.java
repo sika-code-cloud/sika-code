@@ -17,6 +17,8 @@ import com.easy.cloud.core.common.http.pojo.dto.EcHttpConfigStorageDTO;
 import com.easy.cloud.core.common.http.pojo.dto.EcHttpHeaderDTO;
 import com.easy.cloud.core.common.http.utils.EcUriVariables;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
@@ -34,6 +36,8 @@ import java.util.Map;
  *  </code>
  */
 public class EcHttpRequestTemplateBO {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected CloseableHttpClient httpClient;
 
@@ -298,11 +302,12 @@ public class EcHttpRequestTemplateBO {
 	 * @return 类型对象
 	 */
 	public <T> T doExecute(URI uri, Object request, Class<T> responseType, EcMethodType method) {
-		EcDqClientHttpRequestBO<T> httpRequest = new EcDqClientHttpRequestBO<T>(uri, method, request);
+		EcClientHttpRequestBO<T> httpRequest = new EcClientHttpRequestBO<T>(uri, method, request);
 		// 判断是否有代理设置
 		if (null == httpProxy) {
 			httpRequest.setProxy(httpProxy);
 		}
+		logger.info("发送请求的参数为：" + request);
 		httpRequest.setResponseType(responseType);
 		try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
 			return httpRequest.handleResponse(response);

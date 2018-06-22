@@ -2,6 +2,8 @@ package com.easy.cloud.core.task.scheduler.controller;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.task.executor.pojo.dto.EcTaskExecutorDTO;
+import com.easy.cloud.core.task.executor.service.EcTaskExecutorService;
 import com.easy.cloud.core.task.scheduler.pojo.dto.EcTaskSchedulerDTO;
 import com.easy.cloud.core.task.scheduler.service.EcTaskSchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class EcTaskSchedulerController extends EcBaseController {
     @Autowired
     private EcTaskSchedulerService taskSchedulerService;
+    @Autowired
+    private EcTaskExecutorService taskExecutorService;
 
     @RequestMapping(value = "initTask")
     public EcBaseServiceResult initTask(@RequestBody EcTaskSchedulerDTO taskSchedulerDTO) {
@@ -45,5 +49,10 @@ public class EcTaskSchedulerController extends EcBaseController {
     @RequestMapping(value = "deleteTrigger")
     public EcBaseServiceResult deleteTrigger(@RequestBody EcTaskSchedulerDTO taskSchedulerDTO) {
         return taskSchedulerService.deleteTrigger(taskSchedulerDTO);
+    }
+
+    @RequestMapping(value = "updateTaskExecutor")
+    public EcBaseServiceResult updateTaskExecutor(@RequestBody EcTaskExecutorDTO taskExecutorDTO) {
+        return taskExecutorService.updateTaskExecutor(taskExecutorDTO);
     }
 }

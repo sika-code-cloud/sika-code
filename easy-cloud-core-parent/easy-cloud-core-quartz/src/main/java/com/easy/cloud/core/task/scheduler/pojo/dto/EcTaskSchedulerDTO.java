@@ -16,13 +16,11 @@ public class EcTaskSchedulerDTO implements Serializable {
     private EcTaskExecutorDTO taskExecutor;
 
     public EcTaskSchedulerDTO() {
-        this.taskExecutor = new EcTaskExecutorDTO();
+        if (this.taskExecutor == null) {
+            this.taskExecutor = new EcTaskExecutorDTO();
+        }
     }
 
-    /**
-     * 任务类型
-     */
-    private Integer jobType;
 
     /**
      * 任务名称
@@ -65,13 +63,6 @@ public class EcTaskSchedulerDTO implements Serializable {
      */
     private String description;
 
-    public Integer getJobType() {
-        return jobType;
-    }
-
-    public void setJobType(Integer jobType) {
-        this.jobType = jobType;
-    }
 
     public String getJobName() {
         return jobName;
@@ -79,7 +70,6 @@ public class EcTaskSchedulerDTO implements Serializable {
 
     public void setJobName(String jobName) {
         this.jobName = jobName;
-        taskExecutor.setJobName(jobName);
     }
 
     public String getJobGroup() {
@@ -88,8 +78,8 @@ public class EcTaskSchedulerDTO implements Serializable {
 
     public void setJobGroup(String jobGroup) {
         this.jobGroup = jobGroup;
-        taskExecutor.setJobGroup(jobGroup);
     }
+
 
     public String getTriggerName() {
         return triggerName;
@@ -97,7 +87,6 @@ public class EcTaskSchedulerDTO implements Serializable {
 
     public void setTriggerName(String triggerName) {
         this.triggerName = triggerName;
-        taskExecutor.setTriggerName(triggerName);
     }
 
     public String getTriggerGroup() {
@@ -106,7 +95,6 @@ public class EcTaskSchedulerDTO implements Serializable {
 
     public void setTriggerGroup(String triggerGroup) {
         this.triggerGroup = triggerGroup;
-        taskExecutor.setTriggerGroup(triggerGroup);
     }
 
     public Integer getJobStatus() {
@@ -157,11 +145,6 @@ public class EcTaskSchedulerDTO implements Serializable {
         this.taskExecutor = taskExecutor;
     }
 
-    public EcTaskSchedulerDTO jobType(Integer jobType) {
-        setJobType(jobType);
-        return this;
-    }
-
     public EcTaskSchedulerDTO jobName(String jobName) {
         setJobName(jobName);
         return this;
@@ -207,6 +190,13 @@ public class EcTaskSchedulerDTO implements Serializable {
         return this;
     }
 
+    public void buildTaskExecutorData() {
+        this.taskExecutor.setJobName(this.jobName);
+        this.taskExecutor.setJobGroup(this.jobGroup);
+        this.taskExecutor.setTriggerGroup(this.triggerGroup);
+        this.taskExecutor.setTriggerName(this.triggerName);
+    }
+
     public String getTriggerKey() {
         return triggerGroup + "." + triggerName;
     }
@@ -215,7 +205,4 @@ public class EcTaskSchedulerDTO implements Serializable {
         return jobGroup + "." + jobName;
     }
 
-    public void setRequestUrl(String requestUrl) {
-        this.taskExecutor.setRequestUrl(requestUrl);
-    }
 }

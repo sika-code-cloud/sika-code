@@ -9,6 +9,8 @@ import com.easy.cloud.core.basic.pojo.query.EcBaseQuery;
  * @date 2018-06-21 19:21:54
  */
 public class EcTaskExecutorQuery extends EcBaseQuery {
+    /** 任务工作类型 */
+    private String jobType;
     /** 任务工作分组 */
     private String jobGroup;
     /** 任务工作名称 */
@@ -17,8 +19,19 @@ public class EcTaskExecutorQuery extends EcBaseQuery {
     private String triggerGroup;
     /** 任务触发器名称 */
     private String triggerName;
+    /** 任务请求url */
+    private String requestUrl;
     /** 任务执行者编号 */
     private String taskExecutorNo;
+
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
 
     public String getJobGroup() {
         return jobGroup;
@@ -58,5 +71,13 @@ public class EcTaskExecutorQuery extends EcBaseQuery {
 
     public void setTaskExecutorNo(String taskExecutorNo) {
         this.taskExecutorNo = taskExecutorNo;
+    }
+
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
     }
 }

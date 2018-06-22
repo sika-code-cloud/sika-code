@@ -10,6 +10,10 @@ import com.easy.cloud.core.jdbc.base.entity.EcBaseEntity;
  */
 public class EcTaskExecutorEntity extends EcBaseEntity {
     /**
+     * 任务工作类型
+     */
+    private Integer jobType;
+    /**
      * 任务工作分组
      */
     private String jobGroup;
@@ -53,6 +57,22 @@ public class EcTaskExecutorEntity extends EcBaseEntity {
      * 请求的主体内容[json对象字符串]
      */
     private String requestBody;
+    /**
+     * 任务工作回调的完整类名
+     */
+    private String jobCallbackClassName;
+    /**
+     * 是否为异步执行 0:同步 1:异步
+     */
+    private Integer asyn;
+
+    public Integer getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(Integer jobType) {
+        this.jobType = jobType;
+    }
 
     /**
      * 获取任务工作分组
@@ -296,4 +316,19 @@ public class EcTaskExecutorEntity extends EcBaseEntity {
         return this;
     }
 
+    public String getJobCallbackClassName() {
+        return jobCallbackClassName;
+    }
+
+    public void setJobCallbackClassName(String jobCallbackClassName) {
+        this.jobCallbackClassName = jobCallbackClassName;
+    }
+
+    public Integer getAsyn() {
+        return asyn;
+    }
+
+    public void setAsyn(Integer asyn) {
+        this.asyn = asyn;
+    }
 }

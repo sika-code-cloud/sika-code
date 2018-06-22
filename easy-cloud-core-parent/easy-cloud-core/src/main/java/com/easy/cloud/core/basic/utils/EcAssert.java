@@ -34,8 +34,8 @@ public class EcAssert {
 	 * @创建时间 2018年6月9日 下午3:34:46
 	 */
 	public static void verifyDataExistent(Object obj, Object... formatValues) {
-		if (EcBaseUtils.isNull(obj)) {
-			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_NON_EXISTENT, formatValues);
+		if (EcBaseUtils.isNotNull(obj)) {
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_ALREADY_EXISTENT, formatValues);
 		}
 	}
 

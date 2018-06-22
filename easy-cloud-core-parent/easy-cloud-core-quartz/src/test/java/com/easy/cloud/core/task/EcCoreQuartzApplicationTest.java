@@ -1,7 +1,8 @@
 package com.easy.cloud.core.task;
 
 import com.easy.cloud.EcCoreApplication;
-import com.easy.cloud.core.task.job.EcRestJob;
+import com.easy.cloud.core.task.job.EcCoreJob;
+import com.easy.cloud.core.task.job.impl.EcRestJob;
 import com.easy.cloud.core.task.scheduler.pojo.dto.EcTaskSchedulerDTO;
 import com.easy.cloud.core.task.scheduler.service.EcTaskSchedulerService;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class EcCoreQuartzApplicationTest {
     @Test
     public void test() throws Exception {
 
-        JobDetail jobDetail = JobBuilder.newJob(EcRestJob.class)
+        JobDetail jobDetail = JobBuilder.newJob(EcCoreJob.class)
                 .storeDurably(true)
                 .build();
 

@@ -16,7 +16,9 @@ public class EcTaskExecutorBO {
     }
 
     public void initSaveTaskExecutorData() {
-        taskExecutorDTO.setTaskExecutorNo(EcStringUtils.generateUUID());
+        if (EcStringUtils.isEmpty(taskExecutorDTO.getTaskExecutorNo())) {
+            taskExecutorDTO.setTaskExecutorNo(EcStringUtils.generateUUID());
+        }
     }
 
     public void verifySaveTaskExecutorData() {

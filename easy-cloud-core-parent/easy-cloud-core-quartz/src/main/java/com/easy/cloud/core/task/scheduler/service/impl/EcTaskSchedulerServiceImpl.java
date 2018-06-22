@@ -1,10 +1,8 @@
 package com.easy.cloud.core.task.scheduler.service.impl;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.common.json.utils.EcJSONUtils;
-import com.easy.cloud.core.task.executor.pojo.dto.EcTaskExecutorDTO;
 import com.easy.cloud.core.task.executor.service.EcTaskExecutorService;
-import com.easy.cloud.core.task.job.EcRestJob;
+import com.easy.cloud.core.task.job.EcCoreJob;
 import com.easy.cloud.core.task.scheduler.manager.EcTaskSchedulerManager;
 import com.easy.cloud.core.task.scheduler.pojo.bo.EcTaskSchedulerBO;
 import com.easy.cloud.core.task.scheduler.pojo.dto.EcTaskSchedulerDTO;
@@ -30,8 +28,9 @@ public class EcTaskSchedulerServiceImpl implements EcTaskSchedulerService {
     public EcBaseServiceResult initTask(EcTaskSchedulerDTO taskSchedulerDTO) {
         EcTaskSchedulerBO taskSchedulerBO = new EcTaskSchedulerBO(taskSchedulerDTO);
         taskSchedulerBO.verifyInitTaskData();
-        taskSchedulerManager.initTask(taskSchedulerBO.getTaskSchedulerDTO(), EcRestJob.class);
+        taskSchedulerManager.initTask(taskSchedulerBO.getTaskSchedulerDTO(), EcCoreJob.class);
         // 保存任务执行者信息
+        taskSchedulerDTO.buildTaskExecutorData();
         taskExecutorService.saveTaskExecutor(taskSchedulerDTO.getTaskExecutor());
 
         return EcBaseServiceResult.newInstanceOfSuccess();
