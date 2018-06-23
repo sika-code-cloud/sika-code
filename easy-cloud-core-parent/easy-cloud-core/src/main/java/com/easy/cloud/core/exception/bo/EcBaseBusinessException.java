@@ -2,8 +2,9 @@ package com.easy.cloud.core.exception.bo;
 
 import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeInf;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
+import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
 
 /**
  * 
@@ -18,16 +19,18 @@ public class EcBaseBusinessException extends RuntimeException {
 
 	private String errorCode;
 	private String errorMsg;
-	private EcBaseErrorCodeInf ecBaseErrorCodeInf;
+	private Object[] formatValues;
+	private boolean isFormated;
 	// 异常详情信息
 	private Object exceptionDetail;
 
-	public EcBaseBusinessException(EcBaseErrorCodeInf ecBaseErrorCodeInf) {
-		buildDqBaseErrorCodeInf(ecBaseErrorCodeInf);
+	public EcBaseBusinessException(EcBaseErrorCodeInf baseErrorCodeInf, Object... formatValues) {
+		this(baseErrorCodeInf.getErrorCode(), baseErrorCodeInf.getErrorMsg(), formatValues);
 	}
 
-	public EcBaseBusinessException(String errorCode, String errorMsg) {
+	public EcBaseBusinessException(String errorCode, String errorMsg, Object... formatValues) {
 		buildErrorCode(errorCode).buildErrorMsg(errorMsg);
+		this.buildFormatValues(formatValues);
 	}
 
 	public EcBaseBusinessException() {
@@ -45,13 +48,6 @@ public class EcBaseBusinessException extends RuntimeException {
 		return new EcBaseBusinessException(errorCode, errorMsg);
 	}
 
-	public EcBaseBusinessException buildDqBaseErrorCodeInf(EcBaseErrorCodeInf ecBaseErrorCodeInf) {
-		this.ecBaseErrorCodeInf = ecBaseErrorCodeInf;
-		this.errorCode = ecBaseErrorCodeInf.getErrorCode();
-		this.errorMsg = ecBaseErrorCodeInf.getErrorMsg();
-		return this;
-	}
-
 	public EcBaseBusinessException buildExceptionDetail(Object exceptionDetail) {
 		this.exceptionDetail = exceptionDetail;
 		return this;
@@ -67,6 +63,23 @@ public class EcBaseBusinessException extends RuntimeException {
 	private EcBaseBusinessException buildErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
 		return this;
+	}
+
+	/** 构建需要替换msg中参数的值 */
+	private EcBaseBusinessException buildFormatValues(Object... formatValues) {
+		if (EcArrayUtils.isEmpty(formatValues)) {
+			formatValues = new String [] {"数据"};
+		}
+		this.formatValues = formatValues;
+		return this;
+	}
+
+	public Object[] getFormatValues() {
+		return formatValues;
+	}
+
+	public void setFormatValues(String[] formatValues) {
+		this.formatValues = formatValues;
 	}
 
 	public String getErrorCode() {
@@ -91,14 +104,14 @@ public class EcBaseBusinessException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		EcBaseServiceResult result = null;
-		if (EcBaseUtils.isNull(ecBaseErrorCodeInf)) {
-			result = EcBaseServiceResult.newInstance();
-			result.setErrorCode(errorCode);
-			result.setErrorMsg(errorMsg);
-		} else {
-			result = EcBaseServiceResult.newInstanceOfError(ecBaseErrorCodeInf);
+		if (!isFormated) {
+			if (EcStringUtils.isNotEmpty(errorMsg) && EcArrayUtils.isNotEmpty(this.formatValues)) {
+				this.errorMsg = String.format(errorMsg, this.formatValues);
+				this.isFormated = true;
+			}
 		}
+		EcBaseServiceResult result = EcBaseServiceResult.newInstance();
+		result.buildErrorCodeAndMsg(errorCode, errorMsg);
 		result.buildResult(exceptionDetail);
 		return EcJSONUtils.parseObject(result, String.class);
 	}

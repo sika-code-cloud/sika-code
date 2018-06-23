@@ -46,8 +46,10 @@ public class EcAuditBO extends EcBaseAspectBO {
 		super.buildBaseAspectData(joinPoint);
 		// 构建配置数据传输对象
 		buildAuditConfigDTO();
-		// 构建实体数据
-		buildEntityData();
+		if (auditConfigDTO != null) {
+			// 构建实体数据
+			buildEntityData();
+		}
 		return this;
 	}
 

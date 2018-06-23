@@ -14,6 +14,7 @@ import com.easy.cloud.core.basic.utils.EcBaseUtils;
  */
 @SuppressWarnings("rawtypes")
 public class EcCollectionsUtils {
+	
 	/**
 	 * 
 	 * <p>判断该集合是否为空</p>

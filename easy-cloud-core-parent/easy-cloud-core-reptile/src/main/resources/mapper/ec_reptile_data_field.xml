@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easy.cloud.core.reptile.datafield.dao.EcReptileDataFieldDAO" >
+	<!-- 根节点 -->
+	<!-- 设置resultMap -->
+	<resultMap id="EcReptileDataFieldEntity" type="com.easy.cloud.core.reptile.datafield.pojo.entity.EcReptileDataFieldEntity" >
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="version" jdbcType="INTEGER" property="version" />
+		<result column="available" jdbcType="INTEGER" property="available" />
+		<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+		<result column="dynamic_bean_no" jdbcType="BIGINT" property="dynamicBeanNo" />
+		<result column="path" jdbcType="VARCHAR" property="path" />
+		<result column="value_source" jdbcType="INTEGER" property="valueSource" />
+		<result column="value_source_type" jdbcType="INTEGER" property="valueSourceType" />
+		<result column="download_path" jdbcType="VARCHAR" property="downloadPath" />
+		<result column="field_value" jdbcType="VARCHAR" property="fieldValue" />
+		<result column="value_flag" jdbcType="INTEGER" property="valueFlag" />
+		<result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+		<result column="field_type" jdbcType="VARCHAR" property="fieldType" />
+		<result column="sub_field_class_name" jdbcType="VARCHAR" property="subFieldClassName" />
+	</resultMap>
+	<!-- 设置columnList -->
+	<sql id="columnList" >
+		erdf.id,erdf.create_by,erdf.update_by,erdf.create_date,erdf.update_date,erdf.version,erdf.available,erdf.is_deleted,erdf.dynamic_bean_no,erdf.path,erdf.value_source,erdf.value_source_type,erdf.download_path,erdf.field_value,erdf.value_flag,erdf.field_name,erdf.field_type,erdf.sub_field_class_name
+	</sql>
+	<!-- 根据id获取对象信息 -->
+	<select id="findById" resultMap="EcReptileDataFieldEntity" parameterType="java.lang.Long" >
+		SELECT <include refid="columnList" /> 
+		FROM ec_reptile_data_field erdf 
+		WHERE erdf.id = #{id, jdbcType=BIGINT} 
+	</select>
+	<!-- 统计列表数量 -->
+	<select id="listCount" resultType="java.lang.Integer" parameterType="map" >
+		SELECT count(*)
+		FROM ec_reptile_data_field erdf 
+	</select>
+	<!-- 获取列表分页信息 -->
+	<select id="listPage" resultMap="EcReptileDataFieldEntity" parameterType="map" >
+		SELECT <include refid="columnList" /> 
+		FROM ec_reptile_data_field erdf 
+		LIMIT #{maps.start},#{maps.pageSize}
+	</select>
+	<!-- 设置column -->
+	<sql id="setColumnSql" >
+		<set>
+			<if test="id != null" >id = #{id, jdbcType=BIGINT},</if>
+			<if test="createBy != null" >create_by = #{createBy, jdbcType=BIGINT},</if>
+			<if test="updateBy != null" >update_by = #{updateBy, jdbcType=BIGINT},</if>
+			<if test="createDate != null" >create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+			<if test="updateDate != null" >update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+			<if test="version != null" >version = #{version, jdbcType=INTEGER},</if>
+			<if test="available != null" >available = #{available, jdbcType=INTEGER},</if>
+			<if test="isDeleted != null" >is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
+			<if test="dynamicBeanNo != null" >dynamic_bean_no = #{dynamicBeanNo, jdbcType=BIGINT},</if>
+			<if test="path != null" >path = #{path, jdbcType=VARCHAR},</if>
+			<if test="valueSource != null" >value_source = #{valueSource, jdbcType=INTEGER},</if>
+			<if test="valueSourceType != null" >value_source_type = #{valueSourceType, jdbcType=INTEGER},</if>
+			<if test="downloadPath != null" >download_path = #{downloadPath, jdbcType=VARCHAR},</if>
+			<if test="fieldValue != null" >field_value = #{fieldValue, jdbcType=VARCHAR},</if>
+			<if test="valueFlag != null" >value_flag = #{valueFlag, jdbcType=INTEGER},</if>
+			<if test="fieldName != null" >field_name = #{fieldName, jdbcType=VARCHAR},</if>
+			<if test="fieldType != null" >field_type = #{fieldType, jdbcType=VARCHAR},</if>
+			<if test="subFieldClassName != null" >sub_field_class_name = #{subFieldClassName, jdbcType=VARCHAR},</if>
+		</set>
+	</sql>
+	<!-- 保存对象 -->
+	<insert id="save" useGeneratedKeys="true" parameterType="com.easy.cloud.core.reptile.datafield.pojo.entity.EcReptileDataFieldEntity" keyProperty="id" >
+		INSERT INTO ec_reptile_data_field <include refid="setColumnSql" />
+	</insert>
+	<!-- 更新对象 -->
+	<update id="update" parameterType="com.easy.cloud.core.reptile.datafield.pojo.entity.EcReptileDataFieldEntity" >
+		UPDATE ec_reptile_data_field erdf <include refid="setColumnSql" />
+		WHERE erdf.id = #{id, jdbcType=BIGINT}
+	</update>
+	 <!-- 获取列表分页信息 -->
+    <select id="listByQuery" resultMap="EcReptileDataFieldEntity" parameterType="com.easy.cloud.core.reptile.dynamicbean.pojo.query.EcReptileDynamicBeanQuery">
+        SELECT
+        <include refid="columnList" />
+        FROM ec_reptile_data_field erdf 
+		WHERE erdf.is_deleted = 0
+		<if test="query.dynamicBeanNos != null">
+			AND erdf.dynamic_bean_no IN
+			<foreach item="dynamicBeanNo" index="index" collection="query.dynamicBeanNos"
+				open="(" separator="," close=")">
+				#{dynamicBeanNo}
+			</foreach>
+		</if>
+		<if test="query.available != null">
+			AND erdf.available = #{query.available, jdbcType=INTEGER}
+		</if>
+    </select>
+</mapper>

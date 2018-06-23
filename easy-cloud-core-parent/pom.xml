@@ -19,6 +19,7 @@
 	</parent>
 	<properties>
 		<!--设置字符编码及java版本 -->
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
 		<java.version>1.8</java.version>
@@ -33,6 +34,9 @@
 		<module>easy-cloud-core-lock</module>
 		<module>easy-cloud-core-mq</module>
 		<module>easy-cloud-core-search</module>
+		<module>easy-cloud-core-oauth</module>
+		<module>easy-cloud-core-reptile</module>
+		<module>easy-cloud-core-worker</module>
 	</modules>
 
 	<dependencies>

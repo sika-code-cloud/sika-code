@@ -1,11 +1,9 @@
 package com.easy.cloud.core.authority.config;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.IOException;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -14,14 +12,14 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.crazycake.shiro.SerializeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.Resource;
+import org.yaml.snakeyaml.Yaml;
 
-import com.easy.cloud.core.authority.manager.EcRedisManager;
 import com.easy.cloud.core.authority.manager.EcSessionManager;
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
 import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
@@ -36,7 +34,7 @@ import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
  * @创建时间 2018年5月25日 下午2:15:56
  */
 @Configuration
-@PropertySource("classpath:config/redis-default.properties")
+@PropertySource({ "classpath:config/redis-default.properties" })
 public class EcAuthorityConfig {
 	@Value("${ec.redis.hostName}")
 	private String host;
@@ -46,30 +44,30 @@ public class EcAuthorityConfig {
 	private int timeout;
 	@Value("${ec.redis.password}")
 	private String password;
+
 	@Autowired
 	private EcRedisProperties redisProperties;
+	
+	@Value("classpath:config/shiro-filter.yml")
+	private Resource shiroConfig;
+
+	/** 将配置文件的属性设置到ShiroFilterFactoryBean对象中 */
+	public ShiroFilterFactoryBean shiroFilterFactoryBean() {
+		Yaml yaml = new Yaml();
+		ShiroFilterFactoryBean shiroFilterFactoryBean = null;
+		try {
+			shiroFilterFactoryBean = yaml.loadAs(shiroConfig.getInputStream(), ShiroFilterFactoryBean.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return shiroFilterFactoryBean;
+	}
 
 	@Bean
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+		ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
-
-		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-		// 注意过滤器配置顺序 不能颠倒
-		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
-		filterChainDefinitionMap.put("/logout", "logout");
-		// 配置不会被拦截的链接 顺序判断
-		filterChainDefinitionMap.put("/static/**", "anon");
-		filterChainDefinitionMap.put("/ajaxLogin", "anon");
-		filterChainDefinitionMap.put("/login", "anon");
-		filterChainDefinitionMap.put("/**", "authc");
-		// 配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
-		shiroFilterFactoryBean.setLoginUrl("/unauth");
-		// 登录成功后要跳转的链接
-		// shiroFilterFactoryBean.setSuccessUrl("/index");
-		// 未授权界面;
-		// shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
 
@@ -121,13 +119,13 @@ public class EcAuthorityConfig {
 	 * @return
 	 */
 	public RedisManager redisManager() {
-		EcRedisManager redisManager = new EcRedisManager(redisProperties);
+		RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host);
 		redisManager.setPort(port);
-		redisManager.setExpire(1800);// 配置缓存过期时间
+		// 配置缓存过期时间
 		redisManager.setTimeout(timeout);
-		redisManager.setPassword(password);
-		redisManager.init();
+//		redisManager.setPassword(password);
+		redisManager.setJedisPoolConfig(redisProperties);
 		return redisManager;
 	}
 
@@ -171,11 +169,9 @@ public class EcAuthorityConfig {
 	}
 
 	public static void main(String[] args) {
-		EcRedisManager redisManager = new EcRedisManager();
+		RedisManager redisManager = new RedisManager();
 		redisManager.setHost("120.78.74.169");
 		redisManager.setPort(6379);
 		byte[] b = redisManager.get("d353c7b9-7425-4818-a4b7-5641183074a7".getBytes());
-		Session s = (Session)SerializeUtils.deserialize(b);
-		System.out.println(s.getId());
 	}
 }

@@ -113,9 +113,6 @@ public abstract class EcDatabaseAbstactConfig {
 		if (EcStringUtils.isEmpty(getDatabaseName())) {
 			throw new EcBaseBusinessException(EcCodeGenerateErrorCodeEnum.DATABASE_NAME_CANT_EMPTY);
 		}
-		if (EcStringUtils.isEmpty(getDatabasePassword())) {
-			throw new EcBaseBusinessException(EcCodeGenerateErrorCodeEnum.DATABASE_PASSWORD_CANT_EMPTY);
-		}
 		if (EcStringUtils.isEmpty(getDatabasePort())) {
 			throw new EcBaseBusinessException(EcCodeGenerateErrorCodeEnum.DATABASE_PORT_CANT_EMPTY);
 		}
