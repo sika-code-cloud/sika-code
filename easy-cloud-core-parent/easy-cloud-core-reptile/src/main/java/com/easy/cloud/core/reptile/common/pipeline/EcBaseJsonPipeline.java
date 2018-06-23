@@ -8,7 +8,7 @@ import com.geccocrawler.gecco.pipeline.JsonPipeline;
 
 
 public abstract class EcBaseJsonPipeline extends JsonPipeline {
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public final void process(JSONObject jo) {
 		try {

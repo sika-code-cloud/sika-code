@@ -9,6 +9,6 @@ public class EcMqJsonPipeline extends EcBaseJsonPipeline{
 
 	@Override
 	public void doProcess(JSONObject jo) {
-		System.out.println(Thread.currentThread().getName() + "---mq获取到的数据：" + JSONObject.toJSONString(jo));
+		logger.info(Thread.currentThread().getName() + "---mq获取到的数据：" + JSONObject.toJSONString(jo));
 	}
 }

@@ -11,7 +11,7 @@ public class EcRedisJsonPipeline extends EcBaseJsonPipeline{
 
 	@Override
 	public void doProcess(JSONObject jo) {
-		System.out.println(Thread.currentThread().getName() + "---redis获取到的数据：" + JSONObject.toJSONString(jo));
+		logger.info(Thread.currentThread().getName() + "---redis获取到的数据：" + JSONObject.toJSONString(jo));
 		JSONArray jsonArray = jo.getJSONArray("roleDetail");
 		if (jsonArray == null) {
 			return;
@@ -25,7 +25,7 @@ public class EcRedisJsonPipeline extends EcBaseJsonPipeline{
 				newJsonArray.add(jsonvalue);
 			}
 		}
-		System.out.println(newJsonArray.size());
+		logger.info(String.valueOf(newJsonArray.size()));
 	}
 
 }

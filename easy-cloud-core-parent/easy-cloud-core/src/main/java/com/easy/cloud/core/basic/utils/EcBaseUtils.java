@@ -58,27 +58,26 @@ public class EcBaseUtils {
 	 * </p>
 	 *
 	 * <pre>
+	 *     只拷贝fromObj对象中的属性值非空的属性
 	 * </pre>
 	 *
-	 * @param fromObj
-	 *            : 被拷贝数据的对象
-	 * @param targetObj
-	 *            : 拷贝的目标对象
+	 * @param fromObj : 被拷贝数据的对象
+	 * @param targetObj : 拷贝的目标对象
 	 * @return 拷贝完成的对象
 	 * @author daiqi
 	 * @date 2017年12月6日 下午1:54:39
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T copeFromObjToTargetObj(T fromObj, T targetObj) {
+	public static <T> T copeFromObjToTargetObj(Object fromObj, T targetObj) {
 		if (isNull(fromObj) || isNull(targetObj)) {
 			return targetObj;
 		}
 		// 获取目标对象的class
 		Class<T> clazz = (Class<T>) targetObj.getClass();
 		// 将fromObje转换为map
-		Map<String, Object> fromObjMap = EcJSONUtils.parseObject(JSONObject.toJSONString(fromObj), HashMap.class);
+		Map<String, Object> fromObjMap = EcJSONUtils.parseObject(fromObj, HashMap.class);
 		// 将目标对象转换为map
-		Map<String, Object> targetObjMap = EcJSONUtils.parseObject(JSONObject.toJSONString(targetObj), HashMap.class);
+		Map<String, Object> targetObjMap = EcJSONUtils.parseObject(targetObj, HashMap.class);
 		// 循环fromObjMap并将其值put到targetObjMap中
 		for (String newsKey : fromObjMap.keySet()) {
 			if (fromObjMap.get(newsKey) != null) {

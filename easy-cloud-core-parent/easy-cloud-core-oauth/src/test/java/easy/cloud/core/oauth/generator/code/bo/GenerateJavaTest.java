@@ -12,7 +12,6 @@ import com.easy.cloud.core.generator.code.base.config.database.mysql.EcDataBaseM
 import com.easy.cloud.core.generator.code.base.pojo.rule.EcGenerateRule;
 import com.easy.cloud.core.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.generator.code.base.utils.EcCodeGenerateUtils;
-import com.easy.cloud.core.generator.code.bo.javaenum.EcGenerateJavaErrorCodeBO;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcClassNameEndWith;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcIgnoreField;
 import com.easy.cloud.core.generator.code.java.constant.EcCodeGenerateJavaConstant.EcSubModuleDefaultPackageName;
@@ -399,7 +398,7 @@ public class GenerateJavaTest {
 		generateJavaBaseDTO.setCoverSwith(true);
 		EcGenerateRule generateRule = new EcGenerateJavaClassRule(true, true, true, false);
 		try {
-			new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
+//			new EcGenerateJavaErrorCodeBO(generateJavaBaseDTO, generateRule).generateCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -11,8 +11,6 @@ import com.easy.cloud.core.generator.code.base.config.database.mysql.EcDataBaseM
 import com.easy.cloud.core.generator.code.base.sources.database.mysql.EcMysqlDataSources;
 import com.easy.cloud.core.generator.code.xml.pojo.bo.mybatis.EcGenerateXmlMybatisBO;
 import com.easy.cloud.core.generator.code.xml.pojo.dto.EcGenerateXmlMybatisDTO;
-import com.easy.cloud.core.jdbc.test.UserEntity;
-import com.easy.cloud.core.jdbc.test.dao.UserDAO;
 
 /**
  * 
@@ -49,12 +47,12 @@ public class GenerateXmlTest {
 		EcGenerateXmlMybatisDTO mybatisDTO = new EcGenerateXmlMybatisDTO();
 		mybatisDTO.setCoverSwith(true);
 		mybatisDTO.setIgnoreFields(ignoreFields);
-		mybatisDTO.setNamespace(UserDAO.class.getName());
+		mybatisDTO.setNamespace(Object.class.getName());
 		mybatisDTO.setTableName(tableName);
 		mybatisDTO.setProjectName(projectNameMybatis);
 		mybatisDTO.setSubPath("mapper");
-		mybatisDTO.setSimpleClassTypeDO(UserEntity.class.getSimpleName());
-		mybatisDTO.setFullClassTypeDO(UserEntity.class.getName());
+		mybatisDTO.setSimpleClassTypeDO(Object.class.getSimpleName());
+		mybatisDTO.setFullClassTypeDO(Object.class.getName());
 		mybatisDTO.setMappersConfigName("sqlmap-config");
 
 		EcGenerateXmlMybatisBO mybatisBO = new EcGenerateXmlMybatisBO(mybatisDTO);

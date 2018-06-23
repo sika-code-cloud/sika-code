@@ -14,15 +14,16 @@ public class EcJdbcJsonPipeline extends EcBaseJsonPipeline {
 	@Override
 	public void doProcess(JSONObject jo) {
 //		EcReptileSelector.getReptileDynamicBeanService().reptileData(null);
-		System.out.println(Thread.currentThread().getName() + "---jdbc获取到的数据：" + JSONObject.toJSONString(jo));
+		logger.info(Thread.currentThread().getName() + "---jdbc获取到的数据：" + JSONObject.toJSONString(jo));
 		HttpRequest currRequest = HttpGetRequest.fromJson(jo.getJSONObject("request"));
 		String currentUrl = currRequest.getUrl();
-		Integer currentNum = Integer.parseInt(currRequest.getParameter("pageNum"));
-		if (currentUrl != null && currentNum <= 200) {
-			Integer nextNum = currentNum + 1;
-			String nextUrl = EcStringUtils.replace(currentUrl, "page_num="+currentNum, "page_num="+nextNum);
-			DeriveSchedulerContext.into(currRequest.subRequest(nextUrl));
-		}
+
+//		Integer currentNum = Integer.parseInt(currRequest.getParameter("pageNum"));
+//		if (currentUrl != null && currentNum <= 200) {
+//			Integer nextNum = currentNum + 1;
+//			String nextUrl = EcStringUtils.replace(currentUrl, "page_num="+currentNum, "page_num="+nextNum);
+//			DeriveSchedulerContext.into(currRequest.subRequest(nextUrl));
+//		}
 	}
 
 }
