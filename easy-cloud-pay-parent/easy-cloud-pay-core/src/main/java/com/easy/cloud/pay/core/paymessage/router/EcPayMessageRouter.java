@@ -158,9 +158,9 @@ public class EcPayMessageRouter {
 							LOG.debug("End session access: async=true, fromPay=" + payMessage.getFromPay());
 
 						} catch (InterruptedException e) {
-							LOG.error("Error happened when wait task finish", e);
+							LOG.error("Error happened when wait worker finish", e);
 						} catch (ExecutionException e) {
-							LOG.error("Error happened when wait task finish", e);
+							LOG.error("Error happened when wait worker finish", e);
 						}
 					}
 				}
