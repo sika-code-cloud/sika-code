@@ -1,7 +1,13 @@
 package com.easy.cloud.core.authority.config;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
+import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
+import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -12,12 +18,14 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.crazycake.shiro.serializer.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
+import org.springframework.validation.annotation.Validated;
 import org.yaml.snakeyaml.Yaml;
 
 import com.easy.cloud.core.authority.manager.EcSessionManager;
@@ -35,18 +43,20 @@ import com.easy.cloud.core.cache.redis.config.EcRedisProperties;
 @Configuration
 @PropertySource({"classpath:config/redis-default.properties"})
 public class EcAuthorityConfig {
-    @Value("${ec.redis.hostName}")
+    @Value("${ec.authority.redis.hostName}")
     private String host;
-    @Value("${ec.redis.port}")
+    @Value("${ec.authority.redis.port}")
     private int port;
-    @Value("${ec.redis.timeout}")
+    @Value("${ec.authority.redis.timeout}")
     private int timeout;
-    @Value("${ec.redis.password}")
+    @Value("${ec.authority.redis.password}")
     private String password;
-
+    @Value("${ec.authority.md5.hashIterations}")
+    private int hashIterations;
     @Autowired
     private EcRedisProperties redisProperties;
-
+    @Autowired
+    private SysFilterConfigService sysFilterConfigService;
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;
 
@@ -68,6 +78,7 @@ public class EcAuthorityConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         return shiroFilterFactoryBean;
     }
@@ -81,9 +92,9 @@ public class EcAuthorityConfig {
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         // 散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
         // 散列的次数，比如散列两次，相当于md5(md5(""));
-        hashedCredentialsMatcher.setHashIterations(2);
+        hashedCredentialsMatcher.setHashIterations(hashIterations);
         return hashedCredentialsMatcher;
     }
 
@@ -132,7 +143,9 @@ public class EcAuthorityConfig {
         redisManager.setPort(port);
         // 配置缓存过期时间
         redisManager.setTimeout(timeout);
-        redisManager.setPassword(password);
+        if (EcStringUtils.isNotEmpty(password)) {
+            redisManager.setPassword(password);
+        }
         redisManager.setJedisPoolConfig(redisProperties);
         return redisManager;
     }
@@ -176,5 +189,7 @@ public class EcAuthorityConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-
+    public int getHashIterations() {
+        return hashIterations;
+    }
 }

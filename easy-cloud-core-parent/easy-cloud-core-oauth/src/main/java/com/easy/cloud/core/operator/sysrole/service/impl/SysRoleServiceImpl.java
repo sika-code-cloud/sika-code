@@ -1,7 +1,9 @@
 package com.easy.cloud.core.operator.sysrole.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,19 +30,26 @@ public class SysRoleServiceImpl extends EcBaseService implements SysRoleService 
 	@Autowired
 	private SysRoleDAO sysRoleDAO;
 
+	@Override
 	public EcBaseServiceResult save(SysRoleDTO roleDTO) {
 		SysRoleEntity roleEntity = EcJSONUtils.parseObject(roleDTO, SysRoleEntity.class);
 		sysRoleDAO.save(roleEntity);
 		return EcBaseServiceResult.newInstanceOfSucResult(roleEntity);
 	}
-	
+
+	@Override
 	public List<SysRoleDTO> findByUserId(Long userId) {
 		if (EcBaseUtils.isNull(userId)) {
 			throw new EcBaseBusinessException("A_11111111", "用户编号不能为空");
 		}
 		SysRoleQuery query = new SysRoleQuery();
 		query.setUserId(userId);
-		return EcJSONUtils.parseArray(sysRoleDAO.listByQuery(query), SysRoleDTO.class);
+
+		List<SysRoleEntity> sysRoleEntities = sysRoleDAO.listByQuery(query);
+		if (EcCollectionsUtils.isEmpty(sysRoleEntities)) {
+			return new ArrayList<>();
+		}
+		return EcJSONUtils.parseArray(sysRoleEntities, SysRoleDTO.class);
 	}
 
 }

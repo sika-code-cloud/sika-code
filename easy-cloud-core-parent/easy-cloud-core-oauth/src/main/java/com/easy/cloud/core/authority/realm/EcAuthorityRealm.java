@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -37,6 +38,7 @@ public class EcAuthorityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
         SysUserDTO sysUserDTO = (SysUserDTO) principals.getPrimaryPrincipal();
+
         List<SysRoleDTO> roleList = sysRoleService.findByUserId(sysUserDTO.getId());
         Set<Integer> roleNos = new HashSet<>();
         for (SysRoleDTO role : roleList) {
@@ -65,7 +67,7 @@ public class EcAuthorityRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(sysUserDTO,
                 sysUserDTO.getPassword(),
                 ByteSource.Util.bytes(sysUserDTO.getSalt()),
-                getName()
+                sysUserDTO.getAuthCacheKey()
         );
         return authenticationInfo;
     }
