@@ -5,17 +5,23 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * <p>
+ * 权限校验工具类
+ * </p>
+ *
+ * @author daiqi
+ * @date 2018/6/26 10:13
+ * @return
+ */
 @Component
 public class EcAuthorityUtils {
-
-
     private static EcAuthorityConfig authorityConfig;
 
     @Autowired
     public void setAuthorityConfig(EcAuthorityConfig authorityConfig) {
         EcAuthorityUtils.authorityConfig = authorityConfig;
     }
-
 
     /**
      * <p>
