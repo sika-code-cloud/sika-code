@@ -4,6 +4,8 @@ import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogLevelEnum;
 import com.easy.cloud.core.common.log.constant.EcLogConstant.EcLogTypeEnum;
 import com.easy.cloud.core.common.log.proxy.impl.EcLogServiceProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -23,5 +25,5 @@ import com.easy.cloud.core.common.log.proxy.impl.EcLogServiceProxy;
  */
 @EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogLevelEnum.INFO, proxyClass = EcLogServiceProxy.class, type = EcLogTypeEnum.SERVICE)
 public class EcBaseService {
-
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 }

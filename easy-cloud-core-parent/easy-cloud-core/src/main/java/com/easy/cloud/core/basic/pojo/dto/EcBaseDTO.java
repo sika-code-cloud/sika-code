@@ -96,11 +96,4 @@ public class EcBaseDTO implements Serializable {
 		this.remark = remark;
 	}
 
-	@Override
-	public String toString() {
-		return "DqBaseDTO [id=" + id + ", createDate=" + createDate + ", updateDate=" + updateDate + ", version="
-				+ version + ", createBy=" + createBy + ", updateBy=" + updateBy + ", isDeleted=" + isDeleted
-				+ ", remark=" + remark + "]";
-	}
-
 }

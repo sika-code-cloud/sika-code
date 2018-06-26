@@ -1,14 +1,5 @@
 package com.easy.cloud.core.operator.sysresource.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
@@ -19,6 +10,19 @@ import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
 import com.easy.cloud.core.operator.sysresource.pojo.entity.SysResourceEntity;
 import com.easy.cloud.core.operator.sysresource.pojo.query.SysResourceQuery;
 import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
+import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
+import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
+import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 描述：服务实现类
@@ -29,26 +33,46 @@ import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
 @Service(value = "sysResourceService")
 @EcLogAnnotation(logSwitch = false, analysisSwitch = false)
 public class SysResourceServiceImpl extends EcBaseService implements SysResourceService {
-	/** null数据处理接口 */
+	/** 数据处理接口 */
 	@Autowired
 	private SysResourceDAO sysResourceDAO;
-	
-	@Transactional(readOnly = false, isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
+	@Autowired
+	private SysRoleService sysRoleService;
+	@Transactional(rollbackFor = Exception.class)
+	@Override
 	public EcBaseServiceResult save(SysResourceDTO resourceDTO) {
 		SysResourceEntity resourceEntity = EcJSONUtils.parseObject(resourceDTO, SysResourceEntity.class);
 		sysResourceDAO.save(resourceEntity);
 		return EcBaseServiceResult.newInstanceOfSucResult(resourceEntity);
 	}
-	
+
+	@Override
 	public List<SysResourceDTO> findByRoleNos(List<Integer> roleNos) {
 		if (EcCollectionsUtils.isEmpty(roleNos)) {
-			return null;
+			return new ArrayList<>();
 		}
 		SysResourceQuery query = new SysResourceQuery();
 		query.setRoleNos(roleNos);
-		return EcJSONUtils.parseArray(sysResourceDAO.listByQuery(query), SysResourceDTO.class);
+		List<SysResourceEntity> sysRoleEntities = sysResourceDAO.listByQuery(query);
+		if (EcCollectionsUtils.isEmpty(sysRoleEntities)) {
+			return new ArrayList<>();
+		}
+		return EcJSONUtils.parseArray(sysRoleEntities, SysResourceDTO.class);
 	}
-	
+
+	@Override
+	public EcBaseServiceResult listPermissionOfCurrentUser() {
+		Subject subject = SecurityUtils.getSubject();
+		SysUserDTO sysUserDTO = (SysUserDTO) subject.getPrincipal();
+		List<SysRoleDTO> roles = sysRoleService.findByUserId(sysUserDTO.getId());
+		Set<Integer> roleNos = new HashSet<>();
+		for (SysRoleDTO roleDTO : roles) {
+			roleNos.add(roleDTO.getRoleNo());
+		}
+		List<SysResourceDTO> resourceDTOS = findByRoleNos(new ArrayList<>(roleNos));
+		return EcBaseServiceResult.newInstanceOfSucResult(resourceDTOS);
+	}
+
 	private List<SysResourceEntity> getInitData() {
 		List<SysResourceEntity> sysResourceEntities = new ArrayList<>();
 //		Integer resourceNo, String name, String type, String url, Integer parentNo,String parentNos, String permission
