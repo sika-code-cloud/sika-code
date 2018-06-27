@@ -1,7 +1,7 @@
 package com.easy.cloud.core.authority.utils;
 
 import com.easy.cloud.core.authority.config.EcAuthorityConfig;
-import com.easy.cloud.core.authority.config.EcCustomFilterConfig;
+import com.easy.cloud.core.authority.config.EcBaseAuthorityCustomFilterConfig;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.web.filter.mgt.DefaultFilter;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ import java.util.List;
 public class EcAuthorityUtils {
     private static EcAuthorityConfig authorityConfig;
 
-    private static EcCustomFilterConfig customFilterConfig;
+    private static EcBaseAuthorityCustomFilterConfig customFilterConfig;
 
     private static Logger logger = LoggerFactory.getLogger(EcAuthorityUtils.class);
 
@@ -37,7 +37,7 @@ public class EcAuthorityUtils {
     }
 
     @Autowired
-    public void setCustomFilterConfig(EcCustomFilterConfig customFilterConfig) {
+    public void setCustomFilterConfig(EcBaseAuthorityCustomFilterConfig customFilterConfig) {
         EcAuthorityUtils.customFilterConfig = customFilterConfig;
     }
 

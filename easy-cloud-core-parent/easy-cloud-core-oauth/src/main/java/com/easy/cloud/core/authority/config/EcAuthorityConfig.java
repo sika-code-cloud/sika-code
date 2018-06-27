@@ -11,6 +11,7 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -36,9 +37,12 @@ public class EcAuthorityConfig {
     private SysFilterConfigService sysFilterConfigService;
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;
-    @Autowired
-    private EcCustomFilterConfig customFilterConfig;
 
+    @Bean
+    @ConditionalOnMissingBean
+    protected EcBaseAuthorityCustomFilterConfig customFilterConfig() {
+        return new EcBaseAuthorityCustomFilterConfig();
+    }
     /**
      * 将配置文件的属性设置到ShiroFilterFactoryBean对象中
      */
@@ -68,7 +72,7 @@ public class EcAuthorityConfig {
      * @return org.apache.shiro.spring.web.ShiroFilterFactoryBean  
      */  
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());
         shiroFilterFactoryBean.setSecurityManager(securityManager);

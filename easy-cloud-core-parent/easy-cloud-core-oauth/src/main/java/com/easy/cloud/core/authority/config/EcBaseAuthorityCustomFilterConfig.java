@@ -9,20 +9,29 @@ import com.easy.cloud.core.authority.filter.login.EcLoginUsernamePasswordFilter;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 自定义过滤器配置类
+ * <p>
+ * 基础自定义过滤器配置类
+ * </p>
+ * <pre>
+ *     子类可以通过继承该基础类添加自己的自定义过滤器
+ *     同时使用@Component注解交给容器管理或者使用@Bean等等
+ * </pre>
  *
  * @author daiqi
- * @create 2018-06-27 9:45
+ * @date 2018/6/27 20:34
+ * @return
  */
-@Configuration
-public class EcCustomFilterConfig {
+
+public class EcBaseAuthorityCustomFilterConfig {
     private static Map<String, Filter> customFilters = new LinkedHashMap<>();
     @Autowired
     private EcLoginEmailPasswordFilter loginEmailPasswordFilter;
@@ -33,7 +42,7 @@ public class EcCustomFilterConfig {
     @Autowired
     private EcLoginUsernamePasswordFilter loginUsernamePasswordFilter;
 
-    public Map<String, Filter> customFilters() {
+    public final Map<String, Filter> customFilters() {
         if (EcMapUtils.isEmpty(customFilters)) {
             loadFilters();
         }
@@ -53,16 +62,21 @@ public class EcCustomFilterConfig {
      * @author daiqi
      * @date 2018/6/27 10:42
      */
-    private synchronized void loadFilters() {
+    private final synchronized void loadFilters() {
         putCustomFilter("custom", new EcCustomFilter());
         putCustomFilter("custom2", new EcCustomFilter2());
         putCustomFilter("loginEmailPasswordFilter", loginEmailPasswordFilter);
         putCustomFilter("loginPhonePasswordFilter", loginPhonePasswordFilter);
         putCustomFilter("loginPhoneVerifyCodeFilter", loginPhoneVerifyCodeFilter);
         putCustomFilter("loginUsernamePasswordFilter", loginUsernamePasswordFilter);
+        loadOtherFilters();
     }
 
-    private synchronized void putCustomFilter(String name, Filter filter) {
+    protected synchronized void loadOtherFilters() {
+
+    }
+
+    protected final synchronized void putCustomFilter(String name, Filter filter) {
         if (customFilters.containsKey(name)) {
             EcAssert.verifyDataExistent(name, name);
         }
