@@ -3,7 +3,6 @@ package com.easy.cloud.core.basic.utils;
 import java.util.Collection;
 
 import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
-import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.exception.bo.EcBaseBusinessException;
@@ -98,7 +97,7 @@ public class EcAssert {
 	 */
 	public static void verifyListNull(Collection<?> obj, Object... formatValues) {
 		if (EcBaseUtils.isNull(obj)) {
-			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, formatValues);
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_NULL, formatValues);
 		}
 	}
 
@@ -120,7 +119,7 @@ public class EcAssert {
 	public static void verifyListEmpty(Collection<?> obj, Object... formatValues) {
 		verifyListNull(obj, formatValues);
 		if (EcCollectionsUtils.isEmpty(obj)) {
-			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_EMPTY, formatValues);
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_EMPTY, formatValues);
 		}
 	}
 
@@ -141,7 +140,7 @@ public class EcAssert {
 	 */
 	public static void verifyStrEmpty(String str, Object... formatValues) {
 		if (EcStringUtils.isEmpty(str)) {
-			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.STR_CANT_EMPTY, formatValues);
+			throw new EcBaseBusinessException(EcBaseErrorCodeEnum.STR_EMPTY, formatValues);
 		}
 	}
 }

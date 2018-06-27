@@ -1,21 +1,24 @@
 package com.easy.cloud.core.operator.sysuser.controller;
 
 import com.easy.cloud.core.authority.manager.EcAuthorityManager;
+import com.easy.cloud.core.common.log.constant.EcLogConstant;
+import com.easy.cloud.core.common.log.proxy.impl.EcLogControllerProxy;
 import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
 import com.easy.cloud.core.operator.sysuser.pojo.query.SysUserQuery;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.*;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.service.SysUserService;
+
+import javax.servlet.ServletRequest;
 
 /**
  * 描述：控制转发类
@@ -25,7 +28,7 @@ import com.easy.cloud.core.operator.sysuser.service.SysUserService;
  */
 @RestController(value = "sysUserController")
 @RequestMapping(value = "sysUser")
-@EcLogAnnotation(logSwitch = false, analysisSwitch = false)
+@EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogConstant.EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogConstant.EcLogTypeEnum.CONTROLLER)
 public class SysUserController extends EcBaseController {
     @Autowired
     private SysUserService sysUserService;
@@ -40,8 +43,16 @@ public class SysUserController extends EcBaseController {
     }
 
     @RequestMapping(value = "login")
-    public EcBaseServiceResult login(@RequestBody SysUserDTO sysUserDTO) {
-        return sysUserService.login(sysUserDTO);
+    public EcBaseServiceResult login(ServletRequest request, @ModelAttribute SysUserDTO sysUserDTO) {
+        return sysUserService.login(request, sysUserDTO);
+    }
+
+    @RequestMapping(value = "logout")
+    public EcBaseServiceResult logout() {
+        Subject subject = SecurityUtils.getSubject();
+        Object principal = subject.getPrincipal();
+        subject.logout();
+        return EcBaseServiceResult.newInstanceOfSucResult(principal);
     }
 
     @RequestMapping(value = "getCurrentUser")

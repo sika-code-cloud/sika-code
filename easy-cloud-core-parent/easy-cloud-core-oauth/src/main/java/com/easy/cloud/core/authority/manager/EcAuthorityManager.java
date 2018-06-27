@@ -2,7 +2,7 @@ package com.easy.cloud.core.authority.manager;
 
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
+import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -26,8 +27,6 @@ import java.util.Map;
 public class EcAuthorityManager {
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
-    @Autowired
-    private SysFilterConfigService sysFilterConfigService;
     /**
      * shiro 配置的cacheManager， 需要使用Spring bean进行注入
      */
@@ -61,19 +60,42 @@ public class EcAuthorityManager {
     /**
      * 更新过滤器链
      */
-    public synchronized EcBaseServiceResult updateFilterChains() {
+    public synchronized EcBaseServiceResult updateFilterChains(Map<String, String> filterChainDefinitionMap) {
+        Map<String, String> oldFilterChainDefinitionMap = EcJSONUtils.parseObject(shiroFilterFactoryBean.getFilterChainDefinitionMap(), LinkedHashMap.class);
+        try {
+            doUpdateFilterChains(filterChainDefinitionMap);
+            logger.info("更新权限成功！！");
+        } catch (Exception e) {
+            // 发送异常 还原过滤器链
+            doUpdateFilterChains(oldFilterChainDefinitionMap);
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        return EcBaseServiceResult.newInstanceOfSuccess();
+    }
+
+    /**
+     * <p>
+     * 执行更新过滤器链
+     * </p>
+     *
+     * @param filterChainDefinitionMap
+     * @return void
+     * @author daiqi
+     * @date 2018/6/27 13:00
+     */
+    private void doUpdateFilterChains(Map<String, String> filterChainDefinitionMap) {
         AbstractShiroFilter shiroFilter;
         try {
             shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
         } catch (Exception e) {
-            throw new RuntimeException("get ShiroFilter from shiroFilterFactoryBean error!");
+            throw new RuntimeException(e.getMessage(), e);
         }
         PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter.getFilterChainResolver();
         DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
         // 清空老的过滤器链
         manager.getFilterChains().clear();
         shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         // 重新构建生成
         Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
         for (Map.Entry<String, String> entry : chains.entrySet()) {
@@ -81,8 +103,5 @@ public class EcAuthorityManager {
             String chainDefinition = entry.getValue().trim().replace(" ", "");
             manager.createChain(url, chainDefinition);
         }
-        logger.info("更新权限成功！！");
-        return EcBaseServiceResult.newInstanceOfSuccess();
     }
-
 }

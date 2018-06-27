@@ -1,10 +1,12 @@
 package com.easy.cloud.core.operator.sysfilterconfig.controller;
 
-import com.easy.cloud.core.authority.manager.EcAuthorityManager;
 import com.easy.cloud.core.basic.controller.EcBaseController;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.common.log.annotation.EcLogAnnotation;
+import com.easy.cloud.core.common.log.constant.EcLogConstant;
+import com.easy.cloud.core.common.log.proxy.impl.EcLogControllerProxy;
+import com.easy.cloud.core.operator.sysfilterconfig.logic.SysFilterConfigLogic;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
-import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,23 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController(value = "sysFilterConfigController")
 @RequestMapping(value = "sysFilterConfig")
+@EcLogAnnotation(logSwitch = true, analysisSwitch = false, level = EcLogConstant.EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogConstant.EcLogTypeEnum.CONTROLLER)
 public class SysFilterConfigController extends EcBaseController {
     @Autowired
-    private SysFilterConfigService sysFilterConfigService;
-    @Autowired
-    private EcAuthorityManager authorityManager;
+    private SysFilterConfigLogic sysFilterConfigLogic;
 
     @RequestMapping(value = "saveSysFilterConfig")
     public EcBaseServiceResult saveSysFilterConfig(@RequestBody SysFilterConfigDTO sysFilterConfigDTO) {
-        EcBaseServiceResult serviceResult = sysFilterConfigService.saveSysFilterConfig(sysFilterConfigDTO);
-        authorityManager.updateFilterChains();
+        EcBaseServiceResult serviceResult = sysFilterConfigLogic.saveSysFilterConfig(sysFilterConfigDTO);
         return serviceResult;
     }
 
     @RequestMapping(value = "updateSysFilterConfig")
     public EcBaseServiceResult updateSysFilterConfig(@RequestBody SysFilterConfigDTO sysFilterConfigDTO) {
-        EcBaseServiceResult serviceResult =  sysFilterConfigService.updateSysFilterConfig(sysFilterConfigDTO);
-        authorityManager.updateFilterChains();
+        EcBaseServiceResult serviceResult =  sysFilterConfigLogic.updateSysFilterConfig(sysFilterConfigDTO);
         return serviceResult;
     }
 }
