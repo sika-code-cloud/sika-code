@@ -12,6 +12,7 @@
         <result column="version" jdbcType="INTEGER" property="version" />
         <result column="available" jdbcType="INTEGER" property="available" />
         <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
         <result column="job_type" jdbcType="INTEGER" property="jobType" />
         <result column="job_group" jdbcType="VARCHAR" property="jobGroup" />
         <result column="job_name" jdbcType="VARCHAR" property="jobName" />
@@ -26,9 +27,10 @@
         <result column="request_body" jdbcType="LONGVARCHAR" property="requestBody" />
         <result column="job_callback_class_name" jdbcType="VARCHAR" property="jobCallbackClassName" />
         <result column="asyn" jdbcType="INTEGER" property="asyn" />
+        <result column="system_type" jdbcType="INTEGER" property="systemType" />
     </resultMap>
     <!-- 设置columnList -->
-    <sql id="columnList">te.id,te.create_by,te.update_by,te.create_date,te.update_date,te.version,te.available,te.is_deleted,te.job_type,te.job_group,te.job_name,te.trigger_group,te.trigger_name,te.retry_count,te.retry_interval,te.request_url,te.execute_result,te.task_executor_no,te.request_method,te.request_body,te.job_callback_class_name,te.asyn</sql>
+    <sql id="columnList">te.id,te.create_by,te.update_by,te.create_date,te.update_date,te.version,te.available,te.is_deleted,te.remark,te.job_type,te.job_group,te.job_name,te.trigger_group,te.trigger_name,te.retry_count,te.retry_interval,te.request_url,te.execute_result,te.task_executor_no,te.request_method,te.request_body,te.job_callback_class_name,te.asyn,te.system_type</sql>
     <!-- 根据id获取对象信息 -->
     <select id="findById" resultMap="EcTaskExecutorEntity" parameterType="java.lang.Long">
         SELECT
@@ -57,6 +59,7 @@
             <if test="version != null">version = #{version, jdbcType=INTEGER},</if>
             <if test="available != null">available = #{available, jdbcType=INTEGER},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
+            <if test="remark != null">remark = #{remark, jdbcType=INTEGER},</if>
             <if test="jobType != null">job_type = #{jobType, jdbcType=INTEGER},</if>
             <if test="jobGroup != null">job_group = #{jobGroup, jdbcType=VARCHAR},</if>
             <if test="jobName != null">job_name = #{jobName, jdbcType=VARCHAR},</if>
@@ -71,6 +74,7 @@
             <if test="requestBody != null">request_body = #{requestBody, jdbcType=LONGVARCHAR},</if>
             <if test="jobCallbackClassName != null">job_callback_class_name = #{jobCallbackClassName, jdbcType=LONGVARCHAR},</if>
             <if test="asyn != null">asyn = #{asyn, jdbcType=LONGVARCHAR},</if>
+            <if test="systemType != null">system_type = #{systemType, jdbcType=LONGVARCHAR},</if>
         </set>
     </sql>
     <!-- 保存对象 -->
