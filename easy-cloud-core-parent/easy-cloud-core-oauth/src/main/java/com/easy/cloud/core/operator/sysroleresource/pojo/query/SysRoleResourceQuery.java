@@ -9,5 +9,5 @@ import com.easy.cloud.core.basic.pojo.query.EcBaseQuery;
  * @date 2018-05-30 16:24:33
  */
 public class SysRoleResourceQuery extends EcBaseQuery {
-		
+
 }

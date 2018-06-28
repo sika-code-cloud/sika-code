@@ -16,5 +16,6 @@ import com.easy.cloud.core.jdbc.base.dao.EcBaseDAO;
  * @date 2018-05-30 16:24:17
  */
 public interface SysResourceDAO extends EcBaseDAO<SysResourceEntity> {
+	List<SysResourceEntity> listRoleResourceByQuery(@Param(value = "query") SysResourceQuery query);
 	List<SysResourceEntity> listByQuery(@Param(value = "query") SysResourceQuery query);
 }

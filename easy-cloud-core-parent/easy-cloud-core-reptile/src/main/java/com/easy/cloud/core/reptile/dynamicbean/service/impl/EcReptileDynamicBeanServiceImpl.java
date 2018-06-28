@@ -24,7 +24,6 @@ import com.easy.cloud.core.reptile.engine.pojo.dto.EcReptileEngineBeanClassDTO;
 import com.easy.cloud.core.reptile.engine.pojo.query.EcReptileEngineQuery;
 import com.easy.cloud.core.reptile.engine.service.EcReptileEngineService;
 import com.geccocrawler.gecco.GeccoEngine;
-import com.geccocrawler.gecco.dynamic.JavassistDynamicBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +104,7 @@ public class EcReptileDynamicBeanServiceImpl extends EcBaseService implements Ec
         // 1 从数据库中获取dynamicBeanEntity列表
         List<EcReptileDynamicBeanEntity> dynamicBeanEntities = reptileDynamicBeanDAO.listByQuery(dynamicBeanQuery);
         if (EcCollectionsUtils.isEmpty(dynamicBeanEntities)) {
-            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "爬虫动态bean");
+            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_NULL, "爬虫动态bean");
         }
         // 2 根据爬虫动态bean持久化对象列表构建reptileDynamicBeanDTO列表
         List<EcReptileDynamicBeanDTO> dynamicBeanDTOs = buildDynamicBeanDTOs(dynamicBeanEntities);

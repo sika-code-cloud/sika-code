@@ -52,13 +52,13 @@ public class GenerateJavaTest {
 	private String basePackageName = "com.easy.cloud.core.operator";
 
 	// 表名
-	private String tableName = "sys_role";
+	private String tableName = "sys_filter_config";
 	// 模块包名
 	private String moduleName;
 	// 类主体名称
 	private String classBodyName;
 	// 类的注释
-	private String classComment;
+	private String classComment = "";
 	Map<String, Boolean> ignoreFields = new HashMap<>();
 
 	/** 代码生成组建测试 */
@@ -70,11 +70,11 @@ public class GenerateJavaTest {
 		// 生成数据传输类
 		 generateJavaDTOByDataBase();
 		// 生成业务逻辑类
-		// generateJavaBOByDataBase();
+		 generateJavaBOByDataBase();
 		// 生成查询类
 		generateJavaQueryByDataBase();
 		// 生成视图类
-		generateJavaVOByDataBase();
+//		generateJavaVOByDataBase();
 		// 生成DAO类
 		// generateJavaDAOByDataBase();
 		// 生成mybatis文件

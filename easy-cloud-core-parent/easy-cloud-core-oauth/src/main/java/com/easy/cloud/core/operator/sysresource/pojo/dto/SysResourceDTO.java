@@ -2,6 +2,9 @@ package com.easy.cloud.core.operator.sysresource.pojo.dto;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SysResourceDTO extends EcBaseDTO {
 	/** 资源编号 */
 	private Integer resourceNo;
@@ -13,10 +16,14 @@ public class SysResourceDTO extends EcBaseDTO {
 	private String url;
 	/** 直接父编号 */
 	private Integer parentNo;
-	/** 父编号列表 json数组 从左到右 辈分依次减小 */
-	private String parentNos;
 	/** 权限字符串 */
 	private String permission;
+
+	private List<SysResourceDTO> children;
+
+	public SysResourceDTO() {
+		children = new ArrayList<>();
+	}
 
 	public Integer getResourceNo() {
 		return resourceNo;
@@ -58,14 +65,6 @@ public class SysResourceDTO extends EcBaseDTO {
 		this.parentNo = parentNo;
 	}
 
-	public String getParentNos() {
-		return parentNos;
-	}
-
-	public void setParentNos(String parentNos) {
-		this.parentNos = parentNos;
-	}
-
 	public String getPermission() {
 		return permission;
 	}
@@ -74,4 +73,11 @@ public class SysResourceDTO extends EcBaseDTO {
 		this.permission = permission;
 	}
 
+	public List<SysResourceDTO> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<SysResourceDTO> children) {
+		this.children = children;
+	}
 }

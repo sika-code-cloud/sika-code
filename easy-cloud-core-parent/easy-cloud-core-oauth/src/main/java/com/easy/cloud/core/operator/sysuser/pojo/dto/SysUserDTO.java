@@ -17,6 +17,8 @@ public class SysUserDTO extends EcBaseDTO implements AuthCachePrincipal{
 	private String salt;
 	/** 锁定标志 1 锁定 0 未锁 */
 	private Integer locked;
+	/** 登录名称 */
+	private String loginName;
 
 	public String getPhone() {
 		return phone;
@@ -56,6 +58,14 @@ public class SysUserDTO extends EcBaseDTO implements AuthCachePrincipal{
 
 	public void setLocked(Integer locked) {
 		this.locked = locked;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 
 	@Override
