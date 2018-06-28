@@ -9,9 +9,6 @@ import com.easy.cloud.core.authority.filter.login.EcLoginUsernamePasswordFilter;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -23,14 +20,13 @@ import java.util.Map;
  * </p>
  * <pre>
  *     子类可以通过继承该基础类添加自己的自定义过滤器
- *     同时使用@Component注解交给容器管理或者使用@Bean等等
+ *     同时使用@Configuration注解交给容器管理或者使用@Bean等等
  * </pre>
  *
  * @author daiqi
  * @date 2018/6/27 20:34
  * @return
  */
-
 public class EcBaseAuthorityCustomFilterConfig {
     private static Map<String, Filter> customFilters = new LinkedHashMap<>();
     @Autowired

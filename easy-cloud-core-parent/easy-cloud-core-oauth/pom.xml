@@ -1,89 +1,91 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>easy-cloud-core-oauth</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>easy-cloud-core-oauth</artifactId>
+    <packaging>jar</packaging>
 
-	<name>easy-cloud-core-oauth</name>
-	<url>http://maven.apache.org</url>
+    <name>easy-cloud-core-oauth</name>
+    <url>http://maven.apache.org</url>
 
-	<parent>
-		<groupId>easy.cloud.core</groupId>
-		<artifactId>easy-cloud-core-parent</artifactId>
-		<version>1.0.0</version>
-	</parent>
-	<properties>
+    <parent>
+        <groupId>easy.cloud.core</groupId>
+        <artifactId>easy-cloud-core-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <properties>
 
-		<shiro.version>1.4.0</shiro.version>
-		<shiro-redis.version>3.0.0</shiro-redis.version>
-	</properties>
+        <shiro.version>1.4.0</shiro.version>
+        <shiro-redis.version>3.0.0</shiro-redis.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.crazycake</groupId>
-			<artifactId>shiro-redis</artifactId>
-			<version>${shiro-redis.version}</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>${shiro-redis.version}</version>
+        </dependency>
 
-		<!-- oltu实现oauth2.0授权服务maven依赖 -->
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<!-- oltu实现oauth2.0资源服务maven依赖 -->
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<!-- oltu实现oauth2.0资源服务maven依赖 -->
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.client</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<!-- oltu实现oauth2.0客户端maven依赖 -->
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.common</artifactId>
-			<version>1.0.2</version>
-		</dependency>
+        <!-- oltu实现oauth2.0授权服务maven依赖 -->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
-		<!--<dependency>-->
-            <!--<groupId>com.sun</groupId>-->
-            <!--<artifactId>tools</artifactId>-->
-            <!--<version>1.8</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>-->
-    	<!--</dependency>-->
-		<!-- 导入easy-cloud-core相关依赖 -->
-		<dependency>
-			<groupId>easy.cloud.core</groupId>
-			<artifactId>easy-cloud-core</artifactId>
-			<version>${easy.cloud.core.version}</version>
-		</dependency>
+        <!-- oltu实现oauth2.0资源服务maven依赖 -->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
-		<dependency>
-			<groupId>easy.cloud.core</groupId>
-			<artifactId>easy-cloud-core-cache</artifactId>
-			<version>${easy.cloud.core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>easy.cloud.core</groupId>
-			<artifactId>easy-cloud-core-jdbc</artifactId>
-			<version>${easy.cloud.core.version}</version>
-		</dependency>
+        <!-- oltu实现oauth2.0公共maven依赖 -->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.common</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
-	</dependencies>
+        <!-- oltu实现oauth2.0客户端maven依赖 -->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.client</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.sun</groupId>-->
+        <!--<artifactId>tools</artifactId>-->
+        <!--<version>1.8</version>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>-->
+        <!--</dependency>-->
+        <!-- 导入easy-cloud-core相关依赖 -->
+        <dependency>
+            <groupId>easy.cloud.core</groupId>
+            <artifactId>easy-cloud-core</artifactId>
+            <version>${easy.cloud.core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>easy.cloud.core</groupId>
+            <artifactId>easy-cloud-core-cache</artifactId>
+            <version>${easy.cloud.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>easy.cloud.core</groupId>
+            <artifactId>easy-cloud-core-jdbc</artifactId>
+            <version>${easy.cloud.core.version}</version>
+        </dependency>
+
+    </dependencies>
 </project>
