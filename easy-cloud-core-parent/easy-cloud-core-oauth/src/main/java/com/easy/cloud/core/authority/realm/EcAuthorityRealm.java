@@ -25,6 +25,14 @@ import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.service.SysUserService;
 
+/**
+ * <p>
+ * 授权realm
+ * </p>
+ *
+ * @author daiqi
+ * @date 2018/6/28 15:18
+ */
 public class EcAuthorityRealm extends AuthorizingRealm {
     @Autowired
     private SysUserService sysUserService;

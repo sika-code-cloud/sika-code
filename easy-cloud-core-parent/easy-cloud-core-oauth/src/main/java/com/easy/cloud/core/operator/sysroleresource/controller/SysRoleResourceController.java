@@ -24,6 +24,11 @@ public class SysRoleResourceController extends EcBaseController {
 	
 	@RequestMapping(value = "saveRoleResource")
 	public EcBaseServiceResult saveRoleResource(@RequestBody SysRoleResourceDTO sysRoleResourceDTO) {
-		return sysRoleResourceService.save(sysRoleResourceDTO);
+		return sysRoleResourceService.saveSysRoleResource(sysRoleResourceDTO);
+	}
+
+	@RequestMapping(value = "updateSysRoleResource")
+	public EcBaseServiceResult updateSysRoleResource(@RequestBody SysRoleResourceDTO sysRoleResourceDTO) {
+		return sysRoleResourceService.updateSysRoleResource(sysRoleResourceDTO);
 	}
 }

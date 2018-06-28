@@ -10,5 +10,6 @@ import com.easy.cloud.core.operator.sysroleresource.pojo.dto.SysRoleResourceDTO;
  * @date 2018-05-30 16:24:33
  */
 public interface SysRoleResourceService {
-	EcBaseServiceResult save(SysRoleResourceDTO roleDTO);
+	EcBaseServiceResult saveSysRoleResource(SysRoleResourceDTO roleDTO);
+	EcBaseServiceResult updateSysRoleResource(SysRoleResourceDTO roleDTO);
 }

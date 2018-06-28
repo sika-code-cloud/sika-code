@@ -19,8 +19,6 @@ public class SysResourceEntity extends EcBaseEntity {
 	private String url;
 	/** 直接父编号 */
 	private Integer parentNo;
-	/** 父编号列表 json数组 从左到右 辈分依次减小 */
-	private String parentNos;
 	/** 权限字符串 */
 	private String permission;
 
@@ -28,15 +26,13 @@ public class SysResourceEntity extends EcBaseEntity {
 		super();
 	}
 
-	public SysResourceEntity(Integer resourceNo, String name, String type, String url, Integer parentNo,
-			String parentNos, String permission) {
+	public SysResourceEntity(Integer resourceNo, String name, String type, String url, Integer parentNo, String permission) {
 		super();
 		this.resourceNo = resourceNo;
 		this.name = name;
 		this.type = type;
 		this.url = url;
 		this.parentNo = parentNo;
-		this.parentNos = parentNos;
 		this.permission = permission;
 	}
 
@@ -117,22 +113,6 @@ public class SysResourceEntity extends EcBaseEntity {
 	/** 构建直接父编号 */
 	public SysResourceEntity buildParentNo(Integer parentNo) {
 		this.parentNo = parentNo;
-		return this;
-	}
-
-	/** 获取父编号列表 json数组 从左到右 辈分依次减小 */
-	public String getParentNos() {
-		return this.parentNos;
-	}
-
-	/** 设置父编号列表 json数组 从左到右 辈分依次减小 */
-	public void setParentNos(String parentNos) {
-		this.parentNos = parentNos;
-	}
-
-	/** 构建父编号列表 json数组 从左到右 辈分依次减小 */
-	public SysResourceEntity buildParentNos(String parentNos) {
-		this.parentNos = parentNos;
 		return this;
 	}
 

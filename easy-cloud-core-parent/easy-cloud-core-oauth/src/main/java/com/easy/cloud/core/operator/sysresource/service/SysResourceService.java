@@ -37,4 +37,6 @@ public interface SysResourceService {
     List<SysResourceDTO> findByRoleNos(List<Integer> roleNos);
 
     EcBaseServiceResult listPermissionOfCurrentUser();
+
+    EcBaseServiceResult getPermissionTree();
 }

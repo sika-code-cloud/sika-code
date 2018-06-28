@@ -40,4 +40,8 @@ public class SysResourceController extends EcBaseController {
         return sysResourceService.save(resourceDTO);
     }
 
+    @RequestMapping(value = "getPermissionTree")
+    public EcBaseServiceResult getPermissionTree() {
+        return sysResourceService.getPermissionTree();
+    }
 }
