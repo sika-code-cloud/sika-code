@@ -50,9 +50,11 @@ public interface EcTaskExecutorService {
      *     taskExecutorDTO.requestMethod : post : 请求的方法统一使用post : 否
      *     taskExecutorDTO.requestBody : {"name": "zhangsan"} : 请求的主体内容[json对象字符串] : 否
      *     taskExecutorDTO.taskExecutorNo : 1213131 : 任务执行者编号 : 否
-     *     taskExecutorDTO.jobCallbackClassName : com.easy.cloud.core.worker.job.callback.impl.EcDefaultJobCallBackHandler : 异步回调执行handler : 否
+     *     taskExecutorDTO.jobCallbackClassName : com.easy.cloud.core.task.job.callback.impl.DefaultJobCallBackHandler : 异步回调执行handler : 否
      *     taskExecutorDTO.jobType : 1 : 工作类型 @see EcJobType常量类 : 否
      *     taskExecutorDTO.asyn : 1 : 是否为异步执行job 0同步 1为异步  默认异步: 否
+     *     taskExecutorDTO.remark : erp系统充值任务 : 备注: 否
+     *     taskExecutorDTO.systemType : 1 : 系统类型，可以根据配置表进行配置: 是
      * </pre>
      *
      * @param taskExecutorDTO
@@ -79,9 +81,11 @@ public interface EcTaskExecutorService {
      *     taskExecutorDTO.requestMethod : post : 请求的方法统一使用post : 否
      *     taskExecutorDTO.requestBody : {"name": "zhangsan"} : 请求的主体内容[json对象字符串] : 否
      *     taskExecutorDTO.taskExecutorNo : 1213131 : 任务执行者编号 : 否
-     *     taskExecutorDTO.jobCallbackClassName : com.easy.cloud.core.worker.job.callback.impl.EcDefaultJobCallBackHandler : 异步回调执行handler : 否
+     *     taskExecutorDTO.jobCallbackClassName : com.easy.cloud.core.task.job.callback.impl.DefaultJobCallBackHandler : 异步回调执行handler : 否
      *     taskExecutorDTO.jobType : 1 : 工作类型 @see EcJobType常量类 : 否
      *     taskExecutorDTO.asyn : 1 : 是否为异步执行job 0同步 1为异步  默认异步: 否
+     *     taskExecutorDTO.remark : erp系统充值任务 : 备注: 否
+     *     taskExecutorDTO.systemType : 1 : 系统类型，可以根据配置表进行配置: 是
      * </pre>
      *
      * @param taskExecutorDTO

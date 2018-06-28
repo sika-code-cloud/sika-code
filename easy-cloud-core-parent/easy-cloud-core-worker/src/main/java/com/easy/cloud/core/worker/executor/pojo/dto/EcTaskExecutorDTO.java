@@ -62,7 +62,8 @@ public class EcTaskExecutorDTO extends EcBaseDTO {
      * 是否为异步执行 0:同步 1:异步
      */
     private Integer asyn;
-
+    /** 系统类型 */
+    private Integer systemType;
     public Integer getJobType() {
         return jobType;
     }
@@ -239,6 +240,14 @@ public class EcTaskExecutorDTO extends EcBaseDTO {
 
     public void setAsyn(Integer asyn) {
         this.asyn = asyn;
+    }
+
+    public Integer getSystemType() {
+        return systemType;
+    }
+
+    public void setSystemType(Integer systemType) {
+        this.systemType = systemType;
     }
 
     public boolean isAsyn() {

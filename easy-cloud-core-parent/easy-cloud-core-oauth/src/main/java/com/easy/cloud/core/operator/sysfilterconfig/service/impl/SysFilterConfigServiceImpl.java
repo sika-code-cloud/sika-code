@@ -1,5 +1,6 @@
 package com.easy.cloud.core.operator.sysfilterconfig.service.impl;
 
+import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
@@ -11,16 +12,11 @@ import com.easy.cloud.core.operator.sysfilterconfig.dao.SysFilterConfigDAO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.entity.SysFilterConfigEntity;
 import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
-import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
-import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
-import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,22 +50,28 @@ public class SysFilterConfigServiceImpl extends EcBaseService implements SysFilt
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public EcBaseServiceResult saveSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
         EcAssert.verifyObjNull(sysFilterConfigDTO, "sysFilterConfigDTO");
         EcAssert.verifyStrEmpty(sysFilterConfigDTO.getFilterName(), "filterName");
         EcAssert.verifyStrEmpty(sysFilterConfigDTO.getUrlPattern(), "urlPattern");
         EcAssert.verifyObjNull(sysFilterConfigDTO.getOrderNum(), "orderNum");
-
+        logger.info("系统支持的过滤名称列表：" + EcAuthorityUtils.getSupportFilterNames());
         SysFilterConfigEntity sysFilterConfigEntity = EcJSONUtils.parseObject(sysFilterConfigDTO, SysFilterConfigEntity.class);
         sysFilterConfigDAO.save(sysFilterConfigEntity);
+        // 更新缓存的过滤链
         return EcBaseServiceResult.newInstanceOfSucResult(sysFilterConfigEntity);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public EcBaseServiceResult updateSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
+        EcAssert.verifyObjNull(sysFilterConfigDTO.getId(), "id");
+        logger.info("系统支持的过滤名称列表：" + EcAuthorityUtils.getSupportFilterNames());
         SysFilterConfigEntity sysFilterConfigEntity = sysFilterConfigDAO.findById(sysFilterConfigDTO.getId());
         sysFilterConfigEntity = EcBaseUtils.copeFromObjToTargetObj(sysFilterConfigDTO, sysFilterConfigEntity);
         sysFilterConfigDAO.update(sysFilterConfigEntity);
+        // 更新缓存的过滤链
         return EcBaseServiceResult.newInstanceOfSucResult(sysFilterConfigEntity);
     }
 
@@ -81,4 +83,5 @@ public class SysFilterConfigServiceImpl extends EcBaseService implements SysFilt
         }
         return EcJSONUtils.parseArray(sysFilterConfigEntities, SysFilterConfigDTO.class);
     }
+
 }

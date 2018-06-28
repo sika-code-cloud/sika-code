@@ -46,11 +46,4 @@ public class SysRoleController extends EcBaseController {
         return EcBaseServiceResult.newInstanceOfSucResult(sysRoleService.findByUserId(sysUserDTO.getId()));
     }
 
-    @RequestMapping(value = "clearCachedAuthorizationInfo")
-    public EcBaseServiceResult clearCachedAuthorizationInfo(@RequestBody SysUserDTO sysUserDTO) {
-        SysUserDTO sysUserDTOFromTable = sysUserService.findByUsername(sysUserDTO.getUsername());
-        authorityManager.clearAuthorizationInfo(sysUserDTOFromTable);
-        return EcBaseServiceResult.newInstanceOfSucResult(sysUserDTOFromTable);
-    }
-
 }

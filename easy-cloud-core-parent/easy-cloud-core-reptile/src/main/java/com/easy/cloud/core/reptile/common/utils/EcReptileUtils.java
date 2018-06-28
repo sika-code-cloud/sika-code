@@ -22,7 +22,6 @@ import com.geccocrawler.gecco.dynamic.JavassistDynamicBean;
 import com.geccocrawler.gecco.request.HttpGetRequest;
 import com.geccocrawler.gecco.utils.UrlMatcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -268,11 +267,11 @@ public class EcReptileUtils {
      */
     private static JavassistDynamicBean buildJavassistDynamicBean(EcReptileDynamicBeanDTO dynamicBeanDTO) {
         if (EcCollectionsUtils.isEmpty(dynamicBeanDTO.getMatchUrlList())) {
-            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "matchUrlList");
+            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_NULL, "matchUrlList");
         }
 
         if (EcCollectionsUtils.isEmpty(dynamicBeanDTO.getPipelineNameList())) {
-            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_CANT_NULL, "pipelineNameList");
+            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.LIST_NULL, "pipelineNameList");
         }
         JavassistDynamicBean dynamicBean;
         if (EcStringUtils.isNotEmpty(dynamicBeanDTO.getBeanClassNameBody())

@@ -4,6 +4,8 @@ import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.pojo.query.SysUserQuery;
 
+import javax.servlet.ServletRequest;
+
 /**
  * 描述：服务接口
  *
@@ -28,38 +30,13 @@ public interface SysUserService {
      * 用户登录
      * </p>
      *
+     * @param request
      * @param sysUserDTO
      * @return com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult
      * @author daiqi
-     * @date 2018/6/25 11:18
+     * @date 2018/6/27 20:07
      */
-    EcBaseServiceResult login(SysUserDTO sysUserDTO);
-
-    /**
-     * <p>
-     * 根据用户名和密码获取用户信息
-     * </p>
-     *
-     * @param username : String : 用户名
-     * @param password : String : 密码
-     * @return com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult
-     * @author daiqi
-     * @date 2018/6/25 11:18
-     */
-    SysUserDTO findByUsernameAndPassword(String username, String password);
-
-    /**
-     * <p>
-     * 根据手机号和密码获取用户信息
-     * </p>
-     *
-     * @param phone    : String : 手机号
-     * @param password : String : 密码
-     * @return com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult
-     * @author daiqi
-     * @date 2018/6/25 11:18
-     */
-    SysUserDTO findByPhoneAndPassword(String phone, String password);
+    EcBaseServiceResult login(ServletRequest request, SysUserDTO sysUserDTO);
 
     /**
      * <p>
@@ -73,15 +50,16 @@ public interface SysUserService {
      */
     SysUserDTO findByPhone(String phone);
 
-   /**
-    * <p>
-    * 根据用户名获取用户信息
-    * </p>
-    * @author daiqi
-    * @date 2018/6/25 11:33
-    * @param sysUserQuery
-    * @return com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult
-    */
+    /**
+     * <p>
+     * 根据用户名获取用户信息
+     * </p>
+     *
+     * @param sysUserQuery
+     * @return com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult
+     * @author daiqi
+     * @date 2018/6/25 11:33
+     */
     EcBaseServiceResult detailByUsername(SysUserQuery sysUserQuery);
 
     /**
