@@ -2,6 +2,7 @@ package com.easy.cloud.core.operator.sysfilterconfig.service;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
+import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,16 @@ import java.util.Map;
  * @date 2018-06-25 16:36:55
  */
 public interface SysFilterConfigService {
-    List<SysFilterConfigDTO> listAll();
+    /**
+     * 获取可用的列表数据
+     */
+    List<SysFilterConfigDTO> listByAvailable();
 
     EcBaseServiceResult saveSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO);
 
     EcBaseServiceResult updateSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO);
 
     Map<String, String> loadFilterChainDefinitions();
+
+    EcBaseServiceResult deleteByQuery(SysFilterConfigQuery filterConfigQuery);
 }

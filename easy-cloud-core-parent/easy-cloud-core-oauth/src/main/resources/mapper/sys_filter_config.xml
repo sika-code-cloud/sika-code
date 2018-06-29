@@ -14,17 +14,17 @@
 		<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
 		<result column="url_pattern" jdbcType="VARCHAR" property="urlPattern" />
 		<result column="filter_name" jdbcType="VARCHAR" property="filterName" />
-		<result column="order_num" jdbcType="INTEGER" property="orderNum" />
+		<result column="priority_level" jdbcType="INTEGER" property="priorityLevel" />
 	</resultMap>
 	<!-- 设置columnList -->
 	<sql id="columnList" >
-		sfc.id,sfc.create_by,sfc.update_by,sfc.create_date,sfc.update_date,sfc.version,sfc.available,sfc.is_deleted,sfc.url_pattern,sfc.filter_name,sfc.order_num
+		sfc.id,sfc.create_by,sfc.update_by,sfc.create_date,sfc.update_date,sfc.version,sfc.available,sfc.is_deleted,sfc.url_pattern,sfc.filter_name,sfc.priority_level
 	</sql>
 	<!-- 根据id获取对象信息 -->
 	<select id="findById" resultMap="SysFilterConfigEntity" parameterType="java.lang.Long" >
-		SELECT <include refid="columnList" /> 
-		FROM sys_filter_config sfc 
-		WHERE sfc.id = #{id, jdbcType=BIGINT} 
+		SELECT <include refid="columnList" />
+		FROM sys_filter_config sfc
+		WHERE sfc.id = #{id, jdbcType=BIGINT}
 	</select>
 	<!-- 统计列表数量 -->
 	<select id="listCount" resultType="java.lang.Integer" parameterType="map" >
@@ -33,15 +33,15 @@
 	</select>
 	<!-- 获取列表分页信息 -->
 	<select id="listPage" resultMap="SysFilterConfigEntity" parameterType="map" >
-		SELECT <include refid="columnList" /> 
-		FROM sys_filter_config sfc 
+		SELECT <include refid="columnList" />
+		FROM sys_filter_config sfc
 	</select>
 	<!-- 获取列表分页信息 -->
 	<select id="listAll" resultMap="SysFilterConfigEntity" >
 		SELECT <include refid="columnList" />
 		FROM sys_filter_config sfc
 		WHERE sfc.is_deleted = 0
-		ORDER BY sfc.order_num DESC
+		ORDER BY sfc.priority_level DESC
 	</select>
 	<!-- 设置column -->
 	<sql id="setColumnSql" >
@@ -56,7 +56,7 @@
 			<if test="isDeleted != null" >is_deleted = #{isDeleted, jdbcType=INTEGER},</if>
 			<if test="urlPattern != null" >url_pattern = #{urlPattern, jdbcType=VARCHAR},</if>
 			<if test="filterName != null" >filter_name = #{filterName, jdbcType=VARCHAR},</if>
-			<if test="orderNum != null" >order_num = #{orderNum, jdbcType=INTEGER},</if>
+			<if test="priorityLevel != null" >priority_level = #{priorityLevel, jdbcType=INTEGER},</if>
 		</set>
 	</sql>
 	<!-- 保存对象 -->
@@ -67,5 +67,41 @@
 	<update id="update" parameterType="com.easy.cloud.core.operator.sysfilterconfig.pojo.entity.SysFilterConfigEntity" >
 		UPDATE sys_filter_config sfc <include refid="setColumnSql" />
 		WHERE sfc.id = #{id, jdbcType=BIGINT}
+	</update>
+
+	<!-- 根据查询获取用户列表信息 -->
+	<select id="listByQuery" resultMap="SysUserEntity" parameterType="com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery">
+		SELECT
+		<include refid="columnList" />
+		FROM sys_filter_config sfc
+		WHERE sfc.is_deleted = 0
+		<if test="query.id != null">
+			AND sfc.id = #{query.id}
+		</if>
+		<if test="query.available != null">
+			AND sfc.available = #{query.available}
+		</if>
+		<if test="query.urlPattern != null">
+			AND sfc.url_pattern = #{query.urlPattern}
+		</if>
+		<if test="query.filterName != null">
+			AND sfc.filter_name = #{query.filterName}
+		</if>
+	</select>
+
+	<!-- 更新对象 -->
+	<update id="deleteByQuery" parameterType="com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery">
+		UPDATE sys_filter_config sfc
+		SET sfc.is_deleted = 1
+		WHERE sfc.is_deleted = 0
+		<if test="query.id != null">
+			AND sfc.id = #{query.id}
+		</if>
+        <if test="query.urlPattern != null">
+            AND sfc.url_pattern = #{query.urlPattern}
+        </if>
+        <if test="query.filterName != null">
+            AND sfc.filter_name = #{query.filterName}
+        </if>
 	</update>
 </mapper>
