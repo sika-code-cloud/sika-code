@@ -3,6 +3,7 @@ package com.easy.cloud.core.operator.sysuser.service;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.pojo.query.SysUserQuery;
+import org.apache.shiro.subject.Subject;
 
 import javax.servlet.ServletRequest;
 
@@ -37,6 +38,8 @@ public interface SysUserService {
      * @date 2018/6/27 20:07
      */
     EcBaseServiceResult login(ServletRequest request, SysUserDTO sysUserDTO);
+
+    EcBaseServiceResult login(Subject subject, SysUserDTO sysUserDTO);
 
     /**
      * <p>

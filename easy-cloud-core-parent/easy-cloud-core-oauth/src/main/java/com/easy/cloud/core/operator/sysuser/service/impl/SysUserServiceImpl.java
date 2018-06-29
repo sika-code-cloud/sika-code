@@ -58,13 +58,8 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
     }
 
     @Override
-    public EcBaseServiceResult login(ServletRequest request, SysUserDTO sysUserDTO) {
-        String username = EcRequestUtils.getTObjFromAttribute(request, EcAuthorityConstant.USERNAME, String.class);
-        if (EcStringUtils.isEmpty(username)) {
-            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_ERROR, "登录信息");
-        }
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, sysUserDTO.getPassword());
+    public EcBaseServiceResult login(Subject subject, SysUserDTO sysUserDTO) {
+        UsernamePasswordToken token = new UsernamePasswordToken(sysUserDTO.getUsername(), sysUserDTO.getPassword());
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException e) {
@@ -75,6 +70,17 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
             throw new EcBaseBusinessException("A_111111111", "该用户不存在");
         }
         return EcBaseServiceResult.newInstanceOfSuccess();
+    }
+
+    @Override
+    public EcBaseServiceResult login(ServletRequest request, SysUserDTO sysUserDTO) {
+        String username = EcRequestUtils.getTObjFromAttribute(request, EcAuthorityConstant.USERNAME, String.class);
+        if (EcStringUtils.isEmpty(username)) {
+            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_ERROR, "登录信息");
+        }
+        sysUserDTO.setUsername(username);
+        Subject subject = SecurityUtils.getSubject();
+        return login(subject, sysUserDTO);
     }
 
     @Override

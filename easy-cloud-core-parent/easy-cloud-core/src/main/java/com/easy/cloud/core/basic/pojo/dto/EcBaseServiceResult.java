@@ -71,8 +71,7 @@ public class EcBaseServiceResult {
      */
     public static EcBaseServiceResult newInstanceOfSuccess() {
         EcBaseServiceResult ecBaseServiceResult = newInstance();
-        ecBaseServiceResult.buildSuccess(true);
-        return ecBaseServiceResult.buildErrorCode(EcBaseErrorCodeEnum.SUCCESS);
+        return ecBaseServiceResult.buildErrorCode(EcBaseErrorCodeEnum.SUCCESS).buildSuccess(true);
     }
 
     /**
