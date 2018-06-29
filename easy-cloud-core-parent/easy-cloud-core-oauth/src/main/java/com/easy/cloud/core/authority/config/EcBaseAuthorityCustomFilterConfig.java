@@ -1,7 +1,5 @@
 package com.easy.cloud.core.authority.config;
 
-import com.easy.cloud.core.authority.filter.EcCustomFilter;
-import com.easy.cloud.core.authority.filter.EcCustomFilter2;
 import com.easy.cloud.core.authority.filter.login.EcLoginEmailPasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhonePasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhoneVerifyCodeFilter;
@@ -59,8 +57,6 @@ public class EcBaseAuthorityCustomFilterConfig {
      * @date 2018/6/27 10:42
      */
     private final synchronized void loadFilters() {
-        putCustomFilter("custom", new EcCustomFilter());
-        putCustomFilter("custom2", new EcCustomFilter2());
         putCustomFilter("loginEmailPasswordFilter", loginEmailPasswordFilter);
         putCustomFilter("loginPhonePasswordFilter", loginPhonePasswordFilter);
         putCustomFilter("loginPhoneVerifyCodeFilter", loginPhoneVerifyCodeFilter);

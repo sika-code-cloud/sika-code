@@ -69,8 +69,8 @@
 		WHERE sfc.id = #{id, jdbcType=BIGINT}
 	</update>
 
-	<!-- 根据查询获取用户列表信息 -->
-	<select id="listByQuery" resultMap="SysUserEntity" parameterType="com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery">
+	<!-- 根据查询获取列表信息 -->
+	<select id="listByQuery" resultMap="SysFilterConfigEntity" parameterType="com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery">
 		SELECT
 		<include refid="columnList" />
 		FROM sys_filter_config sfc
@@ -87,6 +87,7 @@
 		<if test="query.filterName != null">
 			AND sfc.filter_name = #{query.filterName}
 		</if>
+        ORDER BY sfc.priority_level DESC
 	</select>
 
 	<!-- 更新对象 -->

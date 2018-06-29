@@ -65,7 +65,7 @@ public class SysFilterConfigServiceImpl extends EcBaseService implements SysFilt
         EcAssert.verifyObjNull(sysFilterConfigDTO, "sysFilterConfigDTO");
         EcAssert.verifyStrEmpty(sysFilterConfigDTO.getFilterName(), "filterName");
         EcAssert.verifyStrEmpty(sysFilterConfigDTO.getUrlPattern(), "urlPattern");
-        EcAssert.verifyObjNull(sysFilterConfigDTO.getPriorityLevel(), "orderNum");
+        EcAssert.verifyObjNull(sysFilterConfigDTO.getPriorityLevel(), "priorityLevel");
         logger.info("系统支持的过滤名称列表：" + EcAuthorityUtils.getSupportFilterNames());
         SysFilterConfigEntity sysFilterConfigEntity = EcJSONUtils.parseObject(sysFilterConfigDTO, SysFilterConfigEntity.class);
         sysFilterConfigDAO.save(sysFilterConfigEntity);
