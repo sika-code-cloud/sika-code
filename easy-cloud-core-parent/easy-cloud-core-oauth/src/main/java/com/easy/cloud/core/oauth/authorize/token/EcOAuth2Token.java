@@ -1,4 +1,4 @@
-package com.easy.cloud.core.authority.token;
+package com.easy.cloud.core.oauth.authorize.token;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
@@ -13,7 +13,6 @@ public class EcOAuth2Token implements AuthenticationToken {
 
     private String authCode;
     private String principal;
-
     public String getAuthCode() {
         return authCode;
     }

@@ -1,13 +1,16 @@
 package com.easy.cloud.core.authority.realm;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.easy.cloud.core.authority.token.EcOAuth2Token;
-import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
+import com.easy.cloud.core.oauth.authorize.builder.request.wechat.TokenWechatRequestBuilder;
+import com.easy.cloud.core.oauth.authorize.token.EcOAuth2Token;
+import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
+import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
+import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
+import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
+import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
+import com.easy.cloud.core.operator.sysuser.service.SysUserService;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
@@ -16,25 +19,15 @@ import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.client.response.OAuthResourceResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.crazycake.shiro.AuthCachePrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
-import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
-import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
-import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
-import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
-import com.easy.cloud.core.operator.sysuser.service.SysUserService;
+import java.util.*;
 
 /**
  * <p>
@@ -51,6 +44,11 @@ public class EcAuthorityRealm extends AuthorizingRealm {
     private SysRoleService sysRoleService;
     @Autowired
     private SysResourceService sysResourceService;
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return super.supports(token) || token instanceof EcOAuth2Token;
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -124,25 +122,29 @@ public class EcAuthorityRealm extends AuthorizingRealm {
         String code = oAuth2Token.getAuthCode();
         SysUserDTO sysUserDTO = extractUsername(code);
 
-        SimpleAuthenticationInfo authenticationInfo =
-                new SimpleAuthenticationInfo(sysUserDTO, code, getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(sysUserDTO,
+                sysUserDTO.getPassword(),
+                ByteSource.Util.bytes(sysUserDTO.getSalt()),
+                sysUserDTO.getAuthCacheKey()
+        );
         return authenticationInfo;
     }
 
     private SysUserDTO extractUsername(String code) {
-        String accessTokenUrl = "";
-        String clientId = "";
-        String clientSecret = "";
-        String redirectUrl = "";
-        String userInfoUrl = "";
+//        String accessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxcb207fb7c8f9ddf0&secret=b36be91c0377797699d73fd2b7fcfa77&code="+code+"&grant_type=authorization_code";
+        String accessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token";
+        String clientId = "wxcb207fb7c8f9ddf0";
+        String clientSecret = "b36be91c0377797699d73fd2b7fcfa77";
+        String redirectUrl = "http://www.baidu.com";
+        String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo?openid=OPENID&lang=zh_CN";
         try {
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
 
-            OAuthClientRequest accessTokenRequest = OAuthClientRequest
-                    .tokenLocation(accessTokenUrl)
-                    .setGrantType(GrantType.AUTHORIZATION_CODE)
+            TokenWechatRequestBuilder builder = new TokenWechatRequestBuilder(accessTokenUrl);
+            OAuthClientRequest accessTokenRequest = builder
                     .setClientId(clientId)
                     .setClientSecret(clientSecret)
+                    .setGrantType(GrantType.AUTHORIZATION_CODE)
                     .setCode(code)
                     .setRedirectURI(redirectUrl)
                     .buildQueryMessage();
@@ -151,12 +153,19 @@ public class EcAuthorityRealm extends AuthorizingRealm {
 
             String accessToken = oAuthResponse.getAccessToken();
             Long expiresIn = oAuthResponse.getExpiresIn();
-
+            String openId = (String) EcJSONUtils.parseObject(oAuthResponse.getBody(), HashMap.class).get("openid");
+            userInfoUrl = userInfoUrl.replace("OPENID", openId);
             OAuthClientRequest userInfoRequest = new OAuthBearerClientRequest(userInfoUrl)
                     .setAccessToken(accessToken).buildQueryMessage();
 
             OAuthResourceResponse resourceResponse = oAuthClient.resource(userInfoRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
-            return EcJSONUtils.parseObject(resourceResponse.getBody(), SysUserDTO.class);
+            JSONObject info = JSONObject.parseObject(resourceResponse.getBody());
+            SysUserDTO sysUserDTO = new SysUserDTO();
+            sysUserDTO.setUsername(info.getString("openid"));
+            sysUserDTO.setSalt(sysUserDTO.getUsername());
+            sysUserDTO.setPassword(EcAuthorityUtils.encryptOfMD5(code, sysUserDTO.getSalt()));
+            System.out.println("=======用户数据====" + JSONObject.toJSONString(sysUserDTO));
+            return sysUserDTO;
         } catch (Exception e) {
             e.printStackTrace();
             throw new AuthenticationException(e);

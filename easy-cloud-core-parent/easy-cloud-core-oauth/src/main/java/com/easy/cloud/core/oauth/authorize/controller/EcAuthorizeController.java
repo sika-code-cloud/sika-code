@@ -1,6 +1,9 @@
 package com.easy.cloud.core.oauth.authorize.controller;
 
 import com.easy.cloud.core.basic.controller.EcBaseController;
+import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
+import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
+import com.easy.cloud.core.operator.sysuser.service.SysUserService;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
@@ -22,6 +25,7 @@ import org.apache.oltu.oauth2.rs.response.OAuthRSResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,8 +33,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
@@ -47,6 +53,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EcAuthorizeController extends EcBaseController {
     static Map<String, Object> codeCache = new ConcurrentHashMap<>();
     static Map<String, Object> tokenCache = new ConcurrentHashMap<>();
+    @Autowired
+    private SysUserService sysUserService;
+
+    @RequestMapping(value = "login")
+    public EcBaseServiceResult login(ServletRequest request, @ModelAttribute SysUserDTO sysUserDTO) {
+        return sysUserService.login(request, sysUserDTO);
+    }
 
     @RequestMapping("/toAuthorize")
     public Object authorize(

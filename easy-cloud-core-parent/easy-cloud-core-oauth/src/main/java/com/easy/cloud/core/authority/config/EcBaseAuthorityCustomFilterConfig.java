@@ -4,9 +4,11 @@ import com.easy.cloud.core.authority.filter.login.EcLoginEmailPasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhonePasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhoneVerifyCodeFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginUsernamePasswordFilter;
+import com.easy.cloud.core.authority.filter.oauth.EcOauthWechatFilter;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -61,6 +63,7 @@ public class EcBaseAuthorityCustomFilterConfig {
         putCustomFilter("loginPhonePasswordFilter", loginPhonePasswordFilter);
         putCustomFilter("loginPhoneVerifyCodeFilter", loginPhoneVerifyCodeFilter);
         putCustomFilter("loginUsernamePasswordFilter", loginUsernamePasswordFilter);
+        putCustomFilter("oauthWechatFilter", oauthWechatFilter());
         loadOtherFilters();
     }
 
@@ -73,5 +76,10 @@ public class EcBaseAuthorityCustomFilterConfig {
             EcAssert.verifyDataExistent(name, name);
         }
         customFilters.put(name, filter);
+    }
+
+    @Bean
+    protected EcOauthWechatFilter oauthWechatFilter() {
+        return new EcOauthWechatFilter();
     }
 }
