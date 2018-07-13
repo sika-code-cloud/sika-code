@@ -1,4 +1,4 @@
-package com.easy.cloud.core.authority.filter.oauth;
+package com.easy.cloud.core.oauth.authorize.filter;
 
 import org.springframework.stereotype.Component;
 

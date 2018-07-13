@@ -3,7 +3,10 @@ package com.easy.cloud.core.authority.realm;
 import com.alibaba.fastjson.JSONObject;
 import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
-import com.easy.cloud.core.oauth.authorize.builder.request.wechat.TokenWechatRequestBuilder;
+import com.easy.cloud.core.oauth.authorize.builder.request.EcBaseResourceRequestBuilder;
+import com.easy.cloud.core.oauth.authorize.builder.request.EcBaseTokenRequestBuilder;
+import com.easy.cloud.core.oauth.authorize.builder.request.wechat.EcResourceWechatRequestBuilder;
+import com.easy.cloud.core.oauth.authorize.builder.request.wechat.EcTokenWechatRequestBuilder;
 import com.easy.cloud.core.oauth.authorize.token.EcOAuth2Token;
 import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
 import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
@@ -13,9 +16,9 @@ import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.service.SysUserService;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
-import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.client.response.OAuthJSONAccessTokenResponse;
 import org.apache.oltu.oauth2.client.response.OAuthResourceResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
@@ -136,27 +139,31 @@ public class EcAuthorityRealm extends AuthorizingRealm {
         String clientId = "wxcb207fb7c8f9ddf0";
         String clientSecret = "b36be91c0377797699d73fd2b7fcfa77";
         String redirectUrl = "http://www.baidu.com";
-        String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo?openid=OPENID&lang=zh_CN";
+        String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo";
         try {
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
 
-            TokenWechatRequestBuilder builder = new TokenWechatRequestBuilder(accessTokenUrl);
+            EcBaseTokenRequestBuilder builder = new EcTokenWechatRequestBuilder(accessTokenUrl);
             OAuthClientRequest accessTokenRequest = builder
                     .setClientId(clientId)
                     .setClientSecret(clientSecret)
                     .setGrantType(GrantType.AUTHORIZATION_CODE)
-                    .setCode(code)
+                    .setCode(code+1)
                     .setRedirectURI(redirectUrl)
                     .buildQueryMessage();
 
-            OAuthAccessTokenResponse oAuthResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
+            OAuthAccessTokenResponse oAuthResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST, OAuthJSONAccessTokenResponse.class);
 
             String accessToken = oAuthResponse.getAccessToken();
             Long expiresIn = oAuthResponse.getExpiresIn();
             String openId = (String) EcJSONUtils.parseObject(oAuthResponse.getBody(), HashMap.class).get("openid");
             userInfoUrl = userInfoUrl.replace("OPENID", openId);
-            OAuthClientRequest userInfoRequest = new OAuthBearerClientRequest(userInfoUrl)
-                    .setAccessToken(accessToken).buildQueryMessage();
+            EcBaseResourceRequestBuilder resourceRequestBuilder = new EcResourceWechatRequestBuilder(userInfoUrl);
+            OAuthClientRequest userInfoRequest = resourceRequestBuilder
+                    .setAccessToken(accessToken+1)
+                    .setOpenId(openId)
+                    .setLang("zh_CN")
+                    .buildQueryMessage();
 
             OAuthResourceResponse resourceResponse = oAuthClient.resource(userInfoRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
             JSONObject info = JSONObject.parseObject(resourceResponse.getBody());

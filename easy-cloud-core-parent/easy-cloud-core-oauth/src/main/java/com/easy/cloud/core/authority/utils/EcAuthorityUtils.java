@@ -81,7 +81,9 @@ public class EcAuthorityUtils {
         return filterNames;
     }
 
-    /** 获取支持的过滤器列表 */
+    /**
+     * 获取支持的过滤器列表
+     */
     public static Map<String, String> getSupportFilters() {
         if (EcMapUtils.isNotEmpty(supportFilterNameClassMap)) {
             return supportFilterNameClassMap;
