@@ -1,7 +1,7 @@
-package com.easy.cloud.core.oauth.authorize.filter;
+package com.easy.cloud.core.oauth.authorize.base.filter;
 
 import com.easy.cloud.core.authority.filter.base.EcBaseAuthenticatingFilter;
-import com.easy.cloud.core.oauth.authorize.token.EcOAuth2Token;
+import com.easy.cloud.core.oauth.authorize.base.token.EcBaseOauthToken;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -55,8 +55,10 @@ public abstract class EcBaseOauthFilter extends EcBaseAuthenticatingFilter {
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String code = httpRequest.getParameter(authcCodeParam);
-        return new EcOAuth2Token(code);
+        return getOAuth2Token(code);
     }
+
+    protected abstract EcBaseOauthToken getOAuth2Token(String code);
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {

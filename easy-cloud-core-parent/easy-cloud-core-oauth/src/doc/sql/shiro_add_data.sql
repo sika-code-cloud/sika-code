@@ -24,11 +24,11 @@ insert into sys_resource values(23, '用户修改', 'button', '', 21, '0/1/21/',
 insert into sys_resource values(24, '用户删除', 'button', '', 21, '0/1/21/', 'user:delete', true);
 insert into sys_resource values(25, '用户查看', 'button', '', 21, '0/1/21/', 'user:view', true);
 
-insert into sys_resource values(31, '资源管理', 'menu', '/resource', 1, '0/1/', 'resource:*', true);
-insert into sys_resource values(32, '资源新增', 'button', '', 31, '0/1/31/', 'resource:create', true);
-insert into sys_resource values(33, '资源修改', 'button', '', 31, '0/1/31/', 'resource:update', true);
-insert into sys_resource values(34, '资源删除', 'button', '', 31, '0/1/31/', 'resource:delete', true);
-insert into sys_resource values(35, '资源查看', 'button', '', 31, '0/1/31/', 'resource:view', true);
+insert into sys_resource values(31, '资源管理', 'menu', '/token', 1, '0/1/', 'token:*', true);
+insert into sys_resource values(32, '资源新增', 'button', '', 31, '0/1/31/', 'token:create', true);
+insert into sys_resource values(33, '资源修改', 'button', '', 31, '0/1/31/', 'token:update', true);
+insert into sys_resource values(34, '资源删除', 'button', '', 31, '0/1/31/', 'token:delete', true);
+insert into sys_resource values(35, '资源查看', 'button', '', 31, '0/1/31/', 'token:view', true);
 
 insert into sys_resource values(41, '角色管理', 'menu', '/role', 1, '0/1/', 'role:*', true);
 insert into sys_resource values(42, '角色新增', 'button', '', 41, '0/1/41/', 'role:create', true);

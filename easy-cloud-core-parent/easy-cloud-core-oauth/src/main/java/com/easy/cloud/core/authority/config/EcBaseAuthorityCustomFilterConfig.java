@@ -4,7 +4,7 @@ import com.easy.cloud.core.authority.filter.login.EcLoginEmailPasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhonePasswordFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginPhoneVerifyCodeFilter;
 import com.easy.cloud.core.authority.filter.login.EcLoginUsernamePasswordFilter;
-import com.easy.cloud.core.oauth.authorize.filter.EcOauthWechatFilter;
+import com.easy.cloud.core.oauth.authorize.wechat.filter.EcOauthWechatFilter;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;

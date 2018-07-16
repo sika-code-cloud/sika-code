@@ -34,7 +34,7 @@ public class SysResourceController extends EcBaseController {
      * @author daiqi
      * @date 2018/6/25 15:41
      */
-    @RequiresPermissions("resource:create")
+    @RequiresPermissions("token:create")
     @RequestMapping(value = "saveResource")
     public EcBaseServiceResult saveResource(@RequestBody SysResourceDTO resourceDTO) {
         return sysResourceService.save(resourceDTO);

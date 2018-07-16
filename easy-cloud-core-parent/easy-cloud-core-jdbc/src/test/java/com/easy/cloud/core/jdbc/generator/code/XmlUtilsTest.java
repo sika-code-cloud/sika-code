@@ -110,10 +110,10 @@ public class XmlUtilsTest {
      */
     public static void main(String[] args) throws Exception {
         SAXBuilder builder = new SAXBuilder();
-        //Document doc = builder.build(new File("src/test.xml"));
-        //Document doc = builder.build(new FileInputStream("src/test.xml"));
-        //Document doc = builder.build(new FileReader("src/test.xml"));
-        //Document doc = builder.build(new URL("http://localhost:8080/jdomTest/test.xml"));
+        //Document doc = token.build(new File("src/test.xml"));
+        //Document doc = token.build(new FileInputStream("src/test.xml"));
+        //Document doc = token.build(new FileReader("src/test.xml"));
+        //Document doc = token.build(new URL("http://localhost:8080/jdomTest/test.xml"));
         Document doc = builder.build(EcSourceCodeRelativePath.RESOURCES+"\\test.xml");
         
         
