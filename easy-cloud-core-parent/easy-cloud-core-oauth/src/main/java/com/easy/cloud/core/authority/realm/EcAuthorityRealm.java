@@ -1,26 +1,17 @@
 package com.easy.cloud.core.authority.realm;
 
-import com.alibaba.fastjson.JSONObject;
 import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
-import com.easy.cloud.core.basic.utils.EcBaseUtils;
-import com.easy.cloud.core.oauth.authorize.base.pojo.dto.EcBaseAccessTokenDTO;
-import com.easy.cloud.core.oauth.authorize.base.pojo.dto.EcBaseOauthUserDTO;
-import com.easy.cloud.core.oauth.authorize.base.request.builder.EcBaseResourceRequestBuilder;
-import com.easy.cloud.core.oauth.authorize.base.request.builder.EcBaseTokenRequestBuilder;
-import com.easy.cloud.core.oauth.authorize.base.response.resource.EcBaseOauthTokenResponse;
-import com.easy.cloud.core.oauth.authorize.base.response.token.EcBaseOauthResourceResponse;
-import com.easy.cloud.core.oauth.authorize.base.token.EcBaseOauthToken;
-import com.easy.cloud.core.oauth.authorize.service.EcOauthService;
+import com.easy.cloud.core.basic.utils.EcAssert;
+import com.easy.cloud.core.oauth.authorize.client.base.pojo.dto.EcBaseOauthResourceDTO;
+import com.easy.cloud.core.oauth.authorize.client.base.pojo.dto.EcBaseOauthUserDTO;
+import com.easy.cloud.core.oauth.authorize.client.base.token.EcBaseOauthToken;
+import com.easy.cloud.core.oauth.authorize.manager.EcOauthManager;
 import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
 import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
 import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
 import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
 import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
 import com.easy.cloud.core.operator.sysuser.service.SysUserService;
-import org.apache.oltu.oauth2.client.OAuthClient;
-import org.apache.oltu.oauth2.client.URLConnectionClient;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -47,7 +38,7 @@ public class EcAuthorityRealm extends AuthorizingRealm {
     @Autowired
     private SysResourceService sysResourceService;
     @Autowired
-    private EcOauthService oauthService;
+    private EcOauthManager oauthManager;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -121,7 +112,9 @@ public class EcAuthorityRealm extends AuthorizingRealm {
      * @date 2018/6/29 17:49
      */
     protected AuthenticationInfo doGetAuthenticationInfoOauth2Token(EcBaseOauthToken oauth2Token) {
-        EcBaseOauthUserDTO oauthUserDTO = getOauthResourceDTO(oauth2Token);
+        EcBaseOauthResourceDTO oauthResourceDTO = oauthManager.getOauthResourceDTO(oauth2Token);
+        EcAssert.verifyObjNull(oauthResourceDTO, "oauthResourceDTO");
+        EcBaseOauthUserDTO oauthUserDTO = oauthResourceDTO.getTObj();
         SysUserDTO sysUserDTO = new SysUserDTO();
         sysUserDTO.setUsername(oauthUserDTO.getOpenid());
         sysUserDTO.setPassword(EcAuthorityUtils.encryptOfMD5(oauth2Token.getAuthCode(), oauthUserDTO.getOpenid()));
@@ -133,57 +126,4 @@ public class EcAuthorityRealm extends AuthorizingRealm {
         );
         return authenticationInfo;
     }
-
-    /**
-     * <p>
-     * 获取授权资源数据传输对象
-     * </p>
-     *
-     * @param oauth2Token
-     * @return com.easy.cloud.core.oauth.authorize.base.pojo.dto.EcBaseOauthUserDTO
-     * @author daiqi
-     * @date 2018/7/16 16:07
-     */
-    private EcBaseOauthUserDTO getOauthResourceDTO(EcBaseOauthToken oauth2Token) {
-        try {
-            // 授权请求客户端
-            OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            // 获取授权token
-            Map<String, Object> oAuthResponseParam = getAccessToken(oAuthClient, oauth2Token);
-            // 获取资源请求构建者
-            EcBaseResourceRequestBuilder resourceRequestBuilder = oauth2Token.getResourceRequestBuilder();
-            // 构建客户端请求参数
-            OAuthClientRequest resourceRequest = resourceRequestBuilder.buildClientRequest(oAuthResponseParam);
-            // 执行请求资源
-            EcBaseOauthResourceResponse resourceResponse = oAuthClient.resource(resourceRequest, OAuth.HttpMethod.GET, resourceRequestBuilder.getResourceResponseClass());
-            // 从资源响应对象中获取资源数据传输对象
-            EcBaseOauthUserDTO oauthUserDTO = resourceResponse.getResourceObj(resourceResponse.getResourceDTOClass());
-            System.out.println("=======用户数据====" + JSONObject.toJSONString(oauthUserDTO));
-            return oauthUserDTO;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new AuthenticationException(e);
-        }
-    }
-
-    private Map<String, Object> getAccessToken(OAuthClient oAuthClient, EcBaseOauthToken oauth2Token) throws Exception {
-        Map<String, Object> accessToken = new HashMap<>(oauth2Token.getResourceRequestParam());
-        EcBaseAccessTokenDTO localAccessToken = oauthService.getAccessToken(oauth2Token.getAccessTokenChannel());
-        if (EcBaseUtils.isNotNull(localAccessToken) && localAccessToken.available()) {
-            accessToken.putAll(localAccessToken.getAccessTokenParam());
-        } else {
-            // 获取token请求构建者
-            EcBaseTokenRequestBuilder tokenRequestBuilder = oauth2Token.getTokenRequestBuilder();
-            // 构建客户端请求数据
-            OAuthClientRequest accessTokenRequest = tokenRequestBuilder.buildClientRequest(oauth2Token.getTokenRequestParam());
-            // 返回accessToken响应对象
-            EcBaseOauthTokenResponse response = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST, tokenRequestBuilder.getTokenResponseClass());
-            // 将accessToken放入map中
-            accessToken.putAll(response.getParameters());
-            // 保存accessToken
-            oauthService.saveAccessToken(oauth2Token.getAccessTokenChannel(), oauth2Token.getAccessTokenDTO(accessToken));
-        }
-        return accessToken;
-    }
-
 }

@@ -62,13 +62,14 @@
             <artifactId>org.apache.oltu.oauth2.client</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.sun</groupId>-->
-        <!--<artifactId>tools</artifactId>-->
-        <!--<version>1.8</version>-->
-        <!--<scope>system</scope>-->
-        <!--<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>-->
-        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.3.4.ALL</version>
+        </dependency>
+
         <!-- 导入easy-cloud-core相关依赖 -->
         <dependency>
             <groupId>easy.cloud.core</groupId>
