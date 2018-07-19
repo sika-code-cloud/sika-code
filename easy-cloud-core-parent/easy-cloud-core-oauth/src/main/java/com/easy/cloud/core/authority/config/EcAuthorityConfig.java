@@ -9,6 +9,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -43,6 +44,7 @@ public class EcAuthorityConfig {
     protected EcBaseAuthorityCustomFilterConfig customFilterConfig() {
         return new EcBaseAuthorityCustomFilterConfig();
     }
+
     /**
      * 将配置文件的属性设置到ShiroFilterFactoryBean对象中
      */
@@ -58,7 +60,7 @@ public class EcAuthorityConfig {
         return shiroFilterFactoryBean;
     }
 
-    /**  
+    /**
      * <p>
      * shiro过滤器工厂bean
      * </p>
@@ -66,11 +68,12 @@ public class EcAuthorityConfig {
      *     所需参数示例及其说明
      *     参数名称 : 示例值 : 说明 : 是否必须
      * </pre>
-     * @author daiqi  
+     *
+     * @param securityManager
+     * @return org.apache.shiro.spring.web.ShiroFilterFactoryBean
+     * @author daiqi
      * @date 2018/6/27 10:39
-     * @param securityManager  
-     * @return org.apache.shiro.spring.web.ShiroFilterFactoryBean  
-     */  
+     */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();

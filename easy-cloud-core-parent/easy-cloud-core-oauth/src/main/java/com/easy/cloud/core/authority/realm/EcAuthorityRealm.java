@@ -2,10 +2,10 @@ package com.easy.cloud.core.authority.realm;
 
 import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.basic.utils.EcAssert;
-import com.easy.cloud.core.oauth.authorize.client.base.pojo.dto.EcBaseOauthResourceDTO;
-import com.easy.cloud.core.oauth.authorize.client.base.pojo.dto.EcBaseOauthUserDTO;
-import com.easy.cloud.core.oauth.authorize.client.base.token.EcBaseOauthToken;
-import com.easy.cloud.core.oauth.authorize.manager.EcOauthManager;
+import com.easy.cloud.core.oauth.client.base.pojo.dto.EcBaseOauthResourceDTO;
+import com.easy.cloud.core.oauth.client.base.pojo.dto.EcBaseOauthUserDTO;
+import com.easy.cloud.core.oauth.client.base.token.EcBaseOauthToken;
+import com.easy.cloud.core.oauth.manager.EcOauthManager;
 import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
 import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
 import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;

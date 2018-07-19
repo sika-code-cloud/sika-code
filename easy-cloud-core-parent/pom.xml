@@ -25,6 +25,8 @@
 		<java.version>1.8</java.version>
 		<skipTests>true</skipTests>
 		<easy.cloud.core.version>1.0.0</easy.cloud.core.version>
+		<!--springbootadmin监控版本号-->
+		<spring.boot.admin.version>1.5.6</spring.boot.admin.version>
 	</properties>
 
 	<modules>
@@ -72,6 +74,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>${spring.boot.admin.version}</version>
 		</dependency>
 
 	</dependencies>

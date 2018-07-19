@@ -20,10 +20,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
@@ -82,6 +79,7 @@
             <artifactId>easy-cloud-core-cache</artifactId>
             <version>${easy.cloud.core.version}</version>
         </dependency>
+
         <dependency>
             <groupId>easy.cloud.core</groupId>
             <artifactId>easy-cloud-core-jdbc</artifactId>
