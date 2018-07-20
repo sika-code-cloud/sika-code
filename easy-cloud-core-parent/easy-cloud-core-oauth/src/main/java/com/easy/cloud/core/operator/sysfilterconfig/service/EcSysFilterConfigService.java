@@ -13,7 +13,7 @@ import java.util.Map;
  * @author THINK
  * @date 2018-06-25 16:36:55
  */
-public interface SysFilterConfigService {
+public interface EcSysFilterConfigService {
     /**
      * 获取可用的列表数据
      */

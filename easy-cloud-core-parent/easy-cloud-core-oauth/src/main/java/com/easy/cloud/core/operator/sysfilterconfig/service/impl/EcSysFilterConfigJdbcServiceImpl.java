@@ -15,8 +15,10 @@ import com.easy.cloud.core.operator.sysfilterconfig.dao.SysFilterConfigDAO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.entity.SysFilterConfigEntity;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
-import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
+import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +27,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 描述：服务实现类
+ * 使用jdbc处理过滤器配置信息
  *
  * @author daiqi
  * @date 2018-06-25 16:36:55
  */
-@Service(value = "sysFilterConfigService")
-public class SysFilterConfigServiceImpl extends EcBaseService implements SysFilterConfigService {
+@Service
+@ConditionalOnProperty(value = "ec.oauth.filter.config.jdbc")
+@ConditionalOnMissingBean(name = "ecSysFilterConfigService")
+public class EcSysFilterConfigJdbcServiceImpl extends EcBaseService implements EcSysFilterConfigService {
     /**
      * 数据处理接口
      */

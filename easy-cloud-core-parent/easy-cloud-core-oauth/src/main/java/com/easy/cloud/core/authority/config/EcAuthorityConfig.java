@@ -1,7 +1,7 @@
 package com.easy.cloud.core.authority.config;
 
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
-import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
+import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -9,7 +9,6 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -35,7 +34,7 @@ public class EcAuthorityConfig {
     @Value("${ec.authority.md5.hashIterations}")
     private int hashIterations;
     @Autowired
-    private SysFilterConfigService sysFilterConfigService;
+    private EcSysFilterConfigService sysFilterConfigService;
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;
 
@@ -75,7 +74,7 @@ public class EcAuthorityConfig {
      * @date 2018/6/27 10:39
      */
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());
         shiroFilterFactoryBean.setSecurityManager(securityManager);
