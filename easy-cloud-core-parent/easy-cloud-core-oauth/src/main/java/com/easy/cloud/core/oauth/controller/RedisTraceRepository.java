@@ -15,15 +15,15 @@ import java.util.Map;
  * @create 2018-07-19 15:40
  */
 @Service
-public class MongoTraceRepository implements TraceRepository{
-
+public class RedisTraceRepository implements TraceRepository{
+    private static final String EC_OAUTH_TRACE = EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "trace");
     @Override
     public List<Trace> findAll() {
-        return EcRedisTemplateHandler.rangeAll(EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "trace"), Trace.class);
+        return EcRedisTemplateHandler.range(EC_OAUTH_TRACE, 0,500, Trace.class);
     }
 
     @Override
     public void add(Map<String, Object> traceInfo) {
-        EcRedisTemplateHandler.rightPush(EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "trace"), new Trace(new Date(), traceInfo));
+        EcRedisTemplateHandler.leftPush(EC_OAUTH_TRACE, new Trace(new Date(), traceInfo));
     }
 }

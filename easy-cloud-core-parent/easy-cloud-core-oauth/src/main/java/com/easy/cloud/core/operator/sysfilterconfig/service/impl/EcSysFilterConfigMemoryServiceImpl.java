@@ -26,7 +26,7 @@ import java.util.*;
  */
 @Service
 @ConditionalOnMissingBean(name = "ecSysFilterConfigService")
-public class EcSysFilterConfigMemoryServiceImpl extends EcBaseService implements EcSysFilterConfigService {
+public class EcSysFilterConfigMemoryServiceImpl extends EcBaseSysFilterConfigService {
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;
     /**
@@ -62,7 +62,7 @@ public class EcSysFilterConfigMemoryServiceImpl extends EcBaseService implements
     @Override
     public synchronized Map<String, String> loadFilterChainDefinitions() {
         if (EcMapUtils.isNotEmpty(filterConfigDTOMap)) {
-            return buildFilterChainDefinitions();
+            return buildFilterChainDefinitions(this.filterConfigDTOMap);
         }
         Yaml yaml = new Yaml();
         Map<String, String> filterChainDefinitions = new LinkedHashMap<>();
@@ -86,40 +86,17 @@ public class EcSysFilterConfigMemoryServiceImpl extends EcBaseService implements
         return filterChainDefinitions;
     }
 
-    /**
-     * 构建过滤器链定义列表
-     */
-    private synchronized Map<String, String> buildFilterChainDefinitions() {
-        Map<String, String> filterChainDefinitions = Maps.newLinkedHashMap();
-        sortPriorityLevelDesc();
-        for (String key : filterConfigDTOMap.keySet()) {
-            filterChainDefinitions.put(key, filterConfigDTOMap.get(key).getFilterName());
-        }
-        return filterChainDefinitions;
-    }
-
-    /**
-     * 按照优先级降序排列
-     */
-    private synchronized void sortPriorityLevelDesc() {
-        List<SysFilterConfigDTO> filterConfigDTOS = new ArrayList<>();
-        for (SysFilterConfigDTO filterConfigDTO : filterConfigDTOMap.values()) {
-            filterConfigDTOS.add(filterConfigDTO);
-        }
-        Collections.sort(filterConfigDTOS, new Comparator<SysFilterConfigDTO>() {
-            @Override
-            public int compare(SysFilterConfigDTO o1, SysFilterConfigDTO o2) {
-                return o2.getPriorityLevel() - o1.getPriorityLevel();
-            }
-        });
-        filterConfigDTOMap.clear();
-        for (SysFilterConfigDTO filterConfigDTO : filterConfigDTOS) {
-            filterConfigDTOMap.put(filterConfigDTO.getUrlPattern(), filterConfigDTO);
-        }
-    }
-
     @Override
     public synchronized EcBaseServiceResult deleteByQuery(SysFilterConfigQuery filterConfigQuery) {
-        return null;
+        EcAssert.verifyObjNull(filterConfigQuery, "filterConfigQuery");
+        String urlPattern = filterConfigQuery.getUrlPattern();
+        EcAssert.verifyObjNull(urlPattern, "urlPattern");
+        if (filterConfigDTOMap.containsKey(urlPattern)) {
+            SysFilterConfigDTO filterConfigDTO = filterConfigDTOMap.remove(urlPattern);
+            return EcBaseServiceResult.newInstanceOfSuccess().buildResult(filterConfigDTO);
+        } else {
+            return EcBaseServiceResult.newInstanceOfSuccess().buildResult(0);
+        }
+
     }
 }

@@ -35,7 +35,7 @@ import java.util.Map;
 @Service
 @ConditionalOnProperty(value = "ec.oauth.filter.config.jdbc")
 @ConditionalOnMissingBean(name = "ecSysFilterConfigService")
-public class EcSysFilterConfigJdbcServiceImpl extends EcBaseService implements EcSysFilterConfigService {
+public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigService {
     /**
      * 数据处理接口
      */
@@ -46,7 +46,7 @@ public class EcSysFilterConfigJdbcServiceImpl extends EcBaseService implements E
      * 初始化权限
      */
     @Override
-    public Map<String, String> loadFilterChainDefinitions() {
+    public synchronized Map<String, String> loadFilterChainDefinitions() {
         // 权限控制map.从数据库获取
         Map<String, String> filterChainDefinitionMap = EcMapUtils.newLinkedHashMap();
         List<SysFilterConfigDTO> sysFilterConfigs = listByAvailable();

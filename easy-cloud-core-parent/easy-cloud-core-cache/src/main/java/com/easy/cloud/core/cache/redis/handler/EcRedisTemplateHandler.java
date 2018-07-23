@@ -140,9 +140,9 @@ public class EcRedisTemplateHandler {
      * <pre>
      * </pre>
      *
-     * @param key    : String : 主键
-     * @param obj    : Object : 保存的obj对象
-     * @param offset : Long 有效时间 单位毫秒
+     * @param key     : String : 主键
+     * @param obj     : Object : 保存的obj对象
+     * @param timeOut : Long 有效时间 单位毫秒
      * @author daiqi
      * @date 2017年12月7日 下午6:26:10
      */
@@ -658,7 +658,7 @@ public class EcRedisTemplateHandler {
      * </p>
      * <p>
      * <pre>
-     * DqRedisTemplateHandler.putAllOfHash("key", map)
+     * DqRedisTemplateHandler.putAllToHash("key", map)
      * </pre>
      *
      * @param key     : String : 主key
@@ -666,7 +666,7 @@ public class EcRedisTemplateHandler {
      * @author daiqi
      * @date 2017年12月13日 下午2:40:47
      */
-    public static void putAllOfHash(String key, Map<Object, Object> hashMap) {
+    public static void putAllToHash(String key, Map<Object, Object> hashMap) {
         if (EcStringUtils.isEmpty(key) || EcMapUtils.isEmpty(hashMap)) {
             return;
         }
@@ -691,7 +691,7 @@ public class EcRedisTemplateHandler {
      * @author daiqi
      * @date 2017年12月13日 下午2:40:47
      */
-    public static void putOfHash(String key, String hashKey, Object value) {
+    public static void putToHash(String key, String hashKey, Object value) {
         if (EcStringUtils.isEmpty(key) || EcStringUtils.isEmpty(hashKey) || EcBaseUtils.isNull(value)) {
             return;
         }
@@ -704,7 +704,7 @@ public class EcRedisTemplateHandler {
      * </p>
      * <p>
      * <pre>
-     * DqRedisTemplateHandler.valuesOfMap("key", UserEntity.class) = ["userObj1","userObj2","userObj3"]
+     * DqRedisTemplateHandler.valuesFromHash("key", UserEntity.class) = ["userObj1","userObj2","userObj3"]
      * </pre>
      *
      * @param key   : 主key
@@ -713,7 +713,7 @@ public class EcRedisTemplateHandler {
      * @author daiqi
      * @date 2017年12月19日 上午9:08:27
      */
-    public static <T> List<T> valuesOfMap(String key, Class<T> clazz) {
+    public static <T> List<T> valuesFromHash(String key, Class<T> clazz) {
         if (EcStringUtils.isEmpty(key) || EcBaseUtils.isNull(clazz)) {
             return null;
         }
@@ -726,7 +726,7 @@ public class EcRedisTemplateHandler {
      * </p>
      * <p>
      * <pre>
-     * DqRedisTemplateHandler.valuesOfMap("key", UserEntity.class) = {"hashKey1", userObj1},{"hashKey2", userObj2},{"hashKey3", userObj3}
+     * DqRedisTemplateHandler.valuesFromHash("key", UserEntity.class) = {"hashKey1", userObj1},{"hashKey2", userObj2},{"hashKey3", userObj3}
      * </pre>
      *
      * @param key   : redis主key
@@ -736,32 +736,11 @@ public class EcRedisTemplateHandler {
      * @date 2017年12月19日 上午9:18:43
      */
     @SuppressWarnings("unchecked")
-    public static <T> Map<String, T> entriesOfMap(String key, Class<T> clazz) {
+    public static <T> Map<String, T> entriesFromHash(String key, Class<T> clazz) {
         if (EcStringUtils.isEmpty(key) || EcBaseUtils.isNull(clazz)) {
             return null;
         }
         return EcJSONUtils.parseObject(stringRedisTemplate.opsForHash().entries(key), HashMap.class);
-    }
-
-    // TODO 设置hmap的field的有效时间
-    public static long hset(final String key, final String field, final Object value, int seconds) {
-        stringRedisTemplate.opsForHash().put(key, field, value);
-        return run(key, seconds);
-    }
-
-    // TODO 给hmap的field添加有效时间
-    private static Long run(final String key, final int seconds, final boolean... expired) {
-        RedisCallback<Long> redisCallback = new RedisCallback<Long>() {
-            @Override
-            public Long doInRedis(RedisConnection connection) throws DataAccessException {
-                Jedis jedis = (Jedis) connection.getNativeConnection();
-                if (jedis.exists(key) && expired == null) {
-                    return jedis.expire(key, seconds);
-                }
-                return 0L;
-            }
-        };
-        return stringRedisTemplate.execute(redisCallback);
     }
 
     /** -----------------------------set----------------------------------------- */

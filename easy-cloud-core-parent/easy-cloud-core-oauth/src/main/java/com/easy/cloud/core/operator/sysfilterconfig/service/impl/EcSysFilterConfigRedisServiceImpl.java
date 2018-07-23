@@ -2,6 +2,10 @@ package com.easy.cloud.core.operator.sysfilterconfig.service.impl;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
+import com.easy.cloud.core.basic.utils.EcAssert;
+import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
+import com.easy.cloud.core.common.map.utils.EcMapUtils;
+import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
 import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
@@ -9,40 +13,49 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 使用reidis处理过滤器配置信息
+ *
  * @author daiqi
  * @create 2018-07-20 9:13
  */
 @Service
 @ConditionalOnProperty(value = "ec.oauth.filter.config.redis")
 @ConditionalOnMissingBean(name = "ecSysFilterConfigService")
-public class EcSysFilterConfigRedisServiceImpl extends EcBaseService implements EcSysFilterConfigService{
+public class EcSysFilterConfigRedisServiceImpl extends EcBaseSysFilterConfigService {
+    private static final String EC_OAUTH_FILTER_CONFIG_KEY = EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "filter", "config");
     @Override
     public List<SysFilterConfigDTO> listByAvailable() {
         return null;
     }
 
     @Override
-    public EcBaseServiceResult saveSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
-        return null;
+    public synchronized EcBaseServiceResult saveSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
+        EcRedisTemplateHandler.putToHash(EC_OAUTH_FILTER_CONFIG_KEY, sysFilterConfigDTO.getUrlPattern(), sysFilterConfigDTO);
+        return EcBaseServiceResult.newInstanceOfSuccess().buildResult(sysFilterConfigDTO);
     }
 
     @Override
-    public EcBaseServiceResult updateSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
-        return null;
+    public synchronized EcBaseServiceResult updateSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {
+        EcRedisTemplateHandler.putToHash(EC_OAUTH_FILTER_CONFIG_KEY, sysFilterConfigDTO.getUrlPattern(), sysFilterConfigDTO);
+        return EcBaseServiceResult.newInstanceOfSuccess().buildResult(sysFilterConfigDTO);
     }
 
     @Override
-    public Map<String, String> loadFilterChainDefinitions() {
-        return null;
+    public synchronized Map<String, String> loadFilterChainDefinitions() {
+        Map<String, SysFilterConfigDTO> filterConfigDTOMapFromCache = EcRedisTemplateHandler.entriesFromHash(EC_OAUTH_FILTER_CONFIG_KEY, SysFilterConfigDTO.class);
+        return super.buildFilterChainDefinitions(filterConfigDTOMapFromCache);
     }
 
     @Override
     public EcBaseServiceResult deleteByQuery(SysFilterConfigQuery filterConfigQuery) {
-        return null;
+        EcAssert.verifyObjNull(filterConfigQuery, "filterConfigQuery");
+        EcAssert.verifyObjNull(filterConfigQuery.getUrlPattern(), "urlPattern");
+        long count = EcRedisTemplateHandler.deleteHashKey(EC_OAUTH_FILTER_CONFIG_KEY, filterConfigQuery.getUrlPattern());
+        return EcBaseServiceResult.newInstanceOfSuccess().buildResult(count);
     }
 }

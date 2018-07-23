@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class EcAuthorityManagerConfig {
-    @Value("${ec.authority.redis.hostName}")
+    @Value("${ec.redis.hostName}")
     private String host;
     @Value("${ec.authority.redis.port}")
     private int port;

@@ -3,3 +3,12 @@ loginUrl: "/sysUser/unauth"
 successUrl: "/index"
 unauthorizedUrl: "/403"
 
+##  过滤链定义map
+filterChainDefinitionMap:
+#  /**: "authc"
+#  /monitor/**/metrics: "authc"
+#  /monitor/**/details: "authc"
+  /monitor/**: "anon"
+  /sysFilterConfig/**: "anon"
+  /**: "authc"
+
