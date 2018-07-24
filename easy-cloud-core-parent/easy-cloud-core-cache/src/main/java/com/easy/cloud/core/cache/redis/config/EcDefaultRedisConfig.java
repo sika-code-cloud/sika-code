@@ -32,7 +32,7 @@ import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateN
 public class EcDefaultRedisConfig extends EcRedisConfig {
 	
 	@Primary
-	@Bean(value = "defaultRedisConnectionFactory", destroyMethod = "destroy")
+	@Bean(value = "defaultRedisConnectionFactory")
 	@ConfigurationProperties(prefix = "ec.redis")
 	public RedisConnectionFactory defaultRedisConnectionFactory() {
 		return new JedisConnectionFactory(redisProperties);

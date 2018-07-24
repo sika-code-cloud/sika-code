@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;

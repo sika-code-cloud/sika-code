@@ -3,6 +3,7 @@ package com.easy.cloud.core.operator.sysfilterconfig.service;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 
 import java.util.List;
 import java.util.Map;

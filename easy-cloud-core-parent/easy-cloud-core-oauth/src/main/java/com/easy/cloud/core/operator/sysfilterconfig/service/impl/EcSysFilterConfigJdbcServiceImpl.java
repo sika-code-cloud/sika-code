@@ -34,7 +34,6 @@ import java.util.Map;
  */
 @Service
 @ConditionalOnProperty(value = "ec.oauth.filter.config.jdbc")
-@ConditionalOnMissingBean(name = "ecSysFilterConfigService")
 public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigService {
     /**
      * 数据处理接口

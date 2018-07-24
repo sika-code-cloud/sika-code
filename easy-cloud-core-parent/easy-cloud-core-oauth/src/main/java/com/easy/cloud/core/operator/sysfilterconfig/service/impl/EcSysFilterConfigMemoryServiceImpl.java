@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
@@ -25,7 +26,7 @@ import java.util.*;
  * @create 2018-07-20 9:13
  */
 @Service
-@ConditionalOnMissingBean(name = "ecSysFilterConfigService")
+@ConditionalOnProperty(value = "ec.oauth.filter.config.memory")
 public class EcSysFilterConfigMemoryServiceImpl extends EcBaseSysFilterConfigService {
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;

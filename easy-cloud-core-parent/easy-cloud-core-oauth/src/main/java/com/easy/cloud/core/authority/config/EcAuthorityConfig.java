@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.yaml.snakeyaml.Yaml;
@@ -30,6 +31,7 @@ import java.io.IOException;
  */
 @Configuration
 @PropertySource({"classpath:config/redis-default.properties"})
+@Lazy
 public class EcAuthorityConfig {
     @Value("${ec.authority.md5.hashIterations}")
     private int hashIterations;
@@ -74,6 +76,7 @@ public class EcAuthorityConfig {
      * @date 2018/6/27 10:39
      */
     @Bean
+    @Lazy
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());

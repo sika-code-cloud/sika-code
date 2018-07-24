@@ -1,19 +1,15 @@
 package com.easy.cloud.core.operator.sysfilterconfig.service.impl;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.cache.redis.handler.EcRedisTemplateHandler;
-import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
-import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +21,11 @@ import java.util.Map;
  */
 @Service
 @ConditionalOnProperty(value = "ec.oauth.filter.config.redis")
-@ConditionalOnMissingBean(name = "ecSysFilterConfigService")
 public class EcSysFilterConfigRedisServiceImpl extends EcBaseSysFilterConfigService {
     private static final String EC_OAUTH_FILTER_CONFIG_KEY = EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "filter", "config");
+    @Autowired
+    private EcRedisTemplateHandler redisTemplateHandler;
+
     @Override
     public List<SysFilterConfigDTO> listByAvailable() {
         return null;
