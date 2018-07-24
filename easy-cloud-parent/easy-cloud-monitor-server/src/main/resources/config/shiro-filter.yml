@@ -1,5 +1,5 @@
 # ShiroFilterFactoryBean对象配置
-loginUrl: "/sysUser/unauth"
+loginUrl: "/monitor/login.html"
 successUrl: "/index"
 unauthorizedUrl: "/403"
 
@@ -8,7 +8,13 @@ filterChainDefinitionMap:
 #  /**: "authc"
 #  /monitor/**/metrics: "authc"
 #  /monitor/**/details: "authc"
-  /monitor/**: "anon"
+#  /monitor/**: "anon"
+
+  /monitor/api/**: "anon"
+  /monitor/**/*.html: "anon"
+  /monitor/**/*.css: "anon"
+  /monitor/**/*.js: "anon"
+  /monitor/login: "anon"
   /sysFilterConfig/**: "anon"
   /**: "authc"
 

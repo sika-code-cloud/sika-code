@@ -27,6 +27,14 @@
             <artifactId>spring-boot-admin-server-ui</artifactId>
             <version>${spring.boot.admin.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-server-ui-login -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui-login</artifactId>
+            <version>${spring.boot.admin.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>easy.cloud.core</groupId>
             <artifactId>easy-cloud-core</artifactId>
