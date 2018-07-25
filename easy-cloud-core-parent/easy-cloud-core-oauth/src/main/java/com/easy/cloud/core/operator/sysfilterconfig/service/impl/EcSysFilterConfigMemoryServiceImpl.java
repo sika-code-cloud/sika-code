@@ -12,7 +12,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,11 +37,6 @@ public class EcSysFilterConfigMemoryServiceImpl extends EcBaseSysFilterConfigSer
      * 过滤器链定义列表
      */
     protected Map<String, SysFilterConfigDTO> filterConfigDTOMap = Maps.newLinkedHashMap();
-
-    @Override
-    public synchronized List<SysFilterConfigDTO> listByAvailable() {
-        return null;
-    }
 
     @Override
     public EcBaseServiceResult saveSysFilterConfig(SysFilterConfigDTO sysFilterConfigDTO) {

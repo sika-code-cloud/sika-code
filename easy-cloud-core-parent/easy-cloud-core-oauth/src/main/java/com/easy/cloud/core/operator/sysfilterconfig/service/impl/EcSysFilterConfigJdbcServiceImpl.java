@@ -64,8 +64,8 @@ public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigServi
         EcAssert.verifyObjNull(sysFilterConfigDTO.getPriorityLevel(), "priorityLevel");
         logger.info("系统支持的过滤名称列表：" + EcAuthorityUtils.getSupportFilterNames());
         SysFilterConfigEntity sysFilterConfigEntity = EcJSONUtils.parseObject(sysFilterConfigDTO, SysFilterConfigEntity.class);
-        sysFilterConfigDAO.save(sysFilterConfigEntity);
         // 更新缓存的过滤链
+        sysFilterConfigDAO.save(sysFilterConfigEntity);
         return EcBaseServiceResult.newInstanceOfSucResult(sysFilterConfigEntity);
     }
 
@@ -76,13 +76,12 @@ public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigServi
         logger.info("系统支持的过滤名称列表：" + EcAuthorityUtils.getSupportFilterNames());
         SysFilterConfigEntity sysFilterConfigEntity = sysFilterConfigDAO.findById(sysFilterConfigDTO.getId());
         sysFilterConfigEntity = EcBaseUtils.copeFromObjToTargetObj(sysFilterConfigDTO, sysFilterConfigEntity);
-        sysFilterConfigDAO.update(sysFilterConfigEntity);
         // 更新缓存的过滤链
+        sysFilterConfigDAO.update(sysFilterConfigEntity);
         return EcBaseServiceResult.newInstanceOfSucResult(sysFilterConfigEntity);
     }
 
-    @Override
-    public List<SysFilterConfigDTO> listByAvailable() {
+    protected List<SysFilterConfigDTO> listByAvailable() {
         SysFilterConfigQuery filterConfigQuery = new SysFilterConfigQuery();
         filterConfigQuery.setAvailable(EcBaseConstant.EcAvailableEnum.YES.type());
         return listByQuery(filterConfigQuery);
