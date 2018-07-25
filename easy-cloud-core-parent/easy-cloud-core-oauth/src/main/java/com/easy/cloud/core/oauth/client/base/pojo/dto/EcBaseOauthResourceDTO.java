@@ -9,9 +9,11 @@ import com.easy.cloud.core.common.json.utils.EcJSONUtils;
  * @author daiqi
  * @create 2018-07-16 15:17
  */
-public class EcBaseOauthResourceDTO {
+public abstract class EcBaseOauthResourceDTO<V> {
     @JSONField(deserialize = false, serialize = false)
     public <T extends EcBaseOauthResourceDTO> T getTObj() {
-        return (T)EcJSONUtils.parseObject(this, this.getClass());
+        return (T) EcJSONUtils.parseObject(this, this.getClass());
     }
+
+    public abstract V getOauthResourceId();
 }

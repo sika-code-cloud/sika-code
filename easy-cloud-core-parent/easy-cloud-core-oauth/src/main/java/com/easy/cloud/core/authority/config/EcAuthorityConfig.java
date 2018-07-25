@@ -2,6 +2,9 @@ package com.easy.cloud.core.authority.config;
 
 import com.easy.cloud.core.authority.realm.EcAuthorityRealm;
 import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
+import com.easy.cloud.core.operator.sysfilterconfig.service.impl.EcSysFilterConfigJdbcServiceImpl;
+import com.easy.cloud.core.operator.sysfilterconfig.service.impl.EcSysFilterConfigMemoryServiceImpl;
+import com.easy.cloud.core.operator.sysfilterconfig.service.impl.EcSysFilterConfigRedisServiceImpl;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -12,6 +15,7 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -31,14 +35,31 @@ import java.io.IOException;
  */
 @Configuration
 @PropertySource({"classpath:config/redis-default.properties"})
-@Lazy
 public class EcAuthorityConfig {
     @Value("${ec.authority.md5.hashIterations}")
     private int hashIterations;
-    @Autowired
-    private EcSysFilterConfigService sysFilterConfigService;
     @Value("classpath:config/shiro-filter.yml")
     private Resource shiroConfig;
+
+    @Bean
+    @ConditionalOnProperty(value = "ec.oauth.filter.config.redis")
+    @ConditionalOnMissingBean
+    public EcSysFilterConfigService filterConfigRedisService() {
+        return new EcSysFilterConfigRedisServiceImpl();
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "ec.oauth.filter.config.jdbc")
+    @ConditionalOnMissingBean
+    public EcSysFilterConfigService filterConfigJdbcService() {
+        return new EcSysFilterConfigJdbcServiceImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public EcSysFilterConfigService filterConfigMemoryService() {
+        return new EcSysFilterConfigMemoryServiceImpl().buildShiroConfig(shiroConfig);
+    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -76,10 +97,9 @@ public class EcAuthorityConfig {
      * @date 2018/6/27 10:39
      */
     @Bean
-    @Lazy
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig) {
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig, EcSysFilterConfigService filterConfigService) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(sysFilterConfigService.loadFilterChainDefinitions());
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterConfigService.loadFilterChainDefinitions());
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.getFilters().putAll(customFilterConfig.customFilters());
         return shiroFilterFactoryBean;

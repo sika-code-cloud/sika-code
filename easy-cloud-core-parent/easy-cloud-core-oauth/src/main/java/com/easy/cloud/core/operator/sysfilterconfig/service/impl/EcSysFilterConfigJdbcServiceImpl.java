@@ -3,7 +3,6 @@ package com.easy.cloud.core.operator.sysfilterconfig.service.impl;
 import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.basic.constant.EcBaseConstant;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
@@ -15,11 +14,7 @@ import com.easy.cloud.core.operator.sysfilterconfig.dao.SysFilterConfigDAO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.entity.SysFilterConfigEntity;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
-import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -32,8 +27,6 @@ import java.util.Map;
  * @author daiqi
  * @date 2018-06-25 16:36:55
  */
-@Service
-@ConditionalOnProperty(value = "ec.oauth.filter.config.jdbc")
 public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigService {
     /**
      * 数据处理接口
@@ -100,7 +93,7 @@ public class EcSysFilterConfigJdbcServiceImpl extends EcBaseSysFilterConfigServi
         EcAssert.verifyObjNull(filterConfigQuery, "filterConfigQuery");
         boolean deleteFlag = EcBaseUtils.isNotNull(filterConfigQuery.getId());
         if (deleteFlag) {
-           int deleteCount = sysFilterConfigDAO.deleteByQuery(filterConfigQuery);
+            int deleteCount = sysFilterConfigDAO.deleteByQuery(filterConfigQuery);
             EcBaseServiceResult.newInstanceOfSucResult(deleteCount);
         }
         return EcBaseServiceResult.newInstanceOfSuccess();

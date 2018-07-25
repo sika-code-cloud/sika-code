@@ -1,5 +1,6 @@
 package com.easy.cloud.core.authority.realm;
 
+import com.easy.cloud.core.authority.pojo.dto.EcAuthorityUserDTO;
 import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.oauth.client.base.pojo.dto.EcBaseOauthResourceDTO;
@@ -49,9 +50,9 @@ public class EcAuthorityRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
-        SysUserDTO sysUserDTO = (SysUserDTO) principals.getPrimaryPrincipal();
+        EcAuthorityUserDTO<Long> authorityUserDTO = (EcAuthorityUserDTO) principals.getPrimaryPrincipal();
 
-        List<SysRoleDTO> roleList = sysRoleService.findByUserId(sysUserDTO.getId());
+        List<SysRoleDTO> roleList = sysRoleService.findByUserId(authorityUserDTO.getAuthorityUserId());
         Set<Integer> roleNos = new HashSet<>();
         for (SysRoleDTO role : roleList) {
             authorizationInfo.addRole(role.getName());
@@ -89,15 +90,15 @@ public class EcAuthorityRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfoPassword(AuthenticationToken token) {
 // 获取用户的输入的账号.
         String username = (String) token.getPrincipal();
-        SysUserDTO sysUserDTO = sysUserService.findByUsername(username);
+        EcAuthorityUserDTO authorityUserDTO = sysUserService.findByUsername(username);
         // 账户冻结
-        if (sysUserDTO.getLocked() == 1) {
+        if (authorityUserDTO.getLocked() == 1) {
             throw new LockedAccountException();
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(sysUserDTO,
-                sysUserDTO.getPassword(),
-                ByteSource.Util.bytes(sysUserDTO.getSalt()),
-                sysUserDTO.getAuthCacheKey()
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(authorityUserDTO,
+                authorityUserDTO.getPassword(),
+                ByteSource.Util.bytes(authorityUserDTO.getSalt()),
+                authorityUserDTO.getAuthCacheKey()
         );
         return authenticationInfo;
     }
@@ -112,7 +113,7 @@ public class EcAuthorityRealm extends AuthorizingRealm {
      * @date 2018/6/29 17:49
      */
     protected AuthenticationInfo doGetAuthenticationInfoOauth2Token(EcBaseOauthToken oauth2Token) {
-        EcBaseOauthResourceDTO oauthResourceDTO = oauthManager.getOauthResourceDTO(oauth2Token);
+        EcBaseOauthResourceDTO<Object> oauthResourceDTO = oauthManager.getOauthResourceDTO(oauth2Token);
         EcAssert.verifyObjNull(oauthResourceDTO, "oauthResourceDTO");
         EcBaseOauthUserDTO oauthUserDTO = oauthResourceDTO.getTObj();
         SysUserDTO sysUserDTO = new SysUserDTO();

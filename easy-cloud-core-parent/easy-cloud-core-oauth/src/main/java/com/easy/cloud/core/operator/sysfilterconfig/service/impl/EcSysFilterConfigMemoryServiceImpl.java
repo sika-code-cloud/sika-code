@@ -1,23 +1,19 @@
 package com.easy.cloud.core.operator.sysfilterconfig.service.impl;
 
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
-import com.easy.cloud.core.basic.service.EcBaseService;
 import com.easy.cloud.core.basic.utils.EcAssert;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.query.SysFilterConfigQuery;
-import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
 import com.google.common.collect.Maps;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 使用内存处理过滤器配置信息
@@ -25,11 +21,19 @@ import java.util.*;
  * @author daiqi
  * @create 2018-07-20 9:13
  */
-@Service
-@ConditionalOnProperty(value = "ec.oauth.filter.config.memory")
 public class EcSysFilterConfigMemoryServiceImpl extends EcBaseSysFilterConfigService {
-    @Value("classpath:config/shiro-filter.yml")
+
     private Resource shiroConfig;
+
+    public EcSysFilterConfigMemoryServiceImpl() {
+
+    }
+
+    public EcSysFilterConfigMemoryServiceImpl buildShiroConfig(Resource shiroConfig) {
+        this.shiroConfig = shiroConfig;
+        return this;
+    }
+
     /**
      * 过滤器链定义列表
      */

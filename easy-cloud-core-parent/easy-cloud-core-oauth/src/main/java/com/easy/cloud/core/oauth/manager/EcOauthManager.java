@@ -43,7 +43,9 @@ public class EcOauthManager {
         try {
             // 获取授权token
             Map<String, Object> oAuthResponseParam = getAccessToken(oauth2Token);
-            return oauth2Token.doGetOauthResource(oAuthResponseParam);
+            EcBaseOauthResourceDTO oauthResourceDTO = oauth2Token.doGetOauthResource(oAuthResponseParam);
+            oauthService.saveOauthResource(oauthResourceDTO);
+            return oauthResourceDTO;
         } catch (Exception e) {
             e.printStackTrace();
             throw new AuthenticationException(e);

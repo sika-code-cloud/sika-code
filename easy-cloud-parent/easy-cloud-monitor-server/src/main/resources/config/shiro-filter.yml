@@ -10,10 +10,11 @@ filterChainDefinitionMap:
 #  /monitor/**/details: "authc"
 #  /monitor/**: "anon"
 
+  /**/*.html: "anon"
+  /**/*.css: "anon"
+  /**/*.js: "anon"
+
   /monitor/api/**: "anon"
-  /monitor/**/*.html: "anon"
-  /monitor/**/*.css: "anon"
-  /monitor/**/*.js: "anon"
   /monitor/login: "anon"
   /sysFilterConfig/**: "anon"
   /**: "authc"

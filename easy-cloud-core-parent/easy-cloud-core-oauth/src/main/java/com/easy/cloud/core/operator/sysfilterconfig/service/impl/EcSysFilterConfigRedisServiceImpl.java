@@ -19,8 +19,6 @@ import java.util.Map;
  * @author daiqi
  * @create 2018-07-20 9:13
  */
-@Service
-@ConditionalOnProperty(value = "ec.oauth.filter.config.redis")
 public class EcSysFilterConfigRedisServiceImpl extends EcBaseSysFilterConfigService {
     private static final String EC_OAUTH_FILTER_CONFIG_KEY = EcStringUtils.generateKeyUseColonSeparator("ec", "oauth", "filter", "config");
     @Autowired

@@ -28,11 +28,6 @@ public class EcAccessTokenChannelConfig {
 
     private static Map<Integer, EcBaseAccessTokenDTO> channelDTOMap = new ConcurrentHashMap<>();
 
-    static {
-        putAccessTokenChannel(WECHAT, new EcWechatAccessTokenDTO());
-    }
-
-
     public static void putAccessTokenChannel(Integer channel, EcBaseAccessTokenDTO accessTokenDTO) {
         channelDTOMap.put(channel, accessTokenDTO);
     }
