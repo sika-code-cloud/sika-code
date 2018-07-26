@@ -1,6 +1,7 @@
 package com.easy.cloud.core.operator.sysuser.service.impl;
 
 import com.easy.cloud.core.authority.constant.EcAuthorityConstant;
+import com.easy.cloud.core.authority.constant.EcAuthorityErrorCodeEnum;
 import com.easy.cloud.core.basic.constant.error.EcBaseErrorCodeEnum;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.basic.service.EcBaseService;
@@ -63,11 +64,11 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException e) {
-            throw new EcBaseBusinessException("A_111111111", "帐号/密码错误");
+            throw new EcBaseBusinessException(EcAuthorityErrorCodeEnum.USERNAME_PASSWORD_WRONG);
         } catch (LockedAccountException e) {
-            throw new EcBaseBusinessException("A_111111111", "登录失败，该用户已被冻结");
+            throw new EcBaseBusinessException(EcAuthorityErrorCodeEnum.USER_LOCKED);
         } catch (AuthenticationException e) {
-            throw new EcBaseBusinessException("A_111111111", "该用户不存在");
+            throw new EcBaseBusinessException(EcAuthorityErrorCodeEnum.USER_NOT_EXIST);
         }
         return EcBaseServiceResult.newInstanceOfSuccess();
     }
