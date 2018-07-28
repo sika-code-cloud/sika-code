@@ -75,11 +75,13 @@ public class SysUserServiceImpl extends EcBaseService implements SysUserService 
 
     @Override
     public EcBaseServiceResult login(ServletRequest request, SysUserDTO sysUserDTO) {
-        String username = EcRequestUtils.getTObjFromAttribute(request, EcAuthorityConstant.USERNAME, String.class);
-        if (EcStringUtils.isEmpty(username)) {
-            throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_ERROR, "登录信息");
+        if (EcStringUtils.isEmpty(sysUserDTO.getUsername())) {
+            String username = EcRequestUtils.getTObjFromAttribute(request, EcAuthorityConstant.USERNAME, String.class);
+            if (EcStringUtils.isEmpty(username)) {
+                throw new EcBaseBusinessException(EcBaseErrorCodeEnum.DATA_ERROR, "登录信息");
+            }
+            sysUserDTO.setUsername(username);
         }
-        sysUserDTO.setUsername(username);
         Subject subject = SecurityUtils.getSubject();
         return login(subject, sysUserDTO);
     }

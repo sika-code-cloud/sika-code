@@ -27,15 +27,6 @@ import java.util.Map;
  */
 public class EcBaseAuthorityCustomFilterConfig {
     private static Map<String, Filter> customFilters = new LinkedHashMap<>();
-    @Autowired
-    private EcLoginEmailPasswordFilter loginEmailPasswordFilter;
-    @Autowired
-    private EcLoginPhonePasswordFilter loginPhonePasswordFilter;
-    @Autowired
-    private EcLoginPhoneVerifyCodeFilter loginPhoneVerifyCodeFilter;
-    @Autowired
-    private EcLoginUsernamePasswordFilter loginUsernamePasswordFilter;
-
     public final Map<String, Filter> customFilters() {
         if (EcMapUtils.isEmpty(customFilters)) {
             loadFilters();
@@ -57,10 +48,10 @@ public class EcBaseAuthorityCustomFilterConfig {
      * @date 2018/6/27 10:42
      */
     private final synchronized void loadFilters() {
-        putCustomFilter("loginEmailPasswordFilter", loginEmailPasswordFilter);
-        putCustomFilter("loginPhonePasswordFilter", loginPhonePasswordFilter);
-        putCustomFilter("loginPhoneVerifyCodeFilter", loginPhoneVerifyCodeFilter);
-        putCustomFilter("loginUsernamePasswordFilter", loginUsernamePasswordFilter);
+        putCustomFilter("loginEmailPasswordFilter", new EcLoginEmailPasswordFilter());
+        putCustomFilter("loginPhonePasswordFilter", new EcLoginPhonePasswordFilter());
+        putCustomFilter("loginPhoneVerifyCodeFilter", new EcLoginPhoneVerifyCodeFilter());
+        putCustomFilter("loginUsernamePasswordFilter", new EcLoginUsernamePasswordFilter());
         loadOtherFilters();
     }
 
@@ -74,5 +65,6 @@ public class EcBaseAuthorityCustomFilterConfig {
         }
         customFilters.put(name, filter);
     }
+
 
 }

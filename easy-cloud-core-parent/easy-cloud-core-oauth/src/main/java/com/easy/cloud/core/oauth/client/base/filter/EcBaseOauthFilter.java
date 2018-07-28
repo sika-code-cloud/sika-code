@@ -28,6 +28,7 @@ public abstract class EcBaseOauthFilter extends EcBaseAuthenticatingFilter {
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         return getOAuth2Token(request);
     }
+
     protected abstract EcBaseOauthToken getOAuth2Token(ServletRequest httpRequest);
 
     protected abstract String getOauthCodeKey();
@@ -41,18 +42,15 @@ public abstract class EcBaseOauthFilter extends EcBaseAuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         String error = request.getParameter("error");
         String errorDescription = request.getParameter("error_description");
-        if (EcStringUtils.isNotEmpty(error)) {//如果服务端返回了错误
+        //如果服务端返回了错误
+        if (EcStringUtils.isNotEmpty(error)) {
             WebUtils.issueRedirect(request, response, failureUrl + "?error=" + error + "error_description=" + errorDescription);
             return false;
         }
-
-        Subject subject = getSubject(request, response);
-        if (!subject.isAuthenticated()) {
-            if (EcStringUtils.isEmpty(request.getParameter(getOauthCodeKey()))) {
-                //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
-                saveRequestAndRedirectToLogin(request, response);
-                return false;
-            }
+        if (EcStringUtils.isEmpty(request.getParameter(getOauthCodeKey()))) {
+            //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
+            saveRequestAndRedirectToLogin(request, response);
+            return false;
         }
 
         return executeLogin(request, response);

@@ -1,9 +1,10 @@
 # ShiroFilterFactoryBean对象配置
-loginUrl: "/sysUser/unauth"
+loginUrl: "http://wwww.baidu.com"
 successUrl: "/index"
 unauthorizedUrl: "/403"
 
 ##  过滤链定义map
 filterChainDefinitionMap:
+  /sysUser/login: "loginPhoneVerifyCodeFilter,loginEmailPasswordFilter,loginPhonePasswordFilter,loginUsernamePasswordFilter"
   /**: "anon"
 

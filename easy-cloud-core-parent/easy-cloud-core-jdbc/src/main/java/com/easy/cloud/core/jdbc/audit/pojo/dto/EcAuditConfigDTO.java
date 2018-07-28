@@ -1,4 +1,4 @@
-package com.easy.cloud.core.jdbc.audit.pojo;
+package com.easy.cloud.core.jdbc.audit.pojo.dto;
 
 import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
 import com.easy.cloud.core.jdbc.audit.procced.impl.EcDefaultAuditProcced;

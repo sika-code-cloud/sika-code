@@ -19,7 +19,7 @@ import com.easy.cloud.core.common.array.EcArrayUtils;
 import com.easy.cloud.core.common.date.utils.EcDateUtils;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
-import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
 import com.easy.cloud.core.jdbc.audit.pojo.bo.EcAuditBO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
 import com.easy.cloud.core.jdbc.primarykey.EcBasePrimaryKeyGenerator;

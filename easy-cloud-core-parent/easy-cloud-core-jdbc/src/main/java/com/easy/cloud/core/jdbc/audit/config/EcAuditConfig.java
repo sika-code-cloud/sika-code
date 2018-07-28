@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
-import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
 
 /**
  * 

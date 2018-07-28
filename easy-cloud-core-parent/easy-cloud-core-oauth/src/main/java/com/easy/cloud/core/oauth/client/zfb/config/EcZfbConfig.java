@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class EcZfbConfig {
     @Value(value = "${ec.oauth.zfb.gateway.url}")
     private String gatewayUrl;
-    @Value(value = "${ec.oauth.zfb.appid}")
+    @Value(value = "${ec.oauth.zfb.appId}")
     private String appId;
     @Value(value = "${ec.oauth.zfb.payPubKey}")
     private String zfbPayPubKey;

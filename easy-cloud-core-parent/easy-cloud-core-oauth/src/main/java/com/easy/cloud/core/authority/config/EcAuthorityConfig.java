@@ -12,14 +12,13 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.yaml.snakeyaml.Yaml;
 
@@ -61,12 +60,6 @@ public class EcAuthorityConfig {
         return new EcSysFilterConfigMemoryServiceImpl().buildShiroConfig(shiroConfig);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    protected EcBaseAuthorityCustomFilterConfig customFilterConfig() {
-        return new EcBaseAuthorityCustomFilterConfig();
-    }
-
     /**
      * 将配置文件的属性设置到ShiroFilterFactoryBean对象中
      */
@@ -82,14 +75,16 @@ public class EcAuthorityConfig {
         return shiroFilterFactoryBean;
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    protected EcBaseAuthorityCustomFilterConfig customFilterConfig() {
+        return new EcBaseAuthorityCustomFilterConfig();
+    }
+
     /**
      * <p>
      * shiro过滤器工厂bean
      * </p>
-     * <pre>
-     *     所需参数示例及其说明
-     *     参数名称 : 示例值 : 说明 : 是否必须
-     * </pre>
      *
      * @param securityManager
      * @return org.apache.shiro.spring.web.ShiroFilterFactoryBean
@@ -97,13 +92,15 @@ public class EcAuthorityConfig {
      * @date 2018/6/27 10:39
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig, EcSysFilterConfigService filterConfigService) {
+    @Order(value = 0)
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, EcBaseAuthorityCustomFilterConfig customFilterConfig, EcSysFilterConfigService filterConfigService) throws Exception {
         ShiroFilterFactoryBean shiroFilterFactoryBean = shiroFilterFactoryBean();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterConfigService.loadFilterChainDefinitions());
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.getFilters().putAll(customFilterConfig.customFilters());
         return shiroFilterFactoryBean;
     }
+
 
     /**
      * 凭证匹配器 （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了 ）
