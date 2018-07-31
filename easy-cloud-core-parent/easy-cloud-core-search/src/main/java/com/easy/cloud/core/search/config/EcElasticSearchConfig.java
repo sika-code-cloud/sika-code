@@ -5,13 +5,14 @@ import org.apache.log4j.Logger;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+//import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.util.Assert;
 
 import java.net.InetAddress;
@@ -26,18 +27,18 @@ import static org.apache.commons.lang.StringUtils.substringBeforeLast;
  * @Description:
  * @Author tudou
  * @Date 2018/6/12 15:42
- * @Version 2.0
+ * @Version 1.0
  */
 
 @Configuration
 @ConfigurationProperties(prefix = "spring.data.elasticsearch")
-public class ElasticSearchConfig {
-    private static final Logger logger = Logger.getLogger(ElasticSearchConfig.class);
+public class EcElasticSearchConfig {
+    private static final Logger logger = Logger.getLogger(EcElasticSearchConfig.class);
     @Autowired
-    private ElasticSearchProperties elasticSearchProperties;
+    private EcElasticSearchProperties elasticSearchProperties;
 
     @Bean
-    public Client getTransportClient() throws UnknownHostException {
+    public TransportClient getTransportClient() throws UnknownHostException {
 //        org.springframework.data.mapping.model.Property
         Settings settings = Settings.builder()
                 //集群嗅探功能，可以动态添加新主机并删除旧主机
@@ -52,8 +53,13 @@ public class ElasticSearchConfig {
             Assert.hasText(hostName, "[Assertion failed] missing host name in 'clusterNodes'");
             Assert.hasText(port, "[Assertion failed] missing port in 'clusterNodes'");
             logger.info("adding transport node : " + clusterNode);
-            client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port)));
+            client.addTransportAddress(new TransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port)));
         }
         return client;
     }
+    @Bean
+    public ElasticsearchTemplate getElasticsearchTemplate() throws UnknownHostException {
+        return new ElasticsearchTemplate(getTransportClient());
+    }
+
 }
