@@ -1,0 +1,21 @@
+# ShiroFilterFactoryBean对象配置
+loginUrl: "/monitor/login.html"
+successUrl: "/index"
+unauthorizedUrl: "/403"
+
+##  过滤链定义map
+filterChainDefinitionMap:
+#  /**: "authc"
+#  /monitor/**/metrics: "authc"
+#  /monitor/**/details: "authc"
+#  /monitor/**: "anon"
+
+  /**/*.html: "anon"
+  /**/*.css: "anon"
+  /**/*.js: "anon"
+
+  /monitor/api/**: "anon"
+  /monitor/login: "anon"
+  /sysFilterConfig/**: "anon"
+  /**: "authc"
+

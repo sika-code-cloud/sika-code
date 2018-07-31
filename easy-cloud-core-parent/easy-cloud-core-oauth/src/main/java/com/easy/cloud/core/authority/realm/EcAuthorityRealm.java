@@ -1,16 +1,19 @@
 package com.easy.cloud.core.authority.realm;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import com.easy.cloud.core.authority.pojo.dto.EcAuthorityUserDTO;
+import com.easy.cloud.core.authority.utils.EcAuthorityUtils;
+import com.easy.cloud.core.basic.utils.EcAssert;
+import com.easy.cloud.core.oauth.client.base.pojo.dto.EcBaseOauthResourceDTO;
+import com.easy.cloud.core.oauth.client.base.pojo.dto.EcBaseOauthUserDTO;
+import com.easy.cloud.core.oauth.client.base.token.EcBaseOauthToken;
+import com.easy.cloud.core.oauth.manager.EcOauthManager;
+import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
+import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
+import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
+import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
+import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
+import com.easy.cloud.core.operator.sysuser.service.SysUserService;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -18,12 +21,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.easy.cloud.core.operator.sysresource.pojo.dto.SysResourceDTO;
-import com.easy.cloud.core.operator.sysresource.service.SysResourceService;
-import com.easy.cloud.core.operator.sysrole.pojo.dto.SysRoleDTO;
-import com.easy.cloud.core.operator.sysrole.service.SysRoleService;
-import com.easy.cloud.core.operator.sysuser.pojo.dto.SysUserDTO;
-import com.easy.cloud.core.operator.sysuser.service.SysUserService;
+import java.util.*;
 
 /**
  * <p>
@@ -40,14 +38,21 @@ public class EcAuthorityRealm extends AuthorizingRealm {
     private SysRoleService sysRoleService;
     @Autowired
     private SysResourceService sysResourceService;
+    @Autowired
+    private EcOauthManager oauthManager;
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return super.supports(token) || token instanceof EcBaseOauthToken;
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
-        SysUserDTO sysUserDTO = (SysUserDTO) principals.getPrimaryPrincipal();
+        EcAuthorityUserDTO<Long> authorityUserDTO = (EcAuthorityUserDTO) principals.getPrimaryPrincipal();
 
-        List<SysRoleDTO> roleList = sysRoleService.findByUserId(sysUserDTO.getId());
+        List<SysRoleDTO> roleList = sysRoleService.findByUserId(authorityUserDTO.getAuthorityUserId());
         Set<Integer> roleNos = new HashSet<>();
         for (SysRoleDTO role : roleList) {
             authorizationInfo.addRole(role.getName());
@@ -65,13 +70,56 @@ public class EcAuthorityRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // 获取用户的输入的账号.
+        if (token instanceof EcBaseOauthToken) {
+            return doGetAuthenticationInfoOauth2Token((EcBaseOauthToken) token);
+        } else {
+            return doGetAuthenticationInfoPassword(token);
+        }
+    }
+
+    /**
+     * <p>
+     * 使用账号密码的方式登录
+     * </p>
+     *
+     * @param token
+     * @return org.apache.shiro.authc.AuthenticationInfo
+     * @author daiqi
+     * @date 2018/6/29 17:50
+     */
+    protected AuthenticationInfo doGetAuthenticationInfoPassword(AuthenticationToken token) {
+// 获取用户的输入的账号.
         String username = (String) token.getPrincipal();
-        SysUserDTO sysUserDTO = sysUserService.findByUsername(username);
+        EcAuthorityUserDTO authorityUserDTO = sysUserService.findByUsername(username);
         // 账户冻结
-        if (sysUserDTO.getLocked() == 1) {
+        if (authorityUserDTO.getLocked() == 1) {
             throw new LockedAccountException();
         }
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(authorityUserDTO,
+                authorityUserDTO.getPassword(),
+                ByteSource.Util.bytes(authorityUserDTO.getSalt()),
+                authorityUserDTO.getAuthCacheKey()
+        );
+        return authenticationInfo;
+    }
+
+    /**
+     * <p>
+     * 使用oauth2.0token授权模式登陆
+     * </p>
+     *
+     * @return org.apache.shiro.authc.AuthenticationInfo
+     * @author daiqi
+     * @date 2018/6/29 17:49
+     */
+    protected AuthenticationInfo doGetAuthenticationInfoOauth2Token(EcBaseOauthToken oauth2Token) {
+        EcBaseOauthResourceDTO<Object> oauthResourceDTO = oauthManager.getOauthResourceDTO(oauth2Token);
+        EcAssert.verifyObjNull(oauthResourceDTO, "oauthResourceDTO");
+        EcBaseOauthUserDTO oauthUserDTO = oauthResourceDTO.getTObj();
+        SysUserDTO sysUserDTO = new SysUserDTO();
+        sysUserDTO.setUsername(oauthUserDTO.getOpenid());
+        sysUserDTO.setPassword(EcAuthorityUtils.encryptOfMD5(oauth2Token.getAuthCode(), oauthUserDTO.getOpenid()));
+        sysUserDTO.setSalt(oauthUserDTO.getOpenid());
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(sysUserDTO,
                 sysUserDTO.getPassword(),
                 ByteSource.Util.bytes(sysUserDTO.getSalt()),

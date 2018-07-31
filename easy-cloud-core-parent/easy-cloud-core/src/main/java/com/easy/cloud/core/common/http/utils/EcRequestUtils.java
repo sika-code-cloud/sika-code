@@ -2,8 +2,13 @@ package com.easy.cloud.core.common.http.utils;
 
 import com.easy.cloud.core.common.json.utils.EcJSONUtils;
 import com.easy.cloud.core.common.map.utils.EcMapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -14,6 +19,8 @@ import java.util.Map;
  * @date 2017年12月21日 上午11:49:37
  */
 public class EcRequestUtils {
+    private static Logger logger = LoggerFactory.getLogger(EcRequestUtils.class);
+
     /**
      * <p>
      * 将requestParameter转化为泛型class对应的对象
@@ -66,5 +73,23 @@ public class EcRequestUtils {
     public static <T> T getTObjFromAttribute(ServletRequest request, String name, Class<T> tClass) {
         Object attributeValue = request.getAttribute(name);
         return EcJSONUtils.parseObject(attributeValue, tClass);
+    }
+
+    public static void printForJson(ServletRequest request, ServletResponse response, Object obj) {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        ((HttpServletResponse) response).setHeader("Access-Control-Allow-Origin", "*");
+        PrintWriter wirte = null;
+        String jsonStr = EcJSONUtils.toJSONString(obj);
+        try {
+            wirte = response.getWriter();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+            wirte.print(jsonStr);
+            wirte.flush();
+            wirte.close();
+        }
+
     }
 }

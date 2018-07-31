@@ -52,7 +52,7 @@ public class GenerateJavaTest {
 	private String basePackageName = "com.easy.cloud.core.operator";
 
 	// 表名
-	private String tableName = "sys_filter_config";
+	private String tableName = "sys_filter_url_name";
 	// 模块包名
 	private String moduleName;
 	// 类主体名称

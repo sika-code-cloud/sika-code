@@ -33,7 +33,9 @@ public class EcPrimaryKeySnowflakeGenerator implements EcBasePrimaryKeyGenerator
 				return baseEntity.getId();
 			}
 		}
-		return EcSnowflakeIdAlgorithm.getSingleInstance(EcPrimaryKeyConfig.getWorkerId(), EcPrimaryKeyConfig.getDatacenterId()).nextId();
+		Long workerId = EcPrimaryKeyConfig.getWorkerId();
+		Long datacenterId = EcPrimaryKeyConfig.getDatacenterId();
+		return EcSnowflakeIdAlgorithm.getSingleInstance(workerId, datacenterId).nextId();
 	}
 
 }
