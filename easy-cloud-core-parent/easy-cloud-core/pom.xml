@@ -49,7 +49,7 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+		<!-- https://mvnNrepository.com/artifact/commons-collections/commons-collections -->
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
