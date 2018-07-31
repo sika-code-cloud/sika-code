@@ -93,7 +93,7 @@ public class EcBaseConstant {
 		}
 	}
 
-	public static enum EcAvailableEnum {
+	public enum EcAvailableEnum {
 		/** 可用状态---0---不可用 */
 		NO(0, "不可用"),
 		/** 可用状态---1---可用 */
@@ -101,7 +101,7 @@ public class EcBaseConstant {
 		private int type;
 		private String desc;
 
-		private EcAvailableEnum(int type, String desc) {
+		EcAvailableEnum(int type, String desc) {
 			this.type = type;
 			this.desc = desc;
 		}
@@ -112,6 +112,18 @@ public class EcBaseConstant {
 
 		public String desc() {
 			return desc;
+		}
+
+		public static boolean available(Integer available) {
+			if (available == null) {
+				return false;
+			}
+			return EcBaseUtils.equals(available, YES.type);
+		}
+
+
+		public static boolean notAvailable(Integer available) {
+			return !available(available);
 		}
 	}
 

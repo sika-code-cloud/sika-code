@@ -13,7 +13,7 @@ import com.easy.cloud.core.common.collections.utils.EcCollectionsUtils;
 import com.easy.cloud.core.common.reflection.utils.EcReflectionUtils;
 import com.easy.cloud.core.jdbc.audit.annotation.EcAuditAnnotation;
 import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
-import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
 import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditDTO;
 import com.easy.cloud.core.jdbc.audit.procced.EcBaseAuditProcced;
 

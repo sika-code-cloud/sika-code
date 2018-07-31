@@ -72,7 +72,7 @@
       import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
       import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
       import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
-      import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+      import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
 
       @Component
       public class EcUserConfig extends EcAuditConfig{
@@ -139,7 +139,7 @@
       import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
       import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
       import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
-      import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+      import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
       import com.easy.cloud.core.jdbc.audit.procced.impl.EcDefaultAuditProcced;
 
       @Component

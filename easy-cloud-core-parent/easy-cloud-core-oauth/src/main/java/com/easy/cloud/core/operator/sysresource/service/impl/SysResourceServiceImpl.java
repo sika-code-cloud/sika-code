@@ -116,11 +116,11 @@ public class SysResourceServiceImpl extends EcBaseService implements SysResource
         sysResourceEntities.add(new SysResourceEntity(24, "用户删除", "button", "", 21, "user:delete"));
         sysResourceEntities.add(new SysResourceEntity(25, "用户查看", "button", "", 21, "user:view"));
 
-        sysResourceEntities.add(new SysResourceEntity(31, "资源管理", "menu", "/resource", 1, "resource:*"));
-        sysResourceEntities.add(new SysResourceEntity(32, "资源新增", "button", "", 31, "resource:create"));
-        sysResourceEntities.add(new SysResourceEntity(33, "资源修改", "button", "", 31, "resource:update"));
-        sysResourceEntities.add(new SysResourceEntity(34, "资源删除", "button", "", 31, "resource:delete"));
-        sysResourceEntities.add(new SysResourceEntity(35, "资源查看", "button", "", 31, "resource:view"));
+        sysResourceEntities.add(new SysResourceEntity(31, "资源管理", "menu", "/token", 1, "token:*"));
+        sysResourceEntities.add(new SysResourceEntity(32, "资源新增", "button", "", 31, "token:create"));
+        sysResourceEntities.add(new SysResourceEntity(33, "资源修改", "button", "", 31, "token:update"));
+        sysResourceEntities.add(new SysResourceEntity(34, "资源删除", "button", "", 31, "token:delete"));
+        sysResourceEntities.add(new SysResourceEntity(35, "资源查看", "button", "", 31, "token:view"));
 
         sysResourceEntities.add(new SysResourceEntity(41, "角色管理", "menu", "/role", 1, "role:*"));
         sysResourceEntities.add(new SysResourceEntity(42, "角色新增", "button", "", 41, "role:create"));

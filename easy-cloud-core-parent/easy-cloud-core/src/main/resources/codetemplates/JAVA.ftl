@@ -63,6 +63,11 @@ import ${model};
 	<#if model.comment?exists && model.comment != "">
 	/** 获取${model.comment} */
 	</#if>
+	<#if model.annotations?exists>
+		<#list model.annotations as model>
+	@${model.simpleClassType}<#if model.paramsStr?exists>(${model.paramsStr})</#if>
+		</#list>
+	</#if>
 	<#if model.modifiersStr?exists>${model.modifiersStr} </#if>${model.returnSimpleClassType} get${model.name?cap_first}() {
 		return this.${model.name?uncap_first};
 	}
@@ -74,6 +79,11 @@ import ${model};
 	<#if model.comment?exists && model.comment != "">
 	/** 设置${model.comment} */
 	</#if>
+	<#if model.annotations?exists>
+		<#list model.annotations as model>
+	@${model.simpleClassType}<#if model.paramsStr?exists>(${model.paramsStr})</#if>
+		</#list>
+	</#if>
 	<#if model.modifiersStr?exists>${model.modifiersStr} </#if>${model.returnSimpleClassType} set${model.name?cap_first}(${model.simpleClassType} ${model.name?uncap_first}) {
 		this.${model.name?uncap_first} = ${model.name?uncap_first};
 	}
@@ -84,6 +94,11 @@ import ${model};
 		<#if model.type == 3 && generateRule.generateBuildMethod>
 	<#if model.comment?exists && model.comment != "">
 	/** 构建${model.comment} */
+	</#if>
+	<#if model.annotations?exists>
+		<#list model.annotations as model>
+	@${model.simpleClassType}<#if model.paramsStr?exists>(${model.paramsStr})</#if>
+		</#list>
 	</#if>
 	<#if model.modifiersStr?exists>${model.modifiersStr} </#if>${model.returnSimpleClassType} build${model.name?cap_first}(${model.simpleClassType} ${model.name?uncap_first}) {
 		this.${model.name?uncap_first} = ${model.name?uncap_first};

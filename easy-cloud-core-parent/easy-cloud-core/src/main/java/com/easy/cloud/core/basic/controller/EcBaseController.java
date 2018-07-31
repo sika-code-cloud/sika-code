@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,7 +26,7 @@ import com.easy.cloud.core.exception.handler.EcBaseExceptionHandle;
 @Controller
 @EcLogAnnotation(logSwitch = false, analysisSwitch = false, level = EcLogLevelEnum.INFO, proxyClass = EcLogControllerProxy.class, type = EcLogTypeEnum.CONTROLLER)
 public class EcBaseController extends EcBaseExceptionHandle{
-	
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	@EcLogAnnotation(logSwitch = false, analysisSwitch = false)
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {

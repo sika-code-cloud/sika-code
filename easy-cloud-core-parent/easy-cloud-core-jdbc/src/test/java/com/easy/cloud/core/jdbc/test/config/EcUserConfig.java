@@ -3,7 +3,7 @@ package com.easy.cloud.core.jdbc.test.config;
 import com.easy.cloud.core.jdbc.audit.config.EcAuditConfig;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcActionType;
 import com.easy.cloud.core.jdbc.audit.constant.EcAuditConstant.EcType;
-import com.easy.cloud.core.jdbc.audit.pojo.EcAuditConfigDTO;
+import com.easy.cloud.core.jdbc.audit.pojo.dto.EcAuditConfigDTO;
 import com.easy.cloud.core.jdbc.audit.procced.impl.EcDefaultAuditProcced;
 import org.springframework.stereotype.Component;
 

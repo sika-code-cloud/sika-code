@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.easy.cloud.core.basic.utils.EcBaseUtils;
 import com.easy.cloud.core.common.string.utils.EcStringUtils;
-import com.easy.cloud.core.jdbc.base.repository.EcBaseRepository;
 import com.easy.cloud.core.jdbc.base.utils.EcBaseJdbcUtils;
-import com.easy.cloud.core.jdbc.handler.EcJdbcTemplateHandler;
 import com.easy.cloud.user.base.pojo.dto.UserDTO;
 import com.easy.cloud.user.base.pojo.entity.UserEntity;
 import com.easy.cloud.user.base.pojo.query.UserQuery;

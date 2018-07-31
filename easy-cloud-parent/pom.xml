@@ -22,6 +22,7 @@
 		<module>easy-cloud-config-server</module>
 		<module>easy-cloud-config-client</module>
 		<module>easy-cloud-eureka-server</module>
+		<module>easy-cloud-monitor-server</module>
 	</modules>
 
 
@@ -37,7 +38,8 @@
 		<easy.cloud.version>1.0.0</easy.cloud.version>
 		<easy.cloud.core.version>1.0.0</easy.cloud.core.version>
 		<spring.cloud.version>Edgware.RELEASE</spring.cloud.version>
-		
+		<!--springbootadmin监控版本号-->
+		<spring.boot.admin.version>1.5.6</spring.boot.admin.version>
 		<skipTests>true</skipTests>
 	</properties>
 	<!-- 项目依赖 -->
@@ -120,6 +122,20 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<repositories><!-- 代码库 -->
+		<repository>
+			<id>maven-ali</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public//</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 	<!-- 构建插件 -->
 	<build>
 		<plugins>

@@ -32,7 +32,7 @@ import com.easy.cloud.core.cache.redis.constant.EcRedisConstant.EcRedisTemplateN
 public class EcDefaultRedisConfig extends EcRedisConfig {
 	
 	@Primary
-	@Bean(value = "defaultRedisConnectionFactory", destroyMethod = "destroy")
+	@Bean(value = "defaultRedisConnectionFactory")
 	@ConfigurationProperties(prefix = "ec.redis")
 	public RedisConnectionFactory defaultRedisConnectionFactory() {
 		return new JedisConnectionFactory(redisProperties);
@@ -63,7 +63,7 @@ public class EcDefaultRedisConfig extends EcRedisConfig {
 	 * @date 2017年12月7日 下午5:19:51
 	 */
 	@Bean(value = EcRedisTemplateName.REDIS_TEMPLATE_VALUE_SERIALIZER_NAME)
-	public RedisTemplate<String, Object> redisTemlateValueSerializer(@Qualifier(value = "defaultRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
+	public RedisTemplate<String, Object> redisTemplateValueSerializer(@Qualifier(value = "defaultRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());

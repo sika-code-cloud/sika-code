@@ -166,7 +166,7 @@ public class RedisTemplateTest {
 	}
 	@Test
 	public void testPutAllOfHash(){
-		String key = "putAllOfHash";
+		String key = "putAllToHash";
 		String hashKeys = "311";
 		List<UserEntity> list = new ArrayList<>();
 		List<String> keys = new ArrayList<>();
@@ -180,20 +180,20 @@ public class RedisTemplateTest {
 			userEntity.setPassword("password" + i);
 			hashMap.put(userEntity.getId(), userEntity);
 		}
-		EcRedisTemplateHandler.putAllOfHash(key, hashMap);
+		EcRedisTemplateHandler.putAllToHash(key, hashMap);
 	}
 	
 	@Test
 	public void testValuesOfMap(){
-		String key = "putAllOfHash";
-		List<HashMap> list = EcRedisTemplateHandler.valuesOfMap(key, HashMap.class);
+		String key = "putAllToHash";
+		List<HashMap> list = EcRedisTemplateHandler.valuesFromHash(key, HashMap.class);
 		System.out.println(list.size());
 	}
 	
 	@Test
 	public void testEntriesOfMap(){
-		String key = "putAllOfHash";
-		Map<String, UserEntity> map = EcRedisTemplateHandler.entriesOfMap(key, UserEntity.class);
+		String key = "putAllToHash";
+		Map<String, UserEntity> map = EcRedisTemplateHandler.entriesFromHash(key, UserEntity.class);
 		System.out.println(map.keySet());
 	}
 	

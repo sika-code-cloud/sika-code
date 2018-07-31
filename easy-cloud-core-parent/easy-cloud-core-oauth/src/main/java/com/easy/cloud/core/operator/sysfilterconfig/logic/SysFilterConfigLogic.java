@@ -3,7 +3,7 @@ package com.easy.cloud.core.operator.sysfilterconfig.logic;
 import com.easy.cloud.core.authority.manager.EcAuthorityManager;
 import com.easy.cloud.core.basic.pojo.dto.EcBaseServiceResult;
 import com.easy.cloud.core.operator.sysfilterconfig.pojo.dto.SysFilterConfigDTO;
-import com.easy.cloud.core.operator.sysfilterconfig.service.SysFilterConfigService;
+import com.easy.cloud.core.operator.sysfilterconfig.service.EcSysFilterConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class SysFilterConfigLogic {
     @Autowired
-    private SysFilterConfigService sysFilterConfigService;
+    private EcSysFilterConfigService sysFilterConfigService;
     @Autowired
     private EcAuthorityManager authorityManager;
 
