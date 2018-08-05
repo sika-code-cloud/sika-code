@@ -205,7 +205,7 @@ String index = "   {\n" +
         return xContentBuilder;
     }
 
-    private XContentBuilder logMapping() throws IOException {
+    public XContentBuilder logMapping() throws IOException {
         XContentBuilder xContentBuilder = XContentFactory.jsonBuilder()
                 .startObject()
                 .startObject("_all")

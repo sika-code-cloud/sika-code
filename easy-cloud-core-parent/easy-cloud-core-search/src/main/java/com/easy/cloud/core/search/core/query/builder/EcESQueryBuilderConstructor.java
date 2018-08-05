@@ -21,7 +21,7 @@ import java.util.List;
  * @Date 2018/6/21 15:17
  * @Version 1.0
  */
-public class ESQueryBuilderConstructor {
+public class EcESQueryBuilderConstructor {
 
     /**
      * 设置默认为最大值
@@ -114,7 +114,7 @@ public class ESQueryBuilderConstructor {
     /**
      * 增加简单条件表达式
      */
-    public ESQueryBuilderConstructor must(EcElasticSearchCriterion criterion){
+    public EcESQueryBuilderConstructor must(EcElasticSearchCriterion criterion){
         if(criterion!=null){
             mustCriterions.add(criterion);
         }
@@ -123,7 +123,7 @@ public class ESQueryBuilderConstructor {
     /**
      * 增加简单条件表达式
      */
-    public ESQueryBuilderConstructor should(EcElasticSearchCriterion criterion){
+    public EcESQueryBuilderConstructor should(EcElasticSearchCriterion criterion){
         if(criterion!=null){
             shouldCriterions.add(criterion);
         }
@@ -132,7 +132,7 @@ public class ESQueryBuilderConstructor {
     /**
      * 增加简单条件表达式
      */
-    public ESQueryBuilderConstructor mustNot(EcElasticSearchCriterion criterion){
+    public EcESQueryBuilderConstructor mustNot(EcElasticSearchCriterion criterion){
         if(criterion!=null){
             mustNotCriterions.add(criterion);
         }

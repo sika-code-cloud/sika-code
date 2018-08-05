@@ -35,7 +35,9 @@ public class EcDateFormatUtils {
 	public static final String FORMAT_NORMAL_MONTH = "yyyy-MM";
 	/** 时区---东八时区---GMT+8 */
 	public static final String EAST_EIGHT_TIME_ZONE = "GMT+8";
-	
+
+	public static final String FORMAT_YYYY_MM_DD_HH_MI_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+
 
 	/**
      * <p>Formats a date/time into a specific pattern using the UTC time zone.</p>
