@@ -186,12 +186,12 @@ public class EcTaskSchedulerDTO implements Serializable {
     }
 
     public EcTaskSchedulerDTO description(String description) {
+        this.taskExecutor.setJobName(this.jobName);
         setDescription(description);
         return this;
     }
 
     public void buildTaskExecutorData() {
-        this.taskExecutor.setJobName(this.jobName);
         this.taskExecutor.setJobGroup(this.jobGroup);
         this.taskExecutor.setTriggerGroup(this.triggerGroup);
         this.taskExecutor.setTriggerName(this.triggerName);
