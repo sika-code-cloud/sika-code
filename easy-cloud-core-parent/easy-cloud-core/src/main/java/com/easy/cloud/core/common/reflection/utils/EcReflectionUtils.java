@@ -60,4 +60,45 @@ public class EcReflectionUtils {
 		}
 		return null;
 	}
+	/**
+	* <p>
+	* 拼接某属性的 get方法
+	* </p >
+	* @author tudou
+	* @date 2018/8/14 11:27
+	* @param fieldName 需要拼接的属性名称
+	* @return java.lang.String
+	*/
+	public static String parGetName(String fieldName) {
+		if (null == fieldName || "".equals(fieldName)) {
+			return null;
+		}
+		int startIndex = 0;
+		if (fieldName.charAt(0) == '_')
+			startIndex = 1;
+		return "get"
+				+ fieldName.substring(startIndex, startIndex + 1).toUpperCase()
+				+ fieldName.substring(startIndex + 1);
+	}
+
+	/**
+	* <p>
+	* 拼接在某属性的 set方法
+	* </p >
+	* @author tudou
+	* @date 2018/8/14 11:27
+	* @param fieldName 需要拼接的属性名称
+	* @return java.lang.String
+	*/
+	public static String parSetName(String fieldName) {
+		if (null == fieldName || "".equals(fieldName)) {
+			return null;
+		}
+		int startIndex = 0;
+		if (fieldName.charAt(0) == '_')
+			startIndex = 1;
+		return "set"
+				+ fieldName.substring(startIndex, startIndex + 1).toUpperCase()
+				+ fieldName.substring(startIndex + 1);
+	}
 }

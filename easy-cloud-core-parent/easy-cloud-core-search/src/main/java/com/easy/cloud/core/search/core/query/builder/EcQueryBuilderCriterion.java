@@ -11,15 +11,10 @@ import java.util.List;
  * @Date 2018/6/21 15:17
  * @Version 1.0
  */
-public interface EcElasticSearchCriterion {
-
-    public enum MatchMode {
-        START, END, ANYWHERE
-    }
-
-    public enum Projection {
-        MAX, MIN, AVG, LENGTH, SUM, COUNT
-    }
-
-    public List<QueryBuilder> listBuilders();
+public interface EcQueryBuilderCriterion {
+    /**
+     * 构造List<QueryBuilder> 并返回
+     * @return List<QueryBuilder>
+     */
+    List<QueryBuilder> listBuilders();
 }

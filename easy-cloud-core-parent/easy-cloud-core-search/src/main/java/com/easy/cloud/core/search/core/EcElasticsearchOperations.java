@@ -260,11 +260,19 @@ public interface EcElasticsearchOperations {
 	 */
 	<T> String delete(Class<T> clazz, String id);
 
-	SearchResponse scrollsearch(String index, String type, EcESQueryBuilderConstructor constructor);
+	/**
+	 *
+	 * @param index
+	 * @param type
+	 * @return
+	 */
+	SearchRequestBuilder getSearchRequestBuilder(String index, String type);
 
-	SearchResponse scrollsearch(String index, String type, EcESQueryBuilderConstructor constructor, AggregationBuilder agg);
+	/**
+	 *
+	 * @param searchRequestBuilder
+	 * @return
+	 */
+	SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder);
 
-	SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder, EcESQueryBuilderConstructor constructor);
-
-	SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder, EcESQueryBuilderConstructor constructor, AggregationBuilder agg);
 }

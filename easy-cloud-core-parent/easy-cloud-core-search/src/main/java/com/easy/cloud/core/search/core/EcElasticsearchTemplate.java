@@ -4,7 +4,6 @@ import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 import com.easy.cloud.core.search.annotation.Document;
 import com.easy.cloud.core.search.annotation.Mapping;
 import com.easy.cloud.core.search.annotation.Setting;
-import com.easy.cloud.core.search.core.query.builder.EcESQueryBuilderConstructor;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -28,7 +27,6 @@ import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +51,8 @@ import static org.elasticsearch.client.Requests.refreshRequest;
 @Component
 public class EcElasticsearchTemplate implements EcElasticsearchOperations {
     private static final Logger logger = LoggerFactory.getLogger(EcElasticsearchTemplate.class);
+
+    private static final Integer MAX = 10000;
 
     @Autowired
     private TransportClient client;
@@ -363,23 +363,10 @@ public class EcElasticsearchTemplate implements EcElasticsearchOperations {
     }
 
     @Override
-    public SearchResponse scrollsearch(String index, String type, EcESQueryBuilderConstructor constructor) {
-        return scrollsearch(getSearchRequestBuilder(index, type), constructor);
-    }
-
-    @Override
-    public SearchResponse scrollsearch(String index, String type, EcESQueryBuilderConstructor constructor, AggregationBuilder agg) {
-        return scrollsearch(getSearchRequestBuilder(index, type), constructor, agg);
-    }
-
-    @Override
-    public SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder, EcESQueryBuilderConstructor constructor) {
-        return null;
-    }
-
-    @Override
-    public SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder, EcESQueryBuilderConstructor constructor, AggregationBuilder agg) {
-        return null;
+    public SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder) {
+        Assert.isNull(searchRequestBuilder, "searchRequestBuilder is null");
+        logger.debug(searchRequestBuilder.toString());
+        return searchRequestBuilder.get();
     }
 
     /**
@@ -389,7 +376,8 @@ public class EcElasticsearchTemplate implements EcElasticsearchOperations {
      * @param type
      * @return
      */
-    private SearchRequestBuilder getSearchRequestBuilder(String index, String type) {
+    @Override
+    public SearchRequestBuilder getSearchRequestBuilder(String index, String type) {
         return client.prepareSearch(index.split(",")).setTypes(type.split(","));
     }
 
