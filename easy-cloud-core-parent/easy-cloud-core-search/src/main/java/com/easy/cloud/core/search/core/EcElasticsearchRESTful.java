@@ -39,8 +39,12 @@ import java.util.Map;
  * @Date 2018/8/6 10:16
  */
 public class EcElasticsearchRESTful {
-    @Autowired
+//    @Autowired
     private RestHighLevelClient client;
+
+    public EcElasticsearchRESTful(RestHighLevelClient client) {
+        this.client = client;
+    }
 
     public boolean createIndex(String indexName, String type) throws IOException {
         CreateIndexRequest request = new CreateIndexRequest("twitter");

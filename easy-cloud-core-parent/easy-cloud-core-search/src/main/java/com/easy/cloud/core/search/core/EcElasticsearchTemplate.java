@@ -48,14 +48,18 @@ import static org.elasticsearch.client.Requests.refreshRequest;
  * @Author tudou
  * @Date 2018/8/2 9:56
  */
-@Component
+//@Component
 public class EcElasticsearchTemplate implements EcElasticsearchOperations {
     private static final Logger logger = LoggerFactory.getLogger(EcElasticsearchTemplate.class);
 
     private static final Integer MAX = 10000;
 
-    @Autowired
+//    @Autowired
     private TransportClient client;
+
+    public EcElasticsearchTemplate(TransportClient client) {
+        this.client = client;
+    }
 
     @Override
     public Client getClient() {
@@ -363,22 +367,15 @@ public class EcElasticsearchTemplate implements EcElasticsearchOperations {
     }
 
     @Override
-    public SearchResponse scrollsearch(SearchRequestBuilder searchRequestBuilder) {
+    public SearchResponse search(SearchRequestBuilder searchRequestBuilder) {
         Assert.isNull(searchRequestBuilder, "searchRequestBuilder is null");
         logger.debug(searchRequestBuilder.toString());
         return searchRequestBuilder.get();
     }
 
-    /**
-     * 构造SearchRequestBuilder
-     *
-     * @param index
-     * @param type
-     * @return
-     */
     @Override
-    public SearchRequestBuilder getSearchRequestBuilder(String index, String type) {
-        return client.prepareSearch(index.split(",")).setTypes(type.split(","));
+    public SearchRequestBuilder getSearchRequestBuilder(String indexName, String type) {
+        return client.prepareSearch(indexName.split(",")).setTypes(type.split(","));
     }
 
     private <T> Document getDocument(Class<T> clazz) {

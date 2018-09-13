@@ -1,6 +1,8 @@
 package com.easy.cloud.core.search.config;
 
 import com.easy.cloud.core.common.string.constant.EcStringConstant;
+import com.easy.cloud.core.search.core.EcElasticsearchRESTful;
+import com.easy.cloud.core.search.core.EcElasticsearchTemplate;
 import org.apache.http.HttpHost;
 import org.apache.log4j.Logger;
 import org.elasticsearch.client.RestClient;
@@ -11,6 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
+
+import java.net.UnknownHostException;
 
 import static org.apache.commons.lang.StringUtils.split;
 import static org.apache.commons.lang.StringUtils.substringAfterLast;
@@ -42,5 +46,10 @@ public class EcElasticsearchRESTfulConfig {
             hosts[i] = new HttpHost(hostName, Integer.parseInt(port), "http");
         }
         return new RestHighLevelClient(RestClient.builder(hosts));
+    }
+
+    @Bean
+    public EcElasticsearchRESTful getEcElasticsearchRESTful() {
+        return new EcElasticsearchRESTful(getRestHighLevelClient());
     }
 }

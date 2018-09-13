@@ -178,7 +178,7 @@ class EcQueryBuilder implements EcQueryBuilderCriterion {
     * @param constructor  传入构造器
     * @return com.easy.cloud.core.search.core.query.builder.EcQueryBuilder
     */
-    public EcQueryBuilder constructor(EcESQueryBuilderConstructor constructor) {
+    public EcQueryBuilder constructor(EcQueryBuilderConstructor constructor) {
         if (constructor != null) {
             list.add(constructor.listBuilders());
         }

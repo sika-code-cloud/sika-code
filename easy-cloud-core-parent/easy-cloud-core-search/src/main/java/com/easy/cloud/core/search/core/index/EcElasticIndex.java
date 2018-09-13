@@ -1,6 +1,5 @@
 package com.easy.cloud.core.search.core.index;
 
-import com.easy.cloud.core.search.core.query.EcElasticSearch;
 import org.apache.log4j.Logger;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
