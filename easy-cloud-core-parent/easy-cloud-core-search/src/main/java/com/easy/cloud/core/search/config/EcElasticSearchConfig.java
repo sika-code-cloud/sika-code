@@ -1,6 +1,7 @@
 package com.easy.cloud.core.search.config;
 
 import com.easy.cloud.core.common.string.constant.EcStringConstant;
+import com.easy.cloud.core.search.core.EcElasticsearchTemplate;
 import org.apache.log4j.Logger;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
@@ -60,6 +61,11 @@ public class EcElasticSearchConfig {
     @Bean
     public ElasticsearchTemplate getElasticsearchTemplate() throws UnknownHostException {
         return new ElasticsearchTemplate(getTransportClient());
+    }
+
+    @Bean
+    public EcElasticsearchTemplate getEcElasticsearchTemplate() throws UnknownHostException {
+        return new EcElasticsearchTemplate(getTransportClient());
     }
 
 }

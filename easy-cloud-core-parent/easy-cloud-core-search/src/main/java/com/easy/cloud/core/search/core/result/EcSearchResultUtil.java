@@ -6,5 +6,7 @@ package com.easy.cloud.core.search.core.result;
  * @Author tudou
  * @Date 2018/8/2 11:03
  */
-public class EcSearchResultMapper {
+public class EcSearchResultUtil {
+
+
 }
