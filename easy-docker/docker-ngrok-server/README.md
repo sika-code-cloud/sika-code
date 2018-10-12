@@ -18,7 +18,7 @@ docker build -t jueying/ngrok-server https://github.com/jueying/docker-ngrok-ser
 
 ### 2. 在后台运行容器:
 ```
-docker run -d --name ngrok-server -p 主机http端口:容器http端口 -p 主机https端口:容器https端口 -p 隧道port:隧道port jueying/ngrok-server 域名 容器http端口 主机https端口 隧道port
+docker run -d --name ngrok-server -p 主机http端口:容器http端口 -p 主机https端口:容器https端口 -p 主机隧道port:隧道port jueying/ngrok-server 域名 容器http端口 容器https端口 容器隧道port
 
 例如:
 docker run -d --name ngrok-server -p 80:80 -p 8082:8082 -p 443:443 jueying/ngrok-server mydomain.cn 80 8082 443
