@@ -26,7 +26,7 @@ public class ThreadLocalManager {
     /**
      * 手动清洗名称
      */
-    private static final String MANUAL_CLEAN_NAME = "lxzl.thread.local.manual.clean";
+    private static final String MANUAL_CLEAN_NAME = "easy.cloud.thread.local.manual.clean";
 
     static {
         init();

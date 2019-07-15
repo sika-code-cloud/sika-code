@@ -27,7 +27,7 @@ public interface Valve<Request> {
      * </p>
      *
      * @param name : 阀门名称
-     * @return com.lxzl.standard.chain.valve.Valve
+     * @return com.easy.cloud.standard.chain.valve.Valve
      * @author daiqi
      * @date 2019/5/16 10:29
      */
@@ -49,7 +49,7 @@ public interface Valve<Request> {
      * 获取下一个阀门对象
      * </p>
      *
-     * @return com.lxzl.standard.chain.valve.Valve
+     * @return com.easy.cloud.standard.chain.valve.Valve
      * @author daiqi
      * @date 2019/5/16 9:59
      */
@@ -60,7 +60,7 @@ public interface Valve<Request> {
      * 获取阀门所属的管道
      * </p>
      *
-     * @return com.lxzl.standard.chain.pipeline.Pipeline
+     * @return com.easy.cloud.standard.chain.pipeline.Pipeline
      * @author daiqi
      * @date 2019/5/16 10:01
      */
@@ -72,7 +72,7 @@ public interface Valve<Request> {
      * </p>
      *
      * @param pipeline
-     * @return com.lxzl.standard.chain.valve.Valve
+     * @return com.easy.cloud.standard.chain.valve.Valve
      * @author daiqi
      * @date 2019/5/16 10:08
      */

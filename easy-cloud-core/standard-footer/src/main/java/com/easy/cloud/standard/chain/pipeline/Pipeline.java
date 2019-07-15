@@ -45,7 +45,7 @@ public interface Pipeline<Request> {
      * </p>
      *
      * @param index : 下标
-     * @return com.lxzl.standard.chain.valve.Valve
+     * @return com.easy.cloud.standard.chain.valve.Valve
      * @author daiqi
      * @date 2019/5/16 9:50
      */
@@ -56,7 +56,7 @@ public interface Pipeline<Request> {
      * 获取阀门列表
      * </p>
      *
-     * @return java.manager.List<com.lxzl.standard.chain.valve.Valve>
+     * @return java.manager.List<com.easy.cloud.standard.chain.valve.Valve>
      * @author daiqi
      * @date 2019/5/16 9:46
      */
@@ -79,7 +79,7 @@ public interface Pipeline<Request> {
      * 清理所有阀门数据
      * </p>
      *
-     * @return com.lxzl.standard.chain.pipeline.Pipeline
+     * @return com.easy.cloud.standard.chain.pipeline.Pipeline
      * @author daiqi
      * @date 2019/5/16 9:57
      */
@@ -90,7 +90,7 @@ public interface Pipeline<Request> {
      * 获取第一个阀门
      * </p>
      *
-     * @return com.lxzl.standard.chain.valve.Valve
+     * @return com.easy.cloud.standard.chain.valve.Valve
      * @author daiqi
      * @date 2019/5/16 9:47
      */
