@@ -1,0 +1,36 @@
+#环境配置
+spring:
+  profiles:
+    active: @profileActive@
+## ==========================jsckson配置=====================================
+  jackson:
+    serialization:
+      indent-output: true
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-ignored-properties: true
+      fail_on_unknown_properties: false
+    parser:
+      allow-unquoted-control-chars: true
+      allow-single-quotes: true
+## ==========================jsckson配置=====================================
+
+## =====================switch必须为true=============================
+## jdbc开关key---sika.code.jdbc.switch
+
+sika:
+  code:
+    jdbc:
+      fire: true
+    redis:
+      fire: true
+    log:
+      controller:
+        fire: true
+      sql:
+        fire: false
+## =====================switch必须为true=============================
+## ==========================开关配置=====================================
+debug: false
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
