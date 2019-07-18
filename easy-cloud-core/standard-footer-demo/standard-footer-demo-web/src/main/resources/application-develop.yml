@@ -47,10 +47,10 @@ spring:
   application:
     name: risk-system-server
   rabbitmq:
-    host: localhost
+    host: 120.78.74.169
     port: 5672
-    username: username
-    password: password
+    username: rabbitmq
+    password: 123456
     publisher-confirms: true
     publisher-returns: true
     listener:
