@@ -78,8 +78,7 @@
 - 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
 - sika_code@163.com
 - QQ群: 327424532
-
-![QQ群二维码](sika-file/其他/QQ群二维码.jpg)
+- ![QQ群二维码](sika-file/其他/QQ群二维码.jpg)
 
 ## 开发步骤
 
