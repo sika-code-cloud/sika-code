@@ -24,30 +24,30 @@ import java.util.*;
  */
 public class GenerateCodeHandler {
 
-    private String moduleName;
-    private String tableName;
-    private String[] tablePrefix;
+    protected String moduleName;
+    protected String tableName;
+    protected String[] tablePrefix;
     /**
      * ----------------路径配置 begin------------------
      */
 
     /** common类path */
-    private String pathForCommon;
+    protected String pathForCommon;
     /** dataaccess包path */
-    private String pathForDataaccess;
+    protected String pathForDataaccess;
     /** core的path */
-    private String pathForCore;
+    protected String pathForCore;
     /** web的path */
-    private String pathForWeb;
+    protected String pathForWeb;
     /** api的path */
-    private String pathForApi;
+    protected String pathForApi;
     /** xml的path */
-    private String pathForXml;
+    protected String pathForXml;
     /**
      * ----------------路径配置 end------------------
      */
-    private String parentPackage;
-    private String[] extendsFields = {"id", "create_by", "update_by", "create_date", "update_date",
+    protected String parentPackage;
+    protected String[] extendsFields = {"id", "create_by", "update_by", "create_date", "update_date",
             "version", "available", "is_deleted", "remark"};
     /**
      * 代码生成器
@@ -74,7 +74,7 @@ public class GenerateCodeHandler {
      * 策略配置
      */
     StrategyConfig strategy = new StrategyConfig();
-    private boolean buildFieldFlag = false;
+    protected boolean buildFieldFlag = false;
 
     public void generateCode(GeneratorCodeDTO generatorCodeDTO) {
         this.generatorCodeDTO = generatorCodeDTO;
@@ -129,7 +129,7 @@ public class GenerateCodeHandler {
     }
 
 
-    private void loadStrategy() {
+    protected void loadStrategy() {
 
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
@@ -145,26 +145,26 @@ public class GenerateCodeHandler {
     }
 
 
-    private void generateJava() {
+    protected void generateJava() {
         generateToCommon();
         generateToDataaccess();
         generateToCore();
         generateToWeb();
     }
 
-    private void generateToCommon() {
+    protected void generateToCommon() {
         generateDTO();
         generateQuery();
         generateConstant();
         generateErrorCodeEnum();
     }
 
-    private void generateToDataaccess() {
+    protected void generateToDataaccess() {
         generateEntity();
         generateMapper();
     }
 
-    private void generateToCore() {
+    protected void generateToCore() {
         generateConvert();
         generateService();
         generateServiceImpl();
@@ -188,12 +188,12 @@ public class GenerateCodeHandler {
         generateUpdateResponse();
     }
 
-    private void generateToWeb() {
+    protected void generateToWeb() {
         generateController();
     }
 
 
-    private void generateXml() {
+    protected void generateXml() {
         generateMapperXml();
     }
 
@@ -522,7 +522,7 @@ public class GenerateCodeHandler {
         mpg.execute();
     }
 
-    private void generateCodeCoreForDefault(String javaSrcPath, String retainKey) {
+    protected void generateCodeCoreForDefault(String javaSrcPath, String retainKey) {
         AutoGenerator mpg = copeAutoGenerator();
         // 自定义配置
         InjectionConfig cfg = getInjectionConfigDefault();
@@ -535,7 +535,7 @@ public class GenerateCodeHandler {
         buildFieldFlag = false;
     }
 
-    private void generateCodeCoreForCustomer(String templatePath, String filePath, String classBodySuffix, String packageKey, String subPackege) {
+    protected void generateCodeCoreForCustomer(String templatePath, String filePath, String classBodySuffix, String packageKey, String subPackege) {
         AutoGenerator mpg = copeAutoGenerator();
 
         buildInjectionConfig(mpg, templatePath, filePath, classBodySuffix);
@@ -544,7 +544,7 @@ public class GenerateCodeHandler {
         buildFieldFlag = false;
     }
 
-    private void buildInjectionConfig(AutoGenerator mpg, String templatePath, String filePath, String classBodySuffix) {
+    protected void buildInjectionConfig(AutoGenerator mpg, String templatePath, String filePath, String classBodySuffix) {
         // 自定义配置
         InjectionConfig cfg = getInjectionConfigDefault();
 
@@ -554,11 +554,11 @@ public class GenerateCodeHandler {
         mpg.setCfg(cfg);
     }
 
-    private void buildConfigBuilderDefault(AutoGenerator mpg, String retainKey) {
+    protected void buildConfigBuilderDefault(AutoGenerator mpg, String retainKey) {
         buildConfigBuilder(mpg, retainKey, null, null);
     }
 
-    private void buildConfigBuilderCustom(AutoGenerator mpg, String customPackageKey, String subPackage) {
+    protected void buildConfigBuilderCustom(AutoGenerator mpg, String customPackageKey, String subPackage) {
         buildConfigBuilder(mpg, null, customPackageKey, subPackage);
     }
 
@@ -574,7 +574,7 @@ public class GenerateCodeHandler {
      * @author daiqi
      * @date 2019/5/7 15:31
      */
-    private void buildConfigBuilder(AutoGenerator mpg, String retainKey, String customPackageKey, String subPackage) {
+    protected void buildConfigBuilder(AutoGenerator mpg, String retainKey, String customPackageKey, String subPackage) {
         ConfigBuilder configBuilder = new ConfigBuilder(mpg.getPackageInfo(), mpg.getDataSource(), mpg.getStrategy(), mpg.getTemplate(), mpg.getGlobalConfig());
 
         TableInfo tableInfo = configBuilder.getTableInfoList().get(0);
@@ -615,7 +615,7 @@ public class GenerateCodeHandler {
         this.mpg.setConfig(configBuilder);
     }
 
-    private void buildFieldId(TableInfo tableInfo) {
+    protected void buildFieldId(TableInfo tableInfo) {
         TableField tableField = new TableField();
         tableField.setConvert(false);
         tableField.setKeyFlag(false);
@@ -626,7 +626,7 @@ public class GenerateCodeHandler {
         tableInfo.getFields().add(0, tableField);
     }
 
-    private InjectionConfig getInjectionConfigDefault() {
+    protected InjectionConfig getInjectionConfigDefault() {
         return new InjectionConfig() {
             @Override
             public void initMap() {
@@ -637,7 +637,7 @@ public class GenerateCodeHandler {
         };
     }
 
-    private List<FileOutConfig> getFileOutConfigForJava(String templatePath, String filePath, String classBodySuffix) {
+    protected List<FileOutConfig> getFileOutConfigForJava(String templatePath, String filePath, String classBodySuffix) {
         List<FileOutConfig> focList = new ArrayList<>();
         focList.add(new FileOutConfig(templatePath) {
             @Override
@@ -652,17 +652,17 @@ public class GenerateCodeHandler {
         return focList;
     }
 
-    private AutoGenerator copeAutoGenerator() {
+    protected AutoGenerator copeAutoGenerator() {
         AutoGenerator autoGenerator = new AutoGenerator();
         BeanUtils.copyProperties(mpg, autoGenerator);
         return autoGenerator;
     }
 
-    private String getClassBody(TableInfo tableInfo) {
+    protected String getClassBody(TableInfo tableInfo) {
         return NamingStrategy.capitalFirst(NamingStrategy.removePrefixAndCamel(tableInfo.getName(), strategy.getTablePrefix()));
     }
 
-    private TableInfoExpand expandTableInfo(TableInfo tableInfo) {
+    protected TableInfoExpand expandTableInfo(TableInfo tableInfo) {
         TableInfoExpand tableInfoExpand = new TableInfoExpand();
         tableInfoExpand.setName(tableInfo.getName());
         for (String importPackages : tableInfo.getImportPackages()) {
@@ -681,7 +681,7 @@ public class GenerateCodeHandler {
         return tableInfoExpand;
     }
 
-    private void retainKey(String key, Map<String, String> paramsMap) {
+    protected void retainKey(String key, Map<String, String> paramsMap) {
         String value = paramsMap.get(key);
         paramsMap.clear();
         if (key != null && value != null) {
