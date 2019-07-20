@@ -79,8 +79,8 @@
 - sika_code@163.com
 - QQ群: 327424532
 
- ![QQ群二维码](sika-file/其他/QQ群二维码.jpg)
- 
+ <!--![QQ群二维码](sika-file/其他/QQ群二维码.jpg)-->
+ <img src="sika-file/其他/QQ群二维码.jpg" width = "280px" />
 ## 开发步骤
 
 >#### 待续
