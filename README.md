@@ -41,9 +41,64 @@
 - 本开源项目所有可运行的资源包括但不限于(数据库资源、缓存资源、消息队列资源等等)，只可以用做测试之用。切勿进行压力测试
 - 若要进行压力测试，请替换为自己的数据资源
 
-## 版本说明
+### 版本说明
 - ~~AC_v1.x 基础版本~~
 - [AC_v2.x 模块化拆分、引入简化版本领域编程模式](https://github.com/sika-code/sika-code/wiki)
+
+## 开发步骤
+
+#### sika-code-core [核心组件]
+
+| 序号 | 名称 |  备注 | 完成度（%） |
+| --- | --- | --- |  --- | 
+| 1 | code-generator | 代码生成组件  |  100 |
+| 2 | common | 公共组件  |  100 |
+| 3 | database | 数据库操作  |  100 |
+| 4 | hutool-starter | 糊涂工具启动组件  |  100 |
+| 5 | mq | 消息队列的基础组件 | 100 |
+| 6 | mq-rabbit | rabbitMq消息组件 | 100 |
+| 7 | redis | redis缓存组件 | 90 |
+| 8 | standard-footer | 标准脚手架 | 100 | 
+| 9 | standard-footer-demo | 标准脚手架示例 | 100 |
+| 10 | starter |  启动器 | 100 |
+| 11 | lock | 分部式锁 | 0 |
+| 12 | search | 搜索引擎组件 | 0 |
+| 13 | mongodb | mongodb组件 | 0 |
+| 14 | mail | 邮件组件 | 0 |
+| 15 | reptile | 爬虫组件 | 0 |
+| 16 | batch | 批处理组件 | 0 |
+
+---
+
+#### sika-code-cloud [云组件]
+
+| 序号 | 名称 | 备注 | 完成度（%） |
+| --- | --- | --- | --- | 
+| 1 | monitor | 监控服务 | 0 |
+| 2 | gateway  | 网关服务 | 0 |
+
+---
+
+#### sika-code-center [中台组件]
+
+| 序号 | 名称 | 备注 | 完成度（%） |
+| --- | --- | --- |  --- | 
+| 1 | job-center  | 分布式定时任务中心 | 0 |
+| 2 | wokflow-center  | 工作流中心 | 0 |
+| 3 | file-center  | 文件中心 | 0 |
+| 4 | sms-center | 短信中心 | 0 |
+| 5 | log-center  | 日志中心 | 0 |
+| 6 | oauth-center | 认证鉴权中心 | 0 | 
+| 7 | pay-center | 支付中心 | 0 |
+| 8 |  contact-center | 触点中心 [微信、支付宝、微博、钉钉 等] | 0 |
+
+---
+
+#### sika-code-back [后台]
+
+| 序号 | 名称 | 备注 | 完成度（%） |
+| --- | --- | --- | --- | 
+| 1 | back-center | 后台管理中心 | 0 |
 
 ---
 
@@ -78,9 +133,4 @@
 
  <!--![QQ群二维码](sika-file/其他/QQ群二维码.jpg)-->
  <img src="sika-file/其他/QQ群二维码.jpg" width = "280px" />
-## 开发步骤
 
->#### 待续
-
-
-## 持续开发中
