@@ -43,17 +43,18 @@
             <artifactId>mq-rabbit</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sika.code.systemframework</groupId>
+            <artifactId>lock-redis</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>0.1.2.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.11.0</version>
-        </dependency>
+
         <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>

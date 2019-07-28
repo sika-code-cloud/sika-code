@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>com.sika.code.systemframework</groupId>
-            <artifactId>mq</artifactId>
+            <artifactId>mq-common</artifactId>
             <version>${com.sika.code.systemframework.version}</version>
         </dependency>
     </dependencies>

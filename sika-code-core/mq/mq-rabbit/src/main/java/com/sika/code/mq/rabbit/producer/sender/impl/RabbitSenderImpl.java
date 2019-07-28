@@ -4,7 +4,7 @@ import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.log.util.LogUtil;
 import com.sika.code.mq.common.constant.MqDataType;
 import com.sika.code.mq.common.generator.MqMsgGenerator;
-import com.sika.code.mq.common.pojo.dto.MqMsgDTO;
+import com.sika.code.mq.common.dto.MqMsgDTO;
 import com.sika.code.mq.rabbit.common.constant.MqExchangeConfigEnum;
 import com.sika.code.mq.rabbit.common.constant.MqQueueConfigEnum;
 import com.sika.code.mq.rabbit.producer.sender.RabbitSender;

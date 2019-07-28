@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sika-code-core</artifactId>
+        <artifactId>cache</artifactId>
         <groupId>com.sika.code.systemframework</groupId>
         <version>2.0.0</version>
     </parent>
@@ -12,11 +12,6 @@
     <artifactId>redis</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
-            <artifactId>common</artifactId>
-            <version>${com.sika.code.systemframework.version}</version>
-        </dependency>
         <!-- spring-boot-starter-data-redis 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package com.sika.code.mq.common.pojo.dto;
+package com.sika.code.mq.common.dto;
 
 import com.sika.code.basic.errorcode.BaseErrorCode;
 import com.sika.code.basic.errorcode.BaseErrorCodeEnum;

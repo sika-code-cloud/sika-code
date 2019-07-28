@@ -1,6 +1,8 @@
 package com.sika.code.standard.footer.demo.business.accessruletype.logic.impl;
 
 
+import com.baomidou.mybatisplus.extension.api.R;
+import com.sika.code.lock.distribution.DistributionLock;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeCommonQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeListQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.save.AccessRuleTypeSaveBatchRequestBO;
@@ -16,9 +18,14 @@ import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.respon
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.update.AccessRuleTypeUpdateResponseBO;
 import com.sika.code.standard.base.logic.BaseStandardLogic;
 
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.locks.Lock;
+
 /**
  * <p>
  * 准入规则类型表 逻辑实现类
@@ -31,6 +38,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements AccessRuleTypeLogic {
     @Autowired
     private AccessRuleTypeService accessRuleTypeService;
+    @Autowired
+    private DistributionLock distributionLock;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -62,6 +71,12 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
 
     @Override
     public AccessRuleTypeListQueryResponseBO list(AccessRuleTypeListQueryRequestBO request) {
+        Lock lock = null;
+        try {
+            lock = distributionLock.lock("hello");
+        } finally {
+            distributionLock.unlock(lock);
+        }
         return request.execute();
     }
 }

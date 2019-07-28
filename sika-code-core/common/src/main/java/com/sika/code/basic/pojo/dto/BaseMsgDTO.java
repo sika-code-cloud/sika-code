@@ -57,7 +57,7 @@ public class BaseMsgDTO {
      *
      * @param data      : 具体数据
      * @param errorCode : 错误枚举类
-     * @return com.sika.code.mq.common.pojo.dto.MsgDTO
+     * @return com.sika.code.mq.common.dto.MsgDTO
      * @author daiqi
      * @date 2019/6/29 21:54
      */

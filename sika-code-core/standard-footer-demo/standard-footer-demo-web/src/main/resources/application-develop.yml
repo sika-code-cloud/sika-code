@@ -106,6 +106,12 @@ spring:
 #      max-idle: 500     # 连接池中的最大空闲连接
 #      min-idle: 50     # 连接池中的最小空闲连接
 #      max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  redisson:
+    mode: single
+    single:
+      address: 120.78.74.169:6379
+
+
 
 #设置最大超时时间
 ribbon:

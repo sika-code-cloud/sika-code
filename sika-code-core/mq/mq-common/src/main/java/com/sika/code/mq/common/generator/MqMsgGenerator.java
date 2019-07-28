@@ -2,7 +2,7 @@ package com.sika.code.mq.common.generator;
 
 import com.sika.code.basic.errorcode.BaseErrorCode;
 import com.sika.code.basic.util.BaseUtil;
-import com.sika.code.mq.common.pojo.dto.MqMsgDTO;
+import com.sika.code.mq.common.dto.MqMsgDTO;
 import com.sika.code.mq.common.constant.MqDataType;
 import com.sika.code.no.generator.NoGenerator;
 import com.sika.code.no.properties.NoProperties;

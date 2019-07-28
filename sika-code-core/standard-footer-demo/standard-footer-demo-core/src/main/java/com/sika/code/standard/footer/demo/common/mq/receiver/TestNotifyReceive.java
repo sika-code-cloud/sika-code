@@ -3,7 +3,7 @@ package com.sika.code.standard.footer.demo.common.mq.receiver;
 import com.sika.code.basic.errorcode.BaseErrorCodeEnum;
 import com.sika.code.common.json.util.JSONUtil;
 import com.sika.code.exception.BusinessException;
-import com.sika.code.mq.common.pojo.dto.MqMsgDTO;
+import com.sika.code.mq.common.dto.MqMsgDTO;
 import com.sika.code.standard.footer.demo.common.mq.constant.queue.DemoMqQueueConfigEnum;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;

@@ -20,8 +20,8 @@
         <module>standard-footer</module>
         <module>mq</module>
         <module>mq-rabbit</module>
-        <module>mq-rabbit</module>
-        <module>mq</module>
+        <module>lock</module>
+        <module>cache</module>
     </modules>
 
     <properties>
