@@ -1,5 +1,6 @@
 package com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query;
 
+import com.sika.code.database.common.Page;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.AccessRuleTypeQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.query.AccessRuleTypePageQueryResponseBO;
 import lombok.Data;
@@ -34,7 +35,12 @@ public class AccessRuleTypePageQueryRequestBO extends AccessRuleTypeQueryRequest
 
     @Override
     protected AccessRuleTypePageQueryResponseBO doExecute() {
-        return newResponseBO(this, service().page(queryRequest));
+        Page page = service().page(queryRequest);
+        AccessRuleTypePageQueryResponseBO responseBO = newResponseBO(this, page);
+        for (int i = 0 ; i < queryRequest.getPageSize(); ++i) {
+            newResponseBO(this, page);
+        }
+        return responseBO;
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 
 /**
@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
  * @author daiqi
  * @create 2019-05-10 21:16
  */
-@Configuration
 @SpringBootApplication(scanBasePackages = {BaseComponentScan.COM_EASY_CLOUD}, exclude = {DataSourceAutoConfiguration.class})
 @MapperScan({"com.sika.code.**.mapper"})
+@EnableDiscoveryClient
 public class StandardFooterDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(StandardFooterDemoApplication.class, args);
