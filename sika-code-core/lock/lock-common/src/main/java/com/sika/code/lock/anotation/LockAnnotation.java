@@ -15,6 +15,16 @@ public @interface LockAnnotation {
     int TIME_DEFAULT = 10;
 
     /**
+     * 模块名称
+     */
+    String module();
+
+    /**
+     * 作为key的参数索引
+     */
+    int index() default 0;
+
+    /**
      * 获取锁类型
      */
     LockType lockType() default LockType.UN_FAIR;
