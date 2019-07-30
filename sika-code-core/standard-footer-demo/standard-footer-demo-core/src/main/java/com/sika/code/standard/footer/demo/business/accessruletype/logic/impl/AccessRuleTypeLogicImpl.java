@@ -2,7 +2,9 @@ package com.sika.code.standard.footer.demo.business.accessruletype.logic.impl;
 
 
 import com.sika.code.lock.anotation.DistributionLock;
+import com.sika.code.lock.constant.LockType;
 import com.sika.code.lock.distribution.DistributionLockHandler;
+import com.sika.code.lock.properties.DistributionLockProperties;
 import com.sika.code.standard.base.logic.BaseStandardLogic;
 import com.sika.code.standard.footer.demo.business.accessruletype.logic.AccessRuleTypeLogic;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeCommonQueryRequestBO;
@@ -35,6 +37,8 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     private AccessRuleTypeService accessRuleTypeService;
     @Autowired
     private DistributionLockHandler distributionLockHandler;
+    @Autowired
+    private DistributionLockProperties distributionLockProperties;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -65,7 +69,7 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     }
 
     @Override
-    @DistributionLock(module = "user", fieldName = "queryRequest.accessRuleTypeId")
+    @DistributionLock(module = "user", leaseTime = 100, lockType = LockType.MULTI_LOCK, fieldName = "queryRequest.accessRuleTypeIds")
     public AccessRuleTypeListQueryResponseBO list(AccessRuleTypeListQueryRequestBO request) {
         return request.execute();
     }

@@ -2,7 +2,7 @@ package com.sika.code.lock.config;
 
 import com.sika.code.lock.aspect.LockAspect;
 import com.sika.code.lock.distribution.DistributionLockHandler;
-import com.sika.code.lock.properties.DistributionProperties;
+import com.sika.code.lock.properties.DistributionLockProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +20,13 @@ public class LockConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public DistributionProperties distributionProperties() {
-        return new DistributionProperties();
+    public DistributionLockProperties distributionProperties() {
+        return new DistributionLockProperties();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public LockAspect lockAspect(DistributionLockHandler distributionLockHandler, DistributionProperties distributionProperties) {
-        return new LockAspect(distributionLockHandler, distributionProperties);
+    public LockAspect lockAspect(DistributionLockHandler distributionLockHandler, DistributionLockProperties distributionLockProperties) {
+        return new LockAspect(distributionLockHandler, distributionLockProperties);
     }
 }

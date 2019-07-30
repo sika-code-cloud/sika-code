@@ -1,11 +1,10 @@
 package com.sika.code.cache.redis.aspect;
 
-import com.sika.code.cache.redis.selector.RedisProxySelector;
 import com.sika.code.basic.util.Assert;
 import com.sika.code.cache.redis.pojo.bo.RedisBO;
+import com.sika.code.cache.redis.selector.RedisProxySelector;
 import lombok.Data;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -49,10 +48,5 @@ public class RedisAspect {
         RedisBO redisBO = new RedisBO();
         redisBO.buildRedisData(joinPoint).buildRedisProxySelector(redisProxySelector);
         return redisBO.handle();
-    }
-
-    @AfterThrowing(value = "redisAspect()", throwing = "ex")
-    public void afterThrowing(Throwable ex) {
-        throw new RuntimeException(ex);
     }
 }

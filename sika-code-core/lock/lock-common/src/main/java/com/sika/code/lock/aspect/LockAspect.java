@@ -3,6 +3,7 @@ package com.sika.code.lock.aspect;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Lists;
 import com.sika.code.basic.errorcode.BaseErrorCodeEnum;
+import com.sika.code.basic.util.Assert;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.array.ArrayUtil;
 import com.sika.code.common.string.constant.StringConstant;
@@ -14,13 +15,12 @@ import com.sika.code.lock.constant.LockTryType;
 import com.sika.code.lock.constant.LockType;
 import com.sika.code.lock.distribution.DistributionLockHandler;
 import com.sika.code.lock.pojo.result.LockResult;
-import com.sika.code.lock.properties.DistributionProperties;
+import com.sika.code.lock.properties.DistributionLockProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -45,7 +45,7 @@ import java.util.List;
 public class LockAspect {
 
     protected DistributionLockHandler lockHandler;
-    protected DistributionProperties distributionProperties;
+    protected DistributionLockProperties distributionLockProperties;
 
     @Pointcut("@annotation(com.sika.code.lock.anotation.DistributionLock)")
     public void lockAspect() {
@@ -64,13 +64,16 @@ public class LockAspect {
             Signature signature = joinPoint.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
             Method targetMethod = methodSignature.getMethod();
+
             // 获取分布式锁注解
             DistributionLock lock = targetMethod.getAnnotation(DistributionLock.class);
             Object keyValue = getKeyValue(lock, joinPoint);
             lockResult = doLock(lock, keyValue);
             return joinPoint.proceed();
         } finally {
-            lockHandler.unlock(lockResult.getLock());
+            if (BaseUtil.isNotNull(lockResult) && BaseUtil.isNotNull(lockResult.getLock())) {
+                lockHandler.unlock(lockResult.getLock());
+            }
         }
     }
 
@@ -102,6 +105,7 @@ public class LockAspect {
                 }
             }
         }
+        Assert.verifyObjNull(keyValue, "keyValue");
         return keyValue;
     }
 
@@ -148,35 +152,31 @@ public class LockAspect {
         LockType lockType = lock.lockType();
         switch (lockType) {
             case FAIR:
-                log.info("公平锁");
                 return fairLock(lock, keyValue);
             case MULTI_LOCK:
-                log.info("级联锁");
                 return multiLock(lock, keyValue);
             default:
-                log.info("非公平锁");
                 return lock(lock, keyValue);
-        }
-    }
-
-    protected LockResult lock(DistributionLock lock, Object keyValue) {
-        String fullKey = buildFullKey(lock.module(), keyValue);
-        if (LockTryType.TRY.equals(lock.lockTryType())) {
-            return lockHandler.fairLock(fullKey, lock.leaseTime(), lock.timeUnit());
-        } else {
-            return lockHandler.tryFairLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
         }
     }
 
     protected LockResult fairLock(DistributionLock lock, Object keyValue) {
         String fullKey = buildFullKey(lock.module(), keyValue);
         if (LockTryType.TRY.equals(lock.lockTryType())) {
-            return lockHandler.lock(fullKey, lock.leaseTime(), lock.timeUnit());
+            return lockHandler.tryFairLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
         } else {
-            return lockHandler.tryLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
+            return lockHandler.fairLock(fullKey, lock.leaseTime(), lock.timeUnit());
         }
     }
 
+    protected LockResult lock(DistributionLock lock, Object keyValue) {
+        String fullKey = buildFullKey(lock.module(), keyValue);
+        if (LockTryType.TRY.equals(lock.lockTryType())) {
+            return lockHandler.tryLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
+        } else {
+            return lockHandler.lock(fullKey, lock.leaseTime(), lock.timeUnit());
+        }
+    }
 
     protected LockResult multiLock(DistributionLock lock, Object keyValue) {
         Collection keyValues = null;
@@ -209,7 +209,7 @@ public class LockAspect {
      * @date 2019/7/30 15:54
      */
     private String buildFullKey(String module, Object key) {
-        String prefix = distributionProperties.getPrefix();
+        String prefix = distributionLockProperties.getPrefix();
         StringBuilder stringBuilder = StringUtil.newStringBuilder();
         stringBuilder.append(prefix)
                 .append(StringConstant.Symbol.COLON)
@@ -219,8 +219,4 @@ public class LockAspect {
         return stringBuilder.toString();
     }
 
-    @AfterThrowing(value = "lockAspect()", throwing = "ex")
-    public void afterThrowing(Throwable ex) {
-        throw new RuntimeException(ex);
-    }
 }

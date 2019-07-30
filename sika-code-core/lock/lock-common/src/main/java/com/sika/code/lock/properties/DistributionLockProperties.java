@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @ConfigurationProperties(prefix = PropertiesConstant.LOCK)
-public class DistributionProperties {
+public class DistributionLockProperties {
     /**
      * 默认的lock前缀
      */

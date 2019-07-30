@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DistributionLock {
-    int TIME_DEFAULT = 3;
+    int TIME_DEFAULT = 5;
 
     /**
      * 模块名称

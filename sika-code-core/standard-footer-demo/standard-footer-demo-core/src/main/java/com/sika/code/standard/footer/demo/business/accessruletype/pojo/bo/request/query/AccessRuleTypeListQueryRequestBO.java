@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <p>
  * 准入规则类型表 普通查询请求类
@@ -46,6 +48,6 @@ public class AccessRuleTypeListQueryRequestBO extends AccessRuleTypeQueryRequest
     @Data
     @Accessors(chain = true)
     public static class AccessRuleTypeListQueryRequest extends AccessRuleTypeQueryRequest {
-
+        private List<String> accessRuleTypeIds;
     }
 }
