@@ -1,8 +1,8 @@
 package com.sika.code.standard.footer.demo.business.accessruletype.logic.impl;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
-import com.sika.code.lock.distribution.DistributionLock;
+import com.sika.code.lock.distribution.DistributionLockHandler;
+import com.sika.code.lock.pojo.result.LockResult;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeCommonQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeListQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.save.AccessRuleTypeSaveBatchRequestBO;
@@ -18,8 +18,6 @@ import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.respon
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.update.AccessRuleTypeUpdateResponseBO;
 import com.sika.code.standard.base.logic.BaseStandardLogic;
 
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +37,7 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     @Autowired
     private AccessRuleTypeService accessRuleTypeService;
     @Autowired
-    private DistributionLock distributionLock;
+    private DistributionLockHandler distributionLockHandler;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -71,11 +69,11 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
 
     @Override
     public AccessRuleTypeListQueryResponseBO list(AccessRuleTypeListQueryRequestBO request) {
-        Lock lock = null;
+        LockResult lock = null;
         try {
-            lock = distributionLock.lock("hello");
+            lock = distributionLockHandler.lock("hello");
         } finally {
-            distributionLock.unlock(lock);
+            distributionLockHandler.unlock(lock.getLock());
         }
         return request.execute();
     }

@@ -1,6 +1,7 @@
 package com.sika.code.mq.rabbit.producer.config;
 
 import com.sika.code.basic.constant.BaseConstant;
+import com.sika.code.basic.constant.PropertyConstant;
 import com.sika.code.mq.common.generator.MqMsgGenerator;
 import com.sika.code.mq.rabbit.producer.sender.RabbitSender;
 import com.sika.code.mq.rabbit.producer.sender.impl.RabbitSenderImpl;
@@ -34,7 +35,7 @@ public class RabbitProducerConfig {
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(value = "sika.code.rabbit.sender.ack", havingValue = "true")
+    @ConditionalOnProperty(value = PropertyConstant.RABBIT_SENDER_ACK, havingValue = "true")
     public RabbitProducerAckConfig rabbitProducerAckConfig() {
         return new RabbitProducerAckConfig();
     }

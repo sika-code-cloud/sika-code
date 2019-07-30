@@ -1,5 +1,6 @@
 package com.sika.code.common.log.config;
 
+import com.sika.code.basic.constant.PropertyConstant;
 import com.sika.code.common.log.aspect.ControllerLogAspect;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class LogConfig {
 
     @Bean
-    @ConditionalOnProperty(value = "sika.code.log.controller.fire", havingValue = "true")
+    @ConditionalOnProperty(value = PropertyConstant.LOG_CONTROLLER_FIRE, havingValue = "true")
     public ControllerLogAspect controllerLogAspect() {
         return new ControllerLogAspect();
     }

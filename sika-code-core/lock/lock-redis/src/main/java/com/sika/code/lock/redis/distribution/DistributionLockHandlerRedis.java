@@ -1,19 +1,17 @@
 package com.sika.code.lock.redis.distribution;
 
-import com.sika.code.lock.distribution.DistributionLock;
+import com.sika.code.lock.distribution.DistributionLockHandler;
 import com.sika.code.lock.pojo.result.LockResult;
 import com.sika.code.lock.pojo.result.TryLockResult;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.RedissonMultiLock;
-import org.redisson.api.RCountDownLatch;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -25,7 +23,7 @@ import java.util.concurrent.locks.Lock;
  */
 @AllArgsConstructor
 @Slf4j
-public class DistributionLockRedis implements DistributionLock {
+public class DistributionLockHandlerRedis implements DistributionLockHandler {
 
     private RedissonClient redissonClient;
 

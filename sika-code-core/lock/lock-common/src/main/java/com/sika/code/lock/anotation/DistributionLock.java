@@ -1,8 +1,10 @@
 package com.sika.code.lock.anotation;
 
+import com.sika.code.common.string.util.StringUtil;
 import com.sika.code.lock.constant.LockType;
 import com.sika.code.lock.constant.LockTryType;
 
+import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,8 +13,11 @@ import java.util.concurrent.TimeUnit;
  * @author daiqi
  * @create 2019-07-29 11:02
  */
-public @interface LockAnnotation {
-    int TIME_DEFAULT = 10;
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface DistributionLock {
+    int TIME_DEFAULT = 3;
 
     /**
      * 模块名称
@@ -20,7 +25,12 @@ public @interface LockAnnotation {
     String module();
 
     /**
-     * 作为key的参数索引
+     * 指定的属性名称 --- 默认使用index对应的参数作为key
+     */
+    String fieldName() default StringUtil.EMPTY;
+
+    /**
+     * 作为key的参数索引 从0开始
      */
     int index() default 0;
 
@@ -40,7 +50,7 @@ public @interface LockAnnotation {
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
-     * 最多等待时间
+     * 最多等待时间  try锁有效
      */
     int waitTime() default TIME_DEFAULT;
 

@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author daiqi
  * @date 2019/7/28 12:54
  */
-@ConfigurationProperties(prefix = "spring.redisson", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "spring.redisson")
 @Data
 public class RedissonProperties {
 

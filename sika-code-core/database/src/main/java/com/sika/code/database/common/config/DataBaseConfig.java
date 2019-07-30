@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.sika.code.basic.constant.PropertyConstant;
 import com.sika.code.database.mysql.interceptor.SqlLogInterceptor;
 import com.sika.code.database.mysql.interceptor.SqlLogInterceptorProperties;
 import org.apache.ibatis.plugin.Interceptor;
@@ -30,7 +31,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@ConditionalOnProperty(value = "sika.code.jdbc.fire", havingValue = "true")
+@ConditionalOnProperty(value = PropertyConstant.JDBC_FIRE, havingValue = "true")
 public class DataBaseConfig {
     @Value(value = "${mybatis.mapper-locations}")
     private String mapperLocations;
@@ -39,7 +40,6 @@ public class DataBaseConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConfigurationProperties(prefix = "sika.code.log.sql")
     public SqlLogInterceptorProperties sqlLogInterceptorProperties() {
         return new SqlLogInterceptorProperties();
     }

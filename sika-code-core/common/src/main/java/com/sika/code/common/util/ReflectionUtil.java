@@ -1,5 +1,6 @@
 package com.sika.code.common.util;
 
+import cn.hutool.core.util.ReflectUtil;
 import com.sika.code.basic.util.BaseUtil;
 
 import java.lang.reflect.Field;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author daiqi
  * @date 2018年1月8日 下午7:46:12
  */
-public class ReflectionUtil {
+public class ReflectionUtil extends ReflectUtil {
 	
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package com.sika.code.standard.rest.properties;
 
+import com.sika.code.standard.base.constant.StandardPropertiesConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -8,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @create 2018-12-04 11:17
  */
 @Data
-@ConfigurationProperties(prefix = "sika.code.rest.template")
+@ConfigurationProperties(prefix = StandardPropertiesConstant.REST_TEMPLATE)
 public class RestTemplateProperties {
     /** 默认值-------------------------------------------------------------------------begin */
     /**

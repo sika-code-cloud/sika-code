@@ -1,5 +1,6 @@
 package com.sika.code.mq.rabbit.producer.sender.impl;
 
+import com.sika.code.basic.constant.PropertiesConstant;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.log.util.LogUtil;
 import com.sika.code.mq.common.constant.MqDataType;
@@ -25,7 +26,7 @@ import javax.annotation.PostConstruct;
  */
 @Data
 @Slf4j
-@ConfigurationProperties(prefix = "sika.code.rabbit.sender")
+@ConfigurationProperties(prefix = PropertiesConstant.RABBIT_SENDER)
 public class RabbitSenderImpl implements RabbitSender {
 
     private RabbitTemplate rabbitTemplate;

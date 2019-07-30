@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 public class ExceptionConfig {
     @Bean
     @ConditionalOnMissingBean
-    @ConfigurationProperties(prefix = "sika.code.exception")
     public ExceptionProperties exceptionProperties() {
         return new ExceptionProperties();
     }

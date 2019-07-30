@@ -1,8 +1,8 @@
 package com.sika.code.lock.redis.config;
 
 import com.sika.code.common.string.util.StringUtil;
-import com.sika.code.lock.distribution.DistributionLock;
-import com.sika.code.lock.redis.distribution.DistributionLockRedis;
+import com.sika.code.lock.distribution.DistributionLockHandler;
+import com.sika.code.lock.redis.distribution.DistributionLockHandlerRedis;
 import com.sika.code.lock.redis.properties.RedissonClusterProperties;
 import com.sika.code.lock.redis.properties.RedissonProperties;
 import com.sika.code.lock.redis.properties.RedissonSentinelProperties;
@@ -126,8 +126,8 @@ public class RedissonConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public DistributionLock distributionLock(RedissonClient redissonClient) {
-        return new DistributionLockRedis(redissonClient);
+    public DistributionLockHandler distributionLock(RedissonClient redissonClient) {
+        return new DistributionLockHandlerRedis(redissonClient);
     }
 
 }

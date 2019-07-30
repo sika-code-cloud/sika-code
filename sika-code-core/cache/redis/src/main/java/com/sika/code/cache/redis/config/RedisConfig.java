@@ -1,5 +1,6 @@
 package com.sika.code.cache.redis.config;
 
+import com.sika.code.basic.constant.PropertyConstant;
 import com.sika.code.cache.redis.aspect.RedisAspect;
 import com.sika.code.cache.redis.selector.RedisProxySelector;
 import com.sika.code.cache.redis.serializer.FastJson2JsonRedisSerializer;
@@ -20,7 +21,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @date 2017年12月7日 下午4:44:25
  */
 @Configuration
-@ConditionalOnProperty(name = "sika.code.redis.fire", havingValue = "true")
+@ConditionalOnProperty(name = PropertyConstant.REDIS_FIRE, havingValue = "true")
 public class RedisConfig {
 
 

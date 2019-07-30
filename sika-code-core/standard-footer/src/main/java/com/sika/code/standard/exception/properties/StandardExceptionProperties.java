@@ -1,5 +1,6 @@
 package com.sika.code.standard.exception.properties;
 
+import com.sika.code.standard.base.constant.StandardPropertiesConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
  @Component
  @Data
- @ConfigurationProperties("sika.code.exception.inform")
+ @ConfigurationProperties(StandardPropertiesConstant.EXCEPTION_INFORM)
 public class StandardExceptionProperties {
     /** 钉钉通知群url */
     private String defaultWebHookForDingding;

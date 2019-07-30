@@ -1,5 +1,6 @@
 package com.sika.code.standard.auth.properties;
 
+import com.sika.code.standard.base.constant.StandardPropertiesConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @create 2019-05-16 9:12
  */
 @Data
-@ConfigurationProperties(prefix = "sika.code.auth")
+@ConfigurationProperties(prefix = StandardPropertiesConstant.AUTH)
 @Component
 public class AuthProperties {
     private String jwtSecret;

@@ -1,5 +1,6 @@
 package com.sika.code.common.workspace.properties;
 
+import com.sika.code.basic.constant.PropertiesConstant;
 import com.sika.code.basic.util.BaseUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @Accessors(chain = true)
-@ConfigurationProperties(prefix = "sika.code.workspace")
+@ConfigurationProperties(prefix = PropertiesConstant.WORKSPACE)
 public class WorkspaceProperties {
     /**
      * 默认的工作空间编号

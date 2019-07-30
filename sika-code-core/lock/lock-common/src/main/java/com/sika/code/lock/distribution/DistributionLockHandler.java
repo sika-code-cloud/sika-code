@@ -7,12 +7,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 /**
- * 分布式锁接口
+ * 分布式锁助手接口
  *
  * @author daiqi
  * @create 2019-07-28 17:38
  */
-public interface DistributionLock {
+public interface DistributionLockHandler {
 
     /**
      * <p>
