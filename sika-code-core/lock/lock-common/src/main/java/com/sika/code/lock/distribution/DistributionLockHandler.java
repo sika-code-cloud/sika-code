@@ -2,7 +2,7 @@ package com.sika.code.lock.distribution;
 
 import com.sika.code.lock.pojo.result.LockResult;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -31,7 +31,7 @@ public interface DistributionLockHandler {
      * 带自动释放锁时间的锁 --- 非公平锁
      * </p>
      *
-     * @param lockKey 锁的key
+     * @param lockKey   锁的key
      * @param leaseTime 上锁后自动释放锁时间   单位：秒
      * @return com.sika.code.lock.pojo.result.LockResult
      * @author daiqi
@@ -44,9 +44,9 @@ public interface DistributionLockHandler {
      * 带自动释放锁时间的锁 --- 非公平锁
      * </p>
      *
-     * @param lockKey 锁的key
+     * @param lockKey   锁的key
      * @param leaseTime 上锁后自动释放锁时间
-     * @param unit    时间单位
+     * @param unit      时间单位
      * @return com.sika.code.lock.pojo.result.LockResult
      * @author daiqi
      * @date 2019/7/29 10:23
@@ -100,7 +100,7 @@ public interface DistributionLockHandler {
      * 带自动释放锁时间的锁 --- 公平锁
      * </p>
      *
-     * @param lockKey 锁的key
+     * @param lockKey   锁的key
      * @param leaseTime 上锁后自动释放锁时间   单位：秒
      * @return com.sika.code.lock.pojo.result.LockResult
      * @author daiqi
@@ -113,9 +113,9 @@ public interface DistributionLockHandler {
      * 带自动释放锁时间的锁 --- 公平锁
      * </p>
      *
-     * @param lockKey 锁的key
+     * @param lockKey   锁的key
      * @param leaseTime 上锁后自动释放锁时间
-     * @param unit    时间单位
+     * @param unit      时间单位
      * @return com.sika.code.lock.pojo.result.LockResult
      * @author daiqi
      * @date 2019/7/29 10:19
@@ -161,7 +161,7 @@ public interface DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:08
      */
-    LockResult lock(List<String> lockKeys);
+    LockResult lock(Collection<String> lockKeys);
 
     /**
      * <p>
@@ -174,7 +174,7 @@ public interface DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:08
      */
-    LockResult lock(List<String> lockKeys, int timeout);
+    LockResult lock(Collection<String> lockKeys, int timeout);
 
     /**
      * <p>
@@ -188,7 +188,7 @@ public interface DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:08
      */
-    LockResult lock(List<String> lockKeys, int timeout, TimeUnit unit);
+    LockResult lock(Collection<String> lockKeys, int timeout, TimeUnit unit);
 
     /**
      * <p>
@@ -202,7 +202,7 @@ public interface DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:08
      */
-    LockResult tryLock(List<String> lockKeys, int waitTime, int leaseTime);
+    LockResult tryLock(Collection<String> lockKeys, int waitTime, int leaseTime);
 
     /**
      * <p>
@@ -217,7 +217,7 @@ public interface DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:08
      */
-    LockResult tryLock(List<String> lockKeys, int waitTime, int leaseTime, TimeUnit unit);
+    LockResult tryLock(Collection<String> lockKeys, int waitTime, int leaseTime, TimeUnit unit);
 
     /**
      * 释放锁

@@ -1,28 +1,25 @@
 package com.sika.code.standard.footer.demo.business.accessruletype.logic.impl;
 
 
+import com.sika.code.lock.anotation.DistributionLock;
 import com.sika.code.lock.distribution.DistributionLockHandler;
-import com.sika.code.lock.pojo.result.LockResult;
+import com.sika.code.standard.base.logic.BaseStandardLogic;
+import com.sika.code.standard.footer.demo.business.accessruletype.logic.AccessRuleTypeLogic;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeCommonQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypeListQueryRequestBO;
+import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypePageQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.save.AccessRuleTypeSaveBatchRequestBO;
+import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.save.AccessRuleTypeSaveRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.update.AccessRuleTypeUpdateByIdRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.query.AccessRuleTypeListQueryResponseBO;
-import com.sika.code.standard.footer.demo.business.accessruletype.service.AccessRuleTypeService;
-import com.sika.code.standard.footer.demo.business.accessruletype.logic.AccessRuleTypeLogic;
-import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query.AccessRuleTypePageQueryRequestBO;
-import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.save.AccessRuleTypeSaveRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.query.AccessRuleTypePageQueryResponseBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.query.AccessRuleTypeQueryResponseBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.save.AccessRuleTypeSaveResponseBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.update.AccessRuleTypeUpdateResponseBO;
-import com.sika.code.standard.base.logic.BaseStandardLogic;
-
+import com.sika.code.standard.footer.demo.business.accessruletype.service.AccessRuleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.concurrent.locks.Lock;
 
 /**
  * <p>
@@ -68,13 +65,8 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     }
 
     @Override
+    @DistributionLock(module = "user", fieldName = "queryRequest.accessRuleTypeId")
     public AccessRuleTypeListQueryResponseBO list(AccessRuleTypeListQueryRequestBO request) {
-        LockResult lock = null;
-        try {
-            lock = distributionLockHandler.lock("hello");
-        } finally {
-            distributionLockHandler.unlock(lock.getLock());
-        }
         return request.execute();
     }
 }

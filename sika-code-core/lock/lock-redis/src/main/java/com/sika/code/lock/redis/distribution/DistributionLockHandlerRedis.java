@@ -9,8 +9,8 @@ import org.redisson.RedissonMultiLock;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -83,29 +83,29 @@ public class DistributionLockHandlerRedis implements DistributionLockHandler {
     }
 
     @Override
-    public LockResult lock(List<String> lockKeys) {
+    public LockResult lock(Collection<String> lockKeys) {
         return lock(lockKeys, -1, null);
     }
 
     @Override
-    public LockResult lock(List<String> lockKeys, int leaseTime) {
+    public LockResult lock(Collection<String> lockKeys, int leaseTime) {
         return lock(lockKeys, leaseTime, TimeUnit.SECONDS);
     }
 
 
     @Override
-    public LockResult lock(List<String> lockKeys, int leaseTime, TimeUnit unit) {
+    public LockResult lock(Collection<String> lockKeys, int leaseTime, TimeUnit unit) {
         RedissonMultiLock lock = buildMultiLock(lockKeys);
         return lockCore(lock, leaseTime, unit);
     }
 
     @Override
-    public LockResult tryLock(List<String> lockKeys, int waitTime, int leaseTime) {
+    public LockResult tryLock(Collection<String> lockKeys, int waitTime, int leaseTime) {
         return tryLock(lockKeys, waitTime, leaseTime, TimeUnit.SECONDS);
     }
 
     @Override
-    public LockResult tryLock(List<String> lockKeys, int waitTime, int leaseTime, TimeUnit unit) {
+    public LockResult tryLock(Collection<String> lockKeys, int waitTime, int leaseTime, TimeUnit unit) {
         RedissonMultiLock lock = buildMultiLock(lockKeys);
         return tryLockCore(lock, waitTime, leaseTime, unit);
     }
@@ -125,7 +125,7 @@ public class DistributionLockHandlerRedis implements DistributionLockHandler {
      * @author daiqi
      * @date 2019/7/29 10:37
      */
-    protected RedissonMultiLock buildMultiLock(List<String> lockKeys) {
+    protected RedissonMultiLock buildMultiLock(Collection<String> lockKeys) {
         Set<RLock> locks = new LinkedHashSet<>(lockKeys.size());
         for (String lockKey : lockKeys) {
             locks.add(redissonClient.getLock(lockKey));
@@ -139,9 +139,9 @@ public class DistributionLockHandlerRedis implements DistributionLockHandler {
      * 锁核心逻辑
      * </p>
      *
-     * @param lock    : 锁对象
+     * @param lock      : 锁对象
      * @param leaseTime : 上锁后自动释放锁时间
-     * @param unit    : 时间单位
+     * @param unit      : 时间单位
      * @return com.sika.code.lock.pojo.result.LockResult
      * @author daiqi
      * @date 2019/7/29 10:31
