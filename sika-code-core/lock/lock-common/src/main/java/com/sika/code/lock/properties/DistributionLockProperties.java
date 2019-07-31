@@ -18,8 +18,21 @@ public class DistributionLockProperties {
      */
     protected static final String LOCK_PREFIX_DEFAULT = "SIKA:CODE:LOCK";
     /**
+     * 默认的时间值
+     */
+    protected static final int TIME_DEFAULT = 5;
+    /**
      * 锁前缀
      */
     protected String prefix = LOCK_PREFIX_DEFAULT;
+    /**
+     * 等待时间
+     */
+    protected int waitTime = TIME_DEFAULT;
+
+    /**
+     * 锁的有效时间
+     */
+    protected int leaseTime = TIME_DEFAULT;
 
 }

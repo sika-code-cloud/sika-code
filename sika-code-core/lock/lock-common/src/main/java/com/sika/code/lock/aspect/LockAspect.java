@@ -11,6 +11,7 @@ import com.sika.code.common.string.util.StringUtil;
 import com.sika.code.common.util.ReflectionUtil;
 import com.sika.code.exception.BusinessException;
 import com.sika.code.lock.anotation.DistributionLock;
+import com.sika.code.lock.constant.LockConstant;
 import com.sika.code.lock.constant.LockTryType;
 import com.sika.code.lock.constant.LockType;
 import com.sika.code.lock.distribution.DistributionLockHandler;
@@ -160,24 +161,61 @@ public class LockAspect {
         }
     }
 
+    /**
+     * <p>
+     * 公平锁
+     * </p>
+     *
+     * @param lock
+     * @param keyValue
+     * @return com.sika.code.lock.pojo.result.LockResult
+     * @author daiqi
+     * @date 2019/7/31 9:42
+     */
     protected LockResult fairLock(DistributionLock lock, Object keyValue) {
         String fullKey = buildFullKey(lock.module(), keyValue);
+        int waitTime = buildWaitTime(lock.waitTime());
+        int leaseTime = buildWaitTime(lock.leaseTime());
         if (LockTryType.TRY.equals(lock.lockTryType())) {
-            return lockHandler.tryFairLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
+            return lockHandler.tryFairLock(fullKey, waitTime, leaseTime, lock.timeUnit());
         } else {
-            return lockHandler.fairLock(fullKey, lock.leaseTime(), lock.timeUnit());
+            return lockHandler.fairLock(fullKey, leaseTime, lock.timeUnit());
         }
     }
-
+    
+    /**  
+     * <p>
+     * 非公平锁
+     * </p>
+     *   
+     * @param lock
+     * @param keyValue
+     * @return com.sika.code.lock.pojo.result.LockResult
+     * @author daiqi 
+     * @date 2019/7/31 9:42
+     */  
     protected LockResult lock(DistributionLock lock, Object keyValue) {
         String fullKey = buildFullKey(lock.module(), keyValue);
+        int waitTime = buildWaitTime(lock.waitTime());
+        int leaseTime = buildWaitTime(lock.leaseTime());
         if (LockTryType.TRY.equals(lock.lockTryType())) {
-            return lockHandler.tryLock(fullKey, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
+            return lockHandler.tryLock(fullKey, waitTime, leaseTime, lock.timeUnit());
         } else {
-            return lockHandler.lock(fullKey, lock.leaseTime(), lock.timeUnit());
+            return lockHandler.lock(fullKey, leaseTime, lock.timeUnit());
         }
     }
 
+    /**
+     * <p>
+     * 级联锁
+     * </p>
+     *
+     * @param lock
+     * @param keyValue
+     * @return com.sika.code.lock.pojo.result.LockResult
+     * @author daiqi
+     * @date 2019/7/31 9:42
+     */
     protected LockResult multiLock(DistributionLock lock, Object keyValue) {
         Collection keyValues = null;
         if (keyValue instanceof Collection) {
@@ -190,11 +228,29 @@ public class LockAspect {
         for (Object key : keyValues) {
             keys.add(buildFullKey(lock.module(), key));
         }
+        int waitTime = buildWaitTime(lock.waitTime());
+        int leaseTime = buildWaitTime(lock.leaseTime());
         if (LockTryType.TRY.equals(lock.lockTryType())) {
-            return lockHandler.tryLock(keys, lock.waitTime(), lock.leaseTime(), lock.timeUnit());
+            return lockHandler.tryLock(keys, waitTime, leaseTime, lock.timeUnit());
         } else {
-            return lockHandler.lock(keys, lock.leaseTime(), lock.timeUnit());
+            return lockHandler.lock(keys, leaseTime, lock.timeUnit());
         }
+    }
+
+    protected int buildWaitTime(final int waitTimeAnnotation) {
+        int waitTime = waitTimeAnnotation;
+        if (LockConstant.TIME_DEFAULT == waitTime) {
+            waitTime = distributionLockProperties.getWaitTime();
+        }
+        return waitTime;
+    }
+
+    protected int buildLeaseTime(int leaseTimeAnnotation) {
+        int leaseTime = leaseTimeAnnotation;
+        if (LockConstant.TIME_DEFAULT == leaseTime) {
+            leaseTime = distributionLockProperties.getLeaseTime();
+        }
+        return leaseTime;
     }
 
     /**

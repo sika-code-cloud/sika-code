@@ -1,6 +1,7 @@
 package com.sika.code.lock.anotation;
 
 import com.sika.code.common.string.util.StringUtil;
+import com.sika.code.lock.constant.LockConstant;
 import com.sika.code.lock.constant.LockType;
 import com.sika.code.lock.constant.LockTryType;
 
@@ -17,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DistributionLock {
-    int TIME_DEFAULT = 5;
 
     /**
      * 模块名称
@@ -52,10 +52,10 @@ public @interface DistributionLock {
     /**
      * 最多等待时间  try锁有效
      */
-    int waitTime() default TIME_DEFAULT;
+    int waitTime() default LockConstant.TIME_DEFAULT;
 
     /**
      * 上锁后自动释放锁时间
      */
-    int leaseTime() default TIME_DEFAULT;
+    int leaseTime() default LockConstant.TIME_DEFAULT;
 }

@@ -69,7 +69,7 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     }
 
     @Override
-    @DistributionLock(module = "user", leaseTime = 100, lockType = LockType.MULTI_LOCK, fieldName = "queryRequest.accessRuleTypeIds")
+    @DistributionLock(module = "user", fieldName = "queryRequest.accessRuleTypeId")
     public AccessRuleTypeListQueryResponseBO list(AccessRuleTypeListQueryRequestBO request) {
         return request.execute();
     }
