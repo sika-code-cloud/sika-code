@@ -29,6 +29,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -173,7 +174,7 @@ public class LockAspect {
      * @date 2019/7/31 9:42
      */
     protected LockResult fairLock(DistributionLock lock, Object keyValue) {
-        String fullKey = buildFullKey(lock.module(), keyValue);
+        String fullKey = buildFullKey(lock.modules(), keyValue);
         int waitTime = buildWaitTime(lock.waitTime());
         int leaseTime = buildWaitTime(lock.leaseTime());
         if (LockTryType.TRY.equals(lock.lockTryType())) {
@@ -195,7 +196,7 @@ public class LockAspect {
      * @date 2019/7/31 9:42
      */  
     protected LockResult lock(DistributionLock lock, Object keyValue) {
-        String fullKey = buildFullKey(lock.module(), keyValue);
+        String fullKey = buildFullKey(lock.modules(), keyValue);
         int waitTime = buildWaitTime(lock.waitTime());
         int leaseTime = buildWaitTime(lock.leaseTime());
         if (LockTryType.TRY.equals(lock.lockTryType())) {
@@ -226,7 +227,7 @@ public class LockAspect {
         }
         List<String> keys = Lists.newArrayList();
         for (Object key : keyValues) {
-            keys.add(buildFullKey(lock.module(), key));
+            keys.add(buildFullKey(lock.modules(), key));
         }
         int waitTime = buildWaitTime(lock.waitTime());
         int leaseTime = buildWaitTime(lock.leaseTime());
@@ -258,20 +259,22 @@ public class LockAspect {
      * 构建完整的Key
      * </p>
      *
-     * @param module : 模块名称
+     * @param modules : 模块名称列表
      * @param key    : key
      * @return java.lang.String
      * @author daiqi
      * @date 2019/7/30 15:54
      */
-    private String buildFullKey(String module, Object key) {
+    private String buildFullKey(String [] modules, Object key) {
         String prefix = distributionLockProperties.getPrefix();
+        List<String> fullKeyItems = Lists.newArrayList();
+        fullKeyItems.add(prefix);
+        fullKeyItems.addAll(Arrays.asList(modules));
         StringBuilder stringBuilder = StringUtil.newStringBuilder();
-        stringBuilder.append(prefix)
-                .append(StringConstant.Symbol.COLON)
-                .append(module)
-                .append(StringConstant.Symbol.COLON)
-                .append(key);
+        fullKeyItems.stream()
+                .filter(item -> StringUtil.isNotBlank(item))
+                .forEach(item -> stringBuilder.append(item).append(StringConstant.Symbol.COLON));
+        stringBuilder.append(key);
         return stringBuilder.toString();
     }
 

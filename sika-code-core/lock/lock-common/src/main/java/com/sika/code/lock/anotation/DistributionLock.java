@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 public @interface DistributionLock {
 
     /**
-     * 模块名称
+     * 模块名称数组 支持多级子模块
      */
-    String module();
+    String [] modules();
 
     /**
      * 指定的属性名称 --- 默认使用index对应的参数作为key
@@ -50,12 +50,12 @@ public @interface DistributionLock {
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
-     * 最多等待时间  try锁有效
+     * 最多等待时间  try锁有效 使用默认值将以DistributionLockProperties类中的配置为准
      */
     int waitTime() default LockConstant.TIME_DEFAULT;
 
     /**
-     * 上锁后自动释放锁时间
+     * 上锁后自动释放锁时间 使用默认值将以DistributionLockProperties类中的配置为准
      */
     int leaseTime() default LockConstant.TIME_DEFAULT;
 }
