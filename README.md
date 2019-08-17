@@ -61,7 +61,7 @@
 | 8 | standard-footer | 标准脚手架 | 100 | 
 | 9 | standard-footer-demo | 标准脚手架示例 | 100 |
 | 10 | starter |  启动器 | 100 |
-| 11 | lock | 分部式锁 | 0 |
+| 11 | lock | 分部式锁 | 90 |
 | 12 | search | 搜索引擎组件 | 0 |
 | 13 | mongodb | mongodb组件 | 0 |
 | 14 | mail | 邮件组件 | 0 |
@@ -84,13 +84,13 @@
 | 序号 | 名称 | 备注 | 完成度（%） |
 | --- | --- | --- |  --- | 
 | 1 | job-center  | 分布式定时任务中心 | 0 |
-| 2 | wokflow-center  | 工作流中心 | 0 |
+| 2 | workflow-center  | 工作流中心 | 0 |
 | 3 | file-center  | 文件中心 | 0 |
 | 4 | sms-center | 短信中心 | 0 |
 | 5 | log-center  | 日志中心 | 0 |
 | 6 | oauth-center | 认证鉴权中心 | 0 | 
 | 7 | pay-center | 支付中心 | 0 |
-| 8 |  contact-center | 触点中心 [微信、支付宝、微博、钉钉 等] | 0 |
+| 8 | contact-center | 触点中心 [微信、支付宝、微博、钉钉 等] | 0 |
 
 ---
 
