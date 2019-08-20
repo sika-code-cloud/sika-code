@@ -12,7 +12,7 @@
     <artifactId>standard-footer-demo-generator</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
+            <groupId>com.sika.code.core</groupId>
             <artifactId>code-generator</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>

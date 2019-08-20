@@ -4,22 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sika.code.systemframework</groupId>
+    <groupId>com.sika.code.core</groupId>
     <artifactId>sika-code-core</artifactId>
     <version>2.0.0</version>
     <packaging>pom</packaging>
     <name>sika-code-core</name>
-    <description>sika-code systemframework</description>
+    <description>sika-code核心组件</description>
 
     <modules>
         <module>common</module>
         <module>database</module>
-        <module>redis</module>
+        <module>cache</module>
         <module>starter</module>
         <module>hutool-starter</module>
         <module>standard-footer</module>
         <module>mq</module>
-        <module>mq-rabbit</module>
         <module>lock</module>
         <module>cache</module>
     </modules>
@@ -34,28 +33,25 @@
         <jm.maven.version>3.0.5</jm.maven.version>
 
         <!--<dep.logback.version>1.0.13</dep.logback.version>-->
-        <dep.httpclient.version>4.4.1</dep.httpclient.version>
+        <dep.httpclient.version>4.5.2</dep.httpclient.version>
         <dep.slf4j.version>1.7.5</dep.slf4j.version>
         <dep.commons-lang.version>2.6</dep.commons-lang.version>
         <dep.javax.servlet-api.version>3.1.0</dep.javax.servlet-api.version>
-        <dep.aspectj.version>1.7.4</dep.aspectj.version>
         <dep.spring-extension.version>4.1.5.RELEASE</dep.spring-extension.version>
-        <dep.fastjson.version>1.2.55</dep.fastjson.version>
+        <dep.fastjson.version>1.2.59</dep.fastjson.version>
         <dep.commons-collections.version>3.2.2</dep.commons-collections.version>
         <!-- jom依赖 -->
         <org.jdom.version>2.0.2</org.jdom.version>
         <im4java.version>1.4.0</im4java.version>
-        <pagehelper.version>1.0.0</pagehelper.version>
-        <org.freemarker.version>2.3.28</org.freemarker.version>
         <org.yaml.snakeyaml>1.17</org.yaml.snakeyaml>
         <junit.version>4.12</junit.version>
         <lombok.version>1.18.4</lombok.version>
-        <mybatisplus.version>3.1.1</mybatisplus.version>
+        <mybatisplus.version>3.1.2</mybatisplus.version>
 
-        <com.sika.code.systemframework.version>2.0.0</com.sika.code.systemframework.version>
+        <com.sika.code.core.version>2.0.0</com.sika.code.core.version>
         <!-- spring-boot依赖版本号 -->
-        <spring-boot-dependencies.version>1.5.8.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Edgware.SR5</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>2.1.7.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
     </properties>
 
     <dependencies>
@@ -63,6 +59,16 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--@ConfigurationProperties注解 -->
@@ -101,15 +107,11 @@
             <artifactId>httpclient</artifactId>
             <version>${dep.httpclient.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>${dep.httpclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>${dep.httpclient.version}</version>
+            <version>4.4.4</version>
         </dependency>
 
         <dependency>
@@ -136,28 +138,20 @@
             <version>3.1.0</version>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.im4java</groupId>
             <artifactId>im4java</artifactId>
             <version>${im4java.version}</version>
-        </dependency>
-
-        <!--使用AspectJ方式注解需要相应的包-->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${dep.aspectj.version}</version>
         </dependency>
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${dep.fastjson.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${org.yaml.snakeyaml}</version>
         </dependency>
         <!-- lombok支持 这一款Java开发插件，1:简化冗余的JavaBean代码 2:大大提高JavaBean中方法的执行效率 -->
         <dependency>
@@ -182,6 +176,16 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.17</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>plexus-utils</artifactId>
+                    <groupId>org.codehaus.plexus</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>classworlds</artifactId>
+                    <groupId>classworlds</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -209,9 +213,17 @@
     <!--注意： 这里必须要添加，否则各种依赖有问题 -->
     <repositories>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/libs-milestone</url>
+            <id>spring-release</id>
+            <name>Spring release</name>
+            <url>https://repo.spring.io/release/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo1</id>
+            <name>repo1</name>
+            <url>https://repo1.maven.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

@@ -77,7 +77,7 @@ public class ResultGenerator {
      * @date 2018/11/22 10:12
      */
     public Result generateExceptionResult(String path, Exception exception) {
-        Result result = Result.newInstance(null);
+        Result result = new Result();
         // 构建业务系统异常数据传输对象
         if (rspException) {
             buildBusinessExceptionDTO(path, exception, result);
@@ -123,6 +123,7 @@ public class ResultGenerator {
             result.setCode(BaseErrorCodeEnum.SYS_EXCEPTION.getCode());
             result.setMessage(BaseErrorCodeEnum.SYS_EXCEPTION.getMessage());
         }
+        result.setSuccess(false);
     }
 
     @Accessors

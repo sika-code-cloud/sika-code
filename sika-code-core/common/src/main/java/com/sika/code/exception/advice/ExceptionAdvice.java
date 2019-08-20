@@ -72,6 +72,7 @@ public class ExceptionAdvice {
      */
     protected Result buildResultAndInform(HttpServletRequest request, Exception exception) {
         Result result = buildResult(request, exception);
+        log.error(exception.getMessage(), exception);
         // 通知
         if (isInformCode(result.getCode())) {
             inform(exception);
@@ -98,7 +99,7 @@ public class ExceptionAdvice {
             }
         } else {
             Map<String, BaseErrorCode> needInformCodesMap = exceptionProperties.getNeedInformCodesMap();
-            if (BaseUtil.isNull(needInformCodesMap.get(errorCode))) {
+            if (!needInformCodesMap.containsKey(errorCode)) {
                 isInform = false;
             }
         }

@@ -26,40 +26,28 @@
         <com.sika.code.core.version>2.0.0</com.sika.code.core.version>
 
         <!-- spring-boot依赖版本号 -->
-        <spring-boot-dependencies.version>1.5.8.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Edgware.SR5</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>2.1.7.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
 
     </properties>
 
 
     <dependencies>
         <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
+            <groupId>com.sika.code.core</groupId>
             <artifactId>standard-footer</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
+            <groupId>com.sika.code.core</groupId>
             <artifactId>mq-rabbit</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
+            <groupId>com.sika.code.core</groupId>
             <artifactId>lock-redis</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>0.1.2.RELEASE</version>
-        </dependency>
-
-        <!--<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>0.1.2.RELEASE</version>
-        </dependency>-->
     </dependencies>
 
     <dependencyManagement>
@@ -80,13 +68,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>0.1.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
+                <!--<version>0.1.2.RELEASE</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 

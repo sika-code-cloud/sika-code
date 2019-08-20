@@ -1,5 +1,6 @@
 package com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.query;
 
+import com.sika.code.basic.util.Assert;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.request.AccessRuleTypeQueryRequestBO;
 import com.sika.code.standard.footer.demo.business.accessruletype.pojo.bo.response.query.AccessRuleTypeListQueryResponseBO;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class AccessRuleTypeListQueryRequestBO extends AccessRuleTypeQueryRequest
 
     @Override
     protected void verify() {
-
+        Assert.verifyObjNull(queryRequest.getAvailable(), "available");
     }
 
     @Override

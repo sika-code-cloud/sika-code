@@ -3,14 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-
-        <groupId>com.sika.code.standard.footer.demo</groupId>
-        <artifactId>standard-footer-demo</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>sika-code-center</artifactId>
+        <groupId>com.sika.code.center</groupId>
+        <version>2.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>standard-footer-demo-common</artifactId>
+    <artifactId>sika-code-gateway</artifactId>
 
 
 </project>

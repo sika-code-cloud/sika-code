@@ -12,8 +12,8 @@ import com.sika.code.mq.rabbit.producer.sender.RabbitSender;
 import com.sika.code.mq.rabbit.producer.sender.dto.RabbitSenderDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.annotation.PostConstruct;

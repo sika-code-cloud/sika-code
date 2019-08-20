@@ -62,7 +62,7 @@ public class BaseMsgDTO {
      * @date 2019/6/29 21:54
      */
 
-    protected void init(Object data, BaseErrorCode errorCode) {
+    public void init(Object data, BaseErrorCode errorCode) {
         boolean success = false;
         if (BaseErrorCodeEnum.SUCCESS.equals(errorCode)) {
             success = true;

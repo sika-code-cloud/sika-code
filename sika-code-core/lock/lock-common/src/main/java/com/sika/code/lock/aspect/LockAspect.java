@@ -59,7 +59,6 @@ public class LockAspect {
         return doAround(joinPoint);
     }
 
-
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         LockResult lockResult = null;
         try {
@@ -183,18 +182,18 @@ public class LockAspect {
             return lockHandler.fairLock(fullKey, leaseTime, lock.timeUnit());
         }
     }
-    
-    /**  
+
+    /**
      * <p>
      * 非公平锁
      * </p>
-     *   
+     *
      * @param lock
      * @param keyValue
      * @return com.sika.code.lock.pojo.result.LockResult
-     * @author daiqi 
+     * @author daiqi
      * @date 2019/7/31 9:42
-     */  
+     */
     protected LockResult lock(DistributionLock lock, Object keyValue) {
         String fullKey = buildFullKey(lock.modules(), keyValue);
         int waitTime = buildWaitTime(lock.waitTime());
@@ -260,12 +259,12 @@ public class LockAspect {
      * </p>
      *
      * @param modules : 模块名称列表
-     * @param key    : key
+     * @param key     : key
      * @return java.lang.String
      * @author daiqi
      * @date 2019/7/30 15:54
      */
-    private String buildFullKey(String [] modules, Object key) {
+    private String buildFullKey(String[] modules, Object key) {
         String prefix = distributionLockProperties.getPrefix();
         List<String> fullKeyItems = Lists.newArrayList();
         fullKeyItems.add(prefix);

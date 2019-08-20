@@ -3,8 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sika-code-core</artifactId>
-        <groupId>com.sika.code.systemframework</groupId>
+
+        <groupId>com.sika.code.core</groupId>
+        <artifactId>mq</artifactId>
         <version>2.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,9 +17,9 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sika.code.systemframework</groupId>
+            <groupId>com.sika.code.core</groupId>
             <artifactId>mq-common</artifactId>
-            <version>${com.sika.code.systemframework.version}</version>
+            <version>${com.sika.code.core.version}</version>
         </dependency>
     </dependencies>
 
