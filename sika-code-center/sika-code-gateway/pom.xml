@@ -11,5 +11,26 @@
 
     <artifactId>sika-code-gateway</artifactId>
 
-
+    <dependencies>
+        <!--spring cloud gateway是基于webflux需要排除web依赖-->
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>common</artifactId>
+            <version>${com.sika.code.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+    </dependencies>
 </project>

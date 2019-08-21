@@ -1,10 +1,13 @@
 package com.sika.code.common.threadlocal.config;
 
 import com.sika.code.common.threadlocal.filter.ClearThreadLocalFilter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+
+import javax.servlet.Filter;
 
 /**
  * 配置类
@@ -13,6 +16,7 @@ import org.springframework.core.Ordered;
  * @create 2019-06-23 8:56
  */
 @Configuration
+@ConditionalOnClass(Filter.class)
 public class ThreadLocalConfig {
 
     /**

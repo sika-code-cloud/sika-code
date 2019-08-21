@@ -24,7 +24,9 @@ import com.sika.code.standard.footer.demo.business.accessruletype.service.Access
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +44,8 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
     private AccessRuleTypeService accessRuleTypeService;
     @Autowired
     private DistributionLockProperties distributionLockProperties;
+    @Resource
+    private RestTemplate restTemplateForHttps;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -115,7 +119,7 @@ public class AccessRuleTypeLogicImpl extends BaseStandardLogic implements Access
             // 2.1:无过期时间的锁
             lockResult = distributionLockHandler.fairLock(lockKey);
             // 2.2:有过期时间的锁 key的过期时间为5秒
-            lockResult = distributionLockHandler.fairLock(lockKey,5 );
+            lockResult = distributionLockHandler.fairLock(lockKey, 5);
             // 2.3:带时间单位的锁 key的过期时间为5000毫秒
             lockResult = distributionLockHandler.fairLock(lockKey, 5000, TimeUnit.MILLISECONDS);
 

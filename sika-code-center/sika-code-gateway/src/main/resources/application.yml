@@ -1,0 +1,45 @@
+server:
+  port: 8101
+test:
+  #  hostport: httpbin.org:80
+  #  hostport: localhost:5000
+  #  uri: http://${test.hostport}
+  uri: http://localhost:8100/access_rule_type/list
+
+
+spring:
+  jmx:
+    enabled: false
+  cloud:
+    gateway:
+      default-filters:
+      - PrefixPath=/
+      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+
+      routes:
+      # =====================================
+      # to run server
+      # $ wscat --listen 9000
+      # to run client
+      # $ wscat --connect ws://localhost:8080/echo
+      - id: websocket_test
+        uri: ws://localhost:9000
+        order: 9000
+        predicates:
+        - Path=/echo
+      # =====================================
+      - id: default_path_to_httpbin
+        uri: ${test.uri}
+        order: 10000
+        predicates:
+        - Path=/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+
+management.endpoints.web.exposure.include: '*'

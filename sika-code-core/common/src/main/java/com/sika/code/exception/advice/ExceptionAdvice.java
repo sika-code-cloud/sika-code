@@ -12,10 +12,12 @@ import com.sika.code.result.generator.ResultGenerator;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -31,6 +33,7 @@ import java.util.Map;
  */
 @Data
 @ControllerAdvice
+@ConditionalOnClass(Filter.class)
 @Slf4j
 public class ExceptionAdvice {
 

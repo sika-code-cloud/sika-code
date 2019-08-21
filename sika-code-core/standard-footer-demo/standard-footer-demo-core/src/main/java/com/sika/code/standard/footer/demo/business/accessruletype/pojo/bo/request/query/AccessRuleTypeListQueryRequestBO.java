@@ -33,7 +33,7 @@ public class AccessRuleTypeListQueryRequestBO extends AccessRuleTypeQueryRequest
 
     @Override
     protected void verify() {
-        Assert.verifyObjNull(queryRequest.getAvailable(), "available");
+
     }
 
     @Override
