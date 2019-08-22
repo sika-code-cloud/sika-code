@@ -1,0 +1,150 @@
+server:
+  port: 8100
+  tomcat:
+    accept-count: 1024
+    max-threads: 1024
+
+sika:
+  code:
+    workspace:
+      worker-id: 2
+      data-center-id: 1
+    rabbit:
+      sender:
+        log-fire: true
+        ack: true
+    ## ==========================凌雄restTemplate配置begin=====================================
+    rest:
+      template:
+        maxTotal: 1500
+        defaultMaxPerRoute: 1500
+        connectTimeout: 12000
+        readTimeout: 90000
+        connectionRequestTimeout: 200
+        bufferRequestBody: false
+    ## ==========================凌雄restTemplate配置end=====================================
+    auth:
+      # jwt秘钥
+      jwt-secret: ETZZN3KX194HXI82
+      server-name: risk-system-server
+    thirdparty:
+      url:
+        erpRequestDomain: http://erp-service
+        erpRequestDomainHttps: https://api-gateway.52rental.com/oauth-server
+        sjmhRequestDomainHttps: https://api.shujumohe.com/octopus
+      erp:
+        appId: 201801010001
+        appSecret: cDieLmT10edZYU9diLmFMpMkZLLb1WaSk58wCuK7Nmwnmzz3wDwdYkmzzJNLgiCU
+      sjmh:
+        partnerCode: lxzp_mohe
+        partnerKey: 18063e6db59948ce8ce301062e351fb3
+    ################### 异常通知 begin ############################
+    exception:
+      inform:
+        defaultWebHookForDingding:
+      ################### 异常通知 end ############################
+spring:
+  application:
+    name: risk-system-server
+  rabbitmq:
+    host: 120.78.74.169
+    port: 5672
+    username: rabbitmq
+    password: 123456
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 10
+    template:
+      mandatory: true
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    dynamic:
+      enable: true
+    hikari:
+      # JDBC 配置(驱动类自动从url的mysql识别,数据源类型自动识别)
+      core:
+        minimum-idle: 10
+        maximum-pool-size: 20
+        auto-commit: true
+        idle-timeout: 600000
+        pool-name: DatebookHikariCP
+        max-lifetime: 1800000
+        connection-timeout: 30000
+        connection-test-query: SELECT 1
+        jdbc-url: jdbc:mysql://rm-wz9632z95v9v65458o.mysql.rds.aliyuncs.com:3306/dq_easy_cloud?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+        username: dq_easy_cloud
+        password: Easy-cloud
+        driver-class-name:  com.mysql.cj.jdbc.Driver
+
+
+    ################### mysq end ##########################
+    ################### redis 单机版 start ##########################
+  redis:
+    host: 120.78.74.169
+    port: 6379
+    timeout: 3000
+    ################### redis 单机版 end ##########################
+    #    cluster:
+    #      nodes: localhost:6379
+    #    nodes: 134.224.249.36:7000,134.224.249.37:7000,134.224.249.38:7000,134.224.249.36:7001,134.224.249.37:7001,134.224.249.38:7001
+    ###        #130.75.131.237:7000,130.75.131.238:7000,130.75.131.239:7000,130.75.131.237:7001,130.75.131.238:7001,130.75.131.239:7001
+    ##        #192.168.3.157:7000,192.168.3.158:7000,192.168.3.159:7000,192.168.3.157:7001,192.168.3.158:7001,192.168.3.159:7001
+
+#    timeout: 1000 # 连接超时时间（毫秒）
+#    pool:
+#      max-active: 2000  # 连接池最大连接数（使用负值表示没有限制）
+#      max-idle: 500     # 连接池中的最大空闲连接
+#      min-idle: 50     # 连接池中的最小空闲连接
+#      max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  redisson:
+    mode: single
+    single:
+      address: 120.78.74.169:6379
+
+
+
+#设置最大超时时间
+ribbon:
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: false
+# 服务ribbon的负载配置
+erp-service: # ERP服务
+  ribbon:
+    listOfServers: advance-new-api-gateway.52rental.com/oauth-server
+
+
+##feign参数优化
+feign:
+  compression:
+    request:
+      enabled: true
+      mine-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+logging:
+  level:
+    root: INFO
+    com.netflix: OFF
+    com.central: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+
+management:
+  security:
+    enabled: true

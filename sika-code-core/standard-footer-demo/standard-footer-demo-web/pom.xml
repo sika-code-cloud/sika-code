@@ -71,7 +71,7 @@
     </profiles>
 
     <build>
-        <finalName>risk-system-server</finalName>
+        <finalName>standard-footer-demo-server</finalName>
         <filters>
             <filter>src/main/resources/application-${profileActive}.yml</filter>
         </filters>

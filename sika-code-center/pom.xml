@@ -9,6 +9,7 @@
     <version>2.0.0</version>
     <modules>
         <module>sika-code-gateway</module>
+        <module>sika-code-oauth</module>
     </modules>
     <packaging>pom</packaging>
     <name>sika-code-center</name>

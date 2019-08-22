@@ -50,4 +50,5 @@ public class NoGeneratorOrderSuffixStrategy extends NoGeneratorSuffixStrategy {
         return ++current;
     }
 
+
 }
