@@ -10,6 +10,7 @@
     <modules>
         <module>sika-code-gateway</module>
         <module>sika-code-oauth</module>
+        <module>sika-code-batch</module>
     </modules>
     <packaging>pom</packaging>
     <name>sika-code-center</name>

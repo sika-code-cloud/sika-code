@@ -1,12 +1,12 @@
 package com.sika.code.standard.footer.demo.common.thirdpart.erp.util;
 
+import com.sika.code.common.thirdpart.constant.BaseThirdPartyInterface;
+import com.sika.code.common.thirdpart.request.ThirdPartyRequestDTO;
+import com.sika.code.common.thirdpart.util.ThirdPartyRequestUtil;
 import com.sika.code.standard.footer.demo.common.thirdpart.erp.dto.request.ErpRequest;
 import com.sika.code.standard.footer.demo.common.thirdpart.erp.dto.response.ErpResponse;
 import com.sika.code.standard.footer.demo.common.thirdpart.erp.properties.ErpProperties;
 import com.sika.code.standard.footer.demo.common.thirdpart.properties.ThirdPartyDomainProperties;
-import com.sika.code.standard.thirdpart.constant.BaseThirdPartyInterface;
-import com.sika.code.standard.thirdpart.request.ThirdPartyRequestDTO;
-import com.sika.code.standard.thirdpart.util.ThirdPartyRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +51,7 @@ public class ErpRequestUtil extends ThirdPartyRequestUtil {
         request.setErpAppId(erpProperties.getAppId());
         request.setErpAppSecret(erpProperties.getAppSecret());
         thirdPartyRequestDTO.setData(request);
-        return requestThirdPartyForJson(thirdPartyRequestDTO, responseClass);
+        return requestForJson(thirdPartyRequestDTO, responseClass);
     }
 
     /**

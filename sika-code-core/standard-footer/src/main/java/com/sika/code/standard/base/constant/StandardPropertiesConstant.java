@@ -9,8 +9,7 @@ package com.sika.code.standard.base.constant;
 public class StandardPropertiesConstant {
     /** 异常信息 --- sika.code.exception.inform */
     public static final String EXCEPTION_INFORM = "sika.code.exception.inform";
-    /** restTemplate信息 --- sika.code.rest.template */
-    public static final String REST_TEMPLATE = "sika.code.rest.template";
+
     /** 认证 --- sika.code.auth */
     public static final String AUTH = "sika.code.auth";
 }

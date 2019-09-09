@@ -1,7 +1,7 @@
 package com.sika.code.standard.footer.demo.common.thirdpart.erp.constant;
 
 
-import com.sika.code.standard.thirdpart.constant.BaseThirdPartyInterface;
+import com.sika.code.common.thirdpart.constant.BaseThirdPartyInterface;
 
 /**
  * <p>

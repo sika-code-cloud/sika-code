@@ -1,12 +1,12 @@
 package com.sika.code.common.threadlocal.manager;
 
 import cn.hutool.core.util.BooleanUtil;
+import com.google.common.collect.Lists;
 import com.sika.code.basic.util.Assert;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.threadlocal.constant.ThreadLocalOperateType;
 import com.sika.code.common.threadlocal.customer.InheritableThreadLocalCustomer;
 import com.sika.code.common.threadlocal.customer.ThreadLocalCustomer;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -247,6 +247,7 @@ public class ThreadLocalManager {
     public static void setManualCleanToInheritable(Boolean manualClean) {
         setThreadLocal(MANUAL_CLEAN_NAME, manualClean);
     }
+
     /**
      * <p>
      * 设置清理为手动清理，若manualClean为true则必须手动调用removeAll接口来进行清理
@@ -259,32 +260,6 @@ public class ThreadLocalManager {
      */
     public static void setManualCleanToAll(Boolean manualClean) {
         setThreadLocalAndInheritable(MANUAL_CLEAN_NAME, manualClean);
-    }
-
-    /**
-     * <p>
-     * 从ThreadLocal中获取手动清理
-     * </p>
-     *
-     * @return Boolean
-     * @author daiqi
-     * @date 2019/7/10 16:14
-     */
-    public static boolean getManualCleanFromThreadLocal() {
-        return BooleanUtil.isTrue((Boolean) getThreadLocal(MANUAL_CLEAN_NAME));
-    }
-
-    /**
-     * <p>
-     * 从InheritableThreadLocal中获取手动清理
-     * </p>
-     *
-     * @return Boolean
-     * @author daiqi
-     * @date 2019/7/10 16:14
-     */
-    public static Boolean getManualCleanFromInheritable() {
-        return BooleanUtil.isTrue((Boolean) getInheritable(MANUAL_CLEAN_NAME));
     }
 
     /**
@@ -312,5 +287,77 @@ public class ThreadLocalManager {
         return THREAD_LOCAL_CACHE_LIST;
     }
 
+    /**
+     * <p>
+     * 返回true表示自动清理
+     * </p>
+     *
+     * @param
+     * @return boolean
+     * @author sikadai
+     * @date 2019/8/27 22:33
+     */
+    public static boolean isAutoCleanThreadLocal() {
+        return !isManualCleanThreadLocal();
+    }
+
+    /**
+     * <p>
+     * 为true表示自动清理
+     * </p>
+     *
+     * @param
+     * @return boolean
+     * @author sikadai
+     * @date 2019/8/27 22:32
+     */
+    public static boolean isAutoCleanInheritable() {
+        return !isManualCleanInheritable();
+    }
+
+    /**
+     * <p>
+     * 是需要手动清理ThreadLocal 返回true 否则返回false
+     * </p>
+     *
+     * @return Boolean
+     * @author daiqi
+     * @date 2019/7/10 16:14
+     */
+    public static boolean isManualCleanThreadLocal() {
+        return BooleanUtil.isTrue((Boolean) getThreadLocal(MANUAL_CLEAN_NAME));
+    }
+
+    /**
+     * <p>
+     * 是需要手动清理InheritableThreadLocal 返回true 否则返回false
+     * </p>
+     *
+     * @return Boolean
+     * @author daiqi
+     * @date 2019/7/10 16:14
+     */
+    public static Boolean isManualCleanInheritable() {
+        return BooleanUtil.isTrue((Boolean) getInheritable(MANUAL_CLEAN_NAME));
+    }
+
+    /**
+     * <p>
+     * 自动清理
+     * </p>
+     *
+     * @param
+     * @return void
+     * @author sikadai
+     * @date 2019/8/27 22:31
+     */
+    public static void removeAuto() {
+        if (isAutoCleanThreadLocal()) {
+            removeThreadLocal();
+        }
+        if (isAutoCleanInheritable()) {
+            removeInheritable();
+        }
+    }
 
 }
