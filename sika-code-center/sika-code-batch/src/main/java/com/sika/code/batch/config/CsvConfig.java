@@ -19,9 +19,6 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.validator.Validator;
 import org.springframework.batch.support.DatabaseType;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,18 +50,9 @@ public class CsvConfig {
     public ItemReader<PersonEntity> reader()throws Exception {
         FlatFileItemReader<PersonEntity> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("person.csv"));
-        reader.setLineMapper(new DefaultLineMapper<PersonEntity>(){
-            {
-                setLineTokenizer(new DelimitedLineTokenizer("|"){
-                    {
-                        setNames(new String[]{"name","age","nation","address"});
-                    }
-                });
-                setFieldSetMapper(new BeanWrapperFieldSetMapper<PersonEntity>(){{
-                    setTargetType(PersonEntity.class);
-                }});
-            }
-        });
+        String [] names = {"name","age","nation","address"};
+        String delimited = "|";
+        reader.setLineMapper(BatchUtil.lineMapper(PersonEntity.class, delimited, names));
         return reader;
     }
 
@@ -141,10 +129,10 @@ public class CsvConfig {
      * @return
      */
     @Bean
-    public Job importJob(JobBuilderFactory jobBuilderFactory, Step s1){
+    public Job importJob(JobBuilderFactory jobBuilderFactory, Step step){
         return jobBuilderFactory.get("importJob")
                 .incrementer(new RunIdIncrementer())
-                .flow(s1)//为Job指定Step
+                .flow(step)//为Job指定Step
                 .end()
                 .listener(csvJobListener())//绑定监听器csvJobListener
                 .build();
@@ -159,10 +147,10 @@ public class CsvConfig {
      * @return
      */
     @Bean
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<PersonEntity> reader, ItemWriter<PersonEntity> writer,
+    public Step step(StepBuilderFactory stepBuilderFactory, ItemReader<PersonEntity> reader, ItemWriter<PersonEntity> writer,
                       ItemProcessor<PersonEntity,PersonEntity> processor){
         return stepBuilderFactory
-                .get("step1")
+                .get("step")
                 .<PersonEntity,PersonEntity>chunk(65000)//批处理每次提交65000条数据
                 .reader(reader)//给step绑定reader
                 .processor(processor)//给step绑定processor
@@ -180,7 +168,6 @@ public class CsvConfig {
     public CsvJobListener csvJobListener(){
         return new CsvJobListener();
     }
-
     @Bean
     public Validator<PersonEntity> csvBeanValidator(){
         return new CsvBeanValidator<PersonEntity>();
