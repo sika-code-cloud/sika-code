@@ -6,6 +6,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,10 +17,16 @@ public class DemoController {
     SimpleJobLauncher jobLauncher;
 
     @Autowired
-    Job importJob;
-    @Autowired
-    Job importJob1;
+    @Qualifier(value = "importJob")
+    private Job importJob;
 
+    @Autowired
+    @Qualifier(value = "importJob1")
+    private Job importJob1;
+
+    @Autowired
+    @Qualifier(value = "partitionJob")
+    private Job partitionJob;
     @Autowired
     private AnimalMapper animalMapper;
 
@@ -39,5 +46,13 @@ public class DemoController {
                 .addLong("time", System.currentTimeMillis())
                 .toJobParameters();
         jobLauncher.run(importJob1, jobParameters);
+    }
+
+    @RequestMapping("/test2")
+    public void partitionJob() throws Exception {
+        jobParameters = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .toJobParameters();
+        jobLauncher.run(partitionJob, jobParameters);
     }
 }
