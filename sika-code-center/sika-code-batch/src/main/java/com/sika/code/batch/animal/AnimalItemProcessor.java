@@ -24,9 +24,9 @@ public class AnimalItemProcessor implements ItemProcessor<AnimalDTO, AnimalEntit
          */
         validator.validate(item);
         if (item.getColor().equals("黄色")) {
-            item.setColor("yellow");
+            item.setColor("yellow" + item.getColor());
         } else {
-            item.setColor("other");
+            item.setColor("other" + item.getColor());
         }
         return AnimalConvert.INSTANCE.convertToEntity(item);
     }

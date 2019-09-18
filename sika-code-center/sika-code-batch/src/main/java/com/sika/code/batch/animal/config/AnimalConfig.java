@@ -2,6 +2,8 @@ package com.sika.code.batch.animal.config;
 
 import com.sika.code.batch.animal.*;
 import com.sika.code.batch.animal.listen.AnimalFailureLoggerListener;
+import com.sika.code.batch.animal.listen.AnimalListener;
+import com.sika.code.batch.animal.listen.AnimalListener.*;
 import com.sika.code.batch.animal.mapper.AnimalMapper;
 import com.sika.code.batch.animal.service.AnimalService;
 import com.sika.code.batch.config.BatchUtil;
@@ -54,7 +56,7 @@ public class AnimalConfig {
         reader.setResource(new FileSystemResource("E:\\Users\\animal.csv"));
         String[] names = {"name", "color"};
         reader.setLineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names));
-        reader.setLinesToSkip(10);
+        reader.setLinesToSkip(0);
         return reader;
     }
 
@@ -98,6 +100,7 @@ public class AnimalConfig {
 //        writer.setBaseService(animalService);
         writer.setSqlSessionFactory(sqlSessionFactory);
         writer.setStatementId(AnimalMapper.class.getName() + ".insert");
+        writer.afterPropertiesSet();
         return writer;
     }
 
@@ -134,14 +137,20 @@ public class AnimalConfig {
                 .get("step1")
                 .<AnimalDTO, AnimalEntity>chunk(1000)//批处理每次提交65000条数据
                 .reader(readerAnimal)//给step绑定reader
+                .listener(new AnimalItemReadListener())
                 .processor(processorAnimal)//给step绑定processor
+                .listener(new AnimalItemProcessListener())
                 .writer(writerAnimal)//给step绑定writer
+                .listener(new AnimalItemWriteListener())
                 .faultTolerant()
-                .skipLimit(1)
-                .skip(ServiceUnavailableException.class)
+                .skipLimit(10)
+                .skip(Exception.class)
+                .listener(new AnimalSkipListener())
                 .retryLimit(5)
                 .retry(ServiceUnavailableException.class)
                 .throttleLimit(10)
+                .listener(new AnimalChunkListener())
+                .listener(new AnimalStepExecutionListener())
                 .build();
         return step;
     }
