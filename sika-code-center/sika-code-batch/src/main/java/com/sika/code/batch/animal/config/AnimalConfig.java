@@ -7,13 +7,14 @@ import com.sika.code.batch.animal.listen.AnimalListener.*;
 import com.sika.code.batch.animal.mapper.AnimalMapper;
 import com.sika.code.batch.animal.service.AnimalService;
 import com.sika.code.batch.config.BatchUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.ItemProcessor;
@@ -22,6 +23,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -35,6 +37,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableBatchProcessing
+@Slf4j
 public class AnimalConfig {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
@@ -51,9 +54,10 @@ public class AnimalConfig {
      * @throws Exception
      */
     @Bean
-    public ItemReader<AnimalDTO> readerAnimal() throws Exception {
+    @StepScope
+    public ItemReader<AnimalDTO> readerAnimal(@Value("#{jobParameters[path]}") final String path) throws Exception {
         FlatFileItemReader<AnimalDTO> reader = new FlatFileItemReader<>();
-        reader.setResource(new FileSystemResource("E:\\Users\\animal.csv"));
+        reader.setResource(new FileSystemResource(path));
         String[] names = {"name", "color"};
         reader.setLineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names));
         reader.setLinesToSkip(0);
@@ -117,6 +121,7 @@ public class AnimalConfig {
                 .incrementer(new RunIdIncrementer())
                 .flow(step1)//为Job指定Step
                 .end()
+                .validator(parameters -> log.info("------------parameters-------------{}", parameters))
                 .listener(csvJobListener1())//绑定监听器csvJobListener
                 .build();
     }
@@ -137,18 +142,18 @@ public class AnimalConfig {
                 .get("step1")
                 .<AnimalDTO, AnimalEntity>chunk(1000)//批处理每次提交65000条数据
                 .reader(readerAnimal)//给step绑定reader
-                .listener(new AnimalItemReadListener())
                 .processor(processorAnimal)//给step绑定processor
-                .listener(new AnimalItemProcessListener())
                 .writer(writerAnimal)//给step绑定writer
-                .listener(new AnimalItemWriteListener())
                 .faultTolerant()
                 .skipLimit(10)
                 .skip(Exception.class)
                 .listener(new AnimalSkipListener())
                 .retryLimit(5)
                 .retry(ServiceUnavailableException.class)
-                .throttleLimit(10)
+
+                .listener(new AnimalItemWriteListener())
+                .listener(new AnimalItemReadListener())
+                .listener(new AnimalItemProcessListener())
                 .listener(new AnimalChunkListener())
                 .listener(new AnimalStepExecutionListener())
                 .build();

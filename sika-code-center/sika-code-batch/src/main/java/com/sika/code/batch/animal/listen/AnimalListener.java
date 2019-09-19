@@ -18,16 +18,19 @@ public class AnimalListener {
 
     public static class AnimalStepExecutionListener implements StepExecutionListener {
 
-
+        private static Long beginTime = 0L;
         @Override
         public ExitStatus afterStep(StepExecution stepExecution) {
             LogUtil.info("afterStep", stepExecution.toString(), log);
-            return ExitStatus.COMPLETED;
+            log.info("-------------执行的时间为:{}-------------", (System.currentTimeMillis() - beginTime));
+            return stepExecution.getExitStatus();
         }
 
         @Override
         public void beforeStep(StepExecution stepExecution) {
+            beginTime = System.currentTimeMillis();
             LogUtil.info("beforeStep", stepExecution.toString(), log);
+
         }
 
     }

@@ -10,13 +10,18 @@ import org.springframework.batch.core.JobExecutionListener;
  */
 @Slf4j
 public class CsvJobListener implements JobExecutionListener {
+    private static Long beginTime = 0L;
+
     @Override
     public void beforeJob(JobExecution jobExecution) {
-      log.info("beforeJob:jobExecution{}", jobExecution);
+        beginTime = System.currentTimeMillis();
+        log.info("beforeJob:jobExecution{}", jobExecution);
     }
 
     @Override
     public void afterJob(JobExecution jobExecution) {
         log.info("afterJob:jobExecution{}", jobExecution);
+        log.info("-------------执行的时间为:{}-------------", (System.currentTimeMillis() - beginTime));
     }
+
 }

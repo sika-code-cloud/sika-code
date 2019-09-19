@@ -29,6 +29,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.naming.ServiceUnavailableException;
 import javax.sql.DataSource;
+import java.util.List;
 
 /**
  * @author daiqi
@@ -77,15 +78,22 @@ public class CsvConfig {
      */
     @Bean
     public ItemWriter<PersonEntity> writer(@Qualifier("dataSource") DataSource dataSource){
-        JdbcBatchItemWriter<PersonEntity> writer = new JdbcBatchItemWriter<>();
-        //我们使用JDBC批处理的JdbcBatchItemWriter来写数据到数据库
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-        String sql = "insert into person "+" (name,age,nation,address) "
-                +" values(:name,:age,:nation,:address)";
-        //在此设置要执行批处理的SQL语句
-        writer.setSql(sql);
-        writer.setDataSource(dataSource);
+        ItemWriter<PersonEntity> writer = new ItemWriter<PersonEntity>() {
+            @Override
+            public void write(List<? extends PersonEntity> items) throws Exception {
+
+            }
+        };
         return writer;
+//        JdbcBatchItemWriter<PersonEntity> writer = new JdbcBatchItemWriter<>();
+//        //我们使用JDBC批处理的JdbcBatchItemWriter来写数据到数据库
+//        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+//        String sql = "insert into person "+" (name,age,nation,address) "
+//                +" values(:name,:age,:nation,:address)";
+//        //在此设置要执行批处理的SQL语句
+//        writer.setSql(sql);
+//        writer.setDataSource(dataSource);
+//        return writer;
     }
 
     /**
@@ -151,7 +159,7 @@ public class CsvConfig {
                       ItemProcessor<PersonEntity,PersonEntity> processor){
         return stepBuilderFactory
                 .get("step")
-                .<PersonEntity,PersonEntity>chunk(65000)//批处理每次提交65000条数据
+                .<PersonEntity,PersonEntity>chunk(1000)//批处理每次提交65000条数据
                 .reader(reader)//给step绑定reader
                 .processor(processor)//给step绑定processor
                 .writer(writer)//给step绑定writer
