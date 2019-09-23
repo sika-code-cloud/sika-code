@@ -1,14 +1,13 @@
 package com.sika.code.batch.config;
 
-import com.sika.code.batch.person.CsvBeanValidator;
-import com.sika.code.batch.person.CsvItemProcessor;
-import com.sika.code.batch.person.CsvJobListener;
-import com.sika.code.batch.person.PersonEntity;
+import com.sika.code.batch.person.*;
+import com.sika.code.common.json.util.JSONUtil;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
@@ -22,6 +21,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.validator.Validator;
 import org.springframework.batch.support.DatabaseType;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -44,14 +44,21 @@ public class CsvConfig {
      * 1，使用FlatFileItemReader读取文件
      * 2，使用FlatFileItemReader的setResource方法设置csv文件的路径
      * 3，对此对cvs文件的数据和领域模型类做对应映射
+     * 使用@StepScope注解必须返回为实现类，因为是通过代理生成相应的bean
      * @return
      * @throws Exception
      */
     @Bean
-    public ItemReader<PersonEntity> reader()throws Exception {
+    @StepScope
+    public FlatFileItemReader<PersonEntity> reader(@Value("#{jobParameters[namestr]}") String namestr)throws Exception {
         FlatFileItemReader<PersonEntity> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("person.csv"));
-        String [] names = {"name","age","nation","address"};
+        reader.setLinesToSkip(1);
+        reader.setSkippedLinesCallback(new CsvLineCallbackHandler());
+//        String [] names = {"name","age","nation","address"};
+        List<String> names1 = JSONUtil.parseArray(namestr, String.class);
+        String [] names = new String[names1.size()];
+        names1.toArray(names);
         String delimited = "|";
         reader.setLineMapper(BatchUtil.lineMapper(PersonEntity.class, delimited, names));
         return reader;

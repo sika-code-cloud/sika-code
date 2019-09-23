@@ -1,6 +1,8 @@
 package com.sika.code.batch.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.sika.code.batch.animal.mapper.AnimalMapper;
+import com.sika.code.common.json.util.JSONUtil;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -34,8 +36,15 @@ public class DemoController {
 
     @RequestMapping("/test")
     public void imp() throws Exception {
+        JobParameters jobParameters;
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add("name");
+        jsonArray.add("age");
+        jsonArray.add("nation");
+        jsonArray.add("address");
         jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
+                .addString("namestr", JSONArray.toJSONString(jsonArray))
                 .toJobParameters();
         jobLauncher.run(importJob, jobParameters);
     }
