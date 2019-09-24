@@ -69,7 +69,8 @@ public class CsvConfig {
      * @return
      */
     @Bean
-    public ItemProcessor<PersonEntity,PersonEntity> processor(){
+    @StepScope
+    public ItemProcessor<PersonEntity,PersonEntity> processor(@Value("#{jobParameters[namestr]}") String namestr){
         //使用我们自定义的ItemProcessor的实现CsvItemProcessor
         CsvItemProcessor processor = new CsvItemProcessor();
         //为processor指定校验器为CsvBeanValidator()
@@ -84,7 +85,8 @@ public class CsvConfig {
      * @return
      */
     @Bean
-    public ItemWriter<PersonEntity> writer(@Qualifier("dataSource") DataSource dataSource){
+    @StepScope
+    public ItemWriter<PersonEntity> writer(@Value("#{jobParameters[namestr]}") String namestr, @Qualifier("dataSource") DataSource dataSource){
         ItemWriter<PersonEntity> writer = new ItemWriter<PersonEntity>() {
             @Override
             public void write(List<? extends PersonEntity> items) throws Exception {
