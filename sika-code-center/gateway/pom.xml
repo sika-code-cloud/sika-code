@@ -9,22 +9,48 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sika-code-batch</artifactId>
-    <name>sika-code-batch</name>
-    <description>批处理组件</description>
+    <artifactId>gateway</artifactId>
+    <properties>
+        <!--设置字符编码及java版本 -->
+        <project.build.targetJdk>1.8</project.build.targetJdk>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <jm.build.jvmSize>1024m</jm.build.jvmSize>
+        <jm.maven.version>3.0.5</jm.maven.version>
+        <lombok.version>1.18.4</lombok.version>
+    </properties>
 
     <dependencies>
+        <!--spring cloud gateway是基于webflux需要排除web依赖-->
         <dependency>
             <groupId>com.sika.code.core</groupId>
-            <artifactId>standard-footer</artifactId>
+            <artifactId>common</artifactId>
             <version>${com.sika.code.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <!-- 类映射工具类 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-batch</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
         </dependency>
     </dependencies>
+
 
     <profiles>
         <!-- develop的节点配置:begin -->
@@ -78,7 +104,7 @@
     </profiles>
 
     <build>
-        <finalName>siak-code-oauth-server</finalName>
+        <finalName>siak-code-gateway-server</finalName>
         <filters>
             <filter>src/main/resources/application-${profileActive}.yml</filter>
         </filters>

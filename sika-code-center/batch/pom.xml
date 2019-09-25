@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sika-code-oauth</artifactId>
+    <artifactId>batch</artifactId>
+    <name>batch</name>
+    <description>批处理组件</description>
 
     <dependencies>
         <dependency>
@@ -17,8 +19,12 @@
             <artifactId>standard-footer</artifactId>
             <version>${com.sika.code.core.version}</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <!-- develop的节点配置:begin -->
