@@ -1,16 +1,21 @@
 package com.sika.code.batch.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.sika.code.batch.animal.mapper.AnimalMapper;
-import com.sika.code.common.json.util.JSONUtil;
+import com.google.common.collect.Lists;
+import com.sika.code.batch.adaptor.JobParametersBuilderExp;
+import com.sika.code.batch.dto.JobParametersData;
+import com.sika.code.batch.test.animal.mapper.AnimalMapper;
+import com.sika.code.batch.test.person.PersonEntity;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class DemoController {
@@ -36,16 +41,15 @@ public class DemoController {
 
     @RequestMapping("/test")
     public void imp() throws Exception {
-        JobParameters jobParameters;
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add("name");
-        jsonArray.add("age");
-        jsonArray.add("nation");
-        jsonArray.add("address");
-        jobParameters = new JobParametersBuilder()
-                .addLong("time", System.currentTimeMillis())
-                .addString("namestr", JSONArray.toJSONString(jsonArray))
-                .toJobParameters();
+        List<String> names = Lists.newArrayList("name", "age", "nation", "address");
+        JobParametersData jobParametersData = new JobParametersData()
+                .setDelimiter("|")
+                .setNames(names)
+                .setResource(new ClassPathResource("person.csv"))
+                .setFromClass(PersonEntity.class)
+                .setToClass(PersonEntity.class)
+                ;
+        JobParameters jobParameters = JobParametersBuilderExp.build(jobParametersData);
         jobLauncher.run(importJob, jobParameters);
     }
 
