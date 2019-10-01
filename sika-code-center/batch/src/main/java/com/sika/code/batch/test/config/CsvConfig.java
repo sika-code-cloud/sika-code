@@ -6,10 +6,7 @@ import com.sika.code.batch.test.person.*;
 import com.sika.code.batch.util.BatchUtil;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
@@ -21,7 +18,6 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.validator.Validator;
 import org.springframework.batch.support.DatabaseType;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -50,7 +46,7 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public FlatFileItemReader reader(@Value("#{jobParameters[data]}") String data) throws Exception {
+    public FlatFileItemReader reader() throws Exception {
         JobParametersData parametersData = JobParametersBuilderExp.fromData();
         parametersData.getItemWriter();
         FlatFileItemReader reader = new FlatFileItemReader<>();
@@ -70,7 +66,7 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public ItemProcessor processor(@Value("#{jobParameters[namestr]}") String namestr) {
+    public ItemProcessor processor() {
         //使用我们自定义的ItemProcessor的实现CsvItemProcessor
         CsvItemProcessor processor = new CsvItemProcessor();
         //为processor指定校验器为CsvBeanValidator()
@@ -87,7 +83,7 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public ItemWriter writer(@Value("#{jobParameters[namestr]}") String namestr, @Qualifier("dataSource") DataSource dataSource) {
+    public ItemWriter writer(@Qualifier("dataSource") DataSource dataSource) {
         ItemWriter writer = new ItemWriter<PersonEntity>() {
             @Override
             public void write(List<? extends PersonEntity> items) throws Exception {
@@ -153,8 +149,7 @@ public class CsvConfig {
     public Job importJob(JobBuilderFactory jobBuilderFactory, Step step) {
         return jobBuilderFactory.get("importJob")
                 .incrementer(new RunIdIncrementer())
-                .flow(step)//为Job指定Step
-                .end()
+                .start(step)//为Job指定Step
                 .listener(csvJobListener())//绑定监听器csvJobListener
                 .build();
     }
@@ -169,6 +164,7 @@ public class CsvConfig {
      * @return
      */
     @Bean
+    @JobScope
     public Step step(StepBuilderFactory stepBuilderFactory, ItemReader<PersonEntity> reader, ItemWriter<PersonEntity> writer,
                      ItemProcessor<PersonEntity, PersonEntity> processor) {
         return stepBuilderFactory

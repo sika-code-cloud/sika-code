@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.springframework.batch.core.*;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.ItemProcessor;
@@ -26,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
 import javax.naming.ServiceUnavailableException;
@@ -58,7 +56,7 @@ public class AnimalConfig {
     @StepScope
     public FlatFileItemReader<AnimalDTO> readerAnimal(@Value("#{jobParameters[path]}") final String path) throws Exception {
         FlatFileItemReader<AnimalDTO> reader = new FlatFileItemReader<>();
-        reader.setResource(new FileSystemResource(path));
+        reader.setResource(new ClassPathResource(path));
         List<String> names = Lists.newArrayList("name", "color");
         reader.setLineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names));
         reader.setLinesToSkip(0);
@@ -72,6 +70,7 @@ public class AnimalConfig {
      * @return
      */
     @Bean
+    @StepScope
     public ItemProcessor<AnimalDTO, AnimalEntity> processorAnimal() {
         //使用我们自定义的ItemProcessor的实现CsvItemProcessor
         AnimalItemProcessor processor = new AnimalItemProcessor();
@@ -100,6 +99,7 @@ public class AnimalConfig {
 //        return writer;
 //    }
     @Bean
+    @StepScope
     public ItemWriter<AnimalEntity> writerAnimal(@Qualifier("dataSource") DataSource dataSource) {
         MyBatisBatchItemWriter<AnimalEntity> writer = new MyBatisBatchItemWriter<>();
 //        writer.setBaseService(animalService);
@@ -120,8 +120,7 @@ public class AnimalConfig {
     public Job importJob1(JobBuilderFactory jobBuilderFactory, Step step1) {
         return jobBuilderFactory.get("importJob1")
                 .incrementer(new RunIdIncrementer())
-                .flow(step1)//为Job指定Step
-                .end()
+                .start(step1)//为Job指定Step
                 .validator(parameters -> log.info("------------parameters-------------{}", parameters))
                 .listener(csvJobListener1())//绑定监听器csvJobListener
                 .build();
@@ -137,6 +136,7 @@ public class AnimalConfig {
      * @return
      */
     @Bean
+    @JobScope
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<AnimalDTO> readerAnimal, ItemWriter<AnimalEntity> writerAnimal,
                       ItemProcessor<AnimalDTO, AnimalEntity> processorAnimal) throws Exception {
         TaskletStep step = stepBuilderFactory

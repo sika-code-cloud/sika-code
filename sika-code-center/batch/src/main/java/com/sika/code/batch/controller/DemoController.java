@@ -57,7 +57,7 @@ public class DemoController {
     public void imp1() throws Exception {
         jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
-                .addString("path", "E:\\Users\\animal.csv")
+                .addString("path", "animal.csv")
                 .toJobParameters();
         jobLauncher.run(importJob1, jobParameters);
     }
