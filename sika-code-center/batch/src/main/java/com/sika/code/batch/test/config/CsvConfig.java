@@ -1,9 +1,8 @@
 package com.sika.code.batch.test.config;
 
-import com.sika.code.batch.adaptor.JobParametersBuilderExp;
-import com.sika.code.batch.dto.JobParametersData;
 import com.sika.code.batch.test.person.*;
-import com.sika.code.batch.util.BatchUtil;
+import com.sika.code.common.json.util.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.*;
@@ -15,16 +14,17 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.validator.Validator;
 import org.springframework.batch.support.DatabaseType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.naming.ServiceUnavailableException;
 import javax.sql.DataSource;
-import java.util.List;
 
 /**
  * @author daiqi
@@ -32,6 +32,7 @@ import java.util.List;
  */
 @Configuration
 @EnableBatchProcessing
+@Slf4j
 public class CsvConfig {
 
     /**
@@ -46,16 +47,13 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public FlatFileItemReader reader() throws Exception {
-        JobParametersData parametersData = JobParametersBuilderExp.fromData();
-        parametersData.getItemWriter();
+    @Scope(value = "prototype")
+    public FlatFileItemReader csvItemReader() throws Exception {
         FlatFileItemReader reader = new FlatFileItemReader<>();
-        reader.setResource(parametersData.getResource());
         reader.setLinesToSkip(1);
         reader.setSkippedLinesCallback(new CsvLineCallbackHandler());
+        reader.setLineMapper(new DefaultLineMapper());
 //        String [] names = {"name","age","nation","address"};
-
-        reader.setLineMapper(BatchUtil.lineMapper(parametersData.getFromClass(), parametersData.getDelimiter(), parametersData.getNames()));
         return reader;
     }
 
@@ -66,7 +64,8 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public ItemProcessor processor() {
+    @Scope(value = "prototype")
+    public ItemProcessor csvItemProcessor() {
         //使用我们自定义的ItemProcessor的实现CsvItemProcessor
         CsvItemProcessor processor = new CsvItemProcessor();
         //为processor指定校验器为CsvBeanValidator()
@@ -83,23 +82,21 @@ public class CsvConfig {
      */
     @Bean
     @StepScope
-    public ItemWriter writer(@Qualifier("dataSource") DataSource dataSource) {
-        ItemWriter writer = new ItemWriter<PersonEntity>() {
-            @Override
-            public void write(List<? extends PersonEntity> items) throws Exception {
-
-            }
+    @Scope(value = "prototype")
+    public ItemWriter csvItemWrite(@Qualifier("dataSource") DataSource dataSource) {
+        ItemWriter writer = (ItemWriter<PersonEntity>) items -> {
+            log.info("需要写的数据为:{}", JSONUtil.toJSONString(items));
         };
         return writer;
-//        JdbcBatchItemWriter<PersonEntity> writer = new JdbcBatchItemWriter<>();
+//        JdbcBatchItemWriter<PersonEntity> csvItemWrite = new JdbcBatchItemWriter<>();
 //        //我们使用JDBC批处理的JdbcBatchItemWriter来写数据到数据库
-//        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+//        csvItemWrite.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
 //        String sql = "insert into person "+" (name,age,nation,address) "
 //                +" values(:name,:age,:nation,:address)";
 //        //在此设置要执行批处理的SQL语句
-//        writer.setSql(sql);
-//        writer.setDataSource(dataSource);
-//        return writer;
+//        csvItemWrite.setSql(sql);
+//        csvItemWrite.setDataSource(dataSource);
+//        return csvItemWrite;
     }
 
     /**

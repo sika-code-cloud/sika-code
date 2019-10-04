@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @TableName(value = "animal")
 public class AnimalEntity extends BaseStandardEntity {
-    private Integer name;
+    private String name;
     private String color;
 
 }

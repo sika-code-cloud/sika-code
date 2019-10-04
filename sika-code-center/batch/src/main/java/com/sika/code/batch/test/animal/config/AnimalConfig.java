@@ -1,34 +1,35 @@
 package com.sika.code.batch.test.animal.config;
 
-import com.google.common.collect.Lists;
-import com.sika.code.batch.test.animal.*;
+import com.sika.code.batch.adaptor.JobParametersBuilderExp;
+import com.sika.code.batch.dto.JobParametersData;
+import com.sika.code.batch.dto.StepCommonData;
+import com.sika.code.batch.dto.StepData;
+import com.sika.code.batch.dto.StepExceptionData;
+import com.sika.code.batch.test.animal.AnimalItemProcessor;
+import com.sika.code.batch.test.animal.AnimalValidator;
+import com.sika.code.batch.test.animal.CsvJobListener1;
 import com.sika.code.batch.test.animal.listen.AnimalFailureLoggerListener;
-import com.sika.code.batch.test.animal.listen.AnimalListener.*;
-import com.sika.code.batch.test.animal.mapper.AnimalMapper;
-import com.sika.code.batch.test.animal.service.AnimalService;
-import com.sika.code.batch.util.BatchUtil;
+import com.sika.code.common.string.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.step.tasklet.TaskletStep;
+import org.springframework.batch.core.step.builder.SimpleStepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.context.annotation.Scope;
 
-import javax.naming.ServiceUnavailableException;
 import javax.sql.DataSource;
-import java.util.List;
 
 /**
  * @author daiqi
@@ -41,7 +42,12 @@ public class AnimalConfig {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
     @Autowired
-    private AnimalService animalService;
+    private StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    private JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource dataSource;
 
     /**
      * ItemReader定义,用来读取数据
@@ -54,13 +60,11 @@ public class AnimalConfig {
      */
     @Bean
     @StepScope
-    public FlatFileItemReader<AnimalDTO> readerAnimal(@Value("#{jobParameters[path]}") final String path) throws Exception {
-        FlatFileItemReader<AnimalDTO> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource(path));
-        List<String> names = Lists.newArrayList("name", "color");
-        reader.setLineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names));
-        reader.setLinesToSkip(0);
-        return reader;
+    @Scope(value = "prototype")
+    public FlatFileItemReader readerAnimal() {
+        FlatFileItemReader flatFileItemReader = new FlatFileItemReader<>();
+        flatFileItemReader.setLineMapper(new DefaultLineMapper());
+        return flatFileItemReader;
     }
 
 
@@ -71,7 +75,8 @@ public class AnimalConfig {
      */
     @Bean
     @StepScope
-    public ItemProcessor<AnimalDTO, AnimalEntity> processorAnimal() {
+    @Scope(value = "prototype")
+    public ItemProcessor processorAnimal() {
         //使用我们自定义的ItemProcessor的实现CsvItemProcessor
         AnimalItemProcessor processor = new AnimalItemProcessor();
         //为processor指定校验器为CsvBeanValidator()
@@ -88,25 +93,81 @@ public class AnimalConfig {
      */
 //    @Bean
 //    public ItemWriter<AnimalDTO> writerAnimal(@Qualifier("dataSource") DataSource dataSource) {
-//        JdbcBatchItemWriter<AnimalDTO> writer = new JdbcBatchItemWriter<>();
+//        JdbcBatchItemWriter<AnimalDTO> csvItemWrite = new JdbcBatchItemWriter<>();
 //        //我们使用JDBC批处理的JdbcBatchItemWriter来写数据到数据库
-//        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+//        csvItemWrite.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
 //        String sql = "insert into animal " + " (name,color) "
 //                + " values(:name,:color)";
 //        //在此设置要执行批处理的SQL语句
-//        writer.setSql(sql);
-//        writer.setDataSource(dataSource);
-//        return writer;
+//        csvItemWrite.setSql(sql);
+//        csvItemWrite.setDataSource(dataSource);
+//        return csvItemWrite;
 //    }
     @Bean
     @StepScope
-    public ItemWriter<AnimalEntity> writerAnimal(@Qualifier("dataSource") DataSource dataSource) {
-        MyBatisBatchItemWriter<AnimalEntity> writer = new MyBatisBatchItemWriter<>();
-//        writer.setBaseService(animalService);
-        writer.setSqlSessionFactory(sqlSessionFactory);
-        writer.setStatementId(AnimalMapper.class.getName() + ".insert");
-        writer.afterPropertiesSet();
-        return writer;
+    @Scope(value = "prototype")
+    public ItemWriter writerAnimal() {
+        MyBatisBatchItemWriter myBatisBatchItemWriter = new MyBatisBatchItemWriter<>();
+        myBatisBatchItemWriter.setSqlSessionFactory(sqlSessionFactory);
+        myBatisBatchItemWriter.setStatementId(StringUtil.EMPTY);
+        return myBatisBatchItemWriter;
+    }
+    /**
+     * step步骤，包含ItemReader，ItemProcessor和ItemWriter
+     *
+     * @return
+     */
+    @Bean
+    @JobScope
+    public Step step1() {
+        JobParametersData jobParametersData = JobParametersBuilderExp.fromData();
+        ItemWriter itemWriter = jobParametersData.getItemWriter();
+        ItemReader itemReader = jobParametersData.getItemReader();
+        ItemProcessor itemProcessor = jobParametersData.getItemProcessor();
+        StepData stepData = jobParametersData.getStepData();
+        StepCommonData stepCommonData = stepData.getStepCommonData();
+        StepExceptionData stepExceptionData = stepData.getStepExceptionData();
+
+        SimpleStepBuilder builder = (SimpleStepBuilder) stepBuilderFactory
+                .get(stepCommonData.getName())
+                .chunk(stepCommonData.getChunk())
+                .reader(itemReader)
+                .processor(itemProcessor)
+                .writer(itemWriter)
+                .faultTolerant()
+                .skipLimit(stepCommonData.getSkipLimit())
+                .skip(stepCommonData.getSkipException())
+                .retryLimit(stepCommonData.getRetryLimit())
+                .retry(stepCommonData.getRetryException())
+
+                .listener(stepExceptionData.getSkipListener())
+                .listener(stepExceptionData.getItemWriteListener())
+                .listener(stepExceptionData.getItemReadListener())
+                .listener(stepExceptionData.getItemProcessListener())
+                .listener(stepExceptionData.getChunkListener())
+                .listener(stepExceptionData.getStepExecutionListener());
+        return builder.build();
+//        return builder1.build();
+//
+//        SimpleStepBuilder builder = (SimpleStepBuilder) stepBuilderFactory
+//                .get("step1")
+//                .chunk(1000)//批处理每次提交65000条数据
+//                .csvItemReader(readerAnimal)//给step绑定reader
+//                .csvItemProcessor(processorAnimal)//给step绑定processor
+//                .csvItemWrite(writerAnimal)//给step绑定writer
+//                .faultTolerant()
+//                .skipLimit(10)
+//                .skip(Exception.class)
+//                .retryLimit(5)
+//                .retry(ServiceUnavailableException.class)
+//                .listener(new AnimalSkipListener())
+//                .listener(new AnimalItemWriteListener())
+//                .listener(new AnimalItemReadListener())
+//                .listener(new AnimalItemProcessListener())
+//                .listener(new AnimalChunkListener())
+//                .listener(new AnimalStepExecutionListener());
+
+//        return builder.build();
     }
 
     /**
@@ -117,7 +178,7 @@ public class AnimalConfig {
      * @return
      */
     @Bean
-    public Job importJob1(JobBuilderFactory jobBuilderFactory, Step step1) {
+    public Job importJob1(Step step1) {
         return jobBuilderFactory.get("importJob1")
                 .incrementer(new RunIdIncrementer())
                 .start(step1)//为Job指定Step
@@ -126,45 +187,12 @@ public class AnimalConfig {
                 .build();
     }
 
-    /**
-     * step步骤，包含ItemReader，ItemProcessor和ItemWriter
-     *
-     * @param stepBuilderFactory
-     * @param readerAnimal
-     * @param writerAnimal
-     * @param processorAnimal
-     * @return
-     */
-    @Bean
-    @JobScope
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<AnimalDTO> readerAnimal, ItemWriter<AnimalEntity> writerAnimal,
-                      ItemProcessor<AnimalDTO, AnimalEntity> processorAnimal) throws Exception {
-        TaskletStep step = stepBuilderFactory
-                .get("step1")
-                .<AnimalDTO, AnimalEntity>chunk(1000)//批处理每次提交65000条数据
-                .reader(readerAnimal)//给step绑定reader
-                .processor(processorAnimal)//给step绑定processor
-                .writer(writerAnimal)//给step绑定writer
-                .faultTolerant()
-                .skipLimit(10)
-                .skip(Exception.class)
-                .listener(new AnimalSkipListener())
-                .retryLimit(5)
-                .retry(ServiceUnavailableException.class)
-
-                .listener(new AnimalItemWriteListener())
-                .listener(new AnimalItemReadListener())
-                .listener(new AnimalItemProcessListener())
-                .listener(new AnimalChunkListener())
-                .listener(new AnimalStepExecutionListener())
-                .build();
-        return step;
-    }
 
     @Bean
     public AnimalFailureLoggerListener animalFailureLoggerListener() {
         return new AnimalFailureLoggerListener();
     }
+
     @Bean
     public CsvJobListener1 csvJobListener1() {
         return new CsvJobListener1();

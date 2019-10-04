@@ -102,7 +102,7 @@ public class PartitionerJob {
     @Bean
     @StepScope
     public UserProcessor slaveProcessor(@Value("#{stepExecutionContext[name]}") String name) {
-        log.info("********called slave processor **********");
+        log.info("********called slave csvItemProcessor **********");
         UserProcessor userProcessor = new UserProcessor();
         userProcessor.setThreadName(name);
         return userProcessor;
@@ -156,16 +156,16 @@ public class PartitionerJob {
     public FlatFileItemWriter<User> slaveWriter(
             @Value("#{stepExecutionContext[fromId]}") final String fromId,
             @Value("#{stepExecutionContext[toId]}") final String toId) {
-        FlatFileItemWriter<User> reader = new FlatFileItemWriter<>();
-        reader.setResource(new FileSystemResource(
+        FlatFileItemWriter<User> writer = new FlatFileItemWriter<>();
+        writer.setResource(new FileSystemResource(
                 "d:/user/users.processed" + fromId + "-" + toId + ".csv"));
-        //reader.setAppendAllowed(false);
-        reader.setLineAggregator(new DelimitedLineAggregator<User>() {{
+        //csvItemReader.setAppendAllowed(false);
+        writer.setLineAggregator(new DelimitedLineAggregator<User>() {{
             setDelimiter(",");
             setFieldExtractor(new BeanWrapperFieldExtractor<User>() {{
                 setNames(new String[]{"id", "username", "password", "age"});
             }});
         }});
-        return reader;
+        return writer;
     }
 }

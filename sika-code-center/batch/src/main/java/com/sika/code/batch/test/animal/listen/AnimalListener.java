@@ -1,7 +1,5 @@
 package com.sika.code.batch.test.animal.listen;
 
-import com.sika.code.batch.test.animal.AnimalDTO;
-import com.sika.code.batch.test.animal.AnimalEntity;
 import com.sika.code.common.log.util.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.*;
@@ -19,6 +17,7 @@ public class AnimalListener {
     public static class AnimalStepExecutionListener implements StepExecutionListener {
 
         private static Long beginTime = 0L;
+
         @Override
         public ExitStatus afterStep(StepExecution stepExecution) {
             LogUtil.info("afterStep", stepExecution.toString(), log);
@@ -52,9 +51,9 @@ public class AnimalListener {
         }
     }
 
-    public static class AnimalItemReadListener implements ItemReadListener<AnimalDTO> {
+    public static class AnimalItemReadListener<I> implements ItemReadListener<I> {
         @Override
-        public void afterRead(AnimalDTO item) {
+        public void afterRead(I item) {
             LogUtil.info("afterRead", item, log);
         }
 
@@ -70,49 +69,49 @@ public class AnimalListener {
 
     }
 
-    public static class AnimalItemProcessListener implements ItemProcessListener<AnimalDTO, AnimalEntity> {
+    public static class AnimalItemProcessListener<I, O> implements ItemProcessListener<I, O> {
 
         @Override
-        public void afterProcess(AnimalDTO item, AnimalEntity result) {
+        public void afterProcess(I item, O result) {
             LogUtil.info("afterProcess：item", item, log);
             LogUtil.info("afterProcess：result", result, log);
         }
 
         @Override
-        public void beforeProcess(AnimalDTO item) {
+        public void beforeProcess(I item) {
             LogUtil.info("beforeProcess：item", item, log);
         }
 
         @Override
-        public void onProcessError(AnimalDTO item, Exception e) {
+        public void onProcessError(I item, Exception e) {
             LogUtil.info("onProcessError：item", item, log);
             LogUtil.error("onProcessError：Exception", e, log);
         }
     }
 
-    public static class AnimalItemWriteListener implements ItemWriteListener<AnimalEntity> {
+    public static class AnimalItemWriteListener<O> implements ItemWriteListener<O> {
 
         @Override
-        public void afterWrite(List<? extends AnimalEntity> items) {
+        public void afterWrite(List<? extends O> items) {
             LogUtil.info("afterWrite", items, log);
         }
 
         @Override
-        public void beforeWrite(List<? extends AnimalEntity> items) {
+        public void beforeWrite(List<? extends O> items) {
             LogUtil.info("beforeWrite", items, log);
         }
 
         @Override
-        public void onWriteError(Exception exception, List<? extends AnimalEntity> items) {
+        public void onWriteError(Exception exception, List<? extends O> items) {
             LogUtil.error("onWriteError：exception", exception, log);
             LogUtil.error("onWriteError：items", items, log);
         }
 
     }
 
-    public static class AnimalSkipListener implements SkipListener<AnimalDTO, AnimalEntity> {
+    public static class AnimalSkipListener<I, O> implements SkipListener<I, O> {
         @Override
-        public void onSkipInProcess(AnimalDTO item, Throwable t) {
+        public void onSkipInProcess(I item, Throwable t) {
             LogUtil.error("onSkipInProcess：item", item, log);
             LogUtil.error("onSkipInProcess：Throwable", t, log);
         }
@@ -123,7 +122,7 @@ public class AnimalListener {
         }
 
         @Override
-        public void onSkipInWrite(AnimalEntity item, Throwable t) {
+        public void onSkipInWrite(O item, Throwable t) {
             LogUtil.error("onSkipInWrite：item", item, log);
             LogUtil.error("onSkipInWrite：Throwable", t, log);
         }

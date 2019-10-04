@@ -22,6 +22,7 @@ public class AnimalItemProcessor implements ItemProcessor<AnimalDTO, AnimalEntit
         validator.validate(item);
         if (item.getColor().equals("黄色")) {
             item.setColor("yellow" + item.getColor());
+            throw new RuntimeException(item.getColor());
         } else {
             item.setColor("other" + item.getColor());
         }

@@ -1,5 +1,6 @@
 package com.sika.code.batch.test.person;
 
+import com.sika.code.common.json.util.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.validator.ValidationException;
@@ -26,9 +27,7 @@ public class CsvItemProcessor extends ValidatingItemProcessor<PersonEntity> {
             beginTime = System.currentTimeMillis();
         }
 
-        if (i >= 30912) {
-            log.info("------------所用时间为：{}---处理的条数为：{}--------", System.currentTimeMillis() - beginTime, i);
-        }
+        log.info("处理的数据为{}", JSONUtil.toJSONString(item));
         return item;
     }
 }

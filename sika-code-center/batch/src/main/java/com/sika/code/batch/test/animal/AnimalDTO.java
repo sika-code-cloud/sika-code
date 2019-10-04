@@ -9,6 +9,6 @@ import lombok.Data;
  */
 @Data
 public class AnimalDTO extends BaseStandardDTO {
-    private Integer name;
+    private String name;
     private String color;
 }
