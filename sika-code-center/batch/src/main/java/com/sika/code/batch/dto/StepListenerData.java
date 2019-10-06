@@ -1,10 +1,10 @@
 package com.sika.code.batch.dto;
 
 import com.sika.code.basic.util.BaseUtil;
-import com.sika.code.batch.listener.*;
-import com.sika.code.batch.listener.base.StepRetryProcessListener;
-import com.sika.code.batch.listener.base.StepRetryReadListener;
-import com.sika.code.batch.listener.base.StepRetryWriteListener;
+import com.sika.code.batch.listener.step.*;
+import com.sika.code.batch.listener.step.base.StepRetryProcessListener;
+import com.sika.code.batch.listener.step.base.StepRetryReadListener;
+import com.sika.code.batch.listener.step.base.StepRetryWriteListener;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import javax.batch.api.chunk.listener.RetryReadListener;
 import javax.batch.api.chunk.listener.RetryWriteListener;
 
 /**
- * step异常数据
+ * step监听器数据
  *
  * @author daiqi
  * @create 2019-10-04 21:31
@@ -24,7 +24,7 @@ import javax.batch.api.chunk.listener.RetryWriteListener;
 @Data
 @Accessors(chain = true)
 @Slf4j
-public class StepExceptionData<I, O> {
+public class StepListenerData<I, O> {
 
     /**
      * step的执行监听器 --- step执行时将会触发
@@ -73,14 +73,14 @@ public class StepExceptionData<I, O> {
     private CompositeRetryProcessListener compositeRetryProcessListener;
     private CompositeRetryWriteListener compositeRetryWriteListener;
 
-    public StepExceptionData<I, O> build() {
+    public StepListenerData<I, O> build() {
         buildCompositeException();
         buildDefaultException();
         registers();
         return this;
     }
 
-    public StepExceptionData<I, O> register(StepListener stepListener) {
+    public StepListenerData<I, O> register(StepListener stepListener) {
         if (BaseUtil.isNull(stepListener)) {
             log.debug("注册的stepListener监听器为空");
             return this;
@@ -118,7 +118,7 @@ public class StepExceptionData<I, O> {
     /**
      * 构建默认的Exception
      */
-    private StepExceptionData<I, O> buildDefaultException() {
+    private StepListenerData<I, O> buildDefaultException() {
         if (BaseUtil.isNull(this.stepExecutionListener)) {
             this.stepExecutionListener = new DefaultStepExecutionListener();
         }
@@ -153,7 +153,7 @@ public class StepExceptionData<I, O> {
     /**
      * 构建组合的Exception
      */
-    private StepExceptionData<I, O> buildCompositeException() {
+    private StepListenerData<I, O> buildCompositeException() {
         if (BaseUtil.isNull(this.compositeStepExecutionListener)) {
             this.compositeStepExecutionListener = new CompositeStepExecutionListener();
         }
@@ -184,7 +184,7 @@ public class StepExceptionData<I, O> {
     /**
      * 将默认的Exception注册到组合的Exception
      */
-    public StepExceptionData<I, O> registers() {
+    public StepListenerData<I, O> registers() {
         this.register(stepExecutionListener);
         this.register(chunkListener);
         this.register(itemReadListener);

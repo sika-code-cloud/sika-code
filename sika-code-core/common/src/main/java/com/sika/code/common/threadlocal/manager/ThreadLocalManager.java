@@ -158,6 +158,32 @@ public class ThreadLocalManager {
         }
     }
 
+    /**
+     * 清理所有的ThreadLocal
+     */
+    public static void removeAll(Object key) {
+        // 移除key
+        removeThreadLocal(key);
+        // 移除key
+        removeInheritable(key);
+    }
+
+    /**
+     * 清理ThreadLocal的Key
+     */
+    public static void removeThreadLocal(Object key) {
+        // 移除key
+        threadLocal.get().remove(key);
+    }
+
+    /**
+     * 清理InheritableThreadLocal的Key
+     */
+    public static void removeInheritable(Object key) {
+        // 移除key
+        inheritableThreadLocal.get().remove(key);
+    }
+
     public static Object getThreadLocal(String key) {
         return threadLocal.get().get(key);
     }

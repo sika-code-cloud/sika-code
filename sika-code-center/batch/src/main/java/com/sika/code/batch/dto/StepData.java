@@ -19,16 +19,16 @@ public class StepData<I, O> {
      */
     private StepCommonData stepCommonData;
     /**
-     * 封装异常数据
+     * 封装监听器数据
      */
-    private StepExceptionData<I, O> stepExceptionData;
+    private StepListenerData<I, O> stepListenerData;
 
     public StepData<I, O> build() {
         if (BaseUtil.isNull(stepCommonData)) {
             stepCommonData = new StepCommonData().build();
         }
-        if (BaseUtil.isNull(stepExceptionData)) {
-            stepExceptionData = new StepExceptionData<I, O>().build();
+        if (BaseUtil.isNull(stepListenerData)) {
+            stepListenerData = new StepListenerData<I, O>().build();
         }
         return this;
     }
@@ -37,7 +37,7 @@ public class StepData<I, O> {
      * 注册监听器
      */
     public StepData register(StepListener stepListener) {
-        stepExceptionData.register(stepListener);
+        stepListenerData.register(stepListener);
         return this;
     }
 }

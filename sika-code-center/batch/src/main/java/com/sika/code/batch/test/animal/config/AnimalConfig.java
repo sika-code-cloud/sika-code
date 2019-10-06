@@ -4,7 +4,7 @@ import com.sika.code.batch.adaptor.JobParametersBuilderExp;
 import com.sika.code.batch.dto.JobParametersData;
 import com.sika.code.batch.dto.StepCommonData;
 import com.sika.code.batch.dto.StepData;
-import com.sika.code.batch.dto.StepExceptionData;
+import com.sika.code.batch.dto.StepListenerData;
 import com.sika.code.batch.test.animal.AnimalItemProcessor;
 import com.sika.code.batch.test.animal.AnimalValidator;
 import com.sika.code.batch.test.animal.CsvJobListener1;
@@ -124,9 +124,10 @@ public class AnimalConfig {
         ItemWriter itemWriter = jobParametersData.getItemWriter();
         ItemReader itemReader = jobParametersData.getItemReader();
         ItemProcessor itemProcessor = jobParametersData.getItemProcessor();
+
         StepData stepData = jobParametersData.getStepData();
         StepCommonData stepCommonData = stepData.getStepCommonData();
-        StepExceptionData stepExceptionData = stepData.getStepExceptionData();
+        StepListenerData stepListenerData = stepData.getStepListenerData();
 
         SimpleStepBuilder builder = (SimpleStepBuilder) stepBuilderFactory
                 .get(stepCommonData.getName())
@@ -140,12 +141,12 @@ public class AnimalConfig {
                 .retryLimit(stepCommonData.getRetryLimit())
                 .retry(stepCommonData.getRetryException())
 
-                .listener(stepExceptionData.getSkipListener())
-                .listener(stepExceptionData.getItemWriteListener())
-                .listener(stepExceptionData.getItemReadListener())
-                .listener(stepExceptionData.getItemProcessListener())
-                .listener(stepExceptionData.getChunkListener())
-                .listener(stepExceptionData.getStepExecutionListener());
+                .listener(stepListenerData.getSkipListener())
+                .listener(stepListenerData.getItemWriteListener())
+                .listener(stepListenerData.getItemReadListener())
+                .listener(stepListenerData.getItemProcessListener())
+                .listener(stepListenerData.getChunkListener())
+                .listener(stepListenerData.getStepExecutionListener());
         return builder.build();
 //        return builder1.build();
 //

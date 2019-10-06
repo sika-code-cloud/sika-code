@@ -20,6 +20,10 @@ public class JobParametersBuilderExp {
     private static final String TIME_KEY = "time";
     private JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
 
+    public static void removeDataDTO() {
+        ThreadLocalManager.removeAll(DATA_DTO_KEY);
+    }
+
     private static void addDataDTO(JobParametersDTO dataDTO) {
         // 放入threadLocal中
         ThreadLocalManager.setThreadLocalAndInheritable(DATA_DTO_KEY, dataDTO);

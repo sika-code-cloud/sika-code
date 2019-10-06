@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
 public class StepCommonData {
     private static String NAME_DEFAULT = "STEP_DEFAULT";
     private static int CHUNK_DEFAULT = 100;
-    private static int SKIP_LIMIT_DEFAULT = 10;
     private static Class<? extends Throwable> EXCEPTION_DEFAULT = Exception.class;
 
     /**
@@ -51,14 +50,8 @@ public class StepCommonData {
         if (this.chunk == 0) {
             this.chunk = CHUNK_DEFAULT;
         }
-        if (this.skipLimit == 0) {
-            this.skipLimit = SKIP_LIMIT_DEFAULT;
-        }
         if (BaseUtil.isNull(this.skipException)) {
             this.skipException = EXCEPTION_DEFAULT;
-        }
-        if (this.retryLimit == 0) {
-            this.retryLimit = 0;
         }
         if (BaseUtil.isNull(this.retryException)) {
             this.retryException = EXCEPTION_DEFAULT;
