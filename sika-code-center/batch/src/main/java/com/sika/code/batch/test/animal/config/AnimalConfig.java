@@ -121,11 +121,12 @@ public class AnimalConfig {
     @JobScope
     public Step step1() {
         JobParametersData jobParametersData = JobParametersBuilderExp.fromData();
-        ItemWriter itemWriter = jobParametersData.getItemWriter();
-        ItemReader itemReader = jobParametersData.getItemReader();
-        ItemProcessor itemProcessor = jobParametersData.getItemProcessor();
-
         StepData stepData = jobParametersData.getStepData();
+
+        ItemWriter itemWriter = stepData.getItemWriter();
+        ItemReader itemReader = stepData.getItemReader();
+        ItemProcessor itemProcessor = stepData.getItemProcessor();
+
         StepCommonData stepCommonData = stepData.getStepCommonData();
         StepListenerData stepListenerData = stepData.getStepListenerData();
 
@@ -140,13 +141,12 @@ public class AnimalConfig {
                 .skip(stepCommonData.getSkipException())
                 .retryLimit(stepCommonData.getRetryLimit())
                 .retry(stepCommonData.getRetryException())
-
                 .listener(stepListenerData.getSkipListener())
                 .listener(stepListenerData.getItemWriteListener())
                 .listener(stepListenerData.getItemReadListener())
                 .listener(stepListenerData.getItemProcessListener())
                 .listener(stepListenerData.getChunkListener())
-                .listener(stepListenerData.getStepExecutionListener());
+                .listener(stepListenerData.getStepListener());
         return builder.build();
 //        return builder1.build();
 //
@@ -194,7 +194,6 @@ public class AnimalConfig {
         return new AnimalFailureLoggerListener();
     }
 
-    @Bean
     public CsvJobListener1 csvJobListener1() {
         return new CsvJobListener1();
     }

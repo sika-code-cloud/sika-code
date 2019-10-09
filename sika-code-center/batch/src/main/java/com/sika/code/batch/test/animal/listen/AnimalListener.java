@@ -11,9 +11,9 @@ import java.util.List;
  * @author daiqi
  * @create 2019-09-18 23:34
  */
-@Slf4j(topic = "animal-listener")
+@Slf4j
 public class AnimalListener {
-
+    @Slf4j
     public static class AnimalStepExecutionListener implements StepExecutionListener {
 
         private static Long beginTime = 0L;
@@ -34,6 +34,7 @@ public class AnimalListener {
 
     }
 
+    @Slf4j
     public static class AnimalChunkListener implements ChunkListener {
         @Override
         public void afterChunk(ChunkContext context) {
@@ -51,6 +52,7 @@ public class AnimalListener {
         }
     }
 
+    @Slf4j
     public static class AnimalItemReadListener<I> implements ItemReadListener<I> {
         @Override
         public void afterRead(I item) {
@@ -69,6 +71,7 @@ public class AnimalListener {
 
     }
 
+    @Slf4j
     public static class AnimalItemProcessListener<I, O> implements ItemProcessListener<I, O> {
 
         @Override
@@ -89,6 +92,7 @@ public class AnimalListener {
         }
     }
 
+    @Slf4j
     public static class AnimalItemWriteListener<O> implements ItemWriteListener<O> {
 
         @Override
@@ -109,6 +113,7 @@ public class AnimalListener {
 
     }
 
+    @Slf4j
     public static class AnimalSkipListener<I, O> implements SkipListener<I, O> {
         @Override
         public void onSkipInProcess(I item, Throwable t) {

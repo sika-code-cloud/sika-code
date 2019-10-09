@@ -24,11 +24,11 @@ public class BaseBatchConfig {
     protected JobBuilderFactory jobBuilderFactory;
 
     protected FaultTolerantStepBuilder initFaultTolerantStepBuilder(JobParametersData jobParametersData) {
-        ItemWriter itemWriter = jobParametersData.getItemWriter();
-        ItemReader itemReader = jobParametersData.getItemReader();
-        ItemProcessor itemProcessor = jobParametersData.getItemProcessor();
-
         StepData stepData = jobParametersData.getStepData();
+        ItemWriter itemWriter = stepData.getItemWriter();
+        ItemReader itemReader = stepData.getItemReader();
+        ItemProcessor itemProcessor = stepData.getItemProcessor();
+
         StepCommonData stepCommonData = stepData.getStepCommonData();
 
         return stepBuilderFactory
@@ -59,11 +59,11 @@ public class BaseBatchConfig {
         if (BaseUtil.isNull(stepListenerData)) {
             return;
         }
-        if (BaseUtil.isNotNull(stepListenerData.getSkipListener())) {
-            builder.listener(stepListenerData.getSkipListener());
+        if (BaseUtil.isNotNull(stepListenerData.getStepListener())) {
+            builder.listener(stepListenerData.getStepListener());
         }
-        if (BaseUtil.isNotNull(stepListenerData.getItemWriteListener())) {
-            builder.listener(stepListenerData.getItemWriteListener());
+        if (BaseUtil.isNotNull(stepListenerData.getChunkListener())) {
+            builder.listener(stepListenerData.getChunkListener());
         }
         if (BaseUtil.isNotNull(stepListenerData.getItemReadListener())) {
             builder.listener(stepListenerData.getItemReadListener());
@@ -71,11 +71,20 @@ public class BaseBatchConfig {
         if (BaseUtil.isNotNull(stepListenerData.getItemProcessListener())) {
             builder.listener(stepListenerData.getItemProcessListener());
         }
-        if (BaseUtil.isNotNull(stepListenerData.getChunkListener())) {
-            builder.listener(stepListenerData.getChunkListener());
+        if (BaseUtil.isNotNull(stepListenerData.getItemWriteListener())) {
+            builder.listener(stepListenerData.getItemWriteListener());
         }
-        if (BaseUtil.isNotNull(stepListenerData.getStepExecutionListener())) {
-            builder.listener(stepListenerData.getStepExecutionListener());
+        if (BaseUtil.isNotNull(stepListenerData.getSkipListener())) {
+            builder.listener(stepListenerData.getSkipListener());
+        }
+        if (BaseUtil.isNotNull(stepListenerData.getRetryReadListener())) {
+            builder.listener(stepListenerData.getRetryReadListener());
+        }
+        if (BaseUtil.isNotNull(stepListenerData.getRetryProcessListener())) {
+            builder.listener(stepListenerData.getRetryProcessListener());
+        }
+        if (BaseUtil.isNotNull(stepListenerData.getRetryWriteListener())) {
+            builder.listener(stepListenerData.getRetryWriteListener());
         }
     }
 }

@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * @create 2019-10-04 22:38
  */
 @Slf4j
-public class DefaultRetryReaderListener implements StepRetryReadListener {
+public class DefaultRetryReadListener implements StepRetryReadListener {
 
     @Override
     public void onRetryReadException(Exception e) throws Exception {

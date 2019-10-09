@@ -2,11 +2,13 @@ package com.sika.code.batch.test.animal;
 
 import com.sika.code.batch.test.animal.convert.AnimalConvert;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.item.validator.Validator;
 
 @Data
+@Accessors(chain = true)
 public class AnimalItemProcessor implements ItemProcessor<AnimalDTO, AnimalEntity> {
 
     private Validator<AnimalDTO> validator;

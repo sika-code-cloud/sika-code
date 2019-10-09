@@ -1,12 +1,10 @@
 package com.sika.code.batch.dto;
 
+import com.sika.code.basic.util.Assert;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.batch.core.StepListener;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
 
 /**
  * @author daiqi
@@ -16,15 +14,10 @@ import org.springframework.batch.item.ItemWriter;
 @ToString
 @Accessors(chain = true)
 public class JobParametersData<I, O> {
-    private ItemReader<I> itemReader;
-    private ItemProcessor<I, O> itemProcessor;
-    private ItemWriter<O> itemWriter;
     private StepData<I, O> stepData;
 
     public JobParametersData<I, O> build() {
-        if (this.stepData == null) {
-            this.stepData = new StepData<I, O>().build();
-        }
+        Assert.verifyObjNull(stepData, "stepData");
         return this;
     }
 

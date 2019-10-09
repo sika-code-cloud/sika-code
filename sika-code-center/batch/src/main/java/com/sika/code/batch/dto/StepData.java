@@ -4,6 +4,9 @@ import com.sika.code.basic.util.BaseUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.batch.core.StepListener;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 
 /**
  * step数据
@@ -14,6 +17,9 @@ import org.springframework.batch.core.StepListener;
 @Data
 @Accessors(chain = true)
 public class StepData<I, O> {
+    private ItemReader<I> itemReader;
+    private ItemProcessor<I, O> itemProcessor;
+    private ItemWriter<O> itemWriter;
     /**
      * 封装基础数据
      */
@@ -23,21 +29,39 @@ public class StepData<I, O> {
      */
     private StepListenerData<I, O> stepListenerData;
 
+    public StepData() {
+        init();
+    }
+
     public StepData<I, O> build() {
-        if (BaseUtil.isNull(stepCommonData)) {
-            stepCommonData = new StepCommonData().build();
-        }
-        if (BaseUtil.isNull(stepListenerData)) {
-            stepListenerData = new StepListenerData<I, O>().build();
-        }
+        this.stepCommonData.build();
+        this.stepListenerData.build();
         return this;
+    }
+
+    protected void init() {
+        initStepCommonData();
+        initStepListenerData();
     }
 
     /**
      * 注册监听器
      */
-    public StepData register(StepListener stepListener) {
+    public StepData<I, O> register(StepListener stepListener) {
         stepListenerData.register(stepListener);
         return this;
+    }
+
+
+    protected void initStepCommonData() {
+        if (BaseUtil.isNull(stepCommonData)) {
+            stepCommonData = new StepCommonData();
+        }
+    }
+
+    protected void initStepListenerData() {
+        if (BaseUtil.isNull(stepListenerData)) {
+            stepListenerData = new StepListenerData<>();
+        }
     }
 }

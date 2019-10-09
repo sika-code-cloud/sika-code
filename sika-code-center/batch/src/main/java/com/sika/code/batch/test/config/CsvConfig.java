@@ -179,13 +179,11 @@ public class CsvConfig {
                 .build();
     }
 
-    @Bean
     public CsvJobListener csvJobListener() {
         return new CsvJobListener();
     }
 
-    @Bean
     public Validator<PersonEntity> csvBeanValidator() {
-        return new CsvBeanValidator<PersonEntity>();
+        return new CsvBeanValidator<>();
     }
 }

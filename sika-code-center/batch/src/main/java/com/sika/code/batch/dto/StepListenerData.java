@@ -2,9 +2,6 @@ package com.sika.code.batch.dto;
 
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.batch.listener.step.*;
-import com.sika.code.batch.listener.step.base.StepRetryProcessListener;
-import com.sika.code.batch.listener.step.base.StepRetryReadListener;
-import com.sika.code.batch.listener.step.base.StepRetryWriteListener;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -25,174 +22,143 @@ import javax.batch.api.chunk.listener.RetryWriteListener;
 @Accessors(chain = true)
 @Slf4j
 public class StepListenerData<I, O> {
-
     /**
      * step的执行监听器 --- step执行时将会触发
      */
-    private StepExecutionListener stepExecutionListener;
+    private CompositeStepExecutionListener stepListener;
     /**
      * chunk的监听器 --- 批处理时将会触发
      */
-    private ChunkListener chunkListener;
+    private CompositeChunkListener chunkListener;
     /**
      * 读取item监听器 --- 读书item时将会触发
      */
-    private ItemReadListener<I> itemReadListener;
+    private CompositeItemReadListener<I> itemReadListener;
     /**
      * 处理item监听器 --- 处理item的时将会触发
      */
-    private ItemProcessListener<I, O> itemProcessListener;
+    private CompositeItemProcessListener<I, O> itemProcessListener;
     /**
      * 写入item监听器 --- 发生写入时将会触发
      */
-    private ItemWriteListener<O> itemWriteListener;
+    private CompositeItemWriteListener<O> itemWriteListener;
     /**
      * 跳过的监听器 --- 若发生跳过将会触发
      */
-    private SkipListener<I, O> skipListener;
+    private CompositeSkipListener<I, O> skipListener;
     /**
      * 重试读取的监听器 --- 重试读的时候将会触发
      */
-    private StepRetryReadListener retryReadListener;
+    private CompositeRetryReadListener retryReadListener;
     /**
      * 重试处理的监听器 --- 重试处理的时候将会触发
      */
-    private StepRetryProcessListener retryProcessListener;
+    private CompositeRetryProcessListener retryProcessListener;
     /**
      * 重试写的监听器 --- 重试写的时候将会触发
      */
-    private StepRetryWriteListener retryWriteListener;
+    private CompositeRetryWriteListener retryWriteListener;
 
-    private CompositeStepExecutionListener compositeStepExecutionListener;
-    private CompositeChunkListener compositeChunkListener;
-    private CompositeItemReadListener<I> compositeItemReadListener;
-    private CompositeItemProcessListener<I, O> compositeItemProcessListener;
-    private CompositeItemWriteListener<O> compositeItemWriteListener;
-    private CompositeSkipListener<I, O> compositeSkipListener;
-    private CompositeRetryReadListener compositeRetryReadListener;
-    private CompositeRetryProcessListener compositeRetryProcessListener;
-    private CompositeRetryWriteListener compositeRetryWriteListener;
+    public StepListenerData() {
+        init();
+    }
 
     public StepListenerData<I, O> build() {
-        buildCompositeException();
-        buildDefaultException();
         registers();
         return this;
     }
 
-    public StepListenerData<I, O> register(StepListener stepListener) {
-        if (BaseUtil.isNull(stepListener)) {
+    public StepListenerData<I, O> register(StepListener listener) {
+        if (BaseUtil.isNull(listener)) {
             log.debug("注册的stepListener监听器为空");
             return this;
         }
-        if (stepListener instanceof StepExecutionListener) {
-            compositeStepExecutionListener.register((StepExecutionListener) stepListener);
+        if (listener instanceof StepExecutionListener) {
+            this.stepListener.register((StepExecutionListener) listener);
         }
-        if (stepListener instanceof ChunkListener) {
-            compositeChunkListener.register((ChunkListener) stepListener);
+        if (listener instanceof ChunkListener) {
+            this.chunkListener.register((ChunkListener) listener);
         }
-        if (stepListener instanceof ItemReadListener) {
-            compositeItemReadListener.register((ItemReadListener) stepListener);
+        if (listener instanceof ItemReadListener<?>) {
+            @SuppressWarnings("unchecked")
+            ItemReadListener<I> itemReadListener = (ItemReadListener<I>) listener;
+            this.itemReadListener.register(itemReadListener);
         }
-        if (stepListener instanceof ItemProcessListener) {
-            compositeItemProcessListener.register((ItemProcessListener) stepListener);
+        if (listener instanceof ItemProcessListener<?, ?>) {
+            @SuppressWarnings("unchecked")
+            ItemProcessListener<I, O> itemProcessListener = (ItemProcessListener<I, O>) listener;
+            this.itemProcessListener.register(itemProcessListener);
         }
-        if (stepListener instanceof ItemWriteListener) {
-            compositeItemWriteListener.register((ItemWriteListener) stepListener);
+        if (listener instanceof ItemWriteListener<?>) {
+            @SuppressWarnings("unchecked")
+            ItemWriteListener<O> itemWriteListener = (ItemWriteListener<O>) listener;
+            this.itemWriteListener.register(itemWriteListener);
         }
-        if (stepListener instanceof SkipListener) {
-            compositeSkipListener.register((SkipListener) stepListener);
+        if (listener instanceof SkipListener<?, ?>) {
+            @SuppressWarnings("unchecked")
+            SkipListener<I, O> skipListener = (SkipListener<I, O>) listener;
+            this.skipListener.register(skipListener);
         }
-        if (stepListener instanceof RetryReadListener) {
-            compositeRetryReadListener.register((RetryReadListener) stepListener);
+        if (listener instanceof RetryReadListener) {
+            this.retryReadListener.register((RetryReadListener) listener);
         }
-        if (stepListener instanceof RetryProcessListener) {
-            compositeRetryProcessListener.register((RetryProcessListener) stepListener);
+        if (listener instanceof RetryProcessListener) {
+            this.retryProcessListener.register((RetryProcessListener) listener);
         }
-        if (stepListener instanceof RetryWriteListener) {
-            compositeRetryWriteListener.register((RetryWriteListener) stepListener);
+        if (listener instanceof RetryWriteListener) {
+            this.retryWriteListener.register((RetryWriteListener) listener);
         }
         return this;
     }
 
-    /**
-     * 构建默认的Exception
-     */
-    private StepListenerData<I, O> buildDefaultException() {
-        if (BaseUtil.isNull(this.stepExecutionListener)) {
-            this.stepExecutionListener = new DefaultStepExecutionListener();
-        }
-        if (BaseUtil.isNull(this.chunkListener)) {
-            this.chunkListener = new DefaultChunkListener();
-        }
-        if (BaseUtil.isNull(this.itemReadListener)) {
-            this.itemReadListener = new DefaultItemReadListener<>();
-        }
-        if (BaseUtil.isNull(this.itemProcessListener)) {
-            this.itemProcessListener = new DefaultItemProcessListener<>();
-        }
-        if (BaseUtil.isNull(this.itemWriteListener)) {
-            this.itemWriteListener = new DefaultItemWriteListener<>();
-        }
-        if (BaseUtil.isNull(this.skipListener)) {
-            this.skipListener = new DefaultSkipListener<>();
-        }
-        if (BaseUtil.isNull(this.retryReadListener)) {
-            this.retryReadListener = new DefaultRetryReaderListener();
-        }
-        if (BaseUtil.isNull(this.retryProcessListener)) {
-
-            this.retryProcessListener = new DefaultRetryProcessListener();
-        }
-        if (BaseUtil.isNull(this.retryWriteListener)) {
-            this.retryWriteListener = new DefaultRetryWriteListener();
-        }
-        return this;
-    }
 
     /**
      * 构建组合的Exception
      */
-    private StepListenerData<I, O> buildCompositeException() {
-        if (BaseUtil.isNull(this.compositeStepExecutionListener)) {
-            this.compositeStepExecutionListener = new CompositeStepExecutionListener();
+    private StepListenerData<I, O> init() {
+        if (BaseUtil.isNull(this.stepListener)) {
+            this.stepListener = new CompositeStepExecutionListener();
         }
-        if (BaseUtil.isNull(this.compositeChunkListener)) {
-            this.compositeChunkListener = new CompositeChunkListener();
+        if (BaseUtil.isNull(this.chunkListener)) {
+            this.chunkListener = new CompositeChunkListener();
         }
-        if (BaseUtil.isNull(this.compositeItemReadListener)) {
-            this.compositeItemReadListener = new CompositeItemReadListener<>();
+        if (BaseUtil.isNull(this.itemReadListener)) {
+            this.itemReadListener = new CompositeItemReadListener<>();
         }
-        if (BaseUtil.isNull(this.compositeItemProcessListener)) {
-            this.compositeItemProcessListener = new CompositeItemProcessListener<>();
+        if (BaseUtil.isNull(this.itemProcessListener)) {
+            this.itemProcessListener = new CompositeItemProcessListener<>();
         }
-        if (BaseUtil.isNull(this.compositeItemWriteListener)) {
-            this.compositeItemWriteListener = new CompositeItemWriteListener<>();
+        if (BaseUtil.isNull(this.itemWriteListener)) {
+            this.itemWriteListener = new CompositeItemWriteListener<>();
         }
-        if (BaseUtil.isNull(this.compositeRetryReadListener)) {
-            this.compositeRetryReadListener = new CompositeRetryReadListener();
+        if (BaseUtil.isNull(this.skipListener)) {
+            this.skipListener = new CompositeSkipListener<>();
         }
-        if (BaseUtil.isNull(this.compositeRetryProcessListener)) {
-            this.compositeRetryProcessListener = new CompositeRetryProcessListener();
+        if (BaseUtil.isNull(this.retryReadListener)) {
+            this.retryReadListener = new CompositeRetryReadListener();
         }
-        if (BaseUtil.isNull(this.compositeRetryWriteListener)) {
-            this.compositeRetryWriteListener = new CompositeRetryWriteListener();
+        if (BaseUtil.isNull(this.retryProcessListener)) {
+            this.retryProcessListener = new CompositeRetryProcessListener();
+        }
+        if (BaseUtil.isNull(this.retryWriteListener)) {
+            this.retryWriteListener = new CompositeRetryWriteListener();
         }
         return this;
     }
 
     /**
-     * 将默认的Exception注册到组合的Exception
+     * 将默认的监听器注册到组合的监听器
      */
     public StepListenerData<I, O> registers() {
-        this.register(stepExecutionListener);
-        this.register(chunkListener);
-        this.register(itemReadListener);
-        this.register(itemProcessListener);
-        this.register(itemWriteListener);
-        this.register(retryReadListener);
-        this.register(retryProcessListener);
-        this.register(retryWriteListener);
+        this.register(new DefaultStepExecutionListener());
+        this.register(new DefaultChunkListener());
+        this.register(new DefaultItemReadListener());
+        this.register(new DefaultItemProcessListener());
+        this.register(new DefaultItemWriteListener());
+        this.register(new DefaultSkipListener());
+        this.register(new DefaultRetryReadListener());
+        this.register(new DefaultRetryProcessListener());
+        this.register(new DefaultRetryWriteListener());
         return this;
     }
 }
