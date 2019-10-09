@@ -34,10 +34,14 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.builder.MultiResourceItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,7 +84,16 @@ public class DemoController {
         FlatFileItemReader<AnimalDTO> flatFileItemReader = new FlatFileItemReaderBuilder<AnimalDTO>()
                 .name("animalName")
                 .lineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names))
-                .resource(new ClassPathResource("animal.csv"))
+                .resource(new FileSystemResource("E:\\Users\\animal.csv"))
+                .build();
+
+        Resource [] resources = new Resource[2];
+        resources[0] = new FileSystemResource("E:\\Users\\animal.csv");
+        resources[1] = new ClassPathResource("animal.csv");
+        MultiResourceItemReader<AnimalDTO> multiResourceItemReader = new MultiResourceItemReaderBuilder<AnimalDTO>()
+                .name("animalName1")
+                .resources(resources)
+                .delegate(flatFileItemReader)
                 .build();
         // write
         MyBatisBatchItemWriter<AnimalEntity> myBatisBatchItemWriter = new MyBatisBatchItemWriterBuilder<AnimalEntity>()
@@ -96,14 +109,10 @@ public class DemoController {
                 .build()
                 ;
         StepData<AnimalDTO, AnimalEntity> stepData = new StepData<AnimalDTO, AnimalEntity>()
-                .setItemReader(flatFileItemReader)
+                .setItemReader(multiResourceItemReader)
                 .setItemProcessor(animalItemProcessor)
                 .setItemWriter(myBatisBatchItemWriter)
                 .setStepCommonData(stepCommonData)
-                .register(new AnimalListener.AnimalItemProcessListener<AnimalDTO, AnimalEntity>())
-                .register(new AnimalListener.AnimalItemReadListener<AnimalDTO>())
-                .register(new AnimalListener.AnimalItemWriteListener<AnimalEntity>())
-                .register(new AnimalListener.AnimalSkipListener<AnimalDTO, AnimalEntity>())
                 .build()
                 ;
 
