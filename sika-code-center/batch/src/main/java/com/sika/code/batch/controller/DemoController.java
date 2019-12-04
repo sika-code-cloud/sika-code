@@ -75,12 +75,12 @@ public class DemoController {
 
     @RequestMapping("/defaultTest")
     public void defaultTest() throws Exception {
-        DefaultNamesStrategy namesStrategy = new DefaultNamesStrategy()
+        NamesStrategy namesStrategy = new DefaultNamesStrategy()
                 .setNames(Lists.newArrayList("name", "color"))
                 .build();
 
         Resource resource = new FileSystemResource("E:\\Users\\animal.csv");
-        ResourceNamesStrategy resourceNamesStrategy= new ResourceNamesStrategy()
+        NamesStrategy resourceNamesStrategy= new ResourceNamesStrategy()
                 .setResource(resource)
                 .setDelimiter("|")
                 .build();
@@ -89,7 +89,7 @@ public class DemoController {
         //        // csvItemReader
         FlatFileItemReader<AnimalDTO> flatFileItemReader = new FlatFileItemReaderBuilder<AnimalDTO>()
                 .name("animalName")
-                .lineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", names))
+                .lineMapper(BatchUtil.buildLineMapper(AnimalDTO.class, "|", names))
                 .resource(resource)
                 .build();
 
@@ -104,7 +104,7 @@ public class DemoController {
         // write
         MyBatisBatchItemWriter<AnimalEntity> myBatisBatchItemWriter = new MyBatisBatchItemWriterBuilder<AnimalEntity>()
                 .sqlSessionFactory(sqlSessionFactory)
-                .statementId(AnimalMapper.class.getName() + ".insert")
+                .statementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"))
                 .build();
         // csvItemProcessor
         AnimalItemProcessor animalItemProcessor = new AnimalItemProcessor()
@@ -139,7 +139,7 @@ public class DemoController {
         JobParametersData<PersonEntity, PersonEntity> jobParametersData = new JobParametersData();
         // csvItemReader
         FlatFileItemReader<PersonEntity> flatFileItemReader = ItemReaderFactory.newItemReader("csvItemReader", FlatFileItemReader.class);
-        flatFileItemReader.setLineMapper(BatchUtil.lineMapper(PersonEntity.class, "|", names));
+        flatFileItemReader.setLineMapper(BatchUtil.buildLineMapper(PersonEntity.class, "|", names));
         flatFileItemReader.setResource(resource);
         // write
         ItemWriter<PersonEntity> itemWriter = ItemWriterFactory.newItemWriter("csvItemWrite", ItemWriter.class);
@@ -165,11 +165,11 @@ public class DemoController {
         JobParametersData<AnimalDTO, AnimalEntity> jobParametersData = new JobParametersData();
         // csvItemReader
         FlatFileItemReader<AnimalDTO> flatFileItemReader = ItemReaderFactory.newItemReader("readerAnimal", FlatFileItemReader.class);
-        flatFileItemReader.setLineMapper(BatchUtil.lineMapper(AnimalDTO.class, "|", name));
+        flatFileItemReader.setLineMapper(BatchUtil.buildLineMapper(AnimalDTO.class, "|", name));
         flatFileItemReader.setResource(new ClassPathResource("animal.csv"));
         // write
         MyBatisBatchItemWriter<AnimalEntity> myBatisBatchItemWriter = ItemWriterFactory.newItemWriter("writerAnimal", MyBatisBatchItemWriter.class);
-        myBatisBatchItemWriter.setStatementId(AnimalMapper.class.getName() + ".insert");
+        myBatisBatchItemWriter.setStatementId(BatchUtil.buildStatementId(AnimalMapper.class,"insert"));
         // csvItemProcessor
         AnimalItemProcessor animalItemProcessor = ItemProcessFactory.newItemProcess("processorAnimal", AnimalItemProcessor.class);
 

@@ -5,6 +5,8 @@ import com.sika.code.common.string.util.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.*;
+
 /**
  * step基础数据
  *
@@ -42,6 +44,8 @@ public class StepCommonData {
      * 重试的异常
      */
     private Class<? extends Throwable> retryException;
+    private Set<Class<? extends Throwable>> skipExceptions = new HashSet<>();
+    private Set<Class<? extends Throwable>> retryExceptions = new HashSet<>();
 
     public StepCommonData build() {
         if (StringUtil.isEmpty(this.name)) {
@@ -56,6 +60,9 @@ public class StepCommonData {
         if (BaseUtil.isNull(this.retryException)) {
             this.retryException = EXCEPTION_DEFAULT;
         }
+
+        skipExceptions.add(this.skipException);
+        retryExceptions.add(this.retryException);
         return this;
     }
 }

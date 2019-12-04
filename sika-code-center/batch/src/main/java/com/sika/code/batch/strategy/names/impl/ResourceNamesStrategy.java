@@ -2,18 +2,17 @@ package com.sika.code.batch.strategy.names.impl;
 
 import com.google.common.collect.Lists;
 import com.sika.code.basic.util.Assert;
-import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.batch.strategy.names.NamesStrategy;
 import com.sika.code.common.string.util.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.item.file.BufferedReaderFactory;
+import org.springframework.batch.item.file.DefaultBufferedReaderFactory;
 import org.springframework.core.io.Resource;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -25,8 +24,10 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @Slf4j
-public class ResourceNamesStrategy implements NamesStrategy<ResourceNamesStrategy> {
+public class ResourceNamesStrategy implements NamesStrategy {
     private static final int DEFAULT_NAMES_ON_LINE = 1;
+    public static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
+
     /**
      * 资源
      */
@@ -40,9 +41,17 @@ public class ResourceNamesStrategy implements NamesStrategy<ResourceNamesStrateg
      */
     private String delimiter;
     /**
+     * 资源编码格式
+     */
+    private String encoding = DEFAULT_CHARSET;
+    /**
      * 名称
      */
     private List<String> names;
+    /**
+     * 创建工厂类
+     */
+    private BufferedReaderFactory bufferedReaderFactory = new DefaultBufferedReaderFactory();
 
 
     @Override
@@ -67,8 +76,7 @@ public class ResourceNamesStrategy implements NamesStrategy<ResourceNamesStrateg
      * 构建名称
      */
     protected void buildNames() throws Exception {
-        File file = resource.getFile();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        BufferedReader bufferedReader = bufferedReaderFactory.create(resource, encoding);
         String line;
         int currentLine = DEFAULT_NAMES_ON_LINE;
         while ((line = bufferedReader.readLine()) != null) {

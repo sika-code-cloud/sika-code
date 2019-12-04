@@ -30,8 +30,7 @@ public class BaseBatchConfig {
         ItemProcessor itemProcessor = stepData.getItemProcessor();
 
         StepCommonData stepCommonData = stepData.getStepCommonData();
-
-        return stepBuilderFactory
+        FaultTolerantStepBuilder<?,?> builder = stepBuilderFactory
                 .get(stepCommonData.getName())
                 .chunk(stepCommonData.getChunk())
                 .reader(itemReader)
@@ -39,9 +38,16 @@ public class BaseBatchConfig {
                 .writer(itemWriter)
                 .faultTolerant()
                 .skipLimit(stepCommonData.getSkipLimit())
-                .skip(stepCommonData.getSkipException())
-                .retryLimit(stepCommonData.getRetryLimit())
-                .retry(stepCommonData.getRetryException());
+                .retryLimit(stepCommonData.getRetryLimit());
+        // 循环设置跳过的异常
+        for (Class<? extends Throwable> clazz : stepCommonData.getSkipExceptions()) {
+            builder.skip(clazz);
+        }
+        // 设置重试的异常
+        for (Class<? extends Throwable> clazz : stepCommonData.getRetryExceptions()) {
+            builder.retry(clazz);
+        }
+        return builder;
     }
 
     /**

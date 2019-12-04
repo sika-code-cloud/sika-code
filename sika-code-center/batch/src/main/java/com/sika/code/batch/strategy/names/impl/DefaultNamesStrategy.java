@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class DefaultNamesStrategy implements NamesStrategy<DefaultNamesStrategy> {
+public class DefaultNamesStrategy implements NamesStrategy {
     private List<String> names;
 
     @Override

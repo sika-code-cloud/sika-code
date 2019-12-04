@@ -8,17 +8,17 @@ import java.util.List;
  * @author daiqi
  * @create 2019-12-03 23:26
  */
-public interface NamesStrategy<T extends NamesStrategy> {
+public interface NamesStrategy {
     /**
      * <p>
      * 构建名称
      * </p>
      *
      * @return NamesStrategy
-     * @author sikadai
+     * @author sikadaiT
      * @date 2019/12/3 23:32
      */
-    T build();
+    <T extends NamesStrategy> T build();
 
     /**
      * <p>
