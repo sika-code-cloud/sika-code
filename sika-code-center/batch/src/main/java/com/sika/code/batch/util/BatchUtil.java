@@ -1,12 +1,19 @@
 package com.sika.code.batch.util;
 
+import com.github.rholder.retry.*;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Lists;
 import com.sika.code.basic.util.Assert;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 批量工具类
@@ -47,5 +54,29 @@ public class BatchUtil {
         wrapperFieldSetMapper.setTargetType(tClass);
         lineMapper.setFieldSetMapper(wrapperFieldSetMapper);
         return lineMapper;
+    }
+
+    public static void main(String[] args) {
+        Retryer<String> retryer = RetryerBuilder.<String>newBuilder()
+                .retryIfResult(Predicates.isNull())
+                .retryIfExceptionOfType(Exception.class)
+                .retryIfRuntimeException()
+                .withStopStrategy(StopStrategies.stopAfterAttempt(3))
+                .withWaitStrategy(WaitStrategies.fixedWait(2L, TimeUnit.SECONDS))
+                .build();
+        List<Integer> list = Lists.newArrayList();
+        try {
+            String name = retryer.call(() -> {
+                System.out.println("运行第" + (list.size() + 1));
+                if (list.size() < 2) {
+                    list.add(1);
+                    throw new RuntimeException("lalal-----" + list);
+                }
+                return "zhangsan";
+            });
+            System.out.println(name + list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
