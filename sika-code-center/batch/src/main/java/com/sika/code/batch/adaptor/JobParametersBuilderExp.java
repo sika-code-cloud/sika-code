@@ -65,7 +65,7 @@ public class JobParametersBuilderExp {
     }
 
     /**
-     * @return com.sika.code.batch.dto.JobParametersDTO
+     * @return com.sika.code.batch.pojo.JobParametersDTO
      * @author sikadai
      * @date 2019/9/29 23:27
      */

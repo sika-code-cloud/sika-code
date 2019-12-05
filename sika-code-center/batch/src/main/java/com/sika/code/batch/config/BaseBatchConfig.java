@@ -57,7 +57,7 @@ public class BaseBatchConfig {
      *
      * @param builder
      * @param stepListenerData
-     * @return org.springframework.batch.core.step.builder.SimpleStepBuilder
+     * @return org.springframework.batch.core.step.pojo.SimpleStepBuilder
      * @author daiqi
      * @date 2019/10/7 0:40
      */

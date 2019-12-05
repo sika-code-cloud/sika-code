@@ -150,7 +150,7 @@ public class AnimalConfig {
         return builder.build();
 //        return builder1.build();
 //
-//        SimpleStepBuilder builder = (SimpleStepBuilder) stepBuilderFactory
+//        SimpleStepBuilder pojo = (SimpleStepBuilder) stepBuilderFactory
 //                .get("step1")
 //                .chunk(1000)//批处理每次提交65000条数据
 //                .csvItemReader(readerAnimal)//给step绑定reader
@@ -168,7 +168,7 @@ public class AnimalConfig {
 //                .listener(new AnimalChunkListener())
 //                .listener(new AnimalStepExecutionListener());
 
-//        return builder.build();
+//        return pojo.build();
     }
 
     /**
