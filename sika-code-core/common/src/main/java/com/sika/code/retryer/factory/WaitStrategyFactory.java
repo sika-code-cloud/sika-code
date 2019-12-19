@@ -22,7 +22,7 @@ public class WaitStrategyFactory {
     /**
      * 使用简单的缓存，自动维护缓存机制
      */
-    private static SimpleCache<String, WaitStrategy> WAIT_STRATEGYS_CACHE = new SimpleCache<>();
+    private static SimpleCache<String, WaitStrategy> WAIT_STRATEGY_CACHE = new SimpleCache<>();
 
     /**
      * <p>
@@ -50,11 +50,11 @@ public class WaitStrategyFactory {
      */
     public static WaitStrategy getWaitStrategy(WaitStrategyParam waitStrategyParam) {
         String waitStrategyParamStr = waitStrategyParam.toString();
-        WaitStrategy waitStrategyFromCache = WAIT_STRATEGYS_CACHE.get(waitStrategyParamStr);
+        WaitStrategy waitStrategyFromCache = WAIT_STRATEGY_CACHE.get(waitStrategyParamStr);
         if (waitStrategyFromCache == null) {
             waitStrategyFromCache = newInstance(waitStrategyParam);
         }
-        return WAIT_STRATEGYS_CACHE.put(waitStrategyParamStr, waitStrategyFromCache);
+        return WAIT_STRATEGY_CACHE.put(waitStrategyParamStr, waitStrategyFromCache);
     }
 
 

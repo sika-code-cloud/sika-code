@@ -22,6 +22,7 @@ public class StopStrategyParam extends StrategyParam {
      */
     private int attemptNumber;
 
+    @Override
     public StopStrategyParam build() {
         super.buildCommon();
 

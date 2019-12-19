@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Accessors(chain = true)
-public class StrategyParam {
+public abstract class StrategyParam {
     protected static final Long ZERO = 0L;
     protected static final Long ONE = 1L;
     /** 时间单位 */
@@ -30,5 +30,7 @@ public class StrategyParam {
             this.maxTime = Long.MAX_VALUE;
         }
     }
+
+    public abstract  <T extends StrategyParam> T build();
 
 }

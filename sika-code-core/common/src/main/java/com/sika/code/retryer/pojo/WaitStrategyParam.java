@@ -11,7 +11,7 @@ import static com.sika.code.retryer.constant.WaitStrategyEnum.FIXED;
  * 等待策略的入参
  */
 @Data
-@Accessors
+@Accessors(chain = true)
 public class WaitStrategyParam extends StrategyParam{
 
     private WaitStrategyEnum waitStrategyEnum;
@@ -20,6 +20,7 @@ public class WaitStrategyParam extends StrategyParam{
     /** 每次递增的时长 --- 对递增枚举类型有效 */
     private long increment;
 
+    @Override
     public WaitStrategyParam build() {
         super.buildCommon();
 

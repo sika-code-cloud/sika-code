@@ -1,5 +1,6 @@
 package com.sika.code.retryer.anotation;
 
+import com.github.rholder.retry.RetryListener;
 import com.sika.code.retryer.constant.StopStrategyEnum;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
 
@@ -49,7 +50,7 @@ public @interface RetryerAnnotation {
     /**
      * 需要重试的异常类型列表
      */
-    Class<? extends Throwable> retryIfExceptionOfTypes();
+    Class<? extends Throwable> [] retryIfExceptionOfTypes() default Exception.class;
 
-
+    Class<? extends RetryListener> [] retryListeners() ;
 }
