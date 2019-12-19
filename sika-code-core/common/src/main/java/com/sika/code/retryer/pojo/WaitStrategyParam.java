@@ -34,4 +34,15 @@ public class WaitStrategyParam extends StrategyParam{
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "WaitStrategyParam{" +
+                "waitStrategyEnum=" + waitStrategyEnum +
+                ", initTime=" + initTime +
+                ", increment=" + increment +
+                ", timeUnit=" + timeUnit +
+                ", maxTime=" + maxTime +
+                '}';
+    }
 }

@@ -34,4 +34,13 @@ public class StopStrategyParam extends StrategyParam {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "StopStrategyParam{" +
+                "stopStrategyEnum=" + stopStrategyEnum +
+                ", attemptNumber=" + attemptNumber +
+                ", timeUnit=" + timeUnit +
+                ", maxTime=" + maxTime +
+                '}';
+    }
 }

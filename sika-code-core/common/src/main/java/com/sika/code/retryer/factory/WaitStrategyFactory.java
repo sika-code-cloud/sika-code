@@ -1,5 +1,6 @@
 package com.sika.code.retryer.factory;
 
+import cn.hutool.core.lang.SimpleCache;
 import com.github.rholder.retry.WaitStrategies;
 import com.github.rholder.retry.WaitStrategy;
 import com.sika.code.basic.util.BaseUtil;
@@ -7,6 +8,8 @@ import com.sika.code.retryer.anotation.RetryerAnnotation;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
 import com.sika.code.retryer.pojo.WaitStrategyParam;
 
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,6 +19,44 @@ import java.util.concurrent.TimeUnit;
  * @create 2019-12-05 23:07
  */
 public class WaitStrategyFactory {
+    /**
+     * 使用简单的缓存，自动维护缓存机制
+     */
+    private static SimpleCache<String, WaitStrategy> WAIT_STRATEGYS_CACHE = new SimpleCache<>();
+
+    /**
+     * <p>
+     * 获取默认等待策略，使用了缓存机制
+     * </p>
+     *
+     * @param
+     * @return com.github.rholder.retry.WaitStrategy
+     * @author daiqi
+     * @date 2019/12/19 18:09
+     */
+    public static WaitStrategy getWaitStrategy() {
+        return getWaitStrategy(new WaitStrategyParam().build());
+    }
+
+    /**
+     * <p>
+     * 获取等待策略，使用了缓存机制
+     * </p>
+     *
+     * @param waitStrategyParam : 等待策略参数
+     * @return com.github.rholder.retry.WaitStrategy
+     * @author daiqi
+     * @date 2019/12/19 18:00
+     */
+    public static WaitStrategy getWaitStrategy(WaitStrategyParam waitStrategyParam) {
+        String waitStrategyParamStr = waitStrategyParam.toString();
+        WaitStrategy waitStrategyFromCache = WAIT_STRATEGYS_CACHE.get(waitStrategyParamStr);
+        if (waitStrategyFromCache == null) {
+            waitStrategyFromCache = newInstance(waitStrategyParam);
+        }
+        return WAIT_STRATEGYS_CACHE.put(waitStrategyParamStr, waitStrategyFromCache);
+    }
+
 
     /**
      * <p>
@@ -27,7 +68,7 @@ public class WaitStrategyFactory {
      * @date 2019/12/6 0:02
      */
     public static WaitStrategy newInstance() {
-        return newInstance(null);
+        return newInstance(new WaitStrategyParam().build());
     }
 
     /**

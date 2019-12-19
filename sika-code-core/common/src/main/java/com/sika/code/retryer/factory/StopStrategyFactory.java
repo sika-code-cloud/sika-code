@@ -1,5 +1,6 @@
 package com.sika.code.retryer.factory;
 
+import cn.hutool.core.lang.SimpleCache;
 import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.StopStrategy;
 import com.sika.code.basic.util.BaseUtil;
@@ -15,6 +16,43 @@ import java.util.concurrent.TimeUnit;
  * @create 2019-12-05 22:51
  */
 public class StopStrategyFactory {
+    /**
+     * 使用简单的缓存，自动维护缓存机制
+     */
+    private static SimpleCache<String, StopStrategy> STOP_STRATEGY_CACHE = new SimpleCache<>();
+
+    /**
+     * <p>
+     * 获取默认停止策略，使用了缓存机制
+     * </p>
+     *
+     * @param
+     * @return com.github.rholder.retry.StopStrategy
+     * @author daiqi
+     * @date 2019/12/19 18:08
+     */
+    public static StopStrategy getStopStrategy() {
+        return getStopStrategy(new StopStrategyParam().build());
+    }
+
+    /**
+     * <p>
+     * 获取停止策略，使用了缓存机制
+     * </p>
+     *
+     * @param stopStrategyParam : 停止策略的参数
+     * @return com.github.rholder.retry.StopStrategy
+     * @author daiqi
+     * @date 2019/12/19 18:03
+     */
+    public static StopStrategy getStopStrategy(StopStrategyParam stopStrategyParam) {
+        String stopStrategyParamStr = stopStrategyParam.toString();
+        StopStrategy stopStrategyFromCache = STOP_STRATEGY_CACHE.get(stopStrategyParamStr);
+        if (stopStrategyFromCache == null) {
+            stopStrategyFromCache = newInstance(stopStrategyParam);
+        }
+        return STOP_STRATEGY_CACHE.put(stopStrategyParamStr, stopStrategyFromCache);
+    }
 
     /**
      * <p>
@@ -26,19 +64,19 @@ public class StopStrategyFactory {
      * @date 2019/12/6 0:01
      */
     public static StopStrategy newInstance() {
-        return newInstance(null);
+        return newInstance(new StopStrategyParam().build());
     }
 
-    /**  
+    /**
      * <p>
      * 根据参数构建StopStrategy实例
      * </p>
-     *   
+     *
      * @param stopStrategyParam
      * @return com.github.rholder.retry.StopStrategy
-     * @author sikadai 
+     * @author sikadai
      * @date 2019/12/6 0:01
-     */  
+     */
     public static StopStrategy newInstance(StopStrategyParam stopStrategyParam) {
         if (BaseUtil.isNull(stopStrategyParam)) {
             stopStrategyParam = new StopStrategyParam().build();

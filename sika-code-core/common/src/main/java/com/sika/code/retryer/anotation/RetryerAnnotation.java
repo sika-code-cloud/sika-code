@@ -45,4 +45,11 @@ public @interface RetryerAnnotation {
      * 每次递增的时长 --- 对递增枚举类型有效
      */
     long increment() default 0;
+
+    /**
+     * 需要重试的异常类型列表
+     */
+    Class<? extends Throwable> retryIfExceptionOfTypes();
+
+
 }
