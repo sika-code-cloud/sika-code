@@ -8,6 +8,7 @@ import com.sika.code.batch.dto.StepData;
 import com.sika.code.batch.factory.ItemProcessFactory;
 import com.sika.code.batch.factory.ItemReaderFactory;
 import com.sika.code.batch.factory.ItemWriterFactory;
+import com.sika.code.batch.service.TestService;
 import com.sika.code.batch.strategy.names.NamesStrategy;
 import com.sika.code.batch.strategy.names.impl.DefaultNamesStrategy;
 import com.sika.code.batch.strategy.names.impl.ResourceNamesStrategy;
@@ -73,6 +74,21 @@ public class DemoController {
     @Autowired
     private AnimalValidator animalValidator;
 
+    @Autowired
+    private TestService testService;
+
+    @RequestMapping("/testRetry")
+    public void testRetry() throws Exception {
+        TestService.times = 1;
+        log.info("testRetry：{}", testService.testRetry());
+    }
+
+    @RequestMapping("/testRetry1")
+    public void testRetry1() throws Exception {
+        TestService.times = 1;
+        log.info("testRetry1：{}", testService.testRetry1());
+    }
+
     @RequestMapping("/defaultTest")
     public void defaultTest() throws Exception {
         NamesStrategy namesStrategy = new DefaultNamesStrategy()
@@ -80,7 +96,7 @@ public class DemoController {
                 .build();
 
         Resource resource = new FileSystemResource("E:\\Users\\animal.csv");
-        NamesStrategy resourceNamesStrategy= new ResourceNamesStrategy()
+        NamesStrategy resourceNamesStrategy = new ResourceNamesStrategy()
                 .setResource(resource)
                 .setDelimiter("|")
                 .build();
@@ -131,7 +147,7 @@ public class DemoController {
     public void imp() throws Exception {
         List<String> names = Lists.newArrayList("name", "age", "nation", "address");
         Resource resource = new ClassPathResource("person.csv");
-        ResourceNamesStrategy resourceNamesStrategy= new ResourceNamesStrategy()
+        ResourceNamesStrategy resourceNamesStrategy = new ResourceNamesStrategy()
                 .setResource(resource)
                 .setDelimiter("|")
                 .build();
@@ -169,7 +185,7 @@ public class DemoController {
         flatFileItemReader.setResource(new ClassPathResource("animal.csv"));
         // write
         MyBatisBatchItemWriter<AnimalEntity> myBatisBatchItemWriter = ItemWriterFactory.newItemWriter("writerAnimal", MyBatisBatchItemWriter.class);
-        myBatisBatchItemWriter.setStatementId(BatchUtil.buildStatementId(AnimalMapper.class,"insert"));
+        myBatisBatchItemWriter.setStatementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"));
         // csvItemProcessor
         AnimalItemProcessor animalItemProcessor = ItemProcessFactory.newItemProcess("processorAnimal", AnimalItemProcessor.class);
 

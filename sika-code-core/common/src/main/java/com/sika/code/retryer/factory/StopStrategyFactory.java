@@ -35,6 +35,14 @@ public class StopStrategyFactory {
         return getStopStrategy(new StopStrategyParam().build());
     }
 
+    public static StopStrategy get(String stopStrategyParamStr) {
+        return STOP_STRATEGY_CACHE.get(stopStrategyParamStr);
+    }
+
+    public static StopStrategy put(String stopStrategyParamStr, StopStrategy stopStrategy) {
+       return  STOP_STRATEGY_CACHE.put(stopStrategyParamStr, stopStrategy);
+    }
+
     /**
      * <p>
      * 获取停止策略，使用了缓存机制
@@ -47,11 +55,11 @@ public class StopStrategyFactory {
      */
     public static StopStrategy getStopStrategy(StopStrategyParam stopStrategyParam) {
         String stopStrategyParamStr = stopStrategyParam.toString();
-        StopStrategy stopStrategyFromCache = STOP_STRATEGY_CACHE.get(stopStrategyParamStr);
+        StopStrategy stopStrategyFromCache = get(stopStrategyParamStr);
         if (stopStrategyFromCache == null) {
             stopStrategyFromCache = newInstance(stopStrategyParam);
         }
-        return STOP_STRATEGY_CACHE.put(stopStrategyParamStr, stopStrategyFromCache);
+        return put(stopStrategyParamStr, stopStrategyFromCache);
     }
 
     /**

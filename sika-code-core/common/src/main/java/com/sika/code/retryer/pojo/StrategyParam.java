@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class StrategyParam {
     protected static final Long ZERO = 0L;
     protected static final Long ONE = 1L;
+    protected static final Long INIT_TIME = 3L;
     /** 时间单位 */
     protected TimeUnit timeUnit;
     /**
@@ -24,7 +25,7 @@ public abstract class StrategyParam {
 
     protected void buildCommon() {
         if (BaseUtil.isNull(this.timeUnit)) {
-            this.timeUnit = TimeUnit.MILLISECONDS;
+            this.timeUnit = TimeUnit.SECONDS;
         }
         if (this.maxTime < ZERO) {
             this.maxTime = Long.MAX_VALUE;

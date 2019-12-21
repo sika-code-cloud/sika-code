@@ -3,6 +3,7 @@ package com.sika.code.retryer.anotation;
 import com.github.rholder.retry.RetryListener;
 import com.sika.code.retryer.constant.StopStrategyEnum;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
+import com.sika.code.retryer.listener.DefaultRetryListener;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +22,7 @@ public @interface RetryerAnnotation {
     /**
      * 时间单位
      */
-    TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
+    TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
      * 最大的时长
@@ -50,7 +51,10 @@ public @interface RetryerAnnotation {
     /**
      * 需要重试的异常类型列表
      */
-    Class<? extends Throwable> [] retryIfExceptionOfTypes() default Exception.class;
+    Class<? extends Throwable>[] retryIfExceptionOfTypes() default Exception.class;
 
-    Class<? extends RetryListener> [] retryListeners() ;
+    /**
+     * 重试的监听器列表
+     */
+    Class<? extends RetryListener>[] retryListenerOfTypes() default DefaultRetryListener.class;
 }

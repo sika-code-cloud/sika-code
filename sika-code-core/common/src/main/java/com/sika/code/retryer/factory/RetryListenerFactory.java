@@ -4,7 +4,8 @@ import cn.hutool.core.lang.SimpleCache;
 import com.github.rholder.retry.RetryListener;
 import com.sika.code.common.spring.SpringUtil;
 import com.sika.code.common.util.ReflectionUtil;
-import org.checkerframework.checker.units.qual.C;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 /**
  * 重试监听器工厂类
@@ -12,6 +13,7 @@ import org.checkerframework.checker.units.qual.C;
  * @author daiqi
  * @create 2019-12-20 2:36
  */
+@Slf4j
 public class RetryListenerFactory {
     /**
      * 使用简单的缓存，自动维护缓存机制
@@ -38,7 +40,11 @@ public class RetryListenerFactory {
             return retryListener;
         }
         // 从spring容器取
-        retryListener = SpringUtil.getBean(tClass);
+        try {
+            retryListener = SpringUtil.getBean(tClass);
+        } catch (NoSuchBeanDefinitionException e) {
+            // 不做处理
+        }
         if (retryListener != null) {
             return put(tClass, retryListener);
         }

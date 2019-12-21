@@ -27,10 +27,10 @@ public class WaitStrategyParam extends StrategyParam{
         if (BaseUtil.isNull(this.waitStrategyEnum)) {
             this.waitStrategyEnum = FIXED;
         }
-        if (this.initTime < ZERO) {
-            this.initTime = ZERO;
+        if (this.initTime < ONE) {
+            this.initTime = INIT_TIME;
         }
-        if (this.increment < ONE) {
+        if (this.increment < ZERO) {
             this.increment = ONE;
         }
         return this;

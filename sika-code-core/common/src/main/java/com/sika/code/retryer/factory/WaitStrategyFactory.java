@@ -4,12 +4,9 @@ import cn.hutool.core.lang.SimpleCache;
 import com.github.rholder.retry.WaitStrategies;
 import com.github.rholder.retry.WaitStrategy;
 import com.sika.code.basic.util.BaseUtil;
-import com.sika.code.retryer.anotation.RetryerAnnotation;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
 import com.sika.code.retryer.pojo.WaitStrategyParam;
 
-import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,11 +47,19 @@ public class WaitStrategyFactory {
      */
     public static WaitStrategy getWaitStrategy(WaitStrategyParam waitStrategyParam) {
         String waitStrategyParamStr = waitStrategyParam.toString();
-        WaitStrategy waitStrategyFromCache = WAIT_STRATEGY_CACHE.get(waitStrategyParamStr);
+        WaitStrategy waitStrategyFromCache = get(waitStrategyParamStr);
         if (waitStrategyFromCache == null) {
             waitStrategyFromCache = newInstance(waitStrategyParam);
         }
-        return WAIT_STRATEGY_CACHE.put(waitStrategyParamStr, waitStrategyFromCache);
+        return put(waitStrategyParamStr, waitStrategyFromCache);
+    }
+
+    public static WaitStrategy get(String waitStrategyParamStr) {
+        return WAIT_STRATEGY_CACHE.get(waitStrategyParamStr);
+    }
+
+    public static WaitStrategy put(String waitStrategyParamStr, WaitStrategy waitStrategy) {
+        return WAIT_STRATEGY_CACHE.put(waitStrategyParamStr, waitStrategy);
     }
 
 
