@@ -41,7 +41,7 @@ public @interface RetryerAnnotation {
     /**
      * 初始化的时长
      */
-    long initTime() default 0;
+    long initTime() default 3;
 
     /**
      * 每次递增的时长 --- 对递增枚举类型有效

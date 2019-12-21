@@ -1,16 +1,11 @@
 package com.sika.code.retryer.aspect;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.github.rholder.retry.RetryListener;
 import com.github.rholder.retry.Retryer;
-import com.github.rholder.retry.RetryerBuilder;
 import com.google.common.collect.Sets;
 import com.sika.code.common.array.ArrayUtil;
 import com.sika.code.retryer.anotation.RetryerAnnotation;
-import com.sika.code.retryer.factory.RetryListenerFactory;
 import com.sika.code.retryer.factory.RetryerFactory;
-import com.sika.code.retryer.factory.StopStrategyFactory;
-import com.sika.code.retryer.factory.WaitStrategyFactory;
 import com.sika.code.retryer.pojo.RetryerBuilderParam;
 import com.sika.code.retryer.pojo.StopStrategyParam;
 import com.sika.code.retryer.pojo.WaitStrategyParam;
@@ -44,6 +39,13 @@ public class RetryerAspect {
 
     @Around(value = "retryerAspect()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        return doCall(joinPoint);
+    }
+
+    /**
+     * 执行调用
+     */
+    public Object doCall(ProceedingJoinPoint joinPoint) throws Throwable {
         // 1: 获取RetryerAnnotation
         RetryerAnnotation retryerAnnotation = getRetryerAnnotation(joinPoint);
         if (retryerAnnotation == null) {
@@ -81,6 +83,9 @@ public class RetryerAspect {
 
     }
 
+    /**
+     * 根据注解构建重试构建参数
+     */
     private RetryerBuilderParam buildRetryerBuilderParam(RetryerAnnotation retryerAnnotation) {
         WaitStrategyParam waitStrategyParam = buildWaitStrategyParam(retryerAnnotation);
         StopStrategyParam stopStrategyParam = buildStopStrategyParam(retryerAnnotation);
@@ -109,15 +114,6 @@ public class RetryerAspect {
                 .build();
     }
 
-    private StopStrategyParam buildStopStrategyParam(RetryerAnnotation retryerAnnotation) {
-        return new StopStrategyParam()
-                .setStopStrategyEnum(retryerAnnotation.stopStrategyEnum())
-                .setAttemptNumber(retryerAnnotation.attemptNumber())
-                .setMaxTime(retryerAnnotation.maxTime())
-                .setTimeUnit(retryerAnnotation.timeUnit())
-                .build();
-    }
-
     private WaitStrategyParam buildWaitStrategyParam(RetryerAnnotation retryerAnnotation) {
         return new WaitStrategyParam()
                 .setWaitStrategyEnum(retryerAnnotation.waitStrategyEnum())
@@ -127,4 +123,14 @@ public class RetryerAspect {
                 .setTimeUnit(retryerAnnotation.timeUnit())
                 .build();
     }
+    
+    private StopStrategyParam buildStopStrategyParam(RetryerAnnotation retryerAnnotation) {
+        return new StopStrategyParam()
+                .setStopStrategyEnum(retryerAnnotation.stopStrategyEnum())
+                .setAttemptNumber(retryerAnnotation.attemptNumber())
+                .setMaxTime(retryerAnnotation.maxTime())
+                .setTimeUnit(retryerAnnotation.timeUnit())
+                .build();
+    }
+
 }
