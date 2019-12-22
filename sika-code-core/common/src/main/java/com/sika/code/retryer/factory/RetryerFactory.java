@@ -34,7 +34,7 @@ public class RetryerFactory {
         retryerBuilder.withStopStrategy(StopStrategyFactory.getStopStrategy(retryerBuilderParam.getStopStrategyParam()));
 
 
-        // 循环设置withRetryListener
+        // 循环设置需要重试的异常
         Set<Class<? extends Throwable>> retryIfExceptionOfTypes = retryerBuilderParam.getRetryIfExceptionOfTypes();
         if (CollectionUtil.isNotEmpty(retryIfExceptionOfTypes)) {
             for (Class<? extends Throwable> retryIfExceptionOfType : retryIfExceptionOfTypes) {
