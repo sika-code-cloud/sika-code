@@ -1,6 +1,7 @@
 package com.sika.code.batch.service;
 
 import com.sika.code.retryer.anotation.RetryerAnnotation;
+import com.sika.code.retryer.constant.WaitStrategyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class TestService {
             return true;
         }
     }
-    @RetryerAnnotation(attemptNumber = 3, retryIfExceptionOfTypes = {NullPointerException.class, NumberFormatException.class})
+    @RetryerAnnotation(waitStrategyEnum = WaitStrategyEnum.INCREMENTING, increment = 5, attemptNumber = 5)
     public boolean testRetry1() {
         times++;
         log.info("call times={}", times);
