@@ -48,7 +48,7 @@ public class RetryListenerFactory {
         if (retryListener != null) {
             return put(tClass, retryListener);
         }
-        // 反射创建对账
+        // 反射创建对象
         return put(tClass, ReflectionUtil.newInstanceIfPossible(tClass));
     }
 
