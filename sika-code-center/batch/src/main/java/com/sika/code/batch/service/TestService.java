@@ -33,7 +33,7 @@ public class TestService {
             return true;
         }
     }
-    @RetryerAnnotation(attemptNumber = 3)
+    @RetryerAnnotation(attemptNumber = 3, retryIfExceptionOfTypes = {NullPointerException.class, NumberFormatException.class})
     public boolean testRetry1() {
         times++;
         log.info("call times={}", times);

@@ -33,8 +33,9 @@ public class RetryerFactory {
         retryerBuilder.withWaitStrategy(WaitStrategyFactory.getWaitStrategy(retryerBuilderParam.getWaitStrategyParam()));
         retryerBuilder.withStopStrategy(StopStrategyFactory.getStopStrategy(retryerBuilderParam.getStopStrategyParam()));
 
-        // 循环设置retryIfExceptionOfType
-        Set<Class<? extends Throwable>> retryIfExceptionOfTypes =retryerBuilderParam.getRetryIfExceptionOfTypes();
+
+        // 循环设置withRetryListener
+        Set<Class<? extends Throwable>> retryIfExceptionOfTypes = retryerBuilderParam.getRetryIfExceptionOfTypes();
         if (CollectionUtil.isNotEmpty(retryIfExceptionOfTypes)) {
             for (Class<? extends Throwable> retryIfExceptionOfType : retryIfExceptionOfTypes) {
                 retryerBuilder.retryIfExceptionOfType(retryIfExceptionOfType);

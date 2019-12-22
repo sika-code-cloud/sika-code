@@ -35,7 +35,7 @@ public class RetryerBuilderParam {
         }
         if (CollectionUtil.isEmpty(this.retryIfExceptionOfTypes)) {
             this.retryIfExceptionOfTypes = Sets.newLinkedHashSet();
-            addRetryIfExceptionOfType(Exception.class);
+            addRetryIfExceptionOfTypes(Exception.class);
         }
         // 构建监听器
         buildRetryListeners();
@@ -49,7 +49,7 @@ public class RetryerBuilderParam {
         // 优先对监听器class进行复制
         if (CollectionUtil.isEmpty(this.retryListenerOfTypes)) {
             this.retryListenerOfTypes = Sets.newLinkedHashSet();
-            addRetryListenerClass(DefaultRetryListener.class);
+            addRetryListenerOfTypes(DefaultRetryListener.class);
         }
         if (CollectionUtil.isEmpty(this.retryListeners)) {
             this.retryListeners = Sets.newLinkedHashSet();
@@ -59,12 +59,13 @@ public class RetryerBuilderParam {
         }
     }
 
-    public void addRetryIfExceptionOfType(Class<? extends Throwable> retryIfExceptionOfType) {
+
+    public void addRetryIfExceptionOfTypes(Class<? extends Throwable> retryIfExceptionOfType) {
         this.retryIfExceptionOfTypes.add(retryIfExceptionOfType);
     }
 
-    public void addRetryListenerClass(Class<? extends RetryListener> retryListenerClass) {
-        this.retryListenerOfTypes.add(retryListenerClass);
+    public void addRetryListenerOfTypes(Class<? extends RetryListener> retryListenerOfTypes) {
+        this.retryListenerOfTypes.add(retryListenerOfTypes);
     }
 
     public void addRetryListener(RetryListener retryListener) {

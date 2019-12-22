@@ -60,7 +60,11 @@ public class RetryerAspect {
             try {
                 return joinPoint.proceed();
             } catch (Throwable throwable) {
-                throw new Exception(throwable);
+                if (throwable instanceof Exception) {
+                    throw (Exception) throwable;
+                } else {
+                    throw new Exception(throwable);
+                }
             }
         };
         // 5: 利用重试器调用请求
@@ -91,26 +95,26 @@ public class RetryerAspect {
         StopStrategyParam stopStrategyParam = buildStopStrategyParam(retryerAnnotation);
 
         // 循环设置retryIfExceptionOfType
-        Set<Class<? extends Throwable>> retryIfExceptionOfTypeSets = Sets.newLinkedHashSet();
-        Class<? extends Throwable>[] retryIfExceptionOfTypes = retryerAnnotation.retryIfExceptionOfTypes();
+        Set<Class<? extends Throwable>> retryIfExceptionOfTypeSet = Sets.newLinkedHashSet();
+        Class<? extends Throwable> [] retryIfExceptionOfTypes = retryerAnnotation.retryIfExceptionOfTypes();
         if (ArrayUtil.isNotEmpty(retryIfExceptionOfTypes)) {
             for (Class<? extends Throwable> retryIfExceptionOfType : retryIfExceptionOfTypes) {
-                retryIfExceptionOfTypeSets.add(retryIfExceptionOfType);
+                retryIfExceptionOfTypeSet.add(retryIfExceptionOfType);
             }
         }
         // 循环设置withRetryListener
-        Set<Class<? extends RetryListener>> retryListenersTypes = Sets.newLinkedHashSet();
+        Set<Class<? extends RetryListener>> retryListenersTypeSet = Sets.newLinkedHashSet();
         Class<? extends RetryListener>[] retryListenerOfTypes = retryerAnnotation.retryListenerOfTypes();
         if (ArrayUtil.isNotEmpty(retryListenerOfTypes)) {
             for (Class<? extends RetryListener> retryListenerOfType : retryListenerOfTypes) {
-                retryListenersTypes.add(retryListenerOfType);
+                retryListenersTypeSet.add(retryListenerOfType);
             }
         }
         return new RetryerBuilderParam()
                 .setWaitStrategyParam(waitStrategyParam)
                 .setStopStrategyParam(stopStrategyParam)
-                .setRetryIfExceptionOfTypes(retryIfExceptionOfTypeSets)
-                .setRetryListenerOfTypes(retryListenersTypes)
+                .setRetryIfExceptionOfTypes(retryIfExceptionOfTypeSet)
+                .setRetryListenerOfTypes(retryListenersTypeSet)
                 .build();
     }
 
@@ -123,7 +127,7 @@ public class RetryerAspect {
                 .setTimeUnit(retryerAnnotation.timeUnit())
                 .build();
     }
-    
+
     private StopStrategyParam buildStopStrategyParam(RetryerAnnotation retryerAnnotation) {
         return new StopStrategyParam()
                 .setStopStrategyEnum(retryerAnnotation.stopStrategyEnum())
