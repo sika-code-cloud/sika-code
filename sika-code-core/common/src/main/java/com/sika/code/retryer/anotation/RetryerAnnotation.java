@@ -1,6 +1,8 @@
 package com.sika.code.retryer.anotation;
 
 import com.github.rholder.retry.RetryListener;
+import com.sika.code.retryer.constant.RetryIfConditionEnum;
+import com.sika.code.retryer.constant.RetryerNameEnum;
 import com.sika.code.retryer.constant.StopStrategyEnum;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
 import com.sika.code.retryer.listener.DefaultRetryListener;
@@ -19,6 +21,16 @@ import java.util.concurrent.TimeUnit;
 @Documented
 @Inherited
 public @interface RetryerAnnotation {
+    /**
+     * Retryer对象的名称枚举
+     */
+    RetryerNameEnum retryerName() default RetryerNameEnum.DEFAULT;
+
+    /**
+     * 重试条件的枚举
+     */
+    RetryIfConditionEnum retryIfCondition() default RetryIfConditionEnum.DEFAULT;
+
     /**
      * 时间单位
      */
@@ -47,14 +59,4 @@ public @interface RetryerAnnotation {
      * 每次递增的时长 --- 对递增枚举类型有效
      */
     long increment() default 0;
-
-    /**
-     * 需要重试的异常类型列表
-     */
-    Class<? extends Throwable>[] retryIfExceptionOfTypes() default Exception.class;
-
-    /**
-     * 重试的监听器列表
-     */
-    Class<? extends RetryListener>[] retryListenerOfTypes() default DefaultRetryListener.class;
 }

@@ -3,8 +3,10 @@ package com.sika.code.retryer.aspect;
 import com.github.rholder.retry.RetryListener;
 import com.github.rholder.retry.Retryer;
 import com.google.common.collect.Sets;
+import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.array.ArrayUtil;
 import com.sika.code.retryer.anotation.RetryerAnnotation;
+import com.sika.code.retryer.constant.RetryIfConditionEnum;
 import com.sika.code.retryer.factory.RetryerFactory;
 import com.sika.code.retryer.pojo.RetryerBuilderParam;
 import com.sika.code.retryer.pojo.StopStrategyParam;
@@ -33,11 +35,16 @@ import java.util.concurrent.Callable;
 @Aspect
 public class RetryerAspect {
     @Pointcut("@within(com.sika.code.retryer.anotation.RetryerAnnotation)")
-    public void retryerAspect() {
+    public void retryerAspectForClass() {
 
     }
 
-    @Around(value = "retryerAspect()")
+    @Pointcut("@annotation(com.sika.code.retryer.anotation.RetryerAnnotation)")
+    public void retryerAspectForMethod() {
+
+    }
+
+    @Around(value = "retryerAspectForClass() || retryerAspectForMethod()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         return doCall(joinPoint);
     }
@@ -51,10 +58,7 @@ public class RetryerAspect {
         if (retryerAnnotation == null) {
             return joinPoint.proceed();
         }
-        // 2: 构建重试构建者参数
-        RetryerBuilderParam retryerBuilderParam = buildRetryerBuilderParam(retryerAnnotation);
-        // 3: 获取Retryer对象
-        Retryer<Object> retryer = RetryerFactory.getRetryer(retryerBuilderParam);
+        Retryer<Object> retryer = getRetryer(retryerAnnotation);
         // 4: 创建Callable默认实现对象
         Callable<Object> callable = () -> {
             try {
@@ -69,6 +73,17 @@ public class RetryerAspect {
         };
         // 5: 利用重试器调用请求
         return retryer.call(callable);
+    }
+
+    private Retryer<Object> getRetryer(RetryerAnnotation retryerAnnotation) {
+        Retryer<Object> retryer = RetryerFactory.getRetryer(retryerAnnotation.retryerName());
+        if (BaseUtil.isNull(retryer)) {
+            // 2: 构建重试构建者参数
+            RetryerBuilderParam retryerBuilderParam = buildRetryerBuilderParam(retryerAnnotation);
+            // 3: 获取Retryer对象
+            retryer = RetryerFactory.getRetryer(retryerBuilderParam);
+        }
+        return retryer;
     }
 
     /**
@@ -93,28 +108,13 @@ public class RetryerAspect {
     private RetryerBuilderParam buildRetryerBuilderParam(RetryerAnnotation retryerAnnotation) {
         WaitStrategyParam waitStrategyParam = buildWaitStrategyParam(retryerAnnotation);
         StopStrategyParam stopStrategyParam = buildStopStrategyParam(retryerAnnotation);
-
-        // 循环设置retryIfExceptionOfType
-        Set<Class<? extends Throwable>> retryIfExceptionOfTypeSet = Sets.newLinkedHashSet();
-        Class<? extends Throwable> [] retryIfExceptionOfTypes = retryerAnnotation.retryIfExceptionOfTypes();
-        if (ArrayUtil.isNotEmpty(retryIfExceptionOfTypes)) {
-            for (Class<? extends Throwable> retryIfExceptionOfType : retryIfExceptionOfTypes) {
-                retryIfExceptionOfTypeSet.add(retryIfExceptionOfType);
-            }
-        }
-        // 循环设置withRetryListener
-        Set<Class<? extends RetryListener>> retryListenersTypeSet = Sets.newLinkedHashSet();
-        Class<? extends RetryListener>[] retryListenerOfTypes = retryerAnnotation.retryListenerOfTypes();
-        if (ArrayUtil.isNotEmpty(retryListenerOfTypes)) {
-            for (Class<? extends RetryListener> retryListenerOfType : retryListenerOfTypes) {
-                retryListenersTypeSet.add(retryListenerOfType);
-            }
-        }
+        // 获取重试条件枚举
+        RetryIfConditionEnum retryIfConditionEnum = retryerAnnotation.retryIfCondition();
         return new RetryerBuilderParam()
                 .setWaitStrategyParam(waitStrategyParam)
                 .setStopStrategyParam(stopStrategyParam)
-                .setRetryIfExceptionOfTypes(retryIfExceptionOfTypeSet)
-                .setRetryListenerOfTypes(retryListenersTypeSet)
+                .setRetryerName(retryerAnnotation.retryerName())
+                .buildRetryCondition(retryIfConditionEnum)
                 .build();
     }
 

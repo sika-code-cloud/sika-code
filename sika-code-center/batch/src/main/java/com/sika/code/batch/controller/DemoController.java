@@ -20,6 +20,7 @@ import com.sika.code.batch.test.animal.mapper.AnimalMapper;
 import com.sika.code.batch.test.person.CsvItemProcessor;
 import com.sika.code.batch.test.person.PersonEntity;
 import com.sika.code.batch.util.BatchUtil;
+import com.sika.code.common.date.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
@@ -76,17 +77,32 @@ public class DemoController {
 
     @Autowired
     private TestService testService;
+    private int COUNT = 1000000;
 
     @RequestMapping("/testRetry")
     public void testRetry() throws Exception {
         TestService.times = 1;
-        log.info("testRetry：{}", testService.testRetry());
+        for (int j = 0; j < 30; ++j) {
+            Long begin = DateUtil.current(false);
+            for (int i = 0; i < COUNT; ++i) {
+                testService.testRetry();
+            }
+            System.out.println("testRetry(): 第 " + j + "次:" +(DateUtil.current(false) - begin) + "ms");
+        }
+
+
     }
 
     @RequestMapping("/testRetry1")
     public void testRetry1() throws Exception {
         TestService.times = 1;
-        log.info("testRetry1：{}", testService.testRetry1());
+        for (int j = 0; j < 30; ++j) {
+            Long begin = DateUtil.current(false);
+            for (int i = 0; i < COUNT; ++i) {
+                testService.testRetry1();
+            }
+            System.out.println("testRetry1(): 第 " + j + "次:"+ (DateUtil.current(false) - begin) + "ms");
+        }
     }
 
     @RequestMapping("/defaultTest")
