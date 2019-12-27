@@ -21,10 +21,6 @@ import java.util.concurrent.TimeUnit;
 @Documented
 @Inherited
 public @interface RetryerAnnotation {
-    /**
-     * Retryer对象的名称枚举
-     */
-    RetryerNameEnum retryerName() default RetryerNameEnum.DEFAULT;
 
     /**
      * 重试条件的枚举

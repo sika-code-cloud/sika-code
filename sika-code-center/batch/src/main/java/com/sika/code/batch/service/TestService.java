@@ -1,10 +1,16 @@
 package com.sika.code.batch.service;
 
+import com.github.rholder.retry.RetryException;
+import com.github.rholder.retry.Retryer;
 import com.google.common.collect.Lists;
 import com.sika.code.retryer.anotation.RetryerAnnotation;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
+import com.sika.code.retryer.factory.RetryerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author daiqi
@@ -12,12 +18,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-@RetryerAnnotation
+//@RetryerAnnotation
 public class TestService {
     public static int times = 1;
 
-    public boolean testRetry() {
-        return core1();
+    public boolean testRetry() throws Exception {
+        Retryer<Boolean> retryer = RetryerFactory.newDefaultRetryer();
+        return retryer.call(() -> core1());
     }
 
     @RetryerAnnotation(waitStrategyEnum = WaitStrategyEnum.INCREMENTING, increment = 5, attemptNumber = 5)
@@ -29,6 +36,7 @@ public class TestService {
         for (int i = 0; i < 100; ++i) {
             Lists.newArrayList();
         }
+//        core();
         return true;
     }
 

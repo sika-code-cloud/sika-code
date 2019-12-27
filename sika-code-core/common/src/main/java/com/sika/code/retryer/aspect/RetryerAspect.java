@@ -1,10 +1,7 @@
 package com.sika.code.retryer.aspect;
 
-import com.github.rholder.retry.RetryListener;
 import com.github.rholder.retry.Retryer;
-import com.google.common.collect.Sets;
 import com.sika.code.basic.util.BaseUtil;
-import com.sika.code.common.array.ArrayUtil;
 import com.sika.code.retryer.anotation.RetryerAnnotation;
 import com.sika.code.retryer.constant.RetryIfConditionEnum;
 import com.sika.code.retryer.factory.RetryerFactory;
@@ -21,7 +18,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
@@ -75,8 +71,13 @@ public class RetryerAspect {
         return retryer.call(callable);
     }
 
-    private Retryer<Object> getRetryer(RetryerAnnotation retryerAnnotation) {
-        Retryer<Object> retryer = RetryerFactory.getRetryer(retryerAnnotation.retryerName());
+    private Retryer getRetryer(RetryerAnnotation retryerAnnotation) {
+        RetryIfConditionEnum retryIfConditionEnum = retryerAnnotation.retryIfCondition();
+        String retryerName = null;
+        if (retryIfConditionEnum.getRetryerName() != null) {
+            retryerName = retryIfConditionEnum.getRetryerName().name();
+        }
+        Retryer retryer = RetryerFactory.newDefaultRetryer();
         if (BaseUtil.isNull(retryer)) {
             // 2: 构建重试构建者参数
             RetryerBuilderParam retryerBuilderParam = buildRetryerBuilderParam(retryerAnnotation);
@@ -113,7 +114,6 @@ public class RetryerAspect {
         return new RetryerBuilderParam()
                 .setWaitStrategyParam(waitStrategyParam)
                 .setStopStrategyParam(stopStrategyParam)
-                .setRetryerName(retryerAnnotation.retryerName())
                 .buildRetryCondition(retryIfConditionEnum)
                 .build();
     }

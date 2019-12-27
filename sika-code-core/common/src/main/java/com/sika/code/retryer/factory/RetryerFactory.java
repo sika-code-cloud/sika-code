@@ -7,7 +7,7 @@ import com.github.rholder.retry.RetryerBuilder;
 import com.google.common.base.Predicates;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.util.CollectionUtil;
-import com.sika.code.retryer.constant.RetryerNameEnum;
+import com.sika.code.retryer.constant.RetryIfConditionEnum;
 import com.sika.code.retryer.pojo.RetryerBuilderParam;
 
 import java.util.Set;
@@ -20,11 +20,26 @@ public class RetryerFactory {
     /**
      * 使用简单的缓存，自动维护缓存机制
      */
-    private static SimpleCache<RetryerNameEnum, Retryer> RETRYER_BUILDER_CACHE = new SimpleCache<>();
+    private static SimpleCache<String, Retryer> RETRYER_BUILDER_CACHE = new SimpleCache<>();
 
-    public static Retryer<Object> getRetryer(RetryerNameEnum retryerName) {
+    public static Retryer getRetryer(String retryerName) {
         return get(retryerName);
     }
+
+    public static Retryer getDefaultRetry() {
+        RetryIfConditionEnum defaultRetry = RetryIfConditionEnum.DEFAULT;
+        Retryer retryer = getRetryer(defaultRetry.getRetryerName().name());
+        if (retryer != null) {
+            return retryer;
+        }
+        return put(defaultRetry.getRetryerName().name(), newDefaultRetryer());
+    }
+
+    // 该方法无任何缓存 --- 无特殊情况不建议直接使用
+    public static Retryer newDefaultRetryer() {
+        return newRetryer(new RetryerBuilderParam().build());
+    }
+
     /**
      * <p>
      * 根据retryerBuilderParam参数获取Retryer
@@ -35,16 +50,16 @@ public class RetryerFactory {
      * @author daiqi
      * @date 2019/12/21 22:47
      */
-    public static Retryer<Object> getRetryer(RetryerBuilderParam retryerBuilderParam) {
-        RetryerNameEnum retryerName = retryerBuilderParam.getRetryerName();
-        Retryer<Object> retryerFromCache = getRetryer(retryerName);
+    public static Retryer getRetryer(RetryerBuilderParam retryerBuilderParam) {
+        String retryerName = retryerBuilderParam.getRetryerName();
+        Retryer retryerFromCache = getRetryer(retryerName);
         if (BaseUtil.isNotNull(retryerFromCache)) {
             return retryerFromCache;
         }
-        return put(retryerName, buildRetryer(retryerBuilderParam));
+        return put(retryerName, newRetryer(retryerBuilderParam));
     }
 
-    private static Retryer<Object> buildRetryer(RetryerBuilderParam retryerBuilderParam) {
+    private static Retryer newRetryer(RetryerBuilderParam retryerBuilderParam) {
         return buildRetryerBuilder(retryerBuilderParam).build();
     }
 
@@ -58,8 +73,8 @@ public class RetryerFactory {
      * @author sikadai
      * @date 2019/12/26 23:52
      */
-    private static RetryerBuilder<Object> buildRetryerBuilder(RetryerBuilderParam retryerBuilderParam) {
-        RetryerBuilder<Object> retryerBuilder = RetryerBuilder.newBuilder();
+    private static RetryerBuilder buildRetryerBuilder(RetryerBuilderParam retryerBuilderParam) {
+        RetryerBuilder retryerBuilder = RetryerBuilder.newBuilder();
         retryerBuilder.withWaitStrategy(WaitStrategyFactory.getWaitStrategy(retryerBuilderParam.getWaitStrategyParam()));
         retryerBuilder.withStopStrategy(StopStrategyFactory.getStopStrategy(retryerBuilderParam.getStopStrategyParam()));
         // 循环设置需要重试的异常
@@ -86,11 +101,11 @@ public class RetryerFactory {
         return retryerBuilder;
     }
 
-    private static <T> Retryer<T> get(RetryerNameEnum retryerName) {
+    private static <T> Retryer<T> get(String retryerName) {
         return RETRYER_BUILDER_CACHE.get(retryerName);
     }
 
-    private static <T> Retryer<T> put(RetryerNameEnum retryerName, Retryer retryer) {
+    private static <T> Retryer<T> put(String retryerName, Retryer retryer) {
         return RETRYER_BUILDER_CACHE.put(retryerName, retryer);
     }
 }

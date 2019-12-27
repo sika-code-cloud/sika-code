@@ -15,10 +15,12 @@ import lombok.Getter;
 @Getter
 public enum RetryIfConditionEnum {
     /**
-     * 重试条件
+     * 重试条件 --- 若要使用不同重试条件，retryerName必须不一样
      */
-    DEFAULT(new Class[]{Exception.class}, new Class[]{DefaultRetryListener.class}, null, "默认的重试条件");
+    DEFAULT(RetryerNameEnum.DEFAULT, new Class[]{Exception.class}, new Class[]{DefaultRetryListener.class}, null, "默认的重试条件");
 
+    /** 重试枚举名称 --- 缓存重试对象的唯一key 若要使用不同的重试规则，必须保证唯一 */
+    private RetryerNameEnum retryerName;
     /**
      * 需要重试的异常类型列表
      */

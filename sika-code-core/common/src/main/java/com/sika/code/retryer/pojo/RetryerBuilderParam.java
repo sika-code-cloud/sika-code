@@ -4,6 +4,7 @@ import com.github.rholder.retry.RetryListener;
 import com.google.common.collect.Sets;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.array.ArrayUtil;
+import com.sika.code.common.string.util.StringUtil;
 import com.sika.code.common.util.CollectionUtil;
 import com.sika.code.retryer.constant.RetryIfConditionEnum;
 import com.sika.code.retryer.constant.RetryerNameEnum;
@@ -26,7 +27,7 @@ public class RetryerBuilderParam {
     /**
      * 用于缓存retryer对象的名称
      */
-    private RetryerNameEnum retryerName;
+    private String retryerName;
     /**
      * 停止策略参数
      */
@@ -58,6 +59,9 @@ public class RetryerBuilderParam {
         }
         if (BaseUtil.isNull(this.waitStrategyParam)) {
             this.waitStrategyParam = new WaitStrategyParam().build();
+        }
+        if (StringUtil.isBlank(retryerName)) {
+            this.retryerName = RetryerNameEnum.DEFAULT.name();
         }
         addRetryIfExceptionOfTypes(Exception.class);
         // 构建监听器
@@ -103,6 +107,7 @@ public class RetryerBuilderParam {
         if (BaseUtil.isNull(retryIfCondition)) {
             retryIfCondition = RetryIfConditionEnum.DEFAULT;
         }
+        this.retryerName = retryIfCondition.getRetryerName().name();
         // 循环设置retryIfExceptionOfType
         Class<? extends Throwable>[] retryIfExceptionOfTypes = retryIfCondition.getRetryIfExceptionOfTypes();
         if (ArrayUtil.isNotEmpty(retryIfExceptionOfTypes)) {

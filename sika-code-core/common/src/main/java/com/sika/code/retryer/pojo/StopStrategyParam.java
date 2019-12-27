@@ -29,7 +29,7 @@ public class StopStrategyParam extends StrategyParam {
         if (BaseUtil.isNull(this.stopStrategyEnum)) {
             this.stopStrategyEnum = StopStrategyEnum.STOP_AFTER_ATTEMPT;
         }
-        if (this.attemptNumber < 0) {
+        if (this.attemptNumber <= 0) {
             this.attemptNumber = DEFAULT_ATTEMPT_NUMBER;
         }
         return this;
