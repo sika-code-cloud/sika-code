@@ -77,7 +77,7 @@ public class RetryerAspect {
         if (retryIfConditionEnum.getRetryerName() != null) {
             retryerName = retryIfConditionEnum.getRetryerName().name();
         }
-        Retryer retryer = RetryerFactory.newDefaultRetryer();
+        Retryer retryer = RetryerFactory.getRetryer(retryerName);
         if (BaseUtil.isNull(retryer)) {
             // 2: 构建重试构建者参数
             RetryerBuilderParam retryerBuilderParam = buildRetryerBuilderParam(retryerAnnotation);
