@@ -26,6 +26,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.mybatis.spring.batch.builder.MyBatisBatchItemWriterBuilder;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
@@ -43,6 +44,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -74,6 +76,12 @@ public class DemoController {
     private Job defaultJob;
     @Autowired
     private AnimalValidator animalValidator;
+    @Autowired
+    private Job taskletJob;
+    @Autowired
+    private Job taskletJob2;
+    @Autowired
+    private Job taskletJob3;
 
     @Autowired
     private TestService testService;
@@ -87,7 +95,7 @@ public class DemoController {
             for (int i = 0; i < COUNT; ++i) {
                 testService.testRetry();
             }
-            System.out.println("testRetry(): 第 " + j + "次:" +(DateUtil.current(false) - begin) + "ms");
+            System.out.println("testRetry(): 第 " + j + "次:" + (DateUtil.current(false) - begin) + "ms");
         }
 
 
@@ -101,8 +109,32 @@ public class DemoController {
             for (int i = 0; i < COUNT; ++i) {
                 testService.testRetry1();
             }
-            System.out.println("testRetry1(): 第 " + j + "次:"+ (DateUtil.current(false) - begin) + "ms");
+            System.out.println("testRetry1(): 第 " + j + "次:" + (DateUtil.current(false) - begin) + "ms");
         }
+    }
+
+    @RequestMapping("/taskletJob")
+    public void taskletJob() throws Exception {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addDate("now", new Date())
+                .toJobParameters();
+        jobLauncher.run(taskletJob, jobParameters);
+    }
+
+    @RequestMapping("/taskletJob2")
+    public void taskletJob2() throws Exception {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addDate("now", new Date())
+                .toJobParameters();
+        jobLauncher.run(taskletJob2, jobParameters);
+    }
+
+    @RequestMapping("/taskletJob3")
+    public void taskletJob3() throws Exception {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addDate("now", new Date())
+                .toJobParameters();
+        jobLauncher.run(taskletJob3, jobParameters);
     }
 
     @RequestMapping("/defaultTest")
