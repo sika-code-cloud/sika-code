@@ -4,7 +4,6 @@ import cn.hutool.core.lang.SimpleCache;
 import com.github.rholder.retry.RetryListener;
 import com.github.rholder.retry.Retryer;
 import com.github.rholder.retry.RetryerBuilder;
-import com.google.common.base.Predicates;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.util.CollectionUtil;
 import com.sika.code.retryer.constant.RetryIfConditionEnum;
@@ -89,13 +88,6 @@ public class RetryerFactory {
         if (CollectionUtil.isNotEmpty(retryListeners)) {
             for (RetryListener retryListener : retryListeners) {
                 retryerBuilder.withRetryListener(retryListener);
-            }
-        }
-        // 循环设置返回的结果
-        Set<Object> retryIfResults = retryerBuilderParam.getRetryIfResults();
-        if (CollectionUtil.isEmpty(retryIfResults)) {
-            for (Object retryIfResult : retryIfResults) {
-                retryerBuilder.retryIfResult(Predicates.equalTo(retryIfResult));
             }
         }
         return retryerBuilder;

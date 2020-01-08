@@ -3,7 +3,6 @@ package com.sika.code.retryer.aspect;
 import com.github.rholder.retry.Retryer;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.retryer.anotation.RetryerAnnotation;
-import com.sika.code.retryer.constant.RetryIfConditionEnum;
 import com.sika.code.retryer.factory.RetryerFactory;
 import com.sika.code.retryer.pojo.RetryerBuilderParam;
 import com.sika.code.retryer.pojo.StopStrategyParam;
@@ -54,7 +53,7 @@ public class RetryerAspect {
         if (retryerAnnotation == null || retryerAnnotation.close()) {
             return joinPoint.proceed();
         }
-        Retryer<Object> retryer = getRetryer(retryerAnnotation);
+        Retryer retryer = getRetryer(retryerAnnotation);
         // 4: 创建Callable默认实现对象
         Callable<Object> callable = () -> {
             try {
@@ -71,13 +70,8 @@ public class RetryerAspect {
         return retryer.call(callable);
     }
 
-    private Retryer<Object> getRetryer(RetryerAnnotation retryerAnnotation) {
-        RetryIfConditionEnum retryIfConditionEnum = retryerAnnotation.retryIfCondition();
-        String retryerName = null;
-        if (retryIfConditionEnum.getRetryerName() != null) {
-            retryerName = retryIfConditionEnum.getRetryerName().name();
-        }
-        Retryer retryer = RetryerFactory.getRetryer(retryerName);
+    private Retryer getRetryer(RetryerAnnotation retryerAnnotation) {
+        Retryer retryer = RetryerFactory.getRetryer(retryerAnnotation.retryerName());
         if (BaseUtil.isNull(retryer)) {
             // 2: 构建重试构建者参数
             RetryerBuilderParam retryerBuilderParam = buildRetryerBuilderParam(retryerAnnotation);
@@ -109,12 +103,10 @@ public class RetryerAspect {
     private RetryerBuilderParam buildRetryerBuilderParam(RetryerAnnotation retryerAnnotation) {
         WaitStrategyParam waitStrategyParam = buildWaitStrategyParam(retryerAnnotation);
         StopStrategyParam stopStrategyParam = buildStopStrategyParam(retryerAnnotation);
-        // 获取重试条件枚举
-        RetryIfConditionEnum retryIfConditionEnum = retryerAnnotation.retryIfCondition();
         return new RetryerBuilderParam()
                 .setWaitStrategyParam(waitStrategyParam)
                 .setStopStrategyParam(stopStrategyParam)
-                .buildRetryCondition(retryIfConditionEnum)
+                .buildRetryCondition(retryerAnnotation)
                 .build();
     }
 

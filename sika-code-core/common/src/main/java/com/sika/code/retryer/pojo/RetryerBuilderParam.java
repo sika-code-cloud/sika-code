@@ -6,7 +6,7 @@ import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.common.array.ArrayUtil;
 import com.sika.code.common.string.util.StringUtil;
 import com.sika.code.common.util.CollectionUtil;
-import com.sika.code.retryer.constant.RetryIfConditionEnum;
+import com.sika.code.retryer.anotation.RetryerAnnotation;
 import com.sika.code.retryer.constant.RetryerNameEnum;
 import com.sika.code.retryer.factory.RetryListenerFactory;
 import com.sika.code.retryer.listener.DefaultRetryListener;
@@ -48,10 +48,6 @@ public class RetryerBuilderParam {
      * 重试监听器类型列表 --- 根据类型自动构建重试对象
      */
     private Set<Class<? extends RetryListener>> retryListenerOfTypes = Sets.newLinkedHashSet();
-    /**
-     * 需要重试的结果列表
-     */
-    private Set<Object> retryIfResults = Sets.newLinkedHashSet();
 
     public RetryerBuilderParam build() {
         if (BaseUtil.isNull(this.stopStrategyParam)) {
@@ -63,7 +59,9 @@ public class RetryerBuilderParam {
         if (StringUtil.isBlank(retryerName)) {
             this.retryerName = RetryerNameEnum.DEFAULT.name();
         }
-        addRetryIfExceptionOfTypes(Exception.class);
+        if (CollectionUtil.isEmpty(retryIfExceptionOfTypes)) {
+            addRetryIfExceptionOfTypes(Exception.class);
+        }
         // 构建监听器
         buildRetryListeners();
         return this;
@@ -82,7 +80,6 @@ public class RetryerBuilderParam {
         }
     }
 
-
     public RetryerBuilderParam addRetryIfExceptionOfTypes(Class<? extends Throwable> retryIfExceptionOfType) {
         this.retryIfExceptionOfTypes.add(retryIfExceptionOfType);
         return this;
@@ -98,39 +95,25 @@ public class RetryerBuilderParam {
         return this;
     }
 
-    public RetryerBuilderParam addRetryIfResult(Object retryIfResult) {
-        this.addRetryIfResult(retryIfResult);
-        return this;
-    }
-
-    public RetryerBuilderParam buildRetryCondition(RetryIfConditionEnum retryIfCondition) {
-        if (BaseUtil.isNull(retryIfCondition)) {
-            retryIfCondition = RetryIfConditionEnum.DEFAULT;
-        }
-        this.retryerName = retryIfCondition.getRetryerName().name();
+    public RetryerBuilderParam buildRetryCondition(RetryerAnnotation retryerAnnotation) {
+        this.retryerName = retryerAnnotation.retryerName();
         // 循环设置retryIfExceptionOfType
-        Class<? extends Throwable>[] retryIfExceptionOfTypes = retryIfCondition.getRetryIfExceptionOfTypes();
+        Class<? extends Throwable>[] retryIfExceptionOfTypes = retryerAnnotation.retryIfExceptionOfTypes();
         if (ArrayUtil.isNotEmpty(retryIfExceptionOfTypes)) {
             for (Class<? extends Throwable> retryIfExceptionOfType : retryIfExceptionOfTypes) {
                 addRetryIfExceptionOfTypes(retryIfExceptionOfType);
             }
         }
         // 循环设置withRetryListener
-        Class<? extends RetryListener>[] retryListenerOfTypes = retryIfCondition.getRetryListenerOfTypes();
+        Class<? extends RetryListener>[] retryListenerOfTypes = retryerAnnotation.retryListenerOfTypes();
         if (ArrayUtil.isNotEmpty(retryListenerOfTypes)) {
             for (Class<? extends RetryListener> retryListenerOfType : retryListenerOfTypes) {
                 addRetryListenerOfTypes(retryListenerOfType);
             }
         }
-        // 循环设置retryIfResults
-        Object[] retryIfResults = retryIfCondition.getRetryIfResults();
-        if (ArrayUtil.isNotEmpty(retryIfResults)) {
-            for (Object retryIfResult : retryIfResults) {
-                addRetryIfResult(retryIfResult);
-            }
-        }
         return this;
     }
+
 
     @Override
     public String toString() {
