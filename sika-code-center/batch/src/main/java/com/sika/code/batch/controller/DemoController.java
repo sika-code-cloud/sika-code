@@ -148,12 +148,11 @@ public class DemoController {
                 .setResource(resource)
                 .setDelimiter("|")
                 .build();
-        List<String> names = resourceNamesStrategy.getNames();
 
         //        // csvItemReader
         FlatFileItemReader<AnimalDTO> flatFileItemReader = new FlatFileItemReaderBuilder<AnimalDTO>()
                 .name("animalName")
-                .lineMapper(BatchUtil.buildLineMapper(AnimalDTO.class, "|", names))
+                .lineMapper(BatchUtil.buildLineMapper(AnimalDTO.class, "|", resourceNamesStrategy))
                 .resource(resource)
                 .build();
 
@@ -195,7 +194,7 @@ public class DemoController {
     public void imp() throws Exception {
         List<String> names = Lists.newArrayList("name", "age", "nation", "address");
         Resource resource = new ClassPathResource("person.csv");
-        ResourceNamesStrategy resourceNamesStrategy = new ResourceNamesStrategy()
+        NamesStrategy resourceNamesStrategy = new ResourceNamesStrategy()
                 .setResource(resource)
                 .setDelimiter("|")
                 .build();

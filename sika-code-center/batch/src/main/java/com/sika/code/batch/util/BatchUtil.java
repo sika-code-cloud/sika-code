@@ -1,6 +1,7 @@
 package com.sika.code.batch.util;
 
 import com.sika.code.basic.util.Assert;
+import com.sika.code.batch.strategy.names.NamesStrategy;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -47,6 +48,10 @@ public class BatchUtil {
         wrapperFieldSetMapper.setTargetType(tClass);
         lineMapper.setFieldSetMapper(wrapperFieldSetMapper);
         return lineMapper;
+    }
+
+    public static <T> LineMapper<T> buildLineMapper(Class<T> tClass, String delimiter, NamesStrategy namesStrategy) {
+        return buildLineMapper(tClass, delimiter, namesStrategy.getNames());
     }
 
 }
