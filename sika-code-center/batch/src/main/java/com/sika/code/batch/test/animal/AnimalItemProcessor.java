@@ -21,7 +21,6 @@ public class AnimalItemProcessor implements ItemProcessor<AnimalDTO, AnimalEntit
         /**
          * 对数据进行简单的处理，若民族为汉族，则数据转换为01，其余转换为02
          */
-        validator.validate(item);
         if (item.getColor().equals("黄色")) {
             item.setColor(item.getColor());
             throw new RuntimeException(item.getColor());
