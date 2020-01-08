@@ -48,10 +48,10 @@ public class RetryerAspect {
     /**
      * 执行调用
      */
-    public Object doCall(ProceedingJoinPoint joinPoint) throws Throwable {
+    private Object doCall(ProceedingJoinPoint joinPoint) throws Throwable {
         // 1: 获取RetryerAnnotation
         RetryerAnnotation retryerAnnotation = getRetryerAnnotation(joinPoint);
-        if (retryerAnnotation == null) {
+        if (retryerAnnotation == null || retryerAnnotation.close()) {
             return joinPoint.proceed();
         }
         Retryer<Object> retryer = getRetryer(retryerAnnotation);
@@ -71,7 +71,7 @@ public class RetryerAspect {
         return retryer.call(callable);
     }
 
-    private Retryer getRetryer(RetryerAnnotation retryerAnnotation) {
+    private Retryer<Object> getRetryer(RetryerAnnotation retryerAnnotation) {
         RetryIfConditionEnum retryIfConditionEnum = retryerAnnotation.retryIfCondition();
         String retryerName = null;
         if (retryIfConditionEnum.getRetryerName() != null) {

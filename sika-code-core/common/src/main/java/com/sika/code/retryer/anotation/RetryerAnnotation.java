@@ -1,11 +1,8 @@
 package com.sika.code.retryer.anotation;
 
-import com.github.rholder.retry.RetryListener;
 import com.sika.code.retryer.constant.RetryIfConditionEnum;
-import com.sika.code.retryer.constant.RetryerNameEnum;
 import com.sika.code.retryer.constant.StopStrategyEnum;
 import com.sika.code.retryer.constant.WaitStrategyEnum;
-import com.sika.code.retryer.listener.DefaultRetryListener;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -14,14 +11,15 @@ import java.util.concurrent.TimeUnit;
  * 重试注解
  *
  * @author daiqi
- * @create 2019-12-06 0:03
+ * @date 2019-12-06 0:03
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 public @interface RetryerAnnotation {
-
+    /** 是否关闭重试 --- true - 关闭 false - 开启 */
+    boolean close() default true;
     /**
      * 重试条件的枚举
      */
