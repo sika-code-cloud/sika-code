@@ -1,17 +1,18 @@
 package com.sika.code.batch.refactor.job.config;
 
+import com.sika.code.batch.refactor.writer.MybatisWriterAdapter;
+import com.sika.code.batch.service.AnimalService;
 import com.sika.code.batch.strategy.names.NamesStrategy;
 import com.sika.code.batch.strategy.names.impl.ResourceNamesStrategy;
 import com.sika.code.batch.test.animal.AnimalDTO;
 import com.sika.code.batch.test.animal.AnimalEntity;
 import com.sika.code.batch.test.animal.AnimalItemProcessor;
-import com.sika.code.batch.test.animal.mapper.AnimalMapper;
 import com.sika.code.batch.util.BatchUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -26,12 +27,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import java.util.Collection;
+
 
 /**
  * @author daiqi
  * @create 2020-01-08 23:32
  */
 @Configuration
+@EnableBatchProcessing
 @Slf4j
 public class TestJobConfig {
     @Autowired
@@ -142,9 +146,17 @@ public class TestJobConfig {
     @Bean
     @PrototypeScope
     public ItemWriter<AnimalEntity> refactorItemWriter() {
-        MyBatisBatchItemWriter myBatisBatchItemWriter = new MyBatisBatchItemWriter<>();
-        myBatisBatchItemWriter.setSqlSessionFactory(sqlSessionFactory);
-        myBatisBatchItemWriter.setStatementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"));
-        return myBatisBatchItemWriter;
+//        MyBatisBatchItemWriter myBatisBatchItemWriter = new MyBatisBatchItemWriterBuilder()
+//                .statementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"))
+//                .sqlSessionFactory(sqlSessionFactory)
+//                .build();
+//        return myBatisBatchItemWriter;
+//
+        ItemWriter<AnimalEntity> writer = new MybatisWriterAdapter<AnimalEntity>()
+                .setTargetObjectClass(AnimalService.class)
+                .setTargetMethod("saveBatch")
+                .setParamTypes(new Class[]{Collection.class})
+                .build();
+        return writer;
     }
 }
