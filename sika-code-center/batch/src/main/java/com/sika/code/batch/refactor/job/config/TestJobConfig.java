@@ -1,5 +1,6 @@
 package com.sika.code.batch.refactor.job.config;
 
+import com.sika.code.batch.adaptor.ItemWriterAdapter;
 import com.sika.code.batch.refactor.writer.MybatisWriterAdapter;
 import com.sika.code.batch.service.AnimalService;
 import com.sika.code.batch.strategy.names.NamesStrategy;
@@ -143,20 +144,31 @@ public class TestJobConfig {
         return new AnimalItemProcessor();
     }
 
+//    @Bean
+//    @PrototypeScope
+//    public ItemWriter<AnimalEntity> refactorItemWriter() {
+////        MyBatisBatchItemWriter myBatisBatchItemWriter = new MyBatisBatchItemWriterBuilder()
+////                .statementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"))
+////                .sqlSessionFactory(sqlSessionFactory)
+////                .build();
+////        return myBatisBatchItemWriter;
+////
+//        ItemWriter<AnimalEntity> writer = new MybatisWriterAdapter<AnimalEntity>()
+//                .setTargetObjectClass(AnimalService.class)
+//                .setTargetMethod("saveBatch")
+//                .setParamTypes(new Class[]{Collection.class})
+//                .build();
+//        return writer;
+//    }
+
     @Bean
     @PrototypeScope
     public ItemWriter<AnimalEntity> refactorItemWriter() {
-//        MyBatisBatchItemWriter myBatisBatchItemWriter = new MyBatisBatchItemWriterBuilder()
-//                .statementId(BatchUtil.buildStatementId(AnimalMapper.class, "insert"))
-//                .sqlSessionFactory(sqlSessionFactory)
-//                .build();
-//        return myBatisBatchItemWriter;
 //
-        ItemWriter<AnimalEntity> writer = new MybatisWriterAdapter<AnimalEntity>()
-                .setTargetObjectClass(AnimalService.class)
-                .setTargetMethod("saveBatch")
-                .setParamTypes(new Class[]{Collection.class})
-                .build();
-        return writer;
+        ItemWriterAdapter<AnimalEntity> writer = new ItemWriterAdapter<>();
+        writer.setTargetObjectClass(AnimalService.class);
+        writer.setTargetMethod("saveBatch");
+        writer.setArguments(new Class[]{Collection.class});
+        return writer.build();
     }
 }
