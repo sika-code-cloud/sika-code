@@ -1,5 +1,6 @@
 package com.sika.code.common.spring;
 
+import com.sika.code.basic.constant.BeanMappingEnum;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -84,6 +85,10 @@ public class SpringUtil implements ApplicationContextAware {
             return null;
         }
         return getApplicationContext().getBean(name, clazz);
+    }
+
+    public static <T> T getBean(BeanMappingEnum<T> beanMappingEnum) {
+        return getBean(beanMappingEnum.getBeanName(), beanMappingEnum.getBeanClass());
     }
 
 }
