@@ -16,8 +16,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author daiqi
  * @create 2019-05-10 21:16
  */
-@SpringBootApplication(scanBasePackages = {BaseComponentScan.COM_EASY_CLOUD}, exclude = {DataSourceAutoConfiguration.class})
-@MapperScan({"com.sika.code.**.mapper"})
+@SpringBootApplication(scanBasePackages = {BaseComponentScan.COM_EASY_CLOUD})
+//@MapperScan({"com.sika.code.**.mapper"})
 public class StandardFooterDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(StandardFooterDemoApplication.class, args);
