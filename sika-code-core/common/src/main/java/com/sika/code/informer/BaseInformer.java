@@ -1,5 +1,7 @@
 package com.sika.code.informer;
 
+import com.sika.code.informer.constant.MsgTypeEnum;
+import com.sika.code.informer.dto.BaseThirdMessageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,5 +39,9 @@ public abstract class BaseInformer {
      * @date 2018/7/31 12:34
      */
     protected abstract boolean doInform(String message);
+
+    public boolean inform(BaseThirdMessageDTO baseThirdMessageDTO, String webhook) {
+        return true;
+    }
 
 }

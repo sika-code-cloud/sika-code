@@ -10,7 +10,7 @@ import java.util.Map;
  * @create 2019-03-25 11:41
  */
 @Data
-public class DingdingMessageDTO {
+public class DingdingMessageDTO implements BaseThirdMessageDTO{
     private static final String CONTENT_KEY = "content";
     private static final String MSG_TYPE_TEXT = "text";
     private String msgtype;

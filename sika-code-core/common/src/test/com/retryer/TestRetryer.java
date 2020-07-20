@@ -1,4 +1,4 @@
-package retryer;
+package com.retryer;
 
 import com.github.rholder.retry.*;
 import com.google.common.base.Predicates;
