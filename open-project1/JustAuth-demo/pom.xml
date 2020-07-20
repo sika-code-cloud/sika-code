@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>me.zhyd.justauth</groupId>
+    <artifactId>justauth-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>justauth-demo</name>
+    <description>JustAuth项目的demo</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <hutool.version>5.1.0</hutool.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>me.zhyd.oauth</groupId>
+            <artifactId>JustAuth</artifactId>
+            <version>1.15.5</version>
+        </dependency>
+        <!-- JustAuth1.9.4版本后，如果需要使用支付宝登录，需要单独引用该依赖 -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.7.4.ALL</version>
+        </dependency>
+
+        <!-- 实现自定义的state缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--
+            @since 1.14.0 抽取HTTP，具体实现交给开发者，解耦 hutool-http，开发者可以视自己项目的依赖决定使用何种HTTP方式。
+            “
+              1. 默认会按照下面的优先级自行寻找底层实现，java 11 HttpClient -> OkHttp3 -> apache HttpClient -> hutool-http
+              2. 也可以自行实现 com.xkcoding.http.support.Http 接口，通过 HttpUtil.setHttp(new MyHttpImpl()) 设置进来
+            ”
+            详情请参考：https://github.com/xkcoding/simple-http
+
+            如以下配置，pom种加入了三种HTTP工具包，simple-http默认会从优先级最高的选项取，所以本项目最终使用的HTTP实现方式为“OkHttp3”
+         -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>5.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.2.2</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.10</version>
+            <scope>provided</scope>
+        </dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
