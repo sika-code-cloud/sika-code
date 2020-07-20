@@ -1,5 +1,8 @@
 本项目为 **JustAuth开源项目**（[gitee](https://gitee.com/yadong.zhang/JustAuth) | [github](https://github.com/justauth/JustAuth)）的demo。
 
+![](doc/media/660728a0.png)
+
+![](doc/media/2d3990f5.png)
 
 # 交流
 

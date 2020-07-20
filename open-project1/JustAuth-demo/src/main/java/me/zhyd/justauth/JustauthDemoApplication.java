@@ -1,5 +1,7 @@
 package me.zhyd.justauth;
 
+import me.zhyd.justauth.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -25,6 +27,9 @@ public class JustauthDemoApplication implements ApplicationRunner {
     @Value("${server.port}")
     public int port;
 
+    @Autowired
+    private UserService userService;
+
     public static void main(String[] args) {
         SpringApplication.run(JustauthDemoApplication.class, args);
     }
@@ -35,6 +40,14 @@ public class JustauthDemoApplication implements ApplicationRunner {
         map.put("enableAuthPlatforms", JustAuthPlatformInfo.getPlatformInfos());
         return new ModelAndView("index", map);
     }
+
+    @RequestMapping("/users")
+    public ModelAndView users() {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("users", userService.listAll());
+        return new ModelAndView("users", map);
+    }
+
 
 
     @ExceptionHandler(value = Exception.class)
