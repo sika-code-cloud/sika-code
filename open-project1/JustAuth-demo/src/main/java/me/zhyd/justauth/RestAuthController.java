@@ -2,6 +2,7 @@ package me.zhyd.justauth;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xkcoding.http.config.HttpConfig;
+import lombok.extern.slf4j.Slf4j;
 import me.zhyd.justauth.cache.AuthStateRedisCache;
 import me.zhyd.justauth.custom.AuthMyGitlabRequest;
 import me.zhyd.justauth.service.UserService;
@@ -37,6 +38,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/oauth")
+@Slf4j
 public class RestAuthController {
 
     @Autowired
@@ -47,10 +49,10 @@ public class RestAuthController {
     @RequestMapping("/render/{source}")
     @ResponseBody
     public void renderAuth(@PathVariable("source") String source, HttpServletResponse response) throws IOException {
-        System.out.println("进入render：" + source);
+        log.info("进入render：" + source);
         AuthRequest authRequest = getAuthRequest(source);
         String authorizeUrl = authRequest.authorize(AuthStateUtils.createState());
-        System.out.println(authorizeUrl);
+        log.info(authorizeUrl);
         response.sendRedirect(authorizeUrl);
     }
 
@@ -59,10 +61,10 @@ public class RestAuthController {
      */
     @RequestMapping("/callback/{source}")
     public ModelAndView login(@PathVariable("source") String source, AuthCallback callback, HttpServletRequest request) {
-        System.out.println("进入callback：" + source + " callback params：" + JSONObject.toJSONString(callback));
+        log.info("进入callback：" + source + " callback params：" + JSONObject.toJSONString(callback));
         AuthRequest authRequest = getAuthRequest(source);
         AuthResponse<AuthUser> response = authRequest.login(callback);
-        System.out.println(JSONObject.toJSONString(response));
+        log.info(JSONObject.toJSONString(response));
 
         if (response.ok()) {
             userService.save(response.getData());
@@ -144,10 +146,8 @@ public class RestAuthController {
                         .build());
                 break;
             case "github":
-                HttpConfig httpConfig = new HttpConfig();
-                httpConfig.setTimeout(15000);
                 authRequest = new AuthGithubRequest(AuthConfig.builder()
-                        .httpConfig(httpConfig)
+                        .httpConfig(HttpConfig.builder().timeout(15000).build())
                         .clientId("ef2241ec8a1ed830135c")
                         .clientSecret("069e6ea013382343e7e00a9901765bdd07649897")
                         .redirectUri("http://127.0.0.1:8443/oauth/callback/github")
@@ -177,9 +177,9 @@ public class RestAuthController {
                 break;
             case "oschina":
                 authRequest = new AuthOschinaRequest(AuthConfig.builder()
-                        .clientId("")
-                        .clientSecret("")
-                        .redirectUri("")
+                        .clientId("4iNACRB7hVRkdPiOMsvj")
+                        .clientSecret("1tWgSM7VMnnzc7ZIWjIvoQJ857b6oOuj")
+                        .redirectUri("http://localhost:8443/oauth/callback/oschina")
                         .build());
                 break;
             case "alipay":
