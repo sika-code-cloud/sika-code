@@ -19,7 +19,7 @@
 				<div class="form-group">
 					<label class="control-label col-lg-3" for="nickname">昵称</label>
 					<div class="col-lg-4">
-						<input type="text" class="form-control" name="name" value="${view.name}" maxlength="7" required>
+						<input type="text" class="form-control" name="name" value="${view.name}" maxlength="30" required>
 					</div>
 				</div>
 				<div class="form-group">
