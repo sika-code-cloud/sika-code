@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
             User newUser = BeanConvertUtil.doConvert(authUser, User.class);
             newUser.setSource(authUser.getSource().toString());
             if (null != authUser.getGender()) {
-                newUser.setGender(authUser.getGender().getCode());
+                newUser.setGender(Integer.valueOf(authUser.getGender().getCode()));
             }
             User user = userService.getByUuidAndSource(authUser.getUuid(), authUser.getSource().toString());
             newUser.setUserType(UserTypeEnum.USER);

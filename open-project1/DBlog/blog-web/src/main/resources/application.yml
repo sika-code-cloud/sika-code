@@ -15,6 +15,8 @@ server:
         uri-encoding: UTF-8
 # SPRING PROFILES
 spring:
+    thymeleaf:
+        prefix: classpath:/
     profiles:
         active: '@profileActive@'
     application:

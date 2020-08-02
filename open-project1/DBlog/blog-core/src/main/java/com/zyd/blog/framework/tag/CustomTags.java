@@ -8,8 +8,10 @@ import com.zyd.blog.framework.property.JustAuthProperties;
 import com.zyd.blog.util.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
+import me.zhyd.oauth.config.AuthDefaultSource;
 import me.zhyd.oauth.config.AuthSource;
 import me.zhyd.oauth.utils.AuthChecker;
+import org.assertj.core.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -131,19 +133,11 @@ public class CustomTags extends BaseTag {
     public Object listAvailableOAuthPlatforms(Map params) {
         List<String> list = new ArrayList<>();
         try {
+            Map<String, AuthSource> authSourceMap = getAuthSource();
             for (Field f : authProperties.getClass().getDeclaredFields()) {
                 f.setAccessible(true);
                 String fieldName = f.getName();
-                AuthSource source = null;
-                if ("tencentCloud".equals(fieldName)) {
-                    source = AuthSource.TENCENT_CLOUD;
-                } else if ("stackoverflow".equals(fieldName)) {
-                    source = AuthSource.STACK_OVERFLOW;
-                } else if ("wechatEnterprise".equals(fieldName)) {
-                    source = AuthSource.WECHAT_ENTERPRISE;
-                } else {
-                    source = AuthSource.valueOf(fieldName.toUpperCase());
-                }
+                AuthSource source = authSourceMap.get(fieldName.toUpperCase());
                 AuthConfig authConfig = (AuthConfig) f.get(authProperties);
                 if (null != authConfig) {
                     if (AuthChecker.isSupportedAuth(authConfig, source)) {
@@ -157,6 +151,14 @@ public class CustomTags extends BaseTag {
         }
 
         return list;
+    }
+
+    public Map<String, AuthSource> getAuthSource() {
+        Map<String, AuthSource> authSourceMap = new HashMap<>();
+        for (AuthSource authSource : AuthDefaultSource.values()) {
+            authSourceMap.put(authSource.getName(), authSource);
+        }
+        return authSourceMap;
     }
 
 

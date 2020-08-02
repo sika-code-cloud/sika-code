@@ -1,5 +1,6 @@
 package com.zyd.blog.plugin.oauth;
 
+import com.xkcoding.http.config.HttpConfig;
 import com.zyd.blog.framework.property.JustAuthProperties;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.request.AuthDingTalkRequest;
@@ -26,6 +27,7 @@ public class GithubRequest implements OauthRequest, InitializingBean {
     public AuthRequest getRequest() {
         AuthConfig authConfig = properties.getGithub();
         return new AuthGithubRequest(AuthConfig.builder()
+                .httpConfig(HttpConfig.builder().timeout(15000).build())
                 .clientId(authConfig.getClientId())
                 .clientSecret(authConfig.getClientSecret())
                 .redirectUri(authConfig.getRedirectUri())

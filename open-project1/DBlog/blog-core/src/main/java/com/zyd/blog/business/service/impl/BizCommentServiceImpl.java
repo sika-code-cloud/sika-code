@@ -178,7 +178,7 @@ public class BizCommentServiceImpl implements BizCommentService {
         }
 
         if (StringUtils.isEmpty(comment.getStatus())) {
-            comment.setStatus(CommentStatusEnum.VERIFYING.toString());
+            comment.setStatus(CommentStatusEnum.APPROVED.toString());
         }
 
         // set当前评论者的设备信息

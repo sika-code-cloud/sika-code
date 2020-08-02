@@ -2,9 +2,8 @@ package com.zyd.blog.plugin.oauth;
 
 import com.zyd.blog.framework.property.JustAuthProperties;
 import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.request.AuthDingTalkRequest;
 import me.zhyd.oauth.request.AuthRequest;
-import me.zhyd.oauth.request.AuthWeChatRequest;
+import me.zhyd.oauth.request.AuthWeChatEnterpriseRequest;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ public class WechatRequest implements OauthRequest, InitializingBean {
     @Override
     public AuthRequest getRequest() {
         AuthConfig authConfig = properties.getWechat();
-        return new AuthWeChatRequest(AuthConfig.builder()
+        return new AuthWeChatEnterpriseRequest(AuthConfig.builder()
                 .clientId(authConfig.getClientId())
                 .clientSecret(authConfig.getClientSecret())
                 .redirectUri(authConfig.getRedirectUri())

@@ -27,7 +27,6 @@ public class JustAuthProperties {
     private AuthConfig dingtalk;
     private AuthConfig baidu;
     private AuthConfig coding;
-    private AuthConfig tencentCloud;
     private AuthConfig oschina;
     private AuthConfig alipay;
     private AuthConfig qq;

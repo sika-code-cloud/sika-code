@@ -13,7 +13,6 @@ import com.mtons.mblog.base.lang.MtonsException;
 import com.mtons.mblog.base.storage.Storage;
 import com.mtons.mblog.base.utils.FileKit;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
@@ -64,8 +63,7 @@ public class QiniuStorageImpl extends AbstractStorage implements Storage {
         String key = UpYunUtils.md5(bytes);
         String path = src + key + FileKit.getSuffix(pathAndFileName);
 
-        Zone z = Zone.autoZone();
-        Configuration configuration = new Configuration(z);
+        Configuration configuration = new Configuration();
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket, path);
 
@@ -91,8 +89,7 @@ public class QiniuStorageImpl extends AbstractStorage implements Storage {
 
         String path = StringUtils.remove(storePath, domain.trim());
 
-        Zone z = Zone.autoZone();
-        Configuration configuration = new Configuration(z);
+        Configuration configuration = new Configuration();
         Auth auth = Auth.create(accessKey, secretKey);
 
         BucketManager bucketManager = new BucketManager(auth, configuration);
