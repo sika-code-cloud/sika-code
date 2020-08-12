@@ -18,7 +18,7 @@
     </div>
     <div class="margin">
       <p>有描述的步骤条</p>
-      <el-steps :active="active" align-center="true">
+      <el-steps :active="active" align-center>
         <el-step title="步骤一" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤二" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤三" description="这是一段很长很长很长的描述性文字" />

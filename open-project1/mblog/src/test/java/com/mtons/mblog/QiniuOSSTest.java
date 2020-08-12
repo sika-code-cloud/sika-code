@@ -2,7 +2,6 @@ package com.mtons.mblog;
 
 import com.mtons.mblog.base.utils.ImageUtils;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
@@ -27,8 +26,8 @@ public class QiniuOSSTest {
         byte[] bytes = ImageUtils.screenshot(file, 360, 200);
         final String key = "/static" + UpYunUtils.md5(bytes) + ".jpg";
 
-        Zone z = Zone.autoZone();
-        Configuration configuration = new Configuration(z);
+//        Zone z = Zone.autoZone();
+        Configuration configuration = new Configuration();
 
         final Auth auth = Auth.create(accessKey, secretKey);
         final String upToken = auth.uploadToken(bucket, key);
@@ -46,7 +45,7 @@ public class QiniuOSSTest {
                 //ignore
             }
         }
-        String filePath = domain.trim()+ key + ".jpg";
+        String filePath = domain.trim() + key + ".jpg";
         System.out.println(filePath);
     }
 }

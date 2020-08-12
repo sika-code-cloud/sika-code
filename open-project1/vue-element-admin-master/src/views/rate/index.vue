@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="margin ">
       <p>默认不区分颜色</p>
-      <el-rate v-model="value1" disabled="false" />
+      <el-rate v-model="value1" disabled />
     </div>
     <div class="margin">
       <p>区分颜色</p>
-      <el-rate v-model="value2" :colors="colors" show-text="true" text-color="#F7BA2A" />
+      <el-rate v-model="value2" :colors="colors" show-text text-color="#F7BA2A" />
     </div>
     <div class="margin">
       <p>其他icon</p>
