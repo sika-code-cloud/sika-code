@@ -6,6 +6,7 @@ import com.zyd.blog.business.service.SysUserService;
 import com.zyd.blog.framework.holder.RequestHolder;
 import com.zyd.blog.framework.object.ResponseVO;
 import com.zyd.blog.framework.property.AppProperties;
+import com.zyd.blog.persistence.beans.SysUser;
 import com.zyd.blog.util.ResultUtil;
 import com.zyd.blog.util.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -88,6 +86,33 @@ public class PassportController {
             return ResultUtil.success(null, historyUrl);
         } catch (Exception e) {
             log.error("登录失败，用户名[{}]：{}", username, e.getMessage());
+            token.clear();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
+    @BussinessLog("[{1}]登录系统")
+    @PostMapping("/login")
+    @ResponseBody
+    public ResponseVO login(@RequestBody SysUser sysUser) {
+        UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUsername(), sysUser.getPassword(), false);
+        //获取当前的Subject
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            // 在调用了login方法后,SecurityManager会收到AuthenticationToken,并将其发送给已配置的Realm执行必须的认证检查
+            // 每个Realm都能在必要时对提交的AuthenticationTokens作出反应
+            // 所以这一步在调用login(token)方法时,它会走到xxRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
+            currentUser.login(token);
+            SavedRequest savedRequest = WebUtils.getSavedRequest(RequestHolder.getRequest());
+            String historyUrl = null;
+            if(null != savedRequest) {
+                if(!savedRequest.getMethod().equals("POST")) {
+                    historyUrl = savedRequest.getRequestUrl();
+                }
+            }
+            return ResultUtil.success(null, historyUrl);
+        } catch (Exception e) {
+            log.error("登录失败，用户名[{}]：{}", sysUser.getUsername(), e.getMessage());
             token.clear();
             return ResultUtil.error(e.getMessage());
         }
