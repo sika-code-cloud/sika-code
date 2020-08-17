@@ -43,4 +43,10 @@ public class ResponseVO<T> {
             return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);
         }
     }
+    public Integer getCode() {
+        if (ResponseStatus.SUCCESS.getCode().equals(status)) {
+            return ResponseStatus.SUCCESS_CODE.getCode();
+        }
+        return this.status;
+    }
 }

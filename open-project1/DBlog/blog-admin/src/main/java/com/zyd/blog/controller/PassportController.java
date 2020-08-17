@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * 登录相关
  *
@@ -110,7 +113,9 @@ public class PassportController {
                     historyUrl = savedRequest.getRequestUrl();
                 }
             }
-            return ResultUtil.success(null, historyUrl);
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("token", "admin-token");
+            return ResultUtil.success(null, map);
         } catch (Exception e) {
             log.error("登录失败，用户名[{}]：{}", sysUser.getUsername(), e.getMessage());
             token.clear();

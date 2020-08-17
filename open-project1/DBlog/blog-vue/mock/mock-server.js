@@ -47,9 +47,9 @@ module.exports = app => {
   // parse app.body
   // https://expressjs.com/en/4x/api.html#req.body
   // app.use(bodyParser.json())
-  // app.use(bodyParser.urlencoded({
-  //   extended: true
-  // }))
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }))
 
   const mockRoutes = registerRoutes(app)
   var mockRoutesLength = mockRoutes.mockRoutesLength

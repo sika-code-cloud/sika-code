@@ -50,7 +50,7 @@
       <div style="position:relative">
         <div class="tips">
           <span>账号 : admin</span>
-          <span>密码 : any</span>
+          <span>密码 : 123456</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">账号 : editor</span>
@@ -98,7 +98,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
