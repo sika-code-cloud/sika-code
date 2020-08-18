@@ -110,6 +110,12 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="defaultUserAvatar">默认头像列表 <i class="fa fa-question-circle" title="头像列表，JSON数组"></i> <span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea class="form-control col-md-7 col-xs-12" id="defaultUserAvatar" name="defaultUserAvatar" required="required" placeholder="配置默认的头像" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="installdate">博客安装日期
                                             <i class="fa fa-question-circle" title="用于前台计算系统运行天数"></i> <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
