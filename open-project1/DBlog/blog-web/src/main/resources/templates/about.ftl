@@ -19,7 +19,7 @@
                 </div>
                 <h5 class="custom-title"><i class="fa fa-coffee fa-fw"></i><strong>关于博客</strong><small></small></h5>
                 <div class="info">
-                    本站为非商业化站点，无盈利性质，为博主个人博客。本站二次开发于 <a href="https://gitee.com/yadong.zhang/DBlog" title="" data-toggle="tooltip" data-placement="right" target="_blank" data-original-title="OneBlog是一款简洁美观、自适应的Java博客系统..."><strong>OneBlog</strong></a>。<br>
+                    本站为非商业化站点，无盈利性质，为博主个人博客。本站二次开发于 <a href="https://gitee.com/yadong.zhang/DBlog" title="" data-toggle="tooltip" data-placement="right" target="_blank" data-original-title="开源改变世界，SikaCode让世界没有难写的代码..."><strong>OneBlog</strong></a>。<br>
                 </div>
                 <h5 class="custom-title"><i class="fa fa-copyright fa-fw"></i><strong>关于版权</strong><small></small></h5>
                 <div class="info">
