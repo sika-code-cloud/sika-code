@@ -115,7 +115,7 @@ public class RestApiController {
         } catch (ZhydCommentException e) {
             return ResultUtil.error(e.getMessage());
         }
-        return ResultUtil.success("评论发表成功，系统正在审核，请稍后刷新页面查看！");
+        return ResultUtil.success("评论发表成功，3秒后自动刷新页面！");
     }
 
     @PostMapping("/doSupport/{id}")

@@ -14,7 +14,7 @@
                 <div id="feed_widget">
                     <div class="feed-about">
                         <div class="about-main">
-                            <div class="about-img"><a href="${config.wxCode}" class="showImage" title="微信公众号"><img src="${config.wxCode}" alt="微信公众号"></a></div>
+                            <div class="about-img"><a href="${config.wxCode}" class="showImage" title="微信"><img src="${config.wxCode}" alt="微信"></a></div>
                             <div class="about-name">${config.siteName}</div>
                             <div class="about-the">${config.siteDesc!}</div>
                         </div>

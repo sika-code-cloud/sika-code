@@ -15,7 +15,7 @@
                         <h1 class="disclaimer-title">
                             <strong>免责声明</strong>
                         </h1>
-                        <p>作者：<a href="${config.siteUrl}" title="网站作者">${config.authorName}</a>&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：2018年3月16日</p>
+                        <p>作者：<a href="${config.siteUrl}" title="网站作者">${config.authorName}</a>&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：2020年08月15日</p>
                     </div>
                     <div class="disclaimer-body">
                         <ul class="list-unstyled disclaimer-box">

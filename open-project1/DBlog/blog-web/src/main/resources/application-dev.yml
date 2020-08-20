@@ -12,14 +12,14 @@ spring:
         # 指定SMTP server使用的协议，默认为: smtp
         protocol: smtp
         # 指定SMTP server host.
-        host: xxx
+        host: smtp.163.com
         port: 465
         # 指定SMTP server的用户名.
-        username: xxx
+        username: sikacode@163.com
         # 指定SMTP server登录密码:
-        password: xxx
+        password: QHFREMITNLYXXAQT
         # 指定是否在启动时测试邮件服务器连接，默认为false
-        test-connection: false
+        test-connection: true
         properties:
             mail.smtp.auth: true
             # 腾讯企业邮箱 下两个配置必须！！！
@@ -63,7 +63,7 @@ braum:
 ####################################自定义配置##########################################
 app:
     # 是否启用kaptcha验证码
-    enableKaptcha: false
+    enableKaptcha: true
     # 启用后，项目在启动时会打印数据库（Mysql和Redis）链接信息（包含密码）
     # 代码请参考
     enabledConfigLog: true

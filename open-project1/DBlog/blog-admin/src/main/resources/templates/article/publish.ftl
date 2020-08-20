@@ -37,19 +37,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="title">标题链接 <span class="required">*</span></label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" class="form-control col-md-7 col-xs-12" name="titleLink" id="titleLink" required="required" placeholder="请输入标题链接"/>
-                        </div>
-                        <div class="col-md-1 col-sm-1 col-xs-12">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" class="square" checked name="link"> 链接
-                                </label>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="item form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12" for="password">内容 <span class="required">*</span></label>
