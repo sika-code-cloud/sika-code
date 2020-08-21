@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!--定义日志文件的存储路径-->
-    <!--<property name="LOG_HOME" value="/var/tmp/website-blog-web"/>-->
+    <!--<property name="LOG_HOME" value="/home/project/blog/log/blog-web"/>-->
     <springProperty scope="context" name="logdir" source="logging.path"/>
 
     <!-- 控制台 appender -->

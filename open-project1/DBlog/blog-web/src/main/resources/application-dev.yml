@@ -72,13 +72,13 @@ me:
     zhyd:
         oauth:
             gitee:
-                clientId: ea46b88b2af1d25be0ac85c214a4cfad047d784e494da1dff4c16f7b03d15c31
-                clientSecret: e9187c4f0a5f971633d58cf249ded78d9b168689d44154b4301c7e812abfd29f
-                redirectUri: http://127.0.0.1:8443/oauth/callback/gitee
+                clientId: 66525d74086a4ecb71aa9aeaf996a8cdbe81a215ab62039705afbb319a762ca1
+                clientSecret: bd212722674a45c339314b792ebf9b3809b56e116422e788439cbc43580e749e
+                redirectUri: http://blog.sikacode.com/oauth/callback/gitee
             github:
-                clientId: ef2241ec8a1ed830135c
-                clientSecret: 069e6ea013382343e7e00a9901765bdd07649897
-                redirectUri: http://127.0.0.1:8443/oauth/callback/github
+                clientId: 51997830f1ae1de824f0
+                clientSecret: 0471caabe300ab3e0391fc6ff048165804875a84
+                redirectUri: http://blog.sikacode.com/oauth/callback/github
             weibo:
                 clientId:
                 clientSecret:
