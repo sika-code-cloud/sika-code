@@ -74,7 +74,9 @@ public class WebSocketUtil {
      */
     private static void sendMessage(String message, Session session) {
         try {
-            session.getAsyncRemote().sendText(message);
+            synchronized (session) {
+                session.getBasicRemote().sendText(message);
+            }
         } catch (Exception e) {
             log.error("[Socket] websocket-->向客户端发送数据发生异常", e);
         }
