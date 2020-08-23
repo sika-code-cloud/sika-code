@@ -72,11 +72,7 @@
                         </#if>
                         <header class="entry-header">
                             <h2 class="entry-title">
-                                <#if item.title?contains("a")>
-                                    ${item.title}
-                                <#else>
-                                    <a href="${config.siteUrl}/article/${item.id?c}" rel="bookmark" title="${item.title}" data-toggle="tooltip" data-placement="bottom">${item.title}</a>
-                                </#if>
+                               <a href="${config.siteUrl}/article/${item.id?c}" rel="bookmark" title="${item.title}" data-toggle="tooltip" data-placement="bottom">${item.title}</a>
                             </h2>
                         </header>
                         <div class="entry-content">
