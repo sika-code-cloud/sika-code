@@ -141,9 +141,9 @@
     <div class="menu-box">
         <div class="navbar-header">
             <#if user??>
-                <a href="/oauth/logout" class="navbar-brand"><i class="fa fa-sign-out"></i>退出</a>
+                <a href="/oauth/logout" class="pull-left navbar-toggle"><i class="fa fa-sign-out"></i>退出</a>
             <#else>
-                <a href="javascript:;" class="navbar-brand" data-toggle="modal" data-target="#oauth" rel="nofollow" title="授权登录">登录</a>
+                <a href="javascript:;" class="pull-left navbar-toggle" data-toggle="modal" data-target="#oauth" rel="nofollow" title="授权登录">登录</a>
             </#if>
             <span class="pull-right nav-search toggle-search" data-toggle="modal" data-target=".nav-search-box"><i class="fa fa-search"></i></span>
             <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
