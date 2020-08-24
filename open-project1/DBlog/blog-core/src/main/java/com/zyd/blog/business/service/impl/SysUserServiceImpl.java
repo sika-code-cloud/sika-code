@@ -2,6 +2,7 @@ package com.zyd.blog.business.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zyd.blog.business.dto.SysUserDTO;
 import com.zyd.blog.business.entity.User;
 import com.zyd.blog.business.entity.UserPwd;
 import com.zyd.blog.business.enums.UserNotificationEnum;
@@ -41,6 +42,11 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Override
+    public SysUserDTO register(SysUserDTO sysUserDTO) {
+        return null;
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

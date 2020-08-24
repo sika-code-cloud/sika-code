@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.zyd.blog.business.enums.ResponseStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,11 +20,15 @@ import java.util.List;
  * @since 1.0
  */
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class ResponseVO<T> {
     private Integer status;
     private String message;
     private T data;
+
+    public ResponseVO() {
+    }
 
     public ResponseVO(Integer status, String message, T data) {
         this.status = status;
@@ -43,10 +48,28 @@ public class ResponseVO<T> {
             return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);
         }
     }
+
     public Integer getCode() {
         if (ResponseStatus.SUCCESS.getCode().equals(status)) {
             return ResponseStatus.SUCCESS_CODE.getCode();
         }
         return this.status;
+    }
+
+    public boolean isSuccess() {
+        return ResponseStatus.SUCCESS.getCode().equals(status);
+    }
+
+    public static <T> ResponseVO<T> newSuccess() {
+        return newSuccess(null);
+    }
+
+    public static <T> ResponseVO<T> newSuccess(T data) {
+        ResponseStatus successEnum = ResponseStatus.SUCCESS;
+        return new ResponseVO()
+                .setData(data)
+                .setStatus(successEnum.getCode())
+                .setMessage(successEnum.getMessage())
+                ;
     }
 }

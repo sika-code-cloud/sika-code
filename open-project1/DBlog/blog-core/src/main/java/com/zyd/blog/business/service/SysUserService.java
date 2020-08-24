@@ -2,6 +2,7 @@ package com.zyd.blog.business.service;
 
 
 import com.github.pagehelper.PageInfo;
+import com.zyd.blog.business.dto.SysUserDTO;
 import com.zyd.blog.business.entity.User;
 import com.zyd.blog.business.entity.UserPwd;
 import com.zyd.blog.business.vo.UserConditionVO;
@@ -19,6 +20,11 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysUserService extends AbstractService<User, Long> {
+
+    /**
+     * 注册
+     */
+    SysUserDTO register(SysUserDTO sysUserDTO);
 
     /**
      * 分页查询
