@@ -2,6 +2,7 @@
 server:
     tomcat:
         basedir: /var/tmp/website-blog-admin
+        max-http-post-size: -1
 # SPRING PROFILES
 spring:
     profiles:

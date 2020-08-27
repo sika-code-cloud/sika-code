@@ -25,27 +25,27 @@ const users = {
 
 module.exports = [
   // user login
-  {
-    url: '/vue-element-admin/user/login',
-    type: 'post',
-    response: config => {
-      const { username } = config.body
-      const token = tokens[username]
+  // {
+  //   url: '/vue-element-admin/user/login',
+  //   type: 'post',
+  //   response: config => {
+  //     const { username } = config.body
+  //     const token = tokens[username]
 
-      // mock error
-      if (!token) {
-        return {
-          code: 60204,
-          message: 'Account and password are incorrect.'
-        }
-      }
+  //     // mock error
+  //     if (!token) {
+  //       return {
+  //         code: 60204,
+  //         message: 'Account and password are incorrect.'
+  //       }
+  //     }
 
-      return {
-        code: 20000,
-        data: token
-      }
-    }
-  },
+  //     return {
+  //       code: 20000,
+  //       data: token
+  //     }
+  //   }
+  // },
 
   // get user info
   {
