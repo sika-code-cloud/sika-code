@@ -113,7 +113,7 @@ public class GenerateCodeHandler {
         mpg.setGlobalConfig(gc);
 
 
-        dsc.setUrl("jdbc:mysql://" + generatorCodeDTO.getDataBaseUrl() + ":" + generatorCodeDTO.getDataBasePort() + "/" + generatorCodeDTO.getDataBaseName() + "?useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://" + generatorCodeDTO.getDataBaseUrl() + ":" + generatorCodeDTO.getDataBasePort() + "/" + generatorCodeDTO.getDataBaseName() + "?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername(generatorCodeDTO.getUsername());
