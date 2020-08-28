@@ -275,7 +275,7 @@ public class GenerateCodeHandler {
         String filePath = pathForCommon + "/" + moduleName + "/pojo/pojo/";
         String classBodySuffix = "DTO";
         String packageKey = "DTO";
-        String subPackage = "pojo.pojo";
+        String subPackage = "pojo.dto";
         buildFieldFlag = true;
         generateCodeCoreForCustomer(templatePath, filePath, classBodySuffix, packageKey, subPackage);
     }
