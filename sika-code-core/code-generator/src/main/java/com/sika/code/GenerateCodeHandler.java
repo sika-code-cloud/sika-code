@@ -115,7 +115,7 @@ public class GenerateCodeHandler {
 
         dsc.setUrl("jdbc:mysql://" + generatorCodeDTO.getDataBaseUrl() + ":" + generatorCodeDTO.getDataBasePort() + "/" + generatorCodeDTO.getDataBaseName() + "?useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername(generatorCodeDTO.getUsername());
         dsc.setPassword(generatorCodeDTO.getPassword());
         mpg.setDataSource(dsc);
