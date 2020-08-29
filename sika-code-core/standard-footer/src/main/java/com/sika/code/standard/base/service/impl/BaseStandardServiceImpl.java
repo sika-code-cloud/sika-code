@@ -1,20 +1,18 @@
 package com.sika.code.standard.base.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.google.common.collect.Lists;
 import com.sika.code.basic.pojo.query.BaseQuery;
 import com.sika.code.basic.service.BaseService;
 import com.sika.code.basic.util.Assert;
 import com.sika.code.basic.util.BaseUtil;
 import com.sika.code.database.common.Page;
 import com.sika.code.database.common.PageQuery;
-import com.sika.code.database.primarykey.BaseKeyGenerator;
 import com.sika.code.standard.base.basemapper.BaseStandardMapper;
 import com.sika.code.standard.base.convert.BaseConvert;
 import com.sika.code.standard.base.pojo.dto.BaseStandardDTO;
 import com.sika.code.standard.base.pojo.entity.BaseStandardEntity;
 import com.sika.code.standard.base.service.BaseStandardService;
-import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -34,8 +32,6 @@ import java.util.List;
  * @date 2018/8/30
  */
 public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entity>, Entity extends BaseStandardEntity, DTO extends BaseStandardDTO> extends BaseService<M, Entity> implements BaseStandardService<DTO> {
-    @Autowired
-    private BaseKeyGenerator primaryKeyGenerator;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -45,8 +41,7 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
         if (!success) {
             return null;
         }
-        dto = convertToDTO(entity);
-        return dto;
+        return convertToDTO(entity);
     }
 
     @Override
@@ -80,8 +75,7 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
         if (!update) {
             return null;
         }
-        dto = convertToDTO(entity);
-        return dto;
+        return convertToDTO(entity);
     }
 
     @Override
@@ -254,33 +248,10 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
     }
 
     /**
-     * 构建实体对象列表的主键
-     */
-    private void buildPrimaryKeys(List<Entity> entities) {
-        if (CollUtil.isEmpty(entities)) {
-            return;
-        }
-        // for循环设置主键
-        for (Entity entity : entities) {
-            buildPrimaryKey(entity);
-        }
-    }
-
-    /**
-     * 构建实体对象的主键
-     */
-    private void buildPrimaryKey(Entity entity) {
-        entity.setId(generateId(entity));
-    }
-
-    /**
      * dto转entity
      */
     private Entity convertToEntity(DTO dto) {
-        Entity entity = convert().convertToEntity(dto);
-        // 构建主键
-        buildPrimaryKey(entity);
-        return entity;
+        return convert().convertToEntity(dto);
     }
 
     /**
@@ -294,9 +265,7 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
      * 转化为entity列表
      */
     private List<Entity> convertToEntities(List<DTO> dtos) {
-        List<Entity> entities = convert().convertToEntities(dtos);
-        buildPrimaryKeys(entities);
-        return entities;
+        return convert().convertToEntities(dtos);
     }
 
     /**
@@ -319,21 +288,6 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
         return getBaseMapper();
     }
 
-    /**
-     * <p>
-     * 生成主键
-     * </p>
-     *
-     * @param entity : 实体对象
-     * @return java.lang.Long
-     * @author daiqi
-     * @date 2019/5/13 16:41
-     */
-    private Long generateId(Entity entity) {
-        Assert.verifyObjNull(entity, "实体对象");
-        return (Long) primaryKeyGenerator.generate(entity);
-    }
-
     private <QUERY extends BaseQuery> void verifyQuery(QUERY query) {
         Assert.verifyObjNull(query, "查询对象");
     }
@@ -343,7 +297,7 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
      * 获取转化实现类
      * </p>
      *
-     * @return com.sika.code.central.base.convert.BaseConvert<Entity                                                               ,                                                               DTO>
+     * @return com.sika.code.central.base.convert.BaseConvert<Entity, DTO>
      * @author daiqi
      * @date 2019/4/1 21:18
      */
