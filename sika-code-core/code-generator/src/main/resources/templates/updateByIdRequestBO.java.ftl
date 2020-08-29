@@ -32,7 +32,7 @@ public class ${table.classBodyName}UpdateByIdRequestBO extends ${table.classBody
     @Override
     protected void verify() {
         // 校验数据是否存在，不存在抛出异常
-        service().verifyExist(this.${table.classBodyName?uncap_first}.get${table.classBodyName}Id());
+        service().verifyNotExist(this.${table.classBodyName?uncap_first}.get${table.classBodyName}Id());
     }
 
     @Override
