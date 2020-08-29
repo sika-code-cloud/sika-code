@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * User : LiuKe
+ * User : sikadai
  * Date : 2017/1/13
  * Time : 18:36
  */
@@ -15,10 +15,26 @@ import java.util.List;
 public class Page<T> implements Serializable {
 
     private static final long serialVersionUID = 34234234234985L;
+    /**
+     * 数据总数
+     */
     private int total;
+    /**
+     * 每页的数量
+     */
     private int pageSize;
+    /**
+     * 页面的总数
+     */
     private int pageCount;
+    /**
+     * 当前页面编号
+     */
     private int pageNum;
+    /**
+     * 当前数据
+     */
+    private int currentSize;
     private boolean isHasNextPage;
     private boolean isHasPreviousPage;
     private List<T> list;
@@ -28,7 +44,7 @@ public class Page<T> implements Serializable {
         super();
     }
 
-    public Page(Integer pageNum, Integer pageSize, Integer total) {
+    public Page(Integer pageNum, Integer pageSize, Integer total, List<T> list) {
         pageSize = 0 == pageSize ? null : pageSize;
         Assert.notNull(pageNum, "pageNum");
         Assert.notNull(pageSize, "pageSize");
@@ -43,37 +59,21 @@ public class Page<T> implements Serializable {
             int count = total / pageSize;
             this.pageCount = i == 0 ? count : count + 1;
         }
-        this.isHasPreviousPage = pageNum == 1 ? false : true;
-        this.isHasNextPage = pageNum >= pageCount ? false : true;
-    }
-
-    public Page(PageQuery pageQuery, Integer total) {
-        this(pageQuery.getPageNum(), pageQuery.getPageSize(), total);
+        if (list == null) {
+            this.currentSize = 0;
+        } else {
+            this.currentSize = list.size();
+        }
+        this.list = list;
+        this.isHasPreviousPage = pageNum != 1;
+        this.isHasNextPage = pageNum < pageCount;
     }
 
     public Page(PageQuery pageQuery, Integer total, List<T> list) {
-
-        this(pageQuery.getPageNum(), pageQuery.getPageSize(), total);
-        this.setList(list);
+        this(pageQuery.getPageNum(), pageQuery.getPageSize(), total, list);
     }
 
     public Page(Page page, List<T> list) {
-        this.total = page.getTotal();
-        this.pageSize = page.getPageSize();
-        this.pageNum = page.getPageNum();
-        this.isHasPreviousPage = page.isHasPreviousPage();
-        this.isHasNextPage = page.isHasPreviousPage();
-        this.list = list;
+        this(page.getPageNum(), page.getPageSize(), page.getTotal(), list);
     }
-
-//    public Page(List<T> list) {
-//        PageInfo pageInfo = new PageInfo(list);
-//        this.total = pageInfo.getTotal();
-//        this.pageSize = pageInfo.getPageSize();
-//        this.pageNum = pageInfo.getPageNum();
-//        this.pageCount = pageInfo.getPages();
-//        this.isHasPreviousPage = pageInfo.isHasPreviousPage();
-//        this.isHasNextPage = pageInfo.isHasPreviousPage();
-//        this.list = pageInfo.getList();
-//    }
 }
