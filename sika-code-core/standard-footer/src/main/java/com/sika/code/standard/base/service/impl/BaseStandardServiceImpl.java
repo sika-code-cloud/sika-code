@@ -15,6 +15,7 @@ import com.sika.code.standard.base.pojo.entity.BaseStandardEntity;
 import com.sika.code.standard.base.service.BaseStandardService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -251,7 +252,21 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
      * dto转entity
      */
     private Entity convertToEntity(DTO dto) {
-        return convert().convertToEntity(dto);
+        Entity entity = convert().convertToEntity(dto);
+        buildCreateOrUpdateDate(entity);
+        return entity;
+    }
+
+    protected void buildCreateDate(Entity entity) {
+        if (entity.getCreateDate() == null) {
+            entity.setCreateDate(new Date());
+        }
+    }
+
+    protected void buildUpdateDate(Entity entity) {
+        if (entity.getUpdateDate() == null) {
+            entity.setUpdateDate(new Date());
+        }
     }
 
     /**
@@ -265,7 +280,21 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
      * 转化为entity列表
      */
     private List<Entity> convertToEntities(List<DTO> dtos) {
-        return convert().convertToEntities(dtos);
+        List<Entity> entities = convert().convertToEntities(dtos);
+        if (CollUtil.isEmpty(entities)) {
+            return entities;
+        }
+        for (Entity entity : entities) {
+            buildCreateOrUpdateDate(entity);
+        }
+        return entities;
+    }
+
+    protected void buildCreateOrUpdateDate(Entity entity) {
+        if (entity.getId() == null) {
+            buildCreateDate(entity);
+        }
+        buildUpdateDate(entity);
     }
 
     /**
