@@ -6,6 +6,7 @@ import com.sika.code.exception.BusinessException;
 import com.sika.code.exception.dto.BaseBusinessExceptionDTO;
 import com.sika.code.no.generator.NoGenerator;
 import com.sika.code.result.Result;
+import com.sika.code.result.config.ResultNoConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,16 +21,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ResultGenerator {
-    /**
-     * result的msgNo默认前缀
-     */
-    private static final String PREFIX_DEFAULT = "RMN";
-    /** 异常的msgNo默认前缀 */
-    private static final String EXCEPTION_PREFIX_DEFAULT = "EMN";
-    /**
-     * result的msgNo默认后缀长度
-     */
-    private static final int SUFFIX_COUNT_DEFAULT = 6;
 
     private boolean exceptionDetail;
     /**
@@ -40,12 +31,12 @@ public class ResultGenerator {
     /**
      * 正常响应的result的编号配置
      */
-    private ResultNoConfig noConfig = new ResultNoConfig(PREFIX_DEFAULT, SUFFIX_COUNT_DEFAULT);
+    private ResultNoConfig noConfig;
 
     /**
      * 异常响应的result的编号配置
      */
-    private ResultNoConfig exceptionNoConfig = new ResultNoConfig(EXCEPTION_PREFIX_DEFAULT, SUFFIX_COUNT_DEFAULT);
+    private ResultNoConfig exceptionNoConfig;
 
     /**
      * 编号生成器
@@ -124,21 +115,5 @@ public class ResultGenerator {
             result.setMessage(BaseErrorCodeEnum.SYS_EXCEPTION.getMessage());
         }
         result.setSuccess(false);
-    }
-
-    @Accessors
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ResultNoConfig {
-
-        /**
-         * 编号前缀
-         */
-        private String prefix = PREFIX_DEFAULT;
-        /**
-         * 编号后缀数量
-         */
-        private int suffixCount = SUFFIX_COUNT_DEFAULT;
     }
 }
