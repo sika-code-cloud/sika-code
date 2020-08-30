@@ -253,7 +253,6 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
      */
     private Entity convertToEntity(DTO dto) {
         Entity entity = convert().convertToEntity(dto);
-        buildCreateOrUpdateDate(entity);
         return entity;
     }
 
@@ -283,9 +282,6 @@ public abstract class BaseStandardServiceImpl<M extends BaseStandardMapper<Entit
         List<Entity> entities = convert().convertToEntities(dtos);
         if (CollUtil.isEmpty(entities)) {
             return entities;
-        }
-        for (Entity entity : entities) {
-            buildCreateOrUpdateDate(entity);
         }
         return entities;
     }
