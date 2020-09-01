@@ -93,7 +93,9 @@
 			AND
 			(
 				a.description LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%') OR
-				a.keywords LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')
+				a.keywords LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%') OR
+				btype.name LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')OR
+				btype.description LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')
 			)
 		</if>
         GROUP BY a.id
