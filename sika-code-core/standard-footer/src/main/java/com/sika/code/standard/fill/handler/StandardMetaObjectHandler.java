@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
- * 风控系统填充Object助手类
+ * 标准填充Object助手类
  * 用来填充默认值
  *
  * @author daiqi

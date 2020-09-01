@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 public class BaseEntity<PRIMARY extends Serializable, BY> {
-    @TableId(type = IdType.ID_WORKER)
+    @TableId(type = IdType.AUTO)
     private PRIMARY id;
     @TableField(fill = FieldFill.INSERT)
     private BY createBy;
