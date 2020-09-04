@@ -16,6 +16,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle menu_a" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user fa-fw"></i>${user.username!} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" title="个人中心">个人中心</a></li>
                             <li><a href="/oauth/logout"><i class="fa fa-sign-out"></i>退出</a></li>
                         </ul>
                     </li>
@@ -141,7 +142,14 @@
     <div class="menu-box">
         <div class="navbar-header">
             <#if user??>
-                <a href="/oauth/logout" class="pull-left navbar-toggle"><i class="fa fa-sign-out"></i>退出</a>
+                <a href="#" class="pull-left navbar-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-user fa-fw"></i>${user.username!} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" title="个人中心">个人中心</a></li>
+                    <li><a href="/oauth/logout"><i class="fa fa-sign-out"></i>退出</a></li>
+                </ul>
+<#--                <a href="/oauth/logout" class="pull-left navbar-toggle"><i class="fa fa-sign-out"></i>退出</a>-->
             <#else>
                 <a href="javascript:;" class="pull-left navbar-toggle" data-toggle="modal" data-target="#oauth" rel="nofollow" title="授权登录">登录</a>
             </#if>
