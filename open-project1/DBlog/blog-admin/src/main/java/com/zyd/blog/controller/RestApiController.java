@@ -34,7 +34,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class RestApiController {
 
-    @Autowired
+//    @Autowired
     private ZydWebsocketServer websocketServer;
 
     @BussinessLog("wangEditor编辑器中上传文件")
@@ -68,7 +68,7 @@ public class RestApiController {
     @PostMapping("/notice")
     @BussinessLog("通过websocket向前台发送通知")
     public ResponseVO notice(String msg) throws UnsupportedEncodingException {
-        WebSocketUtil.sendNotificationMsg(msg, websocketServer.getOnlineUsers());
+//        WebSocketUtil.sendNotificationMsg(msg, websocketServer.getOnlineUsers());
         return ResultUtil.success("消息发送成功");
     }
 }

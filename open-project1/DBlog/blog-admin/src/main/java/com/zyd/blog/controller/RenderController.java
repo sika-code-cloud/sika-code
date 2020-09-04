@@ -46,7 +46,7 @@ public class RenderController {
     private BizArticleService articleService;
     @Autowired
     private SysConfigService configService;
-    @Autowired
+//    @Autowired
     private ZydWebsocketServer websocketServer;
 
     @RequiresAuthentication
@@ -191,7 +191,7 @@ public class RenderController {
     @BussinessLog("进入通知管理页")
     @GetMapping("/notice")
     public ModelAndView notice(Model model) {
-        model.addAttribute("online", websocketServer.getOnlineUserCount());
+//        model.addAttribute("online", websocketServer.getOnlineUserCount());
         return ResultUtil.view("laboratory/notification");
     }
 
