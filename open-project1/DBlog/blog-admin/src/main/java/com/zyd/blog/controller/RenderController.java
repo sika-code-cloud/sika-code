@@ -46,7 +46,7 @@ public class RenderController {
     private BizArticleService articleService;
     @Autowired
     private SysConfigService configService;
-    @Autowired
+//    @Autowired
     private ZydWebsocketServer websocketServer;
 
     @RequiresAuthentication

@@ -34,7 +34,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class RestApiController {
 
-    @Autowired
+//    @Autowired
     private ZydWebsocketServer websocketServer;
 
     @BussinessLog("wangEditor编辑器中上传文件")
