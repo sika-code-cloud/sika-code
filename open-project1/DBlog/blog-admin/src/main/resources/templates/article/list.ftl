@@ -75,6 +75,14 @@
                 {
                     checkbox: true
                 }, {
+                    field: 'type.name',
+                    title: '类型',
+                    width: '50px',
+                    align: 'center',
+                    formatter: function (code) {
+                        return code
+                    }
+                },{
                     field: 'title',
                     title: '标题',
                     width: '270px',

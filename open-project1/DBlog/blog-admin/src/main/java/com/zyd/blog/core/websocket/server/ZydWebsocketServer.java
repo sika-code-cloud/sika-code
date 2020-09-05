@@ -20,8 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0
  */
 @Slf4j
-@ServerEndpoint(value = "/websocket")
-@Component
+//@ServerEndpoint(value = "/websocket")
+//@Component
 public class ZydWebsocketServer {
 
     /**

@@ -304,8 +304,9 @@ $.extend({
                     url: "/api/comment",
                     data: data + '&sid=' + $.comment.sid,
                     success: function (json) {
-                        $.alert.ajaxSuccess(json);
-
+                        $.alert.ajaxSuccessConfirm(json, function () {
+                            window.location.reload();
+                        });
                         $.comment._commentDetailModal.modal('hide');
 
                         setTimeout(function () {
