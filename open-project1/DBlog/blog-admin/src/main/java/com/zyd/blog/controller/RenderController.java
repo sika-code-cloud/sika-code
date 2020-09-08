@@ -211,4 +211,11 @@ public class RenderController {
     public ModelAndView files(Model model) {
         return ResultUtil.view("file/list");
     }
+
+    @RequiresPermissions("logs")
+    @BussinessLog("进入日志管理页面")
+    @GetMapping("/logs")
+    public ModelAndView logs(Model model) {
+        return ResultUtil.view("log/list");
+    }
 }

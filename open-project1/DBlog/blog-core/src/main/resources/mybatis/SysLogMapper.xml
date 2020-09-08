@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zyd.blog.persistence.mapper.SysLogMapper">
+	<resultMap id="rm" type="com.zyd.blog.persistence.beans.SysLog">
+		<result property="id" jdbcType="BIGINT" column="id"/>
+		<result property="userId" jdbcType="BIGINT" column="user_id"/>
+		<result property="logLevel" jdbcType="VARCHAR" column="log_level"/>
+		<result property="ip" jdbcType="VARCHAR" column="ip"/>
+		<result property="content" jdbcType="VARCHAR" column="content"/>
+		<result property="type" jdbcType="VARCHAR" column="type"/>
+		<result property="spiderType" jdbcType="VARCHAR" column="spider_type"/>
+		<result property="os" jdbcType="VARCHAR" column="os"/>
+		<result property="browser" jdbcType="VARCHAR" column="browser"/>
+		<result property="requestUrl" jdbcType="VARCHAR" column="request_url"/>
+		<result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+		<result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+	</resultMap>
+
+	<select id="findPageBreakByCondition" parameterType="com.zyd.blog.business.vo.NoticeConditionVO" resultMap="rm">
+		SELECT
+			t.*
+		FROM
+			sys_log t
+		WHERE
+			1 = 1
+		<if test="userId != null">
+			AND t.userId = #{user_id}
+		</if>
+		<if test="logLevel != null">
+			AND t.logLevel = #{log_level}
+		</if>
+		<if test="type != null">
+			AND t.type = #{type}
+		</if>
+		<if test="requestUrl != null and requestUrl != ''">
+			AND t.request_url like CONCAT('%',#{requestUrl , jdbcType=VARCHAR},'%')
+		</if>
+		<if test="os != null and os != ''">
+			AND t.os like CONCAT('%',#{os , jdbcType=VARCHAR},'%')
+		</if>
+		<if test="browser != null and browser != ''">
+			AND t.browser like CONCAT('%',#{browser , jdbcType=VARCHAR},'%')
+		</if>
+		<if test="ip != null and ip != ''">
+			AND t.ip = #{ip}
+		</if>
+		ORDER BY
+			t.create_time DESC
+	</select>
+</mapper>
+

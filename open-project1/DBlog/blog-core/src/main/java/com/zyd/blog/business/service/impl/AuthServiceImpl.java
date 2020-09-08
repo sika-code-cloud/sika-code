@@ -48,6 +48,8 @@ public class AuthServiceImpl implements AuthService {
             } else {
                 userService.insert(newUser);
             }
+            // 更新用户登录信息
+            userService.updateUserLastLoginInfo(user);
             SessionUtil.setUser(newUser);
             return true;
         }

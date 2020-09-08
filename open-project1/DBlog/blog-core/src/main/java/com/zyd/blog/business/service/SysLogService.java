@@ -13,7 +13,7 @@ import com.zyd.blog.framework.object.AbstractService;
  * @date 2018/01/09 17:40
  * @since 1.0
  */
-public interface SysLogService extends AbstractService<Log, Integer> {
+public interface SysLogService extends AbstractService<Log, Long> {
 
     /**
      * 分页查询

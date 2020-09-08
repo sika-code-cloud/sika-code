@@ -16,6 +16,7 @@ import com.zyd.blog.persistence.mapper.SysLogMapper;
 import com.zyd.blog.util.RequestUtil;
 import com.zyd.blog.util.SessionUtil;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
+@Slf4j
 public class SysLogServiceImpl implements SysLogService {
 
     @Autowired
@@ -82,7 +84,7 @@ public class SysLogServiceImpl implements SysLogService {
             sysLog.setOs(agent.getOperatingSystem().getName());
             this.insert(sysLog);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("保存日志失败", log);
         }
     }
 
@@ -98,7 +100,7 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean removeByPrimaryKey(Integer primaryKey) {
+    public boolean removeByPrimaryKey(Long primaryKey) {
         return sysLogMapper.deleteByPrimaryKey(primaryKey) > 0;
     }
 
@@ -111,7 +113,7 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
-    public Log getByPrimaryKey(Integer primaryKey) {
+    public Log getByPrimaryKey(Long primaryKey) {
         Assert.notNull(primaryKey, "PrimaryKey不可为空！");
         SysLog entity = sysLogMapper.selectByPrimaryKey(primaryKey);
         return null == entity ? null : new Log(entity);
