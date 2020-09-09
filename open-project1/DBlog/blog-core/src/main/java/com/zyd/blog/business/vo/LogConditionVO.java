@@ -15,7 +15,16 @@ import lombok.Setter;
 public class LogConditionVO extends BaseConditionVO {
 	private Long userId;
 	private String logLevel;
+	private String ip;
+	private String content;
+	private String params;
 	private String type;
+	private String ua;
+	private String os;
+	private String browser;
+	private String spiderType;
+	private String requestUrl;
+	private String referer;
 	private Boolean spider;
 }
 

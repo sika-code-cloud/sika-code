@@ -7,18 +7,18 @@ spring:
       connection-init-sqls: set names utf8mb4
       driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/dblog?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://172.26.176.203:3306/dblog?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 123456
   ####### Redis Config #######
   redis:
     database: 5
     # Redis服务器地址
-    host: localhost
+    host: 172.26.176.203
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password:
+    password: 123456
 
   ####### redis缓存服务配置 #######
   session:

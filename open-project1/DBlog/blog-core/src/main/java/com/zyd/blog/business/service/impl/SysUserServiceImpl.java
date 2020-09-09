@@ -149,11 +149,12 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public User updateUserLastLoginInfo(User user) {
         if (user != null) {
-            user.setLoginCount(user.getLoginCount() + 1);
-            user.setLastLoginTime(new Date());
-            user.setLastLoginIp(IpUtil.getRealIp(RequestHolder.getRequest()));
-            user.setPassword(null);
-            this.updateSelective(user);
+            User userForUpdate = new User();
+            userForUpdate.setLoginCount(user.getLoginCount() + 1);
+            userForUpdate.setLastLoginTime(new Date());
+            userForUpdate.setLastLoginIp(IpUtil.getRealIp(RequestHolder.getRequest()));
+            userForUpdate.setId(user.getId());
+            this.updateSelective(userForUpdate);
         }
         return user;
     }
