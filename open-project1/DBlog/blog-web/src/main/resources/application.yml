@@ -62,6 +62,20 @@ spring:
                     paths: /**
     banner:
         charset: UTF-8
+    ## ==========================jsckson配置=====================================
+    jackson:
+        serialization:
+            indent-output: true
+            fail-on-empty-beans: false
+        deserialization:
+            fail-on-ignored-properties: true
+            fail_on_unknown_properties: false
+        parser:
+            allow-unquoted-control-chars: true
+            allow-single-quotes: true
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+    ## ==========================jsckson配置=====================================
 # MyBatis
 mybatis:
     type-aliases-package: com.zyd.blog.persistence.beans

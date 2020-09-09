@@ -174,7 +174,7 @@
                         title: '最后登录时间',
                         align: 'center',
                         formatter: function (code) {
-                            return new Date(code).format("yyyy-MM-dd hh:mm:ss")
+                            return code
                         }
                     }, {
                         field: 'loginCount',

@@ -118,7 +118,7 @@
                         title: '更新时间',
                         width: '100px',
                         formatter: function (code) {
-                            return new Date(code).format("yyyy-MM-dd hh:mm:ss")
+                            return code
                         }
                     }, {
                         field: 'operate',

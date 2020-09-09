@@ -501,7 +501,7 @@ $.extend(String.prototype, {
     parseCurrency: function (num) {
         var numberValue = parseFloat(this);
         return parseFloat(numberValue.toFixed(num || 2));
-    }
+    },
 });
 
 /**
