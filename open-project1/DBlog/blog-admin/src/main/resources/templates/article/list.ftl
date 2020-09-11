@@ -162,7 +162,7 @@
                     width: '130px',
                     align: 'center',
                     formatter: function (code) {
-                        return new Date(code).format("yyyy-MM-dd hh:mm:ss")
+                        return code
                     }
                 }, {
                     field: 'operate',

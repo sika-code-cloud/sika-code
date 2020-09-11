@@ -89,7 +89,10 @@
 <#-- 面包屑导航内容 + 系统通知 -->
 <#macro breadcrumb>
     <div class="row">
-        <div class="col col-md-8">
+        <div class="col text-right pull-right">
+            <#nested>
+        </div>
+        <div class="col">
             <nav class="breadcrumb">
                 <div class="notify"><i class="fa fa-bullhorn fa-fw"></i></div>
                 <div id="scrolldiv">
@@ -103,9 +106,7 @@
                 </div>
             </nav>
         </div>
-        <div class="col col-md-4 text-right">
-            <#nested>
-        </div>
+
     </div>
 </#macro>
 

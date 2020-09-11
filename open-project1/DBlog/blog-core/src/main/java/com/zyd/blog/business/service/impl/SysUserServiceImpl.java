@@ -1,5 +1,6 @@
 package com.zyd.blog.business.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zyd.blog.business.dto.SysUserDTO;
@@ -90,7 +91,7 @@ public class SysUserServiceImpl implements SysUserService {
     public boolean updateSelective(User user) {
         Assert.notNull(user, "User不可为空！");
         user.setUpdateTime(new Date());
-        if (!StringUtils.isEmpty(user.getPassword())) {
+        if (StrUtil.isNotEmpty(user.getPassword())) {
             try {
                 user.setPassword(PasswordUtil.encrypt(user.getPassword(), user.getUsername()));
             } catch (Exception e) {

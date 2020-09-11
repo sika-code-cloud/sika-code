@@ -158,7 +158,7 @@
                         title: '访问时间',
                         align: 'center',
                         formatter: function (code) {
-                            return new Date(code).format("yyyy-MM-dd hh:mm:ss")
+                            return code;
                         }
                     },{
                         field: 'operate',

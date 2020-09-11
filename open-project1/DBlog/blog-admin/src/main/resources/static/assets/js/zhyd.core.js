@@ -477,6 +477,7 @@ var zhyd = window.zhyd || {
                     console.error(e);
                 }
             }
+            ,
         }
     },
     mask: {
