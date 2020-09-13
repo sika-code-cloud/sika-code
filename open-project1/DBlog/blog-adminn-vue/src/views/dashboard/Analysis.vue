@@ -199,7 +199,7 @@
                   <!-- position="right" :offsetX="-140" -->
                   <v-legend dataKey="item"/>
                   <v-pie position="percent" color="item" :vStyle="pieStyle" />
-                  <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
+                  <v-coord type="theta" :radius="0.75" :innerRadius="0.7" />
                 </v-chart>
               </div>
 
