@@ -11,6 +11,8 @@ import com.zyd.blog.framework.object.PageResult;
 import com.zyd.blog.framework.object.ResponseVO;
 import com.zyd.blog.util.PasswordUtil;
 import com.zyd.blog.util.ResultUtil;
+import com.zyd.blog.util.SessionUtil;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,4 +118,8 @@ public class RestUserController {
         return ResultUtil.success(ResponseStatus.SUCCESS);
     }
 
+    @RequestMapping("current")
+    public ResponseVO current() {
+        return ResponseVO.newSuccess(SessionUtil.getUser());
+    }
 }
