@@ -55,7 +55,9 @@ public class ResponseVO<T> {
         }
         return this.status;
     }
-
+    public T getResult() {
+        return this.data;
+    }
     public boolean isSuccess() {
         return ResponseStatus.SUCCESS.getCode().equals(status);
     }
@@ -72,4 +74,6 @@ public class ResponseVO<T> {
                 .setMessage(successEnum.getMessage())
                 ;
     }
+
+
 }
