@@ -1,5 +1,7 @@
 package com.zyd.blog.controller;
 
+import cn.hutool.core.io.resource.ClassPathResource;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.zyd.blog.business.annotation.BussinessLog;
 import com.zyd.blog.business.entity.User;
@@ -12,6 +14,7 @@ import com.zyd.blog.framework.object.ResponseVO;
 import com.zyd.blog.util.PasswordUtil;
 import com.zyd.blog.util.ResultUtil;
 import com.zyd.blog.util.SessionUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,6 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 /**
  * 用户管理
@@ -50,9 +58,8 @@ public class RestUserController {
      * 保存用户角色
      *
      * @param userId
-     * @param roleIds
-     *         用户角色
-     *         此处获取的参数的角色id是以 “,” 分隔的字符串
+     * @param roleIds 用户角色
+     *                此处获取的参数的角色id是以 “,” 分隔的字符串
      * @return
      */
     @RequiresPermissions("user:allotRole")
@@ -72,7 +79,7 @@ public class RestUserController {
     public ResponseVO add(User user) {
         User u = userService.getByUserName(user.getUsername());
         if (u != null) {
-            return ResultUtil.error("该用户名["+user.getUsername()+"]已存在！请更改用户名");
+            return ResultUtil.error("该用户名[" + user.getUsername() + "]已存在！请更改用户名");
         }
         try {
             user.setPassword(PasswordUtil.encrypt(user.getPassword(), user.getUsername()));
@@ -120,6 +127,17 @@ public class RestUserController {
 
     @RequestMapping("current")
     public ResponseVO current() {
-        return ResponseVO.newSuccess(SessionUtil.getUser());
+        User user = SessionUtil.getUser();
+        ClassPathResource resource = new ClassPathResource("mock/role.json");
+        String text = null;
+        try {
+            text = IOUtils.toString(resource.getStream(), "utf8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JSONObject mockInfo = JSONObject.parseObject(text);
+        JSONObject role = mockInfo.getJSONObject("role");
+        user.setRole(role);
+        return ResponseVO.newSuccess(user);
     }
 }

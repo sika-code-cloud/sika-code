@@ -17,4 +17,6 @@ public class SessionConst {
      * kaptcha 的 session key
      */
     public final static String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";
+
+    public final static String TOKEN_KEY = "token";
 }

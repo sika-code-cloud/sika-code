@@ -66,14 +66,14 @@
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
-          <div class="extra-wrapper" slot="tabBarExtraContent">
+          <div class="extra-wrapper" slot="tabBarExtraContent" v-show="xlShow">
             <div class="extra-item">
               <a>今日</a>
               <a>本周</a>
               <a>本月</a>
               <a>本年</a>
             </div>
-            <a-range-picker :style="{width: '256px'}" />
+            <a-range-picker :style="{width: '256px'}"/>
           </div>
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
@@ -357,6 +357,7 @@ export default {
       pieScale,
       pieData,
       sourceData,
+      xlShow: true,
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
@@ -367,6 +368,16 @@ export default {
     setTimeout(() => {
       this.loading = !this.loading
     }, 1000)
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize (event) {
+      this.xlShow = document.documentElement.clientWidth > 768
+    }
   }
 }
 </script>

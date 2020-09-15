@@ -1,5 +1,6 @@
 package com.zyd.blog.persistence.beans;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zyd.blog.framework.object.AbstractDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,4 +42,6 @@ public class SysUser extends AbstractDO {
     private Integer loginCount;
     private String remark;
     private Integer status;
+
+    private Object role;
 }

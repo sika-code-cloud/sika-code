@@ -302,4 +302,12 @@ public class User extends AbstractBO {
         this.sysUser.setUpdateTime(updateTime);
     }
 
+    public void setRole(Object role) {
+        this.sysUser.setRole(role);
+    }
+
+    public Object getRole() {
+        return this.sysUser.getRole();
+    }
+
 }

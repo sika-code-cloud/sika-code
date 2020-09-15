@@ -1,5 +1,6 @@
 package com.zyd.blog.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.zyd.blog.business.consts.SessionConst;
 import com.zyd.blog.business.entity.User;
 import com.zyd.blog.framework.holder.RequestHolder;
@@ -42,6 +43,9 @@ public class SessionUtil {
      */
     public static void setUser(User user) {
         RequestHolder.setSession(SessionConst.USER_SESSION_KEY, user);
+        if (StrUtil.isEmpty(getToken())) {
+            setToken();
+        }
     }
 
     /**
@@ -56,15 +60,15 @@ public class SessionUtil {
      *
      * @return String
      */
-    public static String getToken(String key) {
-        return (String) RequestHolder.getSession(key);
+    public static String getToken() {
+        return (String) RequestHolder.getSession(SessionConst.TOKEN_KEY);
     }
 
     /**
      * 添加Token
      */
-    public static void setToken(String key) {
-        RequestHolder.setSession(key, UUID.randomUUID().toString());
+    public static void setToken() {
+        RequestHolder.setSession(SessionConst.TOKEN_KEY, UUID.randomUUID().toString());
     }
 
     /**
@@ -93,6 +97,10 @@ public class SessionUtil {
      */
     public static void removeKaptcha() {
         RequestHolder.removeSession(SessionConst.KAPTCHA_SESSION_KEY);
+    }
+
+    public static String getSessionId() {
+        return RequestHolder.getSession().getId();
     }
 
     /**

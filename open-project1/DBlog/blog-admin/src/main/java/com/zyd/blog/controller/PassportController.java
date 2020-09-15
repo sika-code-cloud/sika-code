@@ -106,15 +106,9 @@ public class PassportController {
             // 每个Realm都能在必要时对提交的AuthenticationTokens作出反应
             // 所以这一步在调用login(token)方法时,它会走到xxRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
             currentUser.login(token);
-            SavedRequest savedRequest = WebUtils.getSavedRequest(RequestHolder.getRequest());
-            String historyUrl = null;
-            if(null != savedRequest) {
-                if(!savedRequest.getMethod().equals("POST")) {
-                    historyUrl = savedRequest.getRequestUrl();
-                }
-            }
+            SessionUtil.setToken();
             Map<String, Object> map = new LinkedHashMap<>();
-            map.put("token", "admin-token");
+            map.put("token", SessionUtil.getToken());
             return ResultUtil.success(null, map);
         } catch (Exception e) {
             log.error("登录失败，用户名[{}]：{}", sysUser.getUsername(), e.getMessage());

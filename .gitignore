@@ -17,6 +17,7 @@ target
 target/*
 classes
 classes/*
+*/node_modules/*
 
 rebel.xml
 
