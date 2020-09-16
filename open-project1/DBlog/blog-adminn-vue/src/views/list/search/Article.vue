@@ -77,7 +77,7 @@
             <a slot="title" href="https://vue.ant.design/">{{ item.title }}</a>
             <template slot="description">
               <span>
-                <a-tag>Ant Design</a-tag>
+                <a-tag>Sika Code</a-tag>
                 <a-tag>设计语言</a-tag>
                 <a-tag>蚂蚁金服</a-tag>
               </span>

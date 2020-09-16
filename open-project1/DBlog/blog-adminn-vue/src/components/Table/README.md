@@ -293,7 +293,7 @@ result.then(r => {
       {
         id: 3,
         cover: 'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png',
-        title: 'Ant Design',
+        title: 'Sika Code',
         description: '城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
         status: 1,
         updatedAt: '2018-07-26 00:00:00'
@@ -301,7 +301,7 @@ result.then(r => {
       {
         id: 4,
         cover: 'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png',
-        title: 'Ant Design Pro',
+        title: 'Sika Code',
         description: '那时候我只会想自己想要什么，从不想自己拥有什么',
         status: 1,
         updatedAt: '2018-07-26 00:00:00'
