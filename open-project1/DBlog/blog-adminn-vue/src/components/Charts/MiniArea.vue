@@ -1,9 +1,9 @@
 <template>
   <div class="antv-chart-mini">
     <div class="chart-wrapper" :style="{ height: 46 }">
-      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, 0, 18, 0]">
-        <v-tooltip />
-        <v-smooth-area position="x*y" />
+      <v-chart :force-fit="true" :height="height" :data="dataSource" :padding="[36, 0, 18, 0] ">
+        <v-tooltip :tooltip="tooltip"/>
+        <v-smooth-area :scale="scale1" position="x*y" />
       </v-chart>
     </div>
   </div>
@@ -23,16 +23,16 @@ for (let i = 0; i < 10; i++) {
 
 const tooltip = [
   'x*y',
-  (x, y) => ({
+  (x, y1) => ({
     name: x,
-    value: y
+    value: y1
   })
 ]
-const scale = [{
+const scale1 = [{
   dataKey: 'x',
   min: 2
 }, {
-  dataKey: 'y',
+  dataKey: 'y1',
   title: '时间',
   min: 1,
   max: 22
@@ -40,11 +40,25 @@ const scale = [{
 
 export default {
   name: 'MiniArea',
+  props: {
+    prefixCls: {
+      type: String,
+      default: 'ant-pro-smooth-area'
+    },
+    scale: {
+      type: [Object, Array],
+      required: true
+    },
+    dataSource: {
+      type: Array,
+      required: true
+    }
+  },
   data () {
     return {
       data,
       tooltip,
-      scale,
+      scale1,
       height: 100
     }
   }

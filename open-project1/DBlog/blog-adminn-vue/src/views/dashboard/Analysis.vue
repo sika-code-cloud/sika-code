@@ -20,14 +20,14 @@
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="访问量" :total="8846 | NumberFormat">
-          <a-tooltip title="指标说明" slot="action">
+        <chart-card :loading="loading" title="访问总量" :total="visitData.totalVisitNumber | NumberFormat">
+          <a-tooltip title="访问量" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <mini-area />
+            <mini-area :dataSource="visitData.perDayVisitNumbers" />
           </div>
-          <template slot="footer">日访问量<span> {{ '1234' | NumberFormat }}</span></template>
+          <template slot="footer">今日访问量<span> {{ visitData.todayVisitNumber | NumberFormat }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
@@ -325,6 +325,20 @@ dv.transform({
 })
 const pieData = dv.rows
 
+const visitData = {
+  totalVisitNumber: 15300,
+  todayVisitNumber: 2300,
+  perDayVisitNumbers: []
+}
+const beginDay = new Date().getTime()
+
+for (let i = 0; i < 10; i++) {
+  visitData.perDayVisitNumbers.push({
+    x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+    y: Math.round(Math.random() * 1000)
+  })
+}
+
 export default {
   name: 'Analysis',
   mixins: [baseMixin],
@@ -343,7 +357,7 @@ export default {
     return {
       loading: true,
       rankList,
-
+      visitData,
       // 搜索用户数
       searchUserData,
       searchUserScale,
@@ -383,6 +397,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../../components/Charts/chart";
   .extra-wrapper {
     line-height: 55px;
     padding-right: 24px;
