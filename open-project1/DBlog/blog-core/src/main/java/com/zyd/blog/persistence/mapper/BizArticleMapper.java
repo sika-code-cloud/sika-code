@@ -1,5 +1,7 @@
 package com.zyd.blog.persistence.mapper;
 
+import com.zyd.blog.business.article.pojo.entity.ArticleStatisticsItem;
+import com.zyd.blog.business.article.pojo.query.ArticleStatisticsQuery;
 import com.zyd.blog.business.vo.ArticleConditionVO;
 import com.zyd.blog.persistence.beans.BizArticle;
 import com.zyd.blog.plugin.BaseMapper;
@@ -74,5 +76,6 @@ public interface BizArticleMapper extends BaseMapper<BizArticle> {
      * @return
      */
     int batchUpdateStatus(@Param("list") List<Long> list, @Param("status") boolean status);
+
 
 }

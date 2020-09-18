@@ -3,6 +3,9 @@ package com.zyd.blog.business.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zyd.blog.business.annotation.RedisCache;
+import com.zyd.blog.business.article.pojo.entity.ArticleStatisticsItem;
+import com.zyd.blog.business.article.pojo.query.ArticleStatisticsQuery;
+import com.zyd.blog.business.article.pojo.vo.ArticleStatisticsVisitVo;
 import com.zyd.blog.business.entity.Article;
 import com.zyd.blog.business.entity.User;
 import com.zyd.blog.business.enums.ArticleStatusEnum;
@@ -54,6 +57,8 @@ public class BizArticleServiceImpl implements BizArticleService {
     private BizArticleMapper bizArticleMapper;
     @Autowired
     private BizArticleLoveMapper bizArticleLoveMapper;
+    @Autowired
+    private BizArticleStatisticsMapper bizArticleStatisticsMapper;
     @Autowired
     private BizArticleLookMapper bizArticleLookMapper;
     @Autowired
@@ -413,5 +418,18 @@ public class BizArticleServiceImpl implements BizArticleService {
             list.add(new Article(entity));
         }
         return list;
+    }
+
+    @Override
+    public ArticleStatisticsVisitVo statisticsVisitData(ArticleStatisticsQuery query) {
+        // 构建
+        query.build();
+        // 查询
+        List<ArticleStatisticsItem> items = bizArticleStatisticsMapper.statisticsVisitData(query);
+        ArticleStatisticsItem totalItem = bizArticleStatisticsMapper.statisticsTotalVisitData(query);
+        ArticleStatisticsVisitVo statisticsVisitVo = new ArticleStatisticsVisitVo();
+        return statisticsVisitVo.setItems(items)
+                .setTotalItem(totalItem)
+                .build();
     }
 }

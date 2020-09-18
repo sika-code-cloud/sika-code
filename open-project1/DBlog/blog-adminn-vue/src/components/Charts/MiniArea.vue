@@ -2,8 +2,9 @@
   <div class="antv-chart-mini">
     <div class="chart-wrapper" :style="{ height: 46 }">
       <v-chart :force-fit="true" :height="height" :data="dataSource" :padding="[36, 0, 18, 0] ">
-        <v-tooltip :tooltip="tooltip"/>
-        <v-smooth-area :scale="scale1" position="x*y" />
+        <v-tooltip :tooltip="tooltip" />
+        <v-line position="month*value" :size="2" />
+        <v-smooth-area :scale="scale1" position="month*value" />
       </v-chart>
     </div>
   </div>
@@ -17,22 +18,22 @@ const beginDay = new Date().getTime()
 for (let i = 0; i < 10; i++) {
   data.push({
     x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
-    y: Math.round(Math.random() * 10)
+    y: Math.round(Math.random() * 100)
   })
 }
 
 const tooltip = [
-  'x*y',
-  (x, y1) => ({
-    name: x,
-    value: y1
+  'month*value',
+  (month, value) => ({
+    name: month,
+    value: value
   })
 ]
 const scale1 = [{
-  dataKey: 'x',
+  dataKey: 'value',
   min: 2
 }, {
-  dataKey: 'y1',
+  dataKey: 'month',
   title: '时间',
   min: 1,
   max: 22
@@ -47,7 +48,7 @@ export default {
     },
     scale: {
       type: [Object, Array],
-      required: true
+      required: false
     },
     dataSource: {
       type: Array,

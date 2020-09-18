@@ -4,7 +4,7 @@
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="总销售额" total="￥126,560">
           <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
             <trend flag="up" style="margin-right: 16px;">
@@ -20,23 +20,24 @@
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="访问总量" :total="visitData.totalVisitNumber | NumberFormat">
+        <chart-card :loading="loading" title="访问总量" :total="visitData.totalItem.number | NumberFormat">
           <a-tooltip title="访问量" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <mini-area :dataSource="visitData.perDayVisitNumbers" />
+            <!--            <mini-area :dataSource="visitData.perDayVisitNumbers" />-->
+            <mini-smooth-area :style="{ height: '45px' }" :dataSource="visitData.visitNumbers" :scale="visitData.visitScale"/>
           </div>
-          <template slot="footer">今日访问量<span> {{ visitData.todayVisitNumber | NumberFormat }}</span></template>
+          <template slot="footer">今日访问量<span> {{ visitData.recentItem.number | NumberFormat }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
           <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <mini-bar />
+            <mini-bar/>
           </div>
           <template slot="footer">转化率 <span>60%</span></template>
         </chart-card>
@@ -44,10 +45,10 @@
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="运营活动效果" total="78%">
           <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
+            <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" height="8px" />
+            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" height="8px"/>
           </div>
           <template slot="footer">
             <trend flag="down" style="margin-right: 16px;">
@@ -78,7 +79,7 @@
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData" title="销售额排行" />
+                <bar :data="barData" title="销售额排行"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <rank-list title="门店销售排行榜" :list="rankList"/>
@@ -88,7 +89,7 @@
           <a-tab-pane tab="访问量" key="2">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData2" title="销售额趋势" />
+                <bar :data="barData2" title="销售额趋势"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <rank-list title="门店销售排行榜" :list="rankList"/>
@@ -105,7 +106,7 @@
           <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ height: '100%' }">
             <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
               <a class="ant-dropdown-link" href="#">
-                <a-icon type="ellipsis" />
+                <a-icon type="ellipsis"/>
               </a>
               <a-menu slot="overlay">
                 <a-menu-item>
@@ -122,13 +123,13 @@
                   <span slot="subtitle">
                     <span>搜索用户数</span>
                     <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
                     </a-tooltip>
                   </span>
                 </number-info>
                 <!-- miniChart -->
                 <div>
-                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
                 </div>
               </a-col>
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
@@ -136,13 +137,13 @@
                   <span slot="subtitle">
                     <span>人均搜索次数</span>
                     <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
                     </a-tooltip>
                   </span>
                 </number-info>
                 <!-- miniChart -->
                 <div>
-                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
                 </div>
               </a-col>
             </a-row>
@@ -169,7 +170,7 @@
               <!-- style="bottom: 12px;display: inline-block;" -->
               <span class="dashboard-analysis-iconGroup">
                 <a-dropdown :trigger="['click']" placement="bottomLeft">
-                  <a-icon type="ellipsis" class="ant-dropdown-link" />
+                  <a-icon type="ellipsis" class="ant-dropdown-link"/>
                   <a-menu slot="overlay">
                     <a-menu-item>
                       <a href="javascript:;">操作一</a>
@@ -194,12 +195,12 @@
               <!-- style="width: calc(100% - 240px);" -->
               <div>
                 <v-chart :force-fit="true" :height="405" :data="pieData" :scale="pieScale">
-                  <v-tooltip :showTitle="false" dataKey="item*percent" />
-                  <v-axis />
+                  <v-tooltip :showTitle="false" dataKey="item*percent"/>
+                  <v-axis/>
                   <!-- position="right" :offsetX="-140" -->
                   <v-legend dataKey="item"/>
-                  <v-pie position="percent" color="item" :vStyle="pieStyle" />
-                  <v-coord type="theta" :radius="0.75" :innerRadius="0.7" />
+                  <v-pie position="percent" color="item" :vStyle="pieStyle"/>
+                  <v-coord type="theta" :radius="0.75" :innerRadius="0.7"/>
                 </v-chart>
               </div>
 
@@ -225,6 +226,7 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
+import { statisticsRecentWeek } from '@/api/article/article'
 
 const barData = []
 const barData2 = []
@@ -326,18 +328,36 @@ dv.transform({
 const pieData = dv.rows
 
 const visitData = {
-  totalVisitNumber: 15300,
-  todayVisitNumber: 2300,
-  perDayVisitNumbers: []
+  totalItem: {
+    number: 15300
+  },
+  recentItem: {
+    number: 2300
+  },
+  visitScale: [],
+  items: [],
+  maxVisitNumber: 1000
 }
-const beginDay = new Date().getTime()
+// const beginDay = new Date().getTime()
+//
+// for (let i = 0; i < 10; i++) {
+//   visitData.visitNumbers.push({
+//     x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+//     y: Math.round(Math.random() * 1000)
+//   })
+// }
 
-for (let i = 0; i < 10; i++) {
-  visitData.perDayVisitNumbers.push({
-    x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
-    y: Math.round(Math.random() * 1000)
-  })
-}
+visitData.visitScale = [{
+  dataKey: 'x',
+  alias: '时间'
+},
+  {
+    dataKey: 'y',
+    alias: '访问量',
+    min: 0,
+    max: visitData.maxVisitNumber
+  }
+]
 
 export default {
   name: 'Analysis',
@@ -384,60 +404,78 @@ export default {
     }, 1000)
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
+    visitData.maxVisitNumber = this.maxNumber(visitData.visitNumbers)
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.handleResize)
   },
+  computed: {
+    max: function (numbers) {
+      return Math.max(numbers)
+    }
+  },
   methods: {
     handleResize (event) {
       this.xlShow = document.documentElement.clientWidth > 768
+    },
+    maxNumber (numbers) {
+      return Math.max(numbers)
+    },
+    /** 统计文章访问数据 */
+    statisticsArticleVisit () {
+      statisticsRecentWeek().then(res => {
+          console.log(res)
+          this.visitData = res.result
+        }
+      )
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@import "../../components/Charts/chart";
-  .extra-wrapper {
-    line-height: 55px;
-    padding-right: 24px;
+.extra-wrapper {
+  line-height: 55px;
+  padding-right: 24px;
 
-    .extra-item {
-      display: inline-block;
-      margin-right: 24px;
+  .extra-item {
+    display: inline-block;
+    margin-right: 24px;
 
-      a {
-        margin-left: 24px;
-      }
+    a {
+      margin-left: 24px;
     }
   }
+}
 
-  .antd-pro-pages-dashboard-analysis-twoColLayout {
+.antd-pro-pages-dashboard-analysis-twoColLayout {
+  position: relative;
+  display: flex;
+  display: block;
+  flex-flow: row wrap;
+}
+
+.antd-pro-pages-dashboard-analysis-salesCard {
+  height: calc(100% - 24px);
+
+  /deep/ .ant-card-head {
     position: relative;
-    display: flex;
-    display: block;
-    flex-flow: row wrap;
   }
+}
 
-  .antd-pro-pages-dashboard-analysis-salesCard {
-    height: calc(100% - 24px);
-    /deep/ .ant-card-head {
-      position: relative;
-    }
+.dashboard-analysis-iconGroup {
+  i {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, .45);
+    cursor: pointer;
+    transition: color .32s;
+    color: black;
   }
+}
 
-  .dashboard-analysis-iconGroup {
-    i {
-      margin-left: 16px;
-      color: rgba(0,0,0,.45);
-      cursor: pointer;
-      transition: color .32s;
-      color: black;
-    }
-  }
-  .analysis-salesTypeRadio {
-    position: absolute;
-    right: 54px;
-    bottom: 12px;
-  }
+.analysis-salesTypeRadio {
+  position: absolute;
+  right: 54px;
+  bottom: 12px;
+}
 </style>
