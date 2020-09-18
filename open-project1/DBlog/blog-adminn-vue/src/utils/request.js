@@ -12,6 +12,8 @@ const request = axios.create({
   timeout: 6000 // 请求超时时间
 })
 
+console.log(process.env.VUE_APP_API_BASE_URL)
+
 // 异常拦截处理器
 const errorHandler = (error) => {
   if (error.response) {
