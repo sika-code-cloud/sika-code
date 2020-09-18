@@ -2,8 +2,6 @@ package com.zyd.blog.business.service;
 
 
 import com.github.pagehelper.PageInfo;
-import com.zyd.blog.business.article.pojo.query.ArticleStatisticsQuery;
-import com.zyd.blog.business.article.pojo.vo.ArticleStatisticsVisitVo;
 import com.zyd.blog.business.entity.Article;
 import com.zyd.blog.business.vo.ArticleConditionVO;
 import com.zyd.blog.framework.object.AbstractService;
@@ -120,16 +118,5 @@ public interface BizArticleService extends AbstractService<Article, Long> {
      */
     void batchUpdateStatus(Long[] ids, boolean status);
 
-    /**
-     * <p>
-     * 统计文章访问数据
-     * </p>
-     *
-     * @param query
-     * @return com.zyd.blog.business.article.vo.ArticleStatisticsVisitVo
-     * @author daiqi
-     * @date 2020/9/18 10:58
-     */
-    ArticleStatisticsVisitVo statisticsVisitData(ArticleStatisticsQuery query);
 
 }

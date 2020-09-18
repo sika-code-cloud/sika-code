@@ -1,4 +1,4 @@
-package com.zyd.blog.business.article.pojo.entity;
+package com.zyd.blog.business.log.pojo.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -13,11 +13,11 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class ArticleStatisticsItem {
+public class LogStatisticsItem {
     private Integer number;
-    private Date day;
+    private String day;
 
-    public static ArticleStatisticsItem init() {
-        return new ArticleStatisticsItem().setNumber(0);
+    public static LogStatisticsItem init() {
+        return new LogStatisticsItem().setNumber(0);
     }
 }

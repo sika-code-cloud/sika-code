@@ -1,12 +1,13 @@
-package com.zyd.blog.business.article.pojo.vo;
+package com.zyd.blog.business.log.pojo.vo;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.zyd.blog.business.article.pojo.entity.ArticleStatisticsItem;
+import com.zyd.blog.business.log.pojo.entity.LogStatisticsItem;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.assertj.core.util.Lists;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -17,12 +18,13 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class ArticleStatisticsVisitVo {
-    private ArticleStatisticsItem totalItem;
-    private ArticleStatisticsItem recentItem;
-    private List<ArticleStatisticsItem> items;
+public class LogStatisticsVisitVo {
+    private LogStatisticsItem totalItem;
+    private LogStatisticsItem recentItem;
+    private LogStatisticsItem maxItem;
+    private List<LogStatisticsItem> items;
 
-    public ArticleStatisticsVisitVo build() {
+    public LogStatisticsVisitVo build() {
         if (CollUtil.isEmpty(items)) {
             this.items = Lists.emptyList();
         }
@@ -30,11 +32,15 @@ public class ArticleStatisticsVisitVo {
             this.recentItem = items.get(items.size() - 1);
         }
         if (ObjectUtil.isEmpty(totalItem)) {
-            totalItem = ArticleStatisticsItem.init();
+            totalItem = LogStatisticsItem.init();
         }
         if (ObjectUtil.isEmpty(recentItem)){
-            recentItem = ArticleStatisticsItem.init();
+            recentItem = LogStatisticsItem.init();
         }
+        // 求最大访问量的item
+        this.maxItem = items.stream()
+                .max(Comparator.comparing(LogStatisticsItem::getNumber))
+                .get();
 
         return this;
     }

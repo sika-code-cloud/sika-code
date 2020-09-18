@@ -26,7 +26,7 @@
           </a-tooltip>
           <div>
             <!--            <mini-area :dataSource="visitData.perDayVisitNumbers" />-->
-            <mini-smooth-area :style="{ height: '45px' }" :dataSource="visitData.visitNumbers" :scale="visitData.visitScale"/>
+            <mini-smooth-area :style="{ height: '45px' }" :dataSource="visitData.items" :scale="visitData.visitScale"/>
           </div>
           <template slot="footer">今日访问量<span> {{ visitData.recentItem.number | NumberFormat }}</span></template>
         </chart-card>
@@ -226,7 +226,7 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { statisticsRecentWeek } from '@/api/article/article'
+import { statisticsRecentWeek } from '@/api/log'
 
 const barData = []
 const barData2 = []
@@ -329,35 +329,17 @@ const pieData = dv.rows
 
 const visitData = {
   totalItem: {
-    number: 15300
+    number: 0
   },
   recentItem: {
-    number: 2300
+    number: 0
   },
   visitScale: [],
   items: [],
-  maxVisitNumber: 1000
-}
-// const beginDay = new Date().getTime()
-//
-// for (let i = 0; i < 10; i++) {
-//   visitData.visitNumbers.push({
-//     x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
-//     y: Math.round(Math.random() * 1000)
-//   })
-// }
-
-visitData.visitScale = [{
-  dataKey: 'x',
-  alias: '时间'
-},
-  {
-    dataKey: 'y',
-    alias: '访问量',
-    min: 0,
-    max: visitData.maxVisitNumber
+  maxItem: {
+    number: 0
   }
-]
+}
 
 export default {
   name: 'Analysis',
@@ -404,7 +386,10 @@ export default {
     }, 1000)
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
-    visitData.maxVisitNumber = this.maxNumber(visitData.visitNumbers)
+    this.statisticsVisit()
+  },
+  mounted () {
+    console.log('test')
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.handleResize)
@@ -419,15 +404,44 @@ export default {
       this.xlShow = document.documentElement.clientWidth > 768
     },
     maxNumber (numbers) {
+      if (numbers === undefined) {
+        return 0
+      }
       return Math.max(numbers)
     },
-    /** 统计文章访问数据 */
-    statisticsArticleVisit () {
+    /** 统计访问数据 */
+    statisticsVisit () {
+      console.log(1)
       statisticsRecentWeek().then(res => {
-          console.log(res)
+          const result = res.result
           this.visitData = res.result
+          this.visitData.visitScale = this.buildVisitScale(result.maxItem.number)
+          this.visitData.items = this.buildViewItems(result.items)
         }
       )
+    },
+    buildViewItems (items) {
+      const viewItems = []
+      for (let i = 0; i < items.length; i++) {
+        viewItems.push({
+          x: items[i].day,
+          y: items[i].number
+        })
+      }
+      return viewItems
+    },
+    buildVisitScale (maxNumber) {
+      return [{
+        dataKey: 'x',
+        alias: '时间'
+      },
+        {
+          dataKey: 'y',
+          alias: '访问量',
+          min: 0,
+          max: maxNumber
+        }
+      ]
     }
   }
 }

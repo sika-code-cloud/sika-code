@@ -8,11 +8,15 @@ import com.zyd.blog.business.entity.User;
 import com.zyd.blog.business.enums.LogLevelEnum;
 import com.zyd.blog.business.enums.LogTypeEnum;
 import com.zyd.blog.business.enums.PlatformEnum;
+import com.zyd.blog.business.log.pojo.entity.LogStatisticsItem;
+import com.zyd.blog.business.log.pojo.query.LogStatisticsQuery;
+import com.zyd.blog.business.log.pojo.vo.LogStatisticsVisitVo;
 import com.zyd.blog.business.service.SysLogService;
 import com.zyd.blog.business.util.WebSpiderUtils;
 import com.zyd.blog.business.vo.LogConditionVO;
 import com.zyd.blog.persistence.beans.SysLog;
 import com.zyd.blog.persistence.mapper.SysLogMapper;
+import com.zyd.blog.persistence.mapper.SysLogStatisticsMapper;
 import com.zyd.blog.util.RequestUtil;
 import com.zyd.blog.util.SessionUtil;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -40,6 +44,8 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Autowired
     private SysLogMapper sysLogMapper;
+    @Autowired
+    private SysLogStatisticsMapper sysLogStatisticsMapper;
 
     @Override
     public PageInfo<Log> findPageBreakByCondition(LogConditionVO vo) {
@@ -117,5 +123,19 @@ public class SysLogServiceImpl implements SysLogService {
         Assert.notNull(primaryKey, "PrimaryKey不可为空！");
         SysLog entity = sysLogMapper.selectByPrimaryKey(primaryKey);
         return null == entity ? null : new Log(entity);
+    }
+
+
+    @Override
+    public LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query) {
+        // 构建
+        query.build();
+        // 查询
+        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitData(query);
+        LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
+        LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
+        return statisticsVisitVo.setItems(items)
+                .setTotalItem(totalItem)
+                .build();
     }
 }

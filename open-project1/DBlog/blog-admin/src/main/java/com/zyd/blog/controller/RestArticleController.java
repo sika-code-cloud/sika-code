@@ -1,10 +1,8 @@
 package com.zyd.blog.controller;
 
-import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.zyd.blog.business.annotation.BussinessLog;
-import com.zyd.blog.business.article.pojo.query.ArticleStatisticsQuery;
 import com.zyd.blog.business.entity.Article;
 import com.zyd.blog.business.enums.BaiduPushTypeEnum;
 import com.zyd.blog.business.enums.ConfigKeyEnum;
@@ -126,14 +124,4 @@ public class RestArticleController {
         return ResultUtil.success("批量发布完成");
     }
 
-    @RequiresPermissions(value = {"article:statistics"}, logical = Logical.OR)
-    @PostMapping(value = "/statisticsRecentWeek")
-    @BussinessLog("查看文章统计信息")
-    public ResponseVO statisticsRecentWeek() {
-        ArticleStatisticsQuery query = new ArticleStatisticsQuery()
-                .setBeginDate(DateUtil.nextWeek())
-                .setEndDate(DateUtil.date())
-                ;
-        return ResultUtil.success(articleService.statisticsVisitData(query));
-    }
 }

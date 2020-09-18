@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zyd.blog.persistence.mapper.SysLogStatisticsMapper">
+    <resultMap id="rm" type="com.zyd.blog.business.log.pojo.entity.LogStatisticsItem">
+        <result property="number" jdbcType="INTEGER" column="number"/>
+        <result property="day" jdbcType="TIMESTAMP" column="day"/>
+    </resultMap>
+
+    <select id="statisticsVisitData"
+            parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
+            resultMap="rm">
+        SELECT
+        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m-%d') day
+        FROM
+        sys_log
+        WHERE
+        <include refid="query"/>
+        group by day
+        order by day asc
+    </select>
+
+    <select id="statisticsTotalVisitData"
+            parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
+            resultMap="rm">
+        SELECT
+        COUNT(*) number
+        FROM
+        sys_log
+        WHERE
+        <include refid="query"/>
+    </select>
+    <sql id="query">
+        1 = 1
+        <if test="query.beginDate != null">AND create_time <![CDATA[ >= ]]> #{query.beginDate}</if>
+        <if test="query.endDate != null">AND create_time <![CDATA[ <= ]]> #{query.endDate}</if>
+    </sql>
+</mapper>
+

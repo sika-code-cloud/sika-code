@@ -4,6 +4,8 @@ package com.zyd.blog.business.service;
 import com.github.pagehelper.PageInfo;
 import com.zyd.blog.business.entity.Log;
 import com.zyd.blog.business.enums.PlatformEnum;
+import com.zyd.blog.business.log.pojo.query.LogStatisticsQuery;
+import com.zyd.blog.business.log.pojo.vo.LogStatisticsVisitVo;
 import com.zyd.blog.business.vo.LogConditionVO;
 import com.zyd.blog.framework.object.AbstractService;
 
@@ -24,4 +26,17 @@ public interface SysLogService extends AbstractService<Log, Long> {
     PageInfo<Log> findPageBreakByCondition(LogConditionVO vo);
 
     void asyncSaveSystemLog(PlatformEnum platform, String bussinessName);
+
+
+    /**
+     * <p>
+     * 统计文章访问数据
+     * </p>
+     *
+     * @param query
+     * @return com.zyd.blog.business.article.vo.ArticleStatisticsVisitVo
+     * @author daiqi
+     * @date 2020/9/18 10:58
+     */
+    LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query);
 }

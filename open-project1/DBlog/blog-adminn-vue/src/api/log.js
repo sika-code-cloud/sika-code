@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 const articleApi = {
-  StatisticsRecentWeek: '/article/statisticsRecentWeek'
+  StatisticsRecentWeek: '/log/statisticsRecentWeek'
 }
 
 /**
