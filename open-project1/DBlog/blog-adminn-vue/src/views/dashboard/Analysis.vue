@@ -1,9 +1,79 @@
 <template>
   <div>
     <a-row :gutter="24">
+      <a-col :sm="12" :md="12" :xl="12">
+        <a-row :gutter="24">
+          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
+            <a-card>
+              <a href="/">
+                <a-statistic
+                  title="文章"
+                  :value="siteInfoData.articleCount"
+                  style="margin-right: 50px"
+                >
+                  <template #suffix>
+                    <a-icon type="file-text" theme="twoTone" />
+                  </template>
+                </a-statistic>
+              </a>
+            </a-card>
+          </a-col>
+          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
+            <a-card>
+              <a href="#">
+                <a-statistic
+                  title="标签"
+                  :value="siteInfoData.tagCount"
+                  style="margin-right: 50px"
+                >
+                  <template #suffix>
+                    <a-icon type="flag" theme="twoTone" />
+                  </template>
+                </a-statistic>
+              </a>
+            </a-card>
+          </a-col>
+        </a-row>
+      </a-col>
+      <a-col :sm="12" :md="12" :xl="12">
+        <a-row :gutter="24">
+          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
+            <a-card>
+              <a href="#">
+                <a-statistic
+                  title="分类"
+                  :value="siteInfoData.typeCount"
+                  style="margin-right: 50px"
+                >
+                  <template #suffix>
+                    <a-icon type="appstore" theme="twoTone"/>
+                  </template>
+                </a-statistic>
+              </a>
+            </a-card>
+          </a-col>
+          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
+            <a-card>
+              <a href="#">
+                <a-statistic
+                  title="留言数"
+                  :value="siteInfoData.commentCount"
+                  style="margin-right: 50px"
+                >
+                  <template #suffix>
+                    <a-icon type="message" theme="twoTone" />
+                  </template>
+                </a-statistic>
+              </a>
+            </a-card>
+          </a-col>
+        </a-row>
+      </a-col>
+    </a-row>
+    <a-row :gutter="24">
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
-          <a-tooltip title="指标说明" slot="action">
+        <chart-card :loading="loading" title="总文章数" :total="siteInfoData.articleCount">
+          <a-tooltip title="总文章数" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
@@ -20,15 +90,15 @@
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="访问总量" :total="visitData.totalItem.number | NumberFormat">
-          <a-tooltip title="访问量" slot="action">
+        <chart-card :loading="loading" title="周访问总量" :total="visitData.totalItem.number | NumberFormat">
+          <a-tooltip title="周访问量" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
             <!--            <mini-area :dataSource="visitData.perDayVisitNumbers" />-->
             <mini-smooth-area :style="{ height: '45px' }" :dataSource="visitData.items" :scale="visitData.visitScale"/>
           </div>
-          <template slot="footer">今日访问量<span> {{ visitData.recentItem.number | NumberFormat }}</span></template>
+          <template slot="footer">当日访问量<span> {{ visitData.recentItem.number | NumberFormat }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
@@ -67,14 +137,14 @@
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
-          <div class="extra-wrapper" slot="tabBarExtraContent" v-show="xlShow">
+          <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
               <a>今日</a>
               <a>本周</a>
               <a>本月</a>
               <a>本年</a>
             </div>
-            <a-range-picker :style="{width: '256px'}"/>
+            <a-range-picker :style="{width: '256px'}" v-show="xlShow"/>
           </div>
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
@@ -226,11 +296,13 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { statisticsRecentWeek } from '@/api/log'
+import { recentWeekLog, siteInfo } from '@/api/statistics'
 
+// 网站信息
+const siteInfoData = {}
 const barData = []
 const barData2 = []
-for (let i = 0; i < 12; i += 1) {
+for (let i = 0; i < 31; i += 1) {
   barData.push({
     x: `${i + 1}月`,
     y: Math.floor(Math.random() * 1000) + 200
@@ -358,6 +430,7 @@ export default {
   data () {
     return {
       loading: true,
+      siteInfoData,
       rankList,
       visitData,
       // 搜索用户数
@@ -386,7 +459,7 @@ export default {
     }, 1000)
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
-    this.statisticsVisit()
+    this.loadStatisticsData()
   },
   mounted () {
     console.log('test')
@@ -409,10 +482,20 @@ export default {
       }
       return Math.max(numbers)
     },
+    loadStatisticsData () {
+      this.siteInfo()
+      this.recentWeekLog()
+    },
     /** 统计访问数据 */
-    statisticsVisit () {
-      console.log(1)
-      statisticsRecentWeek().then(res => {
+    siteInfo () {
+      siteInfo().then(res => {
+          this.siteInfoData = res.result
+        }
+      )
+    },
+    /** 统计访问数据 */
+    recentWeekLog () {
+      recentWeekLog().then(res => {
           const result = res.result
           this.visitData = res.result
           this.visitData.visitScale = this.buildVisitScale(result.maxItem.number)
@@ -424,7 +507,7 @@ export default {
       const viewItems = []
       for (let i = 0; i < items.length; i++) {
         viewItems.push({
-          x: items[i].day,
+          x: items[i].date,
           y: items[i].number
         })
       }

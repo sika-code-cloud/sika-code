@@ -20,8 +20,24 @@ import java.util.List;
 @Repository
 public interface SysLogStatisticsMapper extends BaseMapper<BizArticle> {
 
-    List<LogStatisticsItem> statisticsVisitData(@Param(value = "query") LogStatisticsQuery query);
+    /**
+     * 按天统计
+     */
+    List<LogStatisticsItem> statisticsVisitDataForDay(@Param(value = "query") LogStatisticsQuery query);
 
+    /**
+     * 按小时统计
+     */
+    List<LogStatisticsItem> statisticsVisitDataForHour(@Param(value = "query") LogStatisticsQuery query);
+
+    /**
+     * 按月统计
+     */
+    List<LogStatisticsItem> statisticsVisitDataForMonth(@Param(value = "query") LogStatisticsQuery query);
+
+    /**
+     * 统计总数
+     */
     LogStatisticsItem statisticsTotalVisitData(@Param(value = "query") LogStatisticsQuery query);
 
 }

@@ -15,7 +15,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class LogStatisticsItem {
     private Integer number;
-    private String day;
+    private Date date;
 
     public static LogStatisticsItem init() {
         return new LogStatisticsItem().setNumber(0);

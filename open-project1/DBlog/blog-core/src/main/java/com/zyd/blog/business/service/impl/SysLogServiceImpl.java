@@ -1,5 +1,6 @@
 package com.zyd.blog.business.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -125,17 +126,76 @@ public class SysLogServiceImpl implements SysLogService {
         return null == entity ? null : new Log(entity);
     }
 
-
     @Override
-    public LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query) {
+    public LogStatisticsVisitVo statisticsRecentWeek() {
+        LogStatisticsQuery query = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.lastWeek())
+                .setEndDate(DateUtil.date());
+        return statisticsVisitDataForDay(query);
+    }
+
+    public LogStatisticsVisitVo statisticsRecentYear() {
+        LogStatisticsQuery query = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.beginOfYear(new Date()))
+                .setEndDate(DateUtil.beginOfYear(new Date()));
+        return statisticsVisitDataForMonth(query);
+    }
+
+    public LogStatisticsVisitVo statisticsRecentMonth() {
+        LogStatisticsQuery query = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.lastMonth())
+                .setEndDate(DateUtil.date());
+        return statisticsVisitDataForDay(query);
+    }
+
+    public LogStatisticsVisitVo statisticsRecentDay() {
+        LogStatisticsQuery query = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.beginOfDay(new Date()))
+                .setEndDate(DateUtil.beginOfDay(new Date()));
+        return statisticsVisitDataForHour(query);
+    }
+
+    public LogStatisticsVisitVo statisticsVisitDataForMonth(LogStatisticsQuery query) {
         // 构建
         query.build();
         // 查询
-        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitData(query);
+        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForMonth(query);
         LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
         LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
         return statisticsVisitVo.setItems(items)
                 .setTotalItem(totalItem)
+                .setQuery(query)
+                .buildItemsForMonth()
+                .build();
+    }
+
+
+    @Override
+    public LogStatisticsVisitVo statisticsVisitDataForDay(LogStatisticsQuery query) {
+        // 构建
+        query.build();
+        // 查询
+        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForDay(query);
+        LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
+        LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
+        return statisticsVisitVo.setItems(items)
+                .setTotalItem(totalItem)
+                .setQuery(query)
+                .buildItemsForDay()
+                .build();
+    }
+
+    public LogStatisticsVisitVo statisticsVisitDataForHour(LogStatisticsQuery query) {
+        // 构建
+        query.build();
+        // 查询
+        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForHour(query);
+        LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
+        LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
+        return statisticsVisitVo.setItems(items)
+                .setTotalItem(totalItem)
+                .setQuery(query)
+                .buildItemsForHour()
                 .build();
     }
 }

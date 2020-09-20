@@ -1,11 +1,15 @@
 package com.zyd.blog.controller;
 
+import cn.hutool.core.date.DateUtil;
+import com.zyd.blog.business.log.pojo.query.LogStatisticsQuery;
 import com.zyd.blog.business.service.BizStatisticsService;
 import com.zyd.blog.business.service.SysConfigService;
+import com.zyd.blog.business.service.SysLogService;
 import com.zyd.blog.framework.object.ResponseVO;
 import com.zyd.blog.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +28,8 @@ public class RestStatisticsController {
     private SysConfigService configService;
     @Autowired
     private BizStatisticsService statisticsService;
+    @Autowired
+    private SysLogService sysLogService;
 
     @RequestMapping("/siteInfo")
     public ResponseVO getSiteInfo(){
@@ -40,4 +46,8 @@ public class RestStatisticsController {
         return ResultUtil.success("", statisticsService.listType(10));
     }
 
+    @RequestMapping(value = "/recentWeekLog")
+    public ResponseVO statisticsRecentWeek() {
+        return ResultUtil.success(sysLogService.statisticsRecentWeek());
+    }
 }

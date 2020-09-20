@@ -42,13 +42,4 @@ public class RestLogController {
     public ResponseVO get(@PathVariable Long id) {
         return ResultUtil.success(null, this.sysLogService.getByPrimaryKey(id));
     }
-
-    @PostMapping(value = "/statisticsRecentWeek")
-    public ResponseVO statisticsRecentWeek() {
-        LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.lastWeek())
-                .setEndDate(DateUtil.date())
-                ;
-        return ResultUtil.success(sysLogService.statisticsVisitData(query));
-    }
 }

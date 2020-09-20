@@ -38,5 +38,8 @@ public interface SysLogService extends AbstractService<Log, Long> {
      * @author daiqi
      * @date 2020/9/18 10:58
      */
-    LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query);
+    LogStatisticsVisitVo statisticsVisitDataForDay(LogStatisticsQuery query);
+
+    /** 统计最近一周的日志数据 */
+    LogStatisticsVisitVo statisticsRecentWeek();
 }

@@ -4,20 +4,46 @@
 <mapper namespace="com.zyd.blog.persistence.mapper.SysLogStatisticsMapper">
     <resultMap id="rm" type="com.zyd.blog.business.log.pojo.entity.LogStatisticsItem">
         <result property="number" jdbcType="INTEGER" column="number"/>
-        <result property="day" jdbcType="TIMESTAMP" column="day"/>
+        <result property="date" jdbcType="TIMESTAMP" column="date"/>
     </resultMap>
 
-    <select id="statisticsVisitData"
+    <select id="statisticsVisitDataForHour"
             parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
             resultMap="rm">
         SELECT
-        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m-%d') day
+        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m-%d HH') date
         FROM
         sys_log
         WHERE
         <include refid="query"/>
-        group by day
-        order by day asc
+        group by date
+        order by date asc
+    </select>
+
+    <select id="statisticsVisitDataForDay"
+            parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
+            resultMap="rm">
+        SELECT
+        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m-%d') date
+        FROM
+        sys_log
+        WHERE
+        <include refid="query"/>
+        group by date
+        order by date asc
+    </select>
+
+    <select id="statisticsVisitDataForMonth"
+            parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
+            resultMap="rm">
+        SELECT
+        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m') date
+        FROM
+        sys_log
+        WHERE
+        <include refid="query"/>
+        group by date
+        order by date asc
     </select>
 
     <select id="statisticsTotalVisitData"

@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 
 const articleApi = {
-  StatisticsRecentWeek: '/log/statisticsRecentWeek'
+  RecentWeekLog: '/statistics/recentWeekLog',
+  SiteInfo: '/statistics/siteInfo'
 }
 
 /**
@@ -15,9 +16,15 @@ const articleApi = {
  * @param parameter
  * @returns {*}
  */
-export function statisticsRecentWeek () {
+export function recentWeekLog () {
   return request({
-    url: articleApi.StatisticsRecentWeek,
+    url: articleApi.RecentWeekLog,
+    method: 'post'
+  })
+}
+export function siteInfo () {
+  return request({
+    url: articleApi.SiteInfo,
     method: 'post'
   })
 }
