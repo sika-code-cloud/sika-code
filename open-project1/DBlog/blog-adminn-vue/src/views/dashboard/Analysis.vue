@@ -1,73 +1,65 @@
 <template>
   <div>
     <a-row :gutter="24">
-      <a-col :sm="12" :md="12" :xl="12">
-        <a-row :gutter="24">
-          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
-            <a-card>
-              <a href="/">
-                <a-statistic
-                  title="文章"
-                  :value="siteInfoData.articleCount"
-                  style="margin-right: 50px"
-                >
-                  <template #suffix>
-                    <a-icon type="file-text" theme="twoTone" />
-                  </template>
-                </a-statistic>
-              </a>
-            </a-card>
-          </a-col>
-          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
-            <a-card>
-              <a href="#">
-                <a-statistic
-                  title="标签"
-                  :value="siteInfoData.tagCount"
-                  style="margin-right: 50px"
-                >
-                  <template #suffix>
-                    <a-icon type="flag" theme="twoTone" />
-                  </template>
-                </a-statistic>
-              </a>
-            </a-card>
-          </a-col>
-        </a-row>
+      <a-col :xs="12" :sm="12" :md="6" :xl="6":style="{ marginBottom: '24px' }">
+        <a-card>
+          <a href="/">
+            <a-statistic
+              title="文章"
+              :value="siteInfoData.articleCount"
+              style="margin-right: 50px"
+            >
+              <template #suffix>
+                <a-icon type="file-text" theme="twoTone" />
+              </template>
+            </a-statistic>
+          </a>
+        </a-card>
       </a-col>
-      <a-col :sm="12" :md="12" :xl="12">
-        <a-row :gutter="24">
-          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
-            <a-card>
-              <a href="#">
-                <a-statistic
-                  title="分类"
-                  :value="siteInfoData.typeCount"
-                  style="margin-right: 50px"
-                >
-                  <template #suffix>
-                    <a-icon type="appstore" theme="twoTone"/>
-                  </template>
-                </a-statistic>
-              </a>
-            </a-card>
-          </a-col>
-          <a-col :xs="12" :sm="12" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
-            <a-card>
-              <a href="#">
-                <a-statistic
-                  title="留言数"
-                  :value="siteInfoData.commentCount"
-                  style="margin-right: 50px"
-                >
-                  <template #suffix>
-                    <a-icon type="message" theme="twoTone" />
-                  </template>
-                </a-statistic>
-              </a>
-            </a-card>
-          </a-col>
-        </a-row>
+      <a-col :xs="12" :sm="12" :md="6" :xl="6" :style="{ marginBottom: '24px' }">
+        <a-card>
+          <a href="#">
+            <a-statistic
+              title="标签"
+              :value="siteInfoData.tagCount"
+              style="margin-right: 50px"
+            >
+              <template #suffix>
+                <a-icon type="flag" theme="twoTone" />
+              </template>
+            </a-statistic>
+          </a>
+        </a-card>
+      </a-col>
+      <a-col :xs="12" :sm="12" :md="6" :xl="6" :style="{ marginBottom: '24px' }">
+        <a-card>
+          <a href="#">
+            <a-statistic
+              title="分类"
+              :value="siteInfoData.typeCount"
+              style="margin-right: 50px"
+            >
+              <template #suffix>
+                <a-icon type="appstore" theme="twoTone"/>
+              </template>
+            </a-statistic>
+          </a>
+        </a-card>
+      </a-col>
+      <a-col :xs="12" :sm="12" :md="6" :xl="6" :style="{ marginBottom: '24px' }">
+        <a-card>
+          <a href="#">
+            <a-statistic
+              title="留言数"
+              :value="siteInfoData.commentCount"
+              style="margin-right: 50px"
+            >
+              <template #suffix>
+                <a-icon type="message" theme="twoTone" />
+              </template>
+            </a-statistic>
+          </a>
+        </a-card>
       </a-col>
     </a-row>
     <a-row :gutter="24">
@@ -138,13 +130,42 @@
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
           <div class="extra-wrapper" slot="tabBarExtraContent">
-            <div class="extra-item">
-              <a>今日</a>
-              <a>本周</a>
-              <a>本月</a>
-              <a>本年</a>
-            </div>
-            <a-range-picker :style="{width: '256px'}" v-show="xlShow"/>
+            <a-row>
+              <a-col
+                :xs="12"
+                :sm="24"
+                :style="{ marginBottom: '24px' }"
+                v-show="xlShow">
+                <div class="extra-item">
+                  <a>今日</a>
+                  <a>本周</a>
+                  <a>本月</a>
+                  <a>本年</a>
+                </div>
+                <a-range-picker :style="{width: '256px'}"/>
+              </a-col>
+              <a-col :style="{ marginBottom: '24px' }" v-show="!xlShow">
+                <a-dropdown :trigger="['click','hover']">
+                  <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                    日期 <a-icon type="down" />
+                  </a>
+                  <a-menu slot="overlay" @click="onClick">
+                    <a-menu-item key="1">
+                      今日
+                    </a-menu-item>
+                    <a-menu-item key="2">
+                      本周
+                    </a-menu-item>
+                    <a-menu-item key="3">
+                      本月
+                    </a-menu-item>
+                    <a-menu-item key="3">
+                      本年
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </a-col>
+            </a-row>
           </div>
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
