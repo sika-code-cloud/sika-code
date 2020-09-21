@@ -2,6 +2,9 @@ import request from '@/utils/request'
 
 const articleApi = {
   RecentWeekLog: '/statistics/recentWeekLog',
+  SameYearLog: '/statistics/sameYearLog',
+  SameMonthLog: '/statistics/sameMonthLog',
+  SameDayLog: '/statistics/sameDayLog',
   SiteInfo: '/statistics/siteInfo'
 }
 
@@ -19,6 +22,27 @@ const articleApi = {
 export function recentWeekLog () {
   return request({
     url: articleApi.RecentWeekLog,
+    method: 'post'
+  })
+}
+
+export function sameYearLog () {
+  return request({
+    url: articleApi.SameYearLog,
+    method: 'post'
+  })
+}
+
+export function sameMonthLog () {
+  return request({
+    url: articleApi.SameMonthLog,
+    method: 'post'
+  })
+}
+
+export function sameDayLog () {
+  return request({
+    url: articleApi.SameDayLog,
     method: 'post'
   })
 }

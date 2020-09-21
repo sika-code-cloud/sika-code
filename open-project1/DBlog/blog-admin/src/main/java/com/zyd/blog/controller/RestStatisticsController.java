@@ -32,22 +32,37 @@ public class RestStatisticsController {
     private SysLogService sysLogService;
 
     @RequestMapping("/siteInfo")
-    public ResponseVO getSiteInfo(){
+    public ResponseVO getSiteInfo() {
         return ResultUtil.success("", configService.getSiteInfo());
     }
 
     @RequestMapping("/listSpider")
-    public ResponseVO listSpider(){
+    public ResponseVO listSpider() {
         return ResultUtil.success("", statisticsService.listSpider(10));
     }
 
     @RequestMapping("/listType")
-    public ResponseVO listType(){
+    public ResponseVO listType() {
         return ResultUtil.success("", statisticsService.listType(10));
     }
 
     @RequestMapping(value = "/recentWeekLog")
     public ResponseVO statisticsRecentWeek() {
         return ResultUtil.success(sysLogService.statisticsRecentWeek());
+    }
+
+    @RequestMapping(value = "/sameYearLog")
+    public ResponseVO statisticsSameYear() {
+        return ResultUtil.success(sysLogService.statisticsSameYear());
+    }
+
+    @RequestMapping(value = "/sameMonthLog")
+    public ResponseVO statisticsSameMonth() {
+        return ResultUtil.success(sysLogService.statisticsSameMonth());
+    }
+
+    @RequestMapping(value = "/sameDayLog")
+    public ResponseVO statisticsSameDay() {
+        return ResultUtil.success(sysLogService.statisticsSameDay());
     }
 }

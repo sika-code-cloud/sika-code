@@ -134,21 +134,24 @@ public class SysLogServiceImpl implements SysLogService {
         return statisticsVisitDataForDay(query);
     }
 
-    public LogStatisticsVisitVo statisticsRecentYear() {
+    @Override
+    public LogStatisticsVisitVo statisticsSameYear() {
         LogStatisticsQuery query = new LogStatisticsQuery()
                 .setBeginDate(DateUtil.beginOfYear(new Date()))
                 .setEndDate(DateUtil.beginOfYear(new Date()));
         return statisticsVisitDataForMonth(query);
     }
 
-    public LogStatisticsVisitVo statisticsRecentMonth() {
+    @Override
+    public LogStatisticsVisitVo statisticsSameMonth() {
         LogStatisticsQuery query = new LogStatisticsQuery()
                 .setBeginDate(DateUtil.lastMonth())
                 .setEndDate(DateUtil.date());
         return statisticsVisitDataForDay(query);
     }
 
-    public LogStatisticsVisitVo statisticsRecentDay() {
+    @Override
+    public LogStatisticsVisitVo statisticsSameDay() {
         LogStatisticsQuery query = new LogStatisticsQuery()
                 .setBeginDate(DateUtil.beginOfDay(new Date()))
                 .setEndDate(DateUtil.beginOfDay(new Date()));

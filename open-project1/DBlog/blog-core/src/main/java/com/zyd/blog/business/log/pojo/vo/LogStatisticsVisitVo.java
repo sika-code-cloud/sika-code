@@ -54,9 +54,11 @@ public class LogStatisticsVisitVo {
     public LogStatisticsVisitVo buildItemsForMonth() {
         items = CollUtil.emptyIfNull(items);
         Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
-        long diffDay = DateUtil.betweenDay(query.getBeginDate(), query.getEndDate(), true);
-        for (int i = 0; i < diffDay; ++i) {
-            Date currentDay = DateUtil.offsetDay(query.getBeginDate(), i);
+        Date beginDateOfYear = DateUtil.beginOfYear(query.getBeginDate());
+        Date endDateOfYear = DateUtil.endOfYear(query.getEndDate());
+        long diffMonth = DateUtil.betweenDay(beginDateOfYear, endDateOfYear, true);
+        for (int i = 0; i < diffMonth; ++i) {
+            Date currentDay = DateUtil.offsetMonth(query.getBeginDate(), i);
             itemMap.put(currentDay, LogStatisticsItem.init().setDate(currentDay));
         }
         for (LogStatisticsItem item : items) {
@@ -84,9 +86,11 @@ public class LogStatisticsVisitVo {
     public LogStatisticsVisitVo buildItemsForHour() {
         items = CollUtil.emptyIfNull(items);
         Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
-        long diffDay = DateUtil.betweenDay(query.getBeginDate(), query.getEndDate(), true);
-        for (int i = 0; i < diffDay; ++i) {
-            Date currentDay = DateUtil.offsetDay(query.getBeginDate(), i);
+        Date beginOfDay = DateUtil.beginOfDay(query.getBeginDate());
+        Date endOfDay = DateUtil.endOfDay(query.getEndDate());
+        long diffHour = DateUtil.betweenDay(beginOfDay, endOfDay, true);
+        for (int i = 0; i < diffHour; ++i) {
+            Date currentDay = DateUtil.offsetHour(query.getBeginDate(), i);
             itemMap.put(currentDay, LogStatisticsItem.init().setDate(currentDay));
         }
         for (LogStatisticsItem item : items) {
