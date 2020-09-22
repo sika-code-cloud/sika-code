@@ -37,7 +37,7 @@
             parameterType="com.zyd.blog.business.log.pojo.query.LogStatisticsQuery"
             resultMap="rm">
         SELECT
-        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m') date
+        COUNT(*) number,DATE_FORMAT(create_time,'%Y-%m-01') date
         FROM
         sys_log
         WHERE

@@ -27,19 +27,6 @@ public interface SysLogService extends AbstractService<Log, Long> {
 
     void asyncSaveSystemLog(PlatformEnum platform, String bussinessName);
 
-
-    /**
-     * <p>
-     * 统计文章访问数据
-     * </p>
-     *
-     * @param query
-     * @return com.zyd.blog.business.article.vo.ArticleStatisticsVisitVo
-     * @author daiqi
-     * @date 2020/9/18 10:58
-     */
-    LogStatisticsVisitVo statisticsVisitDataForDay(LogStatisticsQuery query);
-
     /**
      * 统计最近一周的日志数据
      */
