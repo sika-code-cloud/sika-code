@@ -1,6 +1,6 @@
 <template>
-  <div :style="{ padding: '0 0 32px 32px' }">
-    <h4 :style="{ marginBottom: '20px' }">{{ title }}</h4>
+  <div :style="{ padding: '0 0 32px 10px' }">
+    <h4 :style="{ marginBottom: '20px',marginLeft: '22px' }">{{ title }}</h4>
     <v-chart
       height="254"
       :data="data"

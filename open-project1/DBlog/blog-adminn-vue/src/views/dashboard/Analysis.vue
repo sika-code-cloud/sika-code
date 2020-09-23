@@ -137,10 +137,10 @@
                 :style="{ marginBottom: '24px' }"
                 v-show="xlShow">
                 <div class="extra-item">
-                  <a>今日</a>
-                  <a>本周</a>
-                  <a>本月</a>
-                  <a>本年</a>
+                  <a @click="sameDayLog">今日</a>
+                  <a @click="recentWeekLogForBar">本周</a>
+                  <a @click="sameMonthLog">本月</a>
+                  <a @click="sameYearLog">本年</a>
                 </div>
                 <a-range-picker :style="{width: '256px'}"/>
               </a-col>
@@ -562,7 +562,7 @@ export default {
     sameYearLog () {
       sameYearLog().then(res => {
           console.log('sameYearLog' + JSON.stringify(res.result))
-          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
+          this.barData = this.buildViewItems(res.result.items, 'YYYY/MM')
         }
       )
     },
