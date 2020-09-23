@@ -5080,7 +5080,7 @@ form-data@~2.3.2:
 
 formatDate@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmjs.org/formatDate/-/formatDate-1.0.0.tgz#a9cea71390c3fc90a2f160d3ce4905f4d49df757"
+  resolved "https://registry.npm.taobao.org/formatDate/download/formatDate-1.0.0.tgz#a9cea71390c3fc90a2f160d3ce4905f4d49df757"
   integrity sha1-qc6nE5DD/JCi8WDTzkkF9NSd91c=
 
 forwarded@~0.1.2:

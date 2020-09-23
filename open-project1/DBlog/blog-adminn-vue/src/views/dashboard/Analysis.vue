@@ -147,19 +147,19 @@
               <a-col :style="{ marginBottom: '24px' }" v-show="!xlShow">
                 <a-dropdown :trigger="['click','hover']">
                   <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                    日期 <a-icon type="down" />
+                    统计维度 <a-icon type="down" />
                   </a>
-                  <a-menu slot="overlay" @click="onClick">
-                    <a-menu-item key="1">
-                      今日
+                  <a-menu slot="overlay" @click="switchDimension">
+                    <a-menu-item key="sameDayLog">
+                      本天
                     </a-menu-item>
-                    <a-menu-item key="2">
+                    <a-menu-item key="recentWeekLogForBar">
                       本周
                     </a-menu-item>
-                    <a-menu-item key="3">
+                    <a-menu-item key="sameMonthLog">
                       本月
                     </a-menu-item>
-                    <a-menu-item key="3">
+                    <a-menu-item key="sameYearLog">
                       本年
                     </a-menu-item>
                   </a-menu>
@@ -317,7 +317,7 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { recentWeekLog, siteInfo } from '@/api/statistics'
+import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo } from '@/api/statistics'
 
 // 网站信息
 const siteInfoData = {}
@@ -329,7 +329,7 @@ for (let i = 0; i < 31; i += 1) {
     y: Math.floor(Math.random() * 1000) + 200
   })
   barData2.push({
-    x: `${i + 1}月`,
+    x: `03/${i + 1}`,
     y: Math.floor(Math.random() * 1000) + 200
   })
 }
@@ -503,9 +503,23 @@ export default {
       }
       return Math.max(numbers)
     },
+    switchDimension (e) {
+      const key = e.key
+      console.log(key)
+      if (key === 'sameDayLog') {
+        this.sameDayLog()
+      } else if (key === 'recentWeekLogForBar') {
+        this.recentWeekLogForBar()
+      } else if (key === 'sameMonthLog') {
+        this.sameMonthLog()
+      } else if (key === 'sameYearLog') {
+        this.sameYearLog()
+      }
+    },
     loadStatisticsData () {
       this.siteInfo()
       this.recentWeekLog()
+      this.sameDayLog()
     },
     /** 统计访问数据 */
     siteInfo () {
@@ -513,22 +527,50 @@ export default {
           this.siteInfoData = res.result
         }
       )
-    },
-    /** 统计访问数据 */
+    }, /** 统计访问数据 */
+    sameDayLog () {
+      sameDayLog().then(res => {
+          console.log('sameDayLog' + JSON.stringify(res.result))
+          this.barData = this.buildViewItems(res.result.items, 'HH时')
+        }
+      )
+    }, /** 统计访问数据 */
     recentWeekLog () {
       recentWeekLog().then(res => {
+          console.log('recentWeekLog' + JSON.stringify(res.result))
           const result = res.result
           this.visitData = res.result
           this.visitData.visitScale = this.buildVisitScale(result.maxItem.number)
-          this.visitData.items = this.buildViewItems(result.items)
+          this.visitData.items = this.buildViewItems(result.items, 'YYYY/MM/DD')
+        }
+      )
+    }, /** 统计访问数据 */
+    recentWeekLogForBar () {
+      recentWeekLog().then(res => {
+          console.log('recentWeekLog' + JSON.stringify(res.result))
+          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
+        }
+      )
+    }, /** 统计访问数据 */
+    sameMonthLog () {
+      sameMonthLog().then(res => {
+          console.log('sameMonthLog' + JSON.stringify(res.result))
+          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
+        }
+      )
+    }, /** 统计访问数据 */
+    sameYearLog () {
+      sameYearLog().then(res => {
+          console.log('sameYearLog' + JSON.stringify(res.result))
+          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
         }
       )
     },
-    buildViewItems (items) {
+    buildViewItems (items, format) {
       const viewItems = []
       for (let i = 0; i < items.length; i++) {
         viewItems.push({
-          x: items[i].date,
+          x: moment(items[i].date).format(format),
           y: items[i].number
         })
       }

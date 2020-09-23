@@ -9,6 +9,7 @@ import com.zyd.blog.business.entity.User;
 import com.zyd.blog.business.enums.LogLevelEnum;
 import com.zyd.blog.business.enums.LogTypeEnum;
 import com.zyd.blog.business.enums.PlatformEnum;
+import com.zyd.blog.business.log.enums.QueryTypeEnum;
 import com.zyd.blog.business.log.pojo.entity.LogStatisticsItem;
 import com.zyd.blog.business.log.pojo.query.LogStatisticsQuery;
 import com.zyd.blog.business.log.pojo.vo.LogStatisticsVisitVo;
@@ -22,6 +23,7 @@ import com.zyd.blog.util.RequestUtil;
 import com.zyd.blog.util.SessionUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -127,78 +129,63 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsRecentWeek() {
+    public LogStatisticsVisitVo statisticsSameDay() {
         LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.lastWeek())
-                .setEndDate(DateUtil.date());
-        return statisticsVisitDataForDay(query);
+                .setBeginDate(DateUtil.beginOfDay(DateUtil.date()))
+                .setEndDate(DateUtil.endOfDay(DateUtil.date()))
+                .setQueryTypeEnum(QueryTypeEnum.DAY)
+                .build();
+        return statisticsVisitData(query);
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsSameYear() {
+    public LogStatisticsVisitVo statisticsRecentWeek() {
         LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.beginOfYear(new Date()))
-                .setEndDate(DateUtil.beginOfYear(new Date()));
-        return statisticsVisitDataForMonth(query);
+                .setBeginDate(DateUtil.lastWeek())
+                .setEndDate(DateUtil.date())
+                .setQueryTypeEnum(QueryTypeEnum.WEEK)
+                .build();
+        return statisticsVisitData(query);
     }
 
     @Override
     public LogStatisticsVisitVo statisticsSameMonth() {
         LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.lastMonth())
-                .setEndDate(DateUtil.date());
-        return statisticsVisitDataForDay(query);
+                .setBeginDate(DateUtil.beginOfMonth(DateUtil.date()))
+                .setEndDate(DateUtil.endOfMonth(DateUtil.date()))
+                .setQueryTypeEnum(QueryTypeEnum.MONTH)
+                .build();
+        return statisticsVisitData(query);
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsSameDay() {
+    public LogStatisticsVisitVo statisticsSameYear() {
         LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.beginOfDay(new Date()))
-                .setEndDate(DateUtil.beginOfDay(new Date()));
-        return statisticsVisitDataForHour(query);
-    }
-
-    public LogStatisticsVisitVo statisticsVisitDataForMonth(LogStatisticsQuery query) {
-        // 构建
-        query.build();
-        // 查询
-        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForMonth(query);
-        LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
-        LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
-        return statisticsVisitVo.setItems(items)
-                .setTotalItem(totalItem)
-                .setQuery(query)
-                .buildItemsForMonth()
+                .setBeginDate(DateUtil.beginOfYear(DateUtil.date()))
+                .setEndDate(DateUtil.endOfYear(DateUtil.date()))
+                .setQueryTypeEnum(QueryTypeEnum.YEAR)
                 .build();
+        return statisticsVisitData(query);
     }
 
-
-    @Override
-    public LogStatisticsVisitVo statisticsVisitDataForDay(LogStatisticsQuery query) {
-        // 构建
-        query.build();
+    public LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query) {
         // 查询
-        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForDay(query);
+        List<LogStatisticsItem> items = Lists.emptyList();
+        QueryTypeEnum queryTypeEnum = query.getQueryTypeEnum();
+        if (QueryTypeEnum.isDay(queryTypeEnum)) {
+            items = sysLogStatisticsMapper.statisticsVisitDataForHour(query);
+        } else if (QueryTypeEnum.isWeek(queryTypeEnum)) {
+            items = sysLogStatisticsMapper.statisticsVisitDataForDay(query);
+        } else if (QueryTypeEnum.isMonth(queryTypeEnum)) {
+            items = sysLogStatisticsMapper.statisticsVisitDataForDay(query);
+        } else if (QueryTypeEnum.isYear(queryTypeEnum)) {
+            items = sysLogStatisticsMapper.statisticsVisitDataForMonth(query);
+        }
         LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
         LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
         return statisticsVisitVo.setItems(items)
                 .setTotalItem(totalItem)
                 .setQuery(query)
-                .buildItemsForDay()
-                .build();
-    }
-
-    public LogStatisticsVisitVo statisticsVisitDataForHour(LogStatisticsQuery query) {
-        // 构建
-        query.build();
-        // 查询
-        List<LogStatisticsItem> items = sysLogStatisticsMapper.statisticsVisitDataForHour(query);
-        LogStatisticsItem totalItem = sysLogStatisticsMapper.statisticsTotalVisitData(query);
-        LogStatisticsVisitVo statisticsVisitVo = new LogStatisticsVisitVo();
-        return statisticsVisitVo.setItems(items)
-                .setTotalItem(totalItem)
-                .setQuery(query)
-                .buildItemsForHour()
                 .build();
     }
 }

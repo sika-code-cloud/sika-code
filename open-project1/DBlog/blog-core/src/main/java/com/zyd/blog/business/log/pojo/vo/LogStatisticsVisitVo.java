@@ -1,6 +1,8 @@
 package com.zyd.blog.business.log.pojo.vo;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Maps;
@@ -38,6 +40,7 @@ public class LogStatisticsVisitVo {
         if (CollUtil.isNotEmpty(items)) {
             this.recentItem = items.get(items.size() - 1);
         }
+        buildItemsForCore(query.getQueryTypeEnum().getDateField());
         if (ObjectUtil.isEmpty(totalItem)) {
             totalItem = LogStatisticsItem.init();
         }
@@ -51,47 +54,23 @@ public class LogStatisticsVisitVo {
         return this;
     }
 
-    public LogStatisticsVisitVo buildItemsForMonth() {
+    public LogStatisticsVisitVo buildItemsForCore(DateField dateField) {
         items = CollUtil.emptyIfNull(items);
-        Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
-        Date beginDateOfYear = DateUtil.beginOfYear(query.getBeginDate());
-        Date endDateOfYear = DateUtil.endOfYear(query.getEndDate());
-        long diffMonth = DateUtil.betweenDay(beginDateOfYear, endDateOfYear, true);
-        for (int i = 0; i < diffMonth; ++i) {
-            Date currentDay = DateUtil.offsetMonth(query.getBeginDate(), i);
-            itemMap.put(currentDay, LogStatisticsItem.init().setDate(currentDay));
-        }
-        for (LogStatisticsItem item : items) {
-            itemMap.put(item.getDate(), item);
-        }
-        items = itemMap.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
-        return this;
-    }
-
-    public LogStatisticsVisitVo buildItemsForDay() {
-        items = CollUtil.emptyIfNull(items);
-        Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
-        long diffDay = DateUtil.betweenDay(query.getBeginDate(), query.getEndDate(), true);
-        for (int i = 0; i < diffDay; ++i) {
-            Date currentDay = DateUtil.offsetDay(query.getBeginDate(), i);
-            itemMap.put(currentDay, LogStatisticsItem.init().setDate(currentDay));
-        }
-        for (LogStatisticsItem item : items) {
-            itemMap.put(item.getDate(), item);
-        }
-        items = itemMap.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
-        return this;
-    }
-
-    public LogStatisticsVisitVo buildItemsForHour() {
-        items = CollUtil.emptyIfNull(items);
-        Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
         Date beginOfDay = DateUtil.beginOfDay(query.getBeginDate());
         Date endOfDay = DateUtil.endOfDay(query.getEndDate());
-        long diffHour = DateUtil.betweenDay(beginOfDay, endOfDay, true);
-        for (int i = 0; i < diffHour; ++i) {
-            Date currentDay = DateUtil.offsetHour(query.getBeginDate(), i);
-            itemMap.put(currentDay, LogStatisticsItem.init().setDate(currentDay));
+        long differ = 0;
+        if (DateField.MONTH.equals(dateField)) {
+            differ = DateUtil.betweenMonth(beginOfDay, endOfDay, true);
+        } else if (DateField.DAY_OF_YEAR.equals(dateField)) {
+            differ = DateUtil.between(beginOfDay, endOfDay, DateUnit.DAY, true);
+        } else if (DateField.HOUR_OF_DAY.equals(dateField)) {
+            differ = DateUtil.between(beginOfDay, endOfDay, DateUnit.HOUR, true);
+        }
+
+        Map<Date, LogStatisticsItem> itemMap = Maps.newLinkedHashMap();
+        for (int i = 0; i <= differ; ++i) {
+            Date currentDate = DateUtil.offset(beginOfDay, dateField, i);
+            itemMap.put(currentDate, LogStatisticsItem.init().setDate(currentDate));
         }
         for (LogStatisticsItem item : items) {
             itemMap.put(item.getDate(), item);

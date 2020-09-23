@@ -1,7 +1,7 @@
 package com.zyd.blog.business.log.pojo.query;
 
 import cn.hutool.core.date.DateUtil;
-import com.zyd.blog.business.entity.Article;
+import com.zyd.blog.business.log.enums.QueryTypeEnum;
 import com.zyd.blog.persistence.beans.SysLog;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,6 +19,7 @@ import java.util.Date;
 public class LogStatisticsQuery extends SysLog {
     private Date beginDate;
     private Date endDate;
+    private QueryTypeEnum queryTypeEnum;
 
     public LogStatisticsQuery build() {
         if (this.beginDate == null) {
