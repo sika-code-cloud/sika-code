@@ -317,8 +317,7 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo } from '@/api/statistics'
-import { formatDate } from 'formatDate'
+import { recentWeekLog, siteInfo } from '@/api/statistics'
 
 // 网站信息
 const siteInfoData = {}
@@ -507,9 +506,6 @@ export default {
     loadStatisticsData () {
       this.siteInfo()
       this.recentWeekLog()
-      this.sameYearLog()
-      this.sameMonthLog()
-      this.sameDayLog()
     },
     /** 统计访问数据 */
     siteInfo () {
@@ -527,30 +523,12 @@ export default {
           this.visitData.items = this.buildViewItems(result.items)
         }
       )
-    }, /** 统计访问数据 */
-    sameYearLog () {
-      sameYearLog().then(res => {
-          console.log('sameYearLog' + res.result)
-        }
-      )
-    }, /** 统计访问数据 */
-    sameMonthLog () {
-      sameMonthLog().then(res => {
-        console.log('sameMonthLog' + res.result)
-        }
-      )
-    }, /** 统计访问数据 */
-    sameDayLog () {
-      sameDayLog().then(res => {
-          console.log('sameDayLog' + res.result)
-        }
-      )
     },
     buildViewItems (items) {
       const viewItems = []
       for (let i = 0; i < items.length; i++) {
         viewItems.push({
-          x: formatDate(items[i].date, 'YYYY-MM-DD'),
+          x: items[i].date,
           y: items[i].number
         })
       }

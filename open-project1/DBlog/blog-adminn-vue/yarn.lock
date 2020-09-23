@@ -5078,6 +5078,11 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formatDate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/formatDate/-/formatDate-1.0.0.tgz#a9cea71390c3fc90a2f160d3ce4905f4d49df757"
+  integrity sha1-qc6nE5DD/JCi8WDTzkkF9NSd91c=
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/forwarded/download/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
