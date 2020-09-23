@@ -190,7 +190,108 @@
         </a-tabs>
       </div>
     </a-card>
+    <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="!isMobile && 'desktop'">
+      <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
+        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ height: '100%' }">
+            <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
+              <a class="ant-dropdown-link" href="#">
+                <a-icon type="ellipsis"/>
+              </a>
+              <a-menu slot="overlay">
+                <a-menu-item>
+                  <a href="javascript:;">操作一</a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a href="javascript:;">操作二</a>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+            <a-row :gutter="68">
+              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
+                <number-info :total="12321" :sub-total="17.1">
+                  <span slot="subtitle">
+                    <span>搜索用户数</span>
+                    <a-tooltip title="指标说明" slot="action">
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
+                    </a-tooltip>
+                  </span>
+                </number-info>
+                <!-- miniChart -->
+                <div>
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
+                </div>
+              </a-col>
+              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
+                <number-info :total="2.7" :sub-total="26.2" status="down">
+                  <span slot="subtitle">
+                    <span>人均搜索次数</span>
+                    <a-tooltip title="指标说明" slot="action">
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
+                    </a-tooltip>
+                  </span>
+                </number-info>
+                <!-- miniChart -->
+                <div>
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
+                </div>
+              </a-col>
+            </a-row>
+            <div class="ant-table-wrapper">
+              <a-table
+                row-key="index"
+                size="small"
+                :columns="searchTableColumns"
+                :dataSource="searchData"
+                :pagination="{ pageSize: 5 }"
+              >
+                <span slot="range" slot-scope="text, record">
+                  <trend :flag="record.status === 0 ? 'up' : 'down'">
+                    {{ text }}%
+                  </trend>
+                </span>
+              </a-table>
+            </div>
+          </a-card>
+        </a-col>
+        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="销售额类别占比" :style="{ height: '100%' }">
+            <div slot="extra" style="height: inherit;">
+              <!-- style="bottom: 12px;display: inline-block;" -->
+              <span class="dashboard-analysis-iconGroup">
+                <a-dropdown :trigger="['click']" placement="bottomLeft">
+                  <a-icon type="ellipsis" class="ant-dropdown-link"/>
+                  <a-menu slot="overlay">
+                    <a-menu-item>
+                      <a href="javascript:;">操作一</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a href="javascript:;">操作二</a>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </span>
+              <div class="analysis-salesTypeRadio">
+                <a-radio-group defaultValue="a">
+                  <a-radio-button value="a">全部渠道</a-radio-button>
+                  <a-radio-button value="b">线上</a-radio-button>
+                  <a-radio-button value="c">门店</a-radio-button>
+                </a-radio-group>
+              </div>
 
+            </div>
+            <h4>分类文章数统计</h4>
+            <div>
+              <!-- style="width: calc(100% - 240px);" -->
+              <div>
+                <pie :dataSource="listTypeData"/>
+              </div>
+
+            </div>
+          </a-card>
+        </a-col>
+      </a-row>
+    </div>
     <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="!isMobile && 'desktop'">
       <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
         <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
@@ -314,10 +415,11 @@ import {
   Bar,
   Trend,
   NumberInfo,
-  MiniSmoothArea
+  MiniSmoothArea,
+  Pie
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo } from '@/api/statistics'
+import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
 
 // 网站信息
 const siteInfoData = {}
@@ -404,6 +506,7 @@ const sourceData = [
   { item: '母婴产品', count: 9 },
   { item: '其他', count: 7.8 }
 ]
+const listTypeData = [{ item: '其他', count: 0 }]
 
 const pieScale = [{
   dataKey: 'percent',
@@ -446,6 +549,7 @@ export default {
     Bar,
     Trend,
     NumberInfo,
+    Pie,
     MiniSmoothArea
   },
   data () {
@@ -467,6 +571,7 @@ export default {
       pieScale,
       pieData,
       sourceData,
+      listTypeData,
       xlShow: true,
       pieStyle: {
         stroke: '#fff',
@@ -520,6 +625,7 @@ export default {
       this.siteInfo()
       this.recentWeekLog()
       this.sameDayLog()
+      this.listType()
     },
     /** 统计访问数据 */
     siteInfo () {
@@ -530,14 +636,12 @@ export default {
     }, /** 统计访问数据 */
     sameDayLog () {
       sameDayLog().then(res => {
-          console.log('sameDayLog' + JSON.stringify(res.result))
           this.barData = this.buildViewItems(res.result.items, 'HH时')
         }
       )
     }, /** 统计访问数据 */
     recentWeekLog () {
       recentWeekLog().then(res => {
-          console.log('recentWeekLog' + JSON.stringify(res.result))
           const result = res.result
           this.visitData = res.result
           this.visitData.visitScale = this.buildVisitScale(result.maxItem.number)
@@ -547,22 +651,26 @@ export default {
     }, /** 统计访问数据 */
     recentWeekLogForBar () {
       recentWeekLog().then(res => {
-          console.log('recentWeekLog' + JSON.stringify(res.result))
           this.barData = this.buildViewItems(res.result.items, 'MM/DD')
         }
       )
     }, /** 统计访问数据 */
     sameMonthLog () {
       sameMonthLog().then(res => {
-          console.log('sameMonthLog' + JSON.stringify(res.result))
           this.barData = this.buildViewItems(res.result.items, 'MM/DD')
         }
       )
     }, /** 统计访问数据 */
     sameYearLog () {
       sameYearLog().then(res => {
-          console.log('sameYearLog' + JSON.stringify(res.result))
           this.barData = this.buildViewItems(res.result.items, 'YYYY/MM')
+        }
+      )
+    }, /** 统计访问数据 */
+    listType () {
+      listType().then(res => {
+          console.log('listTypeData' + JSON.stringify(res.result))
+          this.listTypeData = this.buildPieDataSource(res.result)
         }
       )
     },
@@ -572,6 +680,16 @@ export default {
         viewItems.push({
           x: moment(items[i].date).format(format),
           y: items[i].number
+        })
+      }
+      return viewItems
+    },
+    buildPieDataSource (items) {
+      const viewItems = []
+      for (let i = 0; i < items.length; i++) {
+        viewItems.push({
+          item: items[i].name,
+          count: items[i].value
         })
       }
       return viewItems

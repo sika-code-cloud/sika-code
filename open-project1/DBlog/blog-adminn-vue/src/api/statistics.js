@@ -5,7 +5,8 @@ const articleApi = {
   SameYearLog: '/statistics/sameYearLog',
   SameMonthLog: '/statistics/sameMonthLog',
   SameDayLog: '/statistics/sameDayLog',
-  SiteInfo: '/statistics/siteInfo'
+  SiteInfo: '/statistics/siteInfo',
+  ListType: '/statistics/listType'
 }
 
 /**
@@ -49,6 +50,12 @@ export function sameDayLog () {
 export function siteInfo () {
   return request({
     url: articleApi.SiteInfo,
+    method: 'post'
+  })
+}
+export function listType () {
+  return request({
+    url: articleApi.ListType,
     method: 'post'
   })
 }

@@ -11,16 +11,6 @@
 </template>
 
 <script>
-import moment from 'moment'
-const data = []
-const beginDay = new Date().getTime()
-
-for (let i = 0; i < 10; i++) {
-  data.push({
-    x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
-    y: Math.round(Math.random() * 100)
-  })
-}
 
 const tooltip = [
   'month*value',
@@ -57,7 +47,6 @@ export default {
   },
   data () {
     return {
-      data,
       tooltip,
       scale1,
       height: 100

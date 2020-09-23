@@ -1,5 +1,6 @@
 // chart
 import Bar from '@/components/Charts/Bar'
+import Pie from '@/components/Charts/Pie'
 import ChartCard from '@/components/Charts/ChartCard'
 import Liquid from '@/components/Charts/Liquid'
 import MiniArea from '@/components/Charts/MiniArea'
@@ -51,6 +52,6 @@ export {
   TagSelect,
   StandardFormRow,
   ArticleListContent,
-
+  Pie,
   Dialog
 }
