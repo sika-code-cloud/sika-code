@@ -395,7 +395,7 @@
                   <v-coord type="theta" :radius="0.75" :innerRadius="0.7"/>
                 </v-chart>
               </div>
-
+              <ELine/>
             </div>
           </a-card>
         </a-col>
@@ -416,7 +416,8 @@ import {
   Trend,
   NumberInfo,
   MiniSmoothArea,
-  Pie
+  Pie,
+  ELine
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
@@ -550,6 +551,7 @@ export default {
     Trend,
     NumberInfo,
     Pie,
+    ELine,
     MiniSmoothArea
   },
   data () {
