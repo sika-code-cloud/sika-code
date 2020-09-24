@@ -193,7 +193,17 @@
     <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="!isMobile && 'desktop'">
       <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
         <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ height: '100%' }">
+          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="分类文章数统计" :style="{ height: '100%' }">
+            <div>
+              <!-- style="width: calc(100% - 240px);" -->
+              <div>
+                <pie :dataSource="listTypeData"/>
+              </div>
+            </div>
+          </a-card>
+        </a-col>
+        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card :loading="loading" :bordered="false" title="文章访问TOP.100" :style="{ height: '100%' }">
             <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
               <a class="ant-dropdown-link" href="#">
                 <a-icon type="ellipsis"/>
@@ -241,8 +251,8 @@
               <a-table
                 row-key="index"
                 size="small"
-                :columns="searchTableColumns"
-                :dataSource="searchData"
+                :columns="articleRankTableColumns"
+                :dataSource="articleRankData"
                 :pagination="{ pageSize: 5 }"
               >
                 <span slot="range" slot-scope="text, record">
@@ -251,42 +261,6 @@
                   </trend>
                 </span>
               </a-table>
-            </div>
-          </a-card>
-        </a-col>
-        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="销售额类别占比" :style="{ height: '100%' }">
-            <div slot="extra" style="height: inherit;">
-              <!-- style="bottom: 12px;display: inline-block;" -->
-              <span class="dashboard-analysis-iconGroup">
-                <a-dropdown :trigger="['click']" placement="bottomLeft">
-                  <a-icon type="ellipsis" class="ant-dropdown-link"/>
-                  <a-menu slot="overlay">
-                    <a-menu-item>
-                      <a href="javascript:;">操作一</a>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <a href="javascript:;">操作二</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </span>
-              <div class="analysis-salesTypeRadio">
-                <a-radio-group defaultValue="a">
-                  <a-radio-button value="a">全部渠道</a-radio-button>
-                  <a-radio-button value="b">线上</a-radio-button>
-                  <a-radio-button value="c">门店</a-radio-button>
-                </a-radio-group>
-              </div>
-
-            </div>
-            <h4>分类文章数统计</h4>
-            <div>
-              <!-- style="width: calc(100% - 240px);" -->
-              <div>
-                <pie :dataSource="listTypeData"/>
-              </div>
-
             </div>
           </a-card>
         </a-col>
@@ -395,7 +369,6 @@
                   <v-coord type="theta" :radius="0.75" :innerRadius="0.7"/>
                 </v-chart>
               </div>
-              <ELine/>
             </div>
           </a-card>
         </a-col>
@@ -416,11 +389,11 @@ import {
   Trend,
   NumberInfo,
   MiniSmoothArea,
-  Pie,
-  ELine
+  Pie
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
+import { articleList } from '@/api/article'
 
 // 网站信息
 const siteInfoData = {}
@@ -463,6 +436,51 @@ const searchUserScale = [
     min: 0,
     max: 10
   }]
+
+const articleRankTableColumns = [
+  {
+    dataIndex: 'id',
+    title: '编号',
+    width: 50
+  },
+  {
+    dataIndex: 'title',
+    title: '文章名称',
+    ellipsis: true,
+    width: 150
+  },
+  {
+    dataIndex: 'lookCount',
+    title: '访问数',
+    width: 75,
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.lookCount - b.lookCount
+  },
+  {
+    dataIndex: 'loveCount',
+    title: '点赞数',
+    width: 75,
+    sorter: (a, b) => a.loveCount - b.loveCount
+  },
+  {
+    dataIndex: 'commentCount',
+    title: '评论数',
+    width: 75,
+    sorter: (a, b) => a.commentCount - b.commentCount
+  }
+]
+
+const articleRankData = []
+
+for (let i = 0; i < 50; i += 1) {
+  articleRankData.push({
+    index: i + 1,
+    title: '文章名称-' + i,
+    count: Math.floor(Math.random() * 1000),
+    range: Math.floor(Math.random() * 100),
+    status: Math.floor((Math.random() * 10) % 2)
+  })
+}
 
 const searchTableColumns = [
   {
@@ -551,7 +569,6 @@ export default {
     Trend,
     NumberInfo,
     Pie,
-    ELine,
     MiniSmoothArea
   },
   data () {
@@ -565,6 +582,8 @@ export default {
       searchUserScale,
       searchTableColumns,
       searchData,
+      articleRankTableColumns,
+      articleRankData,
 
       barData,
       barData2,
@@ -628,6 +647,7 @@ export default {
       this.recentWeekLog()
       this.sameDayLog()
       this.listType()
+      this.articleList()
     },
     /** 统计访问数据 */
     siteInfo () {
@@ -673,6 +693,17 @@ export default {
       listType().then(res => {
           console.log('listTypeData' + JSON.stringify(res.result))
           this.listTypeData = this.buildPieDataSource(res.result)
+        }
+      )
+    }, /** 统计访问数据 */
+    articleList () {
+      const parameter = { 'pageSize': 100 }
+      articleList(parameter).then(res => {
+          console.log('articleList' + JSON.stringify(res))
+          this.articleRankData = res.rows
+          for (let i = 0; i < this.articleRankData.length; ++i) {
+            this.articleRankData[i].index = (i + 1)
+          }
         }
       )
     },

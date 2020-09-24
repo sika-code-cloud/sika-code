@@ -11,9 +11,6 @@ import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
 import TagCloud from '@/components/Charts/TagCloud'
-
-import ELine from '@/components/ECharts/ELine'
-
 // pro components
 import AvatarList from '@/components/AvatarList'
 import Ellipsis from '@/components/Ellipsis'
@@ -55,6 +52,5 @@ export {
   StandardFormRow,
   ArticleListContent,
   Pie,
-  ELine,
   Dialog
 }

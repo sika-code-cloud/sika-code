@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-chart :forceFit="true" :height="height" :style="{marginLeft: '-10px'}" :data="data" :scale="scale">
+    <v-chart :forceFit="true" :height="height" :style="{marginLeft: '-10'}" :data="data" :scale="scale">
       <v-tooltip :showTitle="false" dataKey="item*percent" />
       <v-axis />
 

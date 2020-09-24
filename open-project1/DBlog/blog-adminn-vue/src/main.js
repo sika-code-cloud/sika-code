@@ -1,8 +1,6 @@
 // with polyfills
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-
-import echarts from 'echarts'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -28,9 +26,6 @@ Vue.config.productionTip = false
 Vue.use(VueAxios)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
-
-Vue.use(echarts)
-Vue.prototype.$echarts = echarts
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 

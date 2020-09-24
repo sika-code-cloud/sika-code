@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const articleApi = {
+const statiticsApi = {
   RecentWeekLog: '/statistics/recentWeekLog',
   SameYearLog: '/statistics/sameYearLog',
   SameMonthLog: '/statistics/sameMonthLog',
@@ -22,40 +22,40 @@ const articleApi = {
  */
 export function recentWeekLog () {
   return request({
-    url: articleApi.RecentWeekLog,
+    url: statiticsApi.RecentWeekLog,
     method: 'post'
   })
 }
 
 export function sameYearLog () {
   return request({
-    url: articleApi.SameYearLog,
+    url: statiticsApi.SameYearLog,
     method: 'post'
   })
 }
 
 export function sameMonthLog () {
   return request({
-    url: articleApi.SameMonthLog,
+    url: statiticsApi.SameMonthLog,
     method: 'post'
   })
 }
 
 export function sameDayLog () {
   return request({
-    url: articleApi.SameDayLog,
+    url: statiticsApi.SameDayLog,
     method: 'post'
   })
 }
 export function siteInfo () {
   return request({
-    url: articleApi.SiteInfo,
+    url: statiticsApi.SiteInfo,
     method: 'post'
   })
 }
 export function listType () {
   return request({
-    url: articleApi.ListType,
+    url: statiticsApi.ListType,
     method: 'post'
   })
 }
