@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     ebarId: function () {
-      return 'main-' + Math.random().toString(36)
+      return 'main-' + Math.random().toString(36).substr(2)
     }
   },
   methods: {
