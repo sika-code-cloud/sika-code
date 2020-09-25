@@ -447,7 +447,7 @@ const articleRankTableColumns = [
     dataIndex: 'title',
     title: '文章名称',
     ellipsis: true,
-    width: 150
+    width: 200
   },
   {
     dataIndex: 'lookCount',
