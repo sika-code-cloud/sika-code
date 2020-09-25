@@ -296,6 +296,8 @@
                 <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
+                  <ebar/>
+                  <ebar/>
                 </div>
               </a-col>
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
@@ -389,6 +391,7 @@ import {
   Trend,
   NumberInfo,
   MiniSmoothArea,
+  Ebar,
   Pie
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
@@ -569,6 +572,7 @@ export default {
     Trend,
     NumberInfo,
     Pie,
+    Ebar,
     MiniSmoothArea
   },
   data () {
@@ -606,7 +610,6 @@ export default {
     }, 1000)
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
-    this.loadStatisticsData()
   },
   mounted () {
     console.log('test')

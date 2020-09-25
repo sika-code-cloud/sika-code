@@ -10,6 +10,8 @@ import MiniProgress from '@/components/Charts/MiniProgress'
 import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
+import Ebar from '@/components/ECharts/Ebar'
+
 import TagCloud from '@/components/Charts/TagCloud'
 // pro components
 import AvatarList from '@/components/AvatarList'
@@ -52,5 +54,6 @@ export {
   StandardFormRow,
   ArticleListContent,
   Pie,
+  Ebar,
   Dialog
 }
