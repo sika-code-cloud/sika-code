@@ -1,12 +1,10 @@
 package com.zyd.blog.business.vo;
 
-import com.zyd.blog.business.entity.ArticleLook;
 import com.zyd.blog.framework.object.BaseConditionVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- *
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
  * @version 1.0
  * @website https://www.zhyd.me
@@ -16,6 +14,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ArticleLookConditionVO extends BaseConditionVO {
-	private ArticleLook articleLook;
+    private Integer source;
 }
 

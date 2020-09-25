@@ -15,4 +15,9 @@ import com.zyd.blog.business.entity.ArticleLook;
 public interface BizArticleLookService {
 
     ArticleLook insert(ArticleLook articleLook);
+
+    /**
+     * 系统刷流量
+     */
+    Integer systemBrushFlow();
 }

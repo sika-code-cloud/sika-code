@@ -19,5 +19,6 @@ public class BizArticleLook extends AbstractDO {
     private Long articleId;
     private Long userId;
     private String userIp;
+    private Integer source;
     private Date lookTime;
 }

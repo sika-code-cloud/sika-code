@@ -93,10 +93,11 @@ public class BizArticleServiceImpl implements BizArticleService {
             } else {
                 bizArticle.setTags(tagArticle.getTags());
             }
+            bizArticle.setLookSource(vo.getLookSource());
             this.subquery(bizArticle);
             boList.add(new Article(bizArticle));
         }
-        PageInfo bean = new PageInfo<BizArticle>(list);
+        PageInfo bean = new PageInfo<>(list);
         bean.setList(boList);
         return bean;
     }
@@ -387,6 +388,9 @@ public class BizArticleServiceImpl implements BizArticleService {
         // 查看的次数
         BizArticleLook look = new BizArticleLook();
         look.setArticleId(primaryKey);
+        if (entity.getLookSource() != null) {
+            look.setSource(entity.getLookSource());
+        }
         entity.setLookCount(bizArticleLookMapper.selectCount(look));
 
         // 评论数
