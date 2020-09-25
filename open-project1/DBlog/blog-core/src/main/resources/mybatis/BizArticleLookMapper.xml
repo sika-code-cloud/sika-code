@@ -10,6 +10,7 @@
 		<result property="lookTime" jdbcType="TIMESTAMP" column="look_time"/>
 		<result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
 		<result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+		<result property="source" jdbcType="INTEGER" column="source"/>
 	</resultMap>
 
 	<select id="findPageBreakByCondition" parameterType="com.zyd.blog.business.vo.ArticleLookConditionVO" resultMap="rm">
@@ -19,6 +20,9 @@
 			biz_article_look t
 		WHERE
 			1 = 1
+		<if test="source != null">
+			AND t.source = #{source}
+		</if>
 	</select>
 </mapper>
 

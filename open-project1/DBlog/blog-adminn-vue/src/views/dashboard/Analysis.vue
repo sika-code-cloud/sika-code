@@ -3,7 +3,7 @@
     <a-row :gutter="24">
       <a-col :xs="12" :sm="12" :md="6" :xl="6":style="{ marginBottom: '24px' }">
         <a-card>
-          <a href="/">
+          <a href="#" @click="systemBrushFlow">
             <a-statistic
               title="文章"
               :value="siteInfoData.articleCount"
@@ -393,7 +393,7 @@ import {
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
-import { articleList } from '@/api/article'
+import { articleList, systemBrushFlow } from '@/api/article'
 
 // 网站信息
 const siteInfoData = {}
@@ -695,15 +695,21 @@ export default {
           this.listTypeData = this.buildPieDataSource(res.result)
         }
       )
-    }, /** 统计访问数据 */
+    }, /** 文章列表 */
     articleList () {
-      const parameter = { 'pageSize': 100 }
+      const parameter = { 'pageSize': 100, 'lookSource': 0 }
       articleList(parameter).then(res => {
           console.log('articleList' + JSON.stringify(res))
           this.articleRankData = res.rows
           for (let i = 0; i < this.articleRankData.length; ++i) {
             this.articleRankData[i].index = (i + 1)
           }
+        }
+      )
+    }, /** 系统刷流量 */
+    systemBrushFlow () {
+        systemBrushFlow().then(res => {
+          console.log('systemBrushFlow' + JSON.stringify(res))
         }
       )
     },

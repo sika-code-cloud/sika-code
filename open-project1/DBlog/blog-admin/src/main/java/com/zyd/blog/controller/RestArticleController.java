@@ -7,6 +7,8 @@ import com.zyd.blog.business.entity.Article;
 import com.zyd.blog.business.enums.BaiduPushTypeEnum;
 import com.zyd.blog.business.enums.ConfigKeyEnum;
 import com.zyd.blog.business.enums.ResponseStatus;
+import com.zyd.blog.business.enums.SourceEnum;
+import com.zyd.blog.business.service.BizArticleLookService;
 import com.zyd.blog.business.service.BizArticleService;
 import com.zyd.blog.business.service.SysConfigService;
 import com.zyd.blog.business.util.BaiduPushUtil;
@@ -42,6 +44,8 @@ import java.util.Map;
 public class RestArticleController {
     @Autowired
     private BizArticleService articleService;
+    @Autowired
+    private BizArticleLookService bizArticleLookService;
     @Autowired
     private SysConfigService configService;
 
@@ -122,6 +126,11 @@ public class RestArticleController {
         }
         articleService.batchUpdateStatus(ids, true);
         return ResultUtil.success("批量发布完成");
+    }
+
+    @PostMapping(value = "/systemBrushFlow")
+    public ResponseVO systemBrushFlow() {
+        return ResultUtil.success(bizArticleLookService.systemBrushFlow());
     }
 
 }
