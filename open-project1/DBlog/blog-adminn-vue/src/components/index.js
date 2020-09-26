@@ -11,6 +11,8 @@ import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
 import Ebar from '@/components/ECharts/Ebar'
+import Epie from '@/components/ECharts/Epie'
+import Eline from '@/components/ECharts/Eline'
 
 import TagCloud from '@/components/Charts/TagCloud'
 // pro components
@@ -55,5 +57,7 @@ export {
   ArticleListContent,
   Pie,
   Ebar,
+  Epie,
+  Eline,
   Dialog
 }

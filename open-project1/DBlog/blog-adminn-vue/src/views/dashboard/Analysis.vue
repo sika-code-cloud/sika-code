@@ -296,8 +296,8 @@
                 <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
-                  <ebar/>
-                  <ebar/>
+                  <ebar :height="eBarData.height" :option="eBarData.option"/>
+                  <ebar :height="eBarData.height" :option="eBarData.option"/>
                 </div>
               </a-col>
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
@@ -313,6 +313,7 @@
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
                 </div>
+                <eline :option="eLineData.option"/>
               </a-col>
             </a-row>
             <div class="ant-table-wrapper">
@@ -372,6 +373,7 @@
                 </v-chart>
               </div>
             </div>
+            <epie :option="eListTypeInfo.option" :height="eListTypeInfo.height"/>
           </a-card>
         </a-col>
       </a-row>
@@ -392,6 +394,8 @@ import {
   NumberInfo,
   MiniSmoothArea,
   Ebar,
+  Epie,
+  Eline,
   Pie
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
@@ -559,6 +563,75 @@ const visitData = {
   }
 }
 
+const ePieData = {
+  height: 400,
+  option: {
+    title: {
+      text: '某站点用户访问来源',
+      subtext: '纯属虚构'
+    },
+    legend: {
+      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+    },
+    series: {
+      name: '访问来源',
+      data: [
+        { value: 335, name: '直接访问' },
+        { value: 310, name: '邮件营销' },
+        { value: 234, name: '联盟广告' },
+        { value: 135, name: '视频广告' },
+        { value: 1548, name: '搜索引擎' }
+      ]
+    }
+  }
+}
+
+const eBarData = {
+  height: 200,
+  option: {
+    title: {
+      text: '某站点用户访问来源',
+      subtext: '纯属虚构'
+    },
+    legend: {
+      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+    },
+    xAxis: {
+      data: ['2020-09-01', '2020-09-02', '2020-09-03', '2020-09-04', '2020-09-05', '2020-09-06', '2020-09-07']
+    },
+    series: {
+      name: '访问来源',
+      data: [
+        { value: 335, name: '直接访问' },
+        { value: 310, name: '邮件营销' },
+        { value: 234, name: '联盟广告' },
+        { value: 135, name: '视频广告' },
+        { value: 1548, name: '搜索引擎' }
+      ]
+    }
+  }
+}
+
+const eLineData = {
+  height: 200,
+  option: {
+    title: {
+      text: '某站点用户访问来源',
+      subtext: '纯属虚构'
+    },
+    legend: {
+      data: ['搜索引擎']
+    },
+    xAxis: {
+      data: ['2020-09-01', '2020-09-02', '2020-09-03', '2020-09-04', '2020-09-05', '2020-09-06', '2020-09-07']
+    },
+    series: {
+      name: '访问来源',
+      data: [120, 132, 101, 134, 90, 230, 210]
+    }
+  }
+}
+
 export default {
   name: 'Analysis',
   mixins: [baseMixin],
@@ -573,6 +646,8 @@ export default {
     NumberInfo,
     Pie,
     Ebar,
+    Epie,
+    Eline,
     MiniSmoothArea
   },
   data () {
@@ -597,6 +672,24 @@ export default {
       pieData,
       sourceData,
       listTypeData,
+      eListTypeInfo: {
+        height: 400,
+        option: {
+          title: {
+            text: '分类文章统计'
+          },
+          legend: {
+            data: []
+          },
+          series: {
+            name: '分类文章统计',
+            data: []
+          }
+        }
+      },
+      ePieData,
+      eBarData,
+      eLineData,
       xlShow: true,
       pieStyle: {
         stroke: '#fff',
@@ -609,6 +702,7 @@ export default {
       this.loading = !this.loading
     }, 1000)
     this.handleResize()
+    this.loadStatisticsData()
     window.addEventListener('resize', this.handleResize)
   },
   mounted () {
@@ -696,6 +790,14 @@ export default {
       listType().then(res => {
           console.log('listTypeData' + JSON.stringify(res.result))
           this.listTypeData = this.buildPieDataSource(res.result)
+          const items = res.result
+          for (let i = 0; i < items.length; i++) {
+            this.eListTypeInfo.option.legend.data.push(items[i].name)
+            this.eListTypeInfo.option.series.data.push({
+              name: items[i].name,
+              value: items[i].value
+            })
+          }
         }
       )
     }, /** 文章列表 */
