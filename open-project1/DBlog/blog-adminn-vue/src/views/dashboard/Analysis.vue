@@ -593,7 +593,7 @@ const eLineData = {
     },
     grid: {
       right: '1%',
-      top: '0%',
+      top: '30%',
       left: '-6%',
       containLabel: true
     }
