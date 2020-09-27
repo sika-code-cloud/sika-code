@@ -42,7 +42,7 @@ const defaultTooltip = {
     fontStyle: 'normal',
     fontFamily: 'Arial',
     color: '#595959', // 设置文字颜色
-    fontSize: 10,
+    fontSize: 12,
     lineHeight: 24
   }
 }

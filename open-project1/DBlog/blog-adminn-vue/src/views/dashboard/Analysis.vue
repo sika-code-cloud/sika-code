@@ -723,6 +723,8 @@ export default {
     }, /** 统计访问数据 */
     recentWeekLog () {
       recentWeekLog().then(res => {
+          this.visitData = res.result
+          this.visitData.visitScale = this.buildVisitScale(res.result.maxItem.number)
           const optionData = this.buildViewItems(res.result.items, 'YYYY-MM-DD')
           this.eLineData.option.xAxis.data = optionData.xAxisData
           this.eLineData.option.series.data = optionData.seriesData
