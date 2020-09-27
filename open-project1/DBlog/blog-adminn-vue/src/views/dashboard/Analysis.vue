@@ -86,9 +86,9 @@
           <a-tooltip title="周访问量" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
-          <div>
+          <div style="margin-bottom: -30px">
             <!--            <mini-area :dataSource="visitData.perDayVisitNumbers" />-->
-            <mini-smooth-area :style="{ height: '45px' }" :dataSource="visitData.items" :scale="visitData.visitScale"/>
+            <eline :option="eLineData.option" :height="eLineData.height"/>
           </div>
           <template slot="footer">当日访问量<span> {{ visitData.recentItem.number | NumberFormat }}</span></template>
         </chart-card>
@@ -170,7 +170,9 @@
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData" title="销售额排行"/>
+                <div style="margin: 0 12px 24px 24px; ">
+                  <ebar :height="eBarData.height" :option="eBarData.option"/>
+                </div>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <rank-list title="门店销售排行榜" :list="rankList"/>
@@ -197,7 +199,7 @@
             <div>
               <!-- style="width: calc(100% - 240px);" -->
               <div>
-                <pie :dataSource="listTypeData"/>
+                <epie :option="eListTypeInfo.option"/>
               </div>
             </div>
           </a-card>
@@ -296,8 +298,6 @@
                 <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
-                  <ebar :height="eBarData.height" :option="eBarData.option"/>
-                  <ebar :height="eBarData.height" :option="eBarData.option"/>
                 </div>
               </a-col>
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
@@ -313,7 +313,6 @@
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
                 </div>
-                <eline :option="eLineData.option"/>
               </a-col>
             </a-row>
             <div class="ant-table-wrapper">
@@ -373,7 +372,6 @@
                 </v-chart>
               </div>
             </div>
-            <epie :option="eListTypeInfo.option" :height="eListTypeInfo.height"/>
           </a-card>
         </a-col>
       </a-row>
@@ -401,6 +399,7 @@ import {
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
 import { articleList, systemBrushFlow } from '@/api/article'
+// import _ from 'lodash'
 
 // 网站信息
 const siteInfoData = {}
@@ -532,7 +531,6 @@ const sourceData = [
   { item: '母婴产品', count: 9 },
   { item: '其他', count: 7.8 }
 ]
-const listTypeData = [{ item: '其他', count: 0 }]
 
 const pieScale = [{
   dataKey: 'percent',
@@ -563,71 +561,41 @@ const visitData = {
   }
 }
 
-const ePieData = {
-  height: 400,
-  option: {
-    title: {
-      text: '某站点用户访问来源',
-      subtext: '纯属虚构'
-    },
-    legend: {
-      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-    },
-    series: {
-      name: '访问来源',
-      data: [
-        { value: 335, name: '直接访问' },
-        { value: 310, name: '邮件营销' },
-        { value: 234, name: '联盟广告' },
-        { value: 135, name: '视频广告' },
-        { value: 1548, name: '搜索引擎' }
-      ]
-    }
-  }
-}
-
 const eBarData = {
-  height: 200,
   option: {
-    title: {
-      text: '某站点用户访问来源',
-      subtext: '纯属虚构'
-    },
-    legend: {
-      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-    },
     xAxis: {
-      data: ['2020-09-01', '2020-09-02', '2020-09-03', '2020-09-04', '2020-09-05', '2020-09-06', '2020-09-07']
+      data: []
+    },
+    grid: {
+      top: '5%',
+      margin: '5%'
     },
     series: {
       name: '访问来源',
-      data: [
-        { value: 335, name: '直接访问' },
-        { value: 310, name: '邮件营销' },
-        { value: 234, name: '联盟广告' },
-        { value: 135, name: '视频广告' },
-        { value: 1548, name: '搜索引擎' }
-      ]
+      data: []
     }
   }
 }
 
 const eLineData = {
-  height: 200,
+  height: 100,
   option: {
-    title: {
-      text: '某站点用户访问来源',
-      subtext: '纯属虚构'
-    },
-    legend: {
-      data: ['搜索引擎']
-    },
     xAxis: {
-      data: ['2020-09-01', '2020-09-02', '2020-09-03', '2020-09-04', '2020-09-05', '2020-09-06', '2020-09-07']
+      show: false,
+      data: []
+    },
+    yAxis: {
+      show: false
     },
     series: {
       name: '访问来源',
-      data: [120, 132, 101, 134, 90, 230, 210]
+      data: []
+    },
+    grid: {
+      right: '1%',
+      top: '0%',
+      left: '-6%',
+      containLabel: true
     }
   }
 }
@@ -671,13 +639,8 @@ export default {
       pieScale,
       pieData,
       sourceData,
-      listTypeData,
       eListTypeInfo: {
-        height: 400,
         option: {
-          title: {
-            text: '分类文章统计'
-          },
           legend: {
             data: []
           },
@@ -687,7 +650,6 @@ export default {
           }
         }
       },
-      ePieData,
       eBarData,
       eLineData,
       xlShow: true,
@@ -755,48 +717,44 @@ export default {
     }, /** 统计访问数据 */
     sameDayLog () {
       sameDayLog().then(res => {
-          this.barData = this.buildViewItems(res.result.items, 'HH时')
+          this.buildViewItemsForEbar(res.result.items, 'HH时')
         }
       )
     }, /** 统计访问数据 */
     recentWeekLog () {
       recentWeekLog().then(res => {
-          const result = res.result
-          this.visitData = res.result
-          this.visitData.visitScale = this.buildVisitScale(result.maxItem.number)
-          this.visitData.items = this.buildViewItems(result.items, 'YYYY/MM/DD')
+          const optionData = this.buildViewItems(res.result.items, 'YYYY-MM-DD')
+          this.eLineData.option.xAxis.data = optionData.xAxisData
+          this.eLineData.option.series.data = optionData.seriesData
         }
       )
     }, /** 统计访问数据 */
     recentWeekLogForBar () {
       recentWeekLog().then(res => {
-          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
+          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM-DD')
         }
       )
     }, /** 统计访问数据 */
     sameMonthLog () {
       sameMonthLog().then(res => {
-          this.barData = this.buildViewItems(res.result.items, 'MM/DD')
+          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM-DD')
         }
       )
     }, /** 统计访问数据 */
     sameYearLog () {
       sameYearLog().then(res => {
-          this.barData = this.buildViewItems(res.result.items, 'YYYY/MM')
+          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM')
         }
       )
     }, /** 统计访问数据 */
     listType () {
       listType().then(res => {
-          console.log('listTypeData' + JSON.stringify(res.result))
-          this.listTypeData = this.buildPieDataSource(res.result)
-          const items = res.result
+        this.eListTypeInfo.option.series.data = []
+        this.eListTypeInfo.option.legend.data = []
+        const items = res.result
           for (let i = 0; i < items.length; i++) {
+            this.eListTypeInfo.option.series.data.push(items[i])
             this.eListTypeInfo.option.legend.data.push(items[i].name)
-            this.eListTypeInfo.option.series.data.push({
-              name: items[i].name,
-              value: items[i].value
-            })
           }
         }
       )
@@ -804,7 +762,6 @@ export default {
     articleList () {
       const parameter = { 'pageSize': 100, 'lookSource': 0 }
       articleList(parameter).then(res => {
-          console.log('articleList' + JSON.stringify(res))
           this.articleRankData = res.rows
           for (let i = 0; i < this.articleRankData.length; ++i) {
             this.articleRankData[i].index = (i + 1)
@@ -819,24 +776,25 @@ export default {
       )
     },
     buildViewItems (items, format) {
-      const viewItems = []
+      const option = {
+        xAxisData: [],
+        seriesData: []
+      }
       for (let i = 0; i < items.length; i++) {
-        viewItems.push({
-          x: moment(items[i].date).format(format),
-          y: items[i].number
+        const nameFormat = moment(items[i].date).format(format)
+        option.xAxisData.push(nameFormat)
+        option.seriesData.push({
+          name: nameFormat,
+          value: items[i].number
         })
       }
-      return viewItems
+      return option
     },
-    buildPieDataSource (items) {
-      const viewItems = []
-      for (let i = 0; i < items.length; i++) {
-        viewItems.push({
-          item: items[i].name,
-          count: items[i].value
-        })
-      }
-      return viewItems
+
+    buildViewItemsForEbar (items, format) {
+      const optionData = this.buildViewItems(items, format)
+      this.eBarData.option.xAxis.data = optionData.xAxisData
+      this.eBarData.option.series.data = optionData.seriesData
     },
     buildVisitScale (maxNumber) {
       return [{
