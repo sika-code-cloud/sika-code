@@ -6,7 +6,8 @@ const statiticsApi = {
   SameMonthLog: '/statistics/sameMonthLog',
   SameDayLog: '/statistics/sameDayLog',
   SiteInfo: '/statistics/siteInfo',
-  ListType: '/statistics/listType'
+  ListType: '/statistics/listType',
+  ListSpider: '/statistics/listSpider'
 }
 
 /**
@@ -56,6 +57,12 @@ export function siteInfo () {
 export function listType () {
   return request({
     url: statiticsApi.ListType,
+    method: 'post'
+  })
+}
+export function listSpider () {
+  return request({
+    url: statiticsApi.ListSpider,
     method: 'post'
   })
 }
