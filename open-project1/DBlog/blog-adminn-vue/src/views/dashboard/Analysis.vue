@@ -399,7 +399,7 @@ import {
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
 import { articleList, systemBrushFlow } from '@/api/article'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 // 网站信息
 const siteInfoData = {}
@@ -751,13 +751,9 @@ export default {
     }, /** 统计访问数据 */
     listType () {
       listType().then(res => {
-        this.eListTypeInfo.option.series.data = []
-        this.eListTypeInfo.option.legend.data = []
-        const items = res.result
-          for (let i = 0; i < items.length; i++) {
-            this.eListTypeInfo.option.series.data.push(items[i])
-            this.eListTypeInfo.option.legend.data.push(items[i].name)
-          }
+          const items = res.result
+          this.eListTypeInfo.option.legend.data = _.map(items, 'name')
+          this.eListTypeInfo.option.series.data = items
         }
       )
     }, /** 文章列表 */
