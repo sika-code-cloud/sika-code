@@ -244,8 +244,15 @@ export function defaultFormatter (param, backGroundColor) {
   if (param instanceof Array) {
     firstParam = param[0]
   }
+  const componentSubType = firstParam.componentSubType
+  let upName = firstParam.name
+  let downName = firstParam.seriesName
+  if (componentSubType === 'pie') {
+    upName = downName
+    downName = firstParam.name
+  }
   const marker = changeMarkerSize(firstParam.marker, backGroundColor)
-  let formatter = firstParam.name + '<br>' + marker + firstParam.seriesName + '：' + firstParam.value
+  let formatter = upName + '<br>' + marker + downName + '：' + firstParam.value
   if (firstParam.percent) {
     formatter += ' (' + param.percent + '%)'
   }
