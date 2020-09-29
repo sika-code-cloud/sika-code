@@ -1,6 +1,7 @@
 package com.zyd.blog.business.log.pojo.query;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.zyd.blog.business.log.enums.QueryTypeEnum;
 import com.zyd.blog.persistence.beans.SysLog;
 import lombok.Data;
@@ -17,10 +18,17 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 public class LogStatisticsQuery extends SysLog {
+    private String pointDate;
     private Date beginDate;
     private Date endDate;
     private QueryTypeEnum queryTypeEnum;
 
+    public Date getPointDateNullToNow() {
+        if (StrUtil.isEmpty(this.pointDate)) {
+            return DateUtil.date();
+        }
+        return DateUtil.parseDate(this.pointDate);
+    }
     public LogStatisticsQuery build() {
         if (this.beginDate == null) {
             this.beginDate = new Date();
@@ -32,5 +40,6 @@ public class LogStatisticsQuery extends SysLog {
         this.endDate = DateUtil.endOfDay(endDate);
         return this;
     }
+
 
 }

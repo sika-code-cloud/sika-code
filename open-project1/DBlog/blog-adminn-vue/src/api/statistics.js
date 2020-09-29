@@ -21,30 +21,34 @@ const statiticsApi = {
  * @param parameter
  * @returns {*}
  */
-export function recentWeekLog () {
+export function recentWeekLog (parameter) {
   return request({
     url: statiticsApi.RecentWeekLog,
+    data: parameter,
     method: 'post'
   })
 }
 
-export function sameYearLog () {
+export function sameYearLog (parameter) {
   return request({
     url: statiticsApi.SameYearLog,
+    data: parameter,
     method: 'post'
   })
 }
 
-export function sameMonthLog () {
+export function sameMonthLog (parameter) {
   return request({
     url: statiticsApi.SameMonthLog,
+    data: parameter,
     method: 'post'
   })
 }
 
-export function sameDayLog () {
+export function sameDayLog (parameter) {
   return request({
     url: statiticsApi.SameDayLog,
+    data: parameter,
     method: 'post'
   })
 }

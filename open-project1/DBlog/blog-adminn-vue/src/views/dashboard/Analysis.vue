@@ -141,61 +141,55 @@
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane tab="销售额" key="2">
-            <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData2" title="销售额趋势"/>
-              </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <a-row>
               <a-col
                 :xs="12"
                 :sm="24"
                 :style="{ marginBottom: '24px' }"
-                v-show="xlShow">
+                v-show="xlShow"
+                >
                 <div class="extra-item">
-                  <a-button-group value="large">
-                    <a-button type="link" @click="sameDayLog">
-                      本天
+                  <a-button-group>
+                    <a-button type="link" @click="queryPointLog" :class="{'active': queryData.currentType === 'sameDayLog'}" value = "sameDayLog">
+                      当天
                     </a-button>
-                    <a-button type="link" @click="recentWeekLogForBar">
-                      本周
+                    <a-button type="link" @click="queryPointLog" :class="{'active': queryData.currentType === 'recentWeekLogForBar'}" value = "recentWeekLogForBar">
+                      当周
                     </a-button>
-                    <a-button type="link" @click="sameMonthLog">
-                      本月
+                    <a-button type="link" @click="queryPointLog" :class="{'active': queryData.currentType === 'sameMonthLog'}" value = "sameMonthLog">
+                      当月
                     </a-button>
-                    <a-button type="link" @click="sameYearLog">
-                      本年
+                    <a-button type="link" @click="queryPointLog" :class="{'active': queryData.currentType === 'sameYearLog'}" value = "sameYearLog">
+                      当年
                     </a-button>
                   </a-button-group>
                 </div>
-                <a-range-picker :style="{width: '256px'}"/>
+                <a-date-picker :style="{width: '128px'}" @change="onChangeForLog" :value = "queryData.pointDateFor"/>
               </a-col>
-              <a-col :style="{ marginBottom: '24px' }" v-show="!xlShow">
-                <a-dropdown :trigger="['click','hover']">
-                  <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                    统计维度 <a-icon type="down" />
-                  </a>
-                  <a-menu slot="overlay" @click="switchDimension" :default-selected-keys="[switchSelect]" :selected-keys="[switchSelect]">
-                    <a-menu-item key="sameDayLog">
-                      本天
-                    </a-menu-item>
-                    <a-menu-item key="recentWeekLogForBar">
-                      本周
-                    </a-menu-item>
-                    <a-menu-item key="sameMonthLog">
-                      本月
-                    </a-menu-item>
-                    <a-menu-item key="sameYearLog">
-                      本年
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
+              <a-col :style="{ marginBottom: '24px'}" v-show="!xlShow">
+                <div class="extra-item">
+                  <a-dropdown :trigger="['click','hover']" :style="{marginRight: '-10px'}">
+                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                      统计维度 <a-icon type="down" />
+                    </a>
+                    <a-menu slot="overlay" @click="switchDimension" :default-selected-keys="[queryData.currentType]" :selected-keys="[queryData.currentType]">
+                      <a-menu-item key="sameDayLog">
+                        当天
+                      </a-menu-item>
+                      <a-menu-item key="recentWeekLogForBar">
+                        当周
+                      </a-menu-item>
+                      <a-menu-item key="sameMonthLog">
+                        当月
+                      </a-menu-item>
+                      <a-menu-item key="sameYearLog">
+                        当年
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
+                </div>
+                <a-date-picker :style="{width: '115px'}" @change="onChangeForLog" :value = "queryData.pointDateFor"/>
               </a-col>
             </a-row>
           </div>
@@ -435,13 +429,10 @@ const searchUserScale = [
 
 const articleRankTableColumns = [
   {
-    key: 'id'
-  },
-  {
     dataIndex: 'title',
     title: '文章名称',
     ellipsis: true,
-    width: 200
+    width: 150
   },
   {
     dataIndex: 'lookCount',
@@ -657,11 +648,16 @@ export default {
       },
       eBarData,
       eLineData,
-      switchSelect: 'sameDayLog',
       xlShow: true,
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
+      },
+      queryData: {
+        active: true,
+        currentType: 'sameDayLog',
+        pointDateFor: moment(),
+        pointDate: moment().format('YYYY-MM-DD')
       }
     }
   },
@@ -694,17 +690,28 @@ export default {
       }
       return Math.max(numbers)
     },
+    onChangeForLog (date, dateString) {
+      this.queryData.pointDateFor = date
+      this.queryData.pointDate = dateString
+      this.doStatisticsLog()
+    },
     switchDimension (e) {
-      const key = e.key
-      console.log(key)
-      this.switchSelect = key
-      if (key === 'sameDayLog') {
+      this.queryData.currentType = e.key
+      this.doStatisticsLog()
+    },
+    queryPointLog (event) {
+      this.queryData.currentType = event.target.value
+      this.doStatisticsLog()
+    },
+    doStatisticsLog () {
+      const statisticsType = this.queryData.currentType
+      if (statisticsType === 'sameDayLog') {
         this.sameDayLog()
-      } else if (key === 'recentWeekLogForBar') {
+      } else if (statisticsType === 'recentWeekLogForBar') {
         this.recentWeekLogForBar()
-      } else if (key === 'sameMonthLog') {
+      } else if (statisticsType === 'sameMonthLog') {
         this.sameMonthLog()
-      } else if (key === 'sameYearLog') {
+      } else if (statisticsType === 'sameYearLog') {
         this.sameYearLog()
       }
     },
@@ -725,13 +732,13 @@ export default {
       )
     }, /** 统计访问数据 */
     sameDayLog () {
-      sameDayLog().then(res => {
-          this.buildViewItemsForEbar(res, 'HH时', '本天访问量')
+      sameDayLog(this.queryData).then(res => {
+          this.buildViewItemsForEbar(res, 'HH时', '当天访问量')
         }
       )
     }, /** 统计访问数据 */
     recentWeekLog () {
-      recentWeekLog().then(res => {
+      recentWeekLog({}).then(res => {
           this.visitData = res.result
           const optionData = this.buildViewItems(res.result.items, 'YYYY-MM-DD')
           this.eLineData.option.xAxis.data = optionData.xAxisData
@@ -740,20 +747,20 @@ export default {
       )
     }, /** 统计访问数据 */
     recentWeekLogForBar () {
-      recentWeekLog().then(res => {
-          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '本周访问量')
+      recentWeekLog(this.queryData).then(res => {
+          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '当周访问量')
         }
       )
     }, /** 统计访问数据 */
     sameMonthLog () {
-      sameMonthLog().then(res => {
-          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '本月访问量')
+      sameMonthLog(this.queryData).then(res => {
+          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '当月访问量')
         }
       )
     }, /** 统计访问数据 */
     sameYearLog () {
-      sameYearLog().then(res => {
-          this.buildViewItemsForEbar(res, 'YYYY-MM', '本年访问量')
+      sameYearLog(this.queryData).then(res => {
+          this.buildViewItemsForEbar(res, 'YYYY-MM', '当年访问量')
         }
       )
     }, /** 统计文章类型 */
@@ -768,7 +775,6 @@ export default {
     listSpider () {
       listSpider().then(res => {
           const items = res.result
-          console.log(items)
           this.eListSpiderInfo.option.series.data = items
           this.eListSpiderInfo.option.legend.data = _.map(items, 'name')
         }
@@ -787,7 +793,6 @@ export default {
     listRecent () {
       const parameter = { 'pageSize': 10 }
           listRecent(parameter).then(res => {
-          console.log(res)
         }
       )
     }, /** 系统刷流量 */

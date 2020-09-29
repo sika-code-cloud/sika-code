@@ -129,43 +129,47 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsSameDay() {
-        LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.beginOfDay(DateUtil.date()))
-                .setEndDate(DateUtil.endOfDay(DateUtil.date()))
+    public LogStatisticsVisitVo statisticsSameDay(LogStatisticsQuery query) {
+        Date pointDate = query.getPointDateNullToNow();
+        LogStatisticsQuery queryForLog = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.beginOfDay(pointDate))
+                .setEndDate(DateUtil.endOfDay(pointDate))
                 .setQueryTypeEnum(QueryTypeEnum.DAY)
                 .build();
-        return statisticsVisitData(query);
+        return statisticsVisitData(queryForLog);
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsRecentWeek() {
-        LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.lastWeek())
-                .setEndDate(DateUtil.date())
+    public LogStatisticsVisitVo statisticsRecentWeek(LogStatisticsQuery query) {
+        Date pointDate = query.getPointDateNullToNow();
+        LogStatisticsQuery queryForLog = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.offsetWeek(pointDate, -1))
+                .setEndDate(pointDate)
                 .setQueryTypeEnum(QueryTypeEnum.WEEK)
                 .build();
-        return statisticsVisitData(query);
+        return statisticsVisitData(queryForLog);
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsSameMonth() {
-        LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.beginOfMonth(DateUtil.date()))
-                .setEndDate(DateUtil.endOfMonth(DateUtil.date()))
+    public LogStatisticsVisitVo statisticsSameMonth(LogStatisticsQuery query) {
+        Date pointDate = query.getPointDateNullToNow();
+        LogStatisticsQuery queryForLog = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.beginOfMonth(pointDate))
+                .setEndDate(DateUtil.endOfMonth(pointDate))
                 .setQueryTypeEnum(QueryTypeEnum.MONTH)
                 .build();
-        return statisticsVisitData(query);
+        return statisticsVisitData(queryForLog);
     }
 
     @Override
-    public LogStatisticsVisitVo statisticsSameYear() {
-        LogStatisticsQuery query = new LogStatisticsQuery()
-                .setBeginDate(DateUtil.beginOfYear(DateUtil.date()))
-                .setEndDate(DateUtil.endOfYear(DateUtil.date()))
+    public LogStatisticsVisitVo statisticsSameYear(LogStatisticsQuery query) {
+        Date pointDate = query.getPointDateNullToNow();
+        LogStatisticsQuery queryForLog = new LogStatisticsQuery()
+                .setBeginDate(DateUtil.beginOfYear(pointDate))
+                .setEndDate(DateUtil.endOfYear(pointDate))
                 .setQueryTypeEnum(QueryTypeEnum.YEAR)
                 .build();
-        return statisticsVisitData(query);
+        return statisticsVisitData(queryForLog);
     }
 
     public LogStatisticsVisitVo statisticsVisitData(LogStatisticsQuery query) {

@@ -30,11 +30,20 @@ public interface SysLogService extends AbstractService<Log, Long> {
     /**
      * 统计最近一周的日志数据
      */
-    LogStatisticsVisitVo statisticsRecentWeek();
+    LogStatisticsVisitVo statisticsRecentWeek(LogStatisticsQuery query);
 
-    LogStatisticsVisitVo statisticsSameYear();
+    /**
+     * 统计指定天所在年的日志数据
+     */
+    LogStatisticsVisitVo statisticsSameYear(LogStatisticsQuery query);
 
-    LogStatisticsVisitVo statisticsSameMonth();
+    /**
+     * 统计指定日期所在月的数据
+     */
+    LogStatisticsVisitVo statisticsSameMonth(LogStatisticsQuery query);
 
-    LogStatisticsVisitVo statisticsSameDay();
+    /**
+     * 统计指定指定天的日志数据
+     */
+    LogStatisticsVisitVo statisticsSameDay(LogStatisticsQuery query);
 }
