@@ -3,7 +3,8 @@ import qs from 'qs'
 
 const articleApi = {
   ArticleList: '/article/list',
-  SystemBrushFlow: '/article/systemBrushFlow'
+  SystemBrushFlow: '/article/systemBrushFlow',
+  ListRecent: '/article/listRecent'
 }
 
 /**
@@ -27,6 +28,12 @@ export function articleList (parameter) {
 export function systemBrushFlow () {
   return request({
     url: articleApi.SystemBrushFlow,
+    method: 'post'
+  })
+}
+export function listRecent () {
+  return request({
+    url: articleApi.ListRecent,
     method: 'post'
   })
 }

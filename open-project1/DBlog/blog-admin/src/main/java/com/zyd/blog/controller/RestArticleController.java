@@ -128,6 +128,10 @@ public class RestArticleController {
         return ResultUtil.success("批量发布完成");
     }
 
+    @PostMapping(value = "/listRecent")
+    public ResponseVO listRecent(ArticleConditionVO vo) {
+        return ResultUtil.success(articleService.listRecent(vo.getPageSize()));
+    }
     @PostMapping(value = "/systemBrushFlow")
     public ResponseVO systemBrushFlow() {
         return ResultUtil.success(bizArticleLookService.systemBrushFlow());

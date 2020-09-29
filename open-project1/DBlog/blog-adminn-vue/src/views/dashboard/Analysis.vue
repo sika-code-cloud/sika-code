@@ -231,6 +231,7 @@
             </a-dropdown>
             <div class="ant-table-wrapper">
               <a-table
+                :scroll="{ x: 400}"
                 row-key="index"
                 size="small"
                 :columns="articleRankTableColumns"
@@ -386,7 +387,7 @@ import {
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
 import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType, listSpider } from '@/api/statistics'
-import { articleList, systemBrushFlow } from '@/api/article'
+import { articleList, systemBrushFlow, listRecent } from '@/api/article'
 import { isNotMobile } from '@/utils/util'
 import _ from 'lodash'
 
@@ -434,14 +435,12 @@ const searchUserScale = [
 
 const articleRankTableColumns = [
   {
-    dataIndex: 'id',
-    title: '编号',
-    align: 'center',
-    width: 50
+    key: 'id'
   },
   {
     dataIndex: 'title',
     title: '文章名称',
+    ellipsis: true,
     width: 200
   },
   {
@@ -716,6 +715,7 @@ export default {
       this.listType()
       this.listSpider()
       this.articleList()
+      this.listRecent()
     },
     /** 统计访问数据 */
     siteInfo () {
@@ -781,6 +781,13 @@ export default {
           for (let i = 0; i < this.articleRankData.length; ++i) {
             this.articleRankData[i].index = (i + 1)
           }
+        }
+      )
+    }, /** 近期文章 */
+    listRecent () {
+      const parameter = { 'pageSize': 10 }
+          listRecent(parameter).then(res => {
+          console.log(res)
         }
       )
     }, /** 系统刷流量 */
