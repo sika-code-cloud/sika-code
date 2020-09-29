@@ -129,6 +129,28 @@
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
+          <a-tab-pane loading="true" tab="访问量" key="1">
+            <a-row>
+              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                <div style="margin: 0 12px 24px 24px; ">
+                  <ebar :height="eBarData.height" :option="eBarData.option"/>
+                </div>
+              </a-col>
+              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                <rank-list title="门店销售排行榜" :list="rankList"/>
+              </a-col>
+            </a-row>
+          </a-tab-pane>
+          <a-tab-pane tab="销售额" key="2">
+            <a-row>
+              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                <bar :data="barData2" title="销售额趋势"/>
+              </a-col>
+              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                <rank-list title="门店销售排行榜" :list="rankList"/>
+              </a-col>
+            </a-row>
+          </a-tab-pane>
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <a-row>
               <a-col
@@ -137,10 +159,20 @@
                 :style="{ marginBottom: '24px' }"
                 v-show="xlShow">
                 <div class="extra-item">
-                  <a @click="sameDayLog">今日</a>
-                  <a @click="recentWeekLogForBar">本周</a>
-                  <a @click="sameMonthLog">本月</a>
-                  <a @click="sameYearLog">本年</a>
+                  <a-button-group value="large">
+                    <a-button type="link" @click="sameDayLog">
+                      本天
+                    </a-button>
+                    <a-button type="link" @click="recentWeekLogForBar">
+                      本周
+                    </a-button>
+                    <a-button type="link" @click="sameMonthLog">
+                      本月
+                    </a-button>
+                    <a-button type="link" @click="sameYearLog">
+                      本年
+                    </a-button>
+                  </a-button-group>
                 </div>
                 <a-range-picker :style="{width: '256px'}"/>
               </a-col>
@@ -149,7 +181,7 @@
                   <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                     统计维度 <a-icon type="down" />
                   </a>
-                  <a-menu slot="overlay" @click="switchDimension">
+                  <a-menu slot="overlay" @click="switchDimension" :default-selected-keys="[switchSelect]" :selected-keys="[switchSelect]">
                     <a-menu-item key="sameDayLog">
                       本天
                     </a-menu-item>
@@ -167,34 +199,12 @@
               </a-col>
             </a-row>
           </div>
-          <a-tab-pane loading="true" tab="销售额" key="1">
-            <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <div style="margin: 0 12px 24px 24px; ">
-                  <ebar :height="eBarData.height" :option="eBarData.option"/>
-                </div>
-              </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
-          <a-tab-pane tab="访问量" key="2">
-            <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData2" title="销售额趋势"/>
-              </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
         </a-tabs>
       </div>
     </a-card>
     <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="!isMobile && 'desktop'">
       <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
-        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="分类文章数统计" :style="{ height: '100%' }">
             <div>
               <!-- style="width: calc(100% - 240px);" -->
@@ -204,7 +214,7 @@
             </div>
           </a-card>
         </a-col>
-        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card :loading="loading" :bordered="false" title="文章访问TOP.100" :style="{ height: '100%' }">
             <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
               <a class="ant-dropdown-link" href="#">
@@ -219,36 +229,6 @@
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
-            <a-row :gutter="68">
-              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-                <number-info :total="12321" :sub-total="17.1">
-                  <span slot="subtitle">
-                    <span>搜索用户数</span>
-                    <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
-                    </a-tooltip>
-                  </span>
-                </number-info>
-                <!-- miniChart -->
-                <div>
-                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
-                </div>
-              </a-col>
-              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-                <number-info :total="2.7" :sub-total="26.2" status="down">
-                  <span slot="subtitle">
-                    <span>人均搜索次数</span>
-                    <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }"/>
-                    </a-tooltip>
-                  </span>
-                </number-info>
-                <!-- miniChart -->
-                <div>
-                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
-                </div>
-              </a-col>
-            </a-row>
             <div class="ant-table-wrapper">
               <a-table
                 row-key="index"
@@ -263,6 +243,15 @@
                   </trend>
                 </span>
               </a-table>
+            </div>
+          </a-card>
+        </a-col>
+        <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="爬虫访问TOP.10" :style="{ height: '100%' }">
+            <div>
+              <div>
+                <epie :option="eListSpiderInfo.option"/>
+              </div>
             </div>
           </a-card>
         </a-col>
@@ -295,7 +284,6 @@
                     </a-tooltip>
                   </span>
                 </number-info>
-                <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale"/>
                 </div>
@@ -397,8 +385,9 @@ import {
   Pie
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
-import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType } from '@/api/statistics'
+import { recentWeekLog, sameYearLog, sameMonthLog, sameDayLog, siteInfo, listType, listSpider } from '@/api/statistics'
 import { articleList, systemBrushFlow } from '@/api/article'
+import { isNotMobile } from '@/utils/util'
 import _ from 'lodash'
 
 // 网站信息
@@ -447,17 +436,18 @@ const articleRankTableColumns = [
   {
     dataIndex: 'id',
     title: '编号',
+    align: 'center',
     width: 50
   },
   {
     dataIndex: 'title',
     title: '文章名称',
-    ellipsis: true,
     width: 200
   },
   {
     dataIndex: 'lookCount',
     title: '访问数',
+    align: 'center',
     width: 75,
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.lookCount - b.lookCount
@@ -465,12 +455,14 @@ const articleRankTableColumns = [
   {
     dataIndex: 'loveCount',
     title: '点赞数',
+    align: 'center',
     width: 75,
     sorter: (a, b) => a.loveCount - b.loveCount
   },
   {
     dataIndex: 'commentCount',
     title: '评论数',
+    align: 'center',
     width: 75,
     sorter: (a, b) => a.commentCount - b.commentCount
   }
@@ -563,11 +555,14 @@ const visitData = {
 
 const eBarData = {
   option: {
+    title: {
+      text: '当天访问量'
+    },
     xAxis: {
       data: []
     },
     grid: {
-      top: '5%',
+      top: '15%',
       margin: '5%'
     },
     series: {
@@ -650,8 +645,20 @@ export default {
           }
         }
       },
+      eListSpiderInfo: {
+        option: {
+          legend: {
+            data: []
+          },
+          series: {
+            name: '爬虫访问统计',
+            data: []
+          }
+        }
+      },
       eBarData,
       eLineData,
+      switchSelect: 'sameDayLog',
       xlShow: true,
       pieStyle: {
         stroke: '#fff',
@@ -662,7 +669,7 @@ export default {
   created () {
     setTimeout(() => {
       this.loading = !this.loading
-    }, 1000)
+    }, 500)
     this.handleResize()
     this.loadStatisticsData()
     window.addEventListener('resize', this.handleResize)
@@ -680,7 +687,7 @@ export default {
   },
   methods: {
     handleResize (event) {
-      this.xlShow = document.documentElement.clientWidth > 768
+      this.xlShow = isNotMobile()
     },
     maxNumber (numbers) {
       if (numbers === undefined) {
@@ -691,6 +698,7 @@ export default {
     switchDimension (e) {
       const key = e.key
       console.log(key)
+      this.switchSelect = key
       if (key === 'sameDayLog') {
         this.sameDayLog()
       } else if (key === 'recentWeekLogForBar') {
@@ -706,6 +714,7 @@ export default {
       this.recentWeekLog()
       this.sameDayLog()
       this.listType()
+      this.listSpider()
       this.articleList()
     },
     /** 统计访问数据 */
@@ -717,14 +726,13 @@ export default {
     }, /** 统计访问数据 */
     sameDayLog () {
       sameDayLog().then(res => {
-          this.buildViewItemsForEbar(res.result.items, 'HH时')
+          this.buildViewItemsForEbar(res, 'HH时', '本天访问量')
         }
       )
     }, /** 统计访问数据 */
     recentWeekLog () {
       recentWeekLog().then(res => {
           this.visitData = res.result
-          this.visitData.visitScale = this.buildVisitScale(res.result.maxItem.number)
           const optionData = this.buildViewItems(res.result.items, 'YYYY-MM-DD')
           this.eLineData.option.xAxis.data = optionData.xAxisData
           this.eLineData.option.series.data = optionData.seriesData
@@ -733,27 +741,36 @@ export default {
     }, /** 统计访问数据 */
     recentWeekLogForBar () {
       recentWeekLog().then(res => {
-          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM-DD')
+          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '本周访问量')
         }
       )
     }, /** 统计访问数据 */
     sameMonthLog () {
       sameMonthLog().then(res => {
-          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM-DD')
+          this.buildViewItemsForEbar(res, 'YYYY-MM-DD', '本月访问量')
         }
       )
     }, /** 统计访问数据 */
     sameYearLog () {
       sameYearLog().then(res => {
-          this.buildViewItemsForEbar(res.result.items, 'YYYY-MM')
+          this.buildViewItemsForEbar(res, 'YYYY-MM', '本年访问量')
         }
       )
-    }, /** 统计访问数据 */
+    }, /** 统计文章类型 */
     listType () {
       listType().then(res => {
           const items = res.result
-          this.eListTypeInfo.option.legend.data = _.map(items, 'name')
           this.eListTypeInfo.option.series.data = items
+          this.eListTypeInfo.option.legend.data = _.map(items, 'name')
+        }
+      )
+    }, /** 统计爬虫访问 */
+    listSpider () {
+      listSpider().then(res => {
+          const items = res.result
+          console.log(items)
+          this.eListSpiderInfo.option.series.data = items
+          this.eListSpiderInfo.option.legend.data = _.map(items, 'name')
         }
       )
     }, /** 文章列表 */
@@ -789,23 +806,12 @@ export default {
       return option
     },
 
-    buildViewItemsForEbar (items, format) {
+    buildViewItemsForEbar (res, format, titleText) {
+      const items = res.result.items
       const optionData = this.buildViewItems(items, format)
       this.eBarData.option.xAxis.data = optionData.xAxisData
       this.eBarData.option.series.data = optionData.seriesData
-    },
-    buildVisitScale (maxNumber) {
-      return [{
-        dataKey: 'x',
-        alias: '时间'
-      },
-        {
-          dataKey: 'y',
-          alias: '访问量',
-          min: 0,
-          max: maxNumber
-        }
-      ]
+      this.eBarData.option.title.text = titleText
     }
   }
 }

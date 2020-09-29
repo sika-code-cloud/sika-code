@@ -65,3 +65,12 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+/** 判断是否是手机屏幕 是返回true，否则返回false */
+export function isMobile () {
+  return !isNotMobile()
+}
+
+export function isNotMobile () {
+  return document.documentElement.clientWidth > 768
+}
