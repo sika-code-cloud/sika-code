@@ -189,7 +189,7 @@
                     </a-menu>
                   </a-dropdown>
                 </div>
-                <a-date-picker :style="{width: '115px'}" @change="onChangeForLog" :value = "queryData.pointDateFor"/>
+                <a-date-picker :style="{width: '128px'}" @change="onChangeForLog" :value = "queryData.pointDateFor"/>
               </a-col>
             </a-row>
           </div>
@@ -666,11 +666,11 @@ export default {
       this.loading = !this.loading
     }, 500)
     this.handleResize()
-    this.loadStatisticsData()
     window.addEventListener('resize', this.handleResize)
   },
   mounted () {
     console.log('test')
+    this.loadStatisticsData()
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.handleResize)
