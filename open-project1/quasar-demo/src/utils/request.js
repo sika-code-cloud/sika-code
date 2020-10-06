@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { LoadingBar } from 'quasar'
+import {
+  LoadingBar
+} from 'quasar'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例

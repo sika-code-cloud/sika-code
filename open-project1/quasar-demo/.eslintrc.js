@@ -1,72 +1,54 @@
 module.exports = {
-  // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-  // This option interrupts the configuration hierarchy at this file
-  // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
   root: true,
-
+  parser: 'babel-eslint',
   parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module' // Allows for the use of imports
+    //设置"script"（默认）或"module"如果你的代码是在ECMAScript中的模块。
+    sourceType: 'module'
   },
-
   env: {
-    browser: true
+    browser: true,
   },
-
-  // Rules order is important, please avoid shuffling them
-  extends: [
-    // Base ESLint recommended rules
-    // 'eslint:recommended',
-
-
-    // Uncomment any of the lines below to choose desired strictness,
-    // but leave only one uncommented!
-    // See https://eslint.vuejs.org/rules/#available-rules
-    'plugin:vue/essential', // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    // 'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-
-    'standard'
-
-  ],
-
+  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+  extends: 'standard',
+  // required to lint *.vue files
   plugins: [
-    // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file
-    // required to lint *.vue files
-    'vue',
-
+    'html'
   ],
-
-  globals: {
-    ga: true, // Google Analytics
-    cordova: true,
-    __statics: true,
-    process: true,
-    Capacitor: true,
-    chrome: true
-  },
-
   // add your custom rules here
-  rules: {
-    // allow async-await
-    'generator-star-spacing': 'off',
+  'rules': {
     // allow paren-less arrow functions
-    'arrow-parens': 'off',
-    'one-var': 'off',
-
-    'import/first': 'off',
-    'import/named': 'error',
-    'import/namespace': 'error',
-    'import/default': 'error',
-    'import/export': 'error',
-    'import/extensions': 'off',
-    'import/no-unresolved': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    'prefer-promise-reject-errors': 'off',
-
-
-    // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'arrow-parens': 0,
+    // allow async-await
+    'generator-star-spacing': 0,
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    "no-unused-vars": [2, {
+      // 允许声明未使用变量
+      "vars": "local",
+      // 参数不检查
+      "args": "none"
+    }],
+    // 关闭语句强制分号结尾
+    "semi": [0],
+    //key值前面是否要有空格
+    "key-spacing": [0, {
+      "singleLine": {
+        "beforeColon": false,
+        "afterColon": true
+      },
+      "multiLine": {
+        "beforeColon": true,
+        "afterColon": true,
+        "align": "colon"
+      },
+      //空行最多不能超过100行
+      "no-multiple-empty-lines": [0, {
+        "max": 100
+      }],
+      //关闭禁止混用tab和空格
+      "no-mixed-spaces-and-tabs": [0],
+      //数组第一个指定是否启用这个规则，第二个指定几个空格
+      "indent": [1, 2],
+    }]
   }
 }

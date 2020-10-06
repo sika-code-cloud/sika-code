@@ -1,32 +1,30 @@
 <template>
   <div class="q-pa-md">
-    <q-ajax-bar
-      ref="bar"
-      position="top"
-      color="accent"
-      size="5px"
-      skip-hijack
-    />
     <q-btn color="primary" label="Trigger" @click="trigger" />
   </div>
 </template>
 
 <script>
+import { login } from 'api/user'
+
 export default {
   name: 'q-ajax',
   methods: {
     // we manually trigger it (this is not needed if we
     // don't skip Ajax calls hijacking)
-    trigger () {
-      const bar = this.$refs.bar
-
-      bar.start()
-
-      this.timer = setTimeout(() => {
-        if (this.$refs.bar) {
-          this.$refs.bar.stop()
-        }
-      }, Math.random() * 3000 + 1000)
+    trigger() {
+      login()
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(() => {
+          this.$q.notify({
+            color: 'negative',
+            position: 'top',
+            message: 'Loading failed',
+            icon: 'report_problem'
+          })
+        })
     }
   }
 }
