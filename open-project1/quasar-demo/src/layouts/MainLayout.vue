@@ -1,133 +1,95 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
+  <div>
+    <DefaultLayout v-if="layout === 'default'">
+      <template v-slot:page>
+        <q-page-sticky
+          position="right"
+          :offset="[18, 18]"
+          glossy="true"
+        >
+          <q-fab
+            icon="add"
+            direction="up"
+            color="accent"
+          >
+            <q-fab-action
+              @click="onClick('default')"
+              color="primary"
+              icon="person_add"
+              :glossy="glossy"
+            />
+            <q-fab-action
+              @click="onClick('google')"
+              color="primary"
+              icon="mail"
+            />
+          </q-fab>
+        </q-page-sticky>
+      </template>
+    </DefaultLayout>
+    <GoogleNewsLayout v-else-if="layout === 'google'">
+      <template v-slot:page>
+        <q-page-sticky
+          position="right"
+          :offset="[18, 18]"
+          persistent
           flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-    <q-footer elevated>
-      <q-toolbar>
-        <q-toolbar-title>Footer</q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-    <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-1">
-      <q-list>
-        <q-item-label header class="text-grey-8">
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+        >
+          <q-fab
+            icon="add"
+            direction="up"
+            color="accent"
+          >
+            <q-fab-action
+              @click="onClick('default')"
+              color="primary"
+              icon="person_add"
+              :glossy="glossy"
+            />
+            <q-fab-action
+              @click="onClick('google')"
+              color="primary"
+              icon="mail"
+            />
+          </q-fab>
+        </q-page-sticky>
+      </template>
+    </GoogleNewsLayout>
+  </div>
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Button Demo',
-    caption: 'button',
-    icon: 'favorite',
-    link: '/button'
-  },
-  {
-    title: 'Ajax Demo',
-    caption: 'ajax',
-    icon: 'favorite',
-    link: '/ajax'
-  },
-  {
-    title: 'Avatar Demo',
-    caption: 'avatar',
-    icon: 'favorite',
-    link: '/avatar'
-  },
-  {
-    title: 'Badge Demo',
-    caption: 'badge',
-    icon: 'favorite',
-    link: '/badge'
-  },
-  {
-    title: 'Card Demo',
-    caption: 'card',
-    icon: 'favorite',
-    link: '/card'
-  }
-]
-
+import DefaultLayout from './DefaultLayout.vue'
+import GoogleNewsLayout from './GoogleNewsLayout.vue'
+const layoutKey = 'layout'
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
-  data() {
+  components: { DefaultLayout, GoogleNewsLayout },
+  data () {
     return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
+      layout: '',
+      glossy: true
     }
+  },
+  methods: {
+    onClick (layout) {
+      console.log(layout)
+      this.layout = layout
+      this.$q.localStorage.set(layoutKey, layout)
+    }
+  },
+  created: function () {
+    const layoutFromLocal = this.$q.localStorage.getItem(layoutKey)
+    if (layoutFromLocal) {
+      this.layout = layoutFromLocal
+      return
+    }
+    this.layout = 'default'
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.q-page-sticky
+  z-index: 999
+</style>

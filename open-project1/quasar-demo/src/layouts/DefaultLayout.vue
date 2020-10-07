@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <q-layout view="lHh Lpr lFf">
+      <q-header elevated>
+        <q-toolbar>
+          <q-btn
+            flat
+            dense
+            round
+            icon="menu"
+            aria-label="Menu"
+            @click="leftDrawerOpen = !leftDrawerOpen"
+          />
+
+          <q-toolbar-title>
+            Quasar App
+          </q-toolbar-title>
+
+          <div>Quasar v{{ $q.version }}</div>
+        </q-toolbar>
+      </q-header>
+      <q-footer elevated>
+        <q-toolbar>
+          <q-toolbar-title>Footer</q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
+      <q-drawer
+        v-model="leftDrawerOpen"
+        bordered
+        content-class="bg-grey-1"
+      >
+        <EssentialLink />
+      </q-drawer>
+
+      <q-page-container>
+        <slot name="page">hello world</slot>
+        <router-view />
+      </q-page-container>
+    </q-layout>
+  </div>
+</template>
+
+<script>
+import EssentialLink from 'components/EssentialLink.vue'
+
+export default {
+  name: 'MainLayout',
+  components: { EssentialLink },
+  props: {},
+  data () {
+    return {
+      leftDrawerOpen: true
+    }
+  }
+}
+</script>

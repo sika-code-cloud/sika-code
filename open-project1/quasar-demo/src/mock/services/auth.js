@@ -15,7 +15,13 @@ const login = options => {
   const body = getBody(options)
   console.log('mock: body', body)
   if (!username.includes(body.username) || !password.includes(body.password)) {
-    return builder({ isLogin: true }, '账户或密码错误', 401)
+    return builder(
+      {
+        isLogin: true
+      },
+      '账户或密码错误',
+      401
+    )
   }
 
   return builder(
@@ -39,7 +45,9 @@ const login = options => {
     },
     '',
     200,
-    { 'Custom-Header': Mock.mock('@guid') }
+    {
+      'Custom-Header': Mock.mock('@guid')
+    }
   )
 }
 
@@ -48,11 +56,15 @@ const logout = () => {
 }
 
 const smsCaptcha = () => {
-  return builder({ captcha: Mock.mock('@integer(10000, 99999)') })
+  return builder({
+    captcha: Mock.mock('@integer(10000, 99999)')
+  })
 }
 
 const twofactor = () => {
-  return builder({ stepCode: Mock.mock('@integer(0, 1)') })
+  return builder({
+    stepCode: Mock.mock('@integer(0, 1)')
+  })
 }
 
 Mock.mock(/\/auth\/login/, 'post', login)

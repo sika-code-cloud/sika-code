@@ -10,12 +10,15 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@quasar/cli": "^1.1.2",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "mockjs": "^1.1.0",
     "mockjs2": "^1.0.8",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

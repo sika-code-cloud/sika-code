@@ -1,6 +1,10 @@
 <template>
   <div class="q-pa-md">
-    <q-btn color="primary" label="Trigger" @click="trigger" />
+    <q-btn
+      color="primary"
+      label="Trigger"
+      @click="trigger"
+    />
   </div>
 </template>
 
@@ -12,7 +16,7 @@ export default {
   methods: {
     // we manually trigger it (this is not needed if we
     // don't skip Ajax calls hijacking)
-    trigger() {
+    trigger () {
       login()
         .then(response => {
           console.log(response.data)

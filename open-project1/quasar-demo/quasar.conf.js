@@ -7,7 +7,9 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 const path = require('path')
-const { env } = require('process')
+const {
+  env
+} = require('process')
 
 module.exports = function (ctx) {
   return {
@@ -61,9 +63,16 @@ module.exports = function (ctx) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-      env: ctx.dev ? { VUE_APP_BASE_API: 'http://dev.api.com/api' } : { VUE_APP_BASE_API: 'http://prod.api.com' },
+      env: ctx.dev ? {
+        VUE_APP_BASE_API: 'http://dev.api.com/api'
+      } : {
+        VUE_APP_BASE_API: 'http://prod.api.com'
+      },
       // https://quasar.dev/quasar-cli/handling-webpack
-      extendWebpack (cfg, { isServer, isClient }) {
+      extendWebpack(cfg, {
+        isServer,
+        isClient
+      }) {
         cfg.resolve.alias = {
           ...cfg.resolve.alias, // This adds the existing alias
 
@@ -119,7 +128,10 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'LoadingBar'
+        'LoadingBar',
+        'LocalStorage',
+        'SessionStorage',
+        'Meta'
       ]
     },
 
@@ -144,8 +156,7 @@ module.exports = function (ctx) {
         orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#027be3',
-        icons: [
-          {
+        icons: [{
             src: 'icons/icon-128x128.png',
             sizes: '128x128',
             type: 'image/png'
@@ -210,8 +221,7 @@ module.exports = function (ctx) {
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: true,
 
-      extendWebpack (cfg) {
-      }
+      extendWebpack(cfg) {}
     }
   }
 }
