@@ -84,6 +84,18 @@ const linksData = [
     caption: 'dialog',
     icon: 'favorite',
     link: '/dialog'
+  },
+  {
+    title: 'Editor Demo',
+    caption: 'editor',
+    icon: 'favorite',
+    link: '/editor'
+  },
+  {
+    title: 'ExpansionItem Demo',
+    caption: 'expansionItem',
+    icon: 'favorite',
+    link: '/expansionItem'
   }
 ]
 

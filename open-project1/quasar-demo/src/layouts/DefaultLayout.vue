@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-layout view="lHh Lpr lFf">
+    <q-layout view="hHh LpR fFf">
       <q-header elevated>
         <q-toolbar>
           <q-btn
@@ -9,7 +9,7 @@
             round
             icon="menu"
             aria-label="Menu"
-            @click="leftDrawerOpen = !leftDrawerOpen"
+            @click="onClick"
           />
 
           <q-toolbar-title>
@@ -28,6 +28,8 @@
         v-model="leftDrawerOpen"
         bordered
         content-class="bg-grey-1"
+        @hide="hide"
+        @show="show"
       >
         <EssentialLink />
       </q-drawer>
@@ -46,11 +48,36 @@ import EssentialLink from 'components/EssentialLink.vue'
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
-  props: {},
+  props: {
+
+  },
   data () {
     return {
-      leftDrawerOpen: true
+      leftDrawerOpen: false
     }
+  },
+  methods: {
+    onClick () {
+      this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+    hide () {
+      console.log(this.leftDrawerOpen)
+      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
+    },
+    show () {
+      console.log(this.leftDrawerOpen)
+      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
+    },
+    getLeftDrawOpen () {
+      const leftDrawerOpenFromLocal = this.$q.localStorage.getItem('leftDrawerOpen')
+      if (leftDrawerOpenFromLocal) {
+        return leftDrawerOpenFromLocal
+      }
+      return false
+    }
+  },
+  mounted: function () {
+    this.leftDrawerOpen = this.getLeftDrawOpen()
   }
 }
 </script>

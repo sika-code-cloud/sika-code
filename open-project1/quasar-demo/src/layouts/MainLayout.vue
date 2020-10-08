@@ -1,22 +1,25 @@
 <template>
   <div>
-    <DefaultLayout v-if="layout === 'default'">
+    <DefaultLayout
+      v-if="layout === 'default'"
+      :leftDrawerOpen="leftDrawerOpen"
+    >
       <template v-slot:page>
         <q-page-sticky
           position="right"
           :offset="[18, 18]"
-          glossy="true"
         >
           <q-fab
             icon="add"
             direction="up"
             color="accent"
+            glossy
           >
             <q-fab-action
               @click="onClick('default')"
               color="primary"
               icon="person_add"
-              :glossy="glossy"
+              glossy
             />
             <q-fab-action
               @click="onClick('google')"
@@ -27,24 +30,26 @@
         </q-page-sticky>
       </template>
     </DefaultLayout>
-    <GoogleNewsLayout v-else-if="layout === 'google'">
+    <GoogleNewsLayout
+      v-else-if="layout === 'google'"
+      :leftDrawerOpen="leftDrawerOpen"
+    >
       <template v-slot:page>
         <q-page-sticky
           position="right"
           :offset="[18, 18]"
-          persistent
-          flat
+          glossy
         >
           <q-fab
             icon="add"
             direction="up"
             color="accent"
+            glossy
           >
             <q-fab-action
               @click="onClick('default')"
               color="primary"
               icon="person_add"
-              :glossy="glossy"
             />
             <q-fab-action
               @click="onClick('google')"
@@ -68,6 +73,7 @@ export default {
   data () {
     return {
       layout: '',
+      leftDrawerOpen: false,
       glossy: true
     }
   },

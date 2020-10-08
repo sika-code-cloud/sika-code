@@ -13,7 +13,7 @@
           flat
           dense
           round
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="onClick"
           aria-label="Menu"
           icon="menu"
           class="q-mr-sm"
@@ -176,7 +176,7 @@
             flat
           >
             <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602169145979&di=27aec60072c82766266a914fd4c22093&imgtype=0&src=http%3A%2F%2Fbbsnew.pic.178.com%2Fpic%2F16%2F164022%2Fmonth_1212%2F234047nqz70o77z0ha692a.jpg" />
             </q-avatar>
             <q-tooltip>Account</q-tooltip>
           </q-btn>
@@ -186,10 +186,11 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
       bordered
       content-class="bg-white"
       :width="280"
+      @hide="hide"
+      @show="show"
     >
       <q-scroll-area class="fit">
         <EssentialLink />
@@ -209,10 +210,11 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 export default {
   name: 'GoogleNewsLayout',
-  props: {},
+  props: {
+  },
   data () {
     return {
-      leftDrawerOpen: true,
+      leftDrawerOpen: false,
       search: '',
       showAdvanced: false,
       showDateOptions: false,
@@ -235,7 +237,28 @@ export default {
     changeDate (option) {
       this.byDate = option
       this.showDateOptions = false
+    },
+    onClick () {
+      this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+    hide () {
+      console.log(this.leftDrawerOpen)
+      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
+    },
+    show () {
+      console.log(this.leftDrawerOpen)
+      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
+    },
+    getLeftDrawOpen () {
+      const leftDrawerOpenFromLocal = this.$q.localStorage.getItem('leftDrawerOpen')
+      if (leftDrawerOpenFromLocal) {
+        return leftDrawerOpenFromLocal
+      }
+      return false
     }
+  },
+  mounted: function () {
+    this.leftDrawerOpen = this.getLeftDrawOpen()
   }
 }
 </script>

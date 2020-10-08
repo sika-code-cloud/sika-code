@@ -74,12 +74,14 @@
 
         <q-page-container>
           <q-page padding>
-            <p
-              v-for="n in contentSize"
-              :key="n"
-            >
-              {{ lorem }}
-            </p>
+            <q-scroll-area style="height: 70vh; max-width: 70vh;">
+              <p
+                v-for="n in contentSize"
+                :key="n"
+              >
+                {{ lorem }}
+              </p>
+            </q-scroll-area>
           </q-page>
         </q-page-container>
       </q-layout>

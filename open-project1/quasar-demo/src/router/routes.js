@@ -90,6 +90,26 @@ const routes = [
     ]
   },
   {
+    path: '/editor',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Editor.vue')
+      }
+    ]
+  },
+  {
+    path: '/expansionItem',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/ExpansionItem.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
