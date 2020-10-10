@@ -110,6 +110,26 @@ const routes = [
     ]
   },
   {
+    path: '/form/input',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/form/Input.vue')
+      }
+    ]
+  },
+  {
+    path: '/form/form',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/form/Form.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [

@@ -13,7 +13,6 @@
         <pre style="white-space: pre-line">{{ editor }}</pre>
       </q-card-section>
     </q-card>
-
     <q-card
       flat
       bordered

@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div
-      class="q-pa-md"
-      style="max-width: 350px"
-    >
-      <q-list
-        bordered
-        class="rounded-borders"
-      >
+    <div class="q-pa-md" style="max-width: 350px">
+      <q-list bordered class="rounded-borders">
         <q-expansion-item
           expand-separator
           icon="perm_identity"
@@ -16,8 +10,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -30,8 +25,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -45,22 +41,20 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
         </q-expansion-item>
 
-        <q-expansion-item
-          icon="assessment"
-          label="Disabled"
-          disable
-        >
+        <q-expansion-item icon="assessment" label="Disabled" disable>
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -69,15 +63,8 @@
     </div>
 
     <q-separator />
-    <div
-      class="q-pa-md"
-      style="max-width: 350px"
-    >
-      <q-list
-        padding
-        bordered
-        class="rounded-borders"
-      >
+    <div class="q-pa-md" style="max-width: 350px">
+      <q-list padding bordered class="rounded-borders">
         <q-expansion-item
           dense
           dense-toggle
@@ -87,8 +74,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -103,8 +91,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -120,8 +109,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -129,14 +119,8 @@
       </q-list>
     </div>
     <q-separator />
-    <div
-      class="q-pa-md"
-      style="max-width: 350px"
-    >
-      <q-list
-        bordered
-        class="rounded-borders"
-      >
+    <div class="q-pa-md" style="max-width: 350px">
+      <q-list bordered class="rounded-borders">
         <q-expansion-item
           switch-toggle-side
           expand-separator
@@ -145,8 +129,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -160,18 +145,16 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
         </q-expansion-item>
       </q-list>
 
-      <q-list
-        bordered
-        class="rounded-borders q-mt-md"
-      >
+      <q-list bordered class="rounded-borders q-mt-md">
         <q-expansion-item
           dense-toggle
           switch-toggle-side
@@ -181,8 +164,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -197,8 +181,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -206,53 +191,30 @@
       </q-list>
     </div>
     <q-separator />
-    <div
-      class="q-pa-md"
-      style="max-width: 350px"
-    >
-      <q-list
-        bordered
-        class="rounded-borders"
-      >
+    <div class="q-pa-md" style="max-width: 350px">
+      <q-list bordered class="rounded-borders">
         <q-expansion-item>
           <template v-slot:header>
             <q-item-section avatar>
-              <q-avatar
-                icon="bluetooth"
-                color="primary"
-                text-color="white"
-              />
+              <q-avatar icon="bluetooth" color="primary" text-color="white" />
             </q-item-section>
 
-            <q-item-section>
-              Bluetooth technology
-            </q-item-section>
+            <q-item-section> Bluetooth technology </q-item-section>
 
             <q-item-section side>
               <div class="row items-center">
-                <q-icon
-                  name="star"
-                  color="red"
-                  size="24px"
-                />
-                <q-icon
-                  name="star"
-                  color="red"
-                  size="24px"
-                />
-                <q-icon
-                  name="star"
-                  color="red"
-                  size="24px"
-                />
+                <q-icon name="star" color="red" size="24px" />
+                <q-icon name="star" color="red" size="24px" />
+                <q-icon name="star" color="red" size="24px" />
               </div>
             </q-item-section>
           </template>
 
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -264,19 +226,18 @@
           <template v-slot:header>
             <q-item-section avatar>
               <q-avatar>
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
               </q-avatar>
             </q-item-section>
 
-            <q-item-section>
-              John Doe
-            </q-item-section>
+            <q-item-section> John Doe </q-item-section>
           </template>
 
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -287,21 +248,17 @@
         <q-expansion-item>
           <template v-slot:header>
             <q-item-section avatar>
-              <q-icon
-                color="purple"
-                name="signal_wifi_off"
-              />
+              <q-icon color="purple" name="signal_wifi_off" />
             </q-item-section>
 
-            <q-item-section>
-              Wifi settings
-            </q-item-section>
+            <q-item-section> Wifi settings </q-item-section>
           </template>
 
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -309,10 +266,7 @@
       </q-list>
     </div>
     <q-separator />
-    <div
-      class="q-pa-md"
-      style="max-width: 350px"
-    >
+    <div class="q-pa-md" style="max-width: 350px">
       <q-list bordered>
         <q-expansion-item
           group="somegroup"
@@ -323,8 +277,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -340,8 +295,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -357,8 +313,9 @@
         >
           <q-card>
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>
@@ -375,8 +332,9 @@
         >
           <q-card class="bg-teal-2">
             <q-card-section>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+              eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+              dolorum officiis modi facere maiores architecto suscipit iste
               eveniet doloribus ullam aliquid.
             </q-card-section>
           </q-card>

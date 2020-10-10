@@ -1,21 +1,13 @@
 <template>
   <q-list>
-    <q-item-label
-      header
-      class="text-grey-8"
-    >
-      Essential Links
-    </q-item-label>
+    <q-item-label header class="text-grey-8"> Essential Links </q-item-label>
     <q-item
       v-for="linkData in linksData"
       :key="linkData.title"
       clickable
       :to="linkData.link"
     >
-      <q-item-section
-        v-if="linkData.icon"
-        avatar
-      >
+      <q-item-section v-if="linkData.icon" avatar>
         <q-icon :name="linkData.icon" />
       </q-item-section>
 
@@ -96,12 +88,24 @@ const linksData = [
     caption: 'expansionItem',
     icon: 'favorite',
     link: '/expansionItem'
+  },
+  {
+    title: 'Form/Input Demo',
+    caption: 'Form input',
+    icon: 'favorite',
+    link: '/form/input'
+  },
+  {
+    title: 'Form/Form Demo',
+    caption: 'Form Form',
+    icon: 'favorite',
+    link: '/form/form'
   }
 ]
 
 export default {
   name: 'EssentialLink',
-  data () {
+  data() {
     return {
       linksData
     }
