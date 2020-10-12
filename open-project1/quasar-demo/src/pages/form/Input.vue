@@ -193,7 +193,9 @@ export default {
       url: '',
       time: '',
       date: '',
-      model: ''
+      model: '',
+      readonly: false,
+      disable: false
     }
   },
   computed: {
