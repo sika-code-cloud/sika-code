@@ -1,5 +1,35 @@
 const routes = [
   {
+    path: '/user/login',
+    component: () => import('layouts/UserLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/user/Login.vue')
+      }
+    ]
+  },
+  {
+    path: '/user/register',
+    component: () => import('layouts/UserLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/user/Register.vue')
+      }
+    ]
+  },
+  {
+    path: '/user/registerResult',
+    component: () => import('layouts/UserLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/user/RegisterResult.vue')
+      }
+    ]
+  },
+  {
     path: '/button',
     component: () => import('layouts/MainLayout.vue'),
     children: [
