@@ -20,6 +20,16 @@ const routes = [
     ]
   },
   {
+    path: '/user/register',
+    component: () => import('layouts/UserLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/user/Register.vue')
+      }
+    ]
+  },
+  {
     path: '/user/registerResult',
     component: () => import('layouts/UserLayout.vue'),
     children: [

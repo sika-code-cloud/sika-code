@@ -124,8 +124,9 @@
             <div class="row">
               <div class="col">
                 <q-btn
-                  label="登录"
+                  label="登 录"
                   glossy
+                  size="17px"
                   color="primary q-mt-sm"
                   class="full-width"
                 />
@@ -149,7 +150,12 @@
                 ></q-icon>
               </div>
               <div class="col text-right">
-                <q-btn color="primary" flat label="注册用户" />
+                <q-btn
+                  to="/user/register"
+                  color="primary"
+                  flat
+                  label="注册用户"
+                />
               </div>
             </div>
           </div>
