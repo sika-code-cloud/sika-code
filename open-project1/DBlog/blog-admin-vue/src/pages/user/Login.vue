@@ -16,45 +16,74 @@
     <div class="q-gutter-y-sm">
       <q-tab-panels v-model="tab" animated class="text-center">
         <q-tab-panel name="mails">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-            <q-input
-              outlined
-              clearable
-              clear-icon="cancel"
-              v-model="name"
-              :dense="dense"
-              label="用户名"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-            >
-              <template v-slot:prepend>
-                <q-icon name="event" />
-              </template>
-            </q-input>
-            <q-input
-              outlined
-              clearable
-              clear-icon="cancel"
-              :type="isPwd ? 'password' : 'text'"
-              v-model="password"
-              :dense="dense"
-              label="密码"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '请输入密码']"
-            >
-              <template v-slot:prepend>
-                <q-icon name="event" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
-
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-sm">
+            <div class="row">
+              <div class="col">
+                <q-input
+                  outlined
+                  clearable
+                  clear-icon="cancel"
+                  v-model="name"
+                  :dense=" $q.screen.lt.sm"
+                  label="用户名"
+                  lazy-rules
+                  square
+                  :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="event" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <q-input
+                  outlined
+                  clearable
+                  clear-icon="cancel"
+                  :type="isPwd ? 'password' : 'text'"
+                  v-model="password"
+                  :dense=" $q.screen.lt.sm"
+                  label="密码"
+                  lazy-rules
+                  square
+                  :rules="[(val) => (val && val.length > 0) || '请输入密码']"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="event" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-left" >
+                <q-checkbox v-model="autoLogin" label="自动登录" />
+              </div>
+              <div class="col text-right q-pr-sm">
+                <q-btn color="primary" flat label="忘记密码" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <q-btn label="登录" glossy color="primary q-mt-sm" class="full-width"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-left">
+                其他登录方式
+              </div>
+              <div class="col text-right">
+                其他登录方式
+              </div>
+            </div>
             <div>
               <q-btn label="Submit" type="submit" color="primary" />
               <q-btn
@@ -144,6 +173,7 @@ export default {
       password: null,
       accept: false,
       isPwd: true,
+      autoLogin: true,
       dense: false
     }
   },

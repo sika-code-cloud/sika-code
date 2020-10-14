@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
+  <div class="q-pa-md">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-toggle v-model="dense" />
       <q-input
@@ -7,7 +7,7 @@
         v-model="name"
         label="Your name *"
         hint="Name and surname"
-        :dense="dense"
+        :dense="$q.screen.lt.sm"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
@@ -18,7 +18,7 @@
         v-model="age"
         label="Your age *"
         lazy-rules
-        :dense="dense"
+        :dense="$q.screen.lt.sm"
         :rules="[
           (val) => (val !== null && val !== '') || 'Please type your age',
           (val) => (val > 0 && val < 100) || 'Please type a real age'
@@ -36,6 +36,7 @@
           flat
           class="q-ml-sm"
         />
+
       </div>
     </q-form>
   </div>
@@ -47,11 +48,12 @@ export default {
       name: null,
       age: null,
       dense: false,
-
       accept: false
     }
   },
-
+  created() {
+    console.log('----------' + this.$q.screen.lt.md)
+  },
   methods: {
     onSubmit() {
       if (this.accept !== true) {
