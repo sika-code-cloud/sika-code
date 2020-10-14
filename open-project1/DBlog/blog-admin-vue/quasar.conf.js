@@ -7,9 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 const path = require('path')
-const {
-  env
-} = require('process')
+const { env } = require('process')
 
 module.exports = function (ctx) {
   return {
@@ -22,14 +20,10 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: [
-      'main.js'
-    ],
+    boot: ['main.js'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    css: [
-      'app.sass'
-    ],
+    css: ['app.sass'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -37,7 +31,7 @@ module.exports = function (ctx) {
       // 'mdi-v5',
       // 'fontawesome-v5',
       // 'eva-icons',
-      // 'themify',
+      'themify',
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
@@ -63,21 +57,21 @@ module.exports = function (ctx) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-      env: ctx.dev ? {
-        VUE_APP_BASE_API: 'http://dev.api.com/api'
-      } : {
-        VUE_APP_BASE_API: 'http://prod.api.com'
-      },
+      env: ctx.dev
+        ? {
+            VUE_APP_BASE_API: 'http://dev.api.com/api'
+          }
+        : {
+            VUE_APP_BASE_API: 'http://prod.api.com'
+          },
       // https://quasar.dev/quasar-cli/handling-webpack
-      extendWebpack(cfg, {
-        isServer,
-        isClient
-      }) {
+      extendWebpack(cfg, { isServer, isClient }) {
         cfg.resolve.alias = {
           ...cfg.resolve.alias, // This adds the existing alias
 
           // Add your own alias like this
           api: path.resolve(__dirname, './src/api'),
+          statics: path.resolve(__dirname, './src/statics'),
           utils: path.resolve(__dirname, './src/utils'),
           mock: path.resolve(__dirname, './src/mock'),
           '@': path.resolve(__dirname, './src')
@@ -109,7 +103,7 @@ module.exports = function (ctx) {
     },
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      iconSet: 'material-icons', // Quasar icon set
+      iconSet: 'themify', // Quasar icons set
       lang: 'en-us', // Quasar language pack
       config: {},
 
@@ -156,28 +150,29 @@ module.exports = function (ctx) {
         orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#027be3',
-        icons: [{
-            src: 'icons/icon-128x128.png',
+        icons: [
+          {
+            src: 'icons/icons-128x128.png',
             sizes: '128x128',
             type: 'image/png'
           },
           {
-            src: 'icons/icon-192x192.png',
+            src: 'icons/icons-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'icons/icon-256x256.png',
+            src: 'icons/icons-256x256.png',
             sizes: '256x256',
             type: 'image/png'
           },
           {
-            src: 'icons/icon-384x384.png',
+            src: 'icons/icons-384x384.png',
             sizes: '384x384',
             type: 'image/png'
           },
           {
-            src: 'icons/icon-512x512.png',
+            src: 'icons/icons-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
@@ -201,13 +196,11 @@ module.exports = function (ctx) {
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
         // OS X / Mac App Store
         // appBundleId: '',
         // appCategoryType: '',
         // osxSign: '',
         // protocol: 'myapp://path',
-
         // Windows only
         // win32metadata: { ... }
       },

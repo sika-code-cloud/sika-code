@@ -20,6 +20,9 @@
       "assets/*": [
         "src/assets/*"
       ],
+      "statics/*": [
+        "src/statics/*"
+      ],
       "boot/*": [
         "src/boot/*"
       ],

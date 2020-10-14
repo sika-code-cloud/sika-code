@@ -1,164 +1,160 @@
 <template>
   <div>
-    <q-tabs
-      v-model="tab"
-      active-color="primary"
-      indicator-color="primary"
-      align="left"
-      :breakpoint="0"
-      narrow-indicator
-      class="text-black q-mb-lg"
-    >
-      <q-tab name="mails" label="用户密码登录" />
-      <q-tab name="alarms" label="手机号登录" />
-    </q-tabs>
+    <div>
+      <q-form @submit="onSubmit" @reset="onReset">
+        <q-tabs
+          v-model="tab"
+          active-color="primary"
+          indicator-color="primary"
+          align="left"
+          :breakpoint="0"
+          narrow-indicator
+          class="text-black"
+        >
+          <q-tab name="mails" label="用户密码登录" />
+          <q-tab name="alarms" label="手机号登录" />
+        </q-tabs>
+        <div class="q-gutter-y-sm">
+          <q-tab-panels v-model="tab" class="text-center">
+            <q-tab-panel name="mails" class="q-col-gutter-y-sm">
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    outlined
+                    clearable
+                    clear-icon="cancel"
+                    v-model="name"
+                    dense
+                    label="用户名:admin"
+                    lazy-rules
+                    square
+                    :rules="[
+                      (val) => (val && val.length > 0) || '请输入用户名'
+                    ]"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="event" />
+                    </template>
+                  </q-input>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    outlined
+                    clearable
+                    clear-icon="cancel"
+                    :type="isPwd ? 'password' : 'text'"
+                    v-model="password"
+                    dense
+                    label="密码:sika"
+                    lazy-rules
+                    square
+                    :rules="[(val) => (val && val.length > 0) || '请输入密码']"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="event" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+              </div>
+            </q-tab-panel>
 
-    <div class="q-gutter-y-sm">
-      <q-tab-panels v-model="tab" animated class="text-center">
-        <q-tab-panel name="mails">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-sm">
-            <div class="row">
-              <div class="col">
-                <q-input
-                  outlined
-                  clearable
-                  clear-icon="cancel"
-                  v-model="name"
-                  :dense=" $q.screen.lt.sm"
-                  label="用户名"
-                  lazy-rules
-                  square
-                  :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="event" />
-                  </template>
-                </q-input>
+            <q-tab-panel name="alarms" class="q-col-gutter-y-sm">
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    outlined
+                    clearable
+                    clear-icon="cancel"
+                    v-model="name"
+                    dense
+                    label="手机号"
+                    lazy-rules
+                    square
+                    :rules="[
+                      (val) => (val && val.length > 0) || '请输入用户名'
+                    ]"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="event" />
+                    </template>
+                  </q-input>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <q-input
-                  outlined
-                  clearable
-                  clear-icon="cancel"
-                  :type="isPwd ? 'password' : 'text'"
-                  v-model="password"
-                  :dense=" $q.screen.lt.sm"
-                  label="密码"
-                  lazy-rules
-                  square
-                  :rules="[(val) => (val && val.length > 0) || '请输入密码']"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="event" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    outlined
+                    :type="isPwd ? 'password' : 'text'"
+                    v-model="password"
+                    dense
+                    label="验证码"
+                    lazy-rules
+                    square
+                    :rules="[(val) => (val && val.length > 0) || '请输入密码']"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="event" />
+                    </template>
+                    <template v-slot:after>
+                      <q-btn glossy color="secondary" label="获取验证码" />
+                    </template>
+                  </q-input>
+                </div>
               </div>
-            </div>
+            </q-tab-panel>
+          </q-tab-panels>
+          <div class="q-mx-md">
             <div class="row">
-              <div class="col text-left" >
+              <div class="col text-left">
                 <q-checkbox v-model="autoLogin" label="自动登录" />
               </div>
-              <div class="col text-right q-pr-sm">
+              <div class="col text-right">
                 <q-btn color="primary" flat label="忘记密码" />
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <q-btn label="登录" glossy color="primary q-mt-sm" class="full-width"/>
+                <q-btn
+                  label="登录"
+                  glossy
+                  color="primary q-mt-sm"
+                  class="full-width"
+                />
               </div>
             </div>
-            <div class="row">
-              <div class="col text-left">
-                其他登录方式
+            <div class="row q-pt-md">
+              <div class="col-auto text-left q-pt-sm">
+                <span>其他登录方式</span>
+                <q-icon
+                  class="q-mx-sm"
+                  size="20px"
+                  color="primary"
+                  name="ti-github"
+                ></q-icon>
+                <q-icon size="20px" color="primary" name="ti-skype"></q-icon>
+                <q-icon
+                  class="q-mx-sm"
+                  size="20px"
+                  color="primary"
+                  name="ti-linux"
+                ></q-icon>
               </div>
               <div class="col text-right">
-                其他登录方式
+                <q-btn color="primary" flat label="注册用户" />
               </div>
             </div>
-            <div>
-              <q-btn label="Submit" type="submit" color="primary" />
-              <q-btn
-                label="Reset"
-                type="reset"
-                color="primary"
-                flat
-                class="q-ml-sm"
-              />
-            </div>
-          </q-form>
-        </q-tab-panel>
-
-        <q-tab-panel name="alarms">
-          <div class="text-h6">Alarms</div>
-          Ad molestiae non facere animi nobis, similique nemo velit reiciendis
-          corporis impedit nam in.
-        </q-tab-panel>
-
-        <q-tab-panel name="movies">
-          <div class="text-h6">Movies</div>
-          Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni
-          ea.
-        </q-tab-panel>
-      </q-tab-panels>
-
-      <q-tab-panels
-        v-model="tab"
-        animated
-        transition-prev="fade"
-        transition-next="fade"
-        class="bg-orange text-white text-center"
-      >
-        <q-tab-panel name="mails">
-          <div class="text-h6">Mails</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </q-tab-panel>
-
-        <q-tab-panel name="alarms">
-          <div class="text-h6">Alarms</div>
-          Ad molestiae non facere animi nobis, similique nemo velit reiciendis
-          corporis impedit nam in.
-        </q-tab-panel>
-
-        <q-tab-panel name="movies">
-          <div class="text-h6">Movies</div>
-          Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni
-          ea.
-        </q-tab-panel>
-      </q-tab-panels>
-
-      <q-tab-panels
-        v-model="tab"
-        animated
-        transition-prev="jump-up"
-        transition-next="jump-down"
-        class="bg-teal text-white text-center"
-      >
-        <q-tab-panel name="mails">
-          <div class="text-h6">Mails</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </q-tab-panel>
-
-        <q-tab-panel name="alarms">
-          <div class="text-h6">Alarms</div>
-          Ad molestiae non facere animi nobis, similique nemo velit reiciendis
-          corporis impedit nam in.
-        </q-tab-panel>
-
-        <q-tab-panel name="movies">
-          <div class="text-h6">Movies</div>
-          Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni
-          ea.
-        </q-tab-panel>
-      </q-tab-panels>
+          </div>
+        </div>
+      </q-form>
     </div>
   </div>
 </template>
@@ -204,4 +200,7 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.q-tab-panel {
+}
+</style>

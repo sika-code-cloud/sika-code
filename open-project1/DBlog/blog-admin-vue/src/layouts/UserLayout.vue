@@ -14,10 +14,10 @@
       </q-footer>
 
       <q-page-container>
-        <div class="q-pa-sm row justify-center">
+        <div class="q-pa-sm row justify-center" :class="topMarginClass">
           <div class="col text-center" style="width: 100%; max-width: 400px">
-            <div>
-              <h4 class="q-ma-md">
+            <div class="q-mb-xl">
+              <h4 class="q-ma-sm">
                 <q-avatar class="q-mr-md"
                   ><img
                     alt="Sika logo"
@@ -42,10 +42,12 @@ export default {
   props: {},
   data() {
     return {
-      leftDrawerOpen: false
+      topMarginClass: 'q-mt-lg'
     }
   },
-  methods: {},
+  methods: {
+    topMargin() {}
+  },
   mounted: function () {}
 }
 </script>
