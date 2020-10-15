@@ -1084,7 +1084,7 @@
     user-home "2.0.0"
     validate-npm-package-name "3.0.0"
 
-"@quasar/extras@^1.0.0":
+"@quasar/extras@^1.9.7":
   version "1.9.7"
   resolved "https://registry.npm.taobao.org/@quasar/extras/download/@quasar/extras-1.9.7.tgz#143c77fcea9b1ca742031087b5a90d20c42eff37"
   integrity sha1-FDx3/OqbHKdCAxCHtakNIMQu/zc=
@@ -1596,6 +1596,11 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/amdefine/download/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
+
+animate.css@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-align@^3.0.0:
   version "3.0.0"

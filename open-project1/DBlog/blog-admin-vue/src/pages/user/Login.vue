@@ -133,21 +133,28 @@
               </div>
             </div>
             <div class="row q-pt-md">
-              <div class="col-auto text-left q-pt-sm">
+              <div class="col-auto text-left q-pt-sm ">
                 <span>其他登录方式</span>
-                <q-icon
-                  class="q-mx-sm"
-                  size="20px"
-                  color="primary"
-                  name="ti-github"
-                ></q-icon>
-                <q-icon size="20px" color="primary" name="ti-skype"></q-icon>
-                <q-icon
-                  class="q-mx-sm"
-                  size="20px"
-                  color="primary"
-                  name="ti-linux"
-                ></q-icon>
+                <q-btn class="q-ml-sm" push round size="xs" icon="ti-skype" text-color="primary" />
+                <q-btn class="q-ml-sm" push round size="xs" icon="ti-github" text-color="primary" />
+                <q-btn class="q-ml-sm" push round size="xs" icon="ti-linux" text-color="primary" />
+                <q-btn class="q-ml-sm" push round size="xs" icon="img:statics/icons/atm-away.svg" />
+                <transition-group
+                  appear
+                  enter-active-class="animated bounceInLeft"
+                  leave-active-class="animated bounceOutRight"
+                >
+                  <!-- We wrap a "p" tag and a QBtn -->
+                  <p key="text">
+                    Lorem Ipsum
+                  </p>
+                  <q-btn
+                    key="email-button"
+                    color="secondary"
+                    icon="mail"
+                    label="Email"
+                  />
+                </transition-group>
               </div>
               <div class="col text-right">
                 <q-btn

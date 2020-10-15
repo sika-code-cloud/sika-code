@@ -7,7 +7,6 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 const path = require('path')
-const { env } = require('process')
 
 module.exports = function (ctx) {
   return {
@@ -59,11 +58,11 @@ module.exports = function (ctx) {
       // extractCSS: false,
       env: ctx.dev
         ? {
-            VUE_APP_BASE_API: 'http://dev.api.com/api'
-          }
+          VUE_APP_BASE_API: 'http://dev.api.com/api'
+        }
         : {
-            VUE_APP_BASE_API: 'http://prod.api.com'
-          },
+          VUE_APP_BASE_API: 'http://prod.api.com'
+        },
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg, { isServer, isClient }) {
         cfg.resolve.alias = {
@@ -105,7 +104,19 @@ module.exports = function (ctx) {
     framework: {
       iconSet: 'themify', // Quasar icons set
       lang: 'en-us', // Quasar language pack
-      config: {},
+      config: {
+        brand: {
+          // src/css/quasar.variables.sass
+          primary: '#0089d6',
+          secondary: '#26A69A',
+          accent: '#9C27B0',
+          dark: '#1d1d1d',
+          positive: '#21BA45',
+          negative: '#C10015',
+          info: '#31CCEC',
+          warning: '#F2C037'
+        }
+      },
 
       // Possible values for "importStrategy":
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
@@ -131,7 +142,10 @@ module.exports = function (ctx) {
 
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
-    animations: [],
+    animations: [
+      'bounceInLeft',
+      'bounceOutRight'
+    ],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
