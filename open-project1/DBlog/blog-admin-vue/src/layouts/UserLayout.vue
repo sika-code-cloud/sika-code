@@ -7,12 +7,15 @@
           <div>Quasar v{{ $q.version }}</div>
         </q-toolbar>
       </q-header>
-      <q-footer elevated>
-        <q-toolbar>
-          <q-toolbar-title>Footer</q-toolbar-title>
-        </q-toolbar>
+      <q-footer class="bg-white text-blue-grey-4">
+        <div class="q-gutter-sm q-pb-sm">
+          <div class="text-center">
+            Sika Design Pro <q-icon name="ti-github"></q-icon>
+            Sika Design
+          </div>
+          <div class="text-center">Copyright@2019 Sika 体验技术部出品</div>
+        </div>
       </q-footer>
-
       <q-page-container>
         <div class="q-pa-sm row justify-center" :class="topMarginClass">
           <div class="col text-center" style="width: 100%; max-width: 400px">

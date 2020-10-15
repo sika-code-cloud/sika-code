@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <q-form @submit="onSubmit" @reset="onReset">
+      <q-form @submit="onSubmit" @reset="onReset" ref="loginForm">
         <q-tabs
           v-model="tab"
           active-color="primary"
@@ -25,6 +25,7 @@
                     clear-icon="cancel"
                     v-model="name"
                     dense
+                    debounce="500"
                     label="用户名:admin"
                     lazy-rules
                     square
@@ -47,6 +48,7 @@
                     :type="isPwd ? 'password' : 'text'"
                     v-model="password"
                     dense
+                    debounce="500"
                     label="密码:sika"
                     lazy-rules
                     square
@@ -76,6 +78,7 @@
                     clear-icon="cancel"
                     v-model="name"
                     dense
+                    debounce="500"
                     label="手机号"
                     lazy-rules
                     square
@@ -96,6 +99,7 @@
                     :type="isPwd ? 'password' : 'text'"
                     v-model="password"
                     dense
+                    debounce="500"
                     label="验证码"
                     lazy-rules
                     square
@@ -129,32 +133,44 @@
                   size="17px"
                   color="primary q-mt-sm"
                   class="full-width"
+                  type="submit"
                 />
               </div>
             </div>
             <div class="row q-pt-md">
-              <div class="col-auto text-left q-pt-sm ">
+              <div class="col-auto text-left q-pt-sm">
                 <span>其他登录方式</span>
-                <q-btn class="q-ml-sm" push round size="xs" icon="ti-skype" text-color="primary" />
-                <q-btn class="q-ml-sm" push round size="xs" icon="ti-github" text-color="primary" />
-                <q-btn class="q-ml-sm" push round size="xs" icon="ti-linux" text-color="primary" />
-                <q-btn class="q-ml-sm" push round size="xs" icon="img:statics/icons/atm-away.svg" />
-                <transition-group
-                  appear
-                  enter-active-class="animated bounceInLeft"
-                  leave-active-class="animated bounceOutRight"
-                >
-                  <!-- We wrap a "p" tag and a QBtn -->
-                  <p key="text">
-                    Lorem Ipsum
-                  </p>
-                  <q-btn
-                    key="email-button"
-                    color="secondary"
-                    icon="mail"
-                    label="Email"
-                  />
-                </transition-group>
+                <q-btn
+                  class="q-ml-sm"
+                  push
+                  round
+                  size="xs"
+                  icon="ti-skype"
+                  text-color="primary"
+                />
+                <q-btn
+                  class="q-ml-sm"
+                  push
+                  round
+                  size="xs"
+                  icon="ti-github"
+                  text-color="primary"
+                />
+                <q-btn
+                  class="q-ml-sm"
+                  push
+                  round
+                  size="xs"
+                  icon="ti-linux"
+                  text-color="primary"
+                />
+                <q-btn
+                  class="q-ml-sm"
+                  push
+                  round
+                  size="xs"
+                  icon="img:statics/icons/atm-away.svg"
+                />
               </div>
               <div class="col text-right">
                 <q-btn
@@ -188,21 +204,12 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.accept !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'You need to accept the license and terms first'
-        })
-      } else {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
-      }
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: 'Submitted'
+      })
     },
     onReset() {
       this.name = null

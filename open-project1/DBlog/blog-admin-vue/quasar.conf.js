@@ -58,11 +58,11 @@ module.exports = function (ctx) {
       // extractCSS: false,
       env: ctx.dev
         ? {
-          VUE_APP_BASE_API: 'http://dev.api.com/api'
-        }
+            VUE_APP_BASE_API: 'http://dev.api.com/api'
+          }
         : {
-          VUE_APP_BASE_API: 'http://prod.api.com'
-        },
+            VUE_APP_BASE_API: 'http://prod.api.com'
+          },
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg, { isServer, isClient }) {
         cfg.resolve.alias = {
@@ -102,12 +102,12 @@ module.exports = function (ctx) {
     },
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      iconSet: 'themify', // Quasar icons set
+      iconSet: 'material-icons', // Quasar icons set
       lang: 'en-us', // Quasar language pack
       config: {
         brand: {
           // src/css/quasar.variables.sass
-          primary: '#0089d6',
+          primary: '#1890ff',
           secondary: '#26A69A',
           accent: '#9C27B0',
           dark: '#1d1d1d',

@@ -79,7 +79,34 @@
                 :rules="[(val) => (val && val.length > 0) || '邮箱']"
               >
                 <template v-slot:prepend>
-                  <q-icon name="event" />
+                  <q-btn-dropdown
+                    color="secondary"
+                    flat
+                    :label="phonePrefix"
+                    style="margin-left: -12px"
+                  >
+                    <q-list>
+                      <q-item
+                        clickable
+                        v-close-popup
+                        @click="onItemClick('+86')"
+                      >
+                        <q-item-section>
+                          <q-item-label>+86</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item
+                        clickable
+                        v-close-popup
+                        @click="onItemClick('+87')"
+                      >
+                        <q-item-section>
+                          <q-item-label>+87</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-btn-dropdown>
                 </template>
               </q-input>
               <q-input
@@ -103,6 +130,7 @@
                 <div class="col text-left">
                   <q-btn
                     glossy
+                    type="submit"
                     color="primary full-width"
                     label="注 册"
                     size="md"
@@ -136,10 +164,33 @@ export default {
       accept: false,
       isPwd: true,
       autoLogin: true,
-      dense: false
+      dense: false,
+      phonePrefix: '+86'
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: 'Submitted'
+      })
+    },
+    onReset() {
+      this.name = null
+      this.age = null
+      this.accept = false
+    },
+    onItemClick(value) {
+      this.phonePrefix = value
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.q-field__control {
+  padding-left: 0;
+}
+</style>
