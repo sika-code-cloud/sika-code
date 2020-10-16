@@ -140,19 +140,29 @@
             <div class="row q-pt-md">
               <div class="col-auto text-left q-pt-sm">
                 <span>其他登录方式</span>
+                <transition
+                  v-bind:css="false"
+                  v-on:before-enter="beforeEnter"
+                  v-on:enter="enter"
+                  v-on:leave="leave"
+                >
+                  <q-btn
+                    v-if="show"
+                    class="q-ml-sm"
+                    push
+                    round
+                    dense
+                    size="8px"
+                    icon="ti-skype"
+                    text-color="primary"
+                  />
+                </transition>
                 <q-btn
                   class="q-ml-sm"
                   push
                   round
-                  size="xs"
-                  icon="ti-skype"
-                  text-color="primary"
-                />
-                <q-btn
-                  class="q-ml-sm"
-                  push
-                  round
-                  size="xs"
+                  dense
+                  size="8px"
                   icon="ti-github"
                   text-color="primary"
                 />
@@ -160,15 +170,17 @@
                   class="q-ml-sm"
                   push
                   round
-                  size="xs"
+                  dense
+                  size="8px"
                   icon="ti-linux"
                   text-color="primary"
                 />
                 <q-btn
                   class="q-ml-sm"
                   push
+                  dense
                   round
-                  size="xs"
+                  size="8px"
                   icon="img:statics/icons/atm-away.svg"
                 />
               </div>
@@ -180,8 +192,32 @@
                   label="注册用户"
                 />
               </div>
+              Fade In: <input type="range" v-model="fadeInDuration" min="0" v-bind:max="maxFadeDuration">
+              Fade Out: <input type="range" v-model="fadeOutDuration" min="0" v-bind:max="maxFadeDuration">
+              <transition
+                v-bind:css="false"
+                v-on:before-enter="beforeEnter"
+                v-on:enter="enter"
+                v-on:leave="leave"
+              >
+                <p v-if="show">hello</p>
+              </transition>
+              <button
+                v-if="stop"
+                v-on:click="stop = false; show = false"
+              >Start animating</button>
+              <button
+                v-else
+                v-on:click="stop = true"
+              >Stop it!</button>
             </div>
           </div>
+          <q-btn @click="shuffle">Shuffle</q-btn>
+          <transition-group name="flip-list" tag="ul">
+            <li v-for="item in items" v-bind:key="item">
+              {{ item }}
+            </li>
+          </transition-group>
         </div>
       </q-form>
     </div>
@@ -189,6 +225,8 @@
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
+import _ from 'lodash'
 export default {
   name: 'Login',
   data() {
@@ -199,7 +237,13 @@ export default {
       accept: false,
       isPwd: true,
       autoLogin: true,
-      dense: false
+      dense: false,
+      show: true,
+      fadeInDuration: 1000,
+      fadeOutDuration: 1000,
+      maxFadeDuration: 1500,
+      stop: true,
+      items: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
   },
   methods: {
@@ -215,6 +259,38 @@ export default {
       this.name = null
       this.age = null
       this.accept = false
+    },
+    beforeEnter: function (el) {
+      el.style.opacity = 0
+    },
+    enter: function (el, done) {
+      var vm = this
+      Velocity(el,
+        { opacity: 1 },
+        {
+          duration: this.fadeInDuration,
+          complete: function () {
+            done()
+            if (!vm.stop) vm.show = false
+          }
+        }
+      )
+    },
+    leave: function (el, done) {
+      var vm = this
+      Velocity(el,
+        { opacity: 0 },
+        {
+          duration: this.fadeOutDuration,
+          complete: function () {
+            done()
+            vm.show = true
+          }
+        }
+      )
+    },
+    shuffle: function () {
+      this.items = _.shuffle(this.items)
     }
   }
 }
@@ -222,5 +298,8 @@ export default {
 
 <style scoped>
 .q-tab-panel {
+}
+.flip-list-move {
+  transition: transform 1s;
 }
 </style>
