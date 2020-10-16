@@ -140,48 +140,16 @@
             <div class="row q-pt-md">
               <div class="col-auto text-left q-pt-sm">
                 <span>其他登录方式</span>
-                <transition
-                  v-bind:css="false"
-                  v-on:before-enter="beforeEnter"
-                  v-on:enter="enter"
-                  v-on:leave="leave"
-                >
-                  <q-btn
-                    v-if="show"
-                    class="q-ml-sm"
-                    push
-                    round
-                    dense
-                    size="8px"
-                    icon="ti-skype"
-                    text-color="primary"
-                  />
-                </transition>
-                <q-btn
-                  class="q-ml-sm"
-                  push
-                  round
-                  dense
-                  size="8px"
-                  icon="ti-github"
-                  text-color="primary"
-                />
-                <q-btn
-                  class="q-ml-sm"
-                  push
-                  round
-                  dense
-                  size="8px"
-                  icon="ti-linux"
-                  text-color="primary"
-                />
-                <q-btn
-                  class="q-ml-sm"
-                  push
-                  dense
-                  round
-                  size="8px"
-                  icon="img:statics/icons/atm-away.svg"
+                <q-icon
+                  v-for="(val, key) in loginIcon"
+                  v-bind:key="key"
+                  :size="val.size"
+                  :class="[val.class.iconName, val.class.color]"
+                  @click="thirdLogin(key)"
+                  @mouseover="mouseOver(key, $event)"
+                  @mouseleave="mouseLeave(key, $event)"
+                  style="cursor: pointer"
+                  class="iconfont q-ml-sm"
                 />
               </div>
               <div class="col text-right">
@@ -192,45 +160,68 @@
                   label="注册用户"
                 />
               </div>
-              Fade In: <input type="range" v-model="fadeInDuration" min="0" v-bind:max="maxFadeDuration">
-              Fade Out: <input type="range" v-model="fadeOutDuration" min="0" v-bind:max="maxFadeDuration">
-              <transition
-                v-bind:css="false"
-                v-on:before-enter="beforeEnter"
-                v-on:enter="enter"
-                v-on:leave="leave"
-              >
-                <p v-if="show">hello</p>
-              </transition>
-              <button
-                v-if="stop"
-                v-on:click="stop = false; show = false"
-              >Start animating</button>
-              <button
-                v-else
-                v-on:click="stop = true"
-              >Stop it!</button>
             </div>
           </div>
-          <q-btn @click="shuffle">Shuffle</q-btn>
-          <transition-group name="flip-list" tag="ul">
-            <li v-for="item in items" v-bind:key="item">
-              {{ item }}
-            </li>
-          </transition-group>
         </div>
       </q-form>
     </div>
+    <q-dialog
+      v-model="currentLogin.login"
+      persistent
+      transition-show="scale"
+      transition-hide="scale"
+    >
+      <q-card class="bg-teal text-white" style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Persistent</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          {{ currentLogin.obj }}
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="OK" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
-import Velocity from 'velocity-animate'
-import _ from 'lodash'
 export default {
   name: 'Login',
   data() {
     return {
+      iconObject: {
+        weixin: {
+          class: { iconName: 'iconweixin', color: 'text-grey' },
+          size: '22px'
+        },
+        zhifubao: {
+          class: {
+            iconName: 'iconzhifubao',
+            color: 'text-grey'
+          },
+          size: '20px'
+        },
+        taobao: {
+          class: { iconName: 'icontaobao', color: 'text-grey' },
+          size: '22px'
+        },
+        weibo: {
+          class: { iconName: 'iconweibo', color: 'text-grey' },
+          size: '20px'
+        },
+        github: {
+          class: { iconName: 'iconhuaban88', color: 'text-grey' },
+          size: '23px',
+          type: 'link'
+        }
+      },
+      iconActive: {
+        weibo: 'grey'
+      },
       tab: 'mails',
       name: null,
       password: null,
@@ -238,12 +229,10 @@ export default {
       isPwd: true,
       autoLogin: true,
       dense: false,
-      show: true,
-      fadeInDuration: 1000,
-      fadeOutDuration: 1000,
-      maxFadeDuration: 1500,
-      stop: true,
-      items: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      currentLogin: {
+        login: false,
+        obj: {}
+      }
     }
   },
   methods: {
@@ -260,43 +249,31 @@ export default {
       this.age = null
       this.accept = false
     },
-    beforeEnter: function (el) {
-      el.style.opacity = 0
+    mouseOver(iconKey, event) {
+      this.activeForLoginType(iconKey, 'text-primary')
     },
-    enter: function (el, done) {
-      var vm = this
-      Velocity(el,
-        { opacity: 1 },
-        {
-          duration: this.fadeInDuration,
-          complete: function () {
-            done()
-            if (!vm.stop) vm.show = false
-          }
-        }
-      )
+    mouseLeave(iconKey, event) {
+      this.activeForLoginType(iconKey, 'text-grey')
     },
-    leave: function (el, done) {
-      var vm = this
-      Velocity(el,
-        { opacity: 0 },
-        {
-          duration: this.fadeOutDuration,
-          complete: function () {
-            done()
-            vm.show = true
-          }
-        }
-      )
+    activeForLoginType(iconKey, targetColor) {
+      this.iconObject[iconKey].class.color = targetColor
     },
-    shuffle: function () {
-      this.items = _.shuffle(this.items)
+    thirdLogin(iconKey, event) {
+      this.currentLogin.login = true
+      this.currentLogin.obj = this.iconObject[iconKey]
+    }
+  },
+  computed: {
+    loginIcon: function () {
+      return this.iconObject
     }
   }
 }
 </script>
 
 <style scoped>
+/*@import '~assets/icons/iconfont.css';*/
+@import 'http://at.alicdn.com/t/font_2136554_1fgggi4y4wt.css';
 .q-tab-panel {
 }
 .flip-list-move {

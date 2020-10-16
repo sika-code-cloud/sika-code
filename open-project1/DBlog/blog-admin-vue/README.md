@@ -1,4 +1,4 @@
-# quasar-demo (quasar-demo)
+# sika-design (sika-design)
 
 demo
 

@@ -1,8 +1,8 @@
 {
-  "name": "quasar-demo",
+  "name": "sika-design",
   "version": "0.0.1",
   "description": "demo",
-  "productName": "quasar-demo",
+  "productName": "sika-design",
   "author": "sikadai",
   "private": true,
   "scripts": {

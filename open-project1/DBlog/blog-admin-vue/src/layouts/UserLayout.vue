@@ -8,10 +8,11 @@
         </q-toolbar>
       </q-header>
       <q-footer class="bg-white text-blue-grey-4">
-        <div class="q-gutter-sm q-pb-sm">
-          <div class="text-center">
-            Sika Design Pro <q-icon name="ti-github"></q-icon>
-            Sika Design
+        <div class="q-mb-lg">
+          <div class="text-center q-mb-sm">
+            <span class="inline-block">Sika Design Pro</span>
+            <q-icon name="ti-github  q-mx-md"></q-icon>
+            <span class="inline-block">Sika Design</span>
           </div>
           <div class="text-center">Copyright@2019 Sika 体验技术部出品</div>
         </div>
@@ -21,11 +22,10 @@
           <div class="col text-center" style="width: 100%; max-width: 400px">
             <div class="q-mb-xl">
               <h4 class="q-ma-sm">
-                <q-avatar class="q-mr-md"
-                  ><img
-                    alt="Sika logo"
-                    src="~assets/sikacode-logo.png" /></q-avatar
-                ><strong>Sika Design</strong>
+                <q-avatar class="q-mr-md">
+                  <img alt="Sika logo" src="~assets/sikacode-logo.png" />
+                </q-avatar>
+                <strong>Sika Design</strong>
               </h4>
               <p class="text-grey">
                 Sika Design 是深圳大湾区最具影响力的Web设计样例
