@@ -31,6 +31,8 @@ const routes = [
   },
   {
     path: '/user/registerResult',
+    name: 'registerResult',
+    props: true,
     component: () => import('layouts/UserLayout.vue'),
     children: [
       {

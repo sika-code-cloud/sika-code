@@ -10,15 +10,17 @@
                 outlined
                 clearable
                 clear-icon="cancel"
-                v-model="name"
+                v-model="email"
                 dense
                 label="邮箱"
+                maxlength="128"
+                type="email"
                 lazy-rules
                 square
-                :rules="[(val) => (val && val.length > 0) || '邮箱']"
+                :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
               >
                 <template v-slot:prepend>
-                  <q-icon name="event" />
+                  <q-icon name="mail" />
                 </template>
               </q-input>
               <q-input
@@ -29,6 +31,7 @@
                 v-model="password"
                 dense
                 label="密码"
+                maxlength="32"
                 lazy-rules
                 square
                 :rules="[(val) => (val && val.length > 0) || '请输入密码']"
@@ -49,12 +52,16 @@
                 clearable
                 clear-icon="cancel"
                 :type="isPwd ? 'password' : 'text'"
-                v-model="password"
+                v-model="confirmPassword"
                 dense
                 label="确认密码"
+                maxlength="32"
                 lazy-rules
                 square
-                :rules="[(val) => (val && val.length > 0) || '请输入密码']"
+                :rules="[
+                  (val) => (val && val.length > 0) || '请输入确认密码',
+                  (val) => passwordValida || '两次密码不一致'
+                ]"
               >
                 <template v-slot:prepend>
                   <q-icon name="event" />
@@ -71,12 +78,14 @@
                 outlined
                 clearable
                 clear-icon="cancel"
-                v-model="name"
+                v-model="phone"
+                maxlength="11"
+                type="tel"
                 dense
                 label="手机号"
                 lazy-rules
                 square
-                :rules="[(val) => (val && val.length > 0) || '邮箱']"
+                :rules="[(val) => (val && val.length > 0) || '请输入手机号']"
               >
                 <template v-slot:prepend>
                   <q-btn-dropdown
@@ -111,13 +120,15 @@
               </q-input>
               <q-input
                 outlined
-                :type="isPwd ? 'password' : 'text'"
-                v-model="password"
+                clearable
+                type="text"
+                maxlength="6"
+                v-model="validateCode"
                 dense
                 label="验证码"
                 lazy-rules
                 square
-                :rules="[(val) => (val && val.length > 0) || '请输入密码']"
+                :rules="[(val) => (val && val.length > 0) || '请输入验证码']"
               >
                 <template v-slot:prepend>
                   <q-icon name="event" />
@@ -159,8 +170,11 @@ export default {
   data() {
     return {
       tab: 'mails',
-      name: null,
+      email: null,
       password: null,
+      confirmPassword: null,
+      phone: null,
+      validateCode: null,
       accept: false,
       isPwd: true,
       autoLogin: true,
@@ -171,10 +185,15 @@ export default {
   methods: {
     onSubmit() {
       this.$q.notify({
-        color: 'green-4',
-        textColor: 'white',
-        icon: 'cloud_done',
-        message: 'Submitted'
+        color: 'white',
+        textColor: 'positive',
+        icon: 'check_circle',
+        position: 'top',
+        message: '注册成功'
+      })
+      this.$router.push({
+        path: '/user/registerResult',
+        query: { email: this.email }
       })
     },
     onReset() {
@@ -184,6 +203,11 @@ export default {
     },
     onItemClick(value) {
       this.phonePrefix = value
+    }
+  },
+  computed: {
+    passwordValida: function () {
+      return this.password === this.confirmPassword
     }
   }
 }
