@@ -160,6 +160,19 @@
           </div>
         </div>
       </q-form>
+      <q-dialog v-model="card" persistent >
+        <q-card class="my-card text-center q-col-gutter-y-lg q-px-md" style="width: 600px; max-width: 80vw;" >
+          <q-icon class="q-mt-md text-h4" name="check_circle" color="positive" size="60px"/>
+          <div>
+            <div class="text-h6">账户：<span>{{email}} </span> 注册成功</div>
+            <div class="text-grey" > 注册验证短信已经发送至该邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接验证账户。</div>
+          </div>
+          <q-card-actions align="center" class="q-mb-md">
+            <q-btn v-close-popup glossy color="primary" label="查看邮箱" />
+            <q-btn v-close-popup glossy color="secondary" label="返回首页" />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
@@ -179,7 +192,8 @@ export default {
       isPwd: true,
       autoLogin: true,
       dense: false,
-      phonePrefix: '+86'
+      phonePrefix: '+86',
+      card: false
     }
   },
   methods: {
@@ -191,10 +205,11 @@ export default {
         position: 'top',
         message: '注册成功'
       })
-      this.$router.push({
-        path: '/user/registerResult',
-        query: { email: this.email }
-      })
+      this.card = true
+      // this.$router.push({
+      //   path: '/user/registerResult',
+      //   query: { email: this.email }
+      // })
     },
     onReset() {
       this.name = null

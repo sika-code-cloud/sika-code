@@ -1,5 +1,5 @@
 <template>
-  <div>RegisterResult-{{ this.$route.query.email }}</div>
+  <div>RegisterResult-{{email }}</div>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     }
   },
   mounted() {
-    this.getParams()
+    this.email = this.$q.localStorage.getItem('name')
   },
   methods: {
     getParams() {

@@ -229,6 +229,7 @@ export default {
       isPwd: true,
       autoLogin: true,
       dense: false,
+      card: false,
       currentLogin: {
         login: false,
         obj: {}
@@ -238,10 +239,15 @@ export default {
   methods: {
     onSubmit() {
       this.$q.notify({
-        color: 'green-4',
-        textColor: 'white',
-        icon: 'cloud_done',
-        message: 'Submitted'
+        color: 'white',
+        textColor: 'positive',
+        icon: 'check_circle',
+        position: 'top',
+        message: '登录成功'
+      })
+      this.$q.localStorage.set('name', this.name)
+      this.$router.push({
+        path: '/user/registerResult'
       })
     },
     onReset() {
