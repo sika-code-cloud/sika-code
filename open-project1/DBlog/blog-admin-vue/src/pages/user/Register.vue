@@ -134,7 +134,12 @@
                   <q-icon name="event" />
                 </template>
                 <template v-slot:after>
-                  <q-btn glossy color="secondary" label="获取验证码" />
+                  <q-btn glossy :loading="validateCodeLoading" @click="getVerifyCode" color="secondary" label="获取验证码">
+                    <template v-slot:loading>
+                      <q-icon name="alarm" class="on-left" />
+                      {{ count }} s
+                    </template>
+                  </q-btn>
                 </template>
               </q-input>
               <div class="row">
@@ -142,10 +147,16 @@
                   <q-btn
                     glossy
                     type="submit"
+                    :loading="loading"
                     color="primary full-width"
                     label="注 册"
                     size="md"
-                  />
+                  >
+                    <template v-slot:loading>
+                      <q-spinner-hourglass class="on-left" />
+                      注册...
+                    </template>
+                  </q-btn>
                 </div>
                 <div class="col text-right">
                   <q-btn
@@ -160,12 +171,12 @@
           </div>
         </div>
       </q-form>
-      <q-dialog v-model="card" persistent >
-        <q-card class="my-card text-center q-col-gutter-y-lg q-px-md" style="width: 600px; max-width: 80vw;" >
-          <q-icon class="q-mt-md text-h4" name="check_circle" color="positive" size="60px"/>
+      <q-dialog v-model="card" persistent>
+        <q-card class="my-card text-center q-col-gutter-y-lg q-px-md" style="width: 600px; max-width: 80vw;">
+          <q-icon class="q-mt-md text-h4" name="check_circle" color="positive" size="60px" />
           <div>
-            <div class="text-h6">账户：<span>{{email}} </span> 注册成功</div>
-            <div class="text-grey" > 注册验证短信已经发送至该邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接验证账户。</div>
+            <div class="text-h6">账户：<span>{{ email }} </span> 注册成功</div>
+            <div class="text-grey"> 注册验证短信已经发送至该邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接验证账户。</div>
           </div>
           <q-card-actions align="center" class="q-mb-md">
             <q-btn v-close-popup glossy color="primary" label="查看邮箱" />
@@ -188,24 +199,20 @@ export default {
       confirmPassword: null,
       phone: null,
       validateCode: null,
+      validateCodeLoading: false,
       accept: false,
       isPwd: true,
       autoLogin: true,
       dense: false,
       phonePrefix: '+86',
-      card: false
+      card: false,
+      count: 60,
+      loading: false
     }
   },
   methods: {
     onSubmit() {
-      this.$q.notify({
-        color: 'white',
-        textColor: 'positive',
-        icon: 'check_circle',
-        position: 'top',
-        message: '注册成功'
-      })
-      this.card = true
+      this.simulateProgress(this.success)
       // this.$router.push({
       //   path: '/user/registerResult',
       //   query: { email: this.email }
@@ -218,10 +225,42 @@ export default {
     },
     onItemClick(value) {
       this.phonePrefix = value
+    },
+    getVerifyCode() {
+      // we set loading state
+      this.validateCodeLoading = true
+      const interval = setInterval(() => {
+        this.count--
+        if (this.count <= 0) {
+          this.validateCodeLoading = false
+          this.count = 60
+          clearInterval(interval)
+        }
+      }, 1000)
+    },
+    simulateProgress(callBack) {
+      // we set loading state
+      this.loading = true
+      // simulate a delay
+      setTimeout(() => {
+        // we're done, we reset loading state
+        this.loading = false
+        callBack()
+      }, 2000)
+    },
+    success() {
+      this.$q.notify({
+        color: 'white',
+        textColor: 'positive',
+        icon: 'check_circle',
+        position: 'top',
+        message: '注册成功'
+      })
+      this.card = true
     }
   },
   computed: {
-    passwordValida: function () {
+    passwordValida: function() {
       return this.password === this.confirmPassword
     }
   }

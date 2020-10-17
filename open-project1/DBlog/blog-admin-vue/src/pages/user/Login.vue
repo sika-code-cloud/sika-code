@@ -247,7 +247,7 @@ export default {
       })
       this.$q.localStorage.set('name', this.name)
       this.$router.push({
-        path: '/user/registerResult'
+        path: '/'
       })
     },
     onReset() {
