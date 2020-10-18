@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-layout view="hHh LpR fFf" style="font-family: 微软雅黑">
+    <q-layout view="hHh LpR fff" style="font-family: 微软雅黑">
       <q-header elevated>
         <q-toolbar>
           <q-toolbar-title> Quasar App </q-toolbar-title>
