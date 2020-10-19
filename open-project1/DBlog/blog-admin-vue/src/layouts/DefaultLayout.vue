@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-layout view="hHh LpR fFf">
+    <q-layout view="hHh LpR fFf" style="font-family: 微软雅黑">
       <q-header elevated>
         <q-toolbar>
           <q-btn
@@ -12,9 +12,7 @@
             @click="onClick"
           />
 
-          <q-toolbar-title>
-            Quasar App
-          </q-toolbar-title>
+          <q-toolbar-title> Quasar App </q-toolbar-title>
 
           <div>Quasar v{{ $q.version }}</div>
         </q-toolbar>
@@ -48,28 +46,28 @@ import EssentialLink from 'components/EssentialLink.vue'
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
-  props: {
-
-  },
-  data () {
+  props: {},
+  data() {
     return {
       leftDrawerOpen: false
     }
   },
   methods: {
-    onClick () {
+    onClick() {
       this.leftDrawerOpen = !this.leftDrawerOpen
     },
-    hide () {
+    hide() {
       console.log(this.leftDrawerOpen)
       this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
     },
-    show () {
+    show() {
       console.log(this.leftDrawerOpen)
       this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
     },
-    getLeftDrawOpen () {
-      const leftDrawerOpenFromLocal = this.$q.localStorage.getItem('leftDrawerOpen')
+    getLeftDrawOpen() {
+      const leftDrawerOpenFromLocal = this.$q.localStorage.getItem(
+        'leftDrawerOpen'
+      )
       if (leftDrawerOpenFromLocal) {
         return leftDrawerOpenFromLocal
       }

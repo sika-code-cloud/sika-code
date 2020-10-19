@@ -1,20 +1,9 @@
 <template>
   <div>
-    <DefaultLayout
-      v-if="layout === 'default'"
-      :leftDrawerOpen="leftDrawerOpen"
-    >
+    <DefaultLayout v-if="layout === 'default'" :leftDrawerOpen="leftDrawerOpen">
       <template v-slot:page>
-        <q-page-sticky
-          position="right"
-          :offset="[18, 18]"
-        >
-          <q-fab
-            icon="add"
-            direction="up"
-            color="accent"
-            glossy
-          >
+        <q-page-sticky position="right" :offset="[18, 18]">
+          <q-fab icon="add" direction="up" color="accent" glossy>
             <q-fab-action
               @click="onClick('default')"
               color="primary"
@@ -35,17 +24,8 @@
       :leftDrawerOpen="leftDrawerOpen"
     >
       <template v-slot:page>
-        <q-page-sticky
-          position="right"
-          :offset="[18, 18]"
-          glossy
-        >
-          <q-fab
-            icon="add"
-            direction="up"
-            color="accent"
-            glossy
-          >
+        <q-page-sticky position="right" :offset="[18, 18]" glossy>
+          <q-fab icon="add" direction="up" color="accent" glossy>
             <q-fab-action
               @click="onClick('default')"
               color="primary"
@@ -70,7 +50,7 @@ const layoutKey = 'layout'
 export default {
   name: 'MainLayout',
   components: { DefaultLayout, GoogleNewsLayout },
-  data () {
+  data() {
     return {
       layout: '',
       leftDrawerOpen: false,
@@ -78,7 +58,7 @@ export default {
     }
   },
   methods: {
-    onClick (layout) {
+    onClick(layout) {
       console.log(layout)
       this.layout = layout
       this.$q.localStorage.set(layoutKey, layout)
@@ -88,9 +68,9 @@ export default {
     const layoutFromLocal = this.$q.localStorage.getItem(layoutKey)
     if (layoutFromLocal) {
       this.layout = layoutFromLocal
-      return
+    } else {
+      this.layout = 'google'
     }
-    this.layout = 'default'
   }
 }
 </script>

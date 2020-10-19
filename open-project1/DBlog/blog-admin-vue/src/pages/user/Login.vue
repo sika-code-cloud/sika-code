@@ -134,7 +134,13 @@
                   color="primary q-mt-sm"
                   class="full-width"
                   type="submit"
-                />
+                  :loading="loginLogin"
+                >
+                  <template v-slot:loading>
+                    <q-spinner-ios class="on-left" />
+                    登录...
+                  </template>
+                </q-btn>
               </div>
             </div>
             <div class="row q-pt-md">
@@ -230,6 +236,7 @@ export default {
       autoLogin: true,
       dense: false,
       card: false,
+      loginLogin: false,
       currentLogin: {
         login: false,
         obj: {}
@@ -238,17 +245,22 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$q.notify({
-        color: 'white',
-        textColor: 'positive',
-        icon: 'check_circle',
-        position: 'top',
-        message: '登录成功'
-      })
-      this.$q.localStorage.set('name', this.name)
-      this.$router.push({
-        path: '/'
-      })
+      this.loginLogin = true
+      setTimeout(() => {
+        // we're done, we reset loading state
+        this.$q.notify({
+          color: 'white',
+          textColor: 'positive',
+          icon: 'check_circle',
+          position: 'top',
+          message: '登录成功'
+        })
+        this.loginLogin = true
+        this.$q.localStorage.set('name', this.name)
+        this.$router.push({
+          path: '/'
+        })
+      }, 2000)
     },
     onReset() {
       this.name = null
