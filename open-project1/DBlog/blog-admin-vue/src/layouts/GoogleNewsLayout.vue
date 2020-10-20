@@ -132,7 +132,7 @@
                 >Emailseeeeee</span
               >
               <q-menu
-                :offset="['auto', 28]"
+                :offset="[0, 28]"
                 transition-show="jump-down"
                 transition-hide="jump-up"
                 max-width="100vw"
@@ -184,7 +184,12 @@
       @hide="hide"
       @show="show"
     >
-      <q-scroll-area class="fit">
+      <q-scroll-area
+        class="fit"
+        :thumb-style="thumbStyle"
+        :content-style="contentStyle"
+        :content-active-style="contentActiveStyle"
+      >
         <EssentialLink />
       </q-scroll-area>
     </q-drawer>
@@ -196,18 +201,23 @@
       @before-hide="rightHide"
       behavior="mobile"
       :breakpoint="500"
-      content-class="bg-grey-3"
+      content-class="bg-white"
     >
-      <q-scroll-area class="fit">
+      <q-scroll-area
+        class="fit"
+        :thumb-style="thumbStyle"
+        :content-style="contentStyle"
+        :content-active-style="contentActiveStyle"
+      >
         <div class="q-pa-sm">
           <q-list padding>
             <q-item>
               <q-item-section>
-                <q-item-label>Page style setting</q-item-label>
+                <q-item-label>整体风格设置</q-item-label>
                 <q-item-label caption>
                   <div class="q-mt-sm q-gutter-x-md" style="height: 50px">
                     <div
-                      class="inline-block shadow-2"
+                      class="inline-block shadow-2 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -216,7 +226,7 @@
                       "
                     ></div>
                     <div
-                      class="inline-block shadow-2"
+                      class="inline-block shadow-2 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -236,7 +246,7 @@
                       ></div>
                     </div>
                     <div
-                      class="inline-block shadow-2"
+                      class="inline-block shadow-2 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -250,7 +260,7 @@
             </q-item>
             <q-item>
               <q-item-section>
-                <q-item-label>Theme Color</q-item-label>
+                <q-item-label>主题色</q-item-label>
                 <q-item-label class="q-gutter-sm">
                   <q-btn
                     style="background-color: rgb(24, 144, 255)"
@@ -311,125 +321,163 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-separator spaced />
-            <q-item-label header>General</q-item-label>
 
-            <q-item tag="label" v-ripple>
-              <q-item-section side top>
-                <q-checkbox v-model="check1" />
-              </q-item-section>
+            <q-separator spaced="12px" />
 
+            <q-item>
               <q-item-section>
-                <q-item-label>Notifications</q-item-label>
+                <q-item-label>导航模式</q-item-label>
                 <q-item-label caption>
-                  Notify me about updates to apps or games that I downloaded
+                  <div class="q-mt-sm q-gutter-x-md" style="height: 50px">
+                    <div
+                      class="inline-block shadow-2 cursor-pointer"
+                      style="
+                        width: 50px;
+                        height: 100%;
+                        background-color: white;
+                        border-radius: 5px;
+                      "
+                    ></div>
+                    <div
+                      class="inline-block shadow-2 cursor-pointer"
+                      style="
+                        width: 50px;
+                        height: 100%;
+                        background-color: white;
+                        border-radius: 5px;
+                      "
+                    >
+                      <div
+                        class="inline-block"
+                        style="
+                          width: 15px;
+                          height: 100%;
+                          background-color: #1d1d1d;
+                          border-top-left-radius: 5px;
+                          border-bottom-left-radius: 5px;
+                        "
+                      ></div>
+                    </div>
+                    <div
+                      class="inline-block shadow-2 cursor-pointer"
+                      style="
+                        width: 50px;
+                        height: 100%;
+                        background-color: #1d1d1d;
+                        border-radius: 5px;
+                      "
+                    ></div>
+                  </div>
                 </q-item-label>
               </q-item-section>
             </q-item>
-
-            <q-item tag="label" v-ripple>
-              <q-item-section side top>
-                <q-checkbox v-model="check2" />
-              </q-item-section>
-
+            <q-item tag="label" class="q-mt-md">
               <q-item-section>
-                <q-item-label>Sound</q-item-label>
-                <q-item-label caption>
-                  Auto-update apps at anytime. Data charges may apply
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item tag="label" v-ripple>
-              <q-item-section side top>
-                <q-checkbox v-model="check3" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>Auto-add widgets</q-item-label>
-                <q-item-label caption>
-                  Automatically add home screen widgets
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-separator spaced />
-            <q-item-label header>Notifications</q-item-label>
-
-            <q-item tag="label" v-ripple>
-              <q-item-section>
-                <q-item-label>Battery too low</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-toggle color="blue" v-model="notif1" val="battery" />
-              </q-item-section>
-            </q-item>
-
-            <q-item tag="label" v-ripple>
-              <q-item-section>
-                <q-item-label>Friend request</q-item-label>
-                <q-item-label caption>Allow notification</q-item-label>
+                <q-item-label>内容区域宽度</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="green" v-model="notif2" val="friend" />
-              </q-item-section>
-            </q-item>
-
-            <q-item tag="label" v-ripple>
-              <q-item-section>
-                <q-item-label>Picture uploaded</q-item-label>
-                <q-item-label caption
-                  >Allow notification when uploading images</q-item-label
+                <q-select
+                  behavior="menu"
+                  dense
+                  color="primary"
+                  outlined
+                  v-model="rightSelect"
+                  options-dense
+                  :options="['流式']"
                 >
+                </q-select>
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>固定Header</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="red" v-model="notif3" val="picture" />
+                <q-toggle color="primary" v-model="notif2" val="friend" />
               </q-item-section>
             </q-item>
 
-            <q-separator spaced />
-            <q-item-label header>Other settings</q-item-label>
-
-            <q-item>
-              <q-item-section side>
-                <q-icon color="teal" name="volume_down" />
-              </q-item-section>
+            <q-item tag="label">
               <q-item-section>
-                <q-slider
-                  v-model="volume"
-                  :min="0"
-                  :max="10"
-                  label
-                  color="teal"
-                />
+                <q-item-label>固定侧边菜单</q-item-label>
               </q-item-section>
-              <q-item-section side>
-                <q-icon color="teal" name="volume_up" />
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
               </q-item-section>
             </q-item>
 
-            <q-item>
-              <q-item-section side>
-                <q-icon color="deep-orange" name="brightness_medium" />
-              </q-item-section>
+            <q-separator spaced="12px" />
+            <q-item tag="label">
               <q-item-section>
-                <q-slider
-                  v-model="brightness"
-                  :min="0"
-                  :max="10"
-                  label
-                  color="deep-orange"
-                />
+                <q-item-label>内容区域</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>顶栏</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>页脚</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>菜单</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>菜单头</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
               </q-item-section>
             </q-item>
 
-            <q-item>
-              <q-item-section side>
-                <q-icon color="primary" name="mic" />
-              </q-item-section>
+            <q-separator spaced="“12px" />
+            <q-item-label header>其他设置</q-item-label>
+
+            <q-item tag="label">
               <q-item-section>
-                <q-slider v-model="mic" :min="0" :max="50" label />
+                <q-item-label>色弱模式</q-item-label>
               </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="notif2" val="friend" />
+              </q-item-section>
+            </q-item>
+            <q-separator spaced="“12px" />
+            <q-item>
+              <div
+                class="row q-pa-md bg-blue-1 cursor-pointer"
+                style="border: 1px solid yellowgreen"
+              >
+                <div class="col-1">
+                  <q-icon name="alarm" />
+                </div>
+                <div class="col-11">
+                  配置栏只在开发环境用于预览，生产环境不会展现，请拷贝后手动修改配置文件
+                </div>
+              </div>
+            </q-item>
+            <q-item tag="label">
+              <q-btn
+                label="拷贝设置"
+                class="full-width"
+                outline
+                color="secondary"
+                icon="lightbulb_outline"
+              ></q-btn>
             </q-item>
           </q-list>
         </div>
@@ -439,9 +487,16 @@
       <slot name="page">hello world</slot>
       <q-page padding>
         <router-view />
+        <q-page-scroller
+          class="fit"
+          :thumb-style="thumbStyle"
+          :content-style="contentStyle"
+          :content-active-style="contentActiveStyle"
+        >
+        </q-page-scroller>
         <q-page-sticky
           position="top-right"
-          style="z-index: 3000;"
+          style="z-index: 3000"
           :offset="rightOffset"
         >
           <q-fab
@@ -474,9 +529,12 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
+      leftMini: true,
+      leftBehavior: 'default',
       rightDrawerOpen: false,
       rightDrawerSetting: false,
       rightOffset: [5, 88],
+      rightSelect: '流式',
       search: '',
       showAdvanced: false,
       showDateOptions: false,
@@ -486,6 +544,15 @@ export default {
       byWebsite: '',
       gtSm: this.$q.screen.gt.sm,
       byDate: 'Any time',
+      contentStyle: {},
+      contentActiveStyle: {},
+      thumbStyle: {
+        right: '2px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0.75
+      },
       check1: true,
       check2: false,
       check3: false,
