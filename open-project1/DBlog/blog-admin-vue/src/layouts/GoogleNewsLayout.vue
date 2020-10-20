@@ -132,11 +132,14 @@
                 >Emailseeeeee</span
               >
               <q-menu
-                :offset="[0, 28]"
+                :offset="['auto', 28]"
                 transition-show="jump-down"
                 transition-hide="jump-up"
+                max-width="100vw"
+                :content-class="menuContentClass"
+                content-style="width:100%"
               >
-                <q-list style="min-width: 100px" dense>
+                <q-list dense>
                   <q-item clickable v-close-popup>
                     <q-item-section>个人中心</q-item-section>
                   </q-item>
@@ -438,7 +441,7 @@
         <router-view />
         <q-page-sticky
           position="top-right"
-          style="z-index: 3000"
+          style="z-index: 3000;"
           :offset="rightOffset"
         >
           <q-fab
@@ -550,6 +553,14 @@ export default {
   watch: {
     gtSm: function () {
       this.rightHide()
+    }
+  },
+  computed: {
+    menuContentClass: function () {
+      if (this.$q.screen.lt.sm) {
+        return 'q-mx-xs'
+      }
+      return ''
     }
   },
   mounted: function () {
