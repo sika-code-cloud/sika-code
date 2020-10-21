@@ -1,35 +1,28 @@
 <template>
-  <q-layout view="hHh LpR fFf" class="bg-grey-1" style="font-family: 微软雅黑">
+  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
     <q-resize-observer @resize="onResize" />
-    <q-header elevated class="bg-white title-grey-8" height-hint="64">
+    <q-header class="bg-white title-grey-8" height-hint="64">
       <q-toolbar class="GNL__toolbar">
         <q-btn
           flat
           dense
           round
+          v-show="$q.screen.lt.md"
           @click="onClick"
           aria-label="Menu"
-          icon="menu"
-          class="q-mr-sm"
+          icon="format_indent_increase"
           color="grey-8"
         />
-
-        <q-toolbar-title
-          v-if="$q.screen.gt.xs"
-          shrink
-          class="row items-center no-wrap q-mr-sm"
-        >
+        <q-btn dense flat size="sm" class="q-mr-xs" v-show="$q.screen.gt.xs">
           <q-img src="~assets/sika-logo-1.png" style="width: 100px" />
-        </q-toolbar-title>
-
+        </q-btn>
         <q-space />
-
         <q-input
           class="GNL__toolbar-input"
           outlined
           dense
           v-model="search"
-          color="bg-grey-7 shadow-1"
+          color="bg-grey-7"
           placeholder="Search for topics, locations & sources"
         >
           <template v-slot:prepend>
@@ -40,69 +33,6 @@
               class="cursor-pointer"
               @click="search = ''"
             />
-          </template>
-          <template v-slot:append>
-            <q-btn flat dense round aria-label="Menu" icon="arrow_drop_down">
-              <q-menu anchor="bottom right" self="top right">
-                <div class="q-pa-md" style="width: 400px">
-                  <div class="title-body2 title-grey q-mb-md">
-                    Narrow your search results
-                  </div>
-
-                  <div class="row items-center">
-                    <div class="col-3 title-subtitle2 title-grey">
-                      Exact phrase
-                    </div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="exactPhrase" />
-                    </div>
-
-                    <div class="col-3 title-subtitle2 title-grey">
-                      Has words
-                    </div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="hasWords" />
-                    </div>
-
-                    <div class="col-3 title-subtitle2 title-grey">
-                      Exclude words
-                    </div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="excludeWords" />
-                    </div>
-
-                    <div class="col-3 title-subtitle2 title-grey">Website</div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="byWebsite" />
-                    </div>
-
-                    <div class="col-12 q-pt-lg row justify-end">
-                      <q-btn
-                        flat
-                        dense
-                        no-caps
-                        color="grey-7"
-                        size="md"
-                        style="min-width: 68px"
-                        label="Search"
-                        v-close-popup
-                      />
-                      <q-btn
-                        flat
-                        dense
-                        no-caps
-                        color="grey-7"
-                        size="md"
-                        style="min-width: 68px"
-                        @click="onClear"
-                        label="Clear"
-                        v-close-popup
-                      />
-                    </div>
-                  </div>
-                </div>
-              </q-menu>
-            </q-btn>
           </template>
         </q-input>
 
@@ -176,6 +106,16 @@
         </div>
       </q-toolbar>
     </q-header>
+    <q-footer class="bg-white text-blue-grey-4">
+      <div class="q-mb-lg">
+        <div class="text-center q-mb-sm">
+          <span class="inline-block">Sika Design Pro</span>
+          <q-icon name="ti-github  q-mx-md"></q-icon>
+          <span class="inline-block">Sika Design</span>
+        </div>
+        <div class="text-center">Copyright@2019 Sika 体验技术部出品</div>
+      </div>
+    </q-footer>
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
@@ -190,6 +130,419 @@
         :content-style="contentStyle"
         :content-active-style="contentActiveStyle"
       >
+        <q-list bordered padding class="rounded-borders text-primary">
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="仪表盘"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>分析页</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>监控页</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>工作台</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="表单页"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>基础表单</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>分步表单</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>高级表单</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="列表页"
+          >
+            <q-expansion-item
+              expand-separator
+              :content-inset-level="0.5"
+              icon="receipt"
+              label="搜索列表"
+            >
+              <q-item
+                clickable
+                v-ripple
+                :active="link === 'trash'"
+                @click="link = 'trash'"
+                active-class="my-menu-link"
+              >
+                <q-item-section avatar>
+                  <q-icon name="delete" />
+                </q-item-section>
+                <q-item-section>搜索列表（文章）</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-ripple
+                :active="link === 'trash'"
+                @click="link = 'trash'"
+                active-class="my-menu-link"
+              >
+                <q-item-section avatar>
+                  <q-icon name="delete" />
+                </q-item-section>
+                <q-item-section>搜索列表（项目）</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-ripple
+                :active="link === 'trash'"
+                @click="link = 'trash'"
+                active-class="my-menu-link"
+              >
+                <q-item-section avatar>
+                  <q-icon name="delete" />
+                </q-item-section>
+                <q-item-section>搜索列表（应用）</q-item-section>
+              </q-item>
+            </q-expansion-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>查询列表</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>标准列表</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>卡片列表</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="结果页"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>成功页</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>失败页</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="异常页"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>403</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>404</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>500</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="个人页"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>个人中心</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>个人设置</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="编辑器"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>自定义编辑器</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>Markdown编辑器</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            :content-inset-level="0.5"
+            expand-separator
+            icon="mail"
+            label="仪表盘"
+          >
+            <q-expansion-item
+              expand-separator
+              :content-inset-level="0.5"
+              icon="receipt"
+              label="Receipts"
+            >
+              <q-expansion-item label="Today" :content-inset-level="0.5">
+                <q-item
+                  clickable
+                  v-ripple
+                  :active="link === 'inbox'"
+                  @click="link = 'inbox'"
+                  active-class="my-menu-link"
+                  to="/card"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="inbox" />
+                  </q-item-section>
+
+                  <q-item-section>Inbox</q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  :active="link === 'outbox'"
+                  @click="link = 'outbox'"
+                  active-class="my-menu-link"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="send" />
+                  </q-item-section>
+
+                  <q-item-section>Outbox</q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  :active="link === 'trash'"
+                  @click="link = 'trash'"
+                  active-class="my-menu-link"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="delete" />
+                  </q-item-section>
+
+                  <q-item-section>Trash</q-item-section>
+                </q-item>
+              </q-expansion-item>
+
+              <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+              </q-expansion-item>
+            </q-expansion-item>
+
+            <q-expansion-item
+              :content-inset-level="0.5"
+              expand-separator
+              icon="schedule"
+              label="Postponed"
+            >
+              <q-item
+                clickable
+                v-ripple
+                :active="link === 'settings'"
+                @click="link = 'settings'"
+                active-class="my-menu-link"
+              >
+                <q-item-section avatar>
+                  <q-icon name="settings" />
+                </q-item-section>
+
+                <q-item-section>Settings</q-item-section>
+              </q-item>
+
+              <q-item
+                clickable
+                v-ripple
+                :active="link === 'help'"
+                @click="link = 'help'"
+                active-class="my-menu-link"
+              >
+                <q-item-section avatar>
+                  <q-icon name="help" />
+                </q-item-section>
+
+                <q-item-section>Help</q-item-section>
+              </q-item>
+            </q-expansion-item>
+          </q-expansion-item>
+        </q-list>
         <EssentialLink />
       </q-scroll-area>
     </q-drawer>
@@ -200,7 +553,6 @@
       @before-show="rightShow"
       @before-hide="rightHide"
       behavior="mobile"
-      :breakpoint="500"
       content-class="bg-white"
     >
       <q-scroll-area
@@ -217,7 +569,7 @@
                 <q-item-label caption>
                   <div class="q-mt-sm q-gutter-x-md" style="height: 50px">
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -226,7 +578,7 @@
                       "
                     ></div>
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -246,7 +598,7 @@
                       ></div>
                     </div>
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -330,7 +682,7 @@
                 <q-item-label caption>
                   <div class="q-mt-sm q-gutter-x-md" style="height: 50px">
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -339,7 +691,7 @@
                       "
                     ></div>
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -359,7 +711,7 @@
                       ></div>
                     </div>
                     <div
-                      class="inline-block shadow-2 cursor-pointer"
+                      class="inline-block shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -371,7 +723,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item tag="label" class="q-mt-md">
+            <q-item tag="div" class="q-mt-md">
               <q-item-section>
                 <q-item-label>内容区域宽度</q-item-label>
               </q-item-section>
@@ -459,8 +811,12 @@
             <q-separator spaced="“12px" />
             <q-item>
               <div
-                class="row q-pa-md bg-blue-1 cursor-pointer"
-                style="border: 1px solid yellowgreen"
+                class="row q-pa-md cursor-pointer"
+                style="
+                  border: 1px solid #ffe58f;
+                  background-color: #fffbe6;
+                  border-radius: 2px;
+                "
               >
                 <div class="col-1">
                   <q-icon name="alarm" />
@@ -528,6 +884,7 @@ export default {
   props: {},
   data() {
     return {
+      link: 'inbox',
       leftDrawerOpen: false,
       leftMini: true,
       leftBehavior: 'default',
@@ -550,7 +907,7 @@ export default {
         right: '2px',
         borderRadius: '5px',
         backgroundColor: '#027be3',
-        width: '5px',
+        width: '2px',
         opacity: 0.75
       },
       check1: true,
@@ -637,6 +994,9 @@ export default {
 </script>
 
 <style lang="sass">
+.my-menu-link
+  color: white
+  background: #F2C037
 .GNL
   &__toolbar
     height: 64px
