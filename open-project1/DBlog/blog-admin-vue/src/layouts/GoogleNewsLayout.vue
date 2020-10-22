@@ -7,7 +7,6 @@
           flat
           dense
           round
-          v-show="$q.screen.lt.md"
           @click="onClick"
           aria-label="Menu"
           icon="format_indent_increase"
@@ -120,7 +119,7 @@
       v-model="leftDrawerOpen"
       bordered
       content-class="bg-white"
-      :width="280"
+      :width="240"
       @hide="hide"
       @show="show"
     >
@@ -130,318 +129,281 @@
         :content-style="contentStyle"
         :content-active-style="contentActiveStyle"
       >
-        <q-list bordered padding class="rounded-borders text-primary">
+        <q-list class="rounded-borders text-black">
+          <menu-tree :data="menuData" />
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="dashboard"
             label="仪表盘"
+            :header-style="menuHeadStyle('yibiaopan')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yibiaopan-fenxi'"
+              @click="link = 'yibiaopan-fenxi'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>分析页</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yibiaopan-jiankong'"
+              @click="link = 'yibiaopan-jiankong'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>监控页</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yibiaopan-gongzuotai'"
+              @click="link = 'yibiaopan-gongzuotai'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>工作台</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="edit_road"
             label="表单页"
+            :header-style="menuHeadStyle('biaodan')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              style="border: none"
+              :active="link === 'biaodan-jichubiaodan'"
+              @click="link = 'biaodan-jichubiaodan'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>基础表单</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'biaodan-fenbubiaodan'"
+              @click="link = 'biaodan-fenbubiaodan'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>分步表单</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'biaodan-gaojibiaodan'"
+              @click="link = 'biaodan-gaojibiaodan'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>高级表单</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="table_view"
             label="列表页"
+            :header-style="menuHeadStyle('liebiao')"
           >
             <q-expansion-item
-              expand-separator
               :content-inset-level="0.5"
-              icon="receipt"
               label="搜索列表"
+              :header-style="menuHeadStyle('liebiao-sousuo')"
             >
               <q-item
                 clickable
                 v-ripple
-                :active="link === 'trash'"
-                @click="link = 'trash'"
+                :active="link === 'liebiao-sousuo-sousuoliebiao-wenzhang'"
+                @click="link = 'liebiao-sousuo-sousuoliebiao-wenzhang'"
                 active-class="my-menu-link"
               >
-                <q-item-section avatar>
-                  <q-icon name="delete" />
-                </q-item-section>
                 <q-item-section>搜索列表（文章）</q-item-section>
               </q-item>
               <q-item
                 clickable
                 v-ripple
-                :active="link === 'trash'"
-                @click="link = 'trash'"
+                :active="link === 'liebiao-sousuo-sousuoliebiao-xiangmu'"
+                @click="link = 'liebiao-sousuo-sousuoliebiao-xiangmu'"
                 active-class="my-menu-link"
               >
-                <q-item-section avatar>
-                  <q-icon name="delete" />
-                </q-item-section>
                 <q-item-section>搜索列表（项目）</q-item-section>
               </q-item>
               <q-item
                 clickable
                 v-ripple
-                :active="link === 'trash'"
-                @click="link = 'trash'"
+                :active="link === 'liebiao-sousuo-sousuoliebiao_yingyong'"
+                @click="link = 'liebiao-sousuo-sousuoliebiao_yingyong'"
                 active-class="my-menu-link"
               >
-                <q-item-section avatar>
-                  <q-icon name="delete" />
-                </q-item-section>
                 <q-item-section>搜索列表（应用）</q-item-section>
               </q-item>
             </q-expansion-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'liebiao-chaxunliebiao'"
+              @click="link = 'liebiao-chaxunliebiao'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>查询列表</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'liebiao-biaozhunliebiao'"
+              @click="link = 'liebiao-biaozhunliebiao'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>标准列表</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'liebiao-kapianliebiao'"
+              @click="link = 'liebiao-kapianliebiao'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>卡片列表</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
-            label="结果页"
+            icon="library_books"
+            label="详情页"
+            :header-style="menuHeadStyle('xiangqing')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'xiangqing-jichu'"
+              @click="link = 'xiangqing-jichu'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
+              <q-item-section>基础详情页</q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'xiangqing-gaoji'"
+              @click="link = 'xiangqing-gaoji'"
+              active-class="my-menu-link"
+            >
+              <q-item-section>高级详情页</q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <q-expansion-item
+            :content-inset-level="0.5"
+            icon="check_circle_outline"
+            label="结果页"
+            :header-style="menuHeadStyle('jieguo')"
+          >
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'jieguo-chenggongye'"
+              @click="link = 'jieguo-chenggongye'"
+              active-class="my-menu-link"
+            >
               <q-item-section>成功页</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'jieguo-shibaiye'"
+              @click="link = 'jieguo-shibaiye'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>失败页</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="error_outline"
             label="异常页"
+            :header-style="menuHeadStyle('yichang')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yichang-403'"
+              @click="link = 'yichang-403'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>403</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yichang-404'"
+              @click="link = 'yichang-404'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>404</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'yichang-500'"
+              @click="link = 'yichang-500'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>500</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="perm_identity"
             label="个人页"
+            :header-style="menuHeadStyle('geren')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'geren-zhongxin'"
+              @click="link = 'geren-zhongxin'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>个人中心</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'geren-shezhi'"
+              @click="link = 'geren-shezhi'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>个人设置</q-item-section>
             </q-item>
           </q-expansion-item>
 
           <q-expansion-item
             :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
+            icon="text_fields"
             label="编辑器"
+            :header-style="menuHeadStyle('bianji')"
           >
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'bianji-zidingyibianjiqi'"
+              @click="link = 'bianji-zidingyibianjiqi'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>自定义编辑器</q-item-section>
             </q-item>
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
-              @click="link = 'trash'"
+              :active="link === 'bianji-mdbianjiqi'"
+              @click="link = 'bianji-mdbianjiqi'"
               active-class="my-menu-link"
             >
-              <q-item-section avatar>
-                <q-icon name="delete" />
-              </q-item-section>
               <q-item-section>Markdown编辑器</q-item-section>
             </q-item>
           </q-expansion-item>
@@ -839,7 +801,7 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container>
+    <q-page-container class="bg-white">
       <slot name="page">hello world</slot>
       <q-page padding>
         <router-view />
@@ -878,12 +840,61 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
-
+import MenuTree from 'components/tree/MenuTree'
+const myData = [
+  {
+    name: 'Web秀',
+    children: [
+      {
+        name: 'web前端',
+        children: [
+          {
+            name: 'CSS'
+          },
+          {
+            name: 'JavaScript'
+          },
+          {
+            name: 'Vue'
+          },
+          {
+            name: '小程序'
+          },
+          {
+            name: 'Three.js'
+          }
+        ]
+      },
+      {
+        name: '服务器'
+      },
+      {
+        name: '工具类'
+      }
+    ]
+  },
+  {
+    name: '今日头条',
+    children: [
+      {
+        name: '图片'
+      },
+      {
+        name: '新闻',
+        children: []
+      }
+    ]
+  },
+  {
+    name: 'Angular'
+  }
+]
 export default {
   name: 'GoogleNewsLayout',
   props: {},
   data() {
     return {
+      menuData: myData,
       link: 'inbox',
       leftDrawerOpen: false,
       leftMini: true,
@@ -907,7 +918,7 @@ export default {
         right: '2px',
         borderRadius: '5px',
         backgroundColor: '#027be3',
-        width: '2px',
+        width: '0px',
         opacity: 0.75
       },
       check1: true,
@@ -923,7 +934,7 @@ export default {
       mic: 8
     }
   },
-  components: { EssentialLink },
+  components: { EssentialLink, MenuTree },
   methods: {
     onClear() {
       this.exactPhrase = ''
@@ -953,6 +964,11 @@ export default {
     },
     rightShow() {
       this.rightOffset = [280, 88]
+    },
+    menuHeadStyle(startWith) {
+      if (this.link.startsWith(startWith)) {
+        return { color: '#1890ff' }
+      }
     },
     onResize(size) {
       // 监听容器大小变化
@@ -995,8 +1011,8 @@ export default {
 
 <style lang="sass">
 .my-menu-link
-  color: white
-  background: #F2C037
+  color: #1890ff
+  background: #e6f7ff
 .GNL
   &__toolbar
     height: 64px
