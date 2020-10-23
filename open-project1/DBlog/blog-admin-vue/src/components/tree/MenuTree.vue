@@ -1,15 +1,11 @@
 <template>
   <div class="tree-menu">
-    <q-expansion-item
-      :content-inset-level="0.5"
-      icon="dashboard"
-      label="仪表盘"
-      :header-style="menuHeadStyle('yibiaopan')"
+    <span
       :key="item.name"
       v-for="item in data"
     >
-      <menu-tree-item :data="item"></menu-tree-item>
-    </q-expansion-item>
+      <menu-tree-item :data="item" :link = "link"></menu-tree-item>
+    </span>
   </div>
 </template>
 
@@ -24,7 +20,10 @@ export default {
   },
   data() {
     return {
-      link: ''
+      link: '',
+      parentNode: {
+        children: this.data
+      }
     }
   },
   methods: {

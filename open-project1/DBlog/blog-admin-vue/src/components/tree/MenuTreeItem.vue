@@ -3,8 +3,9 @@
     <q-expansion-item
       :content-inset-level="0.5"
       :label="data.name"
+      icon="dashboard"
       :header-style="menuHeadStyle('yibiaopan')"
-      v-if="hasChild"
+      v-if="hasChild || data.top"
     >
       <menu-tree-item
         v-for="(item, index) in data.children"
@@ -17,8 +18,8 @@
       clickable
       v-ripple
       :key="data.name"
-      :active="link === data.name"
-      @click="link = data.name"
+      :active="active"
+      @click="onclick(data.name)"
       active-class="my-menu-link"
       v-else
     >
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import EventBus from 'components/tree/EventBus'
 export default {
   name: 'MenuTreeItem',
   props: {
@@ -39,7 +41,7 @@ export default {
   data() {
     return {
       open: false,
-      link: ''
+      active: false
     }
   },
   computed: {
@@ -54,10 +56,18 @@ export default {
       }
     },
     menuHeadStyle(startWith) {
-      if (this.link.startsWith(startWith)) {
-        return { color: '#1890ff' }
-      }
+      // if (this.link.startsWith(startWith)) {
+      //   return { color: '#1890ff' }
+      // }
+    },
+    onclick(name) {
+      EventBus.$emit('activeItem', name)
     }
+  },
+  mounted() {
+    EventBus.$on('activeItem', (name) => {
+      this.active = (this.data.name === name)
+    })
   }
 }
 </script>
