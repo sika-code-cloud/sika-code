@@ -1,47 +1,76 @@
 <template>
-  <span>
-    <q-expansion-item
-      :content-inset-level="0.5"
-      :label="data.name"
-      icon="dashboard"
-      :header-style="menuHeadStyle('yibiaopan')"
-      v-if="hasChild || data.top"
-    >
-      <menu-tree-item
-        v-for="(item, index) in data.children"
-        :data="item"
-        :key="index"
-      ></menu-tree-item>
-      {{ data.name }}
-    </q-expansion-item>
-    <q-item
-      clickable
-      v-ripple
-      :key="data.name"
-      :active="active"
-      @click="onclick(data.name)"
-      active-class="my-menu-link"
-      v-else
-    >
+  <q-expansion-item
+    :content-inset-level="0.5"
+    :label="data.name"
+    :icon="data.icon"
+    :header-style="headerStyleActive"
+    v-if="hasChild"
+  >
+    <menu-tree-item
+      v-for="(item, index) in data.children"
+      :data="item"
+      :key="index"
+    ></menu-tree-item>
+  </q-expansion-item>
+  <q-item
+    v-else-if="!hasChild && data.top"
+    clickable
+    v-ripple
+    class="q-pa-none"
+    :key="data.name"
+    @click="onclick(data)"
+    :to="data.to"
+    :active-class="activeItemStyle"
+  >
+    <span class="q-pa-md" :style="itemStyleActive">
+      <q-item-section avatar>
+        <q-icon :name="data.icon" />
+      </q-item-section>
       <q-item-section>{{ data.name }}</q-item-section>
-    </q-item>
-  </span>
+    </span>
+  </q-item>
+  <q-item
+    clickable
+    v-ripple
+    class="q-pa-none"
+    :key="data.name"
+    @click="onclick(data)"
+    :active-class="activeItemStyle"
+    :to="data.to"
+    v-else
+  >
+    <q-item-section class="q-pa-md" :style="itemStyleActive">{{ data.name }}</q-item-section>
+  </q-item>
 </template>
 
 <script>
 import EventBus from 'components/tree/EventBus'
+
+const headerStyleDefault = { color: '#1890ff' }
+const itemStyleDefault = { color: '#1890ff', backgroundColor: '#e6f7ff' }
+const itemStyleUnActiveDefault = { color: 'black' }
+// const itemClassDefault = 'active-item-class'
 export default {
   name: 'MenuTreeItem',
   props: {
     data: {
       type: [Object, Array],
       required: true
+    },
+    activeHeaderStyle: {
+      type: Object,
+      required: false
+    },
+    activeItemStyle: {
+      type: Object,
+      required: false
     }
   },
   data() {
     return {
-      open: false,
-      active: false
+      active: false,
+      headerStyleActive: {},
+      itemStyleActive: {}
     }
   },
   computed: {
@@ -50,53 +79,48 @@ export default {
     }
   },
   methods: {
-    toggle() {
-      if (this.hasChild) {
-        this.open = !this.open
+    onclick(nodeData) {
+      EventBus.$emit('activeItem', nodeData)
+    },
+    changeActiveHeaderStyle(currentItem) {
+      this.active = (this.data.name === currentItem.name)
+      if (currentItem.group && this.data.group && currentItem.group.startsWith(this.data.group)) {
+        if (this.activeHeaderStyle) {
+          this.headerStyleActive = this.activeHeaderStyle
+        } else {
+          this.headerStyleActive = headerStyleDefault
+        }
+      } else {
+        this.headerStyleActive = {}
       }
     },
-    menuHeadStyle(startWith) {
-      // if (this.link.startsWith(startWith)) {
-      //   return { color: '#1890ff' }
-      // }
-    },
-    onclick(name) {
-      EventBus.$emit('activeItem', name)
+    changeActiveItemStyle(currentItem) {
+      this.active = (this.data.name === currentItem.name)
+      if (this.active) {
+        if (this.activeItemStyle) {
+          this.itemStyleActive = this.activeItemStyle
+        } else {
+          this.itemStyleActive = itemStyleDefault
+        }
+      } else {
+        this.itemStyleActive = itemStyleUnActiveDefault
+      }
     }
   },
   mounted() {
-    EventBus.$on('activeItem', (name) => {
-      this.active = (this.data.name === name)
+    EventBus.$on('activeItem', (currentItem) => {
+      this.changeActiveItemStyle(currentItem)
+      this.changeActiveHeaderStyle(currentItem)
     })
+  },
+  created() {
+    this.itemStyleActive = itemStyleUnActiveDefault
   }
 }
 </script>
 
-<style>
-ul {
-  list-style: none;
-  margin: 10px 0;
-}
-li {
-  padding: 3px 0;
-}
-li > span {
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 20px;
-}
-li > span:visited {
-  background: #fff;
-}
-em.icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  vertical-align: middle;
-}
-.tree-menu li {
-  line-height: 1.5;
-}
+<style lang="sass">
+.active-item-class
+  color: #1890ff
+  background-color: #e6f7ff
 </style>

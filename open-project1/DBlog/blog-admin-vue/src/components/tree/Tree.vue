@@ -1,6 +1,6 @@
 <template>
   <div class="tree-menu">
-    <ul :key="item" v-for="item in data">
+    <ul :key="item.name" v-for="item in data">
       <tree-item :data="item"></tree-item>
     </ul>
   </div>

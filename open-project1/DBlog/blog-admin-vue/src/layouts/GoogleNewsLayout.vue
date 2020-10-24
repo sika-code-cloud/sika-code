@@ -131,379 +131,6 @@
       >
         <q-list class="rounded-borders text-black">
           <menu-tree :data="menuData" />
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="dashboard"
-            label="仪表盘"
-            :header-style="menuHeadStyle('yibiaopan')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yibiaopan-fenxi'"
-              @click="link = 'yibiaopan-fenxi'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>分析页</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yibiaopan-jiankong'"
-              @click="link = 'yibiaopan-jiankong'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>监控页</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yibiaopan-gongzuotai'"
-              @click="link = 'yibiaopan-gongzuotai'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>工作台</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="edit_road"
-            label="表单页"
-            :header-style="menuHeadStyle('biaodan')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              style="border: none"
-              :active="link === 'biaodan-jichubiaodan'"
-              @click="link = 'biaodan-jichubiaodan'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>基础表单</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'biaodan-fenbubiaodan'"
-              @click="link = 'biaodan-fenbubiaodan'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>分步表单</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'biaodan-gaojibiaodan'"
-              @click="link = 'biaodan-gaojibiaodan'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>高级表单</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="table_view"
-            label="列表页"
-            :header-style="menuHeadStyle('liebiao')"
-          >
-            <q-expansion-item
-              :content-inset-level="0.5"
-              label="搜索列表"
-              :header-style="menuHeadStyle('liebiao-sousuo')"
-            >
-              <q-item
-                clickable
-                v-ripple
-                :active="link === 'liebiao-sousuo-sousuoliebiao-wenzhang'"
-                @click="link = 'liebiao-sousuo-sousuoliebiao-wenzhang'"
-                active-class="my-menu-link"
-              >
-                <q-item-section>搜索列表（文章）</q-item-section>
-              </q-item>
-              <q-item
-                clickable
-                v-ripple
-                :active="link === 'liebiao-sousuo-sousuoliebiao-xiangmu'"
-                @click="link = 'liebiao-sousuo-sousuoliebiao-xiangmu'"
-                active-class="my-menu-link"
-              >
-                <q-item-section>搜索列表（项目）</q-item-section>
-              </q-item>
-              <q-item
-                clickable
-                v-ripple
-                :active="link === 'liebiao-sousuo-sousuoliebiao_yingyong'"
-                @click="link = 'liebiao-sousuo-sousuoliebiao_yingyong'"
-                active-class="my-menu-link"
-              >
-                <q-item-section>搜索列表（应用）</q-item-section>
-              </q-item>
-            </q-expansion-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'liebiao-chaxunliebiao'"
-              @click="link = 'liebiao-chaxunliebiao'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>查询列表</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'liebiao-biaozhunliebiao'"
-              @click="link = 'liebiao-biaozhunliebiao'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>标准列表</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'liebiao-kapianliebiao'"
-              @click="link = 'liebiao-kapianliebiao'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>卡片列表</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="library_books"
-            label="详情页"
-            :header-style="menuHeadStyle('xiangqing')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'xiangqing-jichu'"
-              @click="link = 'xiangqing-jichu'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>基础详情页</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'xiangqing-gaoji'"
-              @click="link = 'xiangqing-gaoji'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>高级详情页</q-item-section>
-            </q-item>
-          </q-expansion-item>
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="check_circle_outline"
-            label="结果页"
-            :header-style="menuHeadStyle('jieguo')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'jieguo-chenggongye'"
-              @click="link = 'jieguo-chenggongye'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>成功页</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'jieguo-shibaiye'"
-              @click="link = 'jieguo-shibaiye'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>失败页</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="error_outline"
-            label="异常页"
-            :header-style="menuHeadStyle('yichang')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yichang-403'"
-              @click="link = 'yichang-403'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>403</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yichang-404'"
-              @click="link = 'yichang-404'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>404</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'yichang-500'"
-              @click="link = 'yichang-500'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>500</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="perm_identity"
-            label="个人页"
-            :header-style="menuHeadStyle('geren')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'geren-zhongxin'"
-              @click="link = 'geren-zhongxin'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>个人中心</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'geren-shezhi'"
-              @click="link = 'geren-shezhi'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>个人设置</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            icon="text_fields"
-            label="编辑器"
-            :header-style="menuHeadStyle('bianji')"
-          >
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'bianji-zidingyibianjiqi'"
-              @click="link = 'bianji-zidingyibianjiqi'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>自定义编辑器</q-item-section>
-            </q-item>
-            <q-item
-              clickable
-              v-ripple
-              :active="link === 'bianji-mdbianjiqi'"
-              @click="link = 'bianji-mdbianjiqi'"
-              active-class="my-menu-link"
-            >
-              <q-item-section>Markdown编辑器</q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-expansion-item
-            :content-inset-level="0.5"
-            expand-separator
-            icon="mail"
-            label="仪表盘"
-          >
-            <q-expansion-item
-              expand-separator
-              :content-inset-level="0.5"
-              icon="receipt"
-              label="Receipts"
-            >
-              <q-expansion-item label="Today" :content-inset-level="0.5">
-                <q-item
-                  clickable
-                  v-ripple
-                  :active="link === 'inbox'"
-                  @click="link = 'inbox'"
-                  active-class="my-menu-link"
-                  to="/card"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="inbox" />
-                  </q-item-section>
-
-                  <q-item-section>Inbox</q-item-section>
-                </q-item>
-
-                <q-item
-                  clickable
-                  v-ripple
-                  :active="link === 'outbox'"
-                  @click="link = 'outbox'"
-                  active-class="my-menu-link"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="send" />
-                  </q-item-section>
-
-                  <q-item-section>Outbox</q-item-section>
-                </q-item>
-
-                <q-item
-                  clickable
-                  v-ripple
-                  :active="link === 'trash'"
-                  @click="link = 'trash'"
-                  active-class="my-menu-link"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="delete" />
-                  </q-item-section>
-
-                  <q-item-section>Trash</q-item-section>
-                </q-item>
-              </q-expansion-item>
-
-              <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-              </q-expansion-item>
-            </q-expansion-item>
-
-            <q-expansion-item
-              :content-inset-level="0.5"
-              expand-separator
-              icon="schedule"
-              label="Postponed"
-            >
-              <q-item
-                clickable
-                v-ripple
-                :active="link === 'settings'"
-                @click="link = 'settings'"
-                active-class="my-menu-link"
-              >
-                <q-item-section avatar>
-                  <q-icon name="settings" />
-                </q-item-section>
-
-                <q-item-section>Settings</q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-ripple
-                :active="link === 'help'"
-                @click="link = 'help'"
-                active-class="my-menu-link"
-              >
-                <q-item-section avatar>
-                  <q-icon name="help" />
-                </q-item-section>
-
-                <q-item-section>Help</q-item-section>
-              </q-item>
-            </q-expansion-item>
-          </q-expansion-item>
         </q-list>
         <EssentialLink />
       </q-scroll-area>
@@ -579,6 +206,7 @@
                   <q-btn
                     style="background-color: rgb(24, 144, 255)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -586,6 +214,7 @@
                   <q-btn
                     style="background-color: rgb(245, 34, 45)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -593,6 +222,7 @@
                   <q-btn
                     style="background-color: rgb(250, 84, 28)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -601,12 +231,14 @@
                     style="background-color: rgb(250, 173, 20)"
                     text-color="white"
                     icon="done"
+                    flat
                     dense
                     size="xs"
                   />
                   <q-btn
                     style="background-color: rgb(19, 194, 194)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -614,6 +246,7 @@
                   <q-btn
                     style="background-color: rgb(82, 196, 26)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -622,12 +255,14 @@
                     style="background-color: rgb(47, 84, 235)"
                     text-color="white"
                     icon="done"
+                    flat
                     dense
                     size="xs"
                   />
                   <q-btn
                     style="background-color: rgb(114, 46, 209)"
                     text-color="white"
+                    flat
                     icon="done"
                     dense
                     size="xs"
@@ -843,51 +478,161 @@ import EssentialLink from 'components/EssentialLink.vue'
 import MenuTree from 'components/tree/MenuTree'
 const myData = [
   {
-    name: 'Web秀',
+    name: '仪表盘',
+    icon: 'dashboard',
+    group: '仪表盘',
     children: [
       {
-        name: 'web前端',
+        name: '分析页',
+        group: '仪表盘'
+      },
+      {
+        name: '监控页',
+        group: '仪表盘'
+      },
+      {
+        name: '工作台',
+        group: '仪表盘'
+      }
+    ]
+  },
+  {
+    name: '表单页',
+    icon: 'edit_road',
+    group: '表单页',
+    children: [
+      {
+        name: '基础表单',
+        group: '表单页'
+      },
+      {
+        name: '分步表单',
+        group: '表单页'
+      },
+      {
+        name: '高级表单',
+        group: '表单页'
+      }
+    ]
+  },
+  {
+    name: '列表页',
+    icon: 'table_view',
+    group: '列表页',
+    children: [
+      {
+        name: '搜索列表',
+        group: '列表页-搜索列表',
         children: [
           {
-            name: 'CSS'
+            name: '搜索列表（文章）',
+            group: '列表页-搜索列表'
           },
           {
-            name: 'JavaScript'
+            name: '搜索列表（项目）',
+            group: '列表页-搜索列表'
           },
           {
-            name: 'Vue'
-          },
-          {
-            name: '小程序'
-          },
-          {
-            name: 'Three.js'
+            name: '搜索列表（引用）',
+            group: '列表页-搜索列表'
           }
         ]
       },
       {
-        name: '服务器'
+        name: '查询列表',
+        group: '列表页'
       },
       {
-        name: '工具类'
+        name: '标准列表',
+        group: '列表页'
+      },
+      {
+        name: '卡片列表',
+        group: '列表页',
+        to: '/card'
       }
     ]
   },
   {
-    name: '今日头条',
+    name: '详情页',
+    icon: 'library_books',
+    group: '详情页',
     children: [
       {
-        name: '图片'
+        name: '基础详情页',
+        group: '详情页'
       },
       {
-        name: '新闻',
-        children: []
+        name: '高级详情页',
+        group: '详情页'
       }
     ]
   },
   {
-    name: 'Angular',
-    top: true
+    name: '结果页',
+    icon: 'check_circle_outline',
+    group: '结果页',
+    children: [
+      {
+        name: '成功页',
+        group: '结果页'
+      },
+      {
+        name: '失败页',
+        group: '结果页'
+      }
+    ]
+  },
+  {
+    name: '异常页',
+    icon: 'error_outline',
+    group: '异常页',
+    children: [
+      {
+        name: '403',
+        group: '异常页'
+      },
+      {
+        name: '404',
+        group: '异常页'
+      },
+      {
+        name: '500',
+        group: '异常页'
+      }
+    ]
+  },
+  {
+    name: '个人页',
+    icon: 'perm_identity',
+    group: '个人页',
+    children: [
+      {
+        name: '个人中心',
+        group: '个人页'
+      },
+      {
+        name: '个人设置',
+        group: '个人页'
+      }
+    ]
+  },
+  {
+    name: '编辑器',
+    icon: 'text_fields',
+    group: '编辑器',
+    children: [
+      {
+        name: '自定义编辑器',
+        group: '编辑器',
+        to: '/editor'
+      },
+      {
+        name: 'Markdown编辑器',
+        group: '编辑器',
+        to: '/'
+      }
+    ]
   }
 ]
 export default {
