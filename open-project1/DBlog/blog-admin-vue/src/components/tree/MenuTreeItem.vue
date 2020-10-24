@@ -43,7 +43,7 @@
 import EventBus from 'components/tree/EventBus'
 
 const headerStyleDefault = { color: '#1890ff' }
-const itemStyleDefault = { color: '#1890ff', backgroundColor: '#e6f7ff' }
+const itemStyleDefault = { color: '#1890ff', backgroundColor: '#e6f7ff', borderRight: '0.2em solid #1890ff' }
 const itemStyleUnActiveDefault = { color: 'black' }
 // const itemClassDefault = 'active-item-class'
 export default {
