@@ -633,6 +633,12 @@ const myData = [
         to: '/'
       }
     ]
+  },
+  {
+    name: '1编辑器',
+    icon: 'text_fields',
+    group: '1编辑器',
+    top: true
   }
 ]
 export default {

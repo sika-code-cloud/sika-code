@@ -16,30 +16,26 @@
     v-else-if="!hasChild && data.top"
     clickable
     v-ripple
-    class="q-pa-none"
+    :style="itemStyleActive"
     :key="data.name"
     @click="onclick(data)"
     :to="data.to"
-    :active-class="activeItemStyle"
   >
-    <span class="q-pa-md" :style="itemStyleActive">
-      <q-item-section avatar>
-        <q-icon :name="data.icon" />
-      </q-item-section>
-      <q-item-section>{{ data.name }}</q-item-section>
-    </span>
+    <q-item-section avatar>
+      <q-icon :name="data.icon" />
+    </q-item-section>
+    <q-item-section>{{ data.name }}</q-item-section>
   </q-item>
   <q-item
     clickable
     v-ripple
-    class="q-pa-none"
     :key="data.name"
+    :style="itemStyleActive"
     @click="onclick(data)"
-    :active-class="activeItemStyle"
     :to="data.to"
     v-else
   >
-    <q-item-section class="q-pa-md" :style="itemStyleActive">{{ data.name }}</q-item-section>
+    <q-item-section >{{ data.name }}</q-item-section>
   </q-item>
 </template>
 
