@@ -1,0 +1,66 @@
+server:
+  port: 8101
+test:
+  #  hostport: httpbin.org:80
+  #  hostport: localhost:5000
+  #  uri: http://${test.hostport}
+  uri: http://localhost:8100
+
+
+spring:
+  jmx:
+    enabled: false
+  cloud:
+    gateway:
+      default-filters:
+        - Customer1
+        - Customer
+#        - PrefixPath=/
+#        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+
+      routes:
+      # =====================================
+      # to run server
+      # $ wscat --listen 9000
+      # to run client
+      # $ wscat --connect ws://localhost:8080/echo
+      - id: websocket_test
+        uri: ws://localhost:9000
+        order: 9000
+        predicates:
+        - Path=/echo
+      # =====================================
+      - id: default_path_to_httpbin
+        uri: ${test.uri}
+        order: 10000
+        predicates:
+        - Path=/**
+
+#设置最大超时时间
+ribbon:
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: false
+
+oauth-server:
+  ribbon:
+    listOfServers: localhost:8100
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.http.server.reactive: INFO
+    org.springframework.web.reactive: INFO
+    reactor.ipc.netty: INFO
+    reactor.netty: INFO
+
+management.endpoints.web.exposure.include: '*'

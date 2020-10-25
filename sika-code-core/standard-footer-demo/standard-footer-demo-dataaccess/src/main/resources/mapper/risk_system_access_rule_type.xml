@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.standard.footer.demo.business.accessruletype.mapper.AccessRuleTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.standard.footer.demo.business.accessruletype.entity.AccessRuleTypeEntity">
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="version" property="version" />
+        <result column="available" property="available" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="rule_type" property="ruleType" />
+        <result column="show_flag" property="showFlag" />
+        <result column="order_num" property="orderNum" />
+        <result column="priority" property="priority" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="columnList">
+        id, create_by, update_by, create_date, update_date, version, available, is_deleted, remark, rule_type, show_flag, order_num, priority
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="listByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取Id列表信息 -->
+    <select id="listIdByQuery" resultType="java.lang.Long" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT id
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="findByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取表id -->
+    <select id="findIdByQuery" resultType="java.lang.Long" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT id
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="pageByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        <include refid="order_by_sql"/>
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="totalCountByQuery" resultType="Integer" parameterType="com.sika.code.standard.footer.demo.business.accessruletype.pojo.query.AccessRuleTypeQuery" >
+        SELECT count(*)
+        FROM risk_system_access_rule_type
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql" >
+        <if test="query.accessRuleTypeId != null">AND id = #{query.accessRuleTypeId}</if>
+        <if test="query.ruleType != null">AND rule_type = #{query.ruleType}</if>
+        <if test="query.showFlag != null">AND show_flag = #{query.showFlag}</if>
+        <if test="query.orderNum != null">AND order_num = #{query.orderNum}</if>
+        <if test="query.priority != null">AND priority = #{query.priority}</if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null" >
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'accessRuleTypeId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

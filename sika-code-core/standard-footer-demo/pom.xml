@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sika.code.standard.footer.demo</groupId>
+    <artifactId>standard-footer-demo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>standard-footer-demo-core</module>
+        <module>standard-footer-demo-common</module>
+        <module>standard-footer-demo-dataaccess</module>
+        <module>standard-footer-demo-web</module>
+        <module>standard-footer-demo-generator</module>
+    </modules>
+
+    <properties>
+        <!-- 项目构建属性 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <!-- sika-code版本 -->
+        <com.sika.code.core.version>2.0.0</com.sika.code.core.version>
+
+        <!-- spring-boot依赖版本号 -->
+        <spring-boot-dependencies.version>2.1.7.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
+
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>standard-footer</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>mq-rabbit</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>lock-redis</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 集成spring-boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 集成spring-cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
+                <!--<version>0.1.2.RELEASE</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

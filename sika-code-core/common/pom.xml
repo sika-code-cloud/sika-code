@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sika-code-core</artifactId>
+        <groupId>com.sika.code.core</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>common</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+        <!-- 引入hutool工具启动类 -->
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>hutool-starter</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rholder</groupId>
+            <artifactId>guava-retrying</artifactId>
+            <version>${guava-retrying.version}</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sika-code-core</artifactId>
+        <groupId>com.sika.code.core</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>standard-footer</artifactId>
+    <properties>
+        <jjwt.version>0.9.1</jjwt.version>
+        <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
+        <!-- sharding-jdbc版本 -->
+        <sharding-jdbc>2.0.3</sharding-jdbc>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>common</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>database</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sika.code.core</groupId>
+            <artifactId>redis</artifactId>
+            <version>${com.sika.code.core.version}</version>
+        </dependency>
+
+        <!-- 测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.shardingjdbc</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>${sharding-jdbc}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatisplus.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- 类映射工具类 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

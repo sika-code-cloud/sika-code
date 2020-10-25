@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>JustAuth第三方登录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="/img/justauth@0,75x.png" width="30" height="30" alt="" loading="lazy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">用户</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron mt-2 p-4">
+        <h1 class="display-4">JustAuth</h1>
+        <p class="lead">JustAuth，如你所见，它仅仅是一个<strong>第三方授权登录</strong>的<strong>工具类库</strong>，它可以让我们脱离繁琐的第三方登录SDK，让登录变得 <strong>So easy!</strong></p>
+        <hr class="my-4">
+        <a class="btn btn-info" href="https://gitee.com/yadong.zhang/JustAuth" target="_blank" role="button">Gitee <img src="https://gitee.com/yadong.zhang/JustAuth/badge/star.svg?theme=gvp" alt="star"></a>
+        <a class="btn btn-info" href="https://github.com/zhangyd-c/JustAuth" target="_blank" role="button">Github <img src="https://img.shields.io/github/stars/zhangyd-c/JustAuth.svg?style=social" alt="github"></a>
+        <a class="btn btn-light" href="https://docs.justauth.whnb.wang" target="_blank" role="button">帮助文档</a>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col col-3 pt-1 pb-1" th:each="authPlatform : ${enableAuthPlatforms}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img th:src="'https://cdn.jsdelivr.net/gh/justauth/justauth-oauth-logo@1.1/' + ${authPlatform.enname} + '.png'" alt="" style="width: 20px;position: relative;top: -2px;;" class="mr-1">
+                        <a target="_blank" th:href="'http://127.0.0.1:8443/oauth/render/' + ${authPlatform.enname}" th:text="${authPlatform.name}"></a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="'使用' + ${authPlatform.name} + '登录'"></h6>
+                    <span class="badge badge-light ml-1" th:text="${authPlatform.since}"></span>
+                    <a th:if="${authPlatform.readme} ne ''" th:href="${authPlatform.readme}" target="_blank" class="card-link">帮助文档</a>
+                    <a th:if="${authPlatform.apiDoc} ne ''" th:href="${authPlatform.apiDoc}" target="_blank" class="card-link ml-1">官方文档</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="row mt-3 mb-4 justify-content-center">
+        <div class="col col-3 mr-4">
+            <div class="card" style="width: 18rem;">
+                <img src="https://gitee.com/yadong.zhang/static/raw/master/wx/wechat_account.jpg" class="card-img-top" alt="...">
+                <div class="card-body pt-2 pb-2">
+                    <p class="card-text">扫码关注公众号，优先获取最新资讯</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-3">
+            <div class="card" style="width: 18rem;">
+                <img src="/img/wechat.jpg" class="card-img-top" alt="...">
+                <div class="card-body pt-2 pb-2">
+                    <p class="card-text">扫码备注“<strong>JustAuth</strong>”，进专属开发者群</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-live="polite" aria-atomic="true" style="position: fixed;min-height: 200px;top: 0;right: 0;">
+    <!-- Then put toasts within -->
+    <div class="toast" data-delay="30000" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/justauth@0,75x.png" style="width: 20px;" class="rounded mr-2" alt="...">
+            <strong class="mr-auto">欢迎光临！</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            JustAuth，如你所见，它仅仅是一个第三方授权登录的工具类库，它可以让我们脱离繁琐的第三方登录SDK，让登录变得 So easy!
+        </div>
+    </div>
+
+    <div class="toast" data-delay="30000" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/justauth@0,75x.png" style="width: 20px;" class="rounded mr-2" alt="...">
+            <strong class="mr-auto">须知！</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            如你已配置完成，则可以直接点击对应平台的标题进行登录认证。
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<script>
+    $(function(){
+        $('.toast').toast('show')
+    })
+</script>
+</html>

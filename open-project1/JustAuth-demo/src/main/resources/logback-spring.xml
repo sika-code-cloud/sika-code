@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 控制台 appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="me.zhyd" level="DEBUG"/>
+
+    <logger name="me.zhyd.justauth" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>  

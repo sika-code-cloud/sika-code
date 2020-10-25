@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.mapper.CreditQuotaUsageTemplateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.entity.CreditQuotaUsageTemplateEntity">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="version" property="version" />
+        <result column="available" property="available" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="rule_type" property="ruleType" />
+        <result column="rule_name" property="ruleName" />
+        <result column="customer_deposit_type" property="customerDepositType" />
+        <result column="credit_quota" property="creditQuota" />
+        <result column="single_limit_price" property="singleLimitPrice" />
+        <result column="deposit_phase" property="depositPhase" />
+        <result column="payment_phase" property="paymentPhase" />
+        <result column="pay_mode" property="payMode" />
+        <result column="limit_apple_type" property="limitAppleType" />
+        <result column="apple_deposit_phase" property="appleDepositPhase" />
+        <result column="apple_payment_phase" property="applePaymentPhase" />
+        <result column="limit_new_type" property="limitNewType" />
+        <result column="new_deposit_phase" property="newDepositPhase" />
+        <result column="new_payment_phase" property="newPaymentPhase" />
+        <result column="statement_date_type" property="statementDateType" />
+        <result column="latest_payment_date" property="latestPaymentDate" />
+        <result column="payment_type" property="paymentType" />
+        <result column="receiving_type" property="receivingType" />
+        <result column="return_visit_frequency" property="returnVisitFrequency" />
+        <result column="show_type" property="showType" />
+        <result column="order_num" property="orderNum" />
+        <result column="priority" property="priority" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="columnList">
+        id, create_by, update_by, create_date, update_date, version, available, is_deleted, remark, rule_type, rule_name, customer_deposit_type, credit_quota, single_limit_price, deposit_phase, payment_phase, pay_mode, limit_apple_type, apple_deposit_phase, apple_payment_phase, limit_new_type, new_deposit_phase, new_payment_phase, statement_date_type, latest_payment_date, payment_type, receiving_type, return_visit_frequency, show_type, order_num, priority
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="listByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="findByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取id列表 -->
+    <select id="listIdsByQuery" resultType="java.lang.Long" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT id
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取id -->
+    <select id="findIdByQuery" resultType="java.lang.Long" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT id
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="pageByQuery" resultMap="ResultMap" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT <include refid="columnList" />
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        <include refid="order_by_sql"/>
+        LIMIT  #{query.start}, #{query.pageSize}
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="totalCountByQuery" resultType="Integer" parameterType="com.sika.code.standard.footer.demo.business.creditquotausagetemplate.pojo.query.CreditQuotaUsageTemplateQuery" >
+        SELECT count(*)
+        FROM risk_system_credit_quota_usage_template
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql" >
+        <if test="query.creditQuotaUsageTemplateId != null">AND id = #{query.creditQuotaUsageTemplateId}</if>
+        <if test="query.createBy != null">AND create_by = #{query.createBy}</if>
+        <if test="query.updateBy != null">AND update_by = #{query.updateBy}</if>
+        <if test="query.createDate != null">AND create_date = #{query.createDate}</if>
+        <if test="query.updateDate != null">AND update_date = #{query.updateDate}</if>
+        <if test="query.version != null">AND version = #{query.version}</if>
+        <if test="query.available != null">AND available = #{query.available}</if>
+        <if test="query.isDeleted != null">AND is_deleted = #{query.isDeleted}</if>
+        <if test="query.remark != null">AND remark = #{query.remark}</if>
+        <if test="query.ruleType != null">AND rule_type = #{query.ruleType}</if>
+        <if test="query.ruleName != null">AND rule_name = #{query.ruleName}</if>
+        <if test="query.customerDepositType != null">AND customer_deposit_type = #{query.customerDepositType}</if>
+        <if test="query.creditQuota != null">AND credit_quota = #{query.creditQuota}</if>
+        <if test="query.singleLimitPrice != null">AND single_limit_price = #{query.singleLimitPrice}</if>
+        <if test="query.depositPhase != null">AND deposit_phase = #{query.depositPhase}</if>
+        <if test="query.paymentPhase != null">AND payment_phase = #{query.paymentPhase}</if>
+        <if test="query.payMode != null">AND pay_mode = #{query.payMode}</if>
+        <if test="query.limitAppleType != null">AND limit_apple_type = #{query.limitAppleType}</if>
+        <if test="query.appleDepositPhase != null">AND apple_deposit_phase = #{query.appleDepositPhase}</if>
+        <if test="query.applePaymentPhase != null">AND apple_payment_phase = #{query.applePaymentPhase}</if>
+        <if test="query.limitNewType != null">AND limit_new_type = #{query.limitNewType}</if>
+        <if test="query.newDepositPhase != null">AND new_deposit_phase = #{query.newDepositPhase}</if>
+        <if test="query.newPaymentPhase != null">AND new_payment_phase = #{query.newPaymentPhase}</if>
+        <if test="query.statementDateType != null">AND statement_date_type = #{query.statementDateType}</if>
+        <if test="query.latestPaymentDate != null">AND latest_payment_date = #{query.latestPaymentDate}</if>
+        <if test="query.paymentType != null">AND payment_type = #{query.paymentType}</if>
+        <if test="query.receivingType != null">AND receiving_type = #{query.receivingType}</if>
+        <if test="query.returnVisitFrequency != null">AND return_visit_frequency = #{query.returnVisitFrequency}</if>
+        <if test="query.showType != null">AND show_type = #{query.showType}</if>
+        <if test="query.orderNum != null">AND order_num = #{query.orderNum}</if>
+        <if test="query.priority != null">AND priority = #{query.priority}</if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null" >
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'creditQuotaUsageTemplateId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

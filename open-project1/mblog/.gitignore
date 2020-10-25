@@ -1,0 +1,25 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+.idea
+
+indexes
+storage
+logs
+
+# project settings
+*.project
+*.classpath
+.settings/
+target
+.externalToolBuilders
+*.iml
+
+# rebel
+rebel.xml
+
+*.db
+
+!/src/main/java/com/mtons/mblog/base/storage/
