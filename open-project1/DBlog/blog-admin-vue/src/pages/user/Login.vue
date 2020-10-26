@@ -128,11 +128,11 @@
             <div class="row">
               <div class="col">
                 <q-btn
+                  unelevated
                   label="登 录"
-                  glossy
                   size="17px"
                   color="primary q-mt-sm"
-                  class="full-width"
+                  class="full-width no-border-radius"
                   type="submit"
                   :loading="loginLogin"
                 >

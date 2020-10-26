@@ -134,7 +134,14 @@
                   <q-icon name="event" />
                 </template>
                 <template v-slot:after>
-                  <q-btn glossy :loading="validateCodeLoading" @click="getVerifyCode" color="secondary" label="获取验证码">
+                  <q-btn
+                    unelevated
+                    class="no-border-radius"
+                    :loading="validateCodeLoading"
+                    @click="getVerifyCode"
+                    color="secondary"
+                    label="获取验证码"
+                  >
                     <template v-slot:loading>
                       <q-icon name="alarm" class="on-left" />
                       {{ count }} s
@@ -145,7 +152,8 @@
               <div class="row">
                 <div class="col text-left">
                   <q-btn
-                    glossy
+                    class="no-border-radius"
+                    unelevated
                     type="submit"
                     :loading="loading"
                     color="primary full-width"
@@ -172,11 +180,23 @@
         </div>
       </q-form>
       <q-dialog v-model="card" persistent>
-        <q-card class="my-card text-center q-col-gutter-y-lg q-px-md" style="width: 600px; max-width: 80vw;">
-          <q-icon class="q-mt-md text-h4" name="check_circle" color="positive" size="60px" />
+        <q-card
+          class="my-card text-center q-col-gutter-y-lg q-px-md"
+          style="width: 600px; max-width: 80vw"
+        >
+          <q-icon
+            class="q-mt-md text-h4"
+            name="check_circle"
+            color="positive"
+            size="60px"
+          />
           <div>
-            <div class="text-h6">账户：<span>{{ email }} </span> 注册成功</div>
-            <div class="text-grey"> 注册验证短信已经发送至该邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接验证账户。</div>
+            <div class="text-h6">
+              账户：<span>{{ email }} </span> 注册成功
+            </div>
+            <div class="text-grey">
+              注册验证短信已经发送至该邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接验证账户。
+            </div>
           </div>
           <q-card-actions align="center" class="q-mb-md">
             <q-btn v-close-popup glossy color="primary" label="查看邮箱" />
@@ -260,7 +280,7 @@ export default {
     }
   },
   computed: {
-    passwordValida: function() {
+    passwordValida: function () {
       return this.password === this.confirmPassword
     }
   }
