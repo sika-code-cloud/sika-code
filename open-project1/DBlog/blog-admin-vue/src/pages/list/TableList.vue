@@ -96,15 +96,16 @@
           :data="data"
           color="primary"
           :columns="columns"
+          :visible-columns="visibleColumns"
           row-key="name"
           :selected-rows-label="getSelectedString"
           selection="multiple"
           :selected.sync="selected"
           :pagination.sync="pagination"
           hide-selected-banner
-          hide-pagination
+          separator="none"
         >
-          <template v-slot:top-right>
+          <template v-slot:top-right="props">
             <q-btn
               label="新建"
               color="primary"
@@ -121,22 +122,44 @@
             <q-btn rounded flat dense size="md" icon="settings">
               <q-tooltip>列设置</q-tooltip>
             </q-btn>
-            <q-btn rounded flat dense size="md" icon="zoom_out_map">
+            <q-select
+              behavior="menu"
+              v-model="visibleColumns"
+              multiple
+              borderless
+              dense
+              options-dense
+              :display-value="$q.lang.table.columns"
+              emit-value
+              map-options
+              :options="columns"
+              option-value="name"
+              style="min-width: 150px"
+            >
+              <q-tooltip>列设置</q-tooltip>
+            </q-select>
+            <q-btn rounded flat round dense
+                   :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+                   @click="props.toggleFullscreen"
+                  >
               <q-tooltip>全屏</q-tooltip>
             </q-btn>
           </template>
+          <template v-slot:bottom="scope">
+            <div class="full-width ">
+            <q-pagination
+              v-model="pagination.page"
+              color="primary"
+              :max="scope.pagesNumber"
+              size="sm"
+              :max-pages="6"
+              :boundary-numbers="false"
+              :boundary-links="true"
+              class="float-right"
+            />
+            </div>
+          </template>
         </q-table>
-        <div class="row flex justify-end q-mt-md">
-          <q-pagination
-            v-model="pagination.page"
-            color="primary"
-            :max="pagesNumber"
-            size="md"
-            :max-pages="6"
-            :boundary-numbers="false"
-            :boundary-links="true"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -158,6 +181,7 @@ export default {
         rowsPerPage: 4
         // rowsNumber: xx if getting data from a server
       },
+      visibleColumns: ['calories', 'desc', 'fat', 'carbs', 'protein', 'sodium', 'calcium', 'iron'],
       columns: [
         {
           name: 'desc',
