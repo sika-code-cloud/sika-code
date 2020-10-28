@@ -22,7 +22,7 @@
           </q-item-section>
         </q-item>
         <q-item class="col-xl-3 col-md-4 col-sm-6 col-xs-12">
-          <q-item-section class="col-2 text-right"> 调用次数: </q-item-section>
+          <q-item-section class="col-2 text-right"> 调用次数:</q-item-section>
           <q-item-section class="col">
             <q-input
               outlined
@@ -88,9 +88,12 @@
     </q-form>
     <div class="row q-mt-xl">
       <div class="col">
+        <div></div>
         <q-table
+          class="my-sticky-header-table"
           square
-          card-class="shadow-1"
+          flat
+          bordered
           title="查询表格"
           title-class="text-body1"
           :data="data"
@@ -103,49 +106,51 @@
           :selected.sync="selected"
           :pagination.sync="pagination"
           hide-selected-banner
-          separator="none"
+          virtual-scroll
           :loading="loading"
         >
           <template v-slot:top-right="props">
-            <q-btn
-              label="新建"
-              color="primary"
-              class="q-mr-sm no-border-radius"
-              icon="add"
-              unelevated
-              @click="addRow"
-            />
-            <q-btn rounded flat dense size="md" icon="refresh">
-              <q-tooltip>刷新</q-tooltip>
-            </q-btn>
-            <q-btn rounded flat dense size="md" icon="unfold_less">
-              <q-tooltip>密度</q-tooltip>
-            </q-btn>
-            <q-btn rounded flat dense size="md" icon="settings">
-              <q-menu :offset="[0, 12]">
-                <q-list dense>
-                  <q-item
-                    clickable
-                    :active="column.check"
-                    @click="select(column)"
-                    v-bind:key="column.id"
-                    v-for="column in columns"
-                  >
-                    <q-item-section>{{ column.label }}</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-            <q-btn
-              rounded
-              flat
-              round
-              dense
-              :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-              @click="props.toggleFullscreen"
-            >
-              <q-tooltip>全屏</q-tooltip>
-            </q-btn>
+            <div>
+              <q-btn
+                label="新建"
+                color="primary"
+                class="q-mr-sm no-border-radius"
+                icon="add"
+                unelevated
+                @click="addRow"
+              />
+              <q-btn rounded flat dense size="md" icon="refresh">
+                <q-tooltip>刷新</q-tooltip>
+              </q-btn>
+              <q-btn rounded flat dense size="md" icon="unfold_less">
+                <q-tooltip>密度</q-tooltip>
+              </q-btn>
+              <q-btn rounded flat dense size="md" icon="settings">
+                <q-menu :offset="[0, 12]">
+                  <q-list dense>
+                    <q-item
+                      clickable
+                      :active="column.check"
+                      @click="select(column)"
+                      v-bind:key="column.id"
+                      v-for="column in columns"
+                    >
+                      <q-item-section>{{ column.label }}</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+              <q-btn
+                rounded
+                flat
+                round
+                dense
+                :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+                @click="props.toggleFullscreen"
+              >
+                <q-tooltip>全屏</q-tooltip>
+              </q-btn>
+            </div>
           </template>
           <template v-slot:pagination="scope">
             <div class="full-width">
@@ -154,7 +159,7 @@
                 color="primary"
                 :max="scope.pagesNumber"
                 size="sm"
-                :max-pages="6"
+                :max-pages="4"
                 :boundary-numbers="false"
                 :boundary-links="true"
                 class="float-right"
@@ -163,15 +168,44 @@
           </template>
         </q-table>
       </div>
+
+      <q-inner-loading :showing="visible" style="z-index: 8000">
+        <q-spinner-gears size="50px" color="primary" />
+      </q-inner-loading>
     </div>
+    <q-dialog v-model="seamless" full-width seamless position="bottom">
+      <q-card class="q-mx-sm">
+        <q-card-section class="row">
+          <div class="col-sm-6 col-xs-12 q-mb-sm">
+            <div>
+              已选择<span class="text-weight-bold text-blue-8 q-mx-xs"
+                >{{ selected.length }} </span
+              >项 服务调用次数总计<span class="q-mx-xs">{{ 567 }} </span>万
+            </div>
+          </div>
+          <div class="text-right col-sm-6 col-xs-12 q-gutter-x-sm">
+            <q-btn
+              unelevated
+              color="warning"
+              label="批量删除"
+              @click="deleteDatas"
+            />
+            <q-btn unelevated color="primary" label="批量审批" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
+import { QSpinnerFacebook } from 'quasar'
 export default {
   name: 'TableList',
   data() {
     return {
+      visible: false,
+      seamless: false,
       tableShow: true,
       loading: false,
       tableLabel: '展开',
@@ -181,7 +215,7 @@ export default {
         // sortBy: 'calories',
         descending: false,
         page: 1,
-        rowsPerPage: 4
+        rowsPerPage: 20
         // rowsNumber: xx if getting data from a server
       },
       visibleColumns: [
@@ -220,14 +254,24 @@ export default {
           field: 'fat',
           sortable: true
         },
-        { check: true, name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
+        {
+          check: true,
+          name: 'carbs',
+          label: 'Carbs (g)',
+          field: 'carbs'
+        },
         {
           check: true,
           name: 'protein',
           label: 'Protein (g)',
           field: 'protein'
         },
-        { check: true, name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
+        {
+          check: true,
+          name: 'sodium',
+          label: 'Sodium (mg)',
+          field: 'sodium'
+        },
         {
           check: true,
           name: 'calcium',
@@ -373,6 +417,27 @@ export default {
         return '选择：' + `${this.selected.length} / ${this.data.length}`
       }
     },
+    deleteDatas() {
+      const spinner = QSpinnerFacebook
+      this.$q.loading.show({
+        spinner,
+        spinnerColor: 'blue',
+        backgroundColor: 'white',
+        message: '正在删除...',
+        messageColor: 'blue'
+      })
+
+      setTimeout(() => {
+        this.$q.loading.hide()
+        this.$q.notify({
+          color: 'white',
+          textColor: 'positive',
+          icon: 'check_circle',
+          position: 'top',
+          message: '删除成功，即将刷新'
+        })
+      }, 2000)
+    },
     select(columnFromClient) {
       this.visibleColumns = []
       const columns = this.columns
@@ -404,8 +469,31 @@ export default {
     pagesNumber() {
       return Math.ceil(this.data.length / this.pagination.rowsPerPage)
     }
+  },
+  watch: {
+    selected(newSelected, oldSelected) {
+      this.seamless = newSelected.length > 0
+    }
   }
 }
 </script>
 
-<style scoped></style>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  max-height: 600px
+
+  .q-table__top,
+  .q-table__bottom
+    /* bg color is important for th; just specify one */
+    background-color: white
+  thead tr:first-child th
+    font-size: medium
+    font-weight: bolder
+    background-color: white
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+</style>
