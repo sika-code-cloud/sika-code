@@ -30,6 +30,17 @@
           <q-separator vertical/>
           <q-btn color="primary" label="等待中"></q-btn>
         </q-btn-group>
+        <q-btn-toggle
+          unelevated
+          class="no-border-radius"
+          v-model="model"
+          toggle-color="primary"
+          :options="[
+            {label: 'One', value: 'one'},
+            {label: 'Two', value: 'two'},
+            {label: 'Three', value: 'three'}
+          ]"
+        />
       </q-card-section>
 
       <q-separator inset=""/>
@@ -39,7 +50,12 @@
 
 <script>
 export default {
-  name: 'BasicList'
+  name: 'BasicList',
+  data() {
+    return {
+      model: ''
+    }
+  }
 }
 </script>
 
