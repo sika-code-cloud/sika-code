@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-h6"><strong>查询表格</strong></div>
-    <q-card square class="q-gutter-y-md q-mt-lg q-pb-lg shadow-1">
+    <q-card square flat class="q-gutter-y-md q-mt-lg q-pb-lg">
       <q-form>
         <div class="row q-gutter-y-sm">
           <q-item class="col-xl-3 col-sm-6 col-xs-12">
@@ -268,7 +268,7 @@
               @submit.prevent.stop="onSubmit"
               @reset.prevent.stop="onReset"
             >
-              <q-card-section class="q-gutter-sm">
+              <div class="q-gutter-sm q-ma-sm">
                 <q-item-label>
                   <span class="q-mr-xs text-red">*</span>规则名称
                 </q-item-label>
@@ -285,8 +285,8 @@
                   clearable
                 >
                 </q-input>
-              </q-card-section>
-              <q-card-section class="q-gutter-sm">
+              </div>
+              <div class="q-gutter-sm q-ma-sm">
                 <q-item-label>描述</q-item-label>
                 <q-input
                   type="textarea"
@@ -296,8 +296,8 @@
                   square
                 >
                 </q-input>
-              </q-card-section>
-              <q-card-section class="q-gutter-sm q-mb-sm">
+              </div>
+              <div class="q-gutter-sm q-ma-sm q-mb-lg">
                 <q-btn
                   outline
                   unelevated
@@ -313,7 +313,7 @@
                   color="primary"
                   class="no-border-radius"
                 />
-              </q-card-section>
+              </div>
             </form>
           </div>
         </q-card>

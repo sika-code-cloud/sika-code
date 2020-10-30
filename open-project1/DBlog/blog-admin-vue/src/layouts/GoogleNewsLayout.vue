@@ -105,7 +105,7 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-footer class="bg-white text-blue-grey-4">
+    <q-footer class="text-blue-grey-4" style="background-color: #f0f2f5">
       <div class="q-my-lg">
         <div class="text-center q-mb-sm">
           <span class="inline-block">Sika Design Pro</span>
@@ -436,7 +436,7 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="bg-white q-pa-sm">
+    <q-page-container class="q-pa-sm" style="background-color: #f0f2f5">
       <slot name="page">hello world</slot>
       <q-page padding>
         <router-view />

@@ -1,5 +1,15 @@
 const routes = [
   {
+    path: '/list/basic-list',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/BasicList')
+      }
+    ]
+  },
+  {
     path: '/list/table-list',
     component: () => import('layouts/MainLayout.vue'),
     children: [
