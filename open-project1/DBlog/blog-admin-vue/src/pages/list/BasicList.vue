@@ -155,12 +155,12 @@
                 2020-10-31 21:23
               </q-item-label>
             </div>
-            <div class="col-md-2 col-sm-3 col-xs-6">
-              <q-linear-progress style="width: 85%" rounded stripe size="md" :value="stepValue" />
+            <div class="col-md-2 col-sm-3 col-xs-10">
+              <q-linear-progress rounded stripe size="md" :value="stepValue" />
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 q-gutter-x-sm" >
-              <q-btn class="no-border-radius" padding="6px 10px" size="12px" style="font-size: 8px"  unelevated dense icon="delete" color="primary" label="编辑" />
-              <q-btn class="no-border-radius" padding="6px 10px" size="12px" style="font-size: 8px" unelevated dense icon="done" color="primary" label="更多" />
+            <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm" >
+              <q-btn class="no-border-radius" padding="5px 10px" size="12px" unelevated dense icon="delete" color="primary" label="编辑" />
+              <q-btn class="no-border-radius" padding="5px 10px" size="12px" unelevated dense icon="done" color="primary" label="更多" />
             </div>
           </div>
         </q-item>
