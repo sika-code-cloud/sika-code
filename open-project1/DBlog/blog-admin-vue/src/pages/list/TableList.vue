@@ -623,7 +623,7 @@ export default {
         this.$q.loading.hide()
         this.addData = false
         this.$refs.addDataForm.reset()
-        this.$ref.this.$q.notify({
+        this.$q.notify({
           color: 'white',
           textColor: 'positive',
           icon: 'check_circle',
