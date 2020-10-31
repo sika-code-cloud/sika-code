@@ -42,7 +42,7 @@
             <q-tooltip>帮助文档</q-tooltip>
           </q-btn>
           <q-btn round flat size="sm" color="grey-8" icon="notifications_none">
-            <q-badge color="red" title-color="white" floating> 2 </q-badge>
+            <q-badge color="red" title-color="white" floating> 2</q-badge>
             <q-tooltip>消息列表</q-tooltip>
           </q-btn>
           <span class="inline-block">
@@ -61,12 +61,11 @@
                 >Emailseeeeee</span
               >
               <q-menu
-                :offset="[0, 28]"
+                :offset="[0, 12]"
                 transition-show="jump-down"
                 transition-hide="jump-up"
-                max-width="100vw"
                 :content-class="menuContentClass"
-                content-style="width:100%"
+                square
               >
                 <q-list dense>
                   <q-item clickable v-close-popup>
@@ -87,7 +86,8 @@
             <q-menu
               transition-show="jump-down"
               transition-hide="jump-up"
-              :offset="[0, 28]"
+              :offset="[0, 18]"
+              square
             >
               <q-list style="min-width: 120px" dense>
                 <q-item clickable v-close-popup>
@@ -105,8 +105,8 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-footer class="bg-white text-blue-grey-4">
-      <div class="q-mb-lg">
+    <q-footer class="text-blue-grey-4" style="background-color: #f0f2f5">
+      <div class="q-my-lg">
         <div class="text-center q-mb-sm">
           <span class="inline-block">Sika Design Pro</span>
           <q-icon name="ti-github  q-mx-md"></q-icon>
@@ -436,7 +436,7 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="bg-white">
+    <q-page-container class="q-pa-sm" style="background-color: #f0f2f5">
       <slot name="page">hello world</slot>
       <q-page padding>
         <router-view />
@@ -452,7 +452,9 @@
           style="z-index: 3000"
           :offset="rightOffset"
         >
-          <q-fab
+          <q-btn
+            unelevated
+            padding="8px"
             @show="1"
             v-model="rightDrawerSetting"
             icon="settings"
@@ -466,7 +468,7 @@
           :scroll-offset="150"
           :offset="[5, 68]"
         >
-          <q-btn fab icon="keyboard_arrow_up" color="primary" glossy />
+          <q-btn fab-mini icon="keyboard_arrow_up" color="primary" glossy />
         </q-page-scroller>
       </q-page>
     </q-page-container>
@@ -476,6 +478,7 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import MenuTree from 'components/tree/MenuTree'
+
 const myData = [
   {
     name: '仪表盘',
@@ -484,15 +487,18 @@ const myData = [
     children: [
       {
         name: '分析页',
-        group: '仪表盘'
+        group: '仪表盘',
+        to: '/dashboard/analysis'
       },
       {
         name: '监控页',
-        group: '仪表盘'
+        group: '仪表盘',
+        to: '/dashboard/monitor'
       },
       {
         name: '工作台',
-        group: '仪表盘'
+        group: '仪表盘',
+        to: '/dashboard/workplace'
       }
     ]
   },
@@ -503,15 +509,18 @@ const myData = [
     children: [
       {
         name: '基础表单',
-        group: '表单页'
+        group: '表单页',
+        to: '/form/basic-form'
       },
       {
         name: '分步表单',
-        group: '表单页'
+        group: '表单页',
+        to: '/form/step-form'
       },
       {
         name: '高级表单',
-        group: '表单页'
+        group: '表单页',
+        to: '/form/advanced-form'
       }
     ]
   },
@@ -526,30 +535,35 @@ const myData = [
         children: [
           {
             name: '搜索列表（文章）',
-            group: '列表页-搜索列表'
+            group: '列表页-搜索列表',
+            to: '/list/search/articles'
           },
           {
             name: '搜索列表（项目）',
-            group: '列表页-搜索列表'
+            group: '列表页-搜索列表',
+            to: '/list/search/projects'
           },
           {
             name: '搜索列表（引用）',
-            group: '列表页-搜索列表'
+            group: '列表页-搜索列表',
+            to: '/list/search/applications'
           }
         ]
       },
       {
-        name: '查询列表',
-        group: '列表页'
+        name: '查询表格',
+        group: '列表页',
+        to: '/list/table-list'
       },
       {
         name: '标准列表',
-        group: '列表页'
+        group: '列表页',
+        to: '/list/basic-list'
       },
       {
         name: '卡片列表',
         group: '列表页',
-        to: '/card'
+        to: '/card-list'
       }
     ]
   },
@@ -560,11 +574,13 @@ const myData = [
     children: [
       {
         name: '基础详情页',
-        group: '详情页'
+        group: '详情页',
+        to: '/profile/basic'
       },
       {
         name: '高级详情页',
-        group: '详情页'
+        group: '详情页',
+        to: '/profile/advanced'
       }
     ]
   },
@@ -575,11 +591,13 @@ const myData = [
     children: [
       {
         name: '成功页',
-        group: '结果页'
+        group: '结果页',
+        to: '/result/success'
       },
       {
         name: '失败页',
-        group: '结果页'
+        group: '结果页',
+        to: '/result/fail'
       }
     ]
   },
@@ -590,15 +608,18 @@ const myData = [
     children: [
       {
         name: '403',
-        group: '异常页'
+        group: '异常页',
+        to: '/exception/403'
       },
       {
         name: '404',
-        group: '异常页'
+        group: '异常页',
+        to: '/exception/404'
       },
       {
         name: '500',
-        group: '异常页'
+        group: '异常页',
+        to: '/exception/500'
       }
     ]
   },
@@ -609,11 +630,13 @@ const myData = [
     children: [
       {
         name: '个人中心',
-        group: '个人页'
+        group: '个人页',
+        to: '/account/center'
       },
       {
         name: '个人设置',
-        group: '个人页'
+        group: '个人页',
+        to: '/account/settings'
       }
     ]
   },
@@ -625,12 +648,12 @@ const myData = [
       {
         name: '自定义编辑器',
         group: '编辑器',
-        to: '/editor'
+        to: '/editor/customer'
       },
       {
         name: 'Markdown编辑器',
         group: '编辑器',
-        to: '/'
+        to: '/editor/markdown'
       }
     ]
   },
@@ -653,7 +676,7 @@ export default {
       leftBehavior: 'default',
       rightDrawerOpen: false,
       rightDrawerSetting: false,
-      rightOffset: [5, 88],
+      rightOffset: [5, 5],
       rightSelect: '流式',
       search: '',
       showAdvanced: false,
@@ -686,7 +709,10 @@ export default {
       mic: 8
     }
   },
-  components: { EssentialLink, MenuTree },
+  components: {
+    EssentialLink,
+    MenuTree
+  },
   methods: {
     onClear() {
       this.exactPhrase = ''
@@ -711,11 +737,11 @@ export default {
       this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
     },
     rightHide() {
-      this.rightOffset = [5, 88]
+      this.rightOffset = [5, 5]
       this.rightDrawerSetting = false
     },
     rightShow() {
-      this.rightOffset = [280, 88]
+      this.rightOffset = [280, 5]
     },
     menuHeadStyle(startWith) {
       if (this.link.startsWith(startWith)) {
@@ -765,29 +791,36 @@ export default {
 .my-menu-link
   color: #1890ff
   background: #e6f7ff
+
 .GNL
   &__toolbar
     height: 64px
+
   &__toolbar-input
     width: 55%
+
   &__drawer-item
     line-height: 24px
     border-radius: 0 24px 24px 0
     margin-right: 12px
+
     .q-item__section--avatar
       .q-icon
         color: #5f6368
+
     .q-item__label
       color: #3c4043
       letter-spacing: .01785714em
       font-size: .875rem
       font-weight: 500
       line-height: 1.25rem
+
   &__drawer-footer-link
     color: inherit
     title-decoration: none
     font-weight: 500
     font-size: .75rem
+
     &:hover
       color: #000
 </style>
