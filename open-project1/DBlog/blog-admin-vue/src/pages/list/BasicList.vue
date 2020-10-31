@@ -89,6 +89,7 @@
 
     <q-scroll-area class="bg-white q-mt-sm" style="height: 500px">
       <q-item-label header>Google Inbox style</q-item-label>
+
       <div v-for="n in 50" :key="n" v-intersection="onIntersection">
         <q-item>
           <q-item-section avatar top>
