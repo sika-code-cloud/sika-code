@@ -35,8 +35,8 @@
             <div class="col-md-5 col-xs-12" style="max-width: 280px">
               <q-btn-toggle
                 spread
-                class="no-border-radius"
-                style="border: lightgrey solid 1px; height: 40px"
+                class="no-border-radius bg-light-blue-1"
+                dense
                 v-model="model"
                 unelevated
                 toggle-color="primary"
@@ -64,7 +64,8 @@
                       height: 100%;
                     "
                     class="no-border-radius"
-                    padding="0 10px"
+                    dense
+                    padding="xs"
                     flat
                     color="lightgrey"
                     icon="search"
@@ -73,13 +74,13 @@
                 </template>
               </q-input>
             </div>
-            <div class="col-md-auto col-xs-12 col-sm" v-show="$q.screen.gt.sm">
+            <div class="col-md-auto col-xs-12 col-sm gt-sm">
               <q-btn
-                style="height: 40px"
                 color="primary"
+                dense
                 unelevated
                 icon="add"
-                class="no-border-radius"
+                class="no-border-radius q-px-sm"
                 label="添加"
                 @click="addTaskDialog"
               />
@@ -87,8 +88,9 @@
           </div>
         </q-card-section>
       </q-card-section>
-      <q-card-section v-show="$q.screen.lt.md" class="q-mt-none">
+      <q-card-section class="q-mt-none lt-md">
         <q-btn
+          padding="xs"
           color="primary"
           unelevated
           icon="add"
@@ -103,37 +105,64 @@
       <q-item-label header>Google Inbox style</q-item-label>
       <div v-for="n in 50" :key="n" v-intersection="onIntersection">
         <q-item>
-          <q-item-section avatar top>
-            <q-icon name="account_tree" color="black" size="34px" />
+          <q-item-section v-if="n % 5 === 1" avatar top>
+            <q-avatar square>
+              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"/>
+            </q-avatar>
           </q-item-section>
-
-          <q-item-section top class="col-2 gt-sm">
-            <q-item-label class="q-mt-sm">GitHub</q-item-label>
+          <q-item-section  v-if="n % 5 === 2" avatar top>
+            <q-avatar square>
+              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"/>
+            </q-avatar>
           </q-item-section>
-
-          <q-item-section top>
-            <q-item-label lines="1">
-              <span class="text-weight-medium">[quasarframework/quasar]</span>
-              <span class="text-grey-8"> - GitHub repository</span>
-            </q-item-label>
-            <q-item-label caption lines="1">
-              @rstoenescu in #3: > Generic type parameter for props
-            </q-item-label>
-            <q-item-label
-              lines="1"
-              class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase"
-            >
-              <span class="cursor-pointer">Open in GitHub</span>
-            </q-item-label>
+          <q-item-section v-if="n % 5 === 3" avatar top>
+            <q-avatar square>
+              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png"/>
+            </q-avatar>
           </q-item-section>
-
-          <q-item-section top side>
-            <div class="text-grey-8 q-gutter-xs">
-              <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-              <q-btn class="gt-xs" size="12px" flat dense round icon="done" />
-              <q-btn size="12px" flat dense round icon="more_vert" />
+          <q-item-section v-if="n % 5 === 4" avatar top>
+            <q-avatar square>
+              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"/>
+            </q-avatar>
+          </q-item-section>
+          <q-item-section  v-if="n % 5 === 0" avatar top>
+            <q-avatar square>
+              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png"/>
+            </q-avatar>
+          </q-item-section>
+          <div class="row items-center q-col-gutter-y-sm q-mr-none">
+            <div class="col-md-4 col-xs-12">
+              <q-item-label lines="1">
+                <span class="text-weight-medium">Alipay</span>
+              </q-item-label>
+              <q-item-label caption lines="2" class="q-mr-xl">
+                那是一种内在的东西， 他们到达不了，也无法触及的，那是一种内在的东西， 他们到达不了，也无法触及的
+              </q-item-label>
             </div>
-          </q-item-section>
+            <div class="col-md-2 col-sm-2 col-xs-6">
+              <q-item-label class="q-mb-xs" caption lines="1">
+                Owner
+              </q-item-label>
+              <q-item-label caption lines="2">
+                付小小
+              </q-item-label>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+              <q-item-label class="q-mb-xs" caption lines="1">
+                开始时间
+              </q-item-label>
+              <q-item-label caption lines="2">
+                2020-10-31 21:23
+              </q-item-label>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+              <q-linear-progress style="width: 85%" rounded stripe size="md" :value="stepValue" />
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 q-gutter-x-sm" >
+              <q-btn class="no-border-radius" padding="6px 10px" size="12px" style="font-size: 8px"  unelevated dense icon="delete" color="primary" label="编辑" />
+              <q-btn class="no-border-radius" padding="6px 10px" size="12px" style="font-size: 8px" unelevated dense icon="done" color="primary" label="更多" />
+            </div>
+          </div>
         </q-item>
         <q-separator v-if="n !== 50" spaced="10px" inset="" />
       </div>
@@ -276,6 +305,7 @@ export default {
   name: 'BasicList',
   data() {
     return {
+      stepValue: 0.6,
       queryDate: new Date(),
       addTask: false,
       visible: false,
@@ -330,4 +360,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style>
+.q-field--dense .q-field__control, .q-field--dense .q-field__marginal {
+  height: 32px;
+}
+</style>
