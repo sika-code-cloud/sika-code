@@ -130,12 +130,13 @@
               <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png"/>
             </q-avatar>
           </q-item-section>
-          <div class="row items-center q-col-gutter-y-sm q-mr-none">
+          <div class="row items-center q-col-gutter-y-sm full-width">
             <div class="col-md-4 col-xs-12">
               <q-item-label lines="1">
                 <span class="text-weight-medium">Alipay</span>
               </q-item-label>
-              <q-item-label caption lines="2" class="q-mr-xl">
+              <q-item-label caption class="q-mr-md">
+                那是一种内在的东西， 他们到达不了，也无法触及的，那是一种内在的东西， 他们到达不了，也无法触及的
                 那是一种内在的东西， 他们到达不了，也无法触及的，那是一种内在的东西， 他们到达不了，也无法触及的
               </q-item-label>
             </div>
@@ -155,7 +156,7 @@
                 2020-10-31 21:23
               </q-item-label>
             </div>
-            <div class="col-md-2 col-sm-3 col-xs-10">
+            <div class="col-md-2 col-sm-3 col-xs-10 q-pr-md">
               <q-linear-progress rounded stripe size="md" :value="stepValue" />
             </div>
             <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm" >
