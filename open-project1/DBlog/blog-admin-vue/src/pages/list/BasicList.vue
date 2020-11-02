@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sc-base-list">
     <div class="text-h6"><strong>查询表格</strong></div>
     <q-card square flat class="q-gutter-y-md q-mt-lg">
       <div class="row justify-center">
@@ -25,7 +25,7 @@
         </q-card-section>
       </div>
     </q-card>
-    <q-card square flat class="q-gutter-y-md q-mt-lg">
+    <q-card square flat class="q-gutter-y-md q-mt-lg sc-base-list-query">
       <q-card-section class="row items-center q-pb-none">
         <q-card-section class="text-body1 col-sm-3 col-xs-4">
           基本列表
@@ -102,70 +102,85 @@
     </q-card>
 
     <q-scroll-area class="bg-white q-mt-sm" style="height: 500px">
-      <q-item-label header>Google Inbox style</q-item-label>
-      <div v-for="n in 50" :key="n" v-intersection="onIntersection">
-        <q-item>
-          <q-item-section v-if="n % 5 === 1" avatar top>
+      <div
+        v-for="obj in baseListObjs"
+        :key="obj.id"
+        v-intersection="onIntersection"
+      >
+        <q-item transition-show="flip-up">
+          <q-item-section avatar top>
             <q-avatar square>
-              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"/>
-            </q-avatar>
-          </q-item-section>
-          <q-item-section  v-if="n % 5 === 2" avatar top>
-            <q-avatar square>
-              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"/>
-            </q-avatar>
-          </q-item-section>
-          <q-item-section v-if="n % 5 === 3" avatar top>
-            <q-avatar square>
-              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png"/>
-            </q-avatar>
-          </q-item-section>
-          <q-item-section v-if="n % 5 === 4" avatar top>
-            <q-avatar square>
-              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"/>
-            </q-avatar>
-          </q-item-section>
-          <q-item-section  v-if="n % 5 === 0" avatar top>
-            <q-avatar square>
-              <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png"/>
+              <img alt="" :src="obj.imgSrc" />
             </q-avatar>
           </q-item-section>
           <div class="row items-center q-col-gutter-y-sm full-width">
-            <div class="col-md-4 col-xs-12">
+            <div class="q-pt-xs col-md-4 col-xs-12">
               <q-item-label lines="1">
-                <span class="text-weight-medium">Alipay</span>
+                <span class="text-h6">{{ obj.title }}</span>
               </q-item-label>
-              <q-item-label caption class="q-mr-md">
-                那是一种内在的东西， 他们到达不了，也无法触及的，那是一种内在的东西， 他们到达不了，也无法触及的
-                那是一种内在的东西， 他们到达不了，也无法触及的，那是一种内在的东西， 他们到达不了，也无法触及的
-              </q-item-label>
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-6">
-              <q-item-label class="q-mb-xs" caption lines="1">
-                Owner
-              </q-item-label>
-              <q-item-label caption lines="2">
-                付小小
+              <q-item-label class="q-mr-md text-body text-grey-7" lines="2">
+                {{ obj.desc }}
               </q-item-label>
             </div>
-            <div class="col-md-2 col-sm-3 col-xs-6">
-              <q-item-label class="q-mb-xs" caption lines="1">
-                开始时间
+            <div class="col-md-2 col-sm-2 col-xs-6 text-body text-grey-7">
+              <q-item-label class="q-mb-xs"> Owner </q-item-label>
+              <q-item-label>
+                {{ obj.owner }}
               </q-item-label>
-              <q-item-label caption lines="2">
-                2020-10-31 21:23
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6 text-body text-grey-7">
+              <q-item-label class="q-mb-xs"> 开始时间 </q-item-label>
+              <q-item-label>
+                {{ obj.beginTime }}
               </q-item-label>
             </div>
             <div class="col-md-2 col-sm-3 col-xs-10 q-pr-md">
-              <q-linear-progress rounded stripe size="md" :value="stepValue" />
+              <q-linear-progress
+                rounded
+                stripe
+                size="md"
+                :value="obj.progress"
+              />
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm" >
-              <q-btn class="no-border-radius" padding="5px 10px" size="12px" unelevated dense icon="delete" color="primary" label="编辑" />
-              <q-btn class="no-border-radius" padding="5px 10px" size="12px" unelevated dense icon="done" color="primary" label="更多" />
+            <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm">
+              <q-btn
+                class="no-border-radius"
+                padding="5px 10px"
+                size="12px"
+                unelevated
+                dense
+                icon="edit"
+                color="primary"
+                label="编辑"
+                @click="editItem(obj)"
+              />
+              <q-btn-dropdown
+                unelevated
+                size="12px"
+                class="no-border-radius"
+                padding="5px 9px"
+                color="primary"
+                dense
+                label="更多"
+              >
+                <q-list dense>
+                  <q-item clickable v-close-popup @click="editItem(obj)">
+                    <q-item-section>
+                      <q-item-label>编辑</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-close-popup @click="deleteItem(obj)">
+                    <q-item-section>
+                      <q-item-label>删除</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-btn-dropdown>
             </div>
           </div>
         </q-item>
-        <q-separator v-if="n !== 50" spaced="10px" inset="" />
+        <q-separator v-if="obj.id !== 49" spaced="10px" inset="" />
       </div>
     </q-scroll-area>
 
@@ -185,11 +200,11 @@
             <div class="col-sm-9 col-xs-11 q-gutter-md">
               <q-input
                 class="q-pb-none"
-                ref="taskName"
+                ref="title"
                 label="任务名称"
                 placeholder="请输入"
                 outlined
-                v-model="taskName"
+                v-model="waitEdit.title"
                 dense
                 square
                 clearable
@@ -197,8 +212,9 @@
               >
               </q-input>
               <q-input
+                ref="beginTime"
                 outlined
-                v-model="queryDate"
+                v-model="waitEdit.beginTime"
                 label="上次调度时间"
                 dense
                 square
@@ -209,7 +225,10 @@
                       transition-show="scale"
                       transition-hide="scale"
                     >
-                      <q-date v-model="queryDate" mask="YYYY-MM-DD HH:mm">
+                      <q-date
+                        v-model="waitEdit.beginTime"
+                        mask="YYYY-MM-DD HH:mm"
+                      >
                         <div class="row items-center justify-end">
                           <q-btn
                             v-close-popup
@@ -224,9 +243,9 @@
                 </template>
                 <template v-slot:append>
                   <q-icon
-                    v-if="queryDate !== ''"
+                    v-if="waitEdit.beginTime !== ''"
                     name="cancel"
-                    @click="queryDate = ''"
+                    @click="waitEdit.beginTime = ''"
                     class="cursor-pointer"
                   />
                   <q-icon name="access_time" class="cursor-pointer">
@@ -235,7 +254,7 @@
                       transition-hide="scale"
                     >
                       <q-time
-                        v-model="queryDate"
+                        v-model="waitEdit.beginTime"
                         mask="YYYY-MM-DD HH:mm"
                         format24h
                       >
@@ -254,11 +273,11 @@
               </q-input>
               <q-input
                 class="q-pb-none"
-                ref="ruleName"
+                ref="owner"
                 label="任务负责人"
                 placeholder="请输入"
                 outlined
-                v-model="taskName"
+                v-model="waitEdit.owner"
                 dense
                 square
                 clearable
@@ -267,9 +286,10 @@
               <q-input
                 label="产品描述"
                 type="textarea"
+                ref="desc"
                 outlined
                 placeholder="请输入最少五个字符"
-                v-model="ruleName"
+                v-model="waitEdit.desc"
                 square
               >
               </q-input>
@@ -300,19 +320,50 @@
 </template>
 
 <script>
-import { QSpinnerIos } from 'quasar'
+import { date, QSpinnerIos } from 'quasar'
+import _ from 'lodash'
+const baseListObj = {
+  title: 'Alipay',
+  desc:
+    '那是一种内在的东西，他们到达不了，也无法触及的，那是一种内在的东西，他们到达不了，也无法触及的 那是一种内在的东西，他们到达不了，也无法触及的，那是一种内在的东西，他们到达不了，也无法触及的',
+  owner: '付小小',
+  beginTime: date.formatDate(new Date(), 'YYYY-MM-DD HH:MM'),
+  progress: 1
+}
+const imgSrcs = [
+  'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png'
+]
+const baseListObjsDefault = []
+for (let i = 0; i < 50; ++i) {
+  const obj = _.clone(baseListObj)
+  obj.id = i
+  obj.title = obj.title + i
+  obj.owner = obj.owner + i
+  obj.progress = Math.random()
+  obj.imgSrc = imgSrcs[i % 5]
+  baseListObjsDefault.push(obj)
+}
 
 export default {
   name: 'BasicList',
   data() {
     return {
+      baseListObjs: baseListObjsDefault,
       stepValue: 0.6,
-      queryDate: new Date(),
+      queryDate: date.formatDate(new Date(), 'YYYY-MM-DD HH:MM'),
       addTask: false,
       visible: false,
       model: 'all',
-      taskName: '',
-      ruleName: ''
+      title: '',
+      beginTime: '',
+      owner: '',
+      desc: '',
+      ruleName: '',
+      waitEdit: {}
     }
   },
   computed: {
@@ -325,15 +376,33 @@ export default {
       this.visible = entry.isIntersecting
     },
     onReset() {
-      this.taskName = null
+      this.waitEdit.title = null
+      this.waitEdit.owner = null
+      this.waitEdit.beginTime = null
+      this.waitEdit.desc = null
     },
     addTaskDialog() {
       this.addTask = true
     },
+    editItem(item) {
+      console.log(JSON.stringify(item))
+      this.addTask = true
+      this.waitEdit = _.clone(item)
+    },
+    deleteItem(item) {
+      for (let i = 0; i < this.baseListObjs.length; ++i) {
+        if (this.baseListObjs[i].id === item.id) {
+          this.baseListObjs.splice(i, 1)
+        }
+      }
+    },
     onSubmit() {
-      if (!this.$refs.taskName.validate()) {
+      if (!this.$refs.title.validate()) {
         return
       }
+      const addModel = _.clone(this.waitEdit)
+      addModel.progress = Math.random()
+      addModel.imgSrc = imgSrcs[1]
       const spinner = QSpinnerIos
       this.$q.loading.show({
         spinner,
@@ -345,6 +414,18 @@ export default {
       })
 
       setTimeout(() => {
+        let message = '添加成功'
+        if (addModel.id !== undefined) {
+          message = '编辑成功'
+          for (let i = 0; i < this.baseListObjs.length; ++i) {
+            if (this.baseListObjs[i].id === addModel.id) {
+              this.baseListObjs[i] = addModel
+            }
+          }
+        } else {
+          addModel.id = this.baseListObjs.length + 1
+          this.baseListObjs.unshift(addModel)
+        }
         this.$q.loading.hide()
         this.$refs.addDataForm.reset()
         this.addTask = false
@@ -353,7 +434,7 @@ export default {
           textColor: 'positive',
           icon: 'check_circle',
           position: 'top',
-          message: '添加成功'
+          message: message
         })
       }, 2000)
     }
@@ -362,7 +443,8 @@ export default {
 </script>
 
 <style>
-.q-field--dense .q-field__control, .q-field--dense .q-field__marginal {
+.sc-base-list-query .q-field--dense .q-field__control,
+.sc-base-list-query .q-field--dense .q-field__marginal {
   height: 32px;
 }
 </style>
