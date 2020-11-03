@@ -403,7 +403,7 @@
         </div>
       </q-card-section>
 
-      <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+      <img alt="" src="https://cdn.quasar.dev/img/mountains.jpg" />
     </q-card>
 
     <q-card class="my-card">

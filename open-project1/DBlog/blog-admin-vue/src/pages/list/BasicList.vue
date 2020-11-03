@@ -1,30 +1,29 @@
 <template>
   <div class="sc-base-list">
-    <div class="bg-white text-h6 q-pa-md"><strong>标准列表</strong></div>
-    <div class="q-px-md">
+    <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
+      <strong>标准列表</strong>
+    </div>
+    <div>
       <q-card square flat class="q-gutter-y-md q-mt-lg">
         <div class="row justify-center">
           <q-card-section class="col-sm-3 col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-            >我的待办
-            </q-item-label
-            >
+              >我的待办
+            </q-item-label>
             <q-item-label class="text-h5 text-center">8个任务</q-item-label>
           </q-card-section>
           <q-separator vertical />
           <q-card-section class="col-sm-4 col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-            >本周任务平均处理时间
-            </q-item-label
-            >
+              >本周任务平均处理时间
+            </q-item-label>
             <q-item-label class="text-h5 text-center">32分钟</q-item-label>
           </q-card-section>
           <q-separator vertical />
           <q-card-section class="col-sm-3 col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-            >本周完成任务数
-            </q-item-label
-            >
+              >本周完成任务数
+            </q-item-label>
             <q-item-label class="text-h5 text-center">24个任务</q-item-label>
           </q-card-section>
         </div>
@@ -45,10 +44,10 @@
                   unelevated
                   toggle-color="primary"
                   :options="[
-                  { label: '全部', value: 'all' },
-                  { label: '进行中', value: 'ing' },
-                  { label: '等待中', value: 'wait' }
-                ]"
+                    { label: '全部', value: 'all' },
+                    { label: '进行中', value: 'ing' },
+                    { label: '等待中', value: 'wait' }
+                  ]"
                 />
               </div>
               <div class="col-md-3 col-xs-12" style="max-width: 280px">
@@ -63,10 +62,10 @@
                   <template v-slot:append>
                     <q-btn
                       style="
-                      margin-right: -12px;
-                      border-left: solid 1px lightgrey;
-                      height: 100%;
-                    "
+                        margin-right: -12px;
+                        border-left: solid 1px lightgrey;
+                        height: 100%;
+                      "
                       class="no-border-radius"
                       dense
                       padding="xs"
@@ -212,7 +211,9 @@
                   dense
                   square
                   clearable
-                  :rules="[(val) => (val && val.length > 0) || '请输入任务名称']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入任务名称'
+                  ]"
                 >
                 </q-input>
                 <q-input

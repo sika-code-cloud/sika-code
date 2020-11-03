@@ -438,7 +438,8 @@
     </q-drawer>
     <q-page-container class="" style="background-color: #f0f2f5">
       <slot name="page">hello world</slot>
-      <q-page>
+      <slot name="page-title"></slot>
+      <q-page class="q-pa-md">
         <router-view />
         <q-page-scroller
           class="fit"
