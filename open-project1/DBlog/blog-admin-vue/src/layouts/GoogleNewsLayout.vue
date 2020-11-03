@@ -436,9 +436,9 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="q-pa-sm" style="background-color: #f0f2f5">
+    <q-page-container class="" style="background-color: #f0f2f5">
       <slot name="page">hello world</slot>
-      <q-page padding>
+      <q-page>
         <router-view />
         <q-page-scroller
           class="fit"
@@ -563,7 +563,7 @@ const myData = [
       {
         name: '卡片列表',
         group: '列表页',
-        to: '/card-list'
+        to: '/list/card-list'
       }
     ]
   },
