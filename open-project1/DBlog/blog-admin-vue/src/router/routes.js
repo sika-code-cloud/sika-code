@@ -1,5 +1,15 @@
 const routes = [
   {
+    path: '/list/search/articles',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/search/Articles')
+      }
+    ]
+  },
+  {
     path: '/list/card-list',
     component: () => import('layouts/MainLayout.vue'),
     children: [
