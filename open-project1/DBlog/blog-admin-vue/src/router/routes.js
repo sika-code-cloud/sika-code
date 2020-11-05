@@ -1,5 +1,25 @@
 const routes = [
   {
+    path: '/list/search/projects',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/search/Projects')
+      }
+    ]
+  },
+  {
+    path: '/list/search/applications',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/search/Applications')
+      }
+    ]
+  },
+  {
     path: '/list/search/articles',
     component: () => import('layouts/MainLayout.vue'),
     children: [

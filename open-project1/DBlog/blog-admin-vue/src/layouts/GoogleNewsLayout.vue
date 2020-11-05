@@ -75,7 +75,7 @@
                     <q-item-section>个人设置</q-item-section>
                   </q-item>
                   <q-separator color="grey-4" />
-                  <q-item clickable v-close-popup>
+                  <q-item clickable v-close-popup to="/user/login">
                     <q-item-section>退出登录</q-item-section>
                   </q-item>
                 </q-list>
@@ -545,7 +545,7 @@ const myData = [
             to: '/list/search/projects'
           },
           {
-            name: '搜索列表（引用）',
+            name: '搜索列表（应用）',
             group: '列表页-搜索列表',
             to: '/list/search/applications'
           }
