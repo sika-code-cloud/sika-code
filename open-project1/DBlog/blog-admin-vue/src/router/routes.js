@@ -1,5 +1,55 @@
 const routes = [
   {
+    path: '/result/success',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages//result/Success')
+      }
+    ]
+  },
+  {
+    path: '/result/success',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages//result/Fail')
+      }
+    ]
+  },
+  {
+    path: '/exception/403',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages//exception/403')
+      }
+    ]
+  },
+  {
+    path: '/exception/404',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages//exception/404')
+      }
+    ]
+  },
+  {
+    path: '/exception/500',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages//exception/500')
+      }
+    ]
+  },
+  {
     path: '/list/search/projects',
     component: () => import('layouts/MainLayout.vue'),
     children: [

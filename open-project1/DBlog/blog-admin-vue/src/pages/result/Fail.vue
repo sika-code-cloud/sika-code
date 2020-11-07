@@ -1,4 +1,8 @@
-<template></template>
+<template>
+  <div>
+    Fail
+  </div>
+</template>
 
 <script>
 export default {
