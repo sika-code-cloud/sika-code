@@ -904,7 +904,7 @@ export default {
   props: {},
   data() {
     return {
-      showMessage: true,
+      showMessage: false,
       tab: 'mails',
       menuData: myData,
       link: 'inbox',
