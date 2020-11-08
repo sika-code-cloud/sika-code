@@ -112,7 +112,7 @@ module.exports = function (ctx) {
           accent: '#9C27B0',
           dark: '#1d1d1d',
           positive: '#21BA45',
-          negative: '#C10015',
+          negative: '#ff4d4f',
           info: '#31CCEC',
           warning: '#F2C037'
         }

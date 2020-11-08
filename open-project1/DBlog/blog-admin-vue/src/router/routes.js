@@ -10,7 +10,7 @@ const routes = [
     ]
   },
   {
-    path: '/result/success',
+    path: '/result/fail',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {

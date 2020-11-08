@@ -41,8 +41,8 @@
           <q-btn round dense flat size="sm" color="grey-7" icon="help_outline">
             <q-tooltip>帮助文档</q-tooltip>
           </q-btn>
-          <q-btn round flat size="sm" color="grey-8" icon="notifications_none">
-            <q-badge color="red" title-color="white" floating> 2</q-badge>
+          <q-btn round flat size="sm" color="grey-8" icon="notifications_none" @click="showMessage=true">
+            <q-badge color="negative" style="padding: 2px 4px" title-color="white" floating>11</q-badge>
             <q-tooltip>消息列表</q-tooltip>
           </q-btn>
           <span class="inline-block">
@@ -61,11 +61,10 @@
                 >Emailseeeeee</span
               >
               <q-menu
-                :offset="[0, 12]"
+                :offset="[0, 26]"
                 transition-show="jump-down"
                 transition-hide="jump-up"
                 :content-class="menuContentClass"
-                square
               >
                 <q-list dense>
                   <q-item clickable v-close-popup>
@@ -86,8 +85,7 @@
             <q-menu
               transition-show="jump-down"
               transition-hide="jump-up"
-              :offset="[0, 18]"
-              square
+              :offset="[0, 24]"
             >
               <q-list style="min-width: 120px" dense>
                 <q-item clickable v-close-popup>
@@ -102,6 +100,242 @@
               </q-list>
             </q-menu>
           </q-btn>
+        </div>
+        <div>
+          <q-menu
+            class="row"
+            :offset="[0, 36]"
+            transition-show="jump-down"
+            transition-hide="jump-up"
+            content-style="width: 400px"
+            max-height="800px"
+            v-model="showMessage"
+          >
+            <div class="q-gutter-y-md col">
+              <q-card class="full-width">
+                <q-tabs
+                  v-model="tab"
+                  class="text-grey"
+                  active-color="primary"
+                  indicator-color="primary"
+                  align="justify"
+                  narrow-indicator
+                >
+                  <q-tab name="mails" label="通知(4)" />
+                  <q-tab name="alarms" label="消息(3)" />
+                  <q-tab name="movies" label="待办(4)" />
+                </q-tabs>
+                <q-separator />
+                <q-tab-panels v-model="tab" animated>
+                  <q-tab-panel name="mails" class="q-pa-none">
+                    <q-list>
+                      <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="teal" text-color="white" icon="email" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white" icon="bluetooth" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="info" text-color="white" icon="add" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="orange" text-color="white" icon="star" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white">
+                            R
+                          </q-avatar>
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item class="row q-pa-none text-center cursor-pointer">
+                        <q-item-section class="col q-pa-none q-ma-none">
+                          <q-btn label="清空通知" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                        <q-separator vertical/>
+                        <q-item-section  class="col q-pa-none q-ma-none">
+                          <q-btn label="查看更多" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-tab-panel>
+                  <q-tab-panel name="alarms" class="q-pa-none">
+                    <q-list>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="teal" text-color="white" icon="email" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="teal" text-color="white" icon="email" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white" icon="bluetooth" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="info" text-color="white" icon="add" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="orange" text-color="white" icon="star" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white">
+                            R
+                          </q-avatar>
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item class="row q-pa-none text-center cursor-pointer">
+                        <q-item-section class="col q-pa-none q-ma-none">
+                          <q-btn label="清空通知" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                        <q-separator vertical/>
+                        <q-item-section  class="col q-pa-none q-ma-none">
+                          <q-btn label="查看更多" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-tab-panel>
+                  <q-tab-panel name="movies" class="q-pa-none">
+                    <q-list>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="teal" text-color="white" icon="email" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white" icon="bluetooth" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="info" text-color="white" icon="add" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                      <q-item disable class="cursor-pointer">
+                        <q-item-section avatar>
+                          <q-avatar color="orange" text-color="white" icon="star" />
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator inset="item"/>
+                     <q-item class="cursor-pointer q-ma-xs">
+                        <q-item-section avatar>
+                          <q-avatar color="primary" text-color="white">
+                            R
+                          </q-avatar>
+                        </q-item-section>
+                        <q-item-section class="q-gutter-xs">
+                          <q-item-label :lines="1">Rounded avatar-type icon Rounded avatar-type icon</q-item-label>
+                          <div>3年前</div>
+                        </q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item class="row q-pa-none text-center cursor-pointer">
+                        <q-item-section class="col q-pa-none q-ma-none">
+                          <q-btn label="清空通知" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                        <q-separator vertical/>
+                        <q-item-section  class="col q-pa-none q-ma-none">
+                          <q-btn label="查看更多" flat :ripple="{ color: 'info' }" class="q-ma-none full-width full-height no-border-radius"></q-btn>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-tab-panel>
+                </q-tab-panels>
+              </q-card>
+            </div>
+          </q-menu>
         </div>
       </q-toolbar>
     </q-header>
@@ -670,6 +904,8 @@ export default {
   props: {},
   data() {
     return {
+      showMessage: true,
+      tab: 'mails',
       menuData: myData,
       link: 'inbox',
       leftDrawerOpen: false,
