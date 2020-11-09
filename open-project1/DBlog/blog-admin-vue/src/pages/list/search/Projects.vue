@@ -153,7 +153,7 @@
           @mouseleave="clear(item)"
         >
           <q-card square flat>
-            <q-img :src="item.src" :ratio="1.618 / 1" />
+            <q-img :src="item.src" :ratio="16 / 10" />
 
             <q-list>
               <q-item clickable>
