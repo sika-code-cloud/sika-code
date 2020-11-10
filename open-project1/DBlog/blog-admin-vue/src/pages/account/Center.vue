@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>Center</div>
+</template>
 
 <script>
 export default {

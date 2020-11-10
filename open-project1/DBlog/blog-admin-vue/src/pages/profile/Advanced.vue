@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>Advanced</div>
+</template>
 
 <script>
 export default {

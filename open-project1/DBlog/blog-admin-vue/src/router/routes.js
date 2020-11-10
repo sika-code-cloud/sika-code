@@ -1,11 +1,51 @@
 const routes = [
   {
+    path: '/profile/basic',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/profile/basic')
+      }
+    ]
+  },
+  {
+    path: '/profile/advanced',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/profile/advanced')
+      }
+    ]
+  },
+  {
+    path: '/account/center',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/account/Center')
+      }
+    ]
+  },
+  {
+    path: '/account/settings',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/account/Settings')
+      }
+    ]
+  },
+  {
     path: '/result/success',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        component: () => import('pages//result/Success')
+        component: () => import('pages/result/Success')
       }
     ]
   },
@@ -15,7 +55,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('pages//result/Fail')
+        component: () => import('pages/result/Fail')
       }
     ]
   },
