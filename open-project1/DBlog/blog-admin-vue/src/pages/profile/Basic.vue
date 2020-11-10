@@ -3,8 +3,8 @@
     <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
       <strong>基础详情页</strong>
     </div>
-    <div class="q-pt-md">
-      <q-card flat class="q-gutter-y-lg no-border-radius">
+    <div class="q-pt-lg">
+      <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">
             <strong>退款申请</strong>
