@@ -2,11 +2,9 @@
   <div class="row items-center " :class="{'error-height': $q.screen.lt.sm}" >
     <div class="col">
       <q-card-section class="text-center">
-        <q-item-section>
-          <q-item-label>
-            <q-img width="250px" src="https://img.yzcdn.cn/public_files/2017/11/28/a1970f9f93bdf0bb6488e2245f41d8aa.png"/>
-          </q-item-label>
-        </q-item-section>
+        <q-item-label class="row justify-center" :class="{'q-my-lg': $q.screen.gt.xs}">
+          <q-img class="col" style="max-width: 400px;" src="~assets/403.png" :ratio="16/9"/>
+        </q-item-label>
         <q-item-section class="q-mt-md">
           <q-item-label class="text-h5">403</q-item-label>
           <q-item-label class="text-body2 text-grey-6">
