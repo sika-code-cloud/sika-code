@@ -1,28 +1,134 @@
 <template>
   <div class="sika-table-th">
-    <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
-      <strong>高级详情页</strong>
+    <div class="bg-white q-px-lg q-pt-lg" style="margin: -10px -16px 0 -16px">
+      <div class="row text-h6">
+        <strong class="col">单号：234231029431</strong>
+        <div class="col-auto text-right">
+          <span class="q-gutter-x-sm gt-xs">
+            <q-btn-group unelevated>
+              <q-btn
+                color="secondary"
+                padding="5px 15px"
+                label="操作一"
+                style="width: 80px"
+              />
+              <q-btn
+                color="secondary"
+                padding="5px 15px"
+                style="width: 80px"
+                label="操作二"
+              />
+              <q-btn
+                padding="5px 15px"
+                color="secondary"
+                style="width: 60px"
+                label=". . ."
+              />
+            </q-btn-group>
+            <q-btn
+              color="primary"
+              padding="5px 15px"
+              style="width: 80px"
+              unelevated
+              label="主操作"
+            ></q-btn>
+          </span>
+          <span class="col lt-sm">
+            <q-btn-dropdown
+              auto-close
+              unelevated
+              padding="5px 15px"
+              color="primary"
+              label="主操作"
+              split
+            />
+          </span>
+        </div>
+      </div>
+      <div class="row q-gutter-y-sm q-mt-sm">
+        <div class="col-sm-8 col-xs-12">
+          <div class="row q-gutter-y-sm">
+            <span class="col-md-6 col-xs-12 q-pr-sm">创建人：曲丽丽</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">订购产品：XX服务</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">创建时间：2017-07-07</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">关联单据：12321</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">
+              生效日期：2017-07-07 ~ 2017-08-08
+            </span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">
+              备注：请于两个工作日内确认
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+          <span class="row q-gutter-y-sm">
+            <span class="col-sm-6 col-xs-4 text-grey-7">状态</span>
+            <span class="col-sm-6 col-xs-8 text-grey-7">订单金额</span>
+            <span class="col-sm-6 col-xs-4 text-h5">待审批</span>
+            <span class="col-sm-6 col-xs-8 text-h5">¥568.08</span>
+          </span>
+        </div>
+      </div>
+      <q-tabs
+        v-model="tab"
+        class="text-primary q-ml-none q-mt-lg"
+        dense
+        narrow-indicator
+        align="left"
+        :breakpoint="0"
+      >
+        <q-tab name="details" class="q-px-none" label="详情" />
+        <q-tab name="rule" class="q-px-none q-mx-md" label="规则" />
+      </q-tabs>
     </div>
     <div class="q-pt-md">
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
-          <q-item-label class="text-body1">
-            <strong>退款申请</strong>
-          </q-item-label>
-          <q-item-label class="row q-gutter-y-md">
-            <div class="col col-md-4 col-sm-6 col-xs-12">
-              取货单号：1000000000
-            </div>
-            <div class="col col-md-4 col-sm-6 col-xs-12">状态：已取货</div>
-            <div class="col col-md-4 col-sm-6 col-xs-12">
-              销售单号：1000000000
-            </div>
-            <div class="col col-md-12 col-sm-6 col-xs-12">
-              子订单：3214321432
-            </div>
-          </q-item-label>
+          <q-item-label class="text-body1">流程进度</q-item-label>
+          <q-stepper
+            v-model="step"
+            ref="stepper"
+            color="primary"
+            :vertical="$q.screen.lt.md"
+            flat
+          >
+            <q-step
+              :name="1"
+              :class="{ 'step-height': $q.screen.lt.md }"
+              title="创建项目"
+              caption="李大锤 2016-12-12 12:32"
+              icon="settings"
+              :done="step > 1"
+            >
+            </q-step>
+            <q-step
+              :name="2"
+              title="部门初审"
+              :class="{ 'step-height': $q.screen.lt.md }"
+              caption="周毛毛 2016-12-12 12:32"
+              icon="create_new_folder"
+              :done="step > 2"
+            >
+            </q-step>
+            <q-step
+              :name="3"
+              :class="{ 'step-height': $q.screen.lt.md }"
+              title="财务复核"
+              icon="assignment"
+              :done="step > 3"
+            >
+            </q-step>
+            <q-step
+              :name="4"
+              :class="{ 'step-height': $q.screen.lt.md }"
+              title="完成"
+              icon="add_comment"
+            >
+            </q-step>
+          </q-stepper>
         </q-card-section>
-        <q-separator inset=""/>
+      </q-card>
+      <q-card flat class="q-mt-xs q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">
             <strong>用户信息</strong>
@@ -41,7 +147,7 @@
             <div class="col col-md-4 col-sm-6 col-xs-12">备注：无</div>
           </q-item-label>
         </q-card-section>
-        <q-separator inset=""/>
+        <q-separator inset="" />
         <q-card-section>
           <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
           <q-table
@@ -75,6 +181,21 @@
             :columns="tuihuoColumns"
             row-key="name"
           >
+            <template v-slot:body-cell-fat="props">
+              <q-td :props="props">
+                <q-spinner-rings
+                  color="primary"
+                  size="2em"
+                  v-if="props.value === '进行中'"
+                />
+                <span
+                  v-else
+                  style="width: 8px; height: 8px; border-radius: 50%"
+                  class="bg-info inline-block q-mx-sm"
+                />
+                <span>{{ props.value }}</span>
+              </q-td>
+            </template>
           </q-table>
         </q-card-section>
       </q-card>
@@ -87,6 +208,8 @@ export default {
   name: 'Advance',
   data() {
     return {
+      step: '3',
+      tab: 'details',
       tuihuoColumns: [
         {
           name: 'desc',
@@ -272,6 +395,9 @@ export default {
 
 <style>
 .sika-table-th .q-table th {
-  font-size: 15px;
+  font-size: 16px;
+}
+.sika-table-th .q-tab__label {
+  font-size: 16px;
 }
 </style>

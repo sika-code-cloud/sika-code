@@ -22,7 +22,7 @@
             </div>
           </q-item-label>
         </q-card-section>
-        <q-separator inset=""/>
+        <q-separator inset="" />
         <q-card-section>
           <q-item-label class="text-body1">
             <strong>用户信息</strong>
@@ -41,7 +41,7 @@
             <div class="col col-md-4 col-sm-6 col-xs-12">备注：无</div>
           </q-item-label>
         </q-card-section>
-        <q-separator inset=""/>
+        <q-separator inset="" />
         <q-card-section>
           <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
           <q-table
@@ -82,8 +82,12 @@
                   size="2em"
                   v-if="props.value === '进行中'"
                 />
-                <span v-else style="width: 10px;height: 10px; border-radius: 50%" class="bg-info inline-block q-mx-sm"/>
-                <span >{{ props.value }}</span>
+                <span
+                  v-else
+                  style="width: 8px; height: 8px; border-radius: 50%"
+                  class="bg-info inline-block q-mx-sm"
+                />
+                <span>{{ props.value }}</span>
               </q-td>
             </template>
           </q-table>

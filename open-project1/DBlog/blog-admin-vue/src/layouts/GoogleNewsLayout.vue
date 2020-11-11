@@ -1091,7 +1091,7 @@ export default {
       leftBehavior: 'default',
       rightDrawerOpen: false,
       rightDrawerSetting: false,
-      rightOffset: [5, 5],
+      rightOffset: [5, 168],
       rightSelect: '流式',
       search: '',
       showAdvanced: false,
