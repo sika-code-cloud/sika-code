@@ -1,9 +1,9 @@
 <template>
   <div class="sika-table-th">
-    <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
       <strong>基础详情页</strong>
     </div>
-    <div class="q-pt-lg">
+    <div class="q-pt-md">
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">
@@ -22,7 +22,7 @@
             </div>
           </q-item-label>
         </q-card-section>
-
+        <q-separator inset=""/>
         <q-card-section>
           <q-item-label class="text-body1">
             <strong>用户信息</strong>
@@ -41,15 +41,18 @@
             <div class="col col-md-4 col-sm-6 col-xs-12">备注：无</div>
           </q-item-label>
         </q-card-section>
+        <q-separator inset=""/>
         <q-card-section>
           <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
           <q-table
             flat
+            square
+            table-header-class="bg-grey-1"
+            style="border-bottom: 1px solid lightgrey"
             hide-bottom
             :data="data"
             :columns="columns"
             row-key="name"
-            separator="none"
           >
             <template v-slot:bottom-row>
               <q-tr class="text-weight-bolder">
@@ -64,12 +67,25 @@
           <q-item-label class="text-body1 q-mb-lg"> 退货进度 </q-item-label>
           <q-table
             flat
+            square
+            table-header-class="bg-grey-1"
+            style="border-bottom: 1px solid lightgrey"
             hide-bottom
             :data="tuihuoData"
             :columns="tuihuoColumns"
             row-key="name"
-            separator="none"
           >
+            <template v-slot:body-cell-fat="props">
+              <q-td :props="props">
+                <q-spinner-rings
+                  color="primary"
+                  size="2em"
+                  v-if="props.value === '进行中'"
+                />
+                <span v-else style="width: 10px;height: 10px; border-radius: 50%" class="bg-info inline-block q-mx-sm"/>
+                <span >{{ props.value }}</span>
+              </q-td>
+            </template>
           </q-table>
         </q-card-section>
       </q-card>
@@ -173,7 +189,7 @@ export default {
         {
           name: '12345612',
           calories: '矿泉水 550ml',
-          fat: '12421432143214321',
+          fat: '进行中',
           sodium: 2.1,
           calcium: 1,
           iron: 2.12
@@ -181,7 +197,7 @@ export default {
         {
           name: '12345631',
           calories: '凉茶 300ml',
-          fat: '12421432143214321',
+          fat: '成功',
           sodium: 2.1,
           calcium: 1,
           iron: 2.42
@@ -189,7 +205,7 @@ export default {
         {
           name: '12345161',
           calories: '好吃的薯片',
-          fat: '12421432143214321',
+          fat: '成功',
           sodium: 2.1,
           calcium: 1,
           iron: 2.32
@@ -197,7 +213,7 @@ export default {
         {
           name: '12344561',
           calories: '特别好吃的蛋卷',
-          fat: '12421432143214321',
+          fat: '成功',
           sodium: 2.1,
           calcium: 1,
           iron: 2.12
@@ -205,7 +221,7 @@ export default {
         {
           name: '12354561',
           calories: '特别好吃的蛋卷2',
-          fat: '12421432143214321',
+          fat: '成功',
           sodium: 2.1,
           calcium: 1,
           iron: 2.32
