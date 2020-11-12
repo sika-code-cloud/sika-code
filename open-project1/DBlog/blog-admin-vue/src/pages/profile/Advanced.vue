@@ -263,7 +263,6 @@
             <q-tab name="log2" label="操作日志二" />
             <q-tab name="log3" label="操作日志三" />
           </q-tabs>
-          <q-separator />
           <q-tab-panels v-model="operatorLogTab" animated>
             <q-tab-panel name="log1">
               <q-table
