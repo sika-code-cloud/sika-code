@@ -45,7 +45,7 @@
           </span>
         </div>
       </div>
-      <div class="row q-gutter-y-sm q-mt-sm">
+      <div class="row q-gutter-y-md q-mt-sm">
         <div class="col-sm-8 col-xs-12">
           <div class="row q-gutter-y-sm">
             <span class="col-md-6 col-xs-12 q-pr-sm">创建人：曲丽丽</span>
@@ -85,6 +85,7 @@
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">流程进度</q-item-label>
+          <q-separator spaced="15px"/>
           <q-stepper
             v-model="step"
             ref="stepper"
@@ -128,26 +129,107 @@
           </q-stepper>
         </q-card-section>
       </q-card>
-      <q-card flat class="q-mt-xs q-gutter-y-lg no-border-radius">
+      <q-card flat class="q-mt-md no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">
-            <strong>用户信息</strong>
+            用户信息
           </q-item-label>
+          <q-separator spaced="15px"/>
           <q-item-label class="row q-gutter-y-md">
-            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名：李大锤</div>
+            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名： 付小小</div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              联系电话：18100000000
+              会员卡号：32943898021309809423
             </div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              常用快递：菜鸟仓储
+              身份证：3321944288191034921
             </div>
-            <div class="col col-md-4 col-sm-6 col-xs-12 q-pr-sm">
-              取货地址：浙江省杭州市西湖区万塘路18号
+            <div class="col col-md-4 col-sm-6 col-xs-12">
+              联系方式：18112345678
             </div>
-            <div class="col col-md-4 col-sm-6 col-xs-12">备注：无</div>
+            <div class="col col-md-8 col-sm-12 col-xs-12 q-pr-sm">
+               <span class="row">
+                  <span class="col-auto">取货地址：</span>
+                  <q-item-label class="col">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</q-item-label>
+                </span>
+            </div>
           </q-item-label>
         </q-card-section>
-        <q-separator inset="" />
+        <q-card-section>
+          <q-item-label class="text-body1">
+            <strong>信息组</strong>
+          </q-item-label>
+          <q-item-label class="row q-gutter-y-md">
+            <div class="col col-sm-6 col-xs-12">某某数据： 725</div>
+            <div class="col col-sm-6 col-xs-12">
+              该数据更新时间：2017-08-08
+            </div>
+            <div class="col col-sm-6 col-xs-12">
+              某某数据 ：725
+            </div>
+            <div class="col col-sm-6 col-xs-12">
+              该数据更新时间 ：2017-08-08
+            </div>
+          </q-item-label>
+        </q-card-section>
+        <q-card-section>
+          <q-item-label class="text-body2 q-mb-md">
+            信息组
+          </q-item-label>
+          <q-card bordered flat class="q-mt-xs no-border-radius">
+            <q-item-label class="q-pa-md bg-grey-3">
+              多层级信息组
+            </q-item-label>
+            <q-card-section>
+              <q-item-label class="text-body1">
+                <strong>组名称</strong>
+              </q-item-label>
+              <q-item-label class="row q-gutter-y-md">
+                <div class="col col-md-4 col-sm-6 col-xs-12">负责人： 林东东</div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  角色码： 1234567
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  所属部门：XX公司 - YY部
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  过期时间：2017-08-08
+                </div>
+                <div class="col col-md-8 col-sm-12 col-xs-12 q-pr-sm">
+                  <span class="row">
+                    <span class="col-auto">描述 ：</span>
+                    <q-item-label lines="2" class="col">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长</q-item-label>
+                  </span>
+                </div>
+              </q-item-label>
+            </q-card-section>
+            <q-separator inset=""/>
+            <q-card-section>
+              <q-item-label class="text-body1">
+                <strong>组名称</strong>
+              </q-item-label>
+              <q-item-label class="row q-gutter-y-md">
+                <div class="col q-pr-sm">
+                  <span class="row">
+                    <span class="col-auto">学名 ：</span>
+                    <q-item-label lines="2" class="col">Citrullus lanatus (Thunb.) Matsum. et Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗</q-item-label>
+                  </span>
+                </div>
+              </q-item-label>
+            </q-card-section>
+            <q-separator inset=""/>
+            <q-card-section>
+              <q-item-label class="text-body1">
+                <strong>组名称</strong>
+              </q-item-label>
+              <q-item-label class="row q-gutter-y-md">
+                <div class="col col-md-4 col-sm-6 col-xs-12">负责人： 林东东</div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  角色码： 1234567
+                </div>
+              </q-item-label>
+            </q-card-section>
+          </q-card>
+        </q-card-section>
         <q-card-section>
           <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
           <q-table
@@ -197,6 +279,13 @@
               </q-td>
             </template>
           </q-table>
+        </q-card-section>
+      </q-card>
+      <q-card flat class="q-mt-md no-border-radius">
+        <q-card-section>
+          <q-item-label class="text-body1">
+            用户近半年来电记录
+          </q-item-label>
         </q-card-section>
       </q-card>
     </div>
