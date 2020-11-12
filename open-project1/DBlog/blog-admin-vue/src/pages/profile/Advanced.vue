@@ -85,7 +85,7 @@
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">流程进度</q-item-label>
-          <q-separator spaced="15px"/>
+          <q-separator spaced="15px" />
           <q-stepper
             v-model="step"
             ref="stepper"
@@ -131,10 +131,8 @@
       </q-card>
       <q-card flat class="q-mt-md no-border-radius">
         <q-card-section>
-          <q-item-label class="text-body1">
-            用户信息
-          </q-item-label>
-          <q-separator spaced="15px"/>
+          <q-item-label class="text-body1"> 用户信息 </q-item-label>
+          <q-separator spaced="15px" />
           <q-item-label class="row q-gutter-y-md">
             <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名： 付小小</div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
@@ -147,10 +145,13 @@
               联系方式：18112345678
             </div>
             <div class="col col-md-8 col-sm-12 col-xs-12 q-pr-sm">
-               <span class="row">
-                  <span class="col-auto">取货地址：</span>
-                  <q-item-label class="col">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</q-item-label>
-                </span>
+              <span class="row">
+                <span class="col-auto">取货地址：</span>
+                <q-item-label class="col"
+                  >曲丽丽 18100000000
+                  浙江省杭州市西湖区黄姑山路工专路交叉路口</q-item-label
+                >
+              </span>
             </div>
           </q-item-label>
         </q-card-section>
@@ -160,21 +161,15 @@
           </q-item-label>
           <q-item-label class="row q-gutter-y-md">
             <div class="col col-sm-6 col-xs-12">某某数据： 725</div>
-            <div class="col col-sm-6 col-xs-12">
-              该数据更新时间：2017-08-08
-            </div>
-            <div class="col col-sm-6 col-xs-12">
-              某某数据 ：725
-            </div>
+            <div class="col col-sm-6 col-xs-12">该数据更新时间：2017-08-08</div>
+            <div class="col col-sm-6 col-xs-12">某某数据 ：725</div>
             <div class="col col-sm-6 col-xs-12">
               该数据更新时间 ：2017-08-08
             </div>
           </q-item-label>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-body2 q-mb-md">
-            信息组
-          </q-item-label>
+          <q-item-label class="text-body2 q-mb-md"> 信息组 </q-item-label>
           <q-card bordered flat class="q-mt-xs no-border-radius">
             <q-item-label class="q-pa-md bg-grey-3">
               多层级信息组
@@ -184,7 +179,9 @@
                 <strong>组名称</strong>
               </q-item-label>
               <q-item-label class="row q-gutter-y-md">
-                <div class="col col-md-4 col-sm-6 col-xs-12">负责人： 林东东</div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  负责人： 林东东
+                </div>
                 <div class="col col-md-4 col-sm-6 col-xs-12">
                   角色码： 1234567
                 </div>
@@ -197,12 +194,14 @@
                 <div class="col col-md-8 col-sm-12 col-xs-12 q-pr-sm">
                   <span class="row">
                     <span class="col-auto">描述 ：</span>
-                    <q-item-label lines="2" class="col">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长</q-item-label>
+                    <q-item-label lines="2" class="col"
+                      >这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长</q-item-label
+                    >
                   </span>
                 </div>
               </q-item-label>
             </q-card-section>
-            <q-separator inset=""/>
+            <q-separator inset="" />
             <q-card-section>
               <q-item-label class="text-body1">
                 <strong>组名称</strong>
@@ -211,18 +210,23 @@
                 <div class="col q-pr-sm">
                   <span class="row">
                     <span class="col-auto">学名 ：</span>
-                    <q-item-label lines="2" class="col">Citrullus lanatus (Thunb.) Matsum. et Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗</q-item-label>
+                    <q-item-label lines="2" class="col"
+                      >Citrullus lanatus (Thunb.) Matsum. et
+                      Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗</q-item-label
+                    >
                   </span>
                 </div>
               </q-item-label>
             </q-card-section>
-            <q-separator inset=""/>
+            <q-separator inset="" />
             <q-card-section>
               <q-item-label class="text-body1">
                 <strong>组名称</strong>
               </q-item-label>
               <q-item-label class="row q-gutter-y-md">
-                <div class="col col-md-4 col-sm-6 col-xs-12">负责人： 林东东</div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  负责人： 林东东
+                </div>
                 <div class="col col-md-4 col-sm-6 col-xs-12">
                   角色码： 1234567
                 </div>
@@ -230,62 +234,90 @@
             </q-card-section>
           </q-card>
         </q-card-section>
-        <q-card-section>
-          <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
-          <q-table
-            flat
-            square
-            table-header-class="bg-grey-1"
-            style="border-bottom: 1px solid lightgrey"
-            hide-bottom
-            :data="data"
-            :columns="columns"
-            row-key="name"
-          >
-            <template v-slot:bottom-row>
-              <q-tr class="text-weight-bolder">
-                <q-td colspan="4">总计</q-td>
-                <q-td class="text-right"> 10 </q-td>
-                <q-td class="text-right"> 61.5 </q-td>
-              </q-tr>
-            </template>
-          </q-table>
-        </q-card-section>
-        <q-card-section>
-          <q-item-label class="text-body1 q-mb-lg"> 退货进度 </q-item-label>
-          <q-table
-            flat
-            square
-            table-header-class="bg-grey-1"
-            style="border-bottom: 1px solid lightgrey"
-            hide-bottom
-            :data="tuihuoData"
-            :columns="tuihuoColumns"
-            row-key="name"
-          >
-            <template v-slot:body-cell-fat="props">
-              <q-td :props="props">
-                <q-spinner-rings
-                  color="primary"
-                  size="2em"
-                  v-if="props.value === '进行中'"
-                />
-                <span
-                  v-else
-                  style="width: 8px; height: 8px; border-radius: 50%"
-                  class="bg-info inline-block q-mx-sm"
-                />
-                <span>{{ props.value }}</span>
-              </q-td>
-            </template>
-          </q-table>
+      </q-card>
+      <q-card flat class="q-mt-md no-border-radius">
+        <q-card-section class="text-center">
+          <q-item-label class="text-body1 q-mb-lg text-left">
+            用户近半年来电记录
+          </q-item-label>
+          <q-img
+            class="full-width"
+            src="~assets/no_data.png"
+            :ratio="16 / 10"
+            style="max-width: 268px"
+          ></q-img>
+          <q-item-label>暂无数据</q-item-label>
         </q-card-section>
       </q-card>
       <q-card flat class="q-mt-md no-border-radius">
         <q-card-section>
-          <q-item-label class="text-body1">
-            用户近半年来电记录
-          </q-item-label>
+          <q-tabs
+            v-model="operatorLogTab"
+            class="text-grey"
+            active-color="primary"
+            indicator-color="primary"
+            align="left"
+            narrow-indicator
+          >
+            <q-tab name="log1" label="操作日志一" />
+            <q-tab name="log2" label="操作日志二" />
+            <q-tab name="log3" label="操作日志三" />
+          </q-tabs>
+          <q-separator />
+          <q-tab-panels v-model="operatorLogTab" animated>
+            <q-tab-panel name="log1">
+              <q-table
+                flat
+                square
+                table-header-class="bg-grey-1"
+                style="border-bottom: 1px solid lightgrey"
+                hide-bottom
+                :data="tuihuoData"
+                :columns="tuihuoColumns"
+                row-key="name"
+              >
+                <template v-slot:body-cell-fat="props">
+                  <q-td :props="props">
+                    <q-spinner-rings
+                      color="primary"
+                      size="2em"
+                      v-if="props.value === '进行中'"
+                    />
+                    <span
+                      v-else
+                      style="width: 8px; height: 8px; border-radius: 50%"
+                      class="bg-info inline-block q-mx-sm"
+                    />
+                    <span>{{ props.value }}</span>
+                  </q-td>
+                </template>
+              </q-table>
+            </q-tab-panel>
+
+            <q-tab-panel class="text-center" name="log2">
+              <q-img
+                class="full-width"
+                src="~assets/no_data.png"
+                :ratio="16 / 10"
+                style="max-width: 268px"
+              ></q-img>
+              <q-item-label>暂无数据</q-item-label>
+            </q-tab-panel>
+
+            <q-tab-panel name="log3">
+              <q-table
+                flat
+                square
+                table-header-class="bg-grey-1"
+                style="border-bottom: 1px solid lightgrey"
+                hide-bottom
+                :data="data"
+                :columns="columns"
+                row-key="name"
+              >
+              </q-table>
+            </q-tab-panel>
+          </q-tab-panels>
         </q-card-section>
       </q-card>
     </div>
@@ -299,6 +331,7 @@ export default {
     return {
       step: '3',
       tab: 'details',
+      operatorLogTab: 'log1',
       tuihuoColumns: [
         {
           name: 'desc',
