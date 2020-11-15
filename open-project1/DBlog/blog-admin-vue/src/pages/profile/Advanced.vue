@@ -242,7 +242,7 @@
           </q-item-label>
           <q-img
             class="full-width"
-            src="~assets/no_data.png"
+            src="~assets/no_data_1.png"
             :ratio="16 / 10"
             style="max-width: 268px"
           ></q-img>
@@ -296,7 +296,7 @@
             <q-tab-panel class="text-center" name="log2">
               <q-img
                 class="full-width"
-                src="~assets/no_data.png"
+                src="~assets/no_data_1.png"
                 :ratio="16 / 10"
                 style="max-width: 268px"
               ></q-img>
