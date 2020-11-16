@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>AdvancedForm</div>
+</template>
 
 <script>
 export default {
