@@ -9,160 +9,207 @@
       </div>
     </div>
     <q-card square flat class="q-gutter-y-md q-mt-lg q-pb-lg">
-      <div class="row justify-center">
-        <q-form class="q-px-md" style="width: 560px">
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+      <q-form class="q-px-md full-width">
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >标题:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >标题:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label class="q-pl-md">
+              <q-input
+                outlined
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
+                clearable
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md"
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >起止日期:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                outlined
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
+                clearable
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-start">
+          <span
+            class="col-sm-4 col-xs-12 "
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md "
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >目标描述:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                outlined
+                type="textarea"
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-start">
+          <span
+            class="col-sm-4 col-xs-12 "
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md "
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >衡量标准:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                outlined
+                type="textarea"
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md"
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >客户（选填）:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                outlined
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-          <div class="row q-gutter-y-sm q-my-md items-center">
-            <span
-              class="col-sm-2 col-xs-12"
-              :class="{ 'justify-end': $q.screen.gt.xs }"
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md"
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >邀评人（选填）:</q-item-label
             >
-              <q-item-label
-                class="q-pr-md"
-                :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                outlined
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
               >
-            </span>
-            <span class="col-sm-10 col-xs-12">
-              <q-item-label class="full-width">
-                <q-input
-                  outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
-                  dense
-                  square
-                  clearable
-                >
-                </q-input>
-              </q-item-label>
-            </span>
-          </div>
-        </q-form>
-      </div>
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md"
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >权重（选填）:</q-item-label
+            >
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+              <q-input
+                style="max-width: 100px"
+                type="number"
+                outlined
+                v-model="ruleName"
+                placeholder="给目标起个名字"
+                dense
+                square
+                suffix="%"
+              >
+              </q-input>
+            </q-item-label>
+          </span>
+        </div>
+        <div class="row q-gutter-y-sm q-my-md items-center">
+          <span
+            class="col-sm-4 col-xs-12"
+            :class="{ 'justify-end': $q.screen.gt.xs }"
+          >
+            <q-item-label
+              class="q-pr-md"
+              :class="{ 'text-right': $q.screen.gt.xs }"
+            >目标公开:</q-item-label
+            >
+          </span>
+          <span class="col-sm-5 col-xs-12">
+            <q-item-label>
+               <q-option-group
+                 v-model="group"
+                 :options="options"
+                 color="primary"
+                 inline
+               />
+            </q-item-label>
+             <q-item-label class="q-ml-sm">
+               客户、邀评人默认被分享
+            </q-item-label>
+          </span>
+        </div>
+      </q-form>
     </q-card>
   </div>
 </template>
@@ -174,6 +221,21 @@ export default {
   name: 'TableList',
   data() {
     return {
+      group: 'op1',
+      options: [
+        {
+          label: '公开',
+          value: 'op1'
+        },
+        {
+          label: '部分公开',
+          value: 'op2'
+        },
+        {
+          label: '不公开',
+          value: 'op3'
+        }
+      ],
       queryBtnStyle: {},
       queryLoad: false,
       addData: false,
