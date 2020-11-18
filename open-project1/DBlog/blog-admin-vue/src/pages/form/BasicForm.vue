@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="q-pa-md" style="margin: -16px -16px 0 -16px">
       <div class="text-h6">
         <strong>基础表单</strong>
       </div>
@@ -11,7 +11,7 @@
     <q-card
       square
       flat
-      class="q-gutter-y-md q-py-md"
+      class="q-gutter-y-md q-my-md"
       :class="{ 'q-mt-md': $q.screen.gt.xs }"
     >
       <q-form class="q-px-md full-width">
