@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div>
-      <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+      <div class="text-h6">
         <strong>基础表单</strong>
       </div>
       <div class="text-body2">
         表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。
       </div>
     </div>
-    <q-card square flat class="q-gutter-y-md q-mt-lg q-pb-lg">
+    <q-card square flat class="q-gutter-y-md q-mt-lg q-py-md">
       <q-form class="q-px-md full-width">
         <div class="row q-gutter-y-sm q-my-md items-center">
           <span
@@ -58,21 +58,14 @@
               >
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      transition-show="scale"
-                      transition-hide="scale"
+                    <q-menu
+                      square
+                      :offset="[12,10]"
+                      transition-show="jump-down"
+                      transition-hide="jump-up"
                     >
-                      <q-date v-model="beginAndEndDate" mask="YYYY-MM-DD" range>
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
+                      <q-date v-model="beginAndEndDate" square mask="YYYY-MM-DD" range/>
+                    </q-menu>
                   </q-icon>
                 </template>
               </q-input>
@@ -258,7 +251,7 @@
 import { date, QSpinnerIos } from 'quasar'
 
 export default {
-  name: 'TableList',
+  name: 'BasicForm',
   data() {
     return {
       group: 'op1',
