@@ -8,7 +8,12 @@
         表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。
       </div>
     </div>
-    <q-card square flat class="q-gutter-y-md q-mt-lg q-py-md">
+    <q-card
+      square
+      flat
+      class="q-gutter-y-md q-py-md"
+      :class="{ 'q-mt-md': $q.screen.gt.xs }"
+    >
       <q-form class="q-px-md full-width">
         <div class="row q-gutter-y-sm q-my-md items-center">
           <span
@@ -60,11 +65,16 @@
                   <q-icon name="event" class="cursor-pointer">
                     <q-menu
                       square
-                      :offset="[12,10]"
+                      :offset="[12, 10]"
                       transition-show="jump-down"
                       transition-hide="jump-up"
                     >
-                      <q-date v-model="beginAndEndDate" square mask="YYYY-MM-DD" range/>
+                      <q-date
+                        v-model="beginAndEndDate"
+                        square
+                        mask="YYYY-MM-DD"
+                        range
+                      />
                     </q-menu>
                   </q-icon>
                 </template>
