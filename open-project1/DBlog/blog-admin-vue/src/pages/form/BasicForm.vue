@@ -11,7 +11,7 @@
     <q-card
       square
       flat
-      class="q-gutter-y-md q-my-md"
+      class="q-gutter-y-md q-my-md q-py-sm"
       :class="{ 'q-mt-md': $q.screen.gt.xs }"
     >
       <q-form class="q-px-md full-width">
