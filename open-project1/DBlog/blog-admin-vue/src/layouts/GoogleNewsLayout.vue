@@ -398,6 +398,7 @@
       @show="show"
     >
       <q-scroll-area
+        style="height: calc(100% - 50px); margin-top: 50px"
         class="fit"
         :thumb-style="thumbStyle"
         :content-style="contentStyle"
@@ -408,6 +409,20 @@
         </q-list>
         <EssentialLink />
       </q-scroll-area>
+      <div class="absolute-top" style="height: 50px">
+        <div class="bg-transparent q-px-sm q-gutter-x-sm">
+          <q-avatar class="q-mb-sm">
+            <q-img
+              style="width: 40px"
+              :ratio="10 / 10"
+              src="~assets/sika-head.png"
+            />
+          </q-avatar>
+          <div class="text-body1 inline-block text-primary">
+            <strong>Sika Design Pro</strong>
+          </div>
+        </div>
+      </div>
     </q-drawer>
     <q-drawer
       side="right"

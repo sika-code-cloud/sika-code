@@ -1,5 +1,35 @@
 const routes = [
   {
+    path: '/form/basic-form',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/form/BasicForm')
+      }
+    ]
+  },
+  {
+    path: '/form/advanced-form',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/form/AdvancedForm')
+      }
+    ]
+  },
+  {
+    path: '/form/step-form',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/form/StepForm')
+      }
+    ]
+  },
+  {
     path: '/profile/basic',
     component: () => import('layouts/MainLayout.vue'),
     children: [
