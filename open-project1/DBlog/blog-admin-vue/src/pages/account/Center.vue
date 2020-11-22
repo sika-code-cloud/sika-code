@@ -139,7 +139,7 @@
                     <p class="text-grey-8 q-mb-sm q-pl-xs">
                       段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。
                     </p>
-                    <q-item-label class="row text-body1 text-grey-7 items-center q-gutter-x-xs">
+                    <q-item-label class="row text-body2 text-grey-7 items-center q-gutter-x-xs">
                       <q-chip color="white" text-color="primary" class="col-auto cursor-pointer">
                         <q-avatar size="18px">
                           <q-img src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png" />

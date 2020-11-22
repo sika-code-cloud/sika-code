@@ -79,8 +79,10 @@
               </div>
               <div class="col-md-auto col-xs-12 col-sm gt-sm">
                 <q-btn
-                  color="primary"
+                  :ripple="false"
                   dense
+                  flat
+                  style="border: 1px darkgrey dashed"
                   unelevated
                   icon="add"
                   class="no-border-radius q-px-sm"
@@ -93,8 +95,10 @@
         </q-card-section>
         <q-card-section class="q-mt-none lt-md">
           <q-btn
+            :ripple="false"
             padding="xs"
-            color="primary"
+            flat
+            style="border: 1px darkgrey dashed"
             unelevated
             icon="add"
             class="full-width no-border-radius"

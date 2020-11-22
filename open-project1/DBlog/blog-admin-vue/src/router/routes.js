@@ -1,5 +1,35 @@
 const routes = [
   {
+    path: '/dashboard/analysis',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/dashboard/Analysis')
+      }
+    ]
+  },
+  {
+    path: '/dashboard/monitor',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/dashboard/Monitor')
+      }
+    ]
+  },
+  {
+    path: '/dashboard/workplace',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/dashboard/Workplace')
+      }
+    ]
+  },
+  {
     path: '/form/basic-form',
     component: () => import('layouts/MainLayout.vue'),
     children: [

@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
     <q-resize-observer @resize="onResize" />
-    <q-header class="bg-white title-grey-8" height-hint="64">
+    <q-header class="bg-white title-grey-8 shadow-1" height-hint="64">
       <q-toolbar class="GNL__toolbar">
         <q-btn
           flat
@@ -725,7 +725,7 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="" style="background-color: #f0f2f5">
+    <q-page-container class="q-mt-sm" style="background-color: #f0f2f5">
       <slot name="page">hello world</slot>
       <slot name="page-title"></slot>
       <q-page class="q-pa-md">
