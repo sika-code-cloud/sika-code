@@ -221,7 +221,7 @@
           </q-card>
         </q-card>
       </div>
-      <div class="col-xs-12">
+      <div class="col-md-6 col-xs-12" :class="{'q-pr-sm': $q.screen.gt.sm}">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar color="orange-1" size="sm" text-color="orange" class="q-mr-sm" icon="thumb_up"></q-avatar>
@@ -230,7 +230,7 @@
             </span>
           </q-card-section>
           <q-separator />
-          <q-card flat square class="q-pa-md" style="min-height: 184px">
+          <q-card flat square class="q-pa-md" style="min-height: 251px">
             <q-item-section caption class="q-mb-md">
               <q-item-label class="inline-block" style="font-size: 48px">
                 <span class="q-mr-lg">4.5</span>
@@ -296,6 +296,90 @@
                 </div>
               </q-item-label>
             </q-item-section>
+          </q-card>
+        </q-card>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12" :class="{'q-pr-sm': $q.screen.gt.xs, 'q-pl-sm': $q.screen.gt.xs}">
+        <q-card flat class="no-border-radius">
+          <q-card-section class="bg-white">
+            <q-avatar color="purple-1" size="sm" text-color="purple" class="q-mr-sm" icon="tag_faces"></q-avatar>
+            <span>
+              科目满意度
+            </span>
+          </q-card-section>
+          <q-separator />
+          <q-card flat square class="q-pa-md text-center" style="height: 251px">
+            <div class="row">
+              <q-item-section class="col">
+                <q-item-label class="text-h5 text-grey-8">
+                  856
+                </q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
+                <q-item-label>
+                  <q-icon color="orange" name="mood" size="64px"></q-icon>
+                </q-item-label>
+                <q-item-label class="text-grey-7">
+                  正面评论
+                </q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
+                <q-item-label class="text-h5 text-info">
+                  82%
+                </q-item-label>
+              </q-item-section>
+            </div>
+            <q-separator spaced="22px" />
+            <div class="row">
+              <q-item-section class="col">
+                <q-item-label class="text-h5 text-grey-8">
+                  856
+                </q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
+                <q-item-label>
+                  <q-icon color="orange" name="mood_bad" size="64px"></q-icon>
+                </q-item-label>
+                <q-item-label class="text-grey-7">
+                  正面评论
+                </q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
+                <q-item-label class="text-h5 text-negative" >
+                  9%
+                </q-item-label>
+              </q-item-section>
+            </div>
+          </q-card>
+        </q-card>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12" :class="{'q-pl-sm': $q.screen.gt.xs}">
+        <q-card flat class="no-border-radius">
+          <q-card-section class="bg-white">
+            <q-avatar color="red-1" size="sm" text-color="red" class="q-mr-sm" icon="track_changes"></q-avatar>
+            <span>
+              本月目标
+            </span>
+          </q-card-section>
+          <q-separator />
+          <q-card flat square class="q-pa-md text-center" style="height: 251px">
+            <q-item-label caption class="q-mb-md q-mt-sm">
+              <q-knob
+                :angle="180"
+                readonly
+                max="100"
+                v-model="stepData[2]"
+                size="160px"
+                show-value
+                :thickness="0.10"
+                color="blue"
+                track-color="blue-1"
+                class="text-primary content-center"
+              ></q-knob>
+            </q-item-label>
+            <q-item-label class="text-grey-7 q-mb-md" >
+              恭喜，本月目标已达标！
+            </q-item-label>
           </q-card>
         </q-card>
       </div>
