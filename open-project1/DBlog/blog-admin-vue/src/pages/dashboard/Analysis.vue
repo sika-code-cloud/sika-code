@@ -61,11 +61,11 @@
         <q-card flat class="no-border-radius text-grey-9">
           <q-card-section class="bg-white">
             <q-avatar
-              color="green-1"
+              color="red-1"
               size="sm"
-              text-color="green"
+              text-color="red"
               class="q-mr-sm"
-              icon="visibility"
+              icon="attach_money"
             ></q-avatar>
             <span> 销售额 </span>
             <span>
@@ -107,11 +107,11 @@
         <q-card flat class="no-border-radius text-grey-9">
           <q-card-section class="bg-white">
             <q-avatar
-              color="green-1"
+              color="orange-1"
               size="sm"
-              text-color="green"
+              text-color="orange"
               class="q-mr-sm"
-              icon="visibility"
+              icon="reorder"
             ></q-avatar>
             <span> 订单量 </span>
             <span>
@@ -160,11 +160,11 @@
         <q-card flat class="no-border-radius text-grey-9">
           <q-card-section class="bg-white">
             <q-avatar
-              color="green-1"
+              color="purple-1"
               size="sm"
-              text-color="green"
+              text-color="purple"
               class="q-mr-sm"
-              icon="visibility"
+              icon="people_alt"
             ></q-avatar>
             <span> 新增用户 </span>
             <span>
