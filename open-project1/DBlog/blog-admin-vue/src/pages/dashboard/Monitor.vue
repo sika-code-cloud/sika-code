@@ -20,14 +20,14 @@
             <q-avatar size="sm">
               <q-img src="~assets/head.png"></q-img>
             </q-avatar>
-            <q-avatar size="sm">
+            <q-avatar size="sm" style="margin-left: -8px">
               <q-img src="~assets/head.png"></q-img>
             </q-avatar>
-            <q-avatar size="sm">
+            <q-avatar size="sm" style="margin-left: -8px">
               <q-img src="~assets/head.png"></q-img>
             </q-avatar>
 
-            <q-avatar size="sm">
+            <q-avatar size="sm" style="margin-left: -8px">
               <q-img src="~assets/head.png"></q-img>
             </q-avatar>
           </q-item-label>

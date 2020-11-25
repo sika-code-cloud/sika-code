@@ -80,7 +80,7 @@
                 :content-class="menuContentClass"
               >
                 <q-list dense>
-                  <q-item clickable v-close-popup>
+                  <q-item clickable v-close-popup to="/account/center">
                     <q-item-section
                       avatar
                       class="q-mr-sm q-pa-none"
@@ -90,7 +90,7 @@
                     </q-item-section>
                     <q-item-section>个人中心</q-item-section>
                   </q-item>
-                  <q-item clickable v-close-popup>
+                  <q-item clickable v-close-popup to="/account/settings">
                     <q-item-section
                       avatar
                       class="q-mr-sm q-pa-none"
@@ -407,9 +407,8 @@
         <q-list class="rounded-borders text-black">
           <menu-tree :data="menuData" />
         </q-list>
-        <EssentialLink />
       </q-scroll-area>
-      <div class="absolute-top" style="height: 50px">
+      <div class="absolute-top bg-white" style="height: 50px">
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
             <q-img
@@ -730,13 +729,6 @@
       <slot name="page-title"></slot>
       <q-page class="q-pa-md">
         <router-view />
-        <q-page-scroller
-          class="fit"
-          :thumb-style="thumbStyle"
-          :content-style="contentStyle"
-          :content-active-style="contentActiveStyle"
-        >
-        </q-page-scroller>
         <q-page-sticky
           position="top-right"
           style="z-index: 3000"
@@ -766,7 +758,6 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
 import MenuTree from 'components/tree/MenuTree'
 
 const myData = [
@@ -946,12 +937,6 @@ const myData = [
         to: '/editor/markdown'
       }
     ]
-  },
-  {
-    name: '1编辑器',
-    icon: 'text_fields',
-    group: '1编辑器',
-    top: true
   }
 ]
 const informs = [
@@ -1140,7 +1125,6 @@ export default {
     }
   },
   components: {
-    EssentialLink,
     MenuTree
   },
   methods: {

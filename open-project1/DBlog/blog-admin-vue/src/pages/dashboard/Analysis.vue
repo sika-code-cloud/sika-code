@@ -186,31 +186,31 @@
               </q-item-label>
               <q-item-label class="q-mb-md">
                 <q-avatar size="sm">
-                  <q-img src="~assets/head.png"></q-img>
+                  <q-img src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/zhj85zgAfEjChCNIKT1LQENUIOyOYCaX/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/TkH54UozsINlex15TAMI00GElsfsKSiC/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/xrzbBR99F6tYsDJPLNrvwhllowbuL7Gw/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"></q-img>
                 </q-avatar>
-                <q-avatar size="sm" style="margin-left: -12px">
-                  <q-img src="~assets/head.png"></q-img>
+                <q-avatar size="sm" style="margin-left: -8px">
+                  <q-img src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"></q-img>
                 </q-avatar>
                 <q-avatar
                   size="sm"
                   color="orange-1"
                   text-color="orange"
-                  style="margin-left: -12px"
+                  style="margin-left: -8px"
                 >
                   +3
                 </q-avatar>
@@ -435,7 +435,7 @@
                 </div>
                 <div class="col text-purple-4">
                   <q-avatar icon="accessibility" color="purple-1"></q-avatar>
-                  <q-item-label class="q-mt-sm">男性 25%</q-item-label>
+                  <q-item-label class="q-mt-sm">女性 25%</q-item-label>
                 </div>
                 <div class="col text-grey">
                   <q-avatar icon="accessibility" color="grey-2"></q-avatar>
