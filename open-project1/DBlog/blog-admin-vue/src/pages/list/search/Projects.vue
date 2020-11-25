@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sc-design">
     <div class="sc-base-list">
       <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
         <strong>搜索列表（项目）</strong>
@@ -146,7 +146,7 @@
         <div
           class="q-ma-xs cursor-pointer"
           :class="{
-            'shadow-5 text-primary ': item.select,
+            'sc-shadow-blue text-primary ': item.select,
             'text-grey-8': !item.select
           }"
           @mouseover="select(item)"
@@ -262,13 +262,7 @@ export default {
       goodPing: '优秀',
       owners: ownersDefault,
       queryData: '',
-      items: itemsInit,
-      activeClass: {
-        border: '1px dashed dodgerblue'
-      },
-      unActiveClass: {
-        border: '1px dashed lightgrey'
-      }
+      items: itemsInit
     }
   },
   methods: {
@@ -297,8 +291,4 @@ export default {
 <style lang="sass" scoped>
 .sc-card-height
   height: 250px
-.active-class
-  border: 1px dashed #1890ff
-.un-active-class
-  border: 1px dashed lightgrey
 </style>

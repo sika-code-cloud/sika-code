@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
     <q-resize-observer @resize="onResize" />
-    <q-header class="bg-white title-grey-8 shadow-1" height-hint="64">
+    <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
       <q-toolbar class="GNL__toolbar">
         <q-btn
           flat
@@ -17,6 +17,7 @@
         </q-btn>
         <q-space />
         <q-input
+          square
           class="GNL__toolbar-input"
           outlined
           dense
@@ -764,6 +765,7 @@ const myData = [
     name: '仪表盘',
     icon: 'dashboard',
     group: '仪表盘',
+    groupName: 'first',
     children: [
       {
         name: '分析页',
@@ -786,6 +788,7 @@ const myData = [
     name: '表单页',
     icon: 'edit_road',
     group: '表单页',
+    groupName: 'first',
     children: [
       {
         name: '基础表单',
@@ -808,6 +811,7 @@ const myData = [
     name: '列表页',
     icon: 'table_view',
     group: '列表页',
+    groupName: 'first',
     children: [
       {
         name: '搜索列表',
@@ -851,6 +855,7 @@ const myData = [
     name: '详情页',
     icon: 'library_books',
     group: '详情页',
+    groupName: 'first',
     children: [
       {
         name: '基础详情页',
@@ -868,6 +873,7 @@ const myData = [
     name: '结果页',
     icon: 'check_circle_outline',
     group: '结果页',
+    groupName: 'first',
     children: [
       {
         name: '成功页',
@@ -885,6 +891,7 @@ const myData = [
     name: '异常页',
     icon: 'error_outline',
     group: '异常页',
+    groupName: 'first',
     children: [
       {
         name: '403',
@@ -907,6 +914,7 @@ const myData = [
     name: '个人页',
     icon: 'perm_identity',
     group: '个人页',
+    groupName: 'first',
     children: [
       {
         name: '个人中心',
@@ -924,6 +932,7 @@ const myData = [
     name: '编辑器',
     icon: 'text_fields',
     group: '编辑器',
+    groupName: 'first',
     children: [
       {
         name: '自定义编辑器',

@@ -1,5 +1,6 @@
 <template>
   <q-expansion-item
+    :group="data.groupName"
     :content-inset-level="0.5"
     :label="data.name"
     :icon="data.icon"
@@ -35,7 +36,7 @@
     :to="data.to"
     v-else
   >
-    <q-item-section >{{ data.name }}</q-item-section>
+    <q-item-section>{{ data.name }}</q-item-section>
   </q-item>
 </template>
 
@@ -43,7 +44,11 @@
 import EventBus from 'components/tree/EventBus'
 
 const headerStyleDefault = { color: '#1890ff' }
-const itemStyleDefault = { color: '#1890ff', backgroundColor: '#e6f7ff', borderRight: '0.2em solid #1890ff' }
+const itemStyleDefault = {
+  color: '#1890ff',
+  backgroundColor: '#e6f7ff',
+  borderRight: '0.2em solid #1890ff'
+}
 const itemStyleUnActiveDefault = { color: 'black' }
 // const itemClassDefault = 'active-item-class'
 export default {
@@ -72,15 +77,26 @@ export default {
   computed: {
     hasChild() {
       return this.data.children && this.data.children.length
+    },
+    currentPath() {
+      return this.$route.path
     }
   },
   methods: {
     onclick(nodeData) {
+      console.log('---------------' + JSON.stringify(this.currentPath))
       EventBus.$emit('activeItem', nodeData)
     },
+    activeItem(currentItem) {
+      this.active = this.data.name === currentItem.name
+    },
     changeActiveHeaderStyle(currentItem) {
-      this.active = (this.data.name === currentItem.name)
-      if (currentItem.group && this.data.group && currentItem.group.startsWith(this.data.group)) {
+      this.activeItem(currentItem)
+      if (
+        currentItem.group &&
+        this.data.group &&
+        currentItem.group.startsWith(this.data.group)
+      ) {
         if (this.activeHeaderStyle) {
           this.headerStyleActive = this.activeHeaderStyle
         } else {
@@ -91,7 +107,7 @@ export default {
       }
     },
     changeActiveItemStyle(currentItem) {
-      this.active = (this.data.name === currentItem.name)
+      this.activeItem(currentItem)
       if (this.active) {
         if (this.activeItemStyle) {
           this.itemStyleActive = this.activeItemStyle

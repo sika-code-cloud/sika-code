@@ -106,7 +106,7 @@ module.exports = function (ctx) {
       lang: 'en-us', // Quasar language pack
       config: {
         brand: {
-          // src/css/quasar.variables.sass
+          // src/sass/quasar.variables.sass
           primary: '#1890ff',
           secondary: '#26A69A',
           accent: '#9C27B0',

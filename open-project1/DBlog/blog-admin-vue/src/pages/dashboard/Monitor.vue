@@ -140,7 +140,7 @@
             >
               <div
                 :class="{
-                  'shadow-blue text-primary ': item.select,
+                  'sc-shadow-blue text-primary ': item.select,
                   'text-grey-8': !item.select
                 }"
                 @mouseover="select(item)"
@@ -617,13 +617,4 @@ export default {
 <style lang="sass" scoped>
 .sc-card-height
   height: 250px
-
-.active-class
-  border: 1px dashed #1890ff
-
-.un-active-class
-  border: 1px dashed lightgrey
-
-.shadow-blue
-  box-shadow: 0 0 8px -1px #31CCEC
 </style>

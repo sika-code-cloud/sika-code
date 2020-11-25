@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sc-design">
     <div class="q-px-md">
       <q-form @submit="onSubmit" @reset="onReset">
         <div class="q-gutter-y-md">

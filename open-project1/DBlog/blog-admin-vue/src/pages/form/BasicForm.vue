@@ -26,7 +26,7 @@
               >标题:</q-item-label
             >
           </span>
-          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
+          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
             <q-item-label>
               <q-input
                 outlined
@@ -50,7 +50,7 @@
               >起止日期:</q-item-label
             >
           </span>
-          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
+          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
             <q-item-label>
               <q-input
                 outlined
@@ -148,7 +148,7 @@
               <span>:</span>
             </q-item-label>
           </span>
-          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
+          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
             <q-item-label>
               <q-input
                 outlined
@@ -172,7 +172,7 @@
               >邀评人<span class="text-grey-6">（选填）</span>:</q-item-label
             >
           </span>
-          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
+          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
             <q-item-label>
               <q-input
                 outlined
@@ -196,7 +196,7 @@
               >权重<span class="text-grey-6">（选填）</span>:</q-item-label
             >
           </span>
-          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
+          <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
             <q-item-label>
               <q-input
                 style="width: 60%; max-width: 280px"

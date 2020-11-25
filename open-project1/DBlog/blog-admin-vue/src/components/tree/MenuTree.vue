@@ -1,10 +1,7 @@
 <template>
   <div class="tree-menu">
-    <span
-      :key="item.name"
-      v-for="item in data"
-    >
-      <menu-tree-item :data="item" :link = "link"></menu-tree-item>
+    <span :key="item.name" v-for="item in data">
+      <menu-tree-item :data="item" :link="link"></menu-tree-item>
     </span>
   </div>
 </template>
@@ -26,22 +23,10 @@ export default {
       }
     }
   },
-  methods: {
-    toggle() {
-      if (this.hasChild) {
-        this.open = !this.open
-      }
-    },
-    menuHeadStyle(startWith) {
-      if (this.link.startsWith(startWith)) {
-        return { color: '#1890ff' }
-      }
-    }
-  },
+  methods: {},
   components: {
     MenuTreeItem
   }
 }
 </script>
-<style lang="sass">
-</style>
+<style lang="sass"></style>

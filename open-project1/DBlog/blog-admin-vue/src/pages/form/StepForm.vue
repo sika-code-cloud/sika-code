@@ -1,5 +1,5 @@
 <template>
-  <div class="step-form">
+  <div class="sc-design">
     <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
       <div class="text-h6">
         <strong>分步表单</strong>
@@ -291,10 +291,6 @@ export default {
 </script>
 
 <style lang="sass">
-.step-form
-  .q-field--dense
-    .q-field__control
-      height: 36px
 
 .my-sticky-header-table
   /* height or max-height is important */

@@ -186,25 +186,39 @@
               </q-item-label>
               <q-item-label class="q-mb-md">
                 <q-avatar size="sm">
-                  <q-img src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/zhj85zgAfEjChCNIKT1LQENUIOyOYCaX/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/zhj85zgAfEjChCNIKT1LQENUIOyOYCaX/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/TkH54UozsINlex15TAMI00GElsfsKSiC/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/TkH54UozsINlex15TAMI00GElsfsKSiC/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/xrzbBR99F6tYsDJPLNrvwhllowbuL7Gw/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/xrzbBR99F6tYsDJPLNrvwhllowbuL7Gw/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar size="sm" style="margin-left: -8px">
-                  <q-img src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"></q-img>
+                  <q-img
+                    src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"
+                  ></q-img>
                 </q-avatar>
                 <q-avatar
                   size="sm"
@@ -587,29 +601,10 @@ export default {
       }
       return '1em'
     }
+  },
+  mounted() {
+    console.log('---------------' + JSON.stringify(this.$route.path))
   }
 }
 </script>
-
-<style lang="sass">
-.sc-design
-  .q-field--dense
-    .q-field__control
-      height: 36px
-
-.sc-design
-  .q-field__append
-    height: 36px
-
-.sc-card-height
-  height: 250px
-
-.active-class
-  border: 1px dashed #1890ff
-
-.un-active-class
-  border: 1px dashed lightgrey
-
-.shadow-blue
-  box-shadow: 0 0 8px -1px #31CCEC
-</style>
+<style lang="sass"></style>

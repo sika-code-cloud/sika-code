@@ -16,7 +16,7 @@
         <div
           class="q-ma-xs cursor-pointer sc-card-height"
           :class="{
-            'shadow-5 text-primary ': item.select,
+            'sc-shadow-blue text-primary ': item.select,
             'text-grey-8': !item.select
           }"
           @mouseover="select(item)"
