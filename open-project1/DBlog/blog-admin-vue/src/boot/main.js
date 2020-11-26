@@ -1,2 +1,3 @@
 import '@/mock/index'
-import '@/public/sass/main.sass'
+import '@/assets/sass/main.sass'
+import '@/assets/js/sc-common.js'

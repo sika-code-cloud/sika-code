@@ -13,7 +13,7 @@
           color="grey-8"
         />
         <q-btn dense flat size="sm" class="q-mr-xs" v-show="$q.screen.gt.xs">
-          <q-img src="~assets/sika-logo-1.png" style="width: 100px" />
+          <q-img src="imgs/logo/sika-logo-1.png" style="width: 100px" />
         </q-btn>
         <q-space />
         <q-input
@@ -1274,10 +1274,6 @@ export default {
 </script>
 
 <style lang="sass">
-.my-menu-link
-  color: #1890ff
-  background: #e6f7ff
-
 .GNL
   &__toolbar
     height: 64px
@@ -1285,28 +1281,4 @@ export default {
   &__toolbar-input
     width: 55%
 
-  &__drawer-item
-    line-height: 24px
-    border-radius: 0 24px 24px 0
-    margin-right: 12px
-
-    .q-item__section--avatar
-      .q-icon
-        color: #5f6368
-
-    .q-item__label
-      color: #3c4043
-      letter-spacing: .01785714em
-      font-size: .875rem
-      font-weight: 500
-      line-height: 1.25rem
-
-  &__drawer-footer-link
-    color: inherit
-    title-decoration: none
-    font-weight: 500
-    font-size: .75rem
-
-    &:hover
-      color: #000
 </style>
