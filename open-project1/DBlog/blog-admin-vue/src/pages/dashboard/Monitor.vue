@@ -4,125 +4,125 @@
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
         <sc-shadow>
           <q-card flat square class="q-pa-md">
-          <q-item-label class="q-mb-sm">
-            <q-avatar
-              color="blue-1"
-              size="md"
-              text-color="primary"
-              class="q-mr-sm"
-              icon="groups"
-            ></q-avatar>
-          </q-item-label>
-          <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-            <strong>21.2 k</strong>
-          </q-item-label>
-          <q-item-label caption class="q-mb-sm"> 总访问人数 </q-item-label>
-          <q-item-label>
-            <q-avatar size="sm">
-              <q-img src="~assets/head.png"></q-img>
-            </q-avatar>
-            <q-avatar size="sm" style="margin-left: -8px">
-              <q-img src="~assets/head.png"></q-img>
-            </q-avatar>
-            <q-avatar size="sm" style="margin-left: -8px">
-              <q-img src="~assets/head.png"></q-img>
-            </q-avatar>
+            <q-item-label class="q-mb-sm">
+              <q-avatar
+                color="blue-1"
+                size="md"
+                text-color="primary"
+                class="q-mr-sm"
+                icon="groups"
+              ></q-avatar>
+            </q-item-label>
+            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
+              <strong>21.2 k</strong>
+            </q-item-label>
+            <q-item-label caption class="q-mb-sm"> 总访问人数</q-item-label>
+            <q-item-label>
+              <q-avatar size="sm">
+                <q-img src="~assets/head.png"></q-img>
+              </q-avatar>
+              <q-avatar size="sm" style="margin-left: -8px">
+                <q-img src="~assets/head.png"></q-img>
+              </q-avatar>
+              <q-avatar size="sm" style="margin-left: -8px">
+                <q-img src="~assets/head.png"></q-img>
+              </q-avatar>
 
-            <q-avatar size="sm" style="margin-left: -8px">
-              <q-img src="~assets/head.png"></q-img>
-            </q-avatar>
-          </q-item-label>
-        </q-card>
+              <q-avatar size="sm" style="margin-left: -8px">
+                <q-img src="~assets/head.png"></q-img>
+              </q-avatar>
+            </q-item-label>
+          </q-card>
         </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
         <sc-shadow>
           <q-card flat square class="q-pa-md">
-          <q-item-label class="q-mb-sm">
-            <q-avatar
-              color="purple-1"
-              size="md"
-              text-color="purple"
-              class="q-mr-sm"
-              icon="gps_fixed"
-            ></q-avatar>
-          </q-item-label>
-          <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-            <strong>1.6 k</strong>
-          </q-item-label>
-          <q-item-label caption class="q-mb-sm">
-            点击量（近30天）
-          </q-item-label>
-          <q-item-label class="text-green">
-            <q-avatar
-              size="sm"
-              font-size="24px"
-              class="q-mr-sm"
-              icon="keyboard_arrow_up"
-            ></q-avatar>
-            <strong>110.5%</strong>
-          </q-item-label>
-        </q-card>
+            <q-item-label class="q-mb-sm">
+              <q-avatar
+                color="purple-1"
+                size="md"
+                text-color="purple"
+                class="q-mr-sm"
+                icon="gps_fixed"
+              ></q-avatar>
+            </q-item-label>
+            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
+              <strong>1.6 k</strong>
+            </q-item-label>
+            <q-item-label caption class="q-mb-sm">
+              点击量（近30天）
+            </q-item-label>
+            <q-item-label class="text-green">
+              <q-avatar
+                size="sm"
+                font-size="24px"
+                class="q-mr-sm"
+                icon="keyboard_arrow_up"
+              ></q-avatar>
+              <strong>110.5%</strong>
+            </q-item-label>
+          </q-card>
         </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
         <sc-shadow>
           <q-card flat square class="q-pa-md">
-          <q-item-label class="q-mb-sm">
-            <q-avatar
-              color="orange-1"
-              size="md"
-              text-color="orange"
-              class="q-mr-sm"
-              icon="opacity"
-            ></q-avatar>
-          </q-item-label>
-          <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-            <strong>826.0</strong>
-          </q-item-label>
-          <q-item-label caption class="q-mb-sm">
-            到达量（近30天）
-          </q-item-label>
-          <q-item-label class="text-negative">
-            <q-avatar
-              size="sm"
-              font-size="24px"
-              class="q-mr-sm"
-              icon="keyboard_arrow_down"
-            ></q-avatar>
-            <strong>15.5%</strong>
-          </q-item-label>
-        </q-card>
+            <q-item-label class="q-mb-sm">
+              <q-avatar
+                color="orange-1"
+                size="md"
+                text-color="orange"
+                class="q-mr-sm"
+                icon="opacity"
+              ></q-avatar>
+            </q-item-label>
+            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
+              <strong>826.0</strong>
+            </q-item-label>
+            <q-item-label caption class="q-mb-sm">
+              到达量（近30天）
+            </q-item-label>
+            <q-item-label class="text-negative">
+              <q-avatar
+                size="sm"
+                font-size="24px"
+                class="q-mr-sm"
+                icon="keyboard_arrow_down"
+              ></q-avatar>
+              <strong>15.5%</strong>
+            </q-item-label>
+          </q-card>
         </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
         <sc-shadow>
           <q-card flat square class="q-pa-md">
-          <q-item-label class="q-mb-sm">
-            <q-avatar
-              color="green-1"
-              size="md"
-              text-color="green"
-              class="q-mr-sm"
-              icon="filter_list"
-            ></q-avatar>
-          </q-item-label>
-          <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-            <strong>28.8 %</strong>
-          </q-item-label>
-          <q-item-label caption class="q-mb-sm">
-            转化率（近30天）
-          </q-item-label>
-          <q-item-label class="text-green">
-            <q-avatar
-              size="sm"
-              font-size="24px"
-              class="q-mr-sm"
-              icon="keyboard_arrow_up"
-            ></q-avatar>
-            <strong>65.8%</strong>
-          </q-item-label>
-        </q-card>
+            <q-item-label class="q-mb-sm">
+              <q-avatar
+                color="green-1"
+                size="md"
+                text-color="green"
+                class="q-mr-sm"
+                icon="filter_list"
+              ></q-avatar>
+            </q-item-label>
+            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
+              <strong>28.8 %</strong>
+            </q-item-label>
+            <q-item-label caption class="q-mb-sm">
+              转化率（近30天）
+            </q-item-label>
+            <q-item-label class="text-green">
+              <q-avatar
+                size="sm"
+                font-size="24px"
+                class="q-mr-sm"
+                icon="keyboard_arrow_up"
+              ></q-avatar>
+              <strong>65.8%</strong>
+            </q-item-label>
+          </q-card>
         </sc-shadow>
       </div>
     </div>
@@ -163,24 +163,28 @@
                     </q-item-section>
                     <q-item-section>
                       <q-item-label class="text-weight-bold"
-                        >Alipay</q-item-label
+                      >Alipay
+                      </q-item-label
                       >
                     </q-item-section>
                   </q-item>
                   <q-item class="text-grey-6">
                     <q-item-label
-                      >那是一种内在的东西，他们到达不了，也无法触及的</q-item-label
+                    >那是一种内在的东西，他们到达不了，也无法触及的
+                    </q-item-label
                     >
                   </q-item>
                   <q-item>
                     <q-item-section>
                       <q-item-label class="text-grey-6" style="font-size: small"
-                        >科学搬家组</q-item-label
+                      >科学搬家组
+                      </q-item-label
                       >
                     </q-item-section>
                     <q-item-section side>
                       <q-item-label class="text-grey-6" style="font-size: small"
-                        >3天前</q-item-label
+                      >3天前
+                      </q-item-label
                       >
                     </q-item-section>
                   </q-item>
@@ -190,7 +194,7 @@
           </div>
         </q-card>
       </div>
-      <div class="col-sm-6 col-xs-12 q-px-sm" >
+      <div class="col-sm-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -209,22 +213,24 @@
             class="q-pa-md text-center"
             style="min-height: 184px"
           >
-            <q-item-label caption class="q-mb-md"> 20:45:43 </q-item-label>
-            <q-item-label
-              class="text-grey-7 q-mb-md"
-              style="font-size: xx-large"
-            >
-              <strong>109</strong>
-            </q-item-label>
-            <q-item-label class="q-mb-md"> 在线访客数 </q-item-label>
-            <q-item-label caption class="q-mb-md">
-              <q-spinner-rings color="primary" size="xs" />
-              <span>1 秒后更新</span>
-            </q-item-label>
+            <sc-shadow>
+              <q-item-label caption class="q-mb-md"> 20:45:43</q-item-label>
+              <q-item-label
+                class="text-grey-7 q-mb-md"
+                style="font-size: xx-large"
+              >
+                <strong>109</strong>
+              </q-item-label>
+              <q-item-label class="q-mb-md"> 在线访客数</q-item-label>
+              <q-item-label caption class="q-mb-md">
+                <q-spinner-rings color="primary" size="xs" />
+                <span>1 秒后更新</span>
+              </q-item-label>
+            </sc-shadow>
           </q-card>
         </q-card>
       </div>
-      <div class="col-sm-6 col-xs-1 q-px-sm">
+      <div class="col-sm-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -278,19 +284,19 @@
                     color="green"
                   />
                   <span style="font-size: small"
-                    >活跃率：{{ stepData[2] }}%</span
+                  >活跃率：{{ stepData[2] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="blue" />
                   <span style="font-size: small"
-                    >留存率：{{ stepData[1] }}%</span
+                  >留存率：{{ stepData[1] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="red" />
                   <span style="font-size: small"
-                    >跳槽率：{{ stepData[0] }}%</span
+                  >跳槽率：{{ stepData[0] }}%</span
                   >
                 </q-item-label>
               </q-card-section>
@@ -451,31 +457,31 @@
           <q-card flat square class="q-pa-md text-center" style="height: 251px">
             <div class="row">
               <q-item-section class="col">
-                <q-item-label class="text-h5 text-grey-8"> 856 </q-item-label>
+                <q-item-label class="text-h5 text-grey-8"> 856</q-item-label>
               </q-item-section>
               <q-item-section class="col">
                 <q-item-label>
                   <q-icon color="orange" name="mood" size="64px"></q-icon>
                 </q-item-label>
-                <q-item-label class="text-grey-7"> 正面评论 </q-item-label>
+                <q-item-label class="text-grey-7"> 正面评论</q-item-label>
               </q-item-section>
               <q-item-section class="col">
-                <q-item-label class="text-h5 text-info"> 82% </q-item-label>
+                <q-item-label class="text-h5 text-info"> 82%</q-item-label>
               </q-item-section>
             </div>
             <q-separator spaced="22px" />
             <div class="row">
               <q-item-section class="col">
-                <q-item-label class="text-h5 text-grey-8"> 856 </q-item-label>
+                <q-item-label class="text-h5 text-grey-8"> 856</q-item-label>
               </q-item-section>
               <q-item-section class="col">
                 <q-item-label>
                   <q-icon color="orange" name="mood_bad" size="64px"></q-icon>
                 </q-item-label>
-                <q-item-label class="text-grey-7"> 反面评论 </q-item-label>
+                <q-item-label class="text-grey-7"> 反面评论</q-item-label>
               </q-item-section>
               <q-item-section class="col">
-                <q-item-label class="text-h5 text-negative"> 9% </q-item-label>
+                <q-item-label class="text-h5 text-negative"> 9%</q-item-label>
               </q-item-section>
             </div>
           </q-card>
