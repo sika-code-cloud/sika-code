@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md">
       <div class="text-h6 q-mb-sm q-pl-sm"><strong>工作台</strong></div>
       <div class="row items-center q-gutter-y-sm">
         <div class="col-sm-auto col-xs-12">
@@ -13,13 +13,14 @@
             早安，Serati Ma，祝你开心每一天！
           </div>
           <q-item-label class="text-grey-6 text-body"
-            >交互专家
-            |蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</q-item-label
+          >交互专家
+            |蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
+          </q-item-label
           >
         </div>
         <div
           class="col-xs-12 col-md-5 text-grey-6 text-body q-gutter-x-lg"
-          :class="{ 'text-right': $q.screen.gt.sm, 'q-pl-md': $q.screen.lt.md }"
+          :class="{ 'text-right': $q.screen.gt.sm}"
         >
           <q-item-label class="inline-block">
             <q-item-label>
@@ -35,7 +36,8 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >56</q-item-label
+            >56
+            </q-item-label
             >
           </q-item-label>
           <q-item-label class="inline-block">
@@ -52,7 +54,8 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >8/24</q-item-label
+            >8/24
+            </q-item-label
             >
           </q-item-label>
           <q-item-label class="inline-block">
@@ -69,14 +72,15 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >2,223</q-item-label
+            >2,223
+            </q-item-label
             >
           </q-item-label>
         </div>
       </div>
     </div>
-    <div class="q-mt-md row">
-      <div class="col-lg-8 col-xs-12 q-mb-md">
+    <div class="q-mt-md row q-px-sm">
+      <div class="col-lg-8 col-xs-12 q-mb-md q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -98,14 +102,7 @@
               v-for="item in items"
               :key="item.id"
             >
-              <div
-                :class="{
-                  'sc-shadow-blue text-primary ': item.select,
-                  'text-grey-8': !item.select
-                }"
-                @mouseover="select(item)"
-                @mouseleave="clear(item)"
-              >
+              <sc-shadow>
                 <q-card
                   class="no-border-radius"
                   flat
@@ -123,29 +120,33 @@
 
                     <q-item-section>
                       <q-item-label class="text-weight-bold"
-                        >Alipay</q-item-label
+                      >Alipay
+                      </q-item-label
                       >
                     </q-item-section>
                   </q-item>
                   <q-item class="text-grey-6">
                     <q-item-label
-                      >那是一种内在的东西，他们到达不了，也无法触及的</q-item-label
+                    >那是一种内在的东西，他们到达不了，也无法触及的
+                    </q-item-label
                     >
                   </q-item>
                   <q-item>
                     <q-item-section>
                       <q-item-label class="text-grey-6" style="font-size: small"
-                        >科学搬家组</q-item-label
+                      >科学搬家组
+                      </q-item-label
                       >
                     </q-item-section>
                     <q-item-section side>
                       <q-item-label class="text-grey-6" style="font-size: small"
-                        >3天前</q-item-label
+                      >3天前
+                      </q-item-label
                       >
                     </q-item-section>
                   </q-item>
                 </q-card>
-              </div>
+              </sc-shadow>
             </div>
           </div>
         </q-card>
@@ -180,7 +181,8 @@
                     <span class="text-primary q-pl-xs">六月迭代</span>
                   </q-item-label>
                   <q-item-label class="text-grey-6" lines="1"
-                    >2020-12-21 21:11:21</q-item-label
+                  >2020-12-21 21:11:21
+                  </q-item-label
                   >
                 </q-item-section>
               </q-item>
@@ -189,7 +191,7 @@
           </q-list>
         </q-card>
       </div>
-      <div class="col-lg-4 col-xs-12" :class="{ 'q-pl-md': $q.screen.gt.md }">
+      <div class="col-lg-4 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius q-mb-md">
           <q-card-section class="bg-white">
             <q-avatar
@@ -204,63 +206,75 @@
           <q-separator />
           <q-list>
             <q-card-section class="q-mb-sm row">
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar font-size="28px" icon="dashboard" text-color="info">
-                  </q-avatar>
-                  主控台
-                </q-item-section>
+              <div class="col-4">
+                <sc-shadow class="q-py-md">
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar font-size="28px" icon="dashboard" text-color="info">
+                    </q-avatar>
+                    主控台
+                  </q-item-section>
+                </sc-shadow>
               </div>
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar
-                    font-size="28px"
-                    icon="list_alt"
-                    text-color="primary"
-                  >
-                  </q-avatar>
-                  <div>表单</div>
-                </q-item-section>
+              <div class="col-4">
+                <sc-shadow class="q-py-md">
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar
+                      font-size="28px"
+                      icon="list_alt"
+                      text-color="primary"
+                    >
+                    </q-avatar>
+                    <div>表单</div>
+                  </q-item-section>
+                </sc-shadow>
               </div>
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar
-                    font-size="28px"
-                    icon="grid_on"
-                    text-color="warning"
-                  >
-                  </q-avatar>
-                  列表
-                </q-item-section>
+              <div class="col-4">
+                <sc-shadow class="q-py-md">
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar
+                      font-size="28px"
+                      icon="grid_on"
+                      text-color="warning"
+                    >
+                    </q-avatar>
+                    列表
+                  </q-item-section>
+                </sc-shadow>
               </div>
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar font-size="28px" icon="search" text-color="purple">
-                  </q-avatar>
-                  <div>搜索</div>
-                </q-item-section>
+              <div class="col-4 ">
+                <sc-shadow class="q-py-md" >
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar font-size="28px" icon="search" text-color="purple">
+                    </q-avatar>
+                    <div>搜索</div>
+                  </q-item-section>
+                </sc-shadow>
               </div>
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar
-                    font-size="28px"
-                    icon="settings_applications"
-                    text-color="green"
-                  >
-                  </q-avatar>
-                  设置
-                </q-item-section>
+              <div class="col-4">
+                <sc-shadow class="q-py-md">
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar
+                      font-size="28px"
+                      icon="settings_applications"
+                      text-color="green"
+                    >
+                    </q-avatar>
+                    设置
+                  </q-item-section>
+                </sc-shadow>
               </div>
-              <div class="q-py-md col-4">
-                <q-item-section avatar style="align-items: center">
-                  <q-avatar
-                    font-size="28px"
-                    icon="home_repair_service"
-                    text-color="negative"
-                  >
-                  </q-avatar>
-                  <div>工具</div>
-                </q-item-section>
+              <div class="col-4">
+                <sc-shadow class="q-py-md">
+                  <q-item-section avatar style="align-items: center" class="q-pr-none">
+                    <q-avatar
+                      font-size="28px"
+                      icon="home_repair_service"
+                      text-color="negative"
+                    >
+                    </q-avatar>
+                    <div>工具</div>
+                  </q-item-section>
+                </sc-shadow>
               </div>
             </q-card-section>
             <q-separator inset="" />
@@ -401,6 +415,7 @@
 
 <script>
 import _ from 'lodash'
+import ScShadow from 'components/shadow/ScShadow'
 
 const itemDefault = {
   src:
@@ -415,6 +430,7 @@ for (let i = 0; i < 6; ++i) {
 }
 export default {
   name: 'Workplace',
+  components: { ScShadow },
   data() {
     return {
       items: itemsInit,
@@ -462,14 +478,6 @@ export default {
         }
       ]
     }
-  },
-  methods: {
-    select(item) {
-      this.items[item.id].select = true
-    },
-    clear(item) {
-      this.items[item.id].select = false
-    }
   }
 }
 </script>
@@ -477,13 +485,4 @@ export default {
 <style lang="sass" scoped>
 .sc-card-height
   height: 250px
-
-.active-class
-  border: 1px dashed #1890ff
-
-.un-active-class
-  border: 1px dashed lightgrey
-
-.shadow-blue
-  box-shadow: 0 0 8px -1px #31CCEC
 </style>

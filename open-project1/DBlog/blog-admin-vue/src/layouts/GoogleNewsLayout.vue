@@ -727,7 +727,7 @@
     </q-drawer>
     <q-page-container class="q-mt-sm" style="background-color: #f0f2f5">
       <slot name="page-title"></slot>
-      <q-page class="q-pa-md">
+      <q-page>
         <router-view />
         <q-page-sticky
           position="top-right"

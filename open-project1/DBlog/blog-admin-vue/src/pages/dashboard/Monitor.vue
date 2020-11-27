@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <div class="row q-px-sm" style="margin: -16px -16px 0 -16px">
+  <div class="q-px-sm">
+    <div class="row">
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
-        <q-card flat square class="q-pa-md">
+        <sc-shadow>
+          <q-card flat square class="q-pa-md">
           <q-item-label class="q-mb-sm">
             <q-avatar
               color="blue-1"
@@ -32,9 +33,11 @@
             </q-avatar>
           </q-item-label>
         </q-card>
+        </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
-        <q-card flat square class="q-pa-md">
+        <sc-shadow>
+          <q-card flat square class="q-pa-md">
           <q-item-label class="q-mb-sm">
             <q-avatar
               color="purple-1"
@@ -60,9 +63,11 @@
             <strong>110.5%</strong>
           </q-item-label>
         </q-card>
+        </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
-        <q-card flat square class="q-pa-md">
+        <sc-shadow>
+          <q-card flat square class="q-pa-md">
           <q-item-label class="q-mb-sm">
             <q-avatar
               color="orange-1"
@@ -88,9 +93,11 @@
             <strong>15.5%</strong>
           </q-item-label>
         </q-card>
+        </sc-shadow>
       </div>
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
-        <q-card flat square class="q-pa-md">
+        <sc-shadow>
+          <q-card flat square class="q-pa-md">
           <q-item-label class="q-mb-sm">
             <q-avatar
               color="green-1"
@@ -116,10 +123,11 @@
             <strong>65.8%</strong>
           </q-item-label>
         </q-card>
+        </sc-shadow>
       </div>
     </div>
     <div class="row q-gutter-y-md">
-      <div class="col-12">
+      <div class="col-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -138,14 +146,7 @@
               v-for="item in items"
               :key="item.id"
             >
-              <div
-                :class="{
-                  'sc-shadow-blue text-primary ': item.select,
-                  'text-grey-8': !item.select
-                }"
-                @mouseover="select(item)"
-                @mouseleave="clear(item)"
-              >
+              <sc-shadow>
                 <q-card
                   class="no-border-radius"
                   flat
@@ -184,12 +185,12 @@
                     </q-item-section>
                   </q-item>
                 </q-card>
-              </div>
+              </sc-shadow>
             </div>
           </div>
         </q-card>
       </div>
-      <div class="col-sm-6 col-xs-12" :class="{ 'q-pr-sm': $q.screen.gt.xs }">
+      <div class="col-sm-6 col-xs-12 q-px-sm" >
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -223,7 +224,7 @@
           </q-card>
         </q-card>
       </div>
-      <div class="col-sm-6 col-xs-12" :class="{ 'q-pl-sm': $q.screen.gt.xs }">
+      <div class="col-sm-6 col-xs-1 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -297,7 +298,7 @@
           </q-card>
         </q-card>
       </div>
-      <div class="col-md-6 col-xs-12" :class="{ 'q-pr-sm': $q.screen.gt.sm }">
+      <div class="col-md-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -434,10 +435,7 @@
           </q-card>
         </q-card>
       </div>
-      <div
-        class="col-md-3 col-sm-6 col-xs-12"
-        :class="{ 'q-pr-sm': $q.screen.gt.xs, 'q-pl-sm': $q.screen.gt.xs }"
-      >
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -484,9 +482,7 @@
         </q-card>
       </div>
       <div
-        class="col-md-3 col-sm-6 col-xs-12"
-        :class="{ 'q-pl-sm': $q.screen.gt.xs }"
-      >
+        class="col-md-3 col-sm-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -539,6 +535,7 @@
 
 <script>
 import _ from 'lodash'
+import ScShadow from 'components/shadow/ScShadow'
 
 const itemDefault = {
   src:
@@ -553,6 +550,7 @@ for (let i = 0; i < 2; ++i) {
 }
 export default {
   name: 'Monitor',
+  components: { ScShadow },
   data() {
     return {
       rating: 4.5,
@@ -601,14 +599,6 @@ export default {
           calories: '张三'
         }
       ]
-    }
-  },
-  methods: {
-    select(item) {
-      this.items[item.id].select = true
-    },
-    clear(item) {
-      this.items[item.id].select = false
     }
   }
 }

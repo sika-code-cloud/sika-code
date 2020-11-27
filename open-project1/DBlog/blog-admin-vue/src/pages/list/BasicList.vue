@@ -1,26 +1,26 @@
 <template>
   <div class="sc-base-list">
-    <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white text-h6 q-pa-md">
       <strong>标准列表</strong>
     </div>
-    <div>
-      <q-card square flat class="q-gutter-y-md q-mt-lg">
+    <div class="q-px-md">
+      <q-card square flat class="q-gutter-y-md q-mt-md">
         <div class="row justify-center">
-          <q-card-section class="col-sm-3 col-xs-12">
+          <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
               >我的待办
             </q-item-label>
             <q-item-label class="text-h5 text-center">8个任务</q-item-label>
           </q-card-section>
           <q-separator vertical />
-          <q-card-section class="col-sm-4 col-xs-12">
+          <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
               >本周任务平均处理时间
             </q-item-label>
             <q-item-label class="text-h5 text-center">32分钟</q-item-label>
           </q-card-section>
           <q-separator vertical />
-          <q-card-section class="col-sm-3 col-xs-12">
+          <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
               >本周完成任务数
             </q-item-label>
@@ -28,11 +28,11 @@
           </q-card-section>
         </div>
       </q-card>
-      <q-card square flat class="q-gutter-y-md q-mt-lg sc-base-list-query">
-        <q-card-section class="row items-center q-pb-none">
-          <q-card-section class="text-body1 col-sm-3 col-xs-4">
+      <q-card square flat class="q-gutter-y-md q-mt-md sc-base-list-query">
+        <div class="row items-center q-px-md">
+          <q-item-label class="text-body1 col-sm-3 col-xs-4">
             基本列表
-          </q-card-section>
+          </q-item-label>
           <q-card-section class="col-sm-9 col-xs-8 q-px-none">
             <div class="row q-gutter-y-sm q-gutter-x-md justify-end">
               <div class="col-md-5 col-xs-12" style="max-width: 280px">
@@ -77,7 +77,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-md-auto col-xs-12 col-sm gt-sm">
+              <div class="col-md-auto col-xs-12 q-pb-sm col-sm gt-sm">
                 <q-btn
                   :ripple="false"
                   dense
@@ -92,8 +92,8 @@
               </div>
             </div>
           </q-card-section>
-        </q-card-section>
-        <q-card-section class="q-mt-none lt-md">
+        </div>
+        <div class="q-mt-none q-pb-md q-px-md lt-md">
           <q-btn
             :ripple="false"
             padding="xs"
@@ -105,10 +105,10 @@
             label="添加"
             @click="addTaskDialog"
           />
-        </q-card-section>
+        </div>
       </q-card>
 
-      <q-scroll-area class="bg-white q-mt-sm" style="height: 500px">
+      <div class="bg-white q-mt-sm">
         <div
           v-for="obj in baseListObjs"
           :key="obj.id"
@@ -189,7 +189,7 @@
           </q-item>
           <q-separator v-if="obj.id !== 49" spaced="10px" inset="" />
         </div>
-      </q-scroll-area>
+      </div>
 
       <q-dialog v-model="addTask">
         <q-card style="width: 600px" square class="q-pb-md">
@@ -349,7 +349,7 @@ const imgSrcs = [
   'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png'
 ]
 const baseListObjsDefault = []
-for (let i = 0; i < 50; ++i) {
+for (let i = 0; i < 10; ++i) {
   const obj = _.clone(baseListObj)
   obj.id = i
   obj.title = obj.title + i

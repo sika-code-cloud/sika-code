@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-md-4 col-xs-12" :class="{'q-pr-md': $q.screen.gt.sm}">
+  <div class="row q-px-sm">
+    <div class="col-md-4 col-xs-12 q-px-sm">
       <q-card flat class="bg-white no-border-radius">
         <q-card-section class="text-center">
           <q-img src="~assets/head.png" style="max-width: 140px"></q-img>
@@ -105,39 +105,44 @@
         </q-card-section>
       </q-card>
     </div>
-    <div class="col-md-8 col-xs-12">
-        <q-tabs
-          v-model="tab"
-          class="bg-white"
-          active-color="primary"
-          indicator-color="primary"
-          align="left"
-          narrow-indicator
-        >
-          <q-tab name="mails" label="文章(8)" />
-          <q-tab name="alarms" label="应用(8)" />
-          <q-tab name="movies" label="项目(8)" />
-        </q-tabs>
-        <q-separator />
-        <q-tab-panels v-model="tab">
-          <q-tab-panel name="mails" class="q-pa-sm">
-            <q-virtual-scroll
-              class="q-mt-sm"
-              :items="heavyList"
-            >
-              <template v-slot="{ item, index }">
-                <q-item clickabl :key="index">
+    <div class="col-md-8 col-xs-12 q-px-sm">
+      <q-tabs
+        v-model="tab"
+        class="bg-white"
+        active-color="primary"
+        indicator-color="primary"
+        align="left"
+        narrow-indicator
+      >
+        <q-tab name="mails" label="文章(8)" />
+        <q-tab name="alarms" label="应用(8)" />
+        <q-tab name="movies" label="项目(8)" />
+      </q-tabs>
+      <q-separator />
+      <q-tab-panels v-model="tab">
+        <q-tab-panel name="mails" class="q-pa-sm">
+          <q-virtual-scroll
+            class="q-mt-sm"
+            :items="heavyList"
+          >
+            <template v-slot="{ item, index }">
+              <q-item clickabl :key="index" class="q-py-sm">
+                <sc-shadow class="q-pa-sm">
                   <q-item-section>
                     <q-item-label class="text-body1 q-mb-sm">
-                      <strong>Alipay-{{item.lable}}{{index}}</strong>
+                      <strong>Alipay-{{ item.lable }}{{ index }}</strong>
                     </q-item-label>
                     <q-item-label class="q-mb-sm">
-                      <q-chip label="Sika Design" class="cursor-pointer" color="primary" text-color="white" square size="12px"></q-chip>
-                      <q-chip label="设计语言" class="cursor-pointer" color="info" text-color="white" square size="12px"></q-chip>
-                      <q-chip label="蚂蚁金服" class="cursor-pointer" color="deep-orange" text-color="white" square size="12px"></q-chip>
+                      <q-chip label="Sika Design" class="cursor-pointer" color="primary" text-color="white" square
+                              size="12px"></q-chip>
+                      <q-chip label="设计语言" class="cursor-pointer" color="info" text-color="white" square
+                              size="12px"></q-chip>
+                      <q-chip label="蚂蚁金服" class="cursor-pointer" color="deep-orange" text-color="white" square
+                              size="12px"></q-chip>
                     </q-item-label>
                     <p class="text-grey-8 q-mb-sm q-pl-xs">
-                      段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。
+                      段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台
+                      ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。
                     </p>
                     <q-item-label class="row text-body2 text-grey-7 items-center q-gutter-x-xs">
                       <q-chip color="white" text-color="primary" class="col-auto cursor-pointer">
@@ -160,27 +165,21 @@
                       </q-btn-group>
                     </div>
                   </q-item-section>
-                </q-item>
-                <q-separator inset="" spaced="10px"/>
-              </template>
-            </q-virtual-scroll>
-          </q-tab-panel>
-          <q-tab-panel name="alarms">
-            <div class="row" >
-              <div
-                class="col-xl-3 col-sm-4 col-xs-12"
-                :key="item.id"
-                v-for="item in items"
-              >
-                <q-intersection
-                  once
-                  class="q-ma-sm cursor-pointer"
-                  :class="{
-                  'shadow-blue text-primary ': item.select,
-                  'text-grey-8': !item.select}"
-                  @mouseover="select(item)"
-                  @mouseleave="clear(item)"
-                >
+                </sc-shadow>
+              </q-item>
+              <q-separator inset="" spaced="10px" />
+            </template>
+          </q-virtual-scroll>
+        </q-tab-panel>
+        <q-tab-panel name="alarms">
+          <div class="row">
+            <div
+              class="col-xl-3 col-sm-4 col-xs-12"
+              :key="item.id"
+              v-for="item in items"
+            >
+              <q-intersection once class="q-pa-sm">
+                <sc-shadow>
                   <q-card square bordered flat>
                     <q-item>
                       <q-item-section avatar>
@@ -204,47 +203,41 @@
                         <span class="col"><strong>1900</strong></span>
                       </q-item-label>
                     </q-item>
-                    <q-separator/>
+                    <q-separator />
                     <q-item class="q-px-sm">
                       <q-btn-group flat spread class="full-width">
-                        <q-btn flat dense icon="save_alt" size="sm" class="q-mr-sm" color="grey-6" >
+                        <q-btn flat dense icon="save_alt" size="sm" class="q-mr-sm" color="grey-6">
                           <q-tooltip>下载</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="edit" size="sm" color="grey-6" class="q-mx-sm" >
+                        <q-btn flat dense icon="edit" size="sm" color="grey-6" class="q-mx-sm">
                           <q-tooltip>编辑</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="share" size="sm" color="grey-6" class="q-mx-sm" >
+                        <q-btn flat dense icon="share" size="sm" color="grey-6" class="q-mx-sm">
                           <q-tooltip>分享</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="more_horiz" size="sm" color="grey-6" class="q-mx-sm" >
+                        <q-btn flat dense icon="more_horiz" size="sm" color="grey-6" class="q-mx-sm">
                           <q-tooltip>更多</q-tooltip>
                         </q-btn>
                       </q-btn-group>
                     </q-item>
                   </q-card>
-                </q-intersection>
-              </div>
+                </sc-shadow>
+              </q-intersection>
             </div>
-          </q-tab-panel>
-          <q-tab-panel name="movies">
-            <div class="row">
-              <div
-                class="col-xl-3 col-sm-4 col-xs-12"
-                v-bind:key="item.id"
-                v-for="item in items"
-              >
-                <q-intersection
-                  once
-                  class="q-ma-sm cursor-pointer"
-                  :class="{
-                  'shadow-blue text-primary ': item.select,
-                  'text-grey-8': !item.select}"
-                  @mouseover="select(item)"
-                  @mouseleave="clear(item)"
-                >
+          </div>
+        </q-tab-panel>
+        <q-tab-panel name="movies">
+          <div class="row">
+            <div
+              class="col-xl-3 col-sm-4 col-xs-12"
+              v-bind:key="item.id"
+              v-for="item in items"
+            >
+              <q-intersection once class="q-ma-sm">
+                <sc-shadow>
                   <q-card square bordered flat class="q-pb-sm">
                     <q-img :src="item.src" :ratio="16 / 10" />
                     <q-list class="q-mt-md">
@@ -257,30 +250,32 @@
                       <q-item dense clickable>
                         <q-item-section style="font-size: 12px">10小时前</q-item-section>
                         <span>
-                          <q-img src="~assets/head.png" style="width: 28px;height: 28px;" >
+                          <q-img src="~assets/head.png" style="width: 28px;height: 28px;">
                             <q-tooltip>张三</q-tooltip>
                           </q-img>
-                          <q-img src="~assets/head_1.png" style="width: 28px;height: 28px;">
+                          <q-img src="~assets/head_1.png" style="width: 28px;height: 28px;margin-left: -12px">
                               <q-tooltip>豆豆</q-tooltip>
                           </q-img>
-                         <q-img src="~assets/head.png" style="width: 28px;height: 28px" >
+                         <q-img src="~assets/head.png" style="width: 28px;height: 28px;margin-left: -12px">
                             <q-tooltip>乐乐</q-tooltip>
                           </q-img>
                         </span>
                       </q-item>
                     </q-list>
                   </q-card>
-                </q-intersection>
-              </div>
+                </sc-shadow>
+              </q-intersection>
             </div>
-          </q-tab-panel>
-        </q-tab-panels>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import ScShadow from 'components/shadow/ScShadow'
 
 const types = []
 types.push('全部')
@@ -349,6 +344,7 @@ Object.freeze(heavyList)
 
 export default {
   name: 'Center',
+  components: { ScShadow },
   data() {
     return {
       heavyList,

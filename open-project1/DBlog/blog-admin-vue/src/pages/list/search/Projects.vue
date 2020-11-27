@@ -1,7 +1,7 @@
 <template>
   <div class="sc-design">
     <div class="sc-base-list">
-      <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
+      <div class="bg-white text-h6 q-pa-md">
         <strong>搜索列表（项目）</strong>
         <div class="row full-width justify-center">
           <span class="col" style="max-width: 500px">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-white q-gutter-md q-mt-md q-ml-none q-pa-sm">
+    <div class="bg-white q-gutter-md q-mt-md q-mx-md q-pa-sm">
       <div class="row">
         <span class="col-auto q-mt-xs"> 所属类目：</span>
         <span class="col">
@@ -137,21 +137,13 @@
         </span>
       </div>
     </div>
-    <div class="row q-gutter-y-sm q-mt-sm">
+    <div class="row q-gutter-y-md q-mt-sm q-px-sm">
       <div
-        class="col-xl-3 col-md-4 col-sm-6 col-xs-12"
+        class="col-xl-2 col-md-3 col-sm-4 col-xs-12 q-px-sm"
         v-bind:key="item.id"
         v-for="item in items"
       >
-        <div
-          class="q-ma-xs cursor-pointer"
-          :class="{
-            'sc-shadow-blue text-primary ': item.select,
-            'text-grey-8': !item.select
-          }"
-          @mouseover="select(item)"
-          @mouseleave="clear(item)"
-        >
+        <sc-shadow>
           <q-card square flat>
             <q-img :src="item.src" :ratio="16 / 10" />
 
@@ -190,7 +182,7 @@
               </q-item>
             </q-list>
           </q-card>
-        </div>
+        </sc-shadow>
       </div>
     </div>
   </div>
@@ -198,6 +190,7 @@
 
 <script>
 import _ from 'lodash'
+import ScShadow from 'components/shadow/ScShadow'
 const types = []
 types.push('全部')
 for (let i = 0; i < 11; ++i) {
@@ -254,6 +247,7 @@ for (let i = 0; i < 30; ++i) {
 }
 export default {
   name: 'Projects',
+  components: { ScShadow },
   data() {
     return {
       types,

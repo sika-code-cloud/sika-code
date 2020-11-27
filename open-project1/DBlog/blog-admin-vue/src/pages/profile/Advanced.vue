@@ -1,6 +1,6 @@
 <template>
   <div class="sika-table-th">
-    <div class="bg-white q-px-lg q-pt-lg" style="margin: -10px -16px 0 -16px">
+    <div class="bg-white q-px-lg q-pt-lg">
       <div class="row text-h6">
         <strong class="col">单号：234231029431</strong>
         <div class="col-auto text-right">
@@ -81,7 +81,7 @@
         <q-tab name="rule" class="q-px-none q-mx-md" label="规则" />
       </q-tabs>
     </div>
-    <div class="q-pt-md">
+    <div class="q-pt-md q-px-md">
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">流程进度</q-item-label>
@@ -129,7 +129,7 @@
           </q-stepper>
         </q-card-section>
       </q-card>
-      <q-card flat class="q-mt-md no-border-radius">
+      <q-card flat class="q-mt-md q-px-sm no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1"> 用户信息 </q-item-label>
           <q-separator spaced="15px" />
@@ -235,7 +235,7 @@
           </q-card>
         </q-card-section>
       </q-card>
-      <q-card flat class="q-mt-md no-border-radius">
+      <q-card flat class="q-mt-md q-px-sm no-border-radius">
         <q-card-section class="text-center">
           <q-item-label class="text-body1 q-mb-lg text-left">
             用户近半年来电记录

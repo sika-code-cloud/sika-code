@@ -1,6 +1,6 @@
 <template>
   <div class="sc-design">
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md">
       <div class="text-h6">
         <strong>分步表单</strong>
       </div>
@@ -8,7 +8,8 @@
         将一个冗长或用户不熟悉的表单任务分成多个步骤，指导用户完成。
       </div>
     </div>
-    <q-card square flat class="q-gutter-y-md q-mt-lg q-pb-md">
+    <div class="q-px-md">
+      <q-card square flat class="q-gutter-y-md q-mt-md q-pb-md">
       <q-form class="full-width">
         <q-stepper
           flat
@@ -275,7 +276,8 @@
         </q-stepper>
       </q-form>
     </q-card>
-  </div>
+    </div>
+    </div>
 </template>
 
 <script>

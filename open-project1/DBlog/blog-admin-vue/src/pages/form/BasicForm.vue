@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md">
       <div class="text-h6">
         <strong>基础表单</strong>
       </div>
@@ -8,11 +8,11 @@
         表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。
       </div>
     </div>
-    <q-card
+    <div class="q-px-md">
+      <q-card
       square
       flat
-      class="q-gutter-y-md q-my-lg q-py-sm"
-      :class="{ 'q-mt-md': $q.screen.gt.xs }"
+      class="q-gutter-y-md q-my-md q-py-sm"
     >
       <q-form class="q-px-md full-width">
         <div class="row q-gutter-y-sm q-my-md items-center">
@@ -254,7 +254,8 @@
         </div>
       </q-form>
     </q-card>
-  </div>
+    </div>
+    </div>
 </template>
 
 <script>

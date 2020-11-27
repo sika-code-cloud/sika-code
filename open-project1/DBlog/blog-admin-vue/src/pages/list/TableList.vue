@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="bg-white text-h6 q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white text-h6 q-pa-md">
       <strong>查询表格</strong>
     </div>
-    <q-card square flat class="q-gutter-y-md q-mt-lg q-pb-lg">
+    <div class="q-pt-md q-mx-md">
+      <q-card square flat class="q-gutter-y-md q-pb-lg">
       <q-form>
         <div class="row q-gutter-y-sm">
           <q-item class="col-xl-3 col-sm-6 col-xs-12">
@@ -343,6 +344,7 @@
         </q-card>
       </q-dialog>
     </q-card>
+    </div>
   </div>
 </template>
 

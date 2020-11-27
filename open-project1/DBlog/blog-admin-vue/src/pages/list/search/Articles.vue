@@ -1,7 +1,7 @@
 <template>
   <div class="sc-design">
     <div class="sc-base-list">
-      <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
+      <div class="bg-white text-h6 q-pa-md">
         <strong>搜索列表（文章）</strong>
         <div class="row full-width justify-center">
           <span class="col" style="max-width: 500px">
@@ -28,10 +28,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-white q-gutter-md q-mt-md q-ml-none q-pa-sm">
-      <div class="row">
-        <span class="col-auto q-mt-xs"> 所属类目：</span>
-        <span class="col">
+    <div class="q-px-md">
+      <div class="bg-white q-gutter-md q-mt-md q-mx-none q-pa-sm">
+        <div class="row">
+          <span class="col-auto q-mt-xs"> 所属类目：</span>
+          <span class="col">
           <q-chip
             class="cursor-pointer no-border-radius"
             style="padding: 12px 12px"
@@ -44,10 +45,10 @@
             text-color="white"
           />
         </span>
-      </div>
-      <div class="row">
-        <span class="col-sm-auto col-xs-2">owner： </span>
-        <span class="col-sm-auto col-xs-9">
+        </div>
+        <div class="row">
+          <span class="col-sm-auto col-xs-2">owner： </span>
+          <span class="col-sm-auto col-xs-9">
           <q-select
             class="col-auto inline-block"
             outlined
@@ -99,10 +100,10 @@
             </template>
           </q-select>
         </span>
-      </div>
-      <div class="row">
-        <span class="col-sm-auto q-mt-sm"> 其他选项：</span>
-        <span class="col-sm-9 col-xs-8">
+        </div>
+        <div class="row">
+          <span class="col-sm-auto q-mt-sm"> 其他选项：</span>
+          <span class="col-sm-9 col-xs-8">
           <span class="row q-gutter-y-sm">
             <span class="col-sm-5 col-xs-9">
               活跃用户：
@@ -121,24 +122,24 @@
             </span>
             <span class="col-sm-5 col-xs-9">
               好评度：<q-select
-                class="inline-block"
-                style="width: 80px"
-                outlined
-                v-model="goodPing"
-                hide-dropdown-icon
-                square
-                dense
-                options-dense
-                behavior="menu"
-                :options="['优秀', '普通', '一般']"
-              />
+              class="inline-block"
+              style="width: 80px"
+              outlined
+              v-model="goodPing"
+              hide-dropdown-icon
+              square
+              dense
+              options-dense
+              behavior="menu"
+              :options="['优秀', '普通', '一般']"
+            />
             </span>
           </span>
         </span>
+        </div>
       </div>
-    </div>
-    <div class="bg-white q-mt-md">
-      <q-list class="no-border-radius no-border">
+      <div class="bg-white q-mt-md">
+        <q-list class="no-border-radius no-border">
         <span v-for="n in 20" v-bind:key="n">
           <q-item clickable>
             <q-item-section avatar>
@@ -163,7 +164,8 @@
           </q-item>
           <q-separator inset="item" v-show="n !== 20" />
         </span>
-      </q-list>
+        </q-list>
+      </div>
     </div>
   </div>
 </template>

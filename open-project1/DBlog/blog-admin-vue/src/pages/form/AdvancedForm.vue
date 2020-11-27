@@ -1,6 +1,6 @@
 <template>
   <div class="sc-design">
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md">
       <div class="text-h6">
         <strong>高级表单</strong>
       </div>
@@ -8,9 +8,9 @@
         将一个冗长或用户不熟悉的表单任务分成多个步骤，指导用户完成。
       </div>
     </div>
-    <div>
+    <div class="q-px-md">
       <q-form>
-        <q-card square flat class="q-gutter-y-md q-mt-lg q-pt-sm q-pb-lg">
+        <q-card square flat class="q-gutter-y-md q-mt-md q-pt-sm q-pb-lg">
           <div class="row q-px-sm q-mx-md items-center">
             <q-item-label class="text-body1">仓库管理</q-item-label>
           </div>

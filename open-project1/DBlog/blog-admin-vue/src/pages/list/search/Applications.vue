@@ -1,7 +1,7 @@
 <template>
   <div class="sc-design">
     <div class="sc-base-list">
-      <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
+      <div class="bg-white text-h6 q-pa-md">
         <strong>搜索列表（应用）</strong>
         <div class="row full-width justify-center">
           <span class="col" style="max-width: 500px">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-white q-gutter-md q-mt-md q-ml-none q-pa-sm">
+    <div class="bg-white q-gutter-md q-mt-md q-mx-md q-pa-sm">
       <div class="row">
         <span class="col-auto q-mt-xs"> 所属类目：</span>
         <span class="col">
@@ -137,7 +137,7 @@
         </span>
       </div>
     </div>
-    <div class="bg-white q-mt-md">
+    <div class="bg-white q-mt-md q-mx-md">
       <q-list class="no-border-radius no-border">
         <span v-for="n in 20" v-bind:key="n">
           <q-item clickable>

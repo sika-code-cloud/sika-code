@@ -1,9 +1,9 @@
 <template>
   <div class="sika-table-th">
-    <div class="bg-white text-h6 q-pa-md" style="margin: -10px -16px 0 -16px">
+    <div class="bg-white text-h6 q-pa-md">
       <strong>基础详情页</strong>
     </div>
-    <div class="q-pt-md">
+    <div class="q-pt-md q-px-md">
       <q-card flat class="q-px-sm q-gutter-y-lg no-border-radius">
         <q-card-section>
           <q-item-label class="text-body1">

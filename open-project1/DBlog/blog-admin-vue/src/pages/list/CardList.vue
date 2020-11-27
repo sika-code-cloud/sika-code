@@ -1,26 +1,21 @@
 <template>
   <div>
-    <div class="bg-white q-pa-md" style="margin: -16px -16px 0 -16px">
+    <div class="bg-white q-pa-md">
       <div class="text-h6"><strong>卡片列表</strong></div>
       <p class="q-mt-md text-body2 text-grey-8">
         段落示意：sika设计平台 ant.design，用最小的工作量，无缝接入sika生态，
         提供跨越设计与开发的体验解决方案。
       </p>
     </div>
-    <div class="row q-gutter-y-sm q-mt-sm">
+    <div class="row q-gutter-y-md q-mt-sm q-px-sm">
       <div
-        class="col-xl-3 col-md-4 col-sm-6 col-xs-12"
+        class="col-xl-2 col-md-3 col-sm-4 col-xs-12 q-px-sm"
         v-bind:key="item.id"
         v-for="item in items"
       >
-        <div
-          class="q-ma-xs cursor-pointer sc-card-height"
-          :class="{
-            'sc-shadow-blue text-primary ': item.select,
-            'text-grey-8': !item.select
-          }"
-          @mouseover="select(item)"
-          @mouseleave="clear(item)"
+        <sc-shadow></sc-shadow>
+        <sc-shadow
+          class="sc-card-height"
         >
           <q-card
             class="full-height row items-center"
@@ -46,7 +41,7 @@
               </q-card-actions>
             </q-card-section>
           </q-card>
-        </div>
+        </sc-shadow>
       </div>
     </div>
   </div>
@@ -54,6 +49,7 @@
 
 <script>
 import _ from 'lodash'
+import ScShadow from 'components/shadow/ScShadow'
 
 const itemDefault = {
   src:
@@ -68,6 +64,7 @@ for (let i = 0; i < 10; ++i) {
 }
 export default {
   name: 'CardList',
+  components: { ScShadow },
   data() {
     return {
       items: itemsInit,
