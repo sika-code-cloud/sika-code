@@ -1,5 +1,6 @@
 <template>
   <q-expansion-item
+    v-model="open"
     :group="data.groupName"
     :content-inset-level="0.5"
     :label="data.name"
@@ -69,6 +70,7 @@ export default {
   },
   data() {
     return {
+      open: false,
       active: false,
       headerStyleActive: {},
       itemStyleActive: {}
@@ -84,42 +86,49 @@ export default {
   },
   methods: {
     onclick(nodeData) {
-      console.log('---------------' + JSON.stringify(this.currentPath))
       EventBus.$emit('activeItem', nodeData)
     },
     activeItem(currentItem) {
-      this.active = this.data.name === currentItem.name
+      this.active = this.data.to === currentItem.to
+      this.open = currentItem.group.startsWith(this.data.group)
     },
     changeActiveHeaderStyle(currentItem) {
       this.activeItem(currentItem)
-      if (
-        currentItem.group &&
+      const isGroup = currentItem.group &&
         this.data.group &&
         currentItem.group.startsWith(this.data.group)
-      ) {
-        if (this.activeHeaderStyle) {
-          this.headerStyleActive = this.activeHeaderStyle
-        } else {
-          this.headerStyleActive = headerStyleDefault
-        }
-      } else {
+      if (!isGroup) {
         this.headerStyleActive = {}
+        return
+      }
+      if (this.activeHeaderStyle) {
+        this.headerStyleActive = this.activeHeaderStyle
+      } else {
+        this.headerStyleActive = headerStyleDefault
       }
     },
     changeActiveItemStyle(currentItem) {
       this.activeItem(currentItem)
-      if (this.active) {
-        if (this.activeItemStyle) {
-          this.itemStyleActive = this.activeItemStyle
-        } else {
-          this.itemStyleActive = itemStyleDefault
-        }
-      } else {
+      if (!this.active) {
         this.itemStyleActive = itemStyleUnActiveDefault
+        return
       }
+      if (this.activeItemStyle) {
+        this.itemStyleActive = this.activeItemStyle
+      } else {
+        this.itemStyleActive = itemStyleDefault
+      }
+    },
+    buildActiveItem(path) {
+      if (!path || path === '/') {
+        path = '/dashboard/analysis'
+      }
+      const group = path.substr(0, path.lastIndexOf('/'))
+      return { to: path, group: group }
     }
   },
   mounted() {
+    this.onclick(this.buildActiveItem(this.$route.path))
     EventBus.$on('activeItem', (currentItem) => {
       this.changeActiveItemStyle(currentItem)
       this.changeActiveHeaderStyle(currentItem)
@@ -127,6 +136,15 @@ export default {
   },
   created() {
     this.itemStyleActive = itemStyleUnActiveDefault
+  },
+  watch: {
+    $route: {
+      handler: function(val, oldVal) {
+        this.onclick(this.buildActiveItem(val.path))
+      },
+      // 深度观察监听
+      deep: true
+    }
   }
 }
 </script>

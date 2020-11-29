@@ -1,5 +1,5 @@
 <template>
-  <div class="q-px-sm">
+  <div class="q-px-sm q-my-md">
     <div class="row">
       <div class="col-md-3 col-xs-6 text-center q-px-sm q-pb-md">
         <sc-shadow>

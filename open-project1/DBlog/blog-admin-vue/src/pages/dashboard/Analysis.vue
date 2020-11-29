@@ -1,5 +1,5 @@
 <template>
-  <div class="sc-design">
+  <div class="sc-design q-my-md">
     <div class="row q-px-sm">
       <div
         class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md"
@@ -619,9 +619,6 @@ export default {
       }
       return '1em'
     }
-  },
-  mounted() {
-    console.log('---------------' + JSON.stringify(this.$route.path))
   }
 }
 </script>

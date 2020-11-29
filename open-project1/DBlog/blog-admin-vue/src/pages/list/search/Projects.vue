@@ -1,10 +1,10 @@
 <template>
-  <div class="sc-design">
+  <div>
     <div class="sc-base-list">
       <div class="bg-white text-h6 q-pa-md">
         <strong>搜索列表（项目）</strong>
         <div class="row full-width justify-center">
-          <span class="col" style="max-width: 500px">
+          <span class="col sc-design" style="max-width: 500px">
             <q-input
               class="q-ma-md"
               outlined
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-white q-gutter-md q-mt-md q-mx-md q-pa-sm">
+    <div class="sc-design-min bg-white q-gutter-md q-mt-md q-mx-md q-pa-sm">
       <div class="row">
         <span class="col-auto q-mt-xs"> 所属类目：</span>
         <span class="col">
@@ -45,7 +45,7 @@
           />
         </span>
       </div>
-      <div class="row">
+      <div class="row ">
         <span class="col-sm-auto col-xs-2">owner： </span>
         <span class="col-sm-auto col-xs-9">
           <q-select
@@ -121,17 +121,17 @@
             </span>
             <span class="col-sm-5 col-xs-9">
               好评度：<q-select
-                class="inline-block"
-                style="width: 80px"
-                outlined
-                v-model="goodPing"
-                hide-dropdown-icon
-                square
-                dense
-                options-dense
-                behavior="menu"
-                :options="['优秀', '普通', '一般']"
-              />
+              class="inline-block"
+              style="width: 80px"
+              outlined
+              v-model="goodPing"
+              hide-dropdown-icon
+              square
+              dense
+              options-dense
+              behavior="menu"
+              :options="['优秀', '普通', '一般']"
+            />
             </span>
           </span>
         </span>
@@ -191,6 +191,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+
 const types = []
 types.push('全部')
 for (let i = 0; i < 11; ++i) {

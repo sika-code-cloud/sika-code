@@ -725,7 +725,7 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="q-mt-sm" style="background-color: #f0f2f5">
+    <q-page-container style="background-color: #f0f2f5">
       <slot name="page-title"></slot>
       <q-page>
         <router-view />
@@ -764,22 +764,22 @@ const myData = [
   {
     name: '仪表盘',
     icon: 'dashboard',
-    group: '仪表盘',
+    group: '/dashboard',
     groupName: 'first',
     children: [
       {
         name: '分析页',
-        group: '仪表盘',
+        group: '/dashboard',
         to: '/dashboard/analysis'
       },
       {
         name: '监控页',
-        group: '仪表盘',
+        group: '/dashboard',
         to: '/dashboard/monitor'
       },
       {
         name: '工作台',
-        group: '仪表盘',
+        group: '/dashboard',
         to: '/dashboard/workplace'
       }
     ]
@@ -787,22 +787,22 @@ const myData = [
   {
     name: '表单页',
     icon: 'edit_road',
-    group: '表单页',
+    group: '/form',
     groupName: 'first',
     children: [
       {
         name: '基础表单',
-        group: '表单页',
+        group: '/form',
         to: '/form/basic-form'
       },
       {
         name: '分步表单',
-        group: '表单页',
+        group: '/form',
         to: '/form/step-form'
       },
       {
         name: '高级表单',
-        group: '表单页',
+        group: '/form',
         to: '/form/advanced-form'
       }
     ]
@@ -810,43 +810,43 @@ const myData = [
   {
     name: '列表页',
     icon: 'table_view',
-    group: '列表页',
+    group: '/list',
     groupName: 'first',
     children: [
       {
         name: '搜索列表',
-        group: '列表页-搜索列表',
+        group: '/list/search',
         children: [
           {
             name: '搜索列表（文章）',
-            group: '列表页-搜索列表',
+            group: '/list/search',
             to: '/list/search/articles'
           },
           {
             name: '搜索列表（项目）',
-            group: '列表页-搜索列表',
+            group: '/list/search',
             to: '/list/search/projects'
           },
           {
             name: '搜索列表（应用）',
-            group: '列表页-搜索列表',
+            group: '/list/search',
             to: '/list/search/applications'
           }
         ]
       },
       {
         name: '查询表格',
-        group: '列表页',
+        group: '/list',
         to: '/list/table-list'
       },
       {
         name: '标准列表',
-        group: '列表页',
+        group: '/list',
         to: '/list/basic-list'
       },
       {
         name: '卡片列表',
-        group: '列表页',
+        group: '/list',
         to: '/list/card-list'
       }
     ]
@@ -854,17 +854,17 @@ const myData = [
   {
     name: '详情页',
     icon: 'library_books',
-    group: '详情页',
+    group: '/profile',
     groupName: 'first',
     children: [
       {
         name: '基础详情页',
-        group: '详情页',
+        group: '/profile',
         to: '/profile/basic'
       },
       {
         name: '高级详情页',
-        group: '详情页',
+        group: '/profile',
         to: '/profile/advanced'
       }
     ]
@@ -872,17 +872,17 @@ const myData = [
   {
     name: '结果页',
     icon: 'check_circle_outline',
-    group: '结果页',
+    group: '/result',
     groupName: 'first',
     children: [
       {
         name: '成功页',
-        group: '结果页',
+        group: '/result',
         to: '/result/success'
       },
       {
         name: '失败页',
-        group: '结果页',
+        group: '/result',
         to: '/result/fail'
       }
     ]
@@ -890,22 +890,22 @@ const myData = [
   {
     name: '异常页',
     icon: 'error_outline',
-    group: '异常页',
+    group: '/exception',
     groupName: 'first',
     children: [
       {
         name: '403',
-        group: '异常页',
+        group: '/exception',
         to: '/exception/403'
       },
       {
         name: '404',
-        group: '异常页',
+        group: '/exception',
         to: '/exception/404'
       },
       {
         name: '500',
-        group: '异常页',
+        group: '/exception',
         to: '/exception/500'
       }
     ]
@@ -913,17 +913,17 @@ const myData = [
   {
     name: '个人页',
     icon: 'perm_identity',
-    group: '个人页',
+    group: '/account',
     groupName: 'first',
     children: [
       {
         name: '个人中心',
-        group: '个人页',
+        group: '/account',
         to: '/account/center'
       },
       {
         name: '个人设置',
-        group: '个人页',
+        group: '/account',
         to: '/account/settings'
       }
     ]

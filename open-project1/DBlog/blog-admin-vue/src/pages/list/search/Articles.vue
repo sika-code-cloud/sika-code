@@ -1,7 +1,7 @@
 <template>
-  <div class="sc-design">
+  <div class="">
     <div class="sc-base-list">
-      <div class="bg-white text-h6 q-pa-md">
+      <div class="bg-white text-h6 q-pa-md sc-design">
         <strong>搜索列表（文章）</strong>
         <div class="row full-width justify-center">
           <span class="col" style="max-width: 500px">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="q-px-md">
+    <div class="q-px-md sc-design-min">
       <div class="bg-white q-gutter-md q-mt-md q-mx-none q-pa-sm">
         <div class="row">
           <span class="col-auto q-mt-xs"> 所属类目：</span>
@@ -71,11 +71,11 @@
               <q-chip
                 removable
                 dense
+                square
                 @remove="scope.removeAtIndex(scope.index)"
                 :tabindex="scope.tabindex"
                 color="primary"
                 text-color="white"
-                class="q-ma-xs"
               >
                 {{ scope.opt.label }}
               </q-chip>

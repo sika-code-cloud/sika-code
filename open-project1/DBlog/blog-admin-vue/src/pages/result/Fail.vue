@@ -1,5 +1,5 @@
 <template>
-  <div class="row bg-white" style="margin-top: -6px">
+  <div class="row bg-white">
     <div class="col q-pb-xl text-center">
       <q-card-section class="q-mt-xl">
         <q-icon
