@@ -835,6 +835,16 @@ const myData = [
         ]
       },
       {
+        name: '用户列表',
+        group: '/list',
+        to: '/list/user-list'
+      },
+      {
+        name: '商品列表',
+        group: '/list',
+        to: '/list/goods-list'
+      },
+      {
         name: '查询表格',
         group: '/list',
         to: '/list/table-list'

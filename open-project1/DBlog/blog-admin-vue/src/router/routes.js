@@ -180,6 +180,26 @@ const routes = [
     ]
   },
   {
+    path: '/list/user-list',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/UserList')
+      }
+    ]
+  },
+  {
+    path: '/list/goods-list',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/list/GoodsList')
+      }
+    ]
+  },
+  {
     path: '/list/card-list',
     component: () => import('layouts/MainLayout.vue'),
     children: [
