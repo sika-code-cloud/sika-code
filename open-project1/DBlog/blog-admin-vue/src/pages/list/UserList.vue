@@ -55,6 +55,33 @@
         </div>
       </q-list>
     </div>
+    <div class="justify-center row items-center gt-xs">
+      <div class="col-auto">
+        <q-pagination
+          v-model="current"
+          :max="10"
+          :max-pages="3"
+          :direction-links="true"
+        >
+        </q-pagination>
+      </div>
+      <div class="col-auto">
+        跳至：
+        <span class="inline-block q-mr-sm">
+            <q-input v-model="current" outlined dense style="width: 46px" />
+          </span>页
+      </div>
+    </div>
+    <div class="justify-center row items-center lt-sm">
+      <div class="col-auto">
+        <q-pagination
+          v-model="current"
+          :max="5"
+          :input="true"
+        >
+        </q-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -78,6 +105,7 @@ export default {
   components: { ScShadow },
   data() {
     return {
+      current: 2,
       items: itemsInit
     }
   }

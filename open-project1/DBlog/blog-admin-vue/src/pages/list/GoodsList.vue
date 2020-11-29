@@ -10,7 +10,9 @@
       <div v-for="item in 6" :key="item" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
         <sc-shadow>
           <q-card flat class="no-border-radius q-pb-sm">
-            <q-chip size="sm" label="推荐" text-color="green" class="bg-green-1 q-ma-sm absolute-top-right"
+            <q-chip v-if="item % 6 === 1" size="sm" label="缺货" text-color="orange" class="bg-orange-1 q-ma-sm absolute-top-right"
+                    style="border: 1px solid orangered" square></q-chip>
+            <q-chip   v-else-if="item % 6 === 2" size="sm" label="推荐" text-color="green" class="bg-green-1 q-ma-sm absolute-top-right"
                     style="border: 1px solid limegreen" square></q-chip>
             <q-img v-if="item % 6 === 1" src="https://dev-file.iviewui.com/yxsk0RFxdR0X3S0N7QN33mvwLnkfHEJV/middle"
                    width="50%" class="q-mt-md" />
@@ -33,7 +35,7 @@
         </sc-shadow>
       </div>
     </div>
-    <div class="justify-center row items-center">
+    <div class="justify-center row items-center gt-xs">
       <div class="col-auto">
         <q-pagination
           v-model="current"
@@ -43,7 +45,22 @@
         >
         </q-pagination>
       </div>
-      <div class="col-auto">跳至：<span class="inline-block q-mr-sm"><q-input v-model="current" outlined dense style="width: 46px" /></span>页</div>
+      <div class="col-auto">
+        跳至：
+        <span class="inline-block q-mr-sm">
+            <q-input v-model="current" outlined dense style="width: 46px" />
+          </span>页
+      </div>
+    </div>
+    <div class="justify-center row items-center lt-sm">
+      <div class="col-auto">
+        <q-pagination
+          v-model="current"
+          :max="5"
+          :input="true"
+        >
+        </q-pagination>
+      </div>
     </div>
   </div>
 </template>

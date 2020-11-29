@@ -1,349 +1,352 @@
 <template>
-  <div>
+  <div class="sc-design">
     <div class="bg-white text-h6 q-pa-md">
       <strong>查询表格</strong>
     </div>
     <div class="q-pt-md q-mx-md">
       <q-card square flat class="q-gutter-y-md q-pb-lg">
-      <q-form>
-        <div class="row q-gutter-y-sm">
-          <q-item class="col-xl-3 col-sm-6 col-xs-12">
-            <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
-              <q-item-label>规则名称:</q-item-label>
-            </q-item-section>
-            <q-item-section class="col">
-              <q-input
-                outlined
-                v-model="ruleName"
-                label="规则名称"
-                dense
-                square
-                clearable
-              >
-              </q-input>
-            </q-item-section>
-          </q-item>
-          <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
-            <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
-              <q-item-label>描述:</q-item-label>
-            </q-item-section>
-            <q-item-section class="col">
-              <q-input
-                outlined
-                v-model="ruleName"
-                label="描述"
-                dense
-                square
-                clearable
-              >
-              </q-input>
-            </q-item-section>
-          </q-item>
-          <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
-            <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
-              调用次数:
-            </q-item-section>
-            <q-item-section v-show="showQuery" class="col">
-              <q-input
-                outlined
-                v-model="ruleName"
-                label="服务调用次数"
-                dense
-                square
-                clearable
-              >
-              </q-input>
-            </q-item-section>
-          </q-item>
-          <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
-            <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
-              <q-item-label>状态:</q-item-label>
-            </q-item-section>
-            <q-item-section v-show="showQuery" class="col">
-              <q-select
-                behavior="menu"
-                outlined
-                v-model="queryStatus"
-                :options="['关闭', '运行中', '已上线', '异常']"
-                label="状态"
-                dense
-                square
-                clearable
-              >
-              </q-select>
-            </q-item-section>
-          </q-item>
-          <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
-            <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
-              <q-item-label>时间:</q-item-label>
-            </q-item-section>
-            <q-item-section v-show="showQuery" class="col">
-              <q-input
-                outlined
-                v-model="queryDate"
-                label="上次调度时间"
-                dense
-                square
-              >
-                <template v-slot:prepend>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date v-model="queryDate" mask="YYYY-MM-DD HH:mm">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    v-if="queryDate !== ''"
-                    name="cancel"
-                    @click="queryDate = ''"
-                    class="cursor-pointer"
-                  />
-                  <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-time
-                        v-model="queryDate"
-                        mask="YYYY-MM-DD HH:mm"
-                        format24h
-                      >
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </q-item-section>
-          </q-item>
-          <q-item class="col-xl-3 col-sm-6 col-xs-12 q-pr-sm">
-            <q-item-label class="col-12 text-right">
-              <q-btn
-                outline
-                unelevated
-                label="重置"
-                class="q-mr-sm no-border-radius"
-                color="secondary"
-              />
-              <q-btn
-                unelevated
-                label="查询"
-                color="primary"
-                class="q-mr-sm no-border-radius"
-                :loading="queryLoad"
-                :style="queryBtnStyle"
-                @click="doQuery"
-              >
-                <template v-slot:loading>
-                  <q-spinner-ios class="on-center" />
-                </template>
-              </q-btn>
-              <q-btn-dropdown
-                v-model="showQuery"
-                persistent
-                dense
-                flat
-                color="primary"
-                :label="tableLabel"
-                @before-show="show"
-                @before-hide="hide"
-              >
-              </q-btn-dropdown>
-            </q-item-label>
-          </q-item>
-        </div>
-      </q-form>
-      <q-card class="row q-mt-lg">
-        <div class="col">
-          <q-table
-            class="my-sticky-header-table"
-            square
-            flat
-            title="查询表格"
-            title-class="text-body1"
-            :data="data"
-            color="primary"
-            :columns="columns"
-            :visible-columns="visibleColumns"
-            row-key="id"
-            :selected-rows-label="getSelectedString"
-            selection="multiple"
-            :selected.sync="selected"
-            :pagination.sync="pagination"
-            hide-selected-banner
-            virtual-scroll
-            :loading="loading"
-          >
-            <template v-slot:top-right="props">
-              <div>
-                <q-btn
-                  label="新建"
-                  color="primary"
-                  class="q-mr-sm no-border-radius"
-                  icon="add"
-                  unelevated
-                  @click="addRow"
-                />
-                <q-btn rounded flat dense size="md" icon="refresh">
-                  <q-tooltip>刷新</q-tooltip>
-                </q-btn>
-                <q-btn rounded flat dense size="md" icon="unfold_less">
-                  <q-tooltip>密度</q-tooltip>
-                </q-btn>
-                <q-btn rounded flat dense size="md" icon="settings">
-                  <q-menu :offset="[0, 12]">
-                    <q-list dense>
-                      <q-item
-                        clickable
-                        :active="column.check"
-                        @click="select(column)"
-                        v-bind:key="column.id"
-                        v-for="column in columns"
-                      >
-                        <q-item-section>{{ column.label }}</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
-                </q-btn>
-                <q-btn
-                  rounded
-                  flat
-                  round
-                  dense
-                  :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-                  @click="props.toggleFullscreen"
-                >
-                  <q-tooltip>全屏</q-tooltip>
-                </q-btn>
-              </div>
-            </template>
-            <template v-slot:pagination="scope">
-              <div class="full-width">
-                <q-pagination
-                  v-model="pagination.page"
-                  color="primary"
-                  :max="scope.pagesNumber"
-                  size="sm"
-                  :max-pages="4"
-                  :boundary-numbers="false"
-                  :boundary-links="true"
-                  class="float-right"
-                />
-              </div>
-            </template>
-          </q-table>
-
-          <q-inner-loading :showing="queryLoad">
-            <q-spinner-ios size="40px" color="primary" />
-          </q-inner-loading>
-        </div>
-      </q-card>
-      <q-dialog v-model="addData">
-        <q-card square style="width: 600px">
-          <q-toolbar>
-            <q-icon name="post_add" size="md"></q-icon>
-            <q-toolbar-title class="text-body1">新建规则</q-toolbar-title>
-            <q-btn flat round dense icon="close" v-close-popup />
-          </q-toolbar>
-          <div class="q-px-md">
-            <form
-              ref="addDataForm"
-              @submit.prevent.stop="onSubmit"
-              @reset.prevent.stop="onReset"
-            >
-              <div class="q-gutter-sm q-ma-sm">
-                <q-item-label>
-                  <span class="q-mr-xs text-red">*</span>规则名称
-                </q-item-label>
+        <q-form>
+          <div class="row q-gutter-y-sm">
+            <q-item class="col-xl-3 col-sm-6 col-xs-12">
+              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+                <q-item-label>规则名称:</q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
                 <q-input
-                  ref="ruleName"
-                  placeholder="请输入"
                   outlined
                   v-model="ruleName"
+                  label="规则名称"
                   dense
                   square
-                  :rules="[
-                    (val) => (val && val.length > 0) || '请输入规则名称'
-                  ]"
                   clearable
                 >
                 </q-input>
-              </div>
-              <div class="q-gutter-sm q-ma-sm">
-                <q-item-label>描述</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
+              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+                <q-item-label>描述:</q-item-label>
+              </q-item-section>
+              <q-item-section class="col">
                 <q-input
-                  type="textarea"
                   outlined
-                  placeholder="请输入"
                   v-model="ruleName"
+                  label="描述"
+                  dense
                   square
+                  clearable
                 >
                 </q-input>
-              </div>
-              <div class="q-gutter-sm q-ma-sm q-mb-lg">
+              </q-item-section>
+            </q-item>
+            <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
+              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+                调用次数:
+              </q-item-section>
+              <q-item-section v-show="showQuery" class="col">
+                <q-input
+                  outlined
+                  v-model="ruleName"
+                  label="服务调用次数"
+                  dense
+                  square
+                  clearable
+                >
+                </q-input>
+              </q-item-section>
+            </q-item>
+            <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
+              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+                <q-item-label>状态:</q-item-label>
+              </q-item-section>
+              <q-item-section v-show="showQuery" class="col">
+                <q-select
+                  behavior="menu"
+                  outlined
+                  v-model="queryStatus"
+                  :options="['关闭', '运行中', '已上线', '异常']"
+                  label="状态"
+                  dense
+                  square
+                  clearable
+                >
+                </q-select>
+              </q-item-section>
+            </q-item>
+            <q-item v-show="showQuery" class="col-xl-3 col-sm-6 col-xs-12">
+              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+                <q-item-label>时间:</q-item-label>
+              </q-item-section>
+              <q-item-section v-show="showQuery" class="col">
+                <q-input
+                  outlined
+                  v-model="queryDate"
+                  label="上次调度时间"
+                  dense
+                  square
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
+                        <q-date v-model="queryDate" mask="YYYY-MM-DD HH:mm">
+                          <div class="row items-center justify-end">
+                            <q-btn
+                              v-close-popup
+                              label="Close"
+                              color="primary"
+                              flat
+                            />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="queryDate !== ''"
+                      name="cancel"
+                      @click="queryDate = ''"
+                      class="cursor-pointer"
+                    />
+                    <q-icon name="access_time" class="cursor-pointer">
+                      <q-popup-proxy
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
+                        <q-time
+                          v-model="queryDate"
+                          mask="YYYY-MM-DD HH:mm"
+                          format24h
+                        >
+                          <div class="row items-center justify-end">
+                            <q-btn
+                              v-close-popup
+                              label="Close"
+                              color="primary"
+                              flat
+                            />
+                          </div>
+                        </q-time>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+              </q-item-section>
+            </q-item>
+            <q-item class="col-xl-3 col-sm-6 col-xs-12 q-pr-sm">
+              <q-item-label class="col-12 text-right">
                 <q-btn
                   outline
                   unelevated
                   label="重置"
-                  type="reset"
                   class="q-mr-sm no-border-radius"
                   color="secondary"
                 />
                 <q-btn
                   unelevated
-                  type="submit"
-                  label="提交"
+                  label="查询"
                   color="primary"
-                  class="no-border-radius"
-                />
-              </div>
-            </form>
+                  class="q-mr-sm no-border-radius"
+                  :loading="queryLoad"
+                  :style="queryBtnStyle"
+                  @click="doQuery"
+                >
+                  <template v-slot:loading>
+                    <q-spinner-ios class="on-center" />
+                  </template>
+                </q-btn>
+                <q-btn-dropdown
+                  v-model="showQuery"
+                  persistent
+                  dense
+                  flat
+                  color="primary"
+                  :label="tableLabel"
+                  @before-show="show"
+                  @before-hide="hide"
+                >
+                </q-btn-dropdown>
+              </q-item-label>
+            </q-item>
+          </div>
+        </q-form>
+        <q-card class="row q-mt-lg">
+          <div class="col">
+            <q-table
+              class="my-sticky-header-table"
+              square
+              flat
+              title-class="text-body1"
+              :data="data"
+              color="primary"
+              :columns="columns"
+              :visible-columns="visibleColumns"
+              row-key="id"
+              :selected-rows-label="getSelectedString"
+              selection="multiple"
+              :selected.sync="selected"
+              :pagination.sync="pagination"
+              hide-selected-banner
+              virtual-scroll
+              :loading="loading"
+            >
+              <template v-slot:top-left>
+                <div>
+                  <q-btn
+                    label="新建"
+                    color="primary"
+                    class="q-mr-sm no-border-radius"
+                    icon="add"
+                    unelevated
+                    @click="addRow"
+                  />
+                </div>
+              </template>
+              <template v-slot:top-right="props">
+                <div>
+                  <q-btn rounded flat dense size="md" icon="refresh">
+                    <q-tooltip>刷新</q-tooltip>
+                  </q-btn>
+                  <q-btn rounded flat dense size="md" icon="unfold_less">
+                    <q-tooltip>密度</q-tooltip>
+                  </q-btn>
+                  <q-btn rounded flat dense size="md" icon="settings">
+                    <q-menu :offset="[0, 12]">
+                      <q-list dense>
+                        <q-item
+                          clickable
+                          :active="column.check"
+                          @click="select(column)"
+                          v-bind:key="column.id"
+                          v-for="column in columns"
+                        >
+                          <q-item-section>{{ column.label }}</q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-menu>
+                  </q-btn>
+                  <q-btn
+                    rounded
+                    flat
+                    round
+                    dense
+                    :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+                    @click="props.toggleFullscreen"
+                  >
+                    <q-tooltip>全屏</q-tooltip>
+                  </q-btn>
+                </div>
+              </template>
+              <template v-slot:pagination="scope">
+                <div class="full-width">
+                  <q-pagination
+                    v-model="pagination.page"
+                    color="primary"
+                    :max="scope.pagesNumber"
+                    size="sm"
+                    :max-pages="4"
+                    :boundary-numbers="false"
+                    :boundary-links="true"
+                    class="float-right"
+                  />
+                </div>
+              </template>
+            </q-table>
+
+            <q-inner-loading :showing="queryLoad">
+              <q-spinner-ios size="40px" color="primary" />
+            </q-inner-loading>
           </div>
         </q-card>
-      </q-dialog>
-      <q-dialog v-model="seamless" full-width seamless position="bottom">
-        <q-card class="q-mx-sm">
-          <q-card-section class="row">
-            <div class="col-sm-6 col-xs-12 q-mb-sm">
-              <div>
-                已选择<span class="text-weight-bold text-blue-8 q-mx-xs"
-                  >{{ selected.length }} </span
+        <q-dialog v-model="addData">
+          <q-card square style="width: 600px">
+            <q-toolbar>
+              <q-icon name="post_add" size="md"></q-icon>
+              <q-toolbar-title class="text-body1">新建规则</q-toolbar-title>
+              <q-btn flat round dense icon="close" v-close-popup />
+            </q-toolbar>
+            <div class="q-px-md">
+              <form
+                ref="addDataForm"
+                @submit.prevent.stop="onSubmit"
+                @reset.prevent.stop="onReset"
+              >
+                <div class="q-gutter-sm q-ma-sm">
+                  <q-item-label>
+                    <span class="q-mr-xs text-red">*</span>规则名称
+                  </q-item-label>
+                  <q-input
+                    ref="ruleName"
+                    placeholder="请输入"
+                    outlined
+                    v-model="ruleName"
+                    dense
+                    square
+                    :rules="[
+                    (val) => (val && val.length > 0) || '请输入规则名称'
+                  ]"
+                    clearable
+                  >
+                  </q-input>
+                </div>
+                <div class="q-gutter-sm q-ma-sm">
+                  <q-item-label>描述</q-item-label>
+                  <q-input
+                    type="textarea"
+                    outlined
+                    placeholder="请输入"
+                    v-model="ruleName"
+                    square
+                  >
+                  </q-input>
+                </div>
+                <div class="q-gutter-sm q-ma-sm q-mb-lg">
+                  <q-btn
+                    outline
+                    unelevated
+                    label="重置"
+                    type="reset"
+                    class="q-mr-sm no-border-radius"
+                    color="secondary"
+                  />
+                  <q-btn
+                    unelevated
+                    type="submit"
+                    label="提交"
+                    color="primary"
+                    class="no-border-radius"
+                  />
+                </div>
+              </form>
+            </div>
+          </q-card>
+        </q-dialog>
+        <q-dialog v-model="seamless" full-width seamless position="bottom">
+          <q-card class="q-mx-sm">
+            <q-card-section class="row">
+              <div class="col-sm-6 col-xs-12 q-mb-sm">
+                <div>
+                  已选择<span class="text-weight-bold text-blue-8 q-mx-xs"
+                >{{ selected.length }} </span
                 >项 服务调用次数总计<span class="q-mx-xs">{{ 567 }} </span>万
+                </div>
               </div>
-            </div>
-            <div class="text-right col-sm-6 col-xs-12 q-gutter-x-sm">
-              <q-btn
-                unelevated
-                color="warning"
-                label="批量删除"
-                @click="deleteDatas"
-              />
-              <q-btn unelevated color="primary" label="批量审批" />
-            </div>
-          </q-card-section>
-        </q-card>
-      </q-dialog>
-    </q-card>
+              <div class="text-right col-sm-6 col-xs-12 q-gutter-x-sm">
+                <q-btn
+                  unelevated
+                  color="warning"
+                  label="批量删除"
+                  @click="deleteDatas"
+                />
+                <q-btn unelevated color="primary" label="批量审批" />
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+      </q-card>
     </div>
   </div>
 </template>
