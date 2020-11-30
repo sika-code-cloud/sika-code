@@ -213,20 +213,18 @@
             class="q-pa-md text-center"
             style="min-height: 184px"
           >
-            <sc-shadow>
-              <q-item-label caption class="q-mb-md"> 20:45:43</q-item-label>
-              <q-item-label
-                class="text-grey-7 q-mb-md"
-                style="font-size: xx-large"
-              >
-                <strong>109</strong>
-              </q-item-label>
-              <q-item-label class="q-mb-md"> 在线访客数</q-item-label>
-              <q-item-label caption class="q-mb-md">
-                <q-spinner-rings color="primary" size="xs" />
-                <span>1 秒后更新</span>
-              </q-item-label>
-            </sc-shadow>
+            <q-item-label caption class="q-mb-md"> 20:45:43</q-item-label>
+            <q-item-label
+              class="text-grey-7 q-mb-md"
+              style="font-size: xx-large"
+            >
+              <strong>109</strong>
+            </q-item-label>
+            <q-item-label class="q-mb-md"> 在线访客数</q-item-label>
+            <q-item-label caption class="q-mb-md">
+              <q-spinner-rings color="primary" size="xs" />
+              <span>1 秒后更新</span>
+            </q-item-label>
           </q-card>
         </q-card>
       </div>

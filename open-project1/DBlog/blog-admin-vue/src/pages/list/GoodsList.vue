@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="row q-mx-sm q-mt-md text-grey-8 text-center">
-      <div v-for="item in 6" :key="item" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
+      <div v-for="item in 8" :key="item" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
         <sc-shadow>
           <q-card flat class="no-border-radius q-pb-sm">
             <q-chip v-if="item % 6 === 1" size="sm" label="缺货" text-color="orange" class="bg-orange-1 q-ma-sm absolute-top-right"
