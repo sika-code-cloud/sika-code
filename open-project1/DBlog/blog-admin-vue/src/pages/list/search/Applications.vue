@@ -137,7 +137,7 @@
         </span>
       </div>
     </div>
-    <div class="bg-white q-mt-md q-mx-md">
+    <div class="q-mt-md q-mx-sm">
       <div class="row">
         <div
           class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"

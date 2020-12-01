@@ -12,7 +12,7 @@
                 size="sm"
                 text-color="green"
                 class="q-mr-sm"
-                icon="visibility"
+                :icon="analysisData.visitData.icon"
               ></q-avatar>
               <span> 访问量 </span>
               <span>
@@ -33,15 +33,15 @@
                   class="text-grey-9 q-mb-md"
                   style="font-size: xx-large"
                 >
-                  5,848
+                  {{ analysisData.visitData.dayVisitCount }}
                 </q-item-label>
                 <q-item-label class="q-mb-md">
                 <span class="q-mr-md">
-                  日同比 12.5%
+                  日同比 {{ analysisData.visitData.dayForCompare }}
                   <q-icon size="xs" name="arrow_drop_up" color="red" />
                 </span>
                   <span
-                  >周同比 5%
+                  >周同比 {{ analysisData.visitData.weekForCompare }}
                   <q-icon size="xs" name="arrow_drop_down" color="info" />
                 </span>
                 </q-item-label>
@@ -49,7 +49,7 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总访问量</span>
-                <span class="float-right">280 万</span>
+                <span class="float-right">{{ analysisData.visitData.visitTotal }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -66,7 +66,7 @@
                 size="sm"
                 text-color="red"
                 class="q-mr-sm"
-                icon="attach_money"
+                :icon="analysisData.saleData.icon"
               ></q-avatar>
               <span> 销售额 </span>
               <span>
@@ -87,7 +87,7 @@
                   class="text-grey-9 q-mb-md"
                   style="font-size: xx-large"
                 >
-                  ¥12,000
+                  ¥{{ analysisData.saleData.saleMoney }}
                 </q-item-label>
                 <q-item-label class="q-pb-sm">
                   <q-linear-progress :value="0.7" rounded stripe size="8px" />
@@ -96,7 +96,7 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总销售额</span>
-                <span class="float-right">68 万</span>
+                <span class="float-right">{{ analysisData.saleData.saleTotal }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -113,7 +113,7 @@
                 size="sm"
                 text-color="orange"
                 class="q-mr-sm"
-                icon="reorder"
+                :icon="analysisData.orderData.icon"
               ></q-avatar>
               <span> 订单量 </span>
               <span>
@@ -134,15 +134,15 @@
                   class="text-grey-9 q-mb-md"
                   style="font-size: xx-large"
                 >
-                  1,680
+                  {{ analysisData.orderData.dayOrderCount }}
                 </q-item-label>
                 <q-item-label class="q-mb-md">
                 <span class="q-mr-md">
-                  日同比 12.5%
+                  日同比 {{ analysisData.orderData.dayForCompare }}
                   <q-icon size="xs" name="arrow_drop_up" color="red" />
                 </span>
                   <span
-                  >周同比 5%
+                  >周同比 {{ analysisData.orderData.weekForCompare }}
                   <q-icon size="xs" name="arrow_drop_down" color="info" />
                 </span>
                 </q-item-label>
@@ -150,7 +150,7 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>转化率</span>
-                <span class="float-right">60%</span>
+                <span class="float-right">{{ analysisData.orderData.conversionRate }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -167,7 +167,7 @@
                 size="sm"
                 text-color="purple"
                 class="q-mr-sm"
-                icon="people_alt"
+                :icon="analysisData.userData.icon"
               ></q-avatar>
               <span> 新增用户 </span>
               <span>
@@ -185,48 +185,31 @@
                   class="text-grey-9 q-mb-md"
                   style="font-size: xx-large"
                 >
-                  128 位
+                  {{ analysisData.userData.dayIncrease }} 位
                 </q-item-label>
                 <q-item-label class="q-mb-md">
-                  <q-avatar size="sm">
-                    <q-img
-                      src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/zhj85zgAfEjChCNIKT1LQENUIOyOYCaX/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/TkH54UozsINlex15TAMI00GElsfsKSiC/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/xrzbBR99F6tYsDJPLNrvwhllowbuL7Gw/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/bgrngoUb9A6UQ2kAwBFtnSNzhrh2qj1O/avatar"
-                    ></q-img>
-                  </q-avatar>
-                  <q-avatar size="sm" style="margin-left: -8px">
-                    <q-img
-                      src="https://dev-file.iviewui.com/BbnuuEiM0QXNPHVCvb3E2AFrawIjCkqW/avatar"
-                    ></q-img>
-                  </q-avatar>
+                  <span v-for="(user, index) in analysisData.userData.users" :key="index">
+                    <q-avatar size="sm" v-if="index === 0">
+                      <q-img :src="user.head" />
+                      <q-tooltip
+                        transition-show="flip-right"
+                        transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 10px">
+                        {{ user.name }}
+                      </q-tooltip>
+                    </q-avatar>
+                    <q-avatar v-else size="sm" style="margin-left: -8px">
+                      <q-img :src="user.head" />
+                       <q-tooltip
+                         transition-show="flip-right"
+                         transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 10px">
+                        {{ user.name }}
+                      </q-tooltip>
+                    </q-avatar>
+                  </span>
                   <q-avatar
                     size="sm"
-                    color="orange-1"
-                    text-color="orange"
+                    color="orange-2"
+                    text-color="deep-orange"
                     style="margin-left: -8px"
                   >
                     +3
@@ -236,7 +219,7 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总用户</span>
-                <span class="float-right">10800 人</span>
+                <span class="float-right">{{ analysisData.userData.userTotal }} 人</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -334,14 +317,14 @@
                   unelevated
                   toggle-color="primary"
                   :options="[
-                    { label: '今日', value: 'one' },
-                    { label: '当月', value: 'two' },
-                    { label: '当年', value: 'three' }
+                    { label: '今日', value: 'currentDay' },
+                    { label: '当月', value: 'currentMonth' },
+                    { label: '当年', value: 'currentYear' }
                   ]"
                 />
                 <q-input
                   class="float-right"
-                  v-model="data"
+                  v-model="queryDate"
                   dense
                   outlined
                   style="width: 181px"
@@ -355,7 +338,8 @@
             <q-separator />
             <div class="row q-pa-md">
               <q-item-label
-                class="col-md-8 col-sm-6 col-xs-12 q-mb-sm"
+                class="col-md-8 col-xs-12 q-mb-sm"
+                :class="{ 'q-pr-md': $q.screen.gt.sm }"
               >
                 <q-item-label class="text-weight-bold">访问量趋势</q-item-label>
                 <q-banner class="bg-red-2 q-mt-sm" style="height: 248px">
@@ -366,8 +350,7 @@
                 </q-banner>
               </q-item-label>
               <q-item-label
-                class="col-md-4 col-sm-6 col-xs-12"
-                :class="{ 'q-pl-sm': $q.screen.gt.xs }"
+                class="col-md-4 col-xs-12"
               >
                 <q-item-label class="text-weight-bold q-mb-sm"
                 >访问量排行
@@ -458,7 +441,7 @@
                 </span>
               </q-card-section>
               <q-separator />
-              <q-item-label class="row text-center q-px-md q-pt-md">
+              <q-item-label class="row text-center q-px-md q-pt-lg q-pb-sm">
                 <div class="col text-blue">
                   <q-avatar icon="accessibility" color="blue-1"></q-avatar>
                   <q-item-label class="q-mt-sm">男性 65%</q-item-label>
@@ -498,8 +481,8 @@
 
 <script>
 import _ from 'lodash'
+import ANALYSIS_DATA from 'src/mock/data/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
-
 const itemDefault = {
   src:
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604435817316&di=acd6edbc1c306906444d22cfa51bccb4&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg',
@@ -516,7 +499,9 @@ export default {
   components: { ScShadow },
   data() {
     return {
-      visitQuery: 'one',
+      analysisData: ANALYSIS_DATA,
+      queryDate: ANALYSIS_DATA.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
+      visitQuery: 'currentDay',
       rating: 4.5,
       stepData: [20, 40, 80],
       items: itemsInit,
