@@ -1,9 +1,7 @@
 <template>
   <div class="sc-design q-my-md">
     <div class="row q-px-sm">
-      <div
-        class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md"
-      >
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md">
         <sc-shadow>
           <q-card flat class="no-border-radius text-grey-9">
             <q-card-section class="bg-white">
@@ -16,15 +14,15 @@
               ></q-avatar>
               <span> 访问量 </span>
               <span>
-              <q-chip
-                size="sm"
-                square
-                outline
-                color="green"
-                class="bg-green-1 float-right"
-                label="日"
-              ></q-chip>
-            </span>
+                <q-chip
+                  size="sm"
+                  square
+                  outline
+                  color="green"
+                  class="bg-green-1 float-right"
+                  label="日"
+                ></q-chip>
+              </span>
             </q-card-section>
             <q-separator />
             <q-card flat square class="q-pa-md">
@@ -36,28 +34,28 @@
                   {{ analysisData.visitData.dayVisitCount }}
                 </q-item-label>
                 <q-item-label class="q-mb-md">
-                <span class="q-mr-md">
-                  日同比 {{ analysisData.visitData.dayForCompare }}
-                  <q-icon size="xs" name="arrow_drop_up" color="red" />
-                </span>
+                  <span class="q-mr-md">
+                    日同比 {{ analysisData.visitData.dayForCompare }}
+                    <q-icon size="xs" name="arrow_drop_up" color="red" />
+                  </span>
                   <span
-                  >周同比 {{ analysisData.visitData.weekForCompare }}
-                  <q-icon size="xs" name="arrow_drop_down" color="info" />
-                </span>
+                    >周同比 {{ analysisData.visitData.weekForCompare }}
+                    <q-icon size="xs" name="arrow_drop_down" color="info" />
+                  </span>
                 </q-item-label>
               </div>
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总访问量</span>
-                <span class="float-right">{{ analysisData.visitData.visitTotal }}</span>
+                <span class="float-right">{{
+                  analysisData.visitData.visitTotal
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
         </sc-shadow>
       </div>
-      <div
-        class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md"
-      >
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md">
         <sc-shadow>
           <q-card flat class="no-border-radius text-grey-9">
             <q-card-section class="bg-white">
@@ -70,15 +68,15 @@
               ></q-avatar>
               <span> 销售额 </span>
               <span>
-              <q-chip
-                size="sm"
-                square
-                outline
-                color="blue"
-                class="bg-blue-1 float-right"
-                label="月"
-              ></q-chip>
-            </span>
+                <q-chip
+                  size="sm"
+                  square
+                  outline
+                  color="blue"
+                  class="bg-blue-1 float-right"
+                  label="月"
+                ></q-chip>
+              </span>
             </q-card-section>
             <q-separator />
             <q-card flat square class="q-pa-md">
@@ -96,15 +94,15 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总销售额</span>
-                <span class="float-right">{{ analysisData.saleData.saleTotal }}</span>
+                <span class="float-right">{{
+                  analysisData.saleData.saleTotal
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
         </sc-shadow>
       </div>
-      <div
-        class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md"
-      >
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md">
         <sc-shadow>
           <q-card flat class="no-border-radius text-grey-9">
             <q-card-section class="bg-white">
@@ -117,15 +115,15 @@
               ></q-avatar>
               <span> 订单量 </span>
               <span>
-              <q-chip
-                size="sm"
-                square
-                outline
-                color="red"
-                class="bg-red-1 float-right"
-                label="周"
-              ></q-chip>
-            </span>
+                <q-chip
+                  size="sm"
+                  square
+                  outline
+                  color="red"
+                  class="bg-red-1 float-right"
+                  label="周"
+                ></q-chip>
+              </span>
             </q-card-section>
             <q-separator />
             <q-card flat square class="q-pa-md">
@@ -137,28 +135,28 @@
                   {{ analysisData.orderData.dayOrderCount }}
                 </q-item-label>
                 <q-item-label class="q-mb-md">
-                <span class="q-mr-md">
-                  日同比 {{ analysisData.orderData.dayForCompare }}
-                  <q-icon size="xs" name="arrow_drop_up" color="red" />
-                </span>
+                  <span class="q-mr-md">
+                    日同比 {{ analysisData.orderData.dayForCompare }}
+                    <q-icon size="xs" name="arrow_drop_up" color="red" />
+                  </span>
                   <span
-                  >周同比 {{ analysisData.orderData.weekForCompare }}
-                  <q-icon size="xs" name="arrow_drop_down" color="info" />
-                </span>
+                    >周同比 {{ analysisData.orderData.weekForCompare }}
+                    <q-icon size="xs" name="arrow_drop_down" color="info" />
+                  </span>
                 </q-item-label>
               </div>
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>转化率</span>
-                <span class="float-right">{{ analysisData.orderData.conversionRate }}</span>
+                <span class="float-right">{{
+                  analysisData.orderData.conversionRate
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
         </sc-shadow>
       </div>
-      <div
-        class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md"
-      >
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md">
         <sc-shadow>
           <q-card flat class="no-border-radius text-grey-9">
             <q-card-section class="bg-white">
@@ -171,12 +169,12 @@
               ></q-avatar>
               <span> 新增用户 </span>
               <span>
-              <q-icon
-                name="help_outline"
-                color="grey-7"
-                class="float-right"
-              ></q-icon>
-            </span>
+                <q-icon
+                  name="help_outline"
+                  color="grey-7"
+                  class="float-right"
+                ></q-icon>
+              </span>
             </q-card-section>
             <q-separator />
             <q-card flat square class="q-pa-md">
@@ -188,20 +186,29 @@
                   {{ analysisData.userData.dayIncrease }} 位
                 </q-item-label>
                 <q-item-label class="q-mb-md">
-                  <span v-for="(user, index) in analysisData.userData.users" :key="index">
+                  <span
+                    v-for="(user, index) in analysisData.userData.users"
+                    :key="index"
+                  >
                     <q-avatar size="sm" v-if="index === 0">
                       <q-img :src="user.head" />
                       <q-tooltip
                         transition-show="flip-right"
-                        transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 10px">
+                        transition-hide="flip-left"
+                        content-class="bg-primary"
+                        content-style="font-size: 10px"
+                      >
                         {{ user.name }}
                       </q-tooltip>
                     </q-avatar>
                     <q-avatar v-else size="sm" style="margin-left: -8px">
                       <q-img :src="user.head" />
-                       <q-tooltip
-                         transition-show="flip-right"
-                         transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 10px">
+                      <q-tooltip
+                        transition-show="flip-right"
+                        transition-hide="flip-left"
+                        content-class="bg-primary"
+                        content-style="font-size: 10px"
+                      >
                         {{ user.name }}
                       </q-tooltip>
                     </q-avatar>
@@ -219,7 +226,9 @@
               <q-separator spaced="15px" />
               <q-item-label>
                 <span>总用户</span>
-                <span class="float-right">{{ analysisData.userData.userTotal }} 人</span>
+                <span class="float-right"
+                  >{{ analysisData.userData.userTotal }} 人</span
+                >
               </q-item-label>
             </q-card>
           </q-card>
@@ -227,70 +236,18 @@
       </div>
       <div class="col-12 q-mb-md">
         <div class="no-border-radius row q-gutter-y-md">
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="group" text-color="primary"></q-avatar>
-                <q-item-label>用户</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="leaderboard" text-color="green"></q-avatar>
-                <q-item-label>分析</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="shopping_cart" text-color="orange"></q-avatar>
-                <q-item-label>商品</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="assignment" text-color="purple"></q-avatar>
-                <q-item-label>订单</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="card_travel" text-color="yellow"></q-avatar>
-                <q-item-label>票据</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="email" text-color="info"></q-avatar>
-                <q-item-label>消息</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
-            <sc-shadow>
-              <q-card-section class="bg-white">
-                <q-avatar icon="bookmarks" text-color="accent"></q-avatar>
-                <q-item-label>标签</q-item-label>
-              </q-card-section>
-            </sc-shadow>
-          </div>
-          <div class="col-lg col-md-2 col-xs-4 text-center q-px-sm">
+          <div
+            class="col-lg col-md-2 col-xs-4 text-center q-px-sm"
+            v-for="(data, index) in analysisData.linkData"
+            :key="index"
+          >
             <sc-shadow>
               <q-card-section class="bg-white">
                 <q-avatar
-                  icon="design_services"
-                  text-color="deep-orange"
+                  :icon="data.icon"
+                  :text-color="data.textColor"
                 ></q-avatar>
-                <q-item-label>配置</q-item-label>
+                <q-item-label>{{ data.desc }}</q-item-label>
               </q-card-section>
             </sc-shadow>
           </div>
@@ -312,6 +269,7 @@
               </q-item-label>
               <q-item-label class="col q-gutter-sm text-right">
                 <q-btn-toggle
+                  :onclick="changeQueryDate(visitQuery)"
                   style="height: 36px"
                   v-model="visitQuery"
                   unelevated
@@ -322,17 +280,35 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <q-input
+                <q-field
                   class="float-right"
-                  v-model="queryDate"
                   dense
                   outlined
-                  style="width: 181px"
+                  style="width: 225px"
                 >
-                  <template v-slot:append>
-                    <q-icon name="event" color="orange" />
+                  <template v-slot:control>
+                    <div class="self-center full-width no-outline" tabindex="0">
+                      {{ formatQueryDate }}
+                    </div>
                   </template>
-                </q-input>
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer" color="orange">
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
+                      >
+                        <q-date
+                          v-model="beginAndEndDate"
+                          square
+                          mask="YYYY-MM-DD"
+                          range
+                        />
+                      </q-menu>
+                    </q-icon>
+                  </template>
+                </q-field>
               </q-item-label>
             </q-card-section>
             <q-separator />
@@ -349,19 +325,16 @@
                   </template>
                 </q-banner>
               </q-item-label>
-              <q-item-label
-                class="col-md-4 col-xs-12"
-              >
+              <q-item-label class="col-md-4 col-xs-12">
                 <q-item-label class="text-weight-bold q-mb-sm"
-                >访问量排行
-                </q-item-label
-                >
+                  >访问量排行
+                </q-item-label>
                 <q-list>
                   <q-item
                     class="q-pl-none q-py-sm"
                     dense
-                    v-for="item in 7"
-                    :key="item"
+                    v-for="item in analysisData.visitRankData"
+                    :key="item.rank"
                   >
                     <q-item-section
                       avatar
@@ -369,26 +342,24 @@
                       style="min-width: 32px"
                     >
                       <q-avatar
-                        v-if="item < 4"
+                        v-if="item.rank < 4"
                         color="blue-1"
                         text-color="blue"
                         size="sm"
                       >
-                        {{ item }}
-                      </q-avatar
-                      >
+                        {{ item.rank }}
+                      </q-avatar>
                       <q-avatar
                         v-else
                         color="grey-2"
                         text-color="grey-10"
                         size="sm"
                       >
-                        {{ item }}
-                      </q-avatar
-                      >
+                        {{ item.rank }}
+                      </q-avatar>
                     </q-item-section>
-                    <q-item-section>东直门 {{ item }} 号</q-item-section>
-                    <q-item-section side>456,789</q-item-section>
+                    <q-item-section>{{ item.desc }}</q-item-section>
+                    <q-item-section side>{{ item.visitNum }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-item-label>
@@ -418,7 +389,11 @@
                 </span>
               </q-card-section>
               <q-separator />
-              <q-table :data="data" :columns="columns" row-key="key"></q-table>
+              <q-table
+                :data="analysisData.hotSearchData.data"
+                :columns="analysisData.hotSearchData.columns"
+                row-key="key"
+              ></q-table>
             </q-card>
           </div>
           <div class="col-md-6 col-xs-12 q-px-sm">
@@ -480,110 +455,25 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import ANALYSIS_DATA from 'src/mock/data/analysisData'
+import { date } from 'quasar'
+import ANALYSIS_DATA from '@/mock/data/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
-const itemDefault = {
-  src:
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604435817316&di=acd6edbc1c306906444d22cfa51bccb4&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg',
-  select: false
-}
-const itemsInit = []
-for (let i = 0; i < 2; ++i) {
-  const itemTemp = _.clone(itemDefault)
-  itemTemp.id = i
-  itemsInit.push(itemTemp)
-}
+
 export default {
   name: 'Analysis',
   components: { ScShadow },
   data() {
     return {
       analysisData: ANALYSIS_DATA,
-      queryDate: ANALYSIS_DATA.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
+      queryDate: {
+        from: date.startOfDate(Date.now(), 'day'),
+        to: date.startOfDate(Date.now(), 'day')
+      },
       visitQuery: 'currentDay',
-      rating: 4.5,
-      stepData: [20, 40, 80],
-      items: itemsInit,
-      activeClass: {
-        border: '1px dashed dodgerblue'
-      },
-      unActiveClass: {
-        border: '1px dashed lightgrey'
-      },
-      selected: [],
-      columns: [
-        {
-          name: 'rank',
-          required: true,
-          label: '排名',
-          align: 'left',
-          field: 'rank',
-          sortable: true
-        },
-        {
-          name: 'searchKey',
-          align: 'left',
-          label: '搜索关键词',
-          field: 'searchKey',
-          sortable: true
-        },
-        {
-          name: 'userCount',
-          align: 'left',
-          label: '用户数',
-          field: 'userCount',
-          sortable: true
-        },
-        {
-          name: 'zhangfu',
-          align: 'right',
-          label: '周涨幅',
-          field: 'zhangfu',
-          sortable: true
-        }
-      ],
-      data: [
-        {
-          rank: 1,
-          searchKey: '搜索关键词-0',
-          userCount: 257,
-          zhangfu: '20%'
-        },
-        {
-          rank: 2,
-          searchKey: '搜索关键词-1',
-          userCount: 2537,
-          zhangfu: '20%'
-        },
-        {
-          rank: 3,
-          searchKey: '搜索关键词-2',
-          userCount: 2527,
-          zhangfu: '20%'
-        },
-        {
-          rank: 4,
-          searchKey: '搜索关键词-3',
-          userCount: 3257,
-          zhangfu: '20%'
-        },
-        {
-          rank: 5,
-          searchKey: '搜索关键词-4',
-          userCount: 4257,
-          zhangfu: '20%'
-        }
-      ]
+      beginAndEndDate: {}
     }
   },
   methods: {
-    select(item) {
-      this.items[item.id].select = true
-    },
-    clear(item) {
-      this.items[item.id].select = false
-    },
     color(item) {
       if (item < 65) {
         return 'blue'
@@ -592,6 +482,20 @@ export default {
       } else {
         return 'grey'
       }
+    },
+    changeQueryDate(value) {
+      const currentDate = new Date()
+      let lastDate = new Date()
+      if (value === 'currentMonth') {
+        lastDate = date.subtractFromDate(currentDate, { days: 30 })
+      } else if (value === 'currentYear') {
+        lastDate = date.subtractFromDate(currentDate, { days: 365 })
+      }
+      this.queryDate.from = date.startOfDate(lastDate, 'day')
+      this.queryDate.to = date.endOfDate(currentDate, 'day')
+    },
+    formatDate(dateFormat) {
+      return date.formatDate(dateFormat, 'YYYY-MM-DD')
     }
   },
   computed: {
@@ -603,6 +507,21 @@ export default {
         return 'xs'
       }
       return '1em'
+    },
+    formatQueryDate() {
+      return (
+        this.formatDate(this.queryDate.from) +
+        '~' +
+        this.formatDate(this.queryDate.to)
+      )
+    }
+  },
+  watch: {
+    beginAndEndDate(newSelected, oldSelected) {
+      if (newSelected) {
+        this.queryDate.from = newSelected.from
+        this.queryDate.to = newSelected.to
+      }
     }
   }
 }
