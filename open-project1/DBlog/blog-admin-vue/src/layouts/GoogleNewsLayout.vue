@@ -941,17 +941,17 @@ const myData = [
   {
     name: '编辑器',
     icon: 'text_fields',
-    group: '编辑器',
+    group: '/editor',
     groupName: 'first',
     children: [
       {
         name: '自定义编辑器',
-        group: '编辑器',
+        group: '/editor',
         to: '/editor/customer'
       },
       {
         name: 'Markdown编辑器',
-        group: '编辑器',
+        group: '/editor',
         to: '/editor/markdown'
       }
     ]

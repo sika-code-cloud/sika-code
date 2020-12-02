@@ -282,6 +282,16 @@ const routes = [
     ]
   },
   {
+    path: '/editor/markdown',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/editor/Markdown')
+      }
+    ]
+  },
+  {
     path: '/button',
     component: () => import('layouts/MainLayout.vue'),
     children: [
