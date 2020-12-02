@@ -272,6 +272,16 @@ const routes = [
     ]
   },
   {
+    path: '/editor/customer',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/editor/Customer')
+      }
+    ]
+  },
+  {
     path: '/button',
     component: () => import('layouts/MainLayout.vue'),
     children: [
