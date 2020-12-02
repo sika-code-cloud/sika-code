@@ -13,24 +13,45 @@
                 icon="groups"
               ></q-avatar>
             </q-item-label>
-            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-              <strong>21.2 k</strong>
+            <q-item-label
+              class="text-grey-7 q-mb-sm"
+              style="font-size: x-large"
+            >
+              <strong>{{
+                monitorData.visitNumData.visitTotal | numeral('0.0a')
+              }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm"> 总访问人数</q-item-label>
             <q-item-label>
-              <q-avatar size="sm">
-                <q-img src="~assets/head.png"></q-img>
-              </q-avatar>
-              <q-avatar size="sm" style="margin-left: -8px">
-                <q-img src="~assets/head.png"></q-img>
-              </q-avatar>
-              <q-avatar size="sm" style="margin-left: -8px">
-                <q-img src="~assets/head.png"></q-img>
-              </q-avatar>
-
-              <q-avatar size="sm" style="margin-left: -8px">
-                <q-img src="~assets/head.png"></q-img>
-              </q-avatar>
+              <span
+                v-for="(user, index) in monitorData.visitNumData.users"
+                :key="index"
+              >
+                <q-avatar size="22px" v-if="index === 0">
+                  <q-img :src="user.head">
+                    <q-tooltip
+                      transition-show="flip-right"
+                      transition-hide="flip-left"
+                      content-class="bg-primary"
+                      content-style="font-size: 10px"
+                    >
+                      {{ user.name }}
+                    </q-tooltip>
+                  </q-img>
+                </q-avatar>
+                <q-avatar v-else size="22px" style="margin-left: -8px">
+                  <q-img :src="user.head"
+                    ><q-tooltip
+                      transition-show="flip-right"
+                      transition-hide="flip-left"
+                      content-class="bg-primary"
+                      content-style="font-size: 10px"
+                    >
+                      {{ user.name }}
+                    </q-tooltip>
+                  </q-img>
+                </q-avatar>
+              </span>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -47,8 +68,13 @@
                 icon="gps_fixed"
               ></q-avatar>
             </q-item-label>
-            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-              <strong>1.6 k</strong>
+            <q-item-label
+              class="text-grey-7 q-mb-sm"
+              style="font-size: x-large"
+            >
+              <strong>
+                {{ monitorData.pointNumData.pointTotalNum | numeral('0.0a') }}
+              </strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm">
               点击量（近30天）
@@ -60,7 +86,9 @@
                 class="q-mr-sm"
                 icon="keyboard_arrow_up"
               ></q-avatar>
-              <strong>110.5%</strong>
+              <strong>{{
+                monitorData.pointNumData.upRate | numeral('(0.0 %)')
+              }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -77,8 +105,13 @@
                 icon="opacity"
               ></q-avatar>
             </q-item-label>
-            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-              <strong>826.0</strong>
+            <q-item-label
+              class="text-grey-7 q-mb-sm"
+              style="font-size: x-large"
+            >
+              <strong>{{
+                monitorData.arrivalNumData.arrivalTotalNum | numeral('0.0a')
+              }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm">
               到达量（近30天）
@@ -90,7 +123,9 @@
                 class="q-mr-sm"
                 icon="keyboard_arrow_down"
               ></q-avatar>
-              <strong>15.5%</strong>
+              <strong>{{
+                monitorData.arrivalNumData.upRate | numeral('(0.0 %)')
+              }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -107,8 +142,13 @@
                 icon="filter_list"
               ></q-avatar>
             </q-item-label>
-            <q-item-label class="text-grey-7 q-mb-sm" style="font-size: x-large">
-              <strong>28.8 %</strong>
+            <q-item-label
+              class="text-grey-7 q-mb-sm"
+              style="font-size: x-large"
+            >
+              <strong>{{
+                monitorData.conversionData.conversionRate | numeral('(0.0 %)')
+              }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm">
               转化率（近30天）
@@ -120,7 +160,9 @@
                 class="q-mr-sm"
                 icon="keyboard_arrow_up"
               ></q-avatar>
-              <strong>65.8%</strong>
+              <strong>{{
+                monitorData.conversionData.upRate | numeral('(0.0 %)')
+              }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -143,8 +185,8 @@
           <div class="row q-pa-sm">
             <div
               class="col-xs-12 col-sm-6 q-pa-sm cursor-pointer"
-              v-for="item in items"
-              :key="item.id"
+              v-for="(item, index) in monitorData.visitForHourData"
+              :key="index"
             >
               <sc-shadow>
                 <q-card
@@ -155,37 +197,36 @@
                   <q-item>
                     <q-item-section avatar style="min-width: 32px">
                       <q-avatar size="sm">
-                        <img
-                          alt=""
-                          src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
-                        />
+                        <img alt="" :src="item.img" />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label class="text-weight-bold"
-                      >Alipay
-                      </q-item-label
-                      >
+                      <q-item-label class="text-weight-bold">
+                        {{ item.title }}
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
                   <q-item class="text-grey-6">
-                    <q-item-label
-                    >那是一种内在的东西，他们到达不了，也无法触及的
-                    </q-item-label
-                    >
+                    <q-item-label>
+                      {{ item.desc }}
+                    </q-item-label>
                   </q-item>
                   <q-item>
                     <q-item-section>
-                      <q-item-label class="text-grey-6" style="font-size: small"
-                      >科学搬家组
-                      </q-item-label
+                      <q-item-label
+                        class="text-grey-6"
+                        style="font-size: small"
                       >
+                        {{ item.group }}
+                      </q-item-label>
                     </q-item-section>
                     <q-item-section side>
-                      <q-item-label class="text-grey-6" style="font-size: small"
-                      >3天前
-                      </q-item-label
+                      <q-item-label
+                        class="text-grey-6"
+                        style="font-size: small"
                       >
+                        {{ item.visitTime }}
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-card>
@@ -282,19 +323,19 @@
                     color="green"
                   />
                   <span style="font-size: small"
-                  >活跃率：{{ stepData[2] }}%</span
+                    >活跃率：{{ stepData[2] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="blue" />
                   <span style="font-size: small"
-                  >留存率：{{ stepData[1] }}%</span
+                    >留存率：{{ stepData[1] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="red" />
                   <span style="font-size: small"
-                  >跳槽率：{{ stepData[0] }}%</span
+                    >跳槽率：{{ stepData[0] }}%</span
                   >
                 </q-item-label>
               </q-card-section>
@@ -485,8 +526,7 @@
           </q-card>
         </q-card>
       </div>
-      <div
-        class="col-md-3 col-sm-6 col-xs-12 q-px-sm">
+      <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm">
         <q-card flat class="no-border-radius">
           <q-card-section class="bg-white">
             <q-avatar
@@ -540,6 +580,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+import MONITOR_DATA from 'src/mock/data/monitorData'
 
 const itemDefault = {
   src:
@@ -557,6 +598,7 @@ export default {
   components: { ScShadow },
   data() {
     return {
+      monitorData: MONITOR_DATA,
       rating: 4.5,
       stepData: [20, 40, 80],
       items: itemsInit,
