@@ -578,21 +578,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
 import MONITOR_DATA from 'src/mock/data/monitorData'
 
-const itemDefault = {
-  src:
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604435817316&di=acd6edbc1c306906444d22cfa51bccb4&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg',
-  select: false
-}
-const itemsInit = []
-for (let i = 0; i < 2; ++i) {
-  const itemTemp = _.clone(itemDefault)
-  itemTemp.id = i
-  itemsInit.push(itemTemp)
-}
 export default {
   name: 'Monitor',
   components: { ScShadow },
@@ -600,51 +588,7 @@ export default {
     return {
       monitorData: MONITOR_DATA,
       rating: 4.5,
-      stepData: [20, 40, 80],
-      items: itemsInit,
-      activeClass: {
-        border: '1px dashed dodgerblue'
-      },
-      unActiveClass: {
-        border: '1px dashed lightgrey'
-      },
-      selected: [],
-      columns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '任务',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '作者',
-          field: 'calories',
-          sortable: true
-        }
-      ],
-      data: [
-        {
-          name: 'Card 支持点击，可以配置 to 等属性',
-          calories: '张三'
-        },
-        {
-          name: 'Tabs 新增属性，高度可以自适应其它高度',
-          calories: '李四'
-        },
-        {
-          name: 'Drawer 新增可拖拽调整宽度的属性',
-          calories: '王大锤'
-        },
-        {
-          name: 'AvatarList 支持配置 extra，不一定给全量数据',
-          calories: '张三'
-        }
-      ]
+      stepData: [20, 40, 80]
     }
   }
 }

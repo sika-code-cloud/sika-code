@@ -1,6 +1,12 @@
 <template>
   <div class="tinymce-box">
-    <editor v-model="myValue" :init="init" :disabled="disabled" @onClick="onClick"> </editor>
+    <editor
+      v-model="myValue"
+      :init="init"
+      :disabled="disabled"
+      @onClick="onClick"
+    >
+    </editor>
   </div>
 </template>
 
@@ -47,7 +53,8 @@ export default {
         language: 'zh_CN',
         skin_url: '/tinymce/skins/ui/oxide',
         // skin_url: 'tinymce/skins/ui/oxide-dark',//暗色系
-        font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif',
+        font_formats:
+          '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif',
         fontsize_formats: '11px 12px 14px 16px 18px 24px 36px 48px',
         height: 300,
         plugins: this.plugins,
@@ -65,10 +72,10 @@ export default {
           const img = 'data:image/jpeg;base64,' + blobInfo.base64()
           success(img)
         },
-        urlconverter_callback: function(url, node, on_save, name) {
+        urlconverter_callback: function (url, node, on_save, name) {
           return url
         },
-        setup: editor => {
+        setup: (editor) => {
           editor.on('blur', () => {
             this.$emit('onBlur', this.myValue)
           })
@@ -102,7 +109,13 @@ export default {
       const reg4 = /<img.*?>/
       const count = wordcount.body.getWordCount()
 
-      return reg1.test(this.myValue) || reg2.test(this.myValue) || reg3.test(this.myValue) || reg4.test(this.myValue) || count > 0
+      return (
+        reg1.test(this.myValue) ||
+        reg2.test(this.myValue) ||
+        reg3.test(this.myValue) ||
+        reg4.test(this.myValue) ||
+        count > 0
+      )
     }
   },
   watch: {

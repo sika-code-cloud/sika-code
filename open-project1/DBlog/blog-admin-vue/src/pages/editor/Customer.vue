@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import tinymce from 'pages/editor/Tinymce'
+import tinymce from 'Tinymce'
 export default {
   components: { tinymce },
   data() {

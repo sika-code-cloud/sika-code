@@ -27,7 +27,8 @@
     "to": "^0.2.9",
     "update": "^0.7.4",
     "velocity-animate": "^1.5.2",
-    "vue-numeral-filter": "^2.0.0"
+    "vue-numeral-filter": "^2.0.0",
+    "wangeditor": "^4.5.2"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
