@@ -1,3 +1,6 @@
+import _ from 'lodash'
+import numeral from 'numeral'
+
 const visitData = {
   icon: 'visibility',
   dayVisitCount: '5,848',
@@ -108,8 +111,7 @@ for (let index = 1; index < 8; index++) {
   const visitRankDataTemp = {
     rank: index,
     desc: '东直门 ' + index + ' 号',
-    visitNum:
-      parseInt(Math.random() * 2000) + ',' + parseInt(Math.random() * 1000)
+    visitNum: _.random(1000, 20000)
   }
   visitRankData.push(visitRankDataTemp)
 }
@@ -149,93 +151,36 @@ const hotSearchData = {
     {
       rank: 1,
       searchKey: '搜索关键词-0',
-      userCount: 257,
+      userCount: numeral(257).format('0,0'),
       zhangfu: '31%'
     },
     {
       rank: 2,
       searchKey: '搜索关键词-1',
-      userCount: 2537,
+      userCount: numeral(2527).format('0,0'),
       zhangfu: '22%'
     },
     {
       rank: 3,
       searchKey: '搜索关键词-2',
-      userCount: 2527,
+      userCount: numeral(2527).format('0,0'),
       zhangfu: '25%'
     },
     {
       rank: 4,
       searchKey: '搜索关键词-3',
-      userCount: 3257,
+      userCount: numeral(3257).format('0,0'),
       zhangfu: '40%'
     },
     {
       rank: 5,
       searchKey: '搜索关键词-4',
-      userCount: 4257,
+      userCount: numeral(4257).format('0,0'),
       zhangfu: '20%'
     }
   ]
 }
 
-/** 函数----begin */
-export function getCurrentDate() {
-  return new Date().getDate()
-}
-
-export function getCurrentMonth() {
-  return new Date().getMonth()
-}
-
-export function getCurrentYear() {
-  return new Date().getFullYear()
-}
-
-export function getCurrentDayStart() {
-  return getDayStart(new Date())
-}
-
-export function getCurrentMonthStart() {
-  return getMonthStart(new Date())
-}
-
-export function getCurrentYearStart() {
-  return getYearStart(new Date())
-}
-
-export function getDayStart(date) {
-  const startDate = new Date()
-  startDate.setHours(0)
-  startDate.setMinutes(0)
-  startDate.setSeconds(0)
-  startDate.setMonth(date.getMonth())
-  return startDate
-}
-
-export function getMonthStart(date) {
-  const startDate = new Date()
-  startDate.setDate(1)
-  startDate.setHours(0)
-  startDate.setMinutes(0)
-  startDate.setSeconds(0)
-  startDate.setMonth(date.getMonth())
-  return startDate
-}
-
-export function getYearStart(date) {
-  const startDate = new Date()
-  startDate.setDate(1)
-  startDate.setHours(0)
-  startDate.setMinutes(0)
-  startDate.setSeconds(0)
-  startDate.setDate(1)
-  startDate.setMonth(1)
-  startDate.setFullYear(date.getFullYear())
-  return startDate
-}
-
-/** 函数----end */
 export default {
   visitData,
   saleData,
@@ -243,13 +188,5 @@ export default {
   userData,
   linkData,
   visitRankData,
-  hotSearchData,
-  getCurrentDate,
-  getCurrentMonth,
-  getCurrentYear,
-  getCurrentDayStart,
-  getCurrentYearStart,
-  getCurrentMonthStart,
-  getMonthStart,
-  getYearStart
+  hotSearchData
 }

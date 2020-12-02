@@ -359,7 +359,9 @@
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>{{ item.desc }}</q-item-section>
-                    <q-item-section side>{{ item.visitNum }}</q-item-section>
+                    <q-item-section side>{{
+                      item.visitNum | numeral('0,0')
+                    }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-item-label>
@@ -455,9 +457,9 @@
 </template>
 
 <script>
-import { date } from 'quasar'
 import ANALYSIS_DATA from '@/mock/data/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
+import { date } from 'quasar'
 
 export default {
   name: 'Analysis',
