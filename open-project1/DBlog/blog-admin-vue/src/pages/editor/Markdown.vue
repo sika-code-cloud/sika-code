@@ -1,9 +1,10 @@
 <template>
-  <div class="q-mt-xs">
-    <mavon-editor style="z-index: 5000; min-width: 300px" v-model="value" ref=md @imgAdd="$imgAdd" @imgDel="$imgDel"></mavon-editor>
+  <div class="q-mt-xs bg-white">
+    <mavon-editor style="z-index: 3000; min-width: 300px" v-model="value" ref=md @imgAdd="$imgAdd"
+                  @imgDel="$imgDel"></mavon-editor>
     <!--点击按钮触发图片统一上传-->
     <button @click="uploadimg">upload</button>
-    {{ value}}
+    <mavon-editor style="z-index: 2000; min-width: 300px" v-model="value" :editable="false" defaultOpen="preview" :toolbarsFlag="false" :subfield="false"></mavon-editor>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import { mavonEditor } from 'mavon-editor'
 import axios from 'axios'
 import 'mavon-editor/dist/css/index.css'
+import marked from 'marked'
 
 export default {
   name: 'Markdown',
@@ -24,7 +26,28 @@ export default {
       img_file: {}
     }
   },
+  mounted() {
+    this.markdown()
+  },
+  computed: {
+    compiledMarkdown: function() {
+      console.log(marked(this.value, { sanitize: true }))
+      return marked(this.value, { sanitize: true })
+    }
+  },
   methods: {
+    markdown() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        gfm: true,
+        tables: true,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false
+      })
+    },
     // 绑定@imgAdd event
     $imgAdd(pos, $file) {
       // 缓存图片信息

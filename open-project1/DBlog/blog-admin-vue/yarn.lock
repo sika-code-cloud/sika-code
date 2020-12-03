@@ -8541,6 +8541,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+marked@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npm.taobao.org/marked/download/marked-1.2.5.tgz#a44b31f2a0b8b5bfd610f00d55d1952d1ac1dfdb"
+  integrity sha1-pEsx8qC4tb/WEPANVdGVLRrB39s=
+
 match-file@^0.2.0, match-file@^0.2.1:
   version "0.2.2"
   resolved "https://registry.npm.taobao.org/match-file/download/match-file-0.2.2.tgz#26e6bcf1b390a661f6126faf8ac501e33eccfae9"
