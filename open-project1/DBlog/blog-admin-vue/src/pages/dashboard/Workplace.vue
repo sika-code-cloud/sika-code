@@ -13,7 +13,8 @@
             早安，{{ workplaceSata.currentUserData.name }}，祝你开心每一天！
           </div>
           <q-item-label class="text-grey-6 text-body"
-          >{{ workplaceSata.currentUserData.job }} | {{ workplaceSata.currentUserData.department }}
+            >{{ workplaceSata.currentUserData.job }} |
+            {{ workplaceSata.currentUserData.department }}
           </q-item-label>
         </div>
         <div
@@ -37,7 +38,7 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-            >{{ workplaceSata.statisticsData.projectNum }}
+              >{{ workplaceSata.statisticsData.projectNum }}
             </q-item-label>
           </q-item-label>
           <q-item-label class="inline-block">
@@ -54,7 +55,9 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-            >{{ workplaceSata.statisticsData.waitMatterNum }}/{{ workplaceSata.statisticsData.allMatterNum }}
+              >{{ workplaceSata.statisticsData.waitMatterNum }}/{{
+                workplaceSata.statisticsData.allMatterNum
+              }}
             </q-item-label>
           </q-item-label>
           <q-item-label class="inline-block">
@@ -70,8 +73,11 @@
             </q-item-label>
             <q-item-label
               class="text-center text-black q-pt-xs"
-              style="font-size: x-large">
-              {{ workplaceSata.statisticsData.projectVisitNum | numeral('0,0') }}
+              style="font-size: x-large"
+            >
+              {{
+                workplaceSata.statisticsData.projectVisitNum | numeral('0,0')
+              }}
             </q-item-label>
           </q-item-label>
         </div>
@@ -109,10 +115,7 @@
                   <q-item>
                     <q-item-section avatar style="min-width: 32px">
                       <q-avatar size="sm">
-                        <img
-                          alt=""
-                          :src="item.imgSrc"
-                        />
+                        <img alt="" :src="item.imgSrc" />
                       </q-avatar>
                     </q-item-section>
 
@@ -129,12 +132,18 @@
                   </q-item>
                   <q-item>
                     <q-item-section>
-                      <q-item-label class="text-grey-6" style="font-size: small">
+                      <q-item-label
+                        class="text-grey-6"
+                        style="font-size: small"
+                      >
                         {{ item.group }}
                       </q-item-label>
                     </q-item-section>
                     <q-item-section side>
-                      <q-item-label class="text-grey-6" style="font-size: small">
+                      <q-item-label
+                        class="text-grey-6"
+                        style="font-size: small"
+                      >
                         {{ item.time }}
                       </q-item-label>
                     </q-item-section>
@@ -158,7 +167,11 @@
           </q-card-section>
           <q-separator />
           <q-list>
-            <div v-for="(dynamicData, index) in workplaceSata.dynamicDatas" :key="index" class="q-mb-sm">
+            <div
+              v-for="(dynamicData, index) in workplaceSata.dynamicDatas"
+              :key="index"
+              class="q-mb-sm"
+            >
               <q-item class="q-py-md">
                 <q-item-section avatar>
                   <q-avatar>
@@ -168,11 +181,17 @@
 
                 <q-item-section>
                   <q-item-label class="q-mb-xs">
-                    <span class="text-weight-bold q-pr-xs">{{ dynamicData.name }}</span>
+                    <span class="text-weight-bold q-pr-xs">{{
+                      dynamicData.name
+                    }}</span>
                     <span>在</span>
-                    <span class="text-primary q-px-xs">{{ dynamicData.group }}</span>
+                    <span class="text-primary q-px-xs">{{
+                      dynamicData.group
+                    }}</span>
                     <span>新建项目</span>
-                    <span class="text-primary q-pl-xs">{{ dynamicData.matter }}</span>
+                    <span class="text-primary q-pl-xs">{{
+                      dynamicData.matter
+                    }}</span>
                   </q-item-label>
                   <q-item-label class="text-grey-6" lines="1">
                     {{ dynamicData.date }}
@@ -378,7 +397,11 @@
           </q-card-section>
           <q-separator />
           <q-list>
-            <q-item class="q-mb-sm" v-for="(item, index) in workplaceSata.teamMemberDatas" :key="index">
+            <q-item
+              class="q-mb-sm"
+              v-for="(item, index) in workplaceSata.teamMemberDatas"
+              :key="index"
+            >
               <q-item-section avatar>
                 <q-avatar>
                   <q-img :src="item.hearSrc" />
@@ -387,7 +410,9 @@
 
               <q-item-section>
                 <q-item-label>{{ item.name }}</q-item-label>
-                <q-item-label caption lines="1">{{ item.nickName }}</q-item-label>
+                <q-item-label caption lines="1">{{
+                  item.nickName
+                }}</q-item-label>
               </q-item-section>
 
               <q-item-section side>
@@ -439,7 +464,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
-import WORKPLACE_DATA from '@/mock/data/workplaceData'
+import WORKPLACE_DATA from '@/mock/data/dashboard/workplaceData'
 
 const itemDefault = {
   src:
