@@ -3,6 +3,7 @@
     <mavon-editor style="z-index: 5000; min-width: 300px" v-model="value" ref=md @imgAdd="$imgAdd" @imgDel="$imgDel"></mavon-editor>
     <!--点击按钮触发图片统一上传-->
     <button @click="uploadimg">upload</button>
+    {{ value}}
   </div>
 </template>
 

@@ -5,15 +5,15 @@
       <div class="row items-center q-gutter-y-sm">
         <div class="col-sm-auto col-xs-12">
           <q-avatar size="76px">
-            <q-img ratio="1" src="~assets/head_1.png" />
+            <q-img ratio="1" :src="workplaceSata.currentUserData.headSrc" />
           </q-avatar>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-6 q-pl-md">
           <div style="font-size: large" class="q-mb-xs">
-            早安，Serati Ma，祝你开心每一天！
+            早安，{{ workplaceSata.currentUserData.name }}，祝你开心每一天！
           </div>
           <q-item-label class="text-grey-6 text-body"
-            >交互专家 |蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
+          >{{ workplaceSata.currentUserData.job }} | {{ workplaceSata.currentUserData.department }}
           </q-item-label>
         </div>
         <div
@@ -37,7 +37,7 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >56
+            >{{ workplaceSata.statisticsData.projectNum }}
             </q-item-label>
           </q-item-label>
           <q-item-label class="inline-block">
@@ -54,7 +54,7 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >8/24
+            >{{ workplaceSata.statisticsData.waitMatterNum }}/{{ workplaceSata.statisticsData.allMatterNum }}
             </q-item-label>
           </q-item-label>
           <q-item-label class="inline-block">
@@ -70,8 +70,8 @@
             </q-item-label>
             <q-item-label
               class="text-center text-black q-pt-xs"
-              style="font-size: x-large"
-              >2,223
+              style="font-size: x-large">
+              {{ workplaceSata.statisticsData.projectVisitNum | numeral('0,0') }}
             </q-item-label>
           </q-item-label>
         </div>
@@ -97,8 +97,8 @@
           <div class="row q-pa-sm">
             <div
               class="col-xs-12 col-md-4 col-sm-6 q-pa-sm cursor-pointer"
-              v-for="item in items"
-              :key="item.id"
+              v-for="(item, index) in workplaceSata.myProjectDatas"
+              :key="index"
             >
               <sc-shadow>
                 <q-card
@@ -111,31 +111,31 @@
                       <q-avatar size="sm">
                         <img
                           alt=""
-                          src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+                          :src="item.imgSrc"
                         />
                       </q-avatar>
                     </q-item-section>
 
                     <q-item-section>
-                      <q-item-label class="text-weight-bold"
-                        >Alipay
+                      <q-item-label class="text-weight-bold">
+                        {{ item.title }}
                       </q-item-label>
                     </q-item-section>
                   </q-item>
                   <q-item class="text-grey-6">
-                    <q-item-label
-                      >那是一种内在的东西，他们到达不了，也无法触及的
+                    <q-item-label>
+                      {{ item.desc }}
                     </q-item-label>
                   </q-item>
                   <q-item>
                     <q-item-section>
-                      <q-item-label class="text-grey-6" style="font-size: small"
-                        >科学搬家组
+                      <q-item-label class="text-grey-6" style="font-size: small">
+                        {{ item.group }}
                       </q-item-label>
                     </q-item-section>
                     <q-item-section side>
-                      <q-item-label class="text-grey-6" style="font-size: small"
-                        >3天前
+                      <q-item-label class="text-grey-6" style="font-size: small">
+                        {{ item.time }}
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -158,24 +158,24 @@
           </q-card-section>
           <q-separator />
           <q-list>
-            <div v-for="contact in items" :key="contact.id" class="q-mb-sm">
+            <div v-for="(dynamicData, index) in workplaceSata.dynamicDatas" :key="index" class="q-mb-sm">
               <q-item class="q-py-md">
                 <q-item-section avatar>
                   <q-avatar>
-                    <img alt="" src="~assets/head_1.png" />
+                    <img alt="" :src="dynamicData.imgSrc" />
                   </q-avatar>
                 </q-item-section>
 
                 <q-item-section>
                   <q-item-label class="q-mb-xs">
-                    <span class="text-weight-bold q-pr-xs">钟小鱼</span>
+                    <span class="text-weight-bold q-pr-xs">{{ dynamicData.name }}</span>
                     <span>在</span>
-                    <span class="text-primary q-px-xs">高逼格设计天团</span>
+                    <span class="text-primary q-px-xs">{{ dynamicData.group }}</span>
                     <span>新建项目</span>
-                    <span class="text-primary q-pl-xs">六月迭代</span>
+                    <span class="text-primary q-pl-xs">{{ dynamicData.matter }}</span>
                   </q-item-label>
-                  <q-item-label class="text-grey-6" lines="1"
-                    >2020-12-21 21:11:21
+                  <q-item-label class="text-grey-6" lines="1">
+                    {{ dynamicData.date }}
                   </q-item-label>
                 </q-item-section>
               </q-item>
@@ -349,12 +349,12 @@
           </q-card-section>
           <q-separator />
           <q-table
-            :data="data"
-            :columns="columns"
-            row-key="name"
+            :data="workplaceSata.waitMatters.waitMatterDatas"
+            :columns="workplaceSata.waitMatters.waitMatterColumns"
+            row-key="id"
             selection="multiple"
             color="primary"
-            :selected.sync="selected"
+            :selected.sync="workplaceSata.waitMatters.selected"
             hide-pagination
           >
             <template v-slot:header-cell="props">
@@ -378,55 +378,53 @@
           </q-card-section>
           <q-separator />
           <q-list>
-            <q-item class="q-mb-sm" v-for="item in 10" :key="item">
+            <q-item class="q-mb-sm" v-for="(item, index) in workplaceSata.teamMemberDatas" :key="index">
               <q-item-section avatar>
                 <q-avatar>
-                  <q-img src="~assets/head.png" v-if="item % 3 === 1" />
-                  <q-img src="~assets/sika-head.png" v-if="item % 3 === 2" />
-                  <q-img src="~assets/head_1.png" v-else />
+                  <q-img :src="item.hearSrc" />
                 </q-avatar>
               </q-item-section>
 
               <q-item-section>
-                <q-item-label>亮晶晶</q-item-label>
-                <q-item-label caption lines="1">Designer</q-item-label>
+                <q-item-label>{{ item.name }}</q-item-label>
+                <q-item-label caption lines="1">{{ item.nickName }}</q-item-label>
               </q-item-section>
 
               <q-item-section side>
                 <q-chip
-                  v-if="item % 4 === 1"
+                  v-if="index % 4 === 1"
                   outline
                   square
                   color="blue"
                   class="bg-blue-1"
-                  label="在"
+                  :label="item.state"
                   style="width: 56px"
                 />
                 <q-chip
-                  v-if="item % 4 === 2"
+                  v-if="index % 4 === 2"
                   outline
                   square
                   color="green"
                   class="bg-green-1"
-                  label="不在"
+                  :label="item.state"
                   style="width: 56px"
                 />
                 <q-chip
-                  v-if="item % 4 === 3"
+                  v-if="index % 4 === 3"
                   outline
                   square
                   color="red"
                   class="bg-red-1"
-                  label="不在"
+                  :label="item.state"
                   style="width: 56px"
                 />
                 <q-chip
-                  v-if="item % 4 === 0"
+                  v-if="index % 4 === 0"
                   outline
                   square
                   color="purple"
                   class="bg-purple-1"
-                  label="在"
+                  :label="item.state"
                   style="width: 56px"
                 />
               </q-item-section>
@@ -441,6 +439,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+import WORKPLACE_DATA from '@/mock/data/workplaceData'
 
 const itemDefault = {
   src:
@@ -458,6 +457,7 @@ export default {
   components: { ScShadow },
   data() {
     return {
+      workplaceSata: WORKPLACE_DATA,
       items: itemsInit,
       activeClass: {
         border: '1px dashed dodgerblue'
