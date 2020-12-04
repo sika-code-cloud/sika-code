@@ -579,7 +579,7 @@
 
 <script>
 import ScShadow from 'components/shadow/ScShadow'
-import MONITOR_DATA from '@/mock/data/monitorData'
+import MONITOR_DATA from '@/mock/data/dashboard/monitorData'
 
 export default {
   name: 'Monitor',

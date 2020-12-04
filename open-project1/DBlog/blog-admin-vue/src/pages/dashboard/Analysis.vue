@@ -280,12 +280,7 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <q-field
-                  class="float-right"
-                  dense
-                  outlined
-                  style="width: 225px"
-                >
+                <q-field class="float-right" dense outlined>
                   <template v-slot:control>
                     <div class="self-center full-width no-outline" tabindex="0">
                       {{ formatQueryDate }}
@@ -359,9 +354,9 @@
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>{{ item.desc }}</q-item-section>
-                    <q-item-section side>{{
-                      item.visitNum | numeral('0,0')
-                    }}</q-item-section>
+                    <q-item-section side
+                      >{{ item.visitNum | numeral('0,0') }}
+                    </q-item-section>
                   </q-item>
                 </q-list>
               </q-item-label>
@@ -457,7 +452,7 @@
 </template>
 
 <script>
-import ANALYSIS_DATA from '@/mock/data/analysisData'
+import ANALYSIS_DATA from '@/mock/data/dashboard/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
 import { date } from 'quasar'
 
@@ -520,7 +515,13 @@ export default {
   },
   watch: {
     beginAndEndDate(newSelected, oldSelected) {
-      if (newSelected) {
+      if (!newSelected) {
+        newSelected = date.startOfDate(Date.now(), 'day')
+      }
+      if (!newSelected.from || !newSelected.to) {
+        this.queryDate.from = newSelected
+        this.queryDate.to = newSelected
+      } else if (newSelected) {
         this.queryDate.from = newSelected.from
         this.queryDate.to = newSelected.to
       }
