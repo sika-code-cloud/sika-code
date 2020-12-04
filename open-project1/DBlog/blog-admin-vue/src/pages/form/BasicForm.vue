@@ -48,7 +48,7 @@
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
               <q-item-label>
-                <ScStartEndDate />
+                <ScStartEndDate ref="startEndDate" />
               </q-item-label>
             </span>
           </div>
@@ -229,7 +229,7 @@
 </template>
 
 <script>
-import { date, QSpinnerIos } from 'quasar'
+import { QSpinnerIos } from 'quasar'
 import ScStartEndDate from 'components/common/ScStartEndDate'
 
 export default {
@@ -252,7 +252,7 @@ export default {
           value: 'op3'
         }
       ],
-      beginAndEndDate: {},
+      startAndEndDate: this.$refs.startEndDate,
       dateStr: '',
       queryBtnStyle: {},
       queryLoad: false,
@@ -559,9 +559,6 @@ export default {
       //   row.id = this.data.length
       //   this.loading = false
       // }, 500)
-    },
-    formatDate(dateFormat) {
-      return date.formatDate(dateFormat, 'YYYY-MM-DD')
     }
   },
   computed: {
@@ -570,6 +567,8 @@ export default {
     }
   },
   mounted() {
+    this.startAndEndDate = this.$refs.startEndDate.startAndEndDate
+    console.log(JSON.stringify(this.startAndEndDate) + '----------------')
     this.showQuery = this.$q.screen.gt.xs
     this.tableLabel = this.$q.screen.gt.xs ? '收起' : '展开'
   },

@@ -39,7 +39,7 @@
                     <q-icon size="xs" name="arrow_drop_up" color="red" />
                   </span>
                   <span
-                    >周同比 {{ analysisData.visitData.weekForCompare }}
+                  >周同比 {{ analysisData.visitData.weekForCompare }}
                     <q-icon size="xs" name="arrow_drop_down" color="info" />
                   </span>
                 </q-item-label>
@@ -48,8 +48,8 @@
               <q-item-label>
                 <span>总访问量</span>
                 <span class="float-right">{{
-                  analysisData.visitData.visitTotal
-                }}</span>
+                    analysisData.visitData.visitTotal
+                  }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -95,8 +95,8 @@
               <q-item-label>
                 <span>总销售额</span>
                 <span class="float-right">{{
-                  analysisData.saleData.saleTotal
-                }}</span>
+                    analysisData.saleData.saleTotal
+                  }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -140,7 +140,7 @@
                     <q-icon size="xs" name="arrow_drop_up" color="red" />
                   </span>
                   <span
-                    >周同比 {{ analysisData.orderData.weekForCompare }}
+                  >周同比 {{ analysisData.orderData.weekForCompare }}
                     <q-icon size="xs" name="arrow_drop_down" color="info" />
                   </span>
                 </q-item-label>
@@ -149,8 +149,8 @@
               <q-item-label>
                 <span>转化率</span>
                 <span class="float-right">{{
-                  analysisData.orderData.conversionRate
-                }}</span>
+                    analysisData.orderData.conversionRate
+                  }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -227,7 +227,7 @@
               <q-item-label>
                 <span>总用户</span>
                 <span class="float-right"
-                  >{{ analysisData.userData.userTotal }} 人</span
+                >{{ analysisData.userData.userTotal }} 人</span
                 >
               </q-item-label>
             </q-card>
@@ -269,7 +269,7 @@
               </q-item-label>
               <q-item-label class="col q-gutter-sm text-right">
                 <q-btn-toggle
-                  :onclick="changeQueryDate(visitQuery)"
+                  @input="changeQueryDate(visitQuery)"
                   style="height: 36px"
                   v-model="visitQuery"
                   unelevated
@@ -280,30 +280,7 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <q-field class="float-right" dense outlined>
-                  <template v-slot:control>
-                    <div class="self-center full-width no-outline" tabindex="0">
-                      {{ formatQueryDate }}
-                    </div>
-                  </template>
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer" color="orange">
-                      <q-menu
-                        square
-                        :offset="[12, 10]"
-                        transition-show="jump-down"
-                        transition-hide="jump-up"
-                      >
-                        <q-date
-                          v-model="beginAndEndDate"
-                          square
-                          mask="YYYY-MM-DD"
-                          range
-                        />
-                      </q-menu>
-                    </q-icon>
-                  </template>
-                </q-field>
+                <sc-start-end-date class="float-right" ref="startEndDate" :field-style="{'min-width': '222px'}" />
               </q-item-label>
             </q-card-section>
             <q-separator />
@@ -322,7 +299,7 @@
               </q-item-label>
               <q-item-label class="col-md-4 col-xs-12">
                 <q-item-label class="text-weight-bold q-mb-sm"
-                  >访问量排行
+                >访问量排行
                 </q-item-label>
                 <q-list>
                   <q-item
@@ -355,7 +332,7 @@
                     </q-item-section>
                     <q-item-section>{{ item.desc }}</q-item-section>
                     <q-item-section side
-                      >{{ item.visitNum | numeral('0,0') }}
+                    >{{ item.visitNum | numeral('0,0') }}
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -455,19 +432,15 @@
 import ANALYSIS_DATA from '@/mock/data/dashboard/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
 import { date } from 'quasar'
+import ScStartEndDate from 'components/common/ScStartEndDate'
 
 export default {
   name: 'Analysis',
-  components: { ScShadow },
+  components: { ScStartEndDate, ScShadow },
   data() {
     return {
       analysisData: ANALYSIS_DATA,
-      queryDate: {
-        from: date.startOfDate(Date.now(), 'day'),
-        to: date.startOfDate(Date.now(), 'day')
-      },
-      visitQuery: 'currentDay',
-      beginAndEndDate: {}
+      visitQuery: 'currentDay'
     }
   },
   methods: {
@@ -488,11 +461,11 @@ export default {
       } else if (value === 'currentYear') {
         lastDate = date.subtractFromDate(currentDate, { days: 365 })
       }
-      this.queryDate.from = date.startOfDate(lastDate, 'day')
-      this.queryDate.to = date.endOfDate(currentDate, 'day')
-    },
-    formatDate(dateFormat) {
-      return date.formatDate(dateFormat, 'YYYY-MM-DD')
+      if (this.$refs.startEndDate) {
+        console.log(lastDate + '---' + JSON.stringify(this.$refs.startEndDate.startAndEndDate))
+        this.$refs.startEndDate.startAndEndDate.from = date.startOfDate(lastDate, 'day')
+        this.$refs.startEndDate.startAndEndDate.to = date.endOfDate(currentDate, 'day')
+      }
     }
   },
   computed: {
@@ -504,27 +477,6 @@ export default {
         return 'xs'
       }
       return '1em'
-    },
-    formatQueryDate() {
-      return (
-        this.formatDate(this.queryDate.from) +
-        '~' +
-        this.formatDate(this.queryDate.to)
-      )
-    }
-  },
-  watch: {
-    beginAndEndDate(newSelected, oldSelected) {
-      if (!newSelected) {
-        newSelected = date.startOfDate(Date.now(), 'day')
-      }
-      if (!newSelected.from || !newSelected.to) {
-        this.queryDate.from = newSelected
-        this.queryDate.to = newSelected
-      } else if (newSelected) {
-        this.queryDate.from = newSelected.from
-        this.queryDate.to = newSelected.to
-      }
     }
   }
 }
