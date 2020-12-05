@@ -1,5 +1,10 @@
 <template>
-  <q-field :square="fieldSquare" :dense="fieldDense" outlined :style="fieldStyle">
+  <q-field :square="fieldSquare"
+           :dense="fieldDense"
+           outlined
+           :style="fieldStyle"
+           v-model="startAndEndDateFormat"
+           :rules="rules">
     <template v-slot:control>
       <div class="self-center full-width no-outline" tabindex="0">
         {{ startAndEndDateFormat }}
@@ -25,13 +30,14 @@
 
 <script>
 import { date } from 'quasar'
-const startAndEndDateDefault = {
-  from: '',
-  to: ''
-}
+
 export default {
   name: 'ScStartEndDate',
   props: {
+    rules: {
+      type: [Object, Array],
+      required: false
+    },
     clearIcon: {
       type: String,
       default: 'cancel',
@@ -88,18 +94,20 @@ export default {
     },
     fromDate: {
       type: Date,
-      default: () => date.startOfDate(Date.now(), 'day'),
       required: false
     },
     toDate: {
       type: Date,
-      default: () => date.startOfDate(Date.now(), 'day'),
       required: false
     }
   },
   data() {
     return {
       visitQuery: 'currentDay',
+      startAndEndDateForRet: {
+        from: this.fromDate,
+        to: this.toDate
+      },
       startAndEndDate: {
         from: this.fromDate,
         to: this.toDate
@@ -111,14 +119,43 @@ export default {
     formatDate(dateFormat) {
       return date.formatDate(dateFormat, this.dateFormat)
     },
+    buildStartAndEndDate(from, to) {
+      if (from === to) {
+        this.startAndEndDate = from
+        return
+      }
+      this.startAndEndDate = this.defaultValue()
+      if (date.isValid(from)) {
+        this.startAndEndDate.from = this.formatDate(from)
+      }
+      if (date.isValid(to)) {
+        this.startAndEndDate.to = this.formatDate(to)
+      }
+    },
     formatStartAndAnd() {
-      this.startAndEndDateFormat = this.formatDate(this.startAndEndDate.from) + '~' + this.formatDate(this.startAndEndDate.to)
+      const startEndDate = this.startAndEndDateForRet
+      if (!startEndDate.from) {
+        startEndDate.from = this.formatDate(Date.now())
+      }
+      if (!startEndDate.to) {
+        startEndDate.to = this.formatDate(Date.now())
+      }
+      if (startEndDate.from === startEndDate.to) {
+        this.startAndEndDate = startEndDate.from
+      }
+      this.startAndEndDateFormat = startEndDate.from + '~' + startEndDate.to
     },
     buildNow() {
       return date.startOfDate(Date.now(), 'day')
     },
     clear() {
-      this.startAndEndDate = startAndEndDateDefault
+      this.startAndEndDate = this.defaultValue()
+    },
+    defaultValue() {
+      return {
+        from: '',
+        to: ''
+      }
     }
   },
   mounted() {
@@ -127,13 +164,23 @@ export default {
   watch: {
     startAndEndDate: {
       handler(newValue, oldValue) {
+        console.log(JSON.stringify(newValue))
+        this.startAndEndDateForRet = newValue
         if (!newValue) {
-          newValue = startAndEndDateDefault
-          this.startAndEndDate = startAndEndDateDefault
+          newValue = this.defaultValue()
+          this.startAndEndDateForRet = this.defaultValue()
+          this.startAndEndDate = this.defaultValue()
         }
         if (!newValue || newValue.from === '' || newValue.to === '') {
+          this.startAndEndDateForRet = null
           this.startAndEndDateFormat = ''
           return
+        }
+        if (date.isValid(newValue)) {
+          this.startAndEndDateForRet = {
+            from: newValue,
+            to: newValue
+          }
         }
         this.formatStartAndAnd()
       },

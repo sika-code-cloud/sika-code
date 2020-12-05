@@ -1,5 +1,5 @@
-import _ from 'lodash'
 import numeral from 'numeral'
+import _ from 'lodash'
 
 const visitData = {
   icon: 'visibility',

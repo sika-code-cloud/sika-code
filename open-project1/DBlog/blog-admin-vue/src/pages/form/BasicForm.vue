@@ -10,7 +10,8 @@
     </div>
     <div class="q-px-md">
       <q-card square flat class="q-gutter-y-md q-my-md q-py-sm">
-        <q-form class="q-px-md full-width">
+        <q-form class="q-px-md full-width" @reset="onReset"
+                @submit="onSubmit">
           <div class="row q-gutter-y-sm q-my-md items-center">
             <span
               class="col-sm-4 col-xs-12"
@@ -19,17 +20,18 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >标题:</q-item-label
+              >标题:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.title"
                   placeholder="给目标起个名字"
                   dense
                   square
+                  :rules="[ val => val && val.length > 0 || '请输入名字']"
                 >
                 </q-input>
               </q-item-label>
@@ -43,7 +45,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >起止日期:</q-item-label
+              >起止日期:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
@@ -60,7 +62,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >目标描述:</q-item-label
+              >目标描述:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
@@ -68,10 +70,11 @@
                 <q-input
                   outlined
                   type="textarea"
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.targetDesc"
                   placeholder="请输入你的阶段性工作目标"
                   dense
                   square
+                  :rules="[ val => val && val.length > 0 || '请输入阶段性工作目标']"
                 >
                 </q-input>
               </q-item-label>
@@ -85,7 +88,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >衡量标准:</q-item-label
+              >衡量标准:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
@@ -93,10 +96,11 @@
                 <q-input
                   outlined
                   type="textarea"
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.measurementCriteria"
                   placeholder="请输入衡量标准"
                   dense
                   square
+                  :rules="[ val => val && val.length > 0 || '请输入衡量标准']"
                 >
                 </q-input>
               </q-item-label>
@@ -122,7 +126,7 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.customer"
                   placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"
                   dense
                   square
@@ -139,14 +143,14 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >邀评人<span class="text-grey-6">（选填）</span>:</q-item-label
+              >邀评人<span class="text-grey-6">（选填）</span>:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.evaluator"
                   placeholder="请直接 @姓名／工号，最多可邀请 5 人"
                   dense
                   square
@@ -163,7 +167,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >权重<span class="text-grey-6">（选填）</span>:</q-item-label
+              >权重<span class="text-grey-6">（选填）</span>:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
@@ -172,7 +176,7 @@
                   style="width: 60%; max-width: 280px"
                   type="number"
                   outlined
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.weight"
                   placeholder="请输入"
                   dense
                   square
@@ -192,28 +196,29 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-                >目标公开:</q-item-label
+              >目标公开:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
               <q-item-label>
                 <q-option-group
                   size="sm"
-                  v-model="group"
-                  :options="options"
+                  v-model="targetOption"
+                  :options="basicFormData.targetOptions"
                   color="primary"
                   inline
                 />
               </q-item-label>
             </span>
             <span class="offset-sm-4 col-xl-4 col-md-5 col-sm-6 col-xs-12">
-              <q-item-label v-show="group === 'op2'" class="q-mb-md sc-design">
+              <q-item-label v-if="targetOption === 'partPublic'" class="q-mb-md sc-design">
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="basicFormData.inputData.publics"
                   placeholder="公开给"
                   dense
                   square
+                  :rules="[ val => val && val.length > 0 || '请输入公开人姓名']"
                 >
                 </q-input>
               </q-item-label>
@@ -221,6 +226,37 @@
                 客户、邀评人默认被分享
               </q-item-label>
             </span>
+            <div class="q-pt-sm offset-sm-4 col-xl-4 col-md-5 col-sm-6 col-xs-12">
+              <div class="row q-col-gutter-x-md">
+                <div class="col text-left">
+                  <q-btn
+                    class="no-border-radius"
+                    unelevated
+                    type="submit"
+                    :loading="loading"
+                    color="primary full-width"
+                    label="保 存"
+                    size="md"
+                  >
+                    <template v-slot:loading>
+                      <q-spinner-hourglass class="on-left" />
+                      保存...
+                    </template>
+                  </q-btn>
+                </div>
+                <div class="col">
+                  <q-btn
+                    class="no-border-radius"
+                    unelevated
+                    type="reset"
+                    color="grey full-width"
+                    label="清 除"
+                    size="md"
+                  >
+                  </q-btn>
+                </div>
+              </div>
+            </div>
           </div>
         </q-form>
       </q-card>
@@ -230,54 +266,39 @@
 
 <script>
 import ScStartEndDate from 'components/common/ScStartEndDate'
+import BASIC_FORM_DATA from '@/mock/data/form/basicFormData'
 
 export default {
   name: 'BasicForm',
   components: { ScStartEndDate },
   data() {
     return {
-      group: 'op1',
-      options: [
-        {
-          label: '公开',
-          value: 'op1'
-        },
-        {
-          label: '部分公开',
-          value: 'op2'
-        },
-        {
-          label: '不公开',
-          value: 'op3'
-        }
-      ],
-      startAndEndDate: this.$refs.startEndDate,
-      dateStr: '',
-      queryBtnStyle: {},
-      queryLoad: false,
-      addData: false,
-      showQuery: true,
-      queryStatus: '',
-      visible: false,
-      seamless: false,
-      tableShow: true,
       loading: false,
-      tableLabel: '展开',
-      ruleName: '',
-      selected: []
+      basicFormData: BASIC_FORM_DATA,
+      targetOption: 'public'
     }
   },
   methods: {
-  },
-  computed: {
-    pagesNumber() {
-      return Math.ceil(this.data.length / this.pagination.rowsPerPage)
+    onSubmit() {
+      this.basicFormData.inputData.startAndEndDate = this.$refs.startEndDate.startAndEndDateForRet
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: JSON.stringify(this.basicFormData.inputData)
+      })
+    },
+    onReset() {
+      for (const key in this.basicFormData.inputData) {
+        this.basicFormData.inputData[key] = null
+      }
+      this.$refs.startEndDate.startAndEndDate = null
     }
   },
+  computed: {},
   mounted() {
   },
-  watch: {
-  }
+  watch: {}
 }
 </script>
 

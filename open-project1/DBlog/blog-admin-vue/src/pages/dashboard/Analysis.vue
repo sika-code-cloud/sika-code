@@ -280,7 +280,7 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <sc-start-end-date class="float-right" ref="startEndDate" :field-style="{'min-width': '222px'}" />
+                <sc-start-end-date class="float-right" ref="startEndDate" :field-style="{'min-width': '253px'}" />
               </q-item-label>
             </q-card-section>
             <q-separator />
@@ -461,11 +461,7 @@ export default {
       } else if (value === 'currentYear') {
         lastDate = date.subtractFromDate(currentDate, { days: 365 })
       }
-      if (this.$refs.startEndDate) {
-        console.log(lastDate + '---' + JSON.stringify(this.$refs.startEndDate.startAndEndDate))
-        this.$refs.startEndDate.startAndEndDate.from = date.startOfDate(lastDate, 'day')
-        this.$refs.startEndDate.startAndEndDate.to = date.endOfDate(currentDate, 'day')
-      }
+      this.$refs.startEndDate.buildStartAndEndDate(lastDate, currentDate)
     }
   },
   computed: {
