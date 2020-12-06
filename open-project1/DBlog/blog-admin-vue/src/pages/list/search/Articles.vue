@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="sc-design">
     <div class="sc-base-list">
       <div class="bg-white text-h6 q-pa-md sc-design">
         <strong>搜索列表（文章）</strong>
@@ -33,137 +33,212 @@
         <div class="row">
           <span class="col-auto q-mt-xs"> 所属类目：</span>
           <span class="col">
-          <q-chip
-            class="cursor-pointer no-border-radius"
-            style="padding: 12px 12px"
-            square
-            dense
-            color="primary"
-            v-for="type in types"
-            v-bind:key="type"
-            :label="type"
-            text-color="white"
-          />
-        </span>
+            <q-chip
+              class="cursor-pointer no-border-radius"
+              style="padding: 12px 12px"
+              square
+              dense
+              color="primary"
+              v-for="type in types"
+              v-bind:key="type"
+              :label="type"
+              text-color="white"
+            />
+          </span>
         </div>
         <div class="row">
           <span class="col-sm-auto col-xs-2">owner： </span>
           <span class="col-sm-auto col-xs-9">
-          <q-select
-            class="col-auto inline-block"
-            outlined
-            v-model="owner"
-            square
-            multiple
-            dense
-            hide-dropdown-icon
-            options-dense
-            transition-show="jump-down"
-            transition-hide="jump-up"
-            behavior="menu"
-            :options="owners"
-            emit-value
-            map-options
-            use-input
-            @filter="filterFn"
-          >
-            <template v-slot:selected-item="scope">
-              <q-chip
-                removable
-                dense
-                square
-                @remove="scope.removeAtIndex(scope.index)"
-                :tabindex="scope.tabindex"
-                color="primary"
-                text-color="white"
-              >
-                {{ scope.opt.label }}
-              </q-chip>
-            </template>
-            <template v-slot:option="scope">
-              <q-item
-                class="q-pa-none"
-                v-bind="scope.itemProps"
-                v-on="scope.itemEvents"
-              >
-                <q-item-section side>
-                  <q-checkbox
-                    :disable="scope.opt.disable"
-                    v-model="owner"
-                    :val="scope.opt.value"
-                  ></q-checkbox>
-                </q-item-section>
-                <q-item-section class="q-pr-sm">
-                  <q-item-label v-html="scope.opt.label"></q-item-label>
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </span>
+            <q-select
+              class="col-auto inline-block"
+              style="min-width: 100px"
+              outlined
+              v-model="owner"
+              square
+              multiple
+              dense
+              hide-dropdown-icon
+              options-dense
+              transition-show="jump-down"
+              transition-hide="jump-up"
+              behavior="menu"
+              :options="owners"
+              emit-value
+              map-options
+              @filter="filterFn"
+            >
+              <template v-slot:selected-item="scope">
+                <q-chip
+                  removable
+                  dense
+                  square
+                  @remove="scope.removeAtIndex(scope.index)"
+                  :tabindex="scope.tabindex"
+                  color="primary"
+                  text-color="white"
+                >
+                  {{ scope.opt.label }}
+                </q-chip>
+              </template>
+              <template v-slot:option="scope">
+                <q-item
+                  class="q-pa-none"
+                  v-bind="scope.itemProps"
+                  v-on="scope.itemEvents"
+                >
+                  <q-item-section side>
+                    <q-checkbox
+                      :disable="scope.opt.disable"
+                      v-model="owner"
+                      :val="scope.opt.value"
+                    ></q-checkbox>
+                  </q-item-section>
+                  <q-item-section class="q-pr-sm">
+                    <q-item-label v-html="scope.opt.label"></q-item-label>
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </span>
         </div>
         <div class="row">
           <span class="col-sm-auto q-mt-sm"> 其他选项：</span>
           <span class="col-sm-9 col-xs-8">
-          <span class="row q-gutter-y-sm">
-            <span class="col-sm-5 col-xs-9">
-              活跃用户：
-              <q-select
-                class="inline-block"
-                style="width: 80px"
-                outlined
-                v-model="activeUser"
-                square
-                dense
-                options-dense
-                hide-dropdown-icon
-                behavior="menu"
-                :options="['张三', '张小三', '李泽瑞', '朱元璋', '姚明']"
-              />
-            </span>
-            <span class="col-sm-5 col-xs-9">
-              好评度：<q-select
-              class="inline-block"
-              style="width: 80px"
-              outlined
-              v-model="goodPing"
-              hide-dropdown-icon
-              square
-              dense
-              options-dense
-              behavior="menu"
-              :options="['优秀', '普通', '一般']"
-            />
+            <span class="row q-gutter-y-sm">
+              <span class="col-sm-5 col-xs-9">
+                活跃用户：
+                <q-select
+                  class="inline-block"
+                  style="width: 80px"
+                  outlined
+                  v-model="activeUser"
+                  square
+                  dense
+                  options-dense
+                  hide-dropdown-icon
+                  behavior="menu"
+                  :options="['张三', '张小三', '李泽瑞', '朱元璋', '姚明']"
+                />
+              </span>
+              <span class="col-sm-5 col-xs-9">
+                好评度：<q-select
+                  class="inline-block"
+                  style="width: 80px"
+                  outlined
+                  v-model="goodPing"
+                  hide-dropdown-icon
+                  square
+                  dense
+                  options-dense
+                  behavior="menu"
+                  :options="['优秀', '普通', '一般']"
+                />
+              </span>
             </span>
           </span>
-        </span>
         </div>
       </div>
       <div class="bg-white q-mt-md">
-        <q-list class="no-border-radius no-border">
-        <span v-for="n in 20" v-bind:key="n">
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-avatar>
-                <img
-                  src="https://cdn.quasar.dev/img/avatar2.jpg"
-                  v-if="n % 2 === 0"
-                />
-                <img src="https://cdn.quasar.dev/img/avatar4.jpg" v-else />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label lines="1">Brunch this weekend?</q-item-label>
-              <q-item-label caption lines="2">
-                <span class="text-weight-bold">Janet</span>
-                -- I'll be in your neighborhood doing errands this weekend. Do
-                you want to grab brunch?
-              </q-item-label>
-            </q-item-section>
-            <q-item-section side top> 1 min ago </q-item-section>
-          </q-item>
-          <q-separator inset="item" v-show="n !== 20" />
-        </span>
+        <q-list>
+          <div :key="index" v-for="(item, index) in heavyList">
+            <q-item clickabl>
+              <sc-shadow class="q-pa-sm">
+                <q-item-section>
+                  <q-item-label class="text-body1 q-mb-sm">
+                    <strong>Alipay-{{ item.lable }}{{ index }}</strong>
+                  </q-item-label>
+                  <q-item-label class="q-mb-sm">
+                    <q-chip
+                      label="Sika Design"
+                      class="cursor-pointer"
+                      color="primary"
+                      text-color="white"
+                      square
+                      size="12px"
+                    ></q-chip>
+                    <q-chip
+                      label="设计语言"
+                      class="cursor-pointer"
+                      color="info"
+                      text-color="white"
+                      square
+                      size="12px"
+                    ></q-chip>
+                    <q-chip
+                      label="蚂蚁金服"
+                      class="cursor-pointer"
+                      color="deep-orange"
+                      text-color="white"
+                      square
+                      size="12px"
+                    ></q-chip>
+                  </q-item-label>
+                  <p class="text-grey-8 q-mb-sm q-pl-xs">
+                    段落示意：蚂蚁金服设计平台
+                    ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台
+                    ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。
+                  </p>
+                  <q-item-label
+                    class="row text-body2 text-grey-7 items-center q-gutter-x-xs"
+                  >
+                    <q-chip
+                      color="white"
+                      text-color="primary"
+                      class="col-auto cursor-pointer"
+                    >
+                      <q-avatar size="18px">
+                        <q-img
+                          src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+                        />
+                      </q-avatar>
+                      姜宇
+                    </q-chip>
+                    <span class="col-auto q-ml-none">发布在</span>
+                    <span class="col-auto text-primary cursor-pointer"
+                      >https://ant.design</span
+                    >
+                    <span class="col-sm-auto col-xs-12 q-pl-xs"
+                      >2020-11-14 16:15</span
+                    >
+                  </q-item-label>
+                  <div class="q-mt-sm row items-center" style="height: 24px">
+                    <q-btn-group flat>
+                      <q-btn
+                        flat
+                        dense
+                        icon="star_border"
+                        label="118"
+                        size="12px"
+                        class="q-mr-sm"
+                        color="primary"
+                      />
+                      <q-separator vertical />
+                      <q-btn
+                        flat
+                        dense
+                        icon="thumb_up"
+                        label="118"
+                        size="12px"
+                        color="grey-6"
+                        class="q-mx-sm"
+                      />
+                      <q-separator vertical />
+                      <q-btn
+                        flat
+                        dense
+                        icon="message"
+                        label="118"
+                        size="12px"
+                        color="grey-6"
+                        class="q-mx-sm"
+                      />
+                    </q-btn-group>
+                  </div>
+                </q-item-section>
+              </sc-shadow>
+            </q-item>
+            <q-separator inset="" spaced="10px" />
+          </div>
         </q-list>
       </div>
     </div>
@@ -171,6 +246,8 @@
 </template>
 
 <script>
+import ScShadow from 'components/shadow/ScShadow'
+
 const types = []
 types.push('全部')
 for (let i = 0; i < 11; ++i) {
@@ -204,10 +281,20 @@ const ownersDefault = [
     icon: 'casino'
   }
 ]
+
+const maxSize = 10
+const heavyList = []
+for (let i = 0; i < maxSize; i++) {
+  heavyList.push({
+    label: 'Option ' + (i + 1)
+  })
+}
 export default {
   name: 'Articles',
+  components: { ScShadow },
   data() {
     return {
+      heavyList,
       types,
       owner: [],
       activeUser: '张三',

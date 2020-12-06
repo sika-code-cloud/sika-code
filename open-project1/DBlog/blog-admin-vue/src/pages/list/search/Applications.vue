@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="sc-base-list">
       <div class="bg-white text-h6 q-pa-md sc-design">
         <strong>搜索列表（应用）</strong>
@@ -50,6 +50,7 @@
         <span class="col-sm-auto col-xs-9">
           <q-select
             class="col-auto inline-block"
+            style="min-width: 100px"
             outlined
             v-model="owner"
             square
@@ -63,7 +64,6 @@
             :options="owners"
             emit-value
             map-options
-            use-input
             @filter="filterFn"
           >
             <template v-slot:selected-item="scope">
@@ -137,38 +137,120 @@
         </span>
       </div>
     </div>
-    <div class="bg-white q-mt-md q-mx-md">
-      <q-list class="no-border-radius no-border">
-        <span v-for="n in 20" v-bind:key="n">
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-avatar>
-                <img
-                  src="https://cdn.quasar.dev/img/avatar2.jpg"
-                  v-if="n % 2 === 0"
-                />
-                <img src="https://cdn.quasar.dev/img/avatar4.jpg" v-else />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label lines="1">Brunch this weekend?</q-item-label>
-              <q-item-label caption lines="2">
-                <span class="text-weight-bold">Janet</span>
-                -- I'll be in your neighborhood doing errands this weekend. Do
-                you want to grab brunch?
-              </q-item-label>
-            </q-item-section>
-            <q-item-section side top> 1 min ago </q-item-section>
-          </q-item>
-          <q-separator inset="item" v-show="n !== 20" />
-        </span>
-      </q-list>
+    <div class="q-mt-md q-mx-sm">
+      <div class="row">
+        <div
+          class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
+          :key="item.id"
+          v-for="item in itemsInit"
+        >
+          <q-intersection once class="q-pa-sm">
+            <sc-shadow>
+              <q-card square bordered flat>
+                <q-item>
+                  <q-item-section avatar>
+                    <q-avatar>
+                      <img src="~assets/head_1.png" />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-body1">
+                      <strong>爱美丽</strong>
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item class="block text-center q-pt-xs q-mb-sm">
+                  <q-item-label class="row" caption>
+                    <span class="col">活跃用户</span>
+                    <span class="col">新增用户</span>
+                  </q-item-label>
+                  <q-item-label class="row text-body1 text-black">
+                    <span class="col"><strong>12</strong>万</span>
+                    <span class="col"><strong>1900</strong></span>
+                  </q-item-label>
+                </q-item>
+                <q-separator />
+                <q-item class="q-px-sm">
+                  <q-btn-group flat spread class="full-width">
+                    <q-btn
+                      flat
+                      dense
+                      icon="save_alt"
+                      size="sm"
+                      class="q-mr-sm"
+                      color="grey-6"
+                    >
+                      <q-tooltip>下载</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="edit"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>编辑</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="share"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>分享</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="more_horiz"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>更多</q-tooltip>
+                    </q-btn>
+                  </q-btn-group>
+                </q-item>
+              </q-card>
+            </sc-shadow>
+          </q-intersection>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ScShadow from 'components/shadow/ScShadow'
+import _ from 'lodash'
+
+const srcs = [
+  'https://gw.alipayobjects.com/zos/rmsportal/uMfMFlvUuceEyPpotzlq.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/iZBVOIhGJiAnhplqjvZW.png',
+  'https://pic.rmb.bdstatic.com/fbb6939952e2e27c5cdfc5b706905768.jpeg@wm_2,t_55m+5a625Y+3L+WIhuS6q+e+juS4veeahOmbhuS4reWcsA==,fc_ffffff,ff_U2ltSGVp,sz_26,x_17,y_17',
+  'https://gw.alipayobjects.com/zos/rmsportal/iXjVmWVHbCJAyqvDxdtx.png',
+  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604603259601&di=98453cd17ded14a25ec805df888b2267&imgtype=0&src=http%3A%2F%2Fimg.08087.cc%2Fuploads%2F20191128%2F14%2F1574923905-WqopanrGSZ.jpg',
+  'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
+  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602939538&di=a457faa41c62fff3cbf0ab1fed08dcfc&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201308%2F05%2F20130805105309_5E2zE.jpeg',
+  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602939540&di=329ba6679a8ac3e9feb457c5dd24e3d5&imgtype=0&src=http%3A%2F%2F00.minipic.eastday.com%2F20170415%2F20170415170933_d0304d15b93b7025b2a045c4ff65baf3_13.jpeg',
+  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602941634&di=be2c1a81c94d87340186413a8b1bd42e&imgtype=0&src=http%3A%2F%2Ft1.hxzdhn.com%2Fuploads%2Ftu%2F201807%2F9999%2Fb488d1a5fc.jpg'
+]
+const itemDefault = {
+  select: false
+}
+const itemsInit = []
+for (let i = 0; i < 10; ++i) {
+  const itemTemp = _.clone(itemDefault)
+  itemTemp.id = i
+  itemTemp.src = srcs[i % srcs.length]
+  itemsInit.push(itemTemp)
+}
 const types = []
 types.push('全部')
 for (let i = 0; i < 11; ++i) {
@@ -204,8 +286,10 @@ const ownersDefault = [
 ]
 export default {
   name: 'Applications',
+  components: { ScShadow },
   data() {
     return {
+      itemsInit,
       types,
       owner: [],
       activeUser: '张三',
@@ -231,4 +315,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style>
+.q-item__section--side {
+  padding-right: 0;
+}
+</style>

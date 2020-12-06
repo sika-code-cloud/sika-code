@@ -12,17 +12,23 @@
   "dependencies": {
     "@quasar/cli": "^1.1.2",
     "@quasar/extras": "^1.9.7",
+    "@tinymce/tinymce-vue": "3.2.0",
     "animate.css": "^4.1.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "ionicons": "5.2.3",
     "lodash": "^4.17.20",
+    "mavon-editor": "^2.9.0",
     "mockjs": "^1.1.0",
     "mockjs2": "^1.0.8",
+    "numeral": "^2.0.6",
     "quasar": "^1.0.0",
+    "tinymce": "^5.6.1",
     "to": "^0.2.9",
     "update": "^0.7.4",
-    "velocity-animate": "^1.5.2"
+    "velocity-animate": "^1.5.2",
+    "vue-numeral-filter": "^2.0.0",
+    "wangeditor": "^4.5.2"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

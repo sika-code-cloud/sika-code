@@ -272,132 +272,22 @@ const routes = [
     ]
   },
   {
-    path: '/button',
+    path: '/editor/customer',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        component: () => import('pages/Button.vue')
+        component: () => import('pages/editor/Customer')
       }
     ]
   },
   {
-    path: '/ajax',
+    path: '/editor/markdown',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        component: () => import('pages/Ajax.vue')
-      }
-    ]
-  },
-  {
-    path: '/avatar',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Avatar.vue')
-      }
-    ]
-  },
-  {
-    path: '/badge',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Badge.vue')
-      }
-    ]
-  },
-  {
-    path: '/card',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Card.vue')
-      }
-    ]
-  },
-  {
-    path: '/carousel',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Carousel.vue')
-      }
-    ]
-  },
-  {
-    path: '/chatMessage',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/ChatMessage.vue')
-      }
-    ]
-  },
-  {
-    path: '/color',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/color.vue')
-      }
-    ]
-  },
-  {
-    path: '/dialog',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Dialog.vue')
-      }
-    ]
-  },
-  {
-    path: '/editor',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Editor.vue')
-      }
-    ]
-  },
-  {
-    path: '/expansionItem',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/ExpansionItem.vue')
-      }
-    ]
-  },
-  {
-    path: '/form/input',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/form/Input.vue')
-      }
-    ]
-  },
-  {
-    path: '/form/form',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/form/Form.vue')
+        component: () => import('pages/editor/Markdown')
       }
     ]
   },
