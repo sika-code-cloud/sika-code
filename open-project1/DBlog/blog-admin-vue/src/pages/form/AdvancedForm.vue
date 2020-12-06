@@ -10,7 +10,7 @@
     </div>
     <div class="q-px-md">
       <q-form>
-        <q-card square flat class="q-gutter-y-md q-mt-md q-pt-sm q-pb-lg">
+        <q-card square flat class="q-mt-md q-pt-md q-pb-lg">
           <div class="row q-px-sm q-mx-md items-center">
             <q-item-label class="text-body1">仓库管理</q-item-label>
           </div>
@@ -21,10 +21,11 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.name"
+                  placeholder="仓库名"
                   dense
                   square
+                  clearable
                 >
                 </q-input>
               </q-item-label>
@@ -34,10 +35,11 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.domain"
+                  placeholder="仓库域名"
                   dense
                   square
+                  clearable
                 >
                 </q-input>
               </q-item-label>
@@ -47,10 +49,11 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.admin"
+                  placeholder="仓库管理员"
                   dense
                   square
+                  clearable
                 >
                 </q-input>
               </q-item-label>
@@ -60,10 +63,11 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.approval"
+                  placeholder="审批人"
                   dense
                   square
+                  clearable
                 >
                 </q-input>
               </q-item-label>
@@ -73,11 +77,25 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.effectiveDate"
+                  placeholder="生效日期"
                   dense
                   square
+                  clearable
                 >
+                  <template v-slot:prepend>
+                    <q-icon name="event" class="cursor-pointer" color="primary">
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
+                      >
+                        <q-date color="primary" v-model="advancedFormData.storehouseData.effectiveDate" today-btn square
+                                mask="YYYY-MM-DD" />
+                      </q-menu>
+                    </q-icon>
+                  </template>
                 </q-input>
               </q-item-label>
             </span>
@@ -86,10 +104,11 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.storehouseData.type"
+                  placeholder="仓库类型"
                   dense
                   square
+                  clearable
                 >
                 </q-input>
               </q-item-label>
@@ -98,7 +117,7 @@
         </q-card>
       </q-form>
       <q-form>
-        <q-card square flat class="q-gutter-y-md q-mt-lg q-pt-sm q-pb-lg">
+        <q-card square flat class="q-mt-lg q-pt-md q-pb-lg">
           <div class="row q-px-sm q-mx-md items-center">
             <q-item-label class="text-body1">任务管理</q-item-label>
           </div>
@@ -109,8 +128,8 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.name"
+                  placeholder="任务名"
                   dense
                   square
                 >
@@ -122,8 +141,8 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.desc"
+                  placeholder="任务描述"
                   dense
                   square
                 >
@@ -135,8 +154,8 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.executor"
+                  placeholder="执行人"
                   dense
                   square
                 >
@@ -148,8 +167,8 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.personLiable"
+                  placeholder="责任人"
                   dense
                   square
                 >
@@ -161,11 +180,24 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.effectiveDate"
+                  placeholder="生效日期"
                   dense
                   square
+                  clearable
                 >
+                  <template v-slot:prepend>
+                    <q-icon name="event" class="cursor-pointer" color="primary">
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
+                      >
+                        <q-date v-model="advancedFormData.taskData.effectiveDate" today-btn square mask="YYYY-MM-DD" />
+                      </q-menu>
+                    </q-icon>
+                  </template>
                 </q-input>
               </q-item-label>
             </span>
@@ -174,8 +206,8 @@
               <q-item-label>
                 <q-input
                   outlined
-                  v-model="ruleName"
-                  placeholder="给目标起个名字"
+                  v-model="advancedFormData.taskData.type"
+                  placeholder="任务类型"
                   dense
                   square
                 >
@@ -186,7 +218,7 @@
         </q-card>
       </q-form>
       <q-form>
-        <q-card square flat class="q-gutter-y-md q-mt-lg q-pt-sm q-pb-lg">
+        <q-card square flat class="q-mt-lg q-pt-md q-pb-lg">
           <div class="q-mx-md q-px-sm">
             <q-item-label class="text-body1">成员管理</q-item-label>
           </div>
@@ -198,10 +230,16 @@
               table-header-class="bg-grey-1"
               style="border-bottom: 1px solid lightgrey"
               hide-bottom
-              :data="columnData"
-              :columns="columns"
+              :data="advancedFormData.memberData.columnData"
+              :columns="advancedFormData.memberData.columns"
               row-key="name"
             >
+              <template v-slot:body-cell-operation="props">
+                <q-td :props="props" class="q-gutter-x-sm">
+                  <q-btn color="primary" unelevated flat dense label="编辑" />
+                  <q-btn color="primary" unelevated flat dense label="删除" />
+                </q-td>
+              </template>
             </q-table>
             <q-btn
               unelevated
@@ -219,131 +257,18 @@
 </template>
 
 <script>
+import ADVANCED_FORM_DATA from '@/mock/data/form/advancedFormData'
+
 export default {
-  name: 'AdvanceForm',
+  name: 'AdvancedForm',
   data() {
     return {
-      ruleName: '',
-      step: 1,
-      columns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '商品编号',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '商品名称',
-          field: 'calories'
-        },
-        {
-          name: 'fat',
-          align: 'left',
-          label: '商品条码',
-          field: 'fat'
-        },
-        {
-          name: 'sodium',
-          label: '单价',
-          field: 'sodium',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'calcium',
-          label: '数量 (件)',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'iron',
-          label: '金额',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      columnData: [
-        {
-          name: '12343561',
-          calories: '矿泉水 550ml',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12344561',
-          calories: '凉茶 300ml',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.42
-        },
-        {
-          name: '12314561',
-          calories: '好吃的薯片',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        },
-        {
-          name: '12534561',
-          calories: '特别好吃的蛋卷',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '123453561',
-          calories: '特别好吃的蛋卷2',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        }
-      ]
+      advancedFormData: ADVANCED_FORM_DATA
     }
   },
-  methods: {
-    formatNumber(num) {
-      return parseFloat(num).toFixed(2)
-      // return Math.floor(num * 100) / 100
-      // return num.toFixed(2)
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style lang="sass">
-.my-sticky-header-table
-  /* height or max-height is important */
-  max-height: 600px
-
-  .q-table__top,
-  .q-table__bottom
-    /* bg color is important for th; just specify one */
-    background-color: white
-
-  thead tr:first-child th
-    font-size: medium
-    font-weight: bolder
-    background-color: white
-
-  thead tr th
-    position: sticky
-    z-index: 1
-
-  thead tr:first-child th
-    top: 0
 </style>

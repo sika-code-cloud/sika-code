@@ -280,7 +280,7 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <sc-start-end-date class="float-right" ref="startEndDate" :field-style="{'min-width': '253px'}" />
+                <sc-date-range class="float-right" ref="startEndDate" :field-style="{'min-width': '253px'}" />
               </q-item-label>
             </q-card-section>
             <q-separator />
@@ -432,11 +432,11 @@
 import ANALYSIS_DATA from '@/mock/data/dashboard/analysisData'
 import ScShadow from 'components/shadow/ScShadow'
 import { date } from 'quasar'
-import ScStartEndDate from 'components/common/ScStartEndDate'
+import ScDateRange from 'components/common/ScDateRange'
 
 export default {
   name: 'Analysis',
-  components: { ScStartEndDate, ScShadow },
+  components: { ScDateRange, ScShadow },
   data() {
     return {
       analysisData: ANALYSIS_DATA,

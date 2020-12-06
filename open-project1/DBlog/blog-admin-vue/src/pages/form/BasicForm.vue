@@ -50,7 +50,7 @@
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
               <q-item-label>
-                <ScStartEndDate ref="startEndDate" />
+                <sc-date-range ref="startEndDate" />
               </q-item-label>
             </span>
           </div>
@@ -265,12 +265,12 @@
 </template>
 
 <script>
-import ScStartEndDate from 'components/common/ScStartEndDate'
+import ScDateRange from 'components/common/ScDateRange'
 import BASIC_FORM_DATA from '@/mock/data/form/basicFormData'
 
 export default {
   name: 'BasicForm',
-  components: { ScStartEndDate },
+  components: { ScDateRange },
   data() {
     return {
       loading: false,
@@ -280,12 +280,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.basicFormData.inputData.startAndEndDate = this.$refs.startEndDate.startAndEndDateForRet
       this.$q.notify({
-        color: 'green-4',
+        position: 'top',
+        color: 'info',
         textColor: 'white',
         icon: 'cloud_done',
-        message: JSON.stringify(this.basicFormData.inputData)
+        group: false,
+        html: true,
+        message: '保存成功！！'
       })
     },
     onReset() {
