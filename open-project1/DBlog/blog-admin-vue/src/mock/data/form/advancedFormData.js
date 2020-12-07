@@ -44,26 +44,36 @@ const memberData = {
   ],
   columnData: [
     {
+      index: 0,
+      edit: false,
       name: 'John Brown',
       jobNumber: '0001',
       department: 'Sidney No. 1 Lake Park'
     },
     {
+      index: 1,
+      edit: false,
       name: 'Jim Green',
       jobNumber: '0002',
       department: 'London No. 1 Lake Park'
     },
     {
+      index: 2,
+      edit: false,
       name: 'Joe Black',
       jobNumber: '0003',
       department: 'Sidney No. 2 Lake Park'
     },
     {
+      index: 3,
+      edit: false,
       name: 'Joe Black Ml',
       jobNumber: '0004',
       department: 'New York No. 1 Lake Park'
     },
     {
+      index: 4,
+      edit: false,
       name: 'Joe Black Rt',
       jobNumber: '0005',
       department: 'Sidney No. 3 Lake Park'

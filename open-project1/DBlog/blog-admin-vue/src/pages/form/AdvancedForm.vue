@@ -217,7 +217,7 @@
           </div>
         </q-card>
       </q-form>
-      <q-form>
+      <q-form class="sc-edit">
         <q-card square flat class="q-mt-lg q-pt-md q-pb-lg">
           <div class="q-mx-md q-px-sm">
             <q-item-label class="text-body1">成员管理</q-item-label>
@@ -232,13 +232,28 @@
               hide-bottom
               :data="advancedFormData.memberData.columnData"
               :columns="advancedFormData.memberData.columns"
-              row-key="name"
+              row-key="index"
             >
-              <template v-slot:body-cell-operation="props">
-                <q-td :props="props" class="q-gutter-x-sm">
-                  <q-btn color="primary" unelevated flat dense label="编辑" />
-                  <q-btn color="primary" unelevated flat dense label="删除" />
-                </q-td>
+              <template v-slot:body="props">
+                <q-tr :props="props">
+                  <q-td key="name" :props="props" style="font-size: 10px">
+                    <q-input v-if="props.row.edit" v-model="props.row.name" dense autofocus outlined />
+                    <span v-else>{{ props.row.name }}</span>
+                  </q-td>
+                  <q-td key="jobNumber" :props="props" style="font-size: 10px">
+                    <q-badge color="primary" outline class="bg-blue-1">
+                      {{ props.row.jobNumber }}
+                    </q-badge>
+                  </q-td>
+                  <q-td key="department" :props="props" style="font-size: 10px">
+                    {{ props.row.department }}
+                  </q-td>
+                  <q-td key="operation" :props="props">
+                    <q-btn v-if="props.row.edit" color="primary"  unelevated flat dense label="保存" @click="edit(props.row.index)" />
+                    <q-btn v-else color="primary" unelevated flat dense label="编辑" @click="edit(props.row.index)" />
+                    <q-btn color="primary" unelevated flat dense label="删除" />
+                  </q-td>
+                </q-tr>
               </template>
             </q-table>
             <q-btn
@@ -263,12 +278,37 @@ export default {
   name: 'AdvancedForm',
   data() {
     return {
-      advancedFormData: ADVANCED_FORM_DATA
+      advancedFormData: ADVANCED_FORM_DATA,
+      editDatas: [true, true]
     }
   },
-  methods: {}
+  methods: {
+    edit(index) {
+      this.advancedFormData.memberData.columnData[index].edit = true
+    },
+    save(index) {
+      this.advancedFormData.memberData.columnData[index].edit = true
+    }
+  }
 }
 </script>
 
 <style lang="sass">
+.sc-design
+  .sc-edit
+    .q-item__section--side
+      padding-right: 0
+
+    .q-field--dense
+      .q-field__control
+        padding: 0 5px
+        height: 24px
+        font-size: 10px
+
+      .q-field__marginal
+        height: 24px
+
+    .q-field--auto-height.q-field--dense
+      .q-field__control, .q-field__native
+        min-height: 24px
 </style>
