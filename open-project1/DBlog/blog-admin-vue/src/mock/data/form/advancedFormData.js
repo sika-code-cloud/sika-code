@@ -42,43 +42,50 @@ const memberData = {
       align: 'center'
     }
   ],
-  columnData: [
+  columnDatas: [
     {
       index: 0,
       edit: false,
       name: 'John Brown',
       jobNumber: '0001',
-      department: 'Sidney No. 1 Lake Park'
+      department: 'Siake Park'
     },
     {
       index: 1,
       edit: false,
       name: 'Jim Green',
       jobNumber: '0002',
-      department: 'London No. 1 Lake Park'
+      department: 'London No.'
     },
     {
       index: 2,
       edit: false,
       name: 'Joe Black',
       jobNumber: '0003',
-      department: 'Sidney No. 2 Lake Park'
+      department: 'Sidney No. 2'
     },
     {
       index: 3,
       edit: false,
       name: 'Joe Black Ml',
       jobNumber: '0004',
-      department: 'New York No. 1 Lake Park'
+      department: 'New 1 Lake Park'
     },
     {
       index: 4,
       edit: false,
       name: 'Joe Black Rt',
       jobNumber: '0005',
-      department: 'Sidney No. 3 Lake Park'
+      department: 'Sidney No'
     }
-  ]
+  ],
+  columnDataDefault: {
+    index: null,
+    edit: true,
+    name: null,
+    jobNumber: null,
+    department: null
+  }
 }
 export default {
   storehouseData,

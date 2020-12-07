@@ -91,8 +91,15 @@
                         transition-show="jump-down"
                         transition-hide="jump-up"
                       >
-                        <q-date color="primary" v-model="advancedFormData.storehouseData.effectiveDate" today-btn square
-                                mask="YYYY-MM-DD" />
+                        <q-date
+                          color="primary"
+                          v-model="
+                            advancedFormData.storehouseData.effectiveDate
+                          "
+                          today-btn
+                          square
+                          mask="YYYY-MM-DD"
+                        />
                       </q-menu>
                     </q-icon>
                   </template>
@@ -194,7 +201,12 @@
                         transition-show="jump-down"
                         transition-hide="jump-up"
                       >
-                        <q-date v-model="advancedFormData.taskData.effectiveDate" today-btn square mask="YYYY-MM-DD" />
+                        <q-date
+                          v-model="advancedFormData.taskData.effectiveDate"
+                          today-btn
+                          square
+                          mask="YYYY-MM-DD"
+                        />
                       </q-menu>
                     </q-icon>
                   </template>
@@ -225,33 +237,103 @@
           <q-separator spaced="15px" />
           <div class="q-pt-sm q-px-lg">
             <q-table
+              table-style="max-height: 400px"
               flat
               square
               table-header-class="bg-grey-1"
               style="border-bottom: 1px solid lightgrey"
-              hide-bottom
-              :data="advancedFormData.memberData.columnData"
+              :data="advancedFormData.memberData.columnDatas"
               :columns="advancedFormData.memberData.columns"
               row-key="index"
+              :pagination.sync="pagination"
+              virtual-scroll
+              hide-bottom
             >
               <template v-slot:body="props">
                 <q-tr :props="props">
-                  <q-td key="name" :props="props" style="font-size: 10px">
-                    <q-input v-if="props.row.edit" v-model="props.row.name" dense autofocus outlined />
+                  <q-td key="name" :props="props">
+                    <q-input
+                      style="max-width: 80px"
+                      v-if="props.row.edit"
+                      v-model="props.row.name"
+                      dense
+                      outlined
+                    />
                     <span v-else>{{ props.row.name }}</span>
                   </q-td>
-                  <q-td key="jobNumber" :props="props" style="font-size: 10px">
-                    <q-badge color="primary" outline class="bg-blue-1">
+                  <q-td key="jobNumber" :props="props">
+                    <q-input
+                      v-if="props.row.edit"
+                      v-model="props.row.jobNumber"
+                      dense
+                      outlined
+                      style="max-width: 50px"
+                    />
+                    <q-badge v-else color="primary" outline class="bg-blue-1">
                       {{ props.row.jobNumber }}
                     </q-badge>
                   </q-td>
-                  <q-td key="department" :props="props" style="font-size: 10px">
-                    {{ props.row.department }}
+                  <q-td key="department" :props="props">
+                    <q-input
+                      style="max-width: 80px"
+                      v-if="props.row.edit"
+                      v-model="props.row.department"
+                      dense
+                      outlined
+                    />
+                    <span v-else>{{ props.row.department }}</span>
                   </q-td>
                   <q-td key="operation" :props="props">
-                    <q-btn v-if="props.row.edit" color="primary"  unelevated flat dense label="保存" @click="edit(props.row.index)" />
-                    <q-btn v-else color="primary" unelevated flat dense label="编辑" @click="edit(props.row.index)" />
-                    <q-btn color="primary" unelevated flat dense label="删除" />
+                    <q-btn
+                      v-if="props.row.edit"
+                      color="primary"
+                      unelevated
+                      flat
+                      dense
+                      label="保存"
+                      @click="save(props.row.index)"
+                    />
+                    <q-btn
+                      v-else
+                      color="primary"
+                      unelevated
+                      flat
+                      dense
+                      label="编辑"
+                      @click="edit(props.row.index)"
+                    />
+                    <q-btn color="primary" unelevated flat dense label="删除">
+                      <q-menu
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
+                        content-class="text-center"
+                        :offset="[60, 5]"
+                      >
+                        <div class="q-px-sm q-pt-md">
+                          <q-icon name="info" color="warning" class="q-mr-sm" />
+                          是否要删除此行?
+                        </div>
+                        <div class="q-gutter-x-sm q-pt-sm q-pb-md">
+                          <q-btn
+                            color="grey-6"
+                            unelevated
+                            padding="2px sm"
+                            dense
+                            label="取消"
+                            v-close-popup
+                          ></q-btn>
+                          <q-btn
+                            color="primary"
+                            unelevated
+                            padding="2px sm"
+                            dense
+                            label="确认"
+                            @click="deleteData(props.row.index)"
+                            v-close-popup
+                          ></q-btn>
+                        </div>
+                      </q-menu>
+                    </q-btn>
                   </q-td>
                 </q-tr>
               </template>
@@ -263,6 +345,7 @@
               style="border: 1px dashed lightgrey"
               label="新增成员"
               icon="add"
+              @click="add"
             />
           </div>
         </q-card>
@@ -273,21 +356,38 @@
 
 <script>
 import ADVANCED_FORM_DATA from '@/mock/data/form/advancedFormData'
+import _ from 'lodash'
 
 export default {
   name: 'AdvancedForm',
   data() {
     return {
       advancedFormData: ADVANCED_FORM_DATA,
-      editDatas: [true, true]
+      show: false,
+      pagination: {
+        page: 1,
+        rowsNumber: 10
+      }
     }
   },
   methods: {
     edit(index) {
-      this.advancedFormData.memberData.columnData[index].edit = true
+      this.advancedFormData.memberData.columnDatas[index].edit = true
     },
     save(index) {
-      this.advancedFormData.memberData.columnData[index].edit = true
+      this.advancedFormData.memberData.columnDatas[index].edit = false
+    },
+    add() {
+      const columnDataTemp = _.clone(
+        this.advancedFormData.memberData.columnDataDefault
+      )
+      columnDataTemp.index = this.advancedFormData.memberData.columnDatas.length
+
+      console.log(JSON.stringify(columnDataTemp))
+      this.advancedFormData.memberData.columnDatas.push(columnDataTemp)
+    },
+    deleteData(index) {
+      this.advancedFormData.memberData.columnDatas.splice(index, 1)
     }
   }
 }
@@ -302,13 +402,12 @@ export default {
     .q-field--dense
       .q-field__control
         padding: 0 5px
-        height: 24px
-        font-size: 10px
+        height: 28px
 
       .q-field__marginal
-        height: 24px
+        height: 28px
 
     .q-field--auto-height.q-field--dense
       .q-field__control, .q-field__native
-        min-height: 24px
+        min-height: 28px
 </style>
