@@ -302,11 +302,13 @@
                       label="编辑"
                       @click="edit(props.row.index)"
                     />
-                    <q-btn color="primary" unelevated flat dense label="删除">
+                    <q-btn class="sc-design" color="primary" unelevated flat dense label="删除">
                       <q-menu
-                        transition-show="jump-down"
-                        transition-hide="jump-up"
+                        transition-show="jump-up"
+                        transition-hide="jump-down"
                         content-class="text-center"
+                        self="bottom left"
+                        anchor="top left"
                         :offset="[60, 5]"
                       >
                         <div class="q-px-sm q-pt-md">
@@ -317,6 +319,7 @@
                           <q-btn
                             color="grey-6"
                             unelevated
+                            class="no-border-radius text-body2"
                             padding="2px sm"
                             dense
                             label="取消"
@@ -325,6 +328,7 @@
                           <q-btn
                             color="primary"
                             unelevated
+                            class="no-border-radius text-body2"
                             padding="2px sm"
                             dense
                             label="确认"
@@ -388,6 +392,9 @@ export default {
     },
     deleteData(index) {
       this.advancedFormData.memberData.columnDatas.splice(index, 1)
+      for (let i = 0; i < this.advancedFormData.memberData.columnDatas.length; ++i) {
+        this.advancedFormData.memberData.columnDatas[i].index = i
+      }
     }
   }
 }
@@ -410,4 +417,5 @@ export default {
     .q-field--auto-height.q-field--dense
       .q-field__control, .q-field__native
         min-height: 28px
+
 </style>
