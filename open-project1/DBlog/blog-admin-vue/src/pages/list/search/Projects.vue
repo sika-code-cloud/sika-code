@@ -1,7 +1,7 @@
 <template>
-  <div class="sc-design">
+  <div>
     <div class="sc-base-list">
-      <div class="bg-white text-h6 q-pa-md">
+      <div class="bg-white text-h6 q-pa-md sc-design">
         <strong>搜索列表（项目）</strong>
         <div class="row full-width justify-center">
           <span class="col sc-design" style="max-width: 500px">
