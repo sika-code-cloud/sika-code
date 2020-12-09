@@ -137,7 +137,7 @@
         </span>
       </div>
     </div>
-    <div class="bg-white q-mt-md">
+    <div class="bg-white q-mx-md q-mt-md q-pb-md">
       <sc-page :items="heavyList">
         <template v-slot:item="props">
           <q-item clickabl>
