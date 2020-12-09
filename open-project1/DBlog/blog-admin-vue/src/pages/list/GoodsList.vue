@@ -6,61 +6,83 @@
         以卡片的形式展现商品或图片信息。
       </p>
     </div>
-    <div class="row q-mx-sm q-mt-md text-grey-8 text-center">
-      <div v-for="item in 8" :key="item" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
-        <sc-shadow>
-          <q-card flat class="no-border-radius q-pb-sm">
-            <q-chip v-if="item % 6 === 1" size="sm" label="缺货" text-color="orange" class="bg-orange-1 q-ma-sm absolute-top-right"
-                    style="border: 1px solid orangered" square></q-chip>
-            <q-chip   v-else-if="item % 6 === 2" size="sm" label="推荐" text-color="green" class="bg-green-1 q-ma-sm absolute-top-right"
-                    style="border: 1px solid limegreen" square></q-chip>
-            <q-img v-if="item % 6 === 1" src="https://dev-file.iviewui.com/yxsk0RFxdR0X3S0N7QN33mvwLnkfHEJV/middle"
-                   width="50%" class="q-mt-md" />
-            <q-img v-else-if="item % 6 === 2" src="https://dev-file.iviewui.com/PKCycgm3DWJOca5I2uAEqneuLFQAcKa7/middle"
-                   width="50%" class="q-mt-md" />
-            <q-img v-else-if="item % 6 === 3" src="https://dev-file.iviewui.com/8WwJ7tWv9uZ8hepq8pDTjLQiHZy2MB9I/middle"
-                   width="50%" class="q-mt-md" />
-            <q-img v-else-if="item % 6 === 4" src="https://dev-file.iviewui.com/KUa7CaC6m7vRtDCfY0SAXlp7dw9OvBrf/middle"
-                   width="50%" class="q-mt-md" />
-            <q-img v-else-if="item % 6 === 5" src="https://dev-file.iviewui.com/UTPgv8fkOHXszM8Xxm33C2ABuTw7AlRE/middle"
-                   width="50%" class="q-mt-md" />
-            <q-img v-else-if="item % 6 === 0" src="https://dev-file.iviewui.com/OYZqqiP1bbwN22Ai2HnwvSagxuSNchdD/middle"
-                   width="50%" class="q-mt-md" />
-            <q-card-section>
-              <q-item-label>Vue实战</q-item-label>
-              <q-item-label class="text-grey q-py-sm">Vue.js 作者尤雨溪作序</q-item-label>
-              <q-item-label class="text-pink">¥ 69 元</q-item-label>
-            </q-card-section>
-          </q-card>
-        </sc-shadow>
-      </div>
-    </div>
-    <div class="justify-center row items-center gt-xs">
-      <div class="col-auto">
-        <q-pagination
-          v-model="current"
-          :max="10"
-          :max-pages="3"
-          :direction-links="true"
-        >
-        </q-pagination>
-      </div>
-      <div class="col-auto">
-        跳至：
-        <span class="inline-block q-mr-sm">
-            <q-input v-model="current" outlined dense style="width: 46px" />
-          </span>页
-      </div>
-    </div>
-    <div class="justify-center row items-center lt-sm">
-      <div class="col-auto">
-        <q-pagination
-          v-model="current"
-          :max="5"
-          :input="true"
-        >
-        </q-pagination>
-      </div>
+
+    <div class="q-mx-sm q-mt-sm text-grey-8 text-center">
+      <sc-page
+        :items="itemsInit"
+        :per-number="6"
+        item-class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
+      >
+        <template v-slot:item="props">
+          <q-intersection once>
+            <sc-shadow>
+              <q-card flat class="no-border-radius q-pb-sm">
+                <q-chip
+                  v-if="props.item.id % 6 === 1"
+                  size="sm"
+                  label="缺货"
+                  text-color="orange"
+                  class="bg-orange-1 q-ma-sm absolute-top-right"
+                  style="border: 1px solid orangered"
+                  square
+                ></q-chip>
+                <q-chip
+                  v-else-if="props.item.id % 6 === 2"
+                  size="sm"
+                  label="推荐"
+                  text-color="green"
+                  class="bg-green-1 q-ma-sm absolute-top-right"
+                  style="border: 1px solid limegreen"
+                  square
+                ></q-chip>
+                <q-img
+                  v-if="props.item.id % 6 === 1"
+                  src="https://dev-file.iviewui.com/yxsk0RFxdR0X3S0N7QN33mvwLnkfHEJV/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-img
+                  v-else-if="props.item.id % 6 === 2"
+                  src="https://dev-file.iviewui.com/PKCycgm3DWJOca5I2uAEqneuLFQAcKa7/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-img
+                  v-else-if="props.item.id % 6 === 3"
+                  src="https://dev-file.iviewui.com/8WwJ7tWv9uZ8hepq8pDTjLQiHZy2MB9I/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-img
+                  v-else-if="props.item.id % 6 === 4"
+                  src="https://dev-file.iviewui.com/KUa7CaC6m7vRtDCfY0SAXlp7dw9OvBrf/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-img
+                  v-else-if="props.item.id % 6 === 5"
+                  src="https://dev-file.iviewui.com/UTPgv8fkOHXszM8Xxm33C2ABuTw7AlRE/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-img
+                  v-else-if="props.item.id % 6 === 0"
+                  src="https://dev-file.iviewui.com/OYZqqiP1bbwN22Ai2HnwvSagxuSNchdD/middle"
+                  width="50%"
+                  class="q-mt-md"
+                />
+                <q-card-section>
+                  <q-item-label>Vue实战</q-item-label>
+                  <q-item-label class="text-grey q-py-sm"
+                    >Vue.js 作者尤雨溪作序
+                  </q-item-label>
+                  <q-item-label class="text-pink">¥ 69 元</q-item-label>
+                </q-card-section>
+              </q-card>
+            </sc-shadow>
+          </q-intersection>
+        </template>
+      </sc-page>
     </div>
   </div>
 </template>
@@ -68,6 +90,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+import ScPage from 'components/common/ScPage'
 
 const itemDefault = {
   src:
@@ -75,18 +98,21 @@ const itemDefault = {
   select: false
 }
 const itemsInit = []
-for (let i = 0; i < 10; ++i) {
+for (let i = 0; i < 50; ++i) {
   const itemTemp = _.clone(itemDefault)
   itemTemp.id = i
   itemsInit.push(itemTemp)
 }
 export default {
   name: 'GoodsList',
-  components: { ScShadow },
+  components: {
+    ScPage,
+    ScShadow
+  },
   data() {
     return {
       current: 3,
-      items: itemsInit
+      itemsInit
     }
   }
 }

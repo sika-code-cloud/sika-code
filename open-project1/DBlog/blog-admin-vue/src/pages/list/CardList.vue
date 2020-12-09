@@ -7,42 +7,91 @@
         提供跨越设计与开发的体验解决方案。
       </p>
     </div>
-    <div class="row q-gutter-y-md q-mt-sm q-px-sm">
-      <div
-        class="col-xl-2 col-md-3 col-sm-4 col-xs-12 q-px-sm"
-        v-bind:key="item.id"
-        v-for="item in items"
+    <div class="q-px-sm q-mt-sm">
+      <sc-page
+        :items="itemsInit"
+        :per-number="10"
+        item-class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
       >
-        <sc-shadow></sc-shadow>
-        <sc-shadow
-          class="sc-card-height"
-        >
-          <q-card
-            class="full-height row items-center"
-            square
-            flat
-            :class="{
-              'active-class': item.select,
-              'un-active-class': !item.select
-            }"
-            v-if="item.id === 0"
-          >
-            <div class="col text-body1 text-center">
-              <q-icon name="add" />新增产品
-            </div>
-          </q-card>
-          <q-card class="sc-card-height" square flat v-else>
-            <q-card-section horizontal>
-              <q-img class="col sc-card-height" :src="item.src" />
-              <q-card-actions vertical class="justify-around q-px-md">
-                <q-btn flat round color="red" icon="favorite" />
-                <q-btn flat round color="accent" icon="bookmark" />
-                <q-btn flat round color="primary" icon="share" />
-              </q-card-actions>
-            </q-card-section>
-          </q-card>
-        </sc-shadow>
-      </div>
+        <template v-slot:item="props">
+          <q-intersection once>
+            <sc-shadow>
+              <q-card square bordered flat>
+                <q-item>
+                  <q-item-section avatar>
+                    <q-avatar>
+                      <q-img src="~assets/head_1.png" />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-body1">
+                      <strong>爱美丽{{ props.item.id }}</strong>
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item class="block text-center q-pt-xs q-mb-sm">
+                  <q-item-label class="row" caption>
+                    <span class="col">活跃用户</span>
+                    <span class="col">新增用户</span>
+                  </q-item-label>
+                  <q-item-label class="row text-body1 text-black">
+                    <span class="col"><strong>12</strong>万</span>
+                    <span class="col"><strong>1900</strong></span>
+                  </q-item-label>
+                </q-item>
+                <q-separator />
+                <q-item class="q-px-sm">
+                  <q-btn-group flat spread class="full-width">
+                    <q-btn
+                      flat
+                      dense
+                      icon="save_alt"
+                      size="sm"
+                      class="q-mr-sm"
+                      color="grey-6"
+                    >
+                      <q-tooltip>下载</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="edit"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>编辑</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="share"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>分享</q-tooltip>
+                    </q-btn>
+                    <q-separator vertical inset="" />
+                    <q-btn
+                      flat
+                      dense
+                      icon="more_horiz"
+                      size="sm"
+                      color="grey-6"
+                      class="q-mx-sm"
+                    >
+                      <q-tooltip>更多</q-tooltip>
+                    </q-btn>
+                  </q-btn-group>
+                </q-item>
+              </q-card>
+            </sc-shadow>
+          </q-intersection>
+        </template>
+      </sc-page>
     </div>
   </div>
 </template>
@@ -50,6 +99,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+import ScPage from 'components/common/ScPage'
 
 const itemDefault = {
   src:
@@ -57,17 +107,17 @@ const itemDefault = {
   select: false
 }
 const itemsInit = []
-for (let i = 0; i < 10; ++i) {
+for (let i = 0; i < 100; ++i) {
   const itemTemp = _.clone(itemDefault)
   itemTemp.id = i
   itemsInit.push(itemTemp)
 }
 export default {
   name: 'CardList',
-  components: { ScShadow },
+  components: { ScPage, ScShadow },
   data() {
     return {
-      items: itemsInit,
+      itemsInit,
       activeClass: {
         border: '1px dashed dodgerblue'
       },

@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="row">
-      <div class="q-pa-sm" :class="itemClass" :key="index" v-for="(item, index) in perPageItems">
+      <div
+        class="q-pa-sm"
+        :class="itemClass"
+        :key="index"
+        v-for="(item, index) in perPageItems"
+      >
         <slot name="item" :item="item"></slot>
       </div>
     </div>
-    <div>
+    <div class="q-mt-sm">
       <slot name="page">
         <div class="justify-center row items-center gt-xs">
           <div class="col-auto">
@@ -18,7 +23,15 @@
             </q-pagination>
           </div>
           <div class="col-auto">
-            <q-btn label="跳至" class="q-mr-sm" dense unelevated flat color="primary" @click="changePage" />
+            <q-btn
+              label="跳至"
+              class="q-mr-sm"
+              dense
+              unelevated
+              flat
+              color="primary"
+              @click="changePage"
+            />
             <span class="inline-block q-mr-sm">
               <q-input
                 @keyup.enter="changePage"
@@ -67,7 +80,7 @@ export default {
     perNumber: {
       type: Number,
       required: false,
-      default: 5
+      default: 6
     }
   },
   data() {

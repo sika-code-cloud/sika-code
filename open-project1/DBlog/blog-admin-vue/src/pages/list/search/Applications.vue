@@ -137,25 +137,25 @@
         </span>
       </div>
     </div>
-    <div class="q-mt-md q-mx-sm">
-      <div class="row">
-        <div
-          class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
-          :key="item.id"
-          v-for="item in itemsInit"
-        >
-          <q-intersection once class="q-pa-sm">
+    <div class="q-px-sm">
+      <sc-page
+        :items="itemsInit"
+        :per-number="6"
+        item-class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
+      >
+        <template v-slot:item="props">
+          <q-intersection once>
             <sc-shadow>
               <q-card square bordered flat>
                 <q-item>
                   <q-item-section avatar>
                     <q-avatar>
-                      <img src="~assets/head_1.png" />
+                      <q-img src="~assets/head_1.png" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
                     <q-item-label class="text-body1">
-                      <strong>爱美丽</strong>
+                      <strong>爱美丽{{ props.item.id }}</strong>
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -220,14 +220,15 @@
               </q-card>
             </sc-shadow>
           </q-intersection>
-        </div>
-      </div>
+        </template>
+      </sc-page>
     </div>
   </div>
 </template>
 
 <script>
 import ScShadow from 'components/shadow/ScShadow'
+import ScPage from 'components/common/ScPage'
 import _ from 'lodash'
 
 const srcs = [
@@ -245,7 +246,7 @@ const itemDefault = {
   select: false
 }
 const itemsInit = []
-for (let i = 0; i < 10; ++i) {
+for (let i = 0; i < 100; ++i) {
   const itemTemp = _.clone(itemDefault)
   itemTemp.id = i
   itemTemp.src = srcs[i % srcs.length]
@@ -286,7 +287,10 @@ const ownersDefault = [
 ]
 export default {
   name: 'Applications',
-  components: { ScShadow },
+  components: {
+    ScPage,
+    ScShadow
+  },
   data() {
     return {
       itemsInit,

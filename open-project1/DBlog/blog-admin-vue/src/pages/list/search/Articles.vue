@@ -137,11 +137,11 @@
         </span>
       </div>
     </div>
-    <div class="bg-white q-mx-md q-mt-md q-pb-md">
+    <div class="bg-white q-mx-md q-mt-md q-pb-md q-pt-md">
       <sc-page :items="heavyList">
         <template v-slot:item="props">
-          <q-item clickabl>
-            <sc-shadow class="q-pa-sm">
+          <div class="q-px-md q-pb-sm">
+            <sc-shadow class="q-px-sm q-pb-sm">
               <q-item-section>
                 <q-item-label class="text-body1 q-mb-sm">
                   <strong>Alipay-{{ props.item.label }}</strong>
@@ -235,7 +235,7 @@
                 </div>
               </q-item-section>
             </sc-shadow>
-          </q-item>
+          </div>
           <q-separator inset="" spaced="10px" />
         </template>
       </sc-page>

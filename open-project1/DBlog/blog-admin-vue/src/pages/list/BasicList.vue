@@ -108,87 +108,93 @@
         </div>
       </q-card>
 
-      <div class="bg-white q-mt-sm">
-        <div
-          v-for="obj in baseListObjs"
-          :key="obj.id"
-          v-intersection="onIntersection"
-        >
-          <q-item transition-show="flip-up">
-            <q-item-section avatar top>
-              <q-avatar square>
-                <img alt="" :src="obj.imgSrc" />
-              </q-avatar>
-            </q-item-section>
-            <div class="row items-center q-col-gutter-y-sm full-width">
-              <div class="q-pt-xs col-md-4 col-xs-12">
-                <q-item-label lines="1">
-                  <span class="text-h6">{{ obj.title }}</span>
-                </q-item-label>
-                <q-item-label class="q-mr-md text-body text-grey-7" lines="2">
-                  {{ obj.desc }}
-                </q-item-label>
-              </div>
-              <div class="col-md-2 col-sm-2 col-xs-6 text-body text-grey-7">
-                <q-item-label class="q-mb-xs"> Owner</q-item-label>
-                <q-item-label>
-                  {{ obj.owner }}
-                </q-item-label>
-              </div>
-              <div class="col-md-2 col-sm-3 col-xs-6 text-body text-grey-7">
-                <q-item-label class="q-mb-xs"> 开始时间</q-item-label>
-                <q-item-label>
-                  {{ obj.beginTime }}
-                </q-item-label>
-              </div>
-              <div class="col-md-2 col-sm-3 col-xs-10 q-pr-md">
-                <q-linear-progress
-                  rounded
-                  stripe
-                  size="md"
-                  :value="obj.progress"
-                />
-              </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm">
-                <q-btn
-                  class="no-border-radius"
-                  padding="5px 10px"
-                  size="12px"
-                  unelevated
-                  dense
-                  icon="edit"
-                  color="primary"
-                  label="编辑"
-                  @click="editItem(obj)"
-                />
-                <q-btn-dropdown
-                  unelevated
-                  size="12px"
-                  class="no-border-radius"
-                  padding="5px 9px"
-                  color="primary"
-                  dense
-                  label="更多"
-                >
-                  <q-list dense>
-                    <q-item clickable v-close-popup @click="editItem(obj)">
-                      <q-item-section>
-                        <q-item-label>编辑</q-item-label>
-                      </q-item-section>
-                    </q-item>
+      <div class="bg-white q-mt-md">
+        <sc-page :items="baseListObjs">
+          <template v-slot:item="props">
+            <q-item transition-show="flip-up">
+              <q-item-section avatar top>
+                <q-avatar square>
+                  <img alt="" :src="props.item.imgSrc" />
+                </q-avatar>
+              </q-item-section>
+              <div class="row items-center q-col-gutter-y-sm full-width">
+                <div class="q-pt-xs col-md-4 col-xs-12">
+                  <q-item-label lines="1">
+                    <span class="text-h6">{{ props.item.title }}</span>
+                  </q-item-label>
+                  <q-item-label class="q-mr-md text-body text-grey-7" lines="2">
+                    {{ props.item.desc }}
+                  </q-item-label>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 text-body text-grey-7">
+                  <q-item-label class="q-mb-xs"> Owner</q-item-label>
+                  <q-item-label>
+                    {{ props.item.owner }}
+                  </q-item-label>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6 text-body text-grey-7">
+                  <q-item-label class="q-mb-xs"> 开始时间</q-item-label>
+                  <q-item-label>
+                    {{ props.item.beginTime }}
+                  </q-item-label>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-10 q-pr-md">
+                  <q-linear-progress
+                    rounded
+                    stripe
+                    size="md"
+                    :value="props.item.progress"
+                  />
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-12 q-gutter-sm">
+                  <q-btn
+                    class="no-border-radius"
+                    padding="5px 10px"
+                    size="12px"
+                    unelevated
+                    dense
+                    icon="edit"
+                    color="primary"
+                    label="编辑"
+                    @click="editItem(props.item)"
+                  />
+                  <q-btn-dropdown
+                    unelevated
+                    size="12px"
+                    class="no-border-radius"
+                    padding="5px 9px"
+                    color="primary"
+                    dense
+                    label="更多"
+                  >
+                    <q-list dense>
+                      <q-item
+                        clickable
+                        v-close-popup
+                        @click="editItem(props.item)"
+                      >
+                        <q-item-section>
+                          <q-item-label>编辑</q-item-label>
+                        </q-item-section>
+                      </q-item>
 
-                    <q-item clickable v-close-popup @click="deleteItem(obj)">
-                      <q-item-section>
-                        <q-item-label>删除</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-btn-dropdown>
+                      <q-item
+                        clickable
+                        v-close-popup
+                        @click="deleteItem(props.item)"
+                      >
+                        <q-item-section>
+                          <q-item-label>删除</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-btn-dropdown>
+                </div>
               </div>
-            </div>
-          </q-item>
-          <q-separator v-if="obj.id !== 49" spaced="10px" inset="" />
-        </div>
+            </q-item>
+            <q-separator v-if="props.item.id !== 49" spaced="10px" inset="" />
+          </template>
+        </sc-page>
       </div>
 
       <q-dialog v-model="addTask">
@@ -331,6 +337,7 @@
 
 <script>
 import { date, QSpinnerIos } from 'quasar'
+import ScPage from 'components/common/ScPage'
 import _ from 'lodash'
 
 const baseListObj = {
@@ -449,6 +456,9 @@ export default {
         })
       }, 2000)
     }
+  },
+  components: {
+    ScPage
   }
 }
 </script>

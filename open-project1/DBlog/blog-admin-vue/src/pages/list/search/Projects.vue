@@ -121,84 +121,33 @@
             </span>
             <span class="col-sm-5 col-xs-9">
               好评度：<q-select
-              class="inline-block"
-              style="width: 80px"
-              outlined
-              v-model="goodPing"
-              hide-dropdown-icon
-              square
-              dense
-              options-dense
-              behavior="menu"
-              :options="['优秀', '普通', '一般']"
-            />
+                class="inline-block"
+                style="width: 80px"
+                outlined
+                v-model="goodPing"
+                hide-dropdown-icon
+                square
+                dense
+                options-dense
+                behavior="menu"
+                :options="['优秀', '普通', '一般']"
+              />
             </span>
           </span>
         </span>
       </div>
     </div>
-    <div>
-      <sc-page :items="itemsInit" :per-number="6">
+    <div class="q-px-sm">
+      <sc-page
+        :items="itemsInit"
+        :per-number="6"
+        item-class="col-xl-3 col-sm-4 col-xs-12"
+      >
         <template v-slot:item="props">
-          <div
-            class="col-xl-3 col-sm-4 col-xs-12"
-          >
-            <q-intersection once>
-              <sc-shadow>
-                <q-card square bordered flat class="q-pb-sm">
-                  <q-img :src="props.item.src" :ratio="16 / 10" />
-                  <q-list class="q-mt-md">
-                    <q-item dense class="text-body1">
-                      <strong>Alipay</strong>
-                    </q-item>
-                    <q-item dense>
-                      那是一种内在的东西， 他们到达不了，也无法
-                    </q-item>
-                    <q-item dense clickable>
-                      <q-item-section style="font-size: 12px"
-                      >10小时前
-                      </q-item-section
-                      >
-                      <span>
-                      <q-img
-                        src="~assets/head.png"
-                        style="width: 28px; height: 28px"
-                      >
-                        <q-tooltip>张三</q-tooltip>
-                      </q-img>
-                      <q-img
-                        src="~assets/head_1.png"
-                        style="width: 28px; height: 28px; margin-left: -12px"
-                      >
-                        <q-tooltip>豆豆</q-tooltip>
-                      </q-img>
-                      <q-img
-                        src="~assets/head.png"
-                        style="width: 28px; height: 28px; margin-left: -12px"
-                      >
-                        <q-tooltip>乐乐</q-tooltip>
-                      </q-img>
-                    </span>
-                    </q-item>
-                  </q-list>
-                </q-card>
-              </sc-shadow>
-            </q-intersection>
-          </div>
-        </template>
-      </sc-page>
-    </div>
-    <div class="row q-gutter-y-md q-mt-sm q-px-sm">
-      <div class="row">
-        <div
-          class="col-xl-3 col-sm-4 col-xs-12"
-          v-bind:key="item.id"
-          v-for="item in itemsInit"
-        >
-          <q-intersection once class="q-ma-sm">
+          <q-intersection once>
             <sc-shadow>
               <q-card square bordered flat class="q-pb-sm">
-                <q-img :src="item.src" :ratio="16 / 10" />
+                <q-img :src="props.item.src" :ratio="16 / 10" />
                 <q-list class="q-mt-md">
                   <q-item dense class="text-body1">
                     <strong>Alipay</strong>
@@ -208,9 +157,8 @@
                   </q-item>
                   <q-item dense clickable>
                     <q-item-section style="font-size: 12px"
-                    >10小时前
-                    </q-item-section
-                    >
+                      >10小时前
+                    </q-item-section>
                     <span>
                       <q-img
                         src="~assets/head.png"
@@ -236,8 +184,8 @@
               </q-card>
             </sc-shadow>
           </q-intersection>
-        </div>
-      </div>
+        </template>
+      </sc-page>
     </div>
   </div>
 </template>
@@ -304,7 +252,10 @@ for (let i = 0; i < 30; ++i) {
 }
 export default {
   name: 'Projects',
-  components: { ScPage, ScShadow },
+  components: {
+    ScPage,
+    ScShadow
+  },
   data() {
     return {
       itemsInit,
