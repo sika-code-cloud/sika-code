@@ -202,7 +202,12 @@
         <q-tab name="movies" label="项目(8)" />
       </q-tabs>
       <q-separator />
-      <q-tab-panels v-model="tab">
+      <q-tab-panels
+        v-model="tab"
+        animated
+        transition-prev="fade"
+        transition-next="fade"
+      >
         <q-tab-panel name="mails" class="q-px-sm q-pt-none">
           <sc-page :items="heavyList" class="q-mt-sm">
             <template v-slot:item="props">

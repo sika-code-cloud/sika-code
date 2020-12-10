@@ -141,7 +141,7 @@
       <sc-page
         :items="itemsInit"
         :per-number="6"
-        item-class="col-xl-3 col-sm-4 col-xs-12"
+        item-class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
       >
         <template v-slot:item="props">
           <q-intersection once>

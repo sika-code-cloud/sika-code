@@ -12849,7 +12849,7 @@ vue-loader@15.9.5:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-numeral-filter@^2.0.0:
+vue-numeral-filter@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/vue-numeral-filter/download/vue-numeral-filter-1.4.0.tgz#74b68de3a12500338c7de43feb61f2575281710a"
   integrity sha1-dLaN46ElADOMfeQ/62HyV1KBcQo=

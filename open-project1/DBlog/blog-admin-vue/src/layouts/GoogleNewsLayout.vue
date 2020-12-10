@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑;">
+  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
     <q-resize-observer :debounce="300" @resize="onResize" />
     <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
       <q-toolbar class="GNL__toolbar">
@@ -56,9 +56,8 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-            >{{ totalInformCount }}
-            </q-badge
-            >
+              >{{ totalInformCount }}
+            </q-badge>
           </q-btn>
           <span class="inline-block">
             <q-chip dense color="white" class="cursor-pointer q-ml-sm">
@@ -73,7 +72,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-              >Emailseeeeee</span
+                >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -399,7 +398,10 @@
       @hide="hide"
       @show="show"
     >
-      <div class="absolute-top bg-white" style="height: 50px;margin-bottom: 50px">
+      <div
+        class="absolute-top bg-white"
+        style="height: 50px; margin-bottom: 50px"
+      >
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
             <q-img
@@ -1247,18 +1249,18 @@ export default {
     }
   },
   watch: {
-    gtSm: function() {
+    gtSm: function () {
       this.rightHide()
     }
   },
   computed: {
-    menuContentClass: function() {
+    menuContentClass: function () {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function() {
+    informCount: function () {
       let count = 0
       for (let i = 0; i < this.informs.length; ++i) {
         if (informs[i].disable === false) {
@@ -1267,7 +1269,7 @@ export default {
       }
       return count
     },
-    notifiesCount: function() {
+    notifiesCount: function () {
       let count = 0
       for (let i = 0; i < this.notifies.length; ++i) {
         if (notifies[i].disable === false) {
@@ -1276,7 +1278,7 @@ export default {
       }
       return count
     },
-    waitDealCount: function() {
+    waitDealCount: function () {
       let count = 0
       for (let i = 0; i < this.waitDeals.length; ++i) {
         if (waitDeals[i].disable === false) {
@@ -1285,11 +1287,11 @@ export default {
       }
       return count
     },
-    totalInformCount: function() {
+    totalInformCount: function () {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.leftDrawerOpen = this.getLeftDrawOpen()
   }
 }
@@ -1298,11 +1300,11 @@ export default {
 <style lang="sass">
 .v-enter
   opacity: 0
-  transform: translateX(50px)
+  transform: translateY(-50px)
 
 .v-leave-to
   opacity: 0
-  transform: translateX(-50px)
+  transform: translateY(50px)
 
 .v-enter-active, .v-leave-active
   transition: all 0.4s ease
@@ -1313,5 +1315,4 @@ export default {
 
   &__toolbar-input
     width: 55%
-
 </style>

@@ -184,7 +184,7 @@
           <q-separator />
           <div class="row q-pa-sm">
             <div
-              class="col-xs-12 col-sm-6 q-pa-sm cursor-pointer"
+              class="col-xs-12 col-sm-6 col-lg-3 q-pa-sm cursor-pointer"
               v-for="(item, index) in monitorData.visitForHourData"
               :key="index"
             >
