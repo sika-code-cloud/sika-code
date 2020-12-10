@@ -10,7 +10,7 @@
     <div class="q-px-sm q-mt-sm">
       <sc-page
         :items="itemsInit"
-        :per-number="10"
+        :per-number="12"
         item-class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
       >
         <template v-slot:item="props">

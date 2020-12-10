@@ -72,6 +72,7 @@
                       flat
                       color="lightgrey"
                       icon="search"
+                      mask="YYYY-MM-DD"
                       @click="ruleName = new Date()"
                     ></q-btn>
                   </template>
@@ -108,8 +109,8 @@
         </div>
       </q-card>
 
-      <div class="bg-white q-mt-md">
-        <sc-page :items="baseListObjs">
+      <div class="bg-white q-mt-md q-pb-md q-pt-md">
+        <sc-page :items="baseListObjs" :per-number="10">
           <template v-slot:item="props">
             <q-item transition-show="flip-up">
               <q-item-section avatar top>
@@ -339,6 +340,7 @@
 import { date, QSpinnerIos } from 'quasar'
 import ScPage from 'components/common/ScPage'
 import _ from 'lodash'
+import Vue from 'vue'
 
 const baseListObj = {
   title: 'Alipay',
@@ -356,7 +358,7 @@ const imgSrcs = [
   'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png'
 ]
 const baseListObjsDefault = []
-for (let i = 0; i < 10; ++i) {
+for (let i = 0; i < 123; ++i) {
   const obj = _.clone(baseListObj)
   obj.id = i
   obj.title = obj.title + i
@@ -398,8 +400,10 @@ export default {
       this.waitEdit.owner = null
       this.waitEdit.beginTime = null
       this.waitEdit.desc = null
+      this.waitEdit.id = null
     },
     addTaskDialog() {
+      this.waitEdit = {}
       this.addTask = true
     },
     editItem(item) {
@@ -437,13 +441,15 @@ export default {
           message = '编辑成功'
           for (let i = 0; i < this.baseListObjs.length; ++i) {
             if (this.baseListObjs[i].id === addModel.id) {
-              this.baseListObjs[i] = addModel
+              Vue.set(this.baseListObjs, i, addModel)
             }
           }
         } else {
           addModel.id = this.baseListObjs.length + 1
           this.baseListObjs.unshift(addModel)
         }
+        console.log(this.baseListObjs.length)
+        this.$forceUpdate()
         this.$q.loading.hide()
         this.$refs.addDataForm.reset()
         this.addTask = false
@@ -459,7 +465,8 @@ export default {
   },
   components: {
     ScPage
-  }
+  },
+  watch: {}
 }
 </script>
 

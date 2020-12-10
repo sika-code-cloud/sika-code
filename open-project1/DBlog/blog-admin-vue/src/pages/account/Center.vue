@@ -4,19 +4,36 @@
       <q-card flat class="bg-white no-border-radius">
         <q-card-section class="text-center">
           <q-img src="~assets/head.png" style="max-width: 140px"></q-img>
-          <q-item-label class="q-my-sm"><strong>Serati Ma</strong></q-item-label>
+          <q-item-label class="q-my-sm"
+            ><strong>Serati Ma</strong></q-item-label
+          >
           <q-item-label>海纳百川，有容乃大</q-item-label>
           <div class="row text-left q-mt-lg q-ml-sm text-body2 text-grey-9">
             <q-item-label class="col-12">
-              <q-icon name="contact_mail" color="grey-9" size="16px" class="q-mr-xs" />
+              <q-icon
+                name="contact_mail"
+                color="grey-9"
+                size="16px"
+                class="q-mr-xs"
+              />
               交互专家
             </q-item-label>
             <q-item-label class="col-12">
-              <q-icon name="contact_mail" color="grey-9" size="16px" class="q-mr-xs" />
+              <q-icon
+                name="contact_mail"
+                color="grey-9"
+                size="16px"
+                class="q-mr-xs"
+              />
               蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
             </q-item-label>
             <q-item-label class="col-12">
-              <q-icon name="contact_mail" color="grey-9" size="16px" class="q-mr-xs" />
+              <q-icon
+                name="contact_mail"
+                color="grey-9"
+                size="16px"
+                class="q-mr-xs"
+              />
               浙江省杭州市
             </q-item-label>
           </div>
@@ -25,29 +42,83 @@
         <q-card-section>
           <q-item-label class="text-body1">标签</q-item-label>
           <q-item-label class="text-body1 q-gutter-sm">
-            <q-chip size="sm" :selected.sync="desert.Cupcake" removable v-model="icecream" color="primary"
-                    text-color="white" icon="event" label="很有想法的" square />
-            <q-chip size="sm" color="teal" text-color="white" icon="bookmark" label="专注设计" />
-            <q-chip size="sm" removable v-model="eclair" label="辣~" class="glossy" color="orange" text-color="white"
-                    icon-right="star" />
-            <q-chip size="sm" color="deep-orange" text-color="white" icon="directions" label="大长腿" />
+            <q-chip
+              size="sm"
+              :selected.sync="desert.Cupcake"
+              removable
+              v-model="icecream"
+              color="primary"
+              text-color="white"
+              icon="event"
+              label="很有想法的"
+              square
+            />
+            <q-chip
+              size="sm"
+              color="teal"
+              text-color="white"
+              icon="bookmark"
+              label="专注设计"
+            />
+            <q-chip
+              size="sm"
+              removable
+              v-model="eclair"
+              label="辣~"
+              class="glossy"
+              color="orange"
+              text-color="white"
+              icon-right="star"
+            />
+            <q-chip
+              size="sm"
+              color="deep-orange"
+              text-color="white"
+              icon="directions"
+              label="大长腿"
+            />
             <q-chip size="sm">
               <q-avatar icon="bookmark" color="red" text-color="white" />
               川妹子
             </q-chip>
-            <q-chip size="sm" removable v-model="cupcake" color="grey" text-color="white" class="glossy">
+            <q-chip
+              size="sm"
+              removable
+              v-model="cupcake"
+              color="grey"
+              text-color="white"
+              class="glossy"
+            >
               <q-avatar color="red" text-color="white">50</q-avatar>
               海纳百川1
             </q-chip>
-            <q-chip size="sm" :selected.sync="desert.Eclair" color="grey" text-color="white" class="glossy">
+            <q-chip
+              size="sm"
+              :selected.sync="desert.Eclair"
+              color="grey"
+              text-color="white"
+              class="glossy"
+            >
               <q-avatar color="red" text-color="white">50</q-avatar>
               海纳百川2
             </q-chip>
-            <q-chip size="sm" :selected.sync="desert.Icecream" color="primary" text-color="white" class="glossy"
-                    icon="event">
+            <q-chip
+              size="sm"
+              :selected.sync="desert.Icecream"
+              color="primary"
+              text-color="white"
+              class="glossy"
+              icon="event"
+            >
               海纳百川3
             </q-chip>
-            <q-chip size="sm" removable v-model="gingerbread" color="info" text-color="white">
+            <q-chip
+              size="sm"
+              removable
+              v-model="gingerbread"
+              color="info"
+              text-color="white"
+            >
               <q-avatar>
                 <q-img src="https://cdn.quasar.dev/img/avatar5.jpg" />
               </q-avatar>
@@ -61,7 +132,9 @@
           <q-item-label class="q-gutter-sm">
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+                />
               </q-avatar>
               科学搬砖组
             </q-chip>
@@ -73,31 +146,41 @@
             </q-chip>
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"
+                />
               </q-avatar>
               全组都是吴彦祖
             </q-chip>
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png"
+                />
               </q-avatar>
               中二少女团
             </q-chip>
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"
+                />
               </q-avatar>
               程序员日常
             </q-chip>
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png"
+                />
               </q-avatar>
               高逼格设计天团
             </q-chip>
             <q-chip size="16px" color="white">
               <q-avatar size="sm">
-                <q-img src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+                <q-img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"
+                />
               </q-avatar>
               骗你来学计算机
             </q-chip>
@@ -120,76 +203,131 @@
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="tab">
-        <q-tab-panel name="mails" class="q-pa-sm">
-          <q-virtual-scroll
-            class="q-mt-sm"
-            :items="heavyList"
-          >
-            <template v-slot="{ item, index }">
-              <q-item clickabl :key="index" class="q-py-sm">
+        <q-tab-panel name="mails" class="q-px-sm q-pt-none">
+          <sc-page :items="heavyList" class="q-mt-sm">
+            <template v-slot:item="props">
+              <div class="q-pb-sm">
                 <sc-shadow class="q-pa-sm">
                   <q-item-section>
                     <q-item-label class="text-body1 q-mb-sm">
-                      <strong>Alipay-{{ item.lable }}{{ index }}</strong>
+                      <strong
+                        >Alipay-{{ props.item.lable
+                        }}{{ props.item.id }}</strong
+                      >
                     </q-item-label>
                     <q-item-label class="q-mb-sm">
-                      <q-chip label="Sika Design" class="cursor-pointer" color="primary" text-color="white" square
-                              size="12px"></q-chip>
-                      <q-chip label="设计语言" class="cursor-pointer" color="info" text-color="white" square
-                              size="12px"></q-chip>
-                      <q-chip label="蚂蚁金服" class="cursor-pointer" color="deep-orange" text-color="white" square
-                              size="12px"></q-chip>
+                      <q-chip
+                        label="Sika Design"
+                        class="cursor-pointer"
+                        color="primary"
+                        text-color="white"
+                        square
+                        size="12px"
+                      ></q-chip>
+                      <q-chip
+                        label="设计语言"
+                        class="cursor-pointer"
+                        color="info"
+                        text-color="white"
+                        square
+                        size="12px"
+                      ></q-chip>
+                      <q-chip
+                        label="蚂蚁金服"
+                        class="cursor-pointer"
+                        color="deep-orange"
+                        text-color="white"
+                        square
+                        size="12px"
+                      ></q-chip>
                     </q-item-label>
                     <p class="text-grey-8 q-mb-sm q-pl-xs">
-                      段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台
+                      段落示意：蚂蚁金服设计平台
+                      ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台
                       ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。
                     </p>
-                    <q-item-label class="row text-body2 text-grey-7 items-center q-gutter-x-xs">
-                      <q-chip color="white" text-color="primary" class="col-auto cursor-pointer">
+                    <q-item-label
+                      class="row text-body2 text-grey-7 items-center q-gutter-x-xs"
+                    >
+                      <q-chip
+                        color="white"
+                        text-color="primary"
+                        class="col-auto cursor-pointer"
+                      >
                         <q-avatar size="18px">
-                          <q-img src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png" />
+                          <q-img
+                            src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+                          />
                         </q-avatar>
                         姜宇
                       </q-chip>
                       <span class="col-auto q-ml-none">发布在</span>
-                      <span class="col-auto text-primary cursor-pointer">https://ant.design</span>
-                      <span class="col-sm-auto col-xs-12 q-pl-xs">2020-11-14 16:15</span>
+                      <span class="col-auto text-primary cursor-pointer"
+                        >https://ant.design</span
+                      >
+                      <span class="col-sm-auto col-xs-12 q-pl-xs"
+                        >2020-11-14 16:15</span
+                      >
                     </q-item-label>
                     <div class="q-mt-sm row items-center" style="height: 24px">
                       <q-btn-group flat>
-                        <q-btn flat dense icon="star_border" label="118" size="12px" class="q-mr-sm" color="primary" />
+                        <q-btn
+                          flat
+                          dense
+                          icon="star_border"
+                          label="118"
+                          size="12px"
+                          class="q-mr-sm"
+                          color="primary"
+                        />
                         <q-separator vertical />
-                        <q-btn flat dense icon="thumb_up" label="118" size="12px" color="grey-6" class="q-mx-sm" />
+                        <q-btn
+                          flat
+                          dense
+                          icon="thumb_up"
+                          label="118"
+                          size="12px"
+                          color="grey-6"
+                          class="q-mx-sm"
+                        />
                         <q-separator vertical />
-                        <q-btn flat dense icon="message" label="118" size="12px" color="grey-6" class="q-mx-sm" />
+                        <q-btn
+                          flat
+                          dense
+                          icon="message"
+                          label="118"
+                          size="12px"
+                          color="grey-6"
+                          class="q-mx-sm"
+                        />
                       </q-btn-group>
                     </div>
                   </q-item-section>
                 </sc-shadow>
-              </q-item>
-              <q-separator inset="" spaced="10px" />
+              </div>
+              <q-separator spaced="10px" />
             </template>
-          </q-virtual-scroll>
+          </sc-page>
         </q-tab-panel>
-        <q-tab-panel name="alarms">
-          <div class="row">
-            <div
-              class="col-xl-3 col-sm-4 col-xs-12"
-              :key="item.id"
-              v-for="item in items"
-            >
-              <q-intersection once class="q-pa-sm">
+        <q-tab-panel name="alarms" class="q-px-sm q-pt-none">
+          <sc-page
+            :items="items"
+            class="q-mt-sm"
+            item-class="col-xl-3 col-sm-4 col-xs-12"
+          >
+            <template v-slot:item="props">
+              <q-intersection once>
                 <sc-shadow>
                   <q-card square bordered flat>
                     <q-item>
                       <q-item-section avatar>
                         <q-avatar>
-                          <img src="~assets/head_1.png">
+                          <img src="~assets/head_1.png" />
                         </q-avatar>
                       </q-item-section>
                       <q-item-section>
                         <q-item-label class="text-body1">
-                          <strong>爱美丽</strong>
+                          <strong>爱美丽-{{ props.item.id }}</strong>
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -206,19 +344,47 @@
                     <q-separator />
                     <q-item class="q-px-sm">
                       <q-btn-group flat spread class="full-width">
-                        <q-btn flat dense icon="save_alt" size="sm" class="q-mr-sm" color="grey-6">
+                        <q-btn
+                          flat
+                          dense
+                          icon="save_alt"
+                          size="sm"
+                          class="q-mr-sm"
+                          color="grey-6"
+                        >
                           <q-tooltip>下载</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="edit" size="sm" color="grey-6" class="q-mx-sm">
+                        <q-btn
+                          flat
+                          dense
+                          icon="edit"
+                          size="sm"
+                          color="grey-6"
+                          class="q-mx-sm"
+                        >
                           <q-tooltip>编辑</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="share" size="sm" color="grey-6" class="q-mx-sm">
+                        <q-btn
+                          flat
+                          dense
+                          icon="share"
+                          size="sm"
+                          color="grey-6"
+                          class="q-mx-sm"
+                        >
                           <q-tooltip>分享</q-tooltip>
                         </q-btn>
                         <q-separator vertical inset="" />
-                        <q-btn flat dense icon="more_horiz" size="sm" color="grey-6" class="q-mx-sm">
+                        <q-btn
+                          flat
+                          dense
+                          icon="more_horiz"
+                          size="sm"
+                          color="grey-6"
+                          class="q-mx-sm"
+                        >
                           <q-tooltip>更多</q-tooltip>
                         </q-btn>
                       </q-btn-group>
@@ -226,47 +392,56 @@
                   </q-card>
                 </sc-shadow>
               </q-intersection>
-            </div>
-          </div>
+            </template>
+          </sc-page>
         </q-tab-panel>
-        <q-tab-panel name="movies">
-          <div class="row">
-            <div
-              class="col-xl-3 col-sm-4 col-xs-12"
-              v-bind:key="item.id"
-              v-for="item in items"
-            >
-              <q-intersection once class="q-ma-sm">
-                <sc-shadow>
-                  <q-card square bordered flat class="q-pb-sm">
-                    <q-img :src="item.src" :ratio="16 / 10" />
-                    <q-list class="q-mt-md">
-                      <q-item dense class="text-body1">
-                        <strong>Alipay</strong>
-                      </q-item>
-                      <q-item dense>
-                        那是一种内在的东西， 他们到达不了，也无法
-                      </q-item>
-                      <q-item dense clickable>
-                        <q-item-section style="font-size: 12px">10小时前</q-item-section>
-                        <span>
-                          <q-img src="~assets/head.png" style="width: 28px;height: 28px;">
-                            <q-tooltip>张三</q-tooltip>
-                          </q-img>
-                          <q-img src="~assets/head_1.png" style="width: 28px;height: 28px;margin-left: -12px">
-                              <q-tooltip>豆豆</q-tooltip>
-                          </q-img>
-                         <q-img src="~assets/head.png" style="width: 28px;height: 28px;margin-left: -12px">
-                            <q-tooltip>乐乐</q-tooltip>
-                          </q-img>
-                        </span>
-                      </q-item>
-                    </q-list>
-                  </q-card>
-                </sc-shadow>
-              </q-intersection>
-            </div>
-          </div>
+        <q-tab-panel name="movies" class="q-px-sm q-pt-none">
+          <sc-page
+            :items="items"
+            class="q-mt-sm"
+            item-class="col-xl-3 col-sm-4 col-xs-12"
+          >
+            <template v-slot:item="props">
+              <sc-shadow>
+                <q-card square bordered flat class="q-pb-sm">
+                  <q-img :src="props.item.src" :ratio="16 / 10" />
+                  <q-list class="q-mt-md">
+                    <q-item dense class="text-body1">
+                      <strong>Alipay-{{ props.item.id }}</strong>
+                    </q-item>
+                    <q-item dense>
+                      那是一种内在的东西， 他们到达不了，也无法
+                    </q-item>
+                    <q-item dense clickable>
+                      <q-item-section style="font-size: 12px"
+                        >10小时前</q-item-section
+                      >
+                      <span>
+                        <q-img
+                          src="~assets/head.png"
+                          style="width: 28px; height: 28px"
+                        >
+                          <q-tooltip>张三</q-tooltip>
+                        </q-img>
+                        <q-img
+                          src="~assets/head_1.png"
+                          style="width: 28px; height: 28px; margin-left: -12px"
+                        >
+                          <q-tooltip>豆豆</q-tooltip>
+                        </q-img>
+                        <q-img
+                          src="~assets/head.png"
+                          style="width: 28px; height: 28px; margin-left: -12px"
+                        >
+                          <q-tooltip>乐乐</q-tooltip>
+                        </q-img>
+                      </span>
+                    </q-item>
+                  </q-list>
+                </q-card>
+              </sc-shadow>
+            </template>
+          </sc-page>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -276,6 +451,7 @@
 <script>
 import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
+import ScPage from 'components/common/ScPage'
 
 const types = []
 types.push('全部')
@@ -336,6 +512,7 @@ const heavyList = []
 
 for (let i = 0; i < maxSize; i++) {
   heavyList.push({
+    id: i,
     label: 'Option ' + (i + 1)
   })
 }
@@ -344,7 +521,10 @@ Object.freeze(heavyList)
 
 export default {
   name: 'Center',
-  components: { ScShadow },
+  components: {
+    ScPage,
+    ScShadow
+  },
   data() {
     return {
       heavyList,
@@ -377,7 +557,7 @@ export default {
   computed: {
     selection() {
       return Object.keys(this.desert)
-        .filter(type => this.desert[type] === true)
+        .filter((type) => this.desert[type] === true)
         .join(', ')
     }
   },
@@ -406,6 +586,6 @@ export default {
 
 <style scoped>
 .shadow-blue {
-  box-shadow: 0 0 8px -1px #31CCEC;
+  box-shadow: 0 0 8px -1px #31ccec;
 }
 </style>
