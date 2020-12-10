@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
+  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑;">
     <q-resize-observer :debounce="300" @resize="onResize" />
     <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
       <q-toolbar class="GNL__toolbar">
@@ -56,7 +56,8 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-              >{{ totalInformCount }}</q-badge
+            >{{ totalInformCount }}
+            </q-badge
             >
           </q-btn>
           <span class="inline-block">
@@ -72,7 +73,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-                >Emailseeeeee</span
+              >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -398,18 +399,7 @@
       @hide="hide"
       @show="show"
     >
-      <q-scroll-area
-        style="height: calc(100% - 50px); margin-top: 50px"
-        class="fit"
-        :thumb-style="thumbStyle"
-        :content-style="contentStyle"
-        :content-active-style="contentActiveStyle"
-      >
-        <q-list class="rounded-borders text-black">
-          <menu-tree :data="menuData" />
-        </q-list>
-      </q-scroll-area>
-      <div class="absolute-top bg-white" style="height: 50px">
+      <div class="absolute-top bg-white" style="height: 50px;margin-bottom: 50px">
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
             <q-img
@@ -422,6 +412,18 @@
             <strong>Sika Design Pro</strong>
           </div>
         </div>
+      </div>
+      <div style="height: calc(100% - 50px); margin-top: 50px">
+        <q-scroll-area
+          class="fit"
+          :thumb-style="thumbStyle"
+          :content-style="contentStyle"
+          :content-active-style="contentActiveStyle"
+        >
+          <q-list class="rounded-borders text-black">
+            <menu-tree :data="menuData" />
+          </q-list>
+        </q-scroll-area>
       </div>
     </q-drawer>
     <q-drawer
@@ -725,10 +727,12 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container style="background-color: #f0f2f5" class="scroll-y">
+    <q-page-container>
       <slot name="page-title"></slot>
       <q-page>
-        <router-view />
+        <transition mode="out-in">
+          <router-view />
+        </transition>
         <q-page-sticky
           position="top-right"
           style="z-index: 3000"
@@ -1129,6 +1133,14 @@ export default {
         width: '0px',
         opacity: 0.75
       },
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0.2
+      },
       check1: true,
       check2: false,
       check3: false,
@@ -1235,18 +1247,18 @@ export default {
     }
   },
   watch: {
-    gtSm: function () {
+    gtSm: function() {
       this.rightHide()
     }
   },
   computed: {
-    menuContentClass: function () {
+    menuContentClass: function() {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function () {
+    informCount: function() {
       let count = 0
       for (let i = 0; i < this.informs.length; ++i) {
         if (informs[i].disable === false) {
@@ -1255,7 +1267,7 @@ export default {
       }
       return count
     },
-    notifiesCount: function () {
+    notifiesCount: function() {
       let count = 0
       for (let i = 0; i < this.notifies.length; ++i) {
         if (notifies[i].disable === false) {
@@ -1264,7 +1276,7 @@ export default {
       }
       return count
     },
-    waitDealCount: function () {
+    waitDealCount: function() {
       let count = 0
       for (let i = 0; i < this.waitDeals.length; ++i) {
         if (waitDeals[i].disable === false) {
@@ -1273,17 +1285,28 @@ export default {
       }
       return count
     },
-    totalInformCount: function () {
+    totalInformCount: function() {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function () {
+  mounted: function() {
     this.leftDrawerOpen = this.getLeftDrawOpen()
   }
 }
 </script>
 
 <style lang="sass">
+.v-enter
+  opacity: 0
+  transform: translateX(50px)
+
+.v-leave-to
+  opacity: 0
+  transform: translateX(-50px)
+
+.v-enter-active, .v-leave-active
+  transition: all 0.4s ease
+
 .GNL
   &__toolbar
     height: 64px

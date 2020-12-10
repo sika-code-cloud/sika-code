@@ -13,7 +13,7 @@
             早安，{{ workplaceSata.currentUserData.name }}，祝你开心每一天！
           </div>
           <q-item-label class="text-grey-6 text-body"
-            >{{ workplaceSata.currentUserData.job }} |
+          >{{ workplaceSata.currentUserData.job }} |
             {{ workplaceSata.currentUserData.department }}
           </q-item-label>
         </div>
@@ -38,7 +38,7 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >{{ workplaceSata.statisticsData.projectNum }}
+            >{{ workplaceSata.statisticsData.projectNum }}
             </q-item-label>
           </q-item-label>
           <q-item-label class="inline-block">
@@ -55,7 +55,7 @@
             <q-item-label
               class="text-center text-black q-pt-xs"
               style="font-size: x-large"
-              >{{ workplaceSata.statisticsData.waitMatterNum }}/{{
+            >{{ workplaceSata.statisticsData.waitMatterNum }}/{{
                 workplaceSata.statisticsData.allMatterNum
               }}
             </q-item-label>
@@ -182,16 +182,16 @@
                 <q-item-section>
                   <q-item-label class="q-mb-xs">
                     <span class="text-weight-bold q-pr-xs">{{
-                      dynamicData.name
-                    }}</span>
+                        dynamicData.name
+                      }}</span>
                     <span>在</span>
                     <span class="text-primary q-px-xs">{{
-                      dynamicData.group
-                    }}</span>
+                        dynamicData.group
+                      }}</span>
                     <span>新建项目</span>
                     <span class="text-primary q-pl-xs">{{
-                      dynamicData.matter
-                    }}</span>
+                        dynamicData.matter
+                      }}</span>
                   </q-item-label>
                   <q-item-label class="text-grey-6" lines="1">
                     {{ dynamicData.date }}
@@ -411,8 +411,9 @@
               <q-item-section>
                 <q-item-label>{{ item.name }}</q-item-label>
                 <q-item-label caption lines="1">{{
-                  item.nickName
-                }}</q-item-label>
+                    item.nickName
+                  }}
+                </q-item-label>
               </q-item-section>
 
               <q-item-section side>

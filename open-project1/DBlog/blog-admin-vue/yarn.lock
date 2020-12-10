@@ -9235,6 +9235,16 @@ ouch@2.0.0:
     escape-html "^1.0.1"
     lodash "^4.17.10"
 
+overlayscrollbars-vue@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npm.taobao.org/overlayscrollbars-vue/download/overlayscrollbars-vue-0.2.2.tgz#4a3d4eaf09dbbaae8c52ff0e9219909075eb920e"
+  integrity sha1-Sj1Orwnbuq6MUv8OkhmQkHXrkg4=
+
+overlayscrollbars@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/overlayscrollbars/download/overlayscrollbars-1.13.0.tgz#1edb436328133b94877b558f77966d5497ca36a7"
+  integrity sha1-HttDYygTO5SHe1WPd5ZtVJfKNqc=
+
 p-cancelable@^0.4.0:
   version "0.4.1"
   resolved "https://registry.npm.taobao.org/p-cancelable/download/p-cancelable-0.4.1.tgz#35f363d67d52081c8d9585e37bcceb7e0bbcb2a0"
@@ -9581,6 +9591,11 @@ pend@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/pend/download/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
+
+perfect-scrollbar@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npm.taobao.org/perfect-scrollbar/download/perfect-scrollbar-1.5.0.tgz#821d224ed8ff61990c23f26db63048cdc75b6b83"
+  integrity sha1-gh0iTtj/YZkMI/JttjBIzcdba4M=
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
@@ -12835,9 +12850,9 @@ vue-loader@15.9.5:
     vue-style-loader "^4.1.0"
 
 vue-numeral-filter@^2.0.0:
-  version "1.1.3"
-  resolved "https://registry.npm.taobao.org/vue-numeral-filter/download/vue-numeral-filter-1.1.3.tgz#e924c8d585ac1f584cf79ece7e97105e3f0df86a"
-  integrity sha1-6STI1YWsH1hM957OfpcQXj8N+Go=
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/vue-numeral-filter/download/vue-numeral-filter-1.4.0.tgz#74b68de3a12500338c7de43feb61f2575281710a"
+  integrity sha1-dLaN46ElADOMfeQ/62HyV1KBcQo=
   dependencies:
     numeral "^2.0.6"
 

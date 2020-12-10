@@ -7,7 +7,7 @@
       </p>
     </div>
 
-    <div class="q-mx-sm q-mt-sm text-grey-8 text-center">
+    <div class="q-mx-sm q-mt-sm q-pb-md text-grey-8 text-center">
       <sc-page
         :items="itemsInit"
         :per-number="12"

@@ -1,5 +1,5 @@
 const currentUserData = {
-  headSrc: 'img/head_1.png',
+  headSrc: 'imgs/head_1.png',
   greetings: '早安',
   name: 'Serati Ma',
   job: '交互专家',
@@ -25,7 +25,7 @@ for (let i = 0; i < 6; ++i) {
 const dynamicDatas = []
 for (let i = 0; i < 6; ++i) {
   const dynamicData = {
-    imgSrc: 'img/head_1.png',
+    imgSrc: 'imgs/head.png',
     name: '钟小鱼' + i,
     group: '高逼格设计天团' + i,
     matter: '六月迭代' + i,
@@ -79,17 +79,17 @@ const waitMatters = {
 
 const teamMemberDatas = []
 for (let i = 0; i < 10; ++i) {
-  let srcTemp = 'img/head_1.png'
+  let srcTemp = 'imgs/head_1.png'
   let nameTemp = '亮晶晶'
   let nickNameTemp = 'Designer'
   let stateTemp = '在'
   if (i % 3 === 0) {
-    srcTemp = 'img/head.png'
+    srcTemp = 'imgs/head.png'
     nameTemp = '黑糊糊'
     nickNameTemp = 'HeiHuHu'
     stateTemp = '不在'
   } else if (i % 3 === 1) {
-    srcTemp = 'img/sika-head.png'
+    srcTemp = 'imgs/sika-head.png'
     nameTemp = '金灿灿'
     nickNameTemp = 'JinCanCan'
     stateTemp = '不在'
