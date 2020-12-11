@@ -1300,11 +1300,11 @@ export default {
 <style lang="sass">
 .v-enter
   opacity: 0
-  transform: translateY(-50px)
+  transform: translate3d(0, -100px,0)
 
 .v-leave-to
   opacity: 0
-  transform: translateY(50px)
+  transform: translate3d(0, 100px, 0)
 
 .v-enter-active, .v-leave-active
   transition: all 0.4s ease

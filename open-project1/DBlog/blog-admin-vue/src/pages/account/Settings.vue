@@ -39,7 +39,7 @@
         </div>
         <q-separator :vertical="$q.screen.gt.xs" v-show="$q.screen.gt.xs" />
         <div class="col-sm col-xs-12 q-px-md q-pt-none">
-          <q-tab-panels v-model="settingsTab">
+          <q-tab-panels v-model="settingsTab" animated transition-prev="fade" transition-next="fade">
             <q-tab-panel name="basicSettings" class="row q-pt-sm">
               <div class="text-h5 col-12 q-mb-md">基本设置</div>
               <div class="lt-sm col-xs-12 q-mb-md">
@@ -127,12 +127,15 @@
                   v-model="accountSettingsData.basicSetting.address"
                 />
                 <span class="row q-gutter-x-sm">
-                  <q-input
+                  <q-select
                     class="col-3"
                     outlined
                     dense
                     square
+                    behavior="menu"
                     label="前缀"
+                    options-dense
+                    :options="['+86', '+87']"
                     v-model="accountSettingsData.basicSetting.phonePrefix"
                   />
                   <q-input
@@ -171,7 +174,7 @@
                   <q-item-section>
                     <q-item-label>账户密码</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >当前密码强度：强
+                    >当前密码强度：强
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -195,7 +198,7 @@
                   <q-item-section>
                     <q-item-label>密保问题</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >{{ accountSettingsData.safeData.passwordQuestion }}
+                    >{{ accountSettingsData.safeData.passwordQuestion }}
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -206,8 +209,9 @@
                 <q-item>
                   <q-item-section>
                     <q-item-label>备用邮箱</q-item-label>
-                    <q-item-label class="text-grey-6"
-                      >已绑定邮箱：{{ accountSettingsData.safeData.slaveEmail }}
+                    <q-item-label class="text-grey-6">
+                      <q-chip outline color="info" square class="bg-green-1" size="sm">已绑定</q-chip>
+                      {{ accountSettingsData.safeData.slaveEmail }}
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -219,7 +223,7 @@
                   <q-item-section>
                     <q-item-label><strong>MFA 设备</strong></q-item-label>
                     <q-item-label class="text-grey-6"
-                      >未绑定 MFA 设备，绑定后，可以进行二次确认
+                    >未绑定 MFA 设备，绑定后，可以进行二次确认
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -244,7 +248,7 @@
                   <q-item-section>
                     <q-item-label>绑定淘宝</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >{{ accountSettingsData.accountBindData.bindTaoBaoNo }}
+                    >{{ accountSettingsData.accountBindData.bindTaoBaoNo }}
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -284,7 +288,7 @@
                   <q-item-section>
                     <q-item-label>绑定微信</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >{{ accountSettingsData.accountBindData.bindWechatNo }}
+                    >{{ accountSettingsData.accountBindData.bindWechatNo }}
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -301,7 +305,7 @@
                   <q-item-section>
                     <q-item-label>账户密码</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >其他用户的消息将以站内信的形式通知
+                    >其他用户的消息将以站内信的形式通知
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -335,7 +339,7 @@
                   <q-item-section>
                     <q-item-label>待办任务</q-item-label>
                     <q-item-label class="text-grey-6"
-                      >待办任务将以站内信的形式通知
+                    >待办任务将以站内信的形式通知
                     </q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
@@ -365,14 +369,7 @@ export default {
   data() {
     return {
       accountSettingsData: ACCOUNT_SETTINGS_DATA,
-      value: true,
-      tab: 'mails',
-      settingsTab: 'basicSettings',
-      splitterModel: 20,
-      email: 'antdesign@alipay.com',
-      nickname: 'sikaCode',
-      desc: 'sikaCode',
-      position: 'sikaCode'
+      settingsTab: 'basicSettings'
     }
   }
 }
@@ -381,7 +378,4 @@ export default {
 <style scoped>
 @import 'http://at.alicdn.com/t/font_2136554_1fgggi4y4wt.css';
 
-.shadow-blue {
-  box-shadow: 0 0 8px -1px #31ccec;
-}
 </style>
