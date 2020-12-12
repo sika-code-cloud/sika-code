@@ -139,51 +139,49 @@
     </div>
     <div class="q-px-sm">
       <sc-page
-        :items="itemsInit"
-        :per-number="6"
-        item-class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
+        :items="projectsData.projectDatas"
+        class="q-mt-sm"
+        item-class="col-xl-3 col-sm-4 col-xs-12"
       >
         <template v-slot:item="props">
-          <q-intersection once>
-            <sc-shadow>
-              <q-card square bordered flat class="q-pb-sm">
-                <q-img :src="props.item.src" :ratio="16 / 10" />
-                <q-list class="q-mt-md">
-                  <q-item dense class="text-body1">
-                    <strong>Alipay</strong>
-                  </q-item>
-                  <q-item dense>
-                    那是一种内在的东西， 他们到达不了，也无法
-                  </q-item>
-                  <q-item dense clickable>
-                    <q-item-section style="font-size: 12px"
-                      >10小时前
-                    </q-item-section>
-                    <span>
-                      <q-img
-                        src="~assets/head.png"
-                        style="width: 28px; height: 28px"
-                      >
-                        <q-tooltip>张三</q-tooltip>
-                      </q-img>
-                      <q-img
-                        src="~assets/head_1.png"
-                        style="width: 28px; height: 28px; margin-left: -12px"
-                      >
-                        <q-tooltip>豆豆</q-tooltip>
-                      </q-img>
-                      <q-img
-                        src="~assets/head.png"
-                        style="width: 28px; height: 28px; margin-left: -12px"
-                      >
-                        <q-tooltip>乐乐</q-tooltip>
-                      </q-img>
-                    </span>
-                  </q-item>
-                </q-list>
-              </q-card>
-            </sc-shadow>
-          </q-intersection>
+          <sc-shadow>
+            <q-card square bordered flat class="q-pb-sm">
+              <q-img :src="props.item.pictureSrc" :ratio="16 / 10" />
+              <q-list class="q-mt-md">
+                <q-item dense class="text-body1">
+                  <strong>Alipay-{{ props.item.index }}</strong>
+                </q-item>
+                <q-item dense>
+                  那是一种内在的东西， 他们到达不了，也无法
+                </q-item>
+                <q-item dense clickable>
+                  <q-item-section style="font-size: 12px">
+                    {{ props.item.hour }}小时前
+                  </q-item-section>
+                  <span>
+                        <q-img
+                          src="~assets/head.png"
+                          style="width: 28px; height: 28px"
+                        >
+                          <q-tooltip>张三</q-tooltip>
+                        </q-img>
+                        <q-img
+                          src="~assets/head_1.png"
+                          style="width: 28px; height: 28px; margin-left: -12px"
+                        >
+                          <q-tooltip>豆豆</q-tooltip>
+                        </q-img>
+                        <q-img
+                          src="~assets/head.png"
+                          style="width: 28px; height: 28px; margin-left: -12px"
+                        >
+                          <q-tooltip>乐乐</q-tooltip>
+                        </q-img>
+                      </span>
+                </q-item>
+              </q-list>
+            </q-card>
+          </sc-shadow>
         </template>
       </sc-page>
     </div>
@@ -191,9 +189,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
 import ScPage from 'components/common/ScPage'
+import PROJECTS_DATA from '@/mock/data/list/search/projectsData'
 
 const types = []
 types.push('全部')
@@ -228,28 +226,6 @@ const ownersDefault = [
     icon: 'casino'
   }
 ]
-const srcs = [
-  'https://gw.alipayobjects.com/zos/rmsportal/uMfMFlvUuceEyPpotzlq.png',
-  'https://gw.alipayobjects.com/zos/rmsportal/iZBVOIhGJiAnhplqjvZW.png',
-  'https://pic.rmb.bdstatic.com/fbb6939952e2e27c5cdfc5b706905768.jpeg@wm_2,t_55m+5a625Y+3L+WIhuS6q+e+juS4veeahOmbhuS4reWcsA==,fc_ffffff,ff_U2ltSGVp,sz_26,x_17,y_17',
-  'https://gw.alipayobjects.com/zos/rmsportal/iXjVmWVHbCJAyqvDxdtx.png',
-  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604603259601&di=98453cd17ded14a25ec805df888b2267&imgtype=0&src=http%3A%2F%2Fimg.08087.cc%2Fuploads%2F20191128%2F14%2F1574923905-WqopanrGSZ.jpg',
-  'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
-  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602939538&di=a457faa41c62fff3cbf0ab1fed08dcfc&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201308%2F05%2F20130805105309_5E2zE.jpeg',
-  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602939540&di=329ba6679a8ac3e9feb457c5dd24e3d5&imgtype=0&src=http%3A%2F%2F00.minipic.eastday.com%2F20170415%2F20170415170933_d0304d15b93b7025b2a045c4ff65baf3_13.jpeg',
-  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604602941634&di=be2c1a81c94d87340186413a8b1bd42e&imgtype=0&src=http%3A%2F%2Ft1.hxzdhn.com%2Fuploads%2Ftu%2F201807%2F9999%2Fb488d1a5fc.jpg'
-]
-const itemDefault = {
-  select: false
-}
-const itemsInit = []
-for (let i = 0; i < 30; ++i) {
-  const itemTemp = _.clone(itemDefault)
-  itemTemp.id = i
-  itemTemp.key = i
-  itemTemp.src = srcs[i % srcs.length]
-  itemsInit.push(itemTemp)
-}
 export default {
   name: 'Projects',
   components: {
@@ -258,14 +234,13 @@ export default {
   },
   data() {
     return {
-      itemsInit,
+      projectsData: PROJECTS_DATA,
       types,
       owner: [],
       activeUser: '张三',
       goodPing: '优秀',
       owners: ownersDefault,
-      queryData: '',
-      items: itemsInit
+      queryData: ''
     }
   },
   methods: {

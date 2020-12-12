@@ -138,13 +138,15 @@
       </div>
     </div>
     <div class="bg-white q-mx-md q-mt-md q-pb-md q-pt-md">
-      <sc-page :items="heavyList">
+      <sc-page :items="articlesData.articlesDatas" class="q-mt-sm">
         <template v-slot:item="props">
-          <div class="q-px-md q-pb-sm">
-            <sc-shadow class="q-px-sm q-pb-sm">
+          <div class="q-pb-sm">
+            <sc-shadow class="q-pa-sm">
               <q-item-section>
                 <q-item-label class="text-body1 q-mb-sm">
-                  <strong>Alipay-{{ props.item.label }}</strong>
+                  <strong>
+                    Alipay-{{ props.item.index }}
+                  </strong>
                 </q-item-label>
                 <q-item-label class="q-mb-sm">
                   <q-chip
@@ -186,19 +188,19 @@
                     class="col-auto cursor-pointer"
                   >
                     <q-avatar size="18px">
-                      <q-img
-                        src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+                      <img
+                        :src="props.item.imgSrc"
                       />
                     </q-avatar>
                     姜宇
                   </q-chip>
                   <span class="col-auto q-ml-none">发布在</span>
                   <span class="col-auto text-primary cursor-pointer"
-                    >https://ant.design</span
+                  >https://ant.design</span
                   >
-                  <span class="col-sm-auto col-xs-12 q-pl-xs"
-                    >2020-11-14 16:15</span
-                  >
+                  <span class="col-sm-auto col-xs-12 q-pl-xs">
+                        {{ props.item.publishTime }}
+                      </span>
                 </q-item-label>
                 <div class="q-mt-sm row items-center" style="height: 24px">
                   <q-btn-group flat>
@@ -206,7 +208,7 @@
                       flat
                       dense
                       icon="star_border"
-                      label="118"
+                      :label="props.item.collection"
                       size="12px"
                       class="q-mr-sm"
                       color="primary"
@@ -216,7 +218,7 @@
                       flat
                       dense
                       icon="thumb_up"
-                      label="118"
+                      :label="props.item.star"
                       size="12px"
                       color="grey-6"
                       class="q-mx-sm"
@@ -226,7 +228,7 @@
                       flat
                       dense
                       icon="message"
-                      label="118"
+                      :label="props.item.word"
                       size="12px"
                       color="grey-6"
                       class="q-mx-sm"
@@ -236,7 +238,7 @@
               </q-item-section>
             </sc-shadow>
           </div>
-          <q-separator inset="" spaced="10px" />
+          <q-separator spaced="10px" />
         </template>
       </sc-page>
     </div>
@@ -246,6 +248,7 @@
 <script>
 import ScShadow from 'components/shadow/ScShadow'
 import ScPage from 'components/common/ScPage'
+import ARTICLES_DATA from '@/mock/data/list/search/articlesData'
 
 const types = []
 types.push('全部')
@@ -281,20 +284,12 @@ const ownersDefault = [
   }
 ]
 
-const maxSize = 100
-const heavyList = []
-for (let i = 0; i < maxSize; i++) {
-  heavyList.push({
-    index: i,
-    label: 'Option ' + (i + 1)
-  })
-}
 export default {
   name: 'Articles',
   components: { ScPage, ScShadow },
   data() {
     return {
-      heavyList,
+      articlesData: ARTICLES_DATA,
       types,
       owner: [],
       activeUser: '张三',
