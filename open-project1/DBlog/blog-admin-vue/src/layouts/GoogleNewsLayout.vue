@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lfr" class="bg-grey-1" style="font-family: 微软雅黑">
+  <q-layout view="hHh LpR lfr" class="bg-grey-2" style="font-family: 微软雅黑">
     <q-resize-observer :debounce="300" @resize="onResize" />
     <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
       <q-toolbar class="GNL__toolbar">
@@ -380,7 +380,7 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-footer class="text-blue-grey-4" style="background-color: #f0f2f5">
+    <q-footer class="text-blue-grey-4 bg-grey-2">
       <div class="q-my-lg">
         <div class="text-center q-mb-sm">
           <span class="inline-block">Sika Design Pro</span>

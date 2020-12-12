@@ -9,9 +9,9 @@
     </div>
     <div class="q-px-sm q-mt-sm">
       <sc-page
-        :items="itemsInit"
-        :per-number="12"
-        item-class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12"
+        :items="applicationsData.applicationsDatas"
+        class="q-mt-sm"
+        item-class="col-xl-3 col-sm-4 col-xs-12"
       >
         <template v-slot:item="props">
           <q-intersection once>
@@ -20,12 +20,12 @@
                 <q-item>
                   <q-item-section avatar>
                     <q-avatar>
-                      <q-img src="~assets/head_1.png" />
+                      <img style="width: 30px; height: 30px" :src="props.item.imgSrc" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
                     <q-item-label class="text-body1">
-                      <strong>爱美丽{{ props.item.id }}</strong>
+                      <strong>爱美丽-{{ props.item.index }}</strong>
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -35,8 +35,8 @@
                     <span class="col">新增用户</span>
                   </q-item-label>
                   <q-item-label class="row text-body1 text-black">
-                    <span class="col"><strong>12</strong>万</span>
-                    <span class="col"><strong>1900</strong></span>
+                    <span class="col"><strong>{{ props.item.activeUser }}</strong>万</span>
+                    <span class="col"><strong>{{ props.item.increaseUser }}</strong></span>
                   </q-item-label>
                 </q-item>
                 <q-separator />
@@ -97,51 +97,21 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import ScShadow from 'components/shadow/ScShadow'
 import ScPage from 'components/common/ScPage'
+import APPLICATIONS_DATA from '@/mock/data/list/search/applicationsData'
 
-const itemDefault = {
-  src:
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604435817316&di=acd6edbc1c306906444d22cfa51bccb4&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg',
-  select: false
-}
-const itemsInit = []
-for (let i = 0; i < 100; ++i) {
-  const itemTemp = _.clone(itemDefault)
-  itemTemp.id = i
-  itemsInit.push(itemTemp)
-}
 export default {
   name: 'CardList',
   components: { ScPage, ScShadow },
   data() {
     return {
-      itemsInit,
-      activeClass: {
-        border: '1px dashed dodgerblue'
-      },
-      unActiveClass: {
-        border: '1px dashed lightgrey'
-      }
+      applicationsData: APPLICATIONS_DATA
     }
   },
-  methods: {
-    select(item) {
-      this.items[item.id].select = true
-    },
-    clear(item) {
-      this.items[item.id].select = false
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style lang="sass" scoped>
-.sc-card-height
-  height: 250px
-.active-class
-  border: 1px dashed #1890ff
-.un-active-class
-  border: 1px dashed lightgrey
 </style>

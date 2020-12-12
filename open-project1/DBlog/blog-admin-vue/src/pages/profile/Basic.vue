@@ -1,5 +1,5 @@
 <template>
-  <div class="sika-table-th">
+  <div class="sc-design">
     <div class="bg-white text-h6 q-pa-md">
       <strong>基础详情页</strong>
     </div>
@@ -11,14 +11,14 @@
           </q-item-label>
           <q-item-label class="row q-gutter-y-md">
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              取货单号：1000000000
+              取货单号：{{ basicData.returnGoodsApplyData.returnOrderNo }}
             </div>
-            <div class="col col-md-4 col-sm-6 col-xs-12">状态：已取货</div>
+            <div class="col col-md-4 col-sm-6 col-xs-12">状态：{{ basicData.returnGoodsApplyData.returnState }}</div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              销售单号：1000000000
+              销售单号：{{ basicData.returnGoodsApplyData.saleOrderNo }}
             </div>
             <div class="col col-md-12 col-sm-6 col-xs-12">
-              子订单：3214321432
+              子订单：{{ basicData.returnGoodsApplyData.subOrderNo }}
             </div>
           </q-item-label>
         </q-card-section>
@@ -28,66 +28,99 @@
             <strong>用户信息</strong>
           </q-item-label>
           <q-item-label class="row q-gutter-y-md">
-            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名：李大锤</div>
+            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名：{{ basicData.userData.name }}</div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              联系电话：18100000000
+              联系电话：{{ basicData.userData.phone }}
             </div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              常用快递：菜鸟仓储
+              常用快递：{{ basicData.userData.usedExpress }}
             </div>
             <div class="col col-md-4 col-sm-6 col-xs-12 q-pr-sm">
-              取货地址：浙江省杭州市西湖区万塘路18号
+              取货地址：{{ basicData.userData.pickupAddress }}
             </div>
-            <div class="col col-md-4 col-sm-6 col-xs-12">备注：无</div>
+            <div class="col col-md-4 col-sm-6 col-xs-12">备注：{{ basicData.userData.remark }}</div>
           </q-item-label>
         </q-card-section>
         <q-separator inset="" />
         <q-card-section>
-          <q-item-label class="text-body1 q-mb-lg"> 退货商品 </q-item-label>
+          <q-item-label class="text-body1 q-mb-lg"> 退货商品</q-item-label>
           <q-table
             flat
             square
             table-header-class="bg-grey-1"
             style="border-bottom: 1px solid lightgrey"
             hide-bottom
-            :data="data"
-            :columns="columns"
+            :data="basicData.returnGoodsData.datas"
+            :columns="basicData.returnGoodsData.columns"
             row-key="name"
           >
             <template v-slot:bottom-row>
               <q-tr class="text-weight-bolder">
                 <q-td colspan="4">总计</q-td>
-                <q-td class="text-right"> 10 </q-td>
-                <q-td class="text-right"> 61.5 </q-td>
+                <q-td class="text-right"> {{ basicData.returnGoodsData.totalData.totalNumber }}</q-td>
+                <q-td class="text-right"> {{ basicData.returnGoodsData.totalData.totalAmount }}</q-td>
               </q-tr>
             </template>
           </q-table>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-body1 q-mb-lg"> 退货进度 </q-item-label>
+          <q-item-label class="text-body1 q-mb-lg"> 退货进度</q-item-label>
           <q-table
             flat
             square
             table-header-class="bg-grey-1"
             style="border-bottom: 1px solid lightgrey"
             hide-bottom
-            :data="tuihuoData"
-            :columns="tuihuoColumns"
+            :data="basicData.returnGoodsProgressData.datas"
+            :columns="basicData.returnGoodsProgressData.columns"
             row-key="name"
           >
-            <template v-slot:body-cell-fat="props">
+            <template v-slot:body-cell-state="props">
               <q-td :props="props">
-                <q-spinner-rings
-                  color="primary"
-                  size="2em"
-                  v-if="props.value === '进行中'"
-                />
                 <span
-                  v-else
-                  style="width: 8px; height: 8px; border-radius: 50%"
-                  class="bg-info inline-block q-mx-sm"
-                />
-                <span>{{ props.value }}</span>
+                  v-if="props.value === '进行中'">
+                  <q-spinner-rings
+                    color="primary"
+                    size="16px"
+                    class="q-mx-xs"
+                  />
+                  <q-chip square outline color="primary" class="bg-blue-1 no-border-radius" size="sm">
+                   {{ props.value }}
+                  </q-chip>
+                </span>
+                <span v-else-if="props.value === '已完成'">
+                  <q-icon
+                    size="8px"
+                    name="lens"
+                    color="positive"
+                    class="q-mx-sm"
+                  />
+                  <q-chip square outline color="positive" class="bg-green-1 no-border-radius" size="sm">
+                   {{ props.value }}
+                  </q-chip>
+                </span>
+                <span v-else-if="props.value === '已延期'">
+                  <q-icon
+                    size="8px"
+                    name="radio_button_checked"
+                    color="warning"
+                    class="q-mx-sm"
+                  />
+                  <q-chip square outline color="warning" class="bg-orange-1 no-border-radius" size="sm">
+                   {{ props.value }}
+                  </q-chip>
+                </span>
+                <span v-else-if="props.value === '未开始'">
+                  <q-icon
+                    size="8px"
+                    name="lens"
+                    color="grey-5"
+                    class="q-mx-sm"
+                  />
+                  <q-chip square outline color="grey-5" class="bg-grey-1 no-border-radius" size="sm">
+                   {{ props.value }}
+                  </q-chip>
+                </span>
               </q-td>
             </template>
           </q-table>
@@ -98,195 +131,18 @@
 </template>
 
 <script>
+import BASIC_DATA from '@/mock/data/profile/basicData'
+
 export default {
   name: 'Basic',
   data() {
     return {
-      tuihuoColumns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '时间',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '当前进度',
-          field: 'calories',
-          sortable: true
-        },
-        {
-          name: 'fat',
-          align: 'left',
-          label: '状态',
-          field: 'fat',
-          sortable: true
-        },
-        {
-          name: 'sodium',
-          label: '操作员ID',
-          field: 'sodium',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'calcium',
-          label: '耗时',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      columns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '商品编号',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '商品名称',
-          field: 'calories'
-        },
-        {
-          name: 'fat',
-          align: 'left',
-          label: '商品条码',
-          field: 'fat'
-        },
-        {
-          name: 'sodium',
-          label: '单价',
-          field: 'sodium',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'calcium',
-          label: '数量 (件)',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'iron',
-          label: '金额',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      tuihuoData: [
-        {
-          name: '12345612',
-          calories: '矿泉水 550ml',
-          fat: '进行中',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12345631',
-          calories: '凉茶 300ml',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.42
-        },
-        {
-          name: '12345161',
-          calories: '好吃的薯片',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        },
-        {
-          name: '12344561',
-          calories: '特别好吃的蛋卷',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12354561',
-          calories: '特别好吃的蛋卷2',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        }
-      ],
-      data: [
-        {
-          name: '12343561',
-          calories: '矿泉水 550ml',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12344561',
-          calories: '凉茶 300ml',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.42
-        },
-        {
-          name: '12314561',
-          calories: '好吃的薯片',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        },
-        {
-          name: '12534561',
-          calories: '特别好吃的蛋卷',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '123453561',
-          calories: '特别好吃的蛋卷2',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        }
-      ]
+      basicData: BASIC_DATA
     }
   },
-  methods: {
-    formatNumber(num) {
-      return parseFloat(num).toFixed(2)
-      // return Math.floor(num * 100) / 100
-      // return num.toFixed(2)
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style>
-.sika-table-th .q-table th {
-  font-size: 15px;
-}
 </style>

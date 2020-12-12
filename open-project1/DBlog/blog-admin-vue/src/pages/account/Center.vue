@@ -90,7 +90,7 @@
         <q-card-section>
           <q-item-label class="text-body1">团队</q-item-label>
           <q-item-label class="q-gutter-sm">
-            <q-chip size="16px" color="white" :key="index" v-for="(item, index) in accountCenterData.gruopDatas">
+            <q-chip size="16px" color="white" :key="index" v-for="(item, index) in accountCenterData.groupDatas">
               <q-avatar size="sm">
                 <q-img :src="item.imgSrc" />
               </q-avatar>
@@ -110,20 +110,20 @@
         content-class="text-grey-9"
         narrow-indicator
       >
-        <q-tab name="titles" >
+        <q-tab name="titles">
           <span>
             <q-icon name="list_alt" size="sm" />
-            文章({{ accountCenterData.titleDatas.length }})
+            文章({{ articlesData.articlesDatas.length }})
           </span>
         </q-tab>
         <q-tab name="applications">
            <span>
-            <q-icon name="settings_applications" size="sm" />应用({{ accountCenterData.applicationDatas.length }})
+            <q-icon name="settings_applications" size="sm" />应用({{ applicationsData.applicationsDatas.length }})
            </span>
         </q-tab>
         <q-tab name="projects">
            <span>
-            <q-icon name="fact_check" size="sm" />项目({{ accountCenterData.projectDatas.length }})
+            <q-icon name="fact_check" size="sm" />项目({{ projectsData.projectDatas.length }})
            </span>
         </q-tab>
       </q-tabs>
@@ -135,7 +135,7 @@
         transition-next="fade"
       >
         <q-tab-panel name="titles" class="q-px-sm q-pt-none">
-          <sc-page :items="accountCenterData.titleDatas" class="q-mt-sm">
+          <sc-page :items="articlesData.articlesDatas" class="q-mt-sm">
             <template v-slot:item="props">
               <div class="q-pb-sm">
                 <sc-shadow class="q-pa-sm">
@@ -185,7 +185,7 @@
                         class="col-auto cursor-pointer"
                       >
                         <q-avatar size="18px">
-                          <q-img
+                          <img
                             :src="props.item.imgSrc"
                           />
                         </q-avatar>
@@ -241,7 +241,7 @@
         </q-tab-panel>
         <q-tab-panel name="applications" class="q-px-sm q-pt-none">
           <sc-page
-            :items="accountCenterData.applicationDatas"
+            :items="applicationsData.applicationsDatas"
             class="q-mt-sm"
             item-class="col-xl-3 col-sm-4 col-xs-12"
           >
@@ -327,7 +327,7 @@
         </q-tab-panel>
         <q-tab-panel name="projects" class="q-px-sm q-pt-none">
           <sc-page
-            :items="accountCenterData.projectDatas"
+            :items="projectsData.projectDatas"
             class="q-mt-sm"
             item-class="col-xl-3 col-sm-4 col-xs-12"
           >
@@ -382,6 +382,9 @@
 import ScShadow from 'components/shadow/ScShadow'
 import ScPage from 'components/common/ScPage'
 import ACCOUNT_CENTER_DATA from '@/mock/data/account/centerData'
+import APPLICATIONS_DATA from '@/mock/data/list/search/applicationsData'
+import PROJECTS_DATA from '@/mock/data/list/search/projectsData'
+import ARTICLES_DATA from '@/mock/data/list/search/articlesData'
 
 export default {
   name: 'Center',
@@ -392,6 +395,9 @@ export default {
   data() {
     return {
       accountCenterData: ACCOUNT_CENTER_DATA,
+      applicationsData: APPLICATIONS_DATA,
+      projectsData: PROJECTS_DATA,
+      articlesData: ARTICLES_DATA,
       centerTab: 'titles'
     }
   },

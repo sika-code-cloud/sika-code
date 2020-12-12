@@ -1,8 +1,8 @@
 <template>
-  <div class="sika-table-th">
+  <div class="sc-design">
     <div class="bg-white q-px-lg q-pt-lg">
       <div class="row text-h6">
-        <strong class="col">单号：234231029431</strong>
+        <strong class="col">单号：{{ advancedData.headData.orderNo }}</strong>
         <div class="col-auto text-right">
           <span class="q-gutter-x-sm gt-xs">
             <q-btn-group unelevated>
@@ -48,15 +48,15 @@
       <div class="row q-gutter-y-md q-mt-sm">
         <div class="col-sm-8 col-xs-12">
           <div class="row q-gutter-y-sm">
-            <span class="col-md-6 col-xs-12 q-pr-sm">创建人：曲丽丽</span>
-            <span class="col-md-6 col-xs-12 q-pr-sm">订购产品：XX服务</span>
-            <span class="col-md-6 col-xs-12 q-pr-sm">创建时间：2017-07-07</span>
-            <span class="col-md-6 col-xs-12 q-pr-sm">关联单据：12321</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">创建人：{{ advancedData.headData.creator }}</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">订购产品：{{ advancedData.headData.orderProduct }}</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">创建时间：{{ advancedData.headData.createTime }}</span>
+            <span class="col-md-6 col-xs-12 q-pr-sm">关联单据：{{ advancedData.headData.relationOrderNo }}</span>
             <span class="col-md-6 col-xs-12 q-pr-sm">
-              生效日期：2017-07-07 ~ 2017-08-08
+              生效日期：{{ advancedData.headData.effectiveDate }}
             </span>
             <span class="col-md-6 col-xs-12 q-pr-sm">
-              备注：请于两个工作日内确认
+              备注：{{ advancedData.headData.remark }}
             </span>
           </div>
         </div>
@@ -64,8 +64,8 @@
           <span class="row q-gutter-y-sm">
             <span class="col-sm-6 col-xs-4 text-grey-7">状态</span>
             <span class="col-sm-6 col-xs-8 text-grey-7">订单金额</span>
-            <span class="col-sm-6 col-xs-4 text-h5">待审批</span>
-            <span class="col-sm-6 col-xs-8 text-h5">¥568.08</span>
+            <span class="col-sm-6 col-xs-4 text-h5">{{ advancedData.headData.state }}</span>
+            <span class="col-sm-6 col-xs-8 text-h5">¥{{ advancedData.headData.orderAmount }}</span>
           </span>
         </div>
       </div>
@@ -94,36 +94,14 @@
             flat
           >
             <q-step
-              :name="1"
+              v-for="(item, index) in advancedData.progressData"
+              :key="index"
+              :name="item.step"
               :class="{ 'step-height': $q.screen.lt.md }"
-              title="创建项目"
-              caption="李大锤 2016-12-12 12:32"
-              icon="settings"
-              :done="step > 1"
-            >
-            </q-step>
-            <q-step
-              :name="2"
-              title="部门初审"
-              :class="{ 'step-height': $q.screen.lt.md }"
-              caption="周毛毛 2016-12-12 12:32"
-              icon="create_new_folder"
-              :done="step > 2"
-            >
-            </q-step>
-            <q-step
-              :name="3"
-              :class="{ 'step-height': $q.screen.lt.md }"
-              title="财务复核"
-              icon="assignment"
-              :done="step > 3"
-            >
-            </q-step>
-            <q-step
-              :name="4"
-              :class="{ 'step-height': $q.screen.lt.md }"
-              title="完成"
-              icon="add_comment"
+              :title="item.title"
+              :caption="item.capital"
+              :icon="item.icon"
+              :done="step > item.step"
             >
             </q-step>
           </q-stepper>
@@ -131,26 +109,25 @@
       </q-card>
       <q-card flat class="q-mt-md q-px-sm no-border-radius">
         <q-card-section>
-          <q-item-label class="text-body1"> 用户信息 </q-item-label>
+          <q-item-label class="text-body1"> 用户信息</q-item-label>
           <q-separator spaced="15px" />
           <q-item-label class="row q-gutter-y-md">
-            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名： 付小小</div>
+            <div class="col col-md-4 col-sm-6 col-xs-12">用户姓名： {{ advancedData.userInfoData.name }}</div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              会员卡号：32943898021309809423
+              会员卡号： {{ advancedData.userInfoData.membershipNo }}
             </div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              身份证：3321944288191034921
+              身份证：{{ advancedData.userInfoData.idCard }}
             </div>
             <div class="col col-md-4 col-sm-6 col-xs-12">
-              联系方式：18112345678
+              联系方式：{{ advancedData.userInfoData.phone }}
             </div>
             <div class="col col-md-8 col-sm-12 col-xs-12 q-pr-sm">
               <span class="row">
                 <span class="col-auto">取货地址：</span>
-                <q-item-label class="col"
-                  >曲丽丽 18100000000
-                  浙江省杭州市西湖区黄姑山路工专路交叉路口</q-item-label
-                >
+                <q-item-label class="col">
+                  {{ advancedData.userInfoData.pickAddress }}
+                </q-item-label>
               </span>
             </div>
           </q-item-label>
@@ -162,14 +139,14 @@
           <q-item-label class="row q-gutter-y-md">
             <div class="col col-sm-6 col-xs-12">某某数据： 725</div>
             <div class="col col-sm-6 col-xs-12">该数据更新时间：2017-08-08</div>
-            <div class="col col-sm-6 col-xs-12">某某数据 ：725</div>
+            <div class="col col-sm-6 col-xs-12">某某数据：725</div>
             <div class="col col-sm-6 col-xs-12">
-              该数据更新时间 ：2017-08-08
+              该数据更新时间：2017-08-08
             </div>
           </q-item-label>
         </q-card-section>
         <q-card-section>
-          <q-item-label class="text-body2 q-mb-md"> 信息组 </q-item-label>
+          <q-item-label class="text-body2 q-mb-md"> 信息组</q-item-label>
           <q-card bordered flat class="q-mt-xs no-border-radius">
             <q-item-label class="q-pa-md bg-grey-3">
               多层级信息组
@@ -195,7 +172,7 @@
                   <span class="row">
                     <span class="col-auto">描述 ：</span>
                     <q-item-label lines="2" class="col"
-                      >这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长</q-item-label
+                    >这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长</q-item-label
                     >
                   </span>
                 </div>
@@ -211,7 +188,7 @@
                   <span class="row">
                     <span class="col-auto">学名 ：</span>
                     <q-item-label lines="2" class="col"
-                      >Citrullus lanatus (Thunb.) Matsum. et
+                    >Citrullus lanatus (Thunb.) Matsum. et
                       Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗</q-item-label
                     >
                   </span>
@@ -259,41 +236,83 @@
             align="left"
             narrow-indicator
           >
-            <q-tab name="log1" label="操作日志一" />
-            <q-tab name="log2" label="操作日志二" />
-            <q-tab name="log3" label="操作日志三" />
+            <q-tab name="operatorLog1" label="操作日志一" />
+            <q-tab name="operatorLog2" label="操作日志二" />
+            <q-tab name="operatorLog3" label="操作日志三" />
           </q-tabs>
           <q-tab-panels v-model="operatorLogTab" animated>
-            <q-tab-panel name="log1">
+            <q-tab-panel name="operatorLog1">
               <q-table
                 flat
                 square
                 table-header-class="bg-grey-1"
                 style="border-bottom: 1px solid lightgrey"
-                hide-bottom
-                :data="tuihuoData"
-                :columns="tuihuoColumns"
+                :data="advancedData.operateLog1.datas"
+                :columns="advancedData.operateLog1.columns"
                 row-key="name"
               >
-                <template v-slot:body-cell-fat="props">
+                <template v-slot:header="props">
+                  <q-tr :props="props">
+                    <q-th
+                      v-for="col in props.cols"
+                      :key="col.name"
+                      :props="props"
+                      class="text-primary"
+                    >
+                      <q-icon name="invert_colors" size="18px" v-if="col.name === 'operateType'"/>
+                      <q-icon name="account_circle" size="18px" v-if="col.name === 'operator'"/>
+                      <q-icon name="offline_pin" size="18px" v-if="col.name === 'executeResult'"/>
+                      <q-icon name="av_timer" size="18px" v-if="col.name === 'operateTime'"/>
+                      <q-icon name="bookmark_border" size="18px" v-if="col.name === 'remark'"/>
+                      {{ col.label }}
+                    </q-th>
+                  </q-tr>
+                </template>
+                <template v-slot:body-cell-operateType="props">
                   <q-td :props="props">
-                    <q-spinner-rings
-                      color="primary"
-                      size="2em"
-                      v-if="props.value === '进行中'"
-                    />
-                    <span
-                      v-else
-                      style="width: 8px; height: 8px; border-radius: 50%"
-                      class="bg-info inline-block q-mx-sm"
-                    />
-                    <span>{{ props.value }}</span>
+                    <q-chip square outline color="negative" class="bg-red-1 no-border-radius" size="sm">
+                      {{ props.value }}
+                    </q-chip>
+                  </q-td>
+                </template>
+                <template v-slot:body-cell-executeResult="props">
+                  <q-td :props="props">
+                     <span v-if="props.value === '通过'">
+                      <q-icon
+                        v-if="props.value === '通过'"
+                        name="lens"
+                        size="8px"
+                        color="positive"
+                        class="q-mr-sm"
+                      />
+                       <q-chip square outline color="positive" class="bg-green-1 no-border-radius" size="sm">
+                        {{ props.value }}
+                       </q-chip>
+                     </span>
+                    <span v-else-if="props.value === '驳回'">
+                      <q-icon
+                        name="lens"
+                        size="8px"
+                        color="negative"
+                        class="q-mr-sm"
+                      />
+                      <q-chip square outline color="negative" class="bg-red-1 no-border-radius" size="sm">
+                        {{ props.value }}
+                      </q-chip>
+                    </span>
+                  </q-td>
+                </template>
+                <template v-slot:body-cell-remark="props">
+                  <q-td :props="props">
+                    <q-chip color="primary" class="bg-blue-1 no-border-radius" outline size="sm" square>
+                      {{ props.value }}
+                    </q-chip>
                   </q-td>
                 </template>
               </q-table>
             </q-tab-panel>
 
-            <q-tab-panel class="text-center" name="log2">
+            <q-tab-panel class="text-center" name="operatorLog2">
               <q-img
                 class="full-width"
                 src="~assets/no_data_1.png"
@@ -302,18 +321,74 @@
               ></q-img>
               <q-item-label>暂无数据</q-item-label>
             </q-tab-panel>
-
-            <q-tab-panel name="log3">
+            <q-tab-panel name="operatorLog3">
               <q-table
                 flat
                 square
                 table-header-class="bg-grey-1"
                 style="border-bottom: 1px solid lightgrey"
-                hide-bottom
-                :data="data"
-                :columns="columns"
+                :data="advancedData.operateLog3.datas"
+                :columns="advancedData.operateLog3.columns"
                 row-key="name"
               >
+                <template v-slot:header="props">
+                  <q-tr :props="props">
+                    <q-th
+                      v-for="col in props.cols"
+                      :key="col.name"
+                      :props="props"
+                      class="text-primary"
+                    >
+                      <q-icon name="invert_colors" size="18px" v-if="col.name === 'operateType'"/>
+                      <q-icon name="account_circle" size="18px" v-if="col.name === 'operator'"/>
+                      <q-icon name="offline_pin" size="18px" v-if="col.name === 'executeResult'"/>
+                      <q-icon name="av_timer" size="18px" v-if="col.name === 'operateTime'"/>
+                      <q-icon name="bookmark_border" size="18px" v-if="col.name === 'remark'"/>
+                      {{ col.label }}
+                    </q-th>
+                  </q-tr>
+                </template>
+                <template v-slot:body-cell-operateType="props">
+                  <q-td :props="props">
+                    <q-chip square outline color="primary" class="bg-blue-1 no-border-radius" size="sm">
+                      {{ props.value }}
+                    </q-chip>
+                  </q-td>
+                </template>
+                <template v-slot:body-cell-executeResult="props">
+                  <q-td :props="props">
+                     <span v-if="props.value === '通过'">
+                      <q-icon
+                        v-if="props.value === '通过'"
+                        name="lens"
+                        size="8px"
+                        color="positive"
+                        class="q-mr-sm"
+                      />
+                       <q-chip square outline color="positive" class="bg-green-1 no-border-radius" size="sm">
+                        {{ props.value }}
+                       </q-chip>
+                     </span>
+                    <span v-else-if="props.value === '驳回'">
+                      <q-icon
+                        name="lens"
+                        size="8px"
+                        color="negative"
+                        class="q-mr-sm"
+                      />
+                      <q-chip square outline color="negative" class="bg-red-1 no-border-radius" size="sm">
+                        {{ props.value }}
+                      </q-chip>
+                    </span>
+                  </q-td>
+                </template>
+                <template v-slot:body-cell-remark="props">
+                  <q-td :props="props">
+                    <q-chip color="primary" class="bg-blue-1 no-border-radius" outline size="sm" square>
+                      {{ props.value }}
+                    </q-chip>
+                  </q-td>
+                </template>
               </q-table>
             </q-tab-panel>
           </q-tab-panels>
@@ -324,201 +399,20 @@
 </template>
 
 <script>
+import ADVANCED_DATA from '@/mock/data/profile/advancedData'
+
 export default {
   name: 'Advance',
   data() {
     return {
-      step: '3',
+      advancedData: ADVANCED_DATA,
+      step: 3,
       tab: 'details',
-      operatorLogTab: 'log1',
-      tuihuoColumns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '时间',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '当前进度',
-          field: 'calories',
-          sortable: true
-        },
-        {
-          name: 'fat',
-          align: 'left',
-          label: '状态',
-          field: 'fat',
-          sortable: true
-        },
-        {
-          name: 'sodium',
-          label: '操作员ID',
-          field: 'sodium',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'calcium',
-          label: '耗时',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      columns: [
-        {
-          name: 'desc',
-          required: true,
-          label: '商品编号',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`
-        },
-        {
-          name: 'calories',
-          align: 'left',
-          label: '商品名称',
-          field: 'calories'
-        },
-        {
-          name: 'fat',
-          align: 'left',
-          label: '商品条码',
-          field: 'fat'
-        },
-        {
-          name: 'sodium',
-          label: '单价',
-          field: 'sodium',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'calcium',
-          label: '数量 (件)',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          name: 'iron',
-          label: '金额',
-          field: 'iron',
-          sortable: true,
-          format: (val) => this.formatNumber(`${val}`),
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      tuihuoData: [
-        {
-          name: '12345612',
-          calories: '矿泉水 550ml',
-          fat: '进行中',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12345631',
-          calories: '凉茶 300ml',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.42
-        },
-        {
-          name: '12345161',
-          calories: '好吃的薯片',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        },
-        {
-          name: '12344561',
-          calories: '特别好吃的蛋卷',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12354561',
-          calories: '特别好吃的蛋卷2',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        }
-      ],
-      data: [
-        {
-          name: '12343561',
-          calories: '矿泉水 550ml',
-          fat: '成功',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '12344561',
-          calories: '凉茶 300ml',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.42
-        },
-        {
-          name: '12314561',
-          calories: '好吃的薯片',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        },
-        {
-          name: '12534561',
-          calories: '特别好吃的蛋卷',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.12
-        },
-        {
-          name: '123453561',
-          calories: '特别好吃的蛋卷2',
-          fat: '12421432143214321',
-          sodium: 2.1,
-          calcium: 1,
-          iron: 2.32
-        }
-      ]
-    }
-  },
-  methods: {
-    formatNumber(num) {
-      return parseFloat(num).toFixed(2)
-      // return Math.floor(num * 100) / 100
-      // return num.toFixed(2)
+      operatorLogTab: 'operatorLog1'
     }
   }
 }
 </script>
 
 <style>
-.sika-table-th .q-table th {
-  font-size: 16px;
-}
-.sika-table-th .q-tab__label {
-  font-size: 16px;
-}
 </style>
