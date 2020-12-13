@@ -1,5 +1,6 @@
 import { date } from 'quasar'
 import dateUtil from 'src/utils/dateUtil'
+import commonUtil from 'src/utils/commonUtil'
 
 const imgSrcs = [
   'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
@@ -12,11 +13,10 @@ const imgSrcs = [
 ]
 const articlesDatas = []
 for (let i = 0; i < 36; ++i) {
-  const imgIndex = Math.floor(Math.random() * imgSrcs.length)
   const publishTimeTemp = date.formatDate(dateUtil.buildRandomDate(2020), 'YYYY-MM-DD HH:mm')
   articlesDatas.push({
     index: i,
-    imgSrc: imgSrcs[imgIndex],
+    imgSrc: commonUtil.getRandomData(imgSrcs),
     publishTime: publishTimeTemp,
     collection: Math.floor(Math.random() * 300),
     star: Math.floor(Math.random() * 200),

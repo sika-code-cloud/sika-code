@@ -144,7 +144,9 @@
         item-class="col-xl-3 col-sm-4 col-xs-12"
       >
         <template v-slot:item="props">
-          <q-intersection once>
+          <q-intersection
+            once
+            transition="scale">
             <sc-shadow>
               <q-card square bordered flat>
                 <q-item>

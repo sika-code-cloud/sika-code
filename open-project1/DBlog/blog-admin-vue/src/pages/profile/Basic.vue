@@ -81,8 +81,7 @@
                   v-if="props.value === '进行中'">
                   <q-spinner-rings
                     color="primary"
-                    size="16px"
-                    class="q-mx-xs"
+                    size="sm"
                   />
                   <q-chip square outline color="primary" class="bg-blue-1 no-border-radius" size="sm">
                    {{ props.value }}
@@ -90,7 +89,6 @@
                 </span>
                 <span v-else-if="props.value === '已完成'">
                   <q-icon
-                    size="8px"
                     name="lens"
                     color="positive"
                     class="q-mx-sm"
@@ -101,7 +99,6 @@
                 </span>
                 <span v-else-if="props.value === '已延期'">
                   <q-icon
-                    size="8px"
                     name="radio_button_checked"
                     color="warning"
                     class="q-mx-sm"
@@ -112,7 +109,6 @@
                 </span>
                 <span v-else-if="props.value === '未开始'">
                   <q-icon
-                    size="8px"
                     name="lens"
                     color="grey-5"
                     class="q-mx-sm"

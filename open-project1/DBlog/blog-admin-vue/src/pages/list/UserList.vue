@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="q-mt-md q-mx-md bg-white q-py-md text-grey-8">
-      <sc-page :items="itemsInit">
+      <sc-page :items="userListData.userListDatas">
         <template v-slot:item="props">
           <sc-shadow class="q-mb-md q-mx-md">
             <q-item>
@@ -15,30 +15,32 @@
                 <q-item-label class="q-mb-md">
                   <q-item-section avatar class="inline-block">
                     <q-avatar>
-                      <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+                      <img :src="props.item.imgSrc" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section
                     class="inline-block text-weight-bolder text-body1"
                   >
-                    Alipay{{ props.item.id }}
+                    {{ props.item.name }}
                   </q-item-section>
                 </q-item-label>
                 <q-item-label>
-                  <span> ID：123456700 </span>
+                  <span> ID：{{ props.item.idCard }} </span>
                   <q-btn
                     icon="content_copy"
                     outline
                     label="复制"
                     style="font-size: 12px"
+                    @click="copy(props.item)"
                     padding="2px 8px"
                   ></q-btn>
                 </q-item-label>
                 <q-item-label class="q-mb-sm">
-                  邮箱地址：user@iview.design
+                  邮箱地址：{{ props.item.email }}
                 </q-item-label>
                 <q-item-label class="q-mb-sm">
                   <q-chip
+                    v-if="props.item.verifyEmail"
                     label="已验证邮箱"
                     outline
                     text-color="green"
@@ -47,7 +49,16 @@
                     square
                   ></q-chip>
                   <q-chip
-                    label="管理员"
+                    v-else
+                    label="待验证邮箱"
+                    outline
+                    text-color="grey"
+                    class="bg-grey-1 q-ml-none"
+                    style="font-size: 12px"
+                    square
+                  ></q-chip>
+                  <q-chip
+                    :label="props.item.role"
                     outline
                     text-color="purple"
                     class="bg-purple-1"
@@ -64,29 +75,17 @@
                   ></q-btn>
                 </q-item-label>
                 <q-item-label class="row items-center">
-                  <q-btn
-                    color="primary"
-                    dense
-                    padding="1px 8px"
-                    unelevated
-                    label="普通用户"
-                  ></q-btn>
-                  <q-separator inset="item-thumbnail" vertical spaced="10px" />
-                  <q-btn
-                    color="primary"
-                    dense
-                    padding="1px 8px"
-                    unelevated
-                    label="管理员"
-                  ></q-btn>
-                  <q-separator inset="item-thumbnail" vertical spaced="10px" />
-                  <q-btn
-                    color="primary"
-                    dense
-                    padding="1px 8px"
-                    unelevated
-                    label="运营人员"
-                  ></q-btn>
+                  <div class="row" v-for="(role, index) in userListData.userRoleDatas" :key="index">
+                    <q-btn
+                      color="primary"
+                      dense
+                      padding="1px 8px"
+                      unelevated
+                      :label="role"
+                    ></q-btn>
+                    <q-separator v-if="index < userListData.userRoleDatas.length - 1" inset="item-thumbnail" vertical
+                                 spaced="10px" />
+                  </div>
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -99,21 +98,11 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import { copyToClipboard } from 'quasar'
 import ScShadow from 'components/shadow/ScShadow'
 import ScPage from 'components/common/ScPage'
+import USER_LIST_DATA from '@/mock/data/list/userListData'
 
-const itemDefault = {
-  src:
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604435817316&di=acd6edbc1c306906444d22cfa51bccb4&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg',
-  select: false
-}
-const itemsInit = []
-for (let i = 0; i < 110; ++i) {
-  const itemTemp = _.clone(itemDefault)
-  itemTemp.id = i
-  itemsInit.push(itemTemp)
-}
 export default {
   name: 'UserList',
   components: {
@@ -122,8 +111,22 @@ export default {
   },
   data() {
     return {
-      current: 2,
-      itemsInit
+      userListData: USER_LIST_DATA
+    }
+  },
+  methods: {
+    copy(item) {
+      copyToClipboard(item.idCard).then(() => {
+        this.$q.notify({
+          color: 'white',
+          textColor: 'positive',
+          icon: 'check_circle',
+          position: 'top-right',
+          message: 'ID【' + item.idCard + '】复制成功'
+        })
+      }).catch(() => {
+        // 失败
+      })
     }
   }
 }

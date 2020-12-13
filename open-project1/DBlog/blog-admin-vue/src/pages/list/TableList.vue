@@ -4,17 +4,17 @@
       <strong>查询表格</strong>
     </div>
     <div class="q-pt-md q-mx-md">
-      <q-card square flat class="q-gutter-y-md q-pb-lg">
+      <q-card square flat class="q-gutter-y-md q-pb-md">
         <q-form>
-          <div class="row q-gutter-y-sm">
+          <div class="row q-gutter-y-sm q-pt-sm">
             <q-item class="col-xl-3 col-sm-6 col-xs-12">
-              <q-item-section v-show="$q.screen.gt.sm" class="col-2 text-right">
+              <q-item-section class="col-2 text-right gt-sm">
                 <q-item-label>规则名称:</q-item-label>
               </q-item-section>
               <q-item-section class="col">
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="queryCondition.ruleName"
                   label="规则名称"
                   dense
                   square
@@ -30,7 +30,7 @@
               <q-item-section class="col">
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="queryCondition.desc"
                   label="描述"
                   dense
                   square
@@ -46,7 +46,7 @@
               <q-item-section v-show="showQuery" class="col">
                 <q-input
                   outlined
-                  v-model="ruleName"
+                  v-model="queryCondition.callCount"
                   label="服务调用次数"
                   dense
                   square
@@ -63,8 +63,9 @@
                 <q-select
                   behavior="menu"
                   outlined
-                  v-model="queryStatus"
-                  :options="['关闭', '运行中', '已上线', '异常']"
+                  options-dense
+                  v-model="queryCondition.state"
+                  :options="tableListData.stateValue"
                   label="状态"
                   dense
                   square
@@ -80,18 +81,20 @@
               <q-item-section v-show="showQuery" class="col">
                 <q-input
                   outlined
-                  v-model="queryDate"
+                  v-model="queryCondition.callNextTime"
                   label="上次调度时间"
                   dense
                   square
                 >
                   <template v-slot:prepend>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        transition-show="scale"
-                        transition-hide="scale"
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
                       >
-                        <q-date v-model="queryDate" mask="YYYY-MM-DD HH:mm">
+                        <q-date v-model="queryDate" mask="YYYY-MM-DD HH:mm" today-btn>
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
@@ -101,7 +104,7 @@
                             />
                           </div>
                         </q-date>
-                      </q-popup-proxy>
+                      </q-menu>
                     </q-icon>
                   </template>
                   <template v-slot:append>
@@ -112,9 +115,11 @@
                       class="cursor-pointer"
                     />
                     <q-icon name="access_time" class="cursor-pointer">
-                      <q-popup-proxy
-                        transition-show="scale"
-                        transition-hide="scale"
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
                       >
                         <q-time
                           v-model="queryDate"
@@ -130,7 +135,7 @@
                             />
                           </div>
                         </q-time>
-                      </q-popup-proxy>
+                      </q-menu>
                     </q-icon>
                   </template>
                 </q-input>
@@ -144,6 +149,7 @@
                   label="重置"
                   class="q-mr-sm no-border-radius"
                   color="secondary"
+                  @click="resetQuery"
                 />
                 <q-btn
                   unelevated
@@ -180,9 +186,9 @@
               square
               flat
               title-class="text-body1"
-              :data="data"
               color="primary"
-              :columns="columns"
+              :data="filterListData"
+              :columns="tableListData.tableListDatas.columns"
               :visible-columns="visibleColumns"
               row-key="id"
               :selected-rows-label="getSelectedString"
@@ -353,11 +359,16 @@
 
 <script>
 import { date, QSpinnerIos } from 'quasar'
+import _ from 'lodash'
+import TABLE_LIST_DATA from '@/mock/data/list/tableListData'
 
 export default {
   name: 'TableList',
   data() {
     return {
+      tableListData: TABLE_LIST_DATA,
+      filterListData: [],
+      queryCondition: TABLE_LIST_DATA.queryCondition,
       queryBtnStyle: {},
       queryLoad: false,
       addData: false,
@@ -375,18 +386,15 @@ export default {
         // sortBy: 'calories',
         descending: false,
         page: 1,
-        rowsPerPage: 20
+        rowsPerPage: 5
         // rowsNumber: xx if getting data from a server
       },
       visibleColumns: [
-        'calories',
-        'desc',
-        'fat',
-        'carbs',
-        'protein',
-        'sodium',
-        'calcium',
-        'iron'
+        'ruleName',
+        'state',
+        'callCount',
+        'callNextTime',
+        'desc'
       ],
       columns: [
         {
@@ -644,11 +652,39 @@ export default {
     onReset() {
       this.ruleName = null
     },
+    resetQuery() {
+      this.queryCondition = {}
+    },
     doQuery() {
       this.queryLoad = true
       setTimeout(() => {
         this.queryLoad = false
+        this.filterListData = []
+        const datas = this.tableListData.tableListDatas.datas
+        for (let i = 0; i < datas.length; ++i) {
+          const data = datas[i]
+          if (this.isMatchData(data)) {
+            this.filterListData.push(data)
+          }
+        }
       }, 2000)
+    },
+    isMatchData(data) {
+      const listQueryData = this.queryCondition
+      let ruleNameFlag = false
+      console.log(ruleNameFlag)
+      if (!listQueryData.ruleName || data.ruleName.search(listQueryData.ruleName) !== -1) {
+        ruleNameFlag = true
+      }
+      let descFlag = false
+      if (!listQueryData.desc || data.desc.search(listQueryData.desc) !== -1) {
+        descFlag = true
+      }
+      let stateFlag = false
+      if (!listQueryData.state || data.state === listQueryData.state) {
+        stateFlag = true
+      }
+      return ruleNameFlag && descFlag && stateFlag
     },
     addRow() {
       this.addData = true
@@ -672,6 +708,7 @@ export default {
     }
   },
   mounted() {
+    this.filterListData = _.cloneDeep(TABLE_LIST_DATA.tableListDatas.datas)
     this.showQuery = this.$q.screen.gt.xs
     this.tableLabel = this.$q.screen.gt.xs ? '收起' : '展开'
   },

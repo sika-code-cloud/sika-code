@@ -1,5 +1,5 @@
 <template>
-  <div class="sc-base-list">
+  <div class="sc-base-list sc-design">
     <div class="bg-white text-h6 q-pa-md">
       <strong>标准列表</strong>
     </div>
@@ -8,23 +8,23 @@
         <div class="row justify-center">
           <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-              >我的待办
+            >我的待办
             </q-item-label>
-            <q-item-label class="text-h5 text-center">8个任务</q-item-label>
+            <q-item-label class="text-h5 text-center">{{ basicListData.summaryData.waitDealTask }}个任务</q-item-label>
           </q-card-section>
           <q-separator vertical />
           <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-              >本周任务平均处理时间
+            >本周任务平均处理时间
             </q-item-label>
-            <q-item-label class="text-h5 text-center">32分钟</q-item-label>
+            <q-item-label class="text-h5 text-center">{{ basicListData.summaryData.weekDealDuration }}分钟</q-item-label>
           </q-card-section>
           <q-separator vertical />
           <q-card-section class="col-sm col-xs-12">
             <q-item-label class="text-body text-grey-6 text-center q-mb-sm"
-              >本周完成任务数
+            >本周完成任务数
             </q-item-label>
-            <q-item-label class="text-h5 text-center">24个任务</q-item-label>
+            <q-item-label class="text-h5 text-center">{{ basicListData.summaryData.completeTask }}个任务</q-item-label>
           </q-card-section>
         </div>
       </q-card>
@@ -37,26 +37,29 @@
             <div class="row q-gutter-y-sm q-gutter-x-md justify-end">
               <div class="col-md-5 col-xs-12" style="max-width: 280px">
                 <q-btn-toggle
+                  style="height: 36px"
                   spread
                   class="no-border-radius bg-light-blue-1"
                   dense
-                  v-model="model"
+                  v-model="listQueryData.matterState"
                   unelevated
                   toggle-color="primary"
+                  @click="queryData"
                   :options="[
-                    { label: '全部', value: 'all' },
-                    { label: '进行中', value: 'ing' },
-                    { label: '等待中', value: 'wait' }
+                    { label: '全部', value: '全部' },
+                    { label: '待处理', value: '待处理' },
+                    { label: '已完成', value: '已完成' }
                   ]"
                 />
               </div>
               <div class="col-md-3 col-xs-12" style="max-width: 280px">
                 <q-input
                   ref="ruleName"
-                  placeholder="请输入"
+                  placeholder="请输入事项名称"
                   outlined
-                  v-model="ruleName"
+                  v-model="listQueryData.matter"
                   dense
+                  @keydown.enter="queryData"
                   square
                 >
                   <template v-slot:append>
@@ -72,8 +75,7 @@
                       flat
                       color="lightgrey"
                       icon="search"
-                      mask="YYYY-MM-DD"
-                      @click="ruleName = new Date()"
+                      @click="queryData"
                     ></q-btn>
                   </template>
                 </q-input>
@@ -83,7 +85,7 @@
                   :ripple="false"
                   dense
                   flat
-                  style="border: 1px darkgrey dashed"
+                  style="border: 1px darkgrey dashed; height: 36px"
                   unelevated
                   icon="add"
                   class="no-border-radius q-px-sm"
@@ -99,7 +101,7 @@
             :ripple="false"
             padding="xs"
             flat
-            style="border: 1px darkgrey dashed"
+            style="border: 1px darkgrey dashed; height: 36px"
             unelevated
             icon="add"
             class="full-width no-border-radius"
@@ -110,7 +112,7 @@
       </q-card>
 
       <div class="bg-white q-mt-md q-pb-md q-pt-md">
-        <sc-page :items="baseListObjs" :per-number="10">
+        <sc-page :items="filterListData" :per-number="10">
           <template v-slot:item="props">
             <q-item transition-show="flip-up">
               <q-item-section avatar top>
@@ -119,24 +121,34 @@
                 </q-avatar>
               </q-item-section>
               <div class="row items-center q-col-gutter-y-sm full-width">
-                <div class="q-pt-xs col-md-4 col-xs-12">
-                  <q-item-label lines="1">
-                    <span class="text-h6">{{ props.item.title }}</span>
+                <div class="q-pt-xs col-xs-12">
+                  <q-item-label lines="1" class="items-center row">
+                    <span class="text-h6">{{ props.item.matter }}</span>
+                    <span class="q-ml-xs">
+                      <q-chip size="sm" v-if="props.item.state === '待处理'" outline color="negative"
+                              class="bg-red-1 no-border-radius" square>
+                        {{ props.item.state }}
+                      </q-chip>
+                      <q-chip size="sm" v-if="props.item.state === '已完成'" outline color="positive"
+                              class="bg-green-1 no-border-radius" square>
+                        {{ props.item.state }}
+                      </q-chip>
+                    </span>
                   </q-item-label>
                   <q-item-label class="q-mr-md text-body text-grey-7" lines="2">
                     {{ props.item.desc }}
                   </q-item-label>
                 </div>
-                <div class="col-md-2 col-sm-2 col-xs-6 text-body text-grey-7">
+                <div class="col-sm-2 col-xs-6 text-body text-grey-7">
                   <q-item-label class="q-mb-xs"> Owner</q-item-label>
                   <q-item-label>
-                    {{ props.item.owner }}
+                    {{ props.item.name }}
                   </q-item-label>
                 </div>
-                <div class="col-md-2 col-sm-3 col-xs-6 text-body text-grey-7">
+                <div class="col-sm-3 col-xs-6 text-body text-grey-7">
                   <q-item-label class="q-mb-xs"> 开始时间</q-item-label>
                   <q-item-label>
-                    {{ props.item.beginTime }}
+                    {{ props.item.startTime }}
                   </q-item-label>
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-10 q-pr-md">
@@ -218,7 +230,7 @@
                   label="任务名称"
                   placeholder="请输入"
                   outlined
-                  v-model="waitEdit.title"
+                  v-model="waitEdit.matter"
                   dense
                   square
                   clearable
@@ -230,19 +242,22 @@
                 <q-input
                   ref="beginTime"
                   outlined
-                  v-model="waitEdit.beginTime"
+                  v-model="waitEdit.startTime"
                   label="上次调度时间"
                   dense
                   square
                 >
                   <template v-slot:prepend>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        transition-show="scale"
-                        transition-hide="scale"
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
                       >
                         <q-date
-                          v-model="waitEdit.beginTime"
+                          today-btn
+                          v-model="waitEdit.startTime"
                           mask="YYYY-MM-DD HH:mm"
                         >
                           <div class="row items-center justify-end">
@@ -254,23 +269,25 @@
                             />
                           </div>
                         </q-date>
-                      </q-popup-proxy>
+                      </q-menu>
                     </q-icon>
                   </template>
                   <template v-slot:append>
                     <q-icon
-                      v-if="waitEdit.beginTime !== ''"
+                      v-if="waitEdit.startTime !== ''"
                       name="cancel"
-                      @click="waitEdit.beginTime = ''"
+                      @click="waitEdit.startTime = ''"
                       class="cursor-pointer"
                     />
                     <q-icon name="access_time" class="cursor-pointer">
-                      <q-popup-proxy
-                        transition-show="scale"
-                        transition-hide="scale"
+                      <q-menu
+                        square
+                        :offset="[12, 10]"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
                       >
                         <q-time
-                          v-model="waitEdit.beginTime"
+                          v-model="waitEdit.startTime"
                           mask="YYYY-MM-DD HH:mm"
                           format24h
                         >
@@ -283,7 +300,7 @@
                             />
                           </div>
                         </q-time>
-                      </q-popup-proxy>
+                      </q-menu>
                     </q-icon>
                   </template>
                 </q-input>
@@ -293,7 +310,7 @@
                   label="任务负责人"
                   placeholder="请输入"
                   outlined
-                  v-model="waitEdit.owner"
+                  v-model="waitEdit.name"
                   dense
                   square
                   clearable
@@ -337,70 +354,58 @@
 </template>
 
 <script>
-import { date, QSpinnerIos } from 'quasar'
+import { QSpinnerIos } from 'quasar'
 import ScPage from 'components/common/ScPage'
+import BASIC_LIST_DATA from '@/mock/data/list/basicListData'
 import _ from 'lodash'
 import Vue from 'vue'
-
-const baseListObj = {
-  title: 'Alipay',
-  desc:
-    '那是一种内在的东西，他们到达不了，也无法触及的，那是一种内在的东西，他们到达不了，也无法触及的 那是一种内在的东西，他们到达不了，也无法触及的，那是一种内在的东西，他们到达不了，也无法触及的',
-  owner: '付小小',
-  beginTime: date.formatDate(new Date(), 'YYYY-MM-DD HH:MM'),
-  progress: 1
-}
-const imgSrcs = [
-  'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-  'https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png',
-  'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png',
-  'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png',
-  'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png'
-]
-const baseListObjsDefault = []
-for (let i = 0; i < 123; ++i) {
-  const obj = _.clone(baseListObj)
-  obj.id = i
-  obj.title = obj.title + i
-  obj.owner = obj.owner + i
-  obj.progress = Math.random()
-  obj.imgSrc = imgSrcs[i % 5]
-  baseListObjsDefault.push(obj)
-}
+import commonUtil from 'src/utils/commonUtil'
 
 export default {
   name: 'BasicList',
   data() {
     return {
-      baseListObjs: baseListObjsDefault,
-      stepValue: 0.6,
-      queryDate: date.formatDate(new Date(), 'YYYY-MM-DD HH:MM'),
+      basicListData: BASIC_LIST_DATA,
+      listQueryData: {
+        matterState: '全部',
+        matter: null
+      },
       addTask: false,
-      visible: false,
-      model: 'all',
-      title: '',
-      beginTime: '',
-      owner: '',
-      desc: '',
-      ruleName: '',
+      filterListData: [],
       waitEdit: {}
     }
   },
   computed: {
-    visibleClass() {
-      return `bg-${this.visible ? 'positive' : 'negative'}`
-    }
   },
   methods: {
-    onIntersection(entry) {
-      this.visible = entry.isIntersecting
+    queryData() {
+      this.filterListData = []
+      for (let i = 0; i < this.basicListData.basicListDatas.length; ++i) {
+        const data = this.basicListData.basicListDatas[i]
+        if (this.isMatchData(data)) {
+          this.filterListData.push(data)
+        }
+      }
+    },
+    isMatchData(data) {
+      const listQueryData = this.listQueryData
+      let matterFlag = false
+      if (!listQueryData.matter || data.matter.search(listQueryData.matter) !== -1) {
+        matterFlag = true
+      }
+      let matterStateFlag = false
+      if (listQueryData.matterState === '全部' || data.state === listQueryData.matterState) {
+        matterStateFlag = true
+      }
+      return matterFlag && matterStateFlag
     },
     onReset() {
-      this.waitEdit.title = null
-      this.waitEdit.owner = null
-      this.waitEdit.beginTime = null
+      this.waitEdit.matter = null
+      this.waitEdit.name = null
+      this.waitEdit.startTime = null
       this.waitEdit.desc = null
       this.waitEdit.id = null
+      this.waitEdit.state = null
     },
     addTaskDialog() {
       this.waitEdit = {}
@@ -412,9 +417,9 @@ export default {
       this.waitEdit = _.clone(item)
     },
     deleteItem(item) {
-      for (let i = 0; i < this.baseListObjs.length; ++i) {
-        if (this.baseListObjs[i].id === item.id) {
-          this.baseListObjs.splice(i, 1)
+      for (let i = 0; i < this.basicListData.basicListDatas.length; ++i) {
+        if (this.basicListData.basicListDatas[i].id === item.id) {
+          this.basicListData.basicListDatas.splice(i, 1)
         }
       }
     },
@@ -424,7 +429,7 @@ export default {
       }
       const addModel = _.clone(this.waitEdit)
       addModel.progress = Math.random()
-      addModel.imgSrc = imgSrcs[1]
+      addModel.imgSrc = commonUtil.getRandomData(this.basicListData.imgSrcs)
       const spinner = QSpinnerIos
       this.$q.loading.show({
         spinner,
@@ -435,20 +440,21 @@ export default {
         messageColor: 'blue'
       })
 
+      const basicListDatas = this.basicListData.basicListDatas
       setTimeout(() => {
         let message = '添加成功'
         if (addModel.id !== undefined) {
           message = '编辑成功'
-          for (let i = 0; i < this.baseListObjs.length; ++i) {
-            if (this.baseListObjs[i].id === addModel.id) {
-              Vue.set(this.baseListObjs, i, addModel)
+          for (let i = 0; i < basicListDatas.length; ++i) {
+            if (basicListDatas[i].id === addModel.id) {
+              Vue.set(this.basicListData.basicListDatas, i, addModel)
             }
           }
         } else {
-          addModel.id = this.baseListObjs.length + 1
-          this.baseListObjs.unshift(addModel)
+          addModel.id = basicListDatas.length + 1
+          addModel.state = '待处理'
+          basicListDatas.unshift(addModel)
         }
-        console.log(this.baseListObjs.length)
         this.$forceUpdate()
         this.$q.loading.hide()
         this.$refs.addDataForm.reset()
@@ -466,13 +472,20 @@ export default {
   components: {
     ScPage
   },
-  watch: {}
+  mounted() {
+    this.filterListData = _.cloneDeep(BASIC_LIST_DATA.basicListDatas)
+  },
+  watch: {
+    basicListData: {
+      handler(newName, oldName) {
+        this.queryData()
+      },
+      immediate: true,
+      deep: true
+    }
+  }
 }
 </script>
 
 <style>
-.sc-base-list-query .q-field--dense .q-field__control,
-.sc-base-list-query .q-field--dense .q-field__marginal {
-  height: 32px;
-}
 </style>

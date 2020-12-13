@@ -121,17 +121,17 @@
             </span>
             <span class="col-sm-5 col-xs-9">
               好评度：<q-select
-                class="inline-block"
-                style="width: 80px"
-                outlined
-                v-model="goodPing"
-                hide-dropdown-icon
-                square
-                dense
-                options-dense
-                behavior="menu"
-                :options="['优秀', '普通', '一般']"
-              />
+              class="inline-block"
+              style="width: 80px"
+              outlined
+              v-model="goodPing"
+              hide-dropdown-icon
+              square
+              dense
+              options-dense
+              behavior="menu"
+              :options="['优秀', '普通', '一般']"
+            />
             </span>
           </span>
         </span>
@@ -144,21 +144,24 @@
         item-class="col-xl-3 col-sm-4 col-xs-12"
       >
         <template v-slot:item="props">
-          <sc-shadow>
-            <q-card square bordered flat class="q-pb-sm">
-              <q-img :src="props.item.pictureSrc" :ratio="16 / 10" />
-              <q-list class="q-mt-md">
-                <q-item dense class="text-body1">
-                  <strong>Alipay-{{ props.item.index }}</strong>
-                </q-item>
-                <q-item dense>
-                  那是一种内在的东西， 他们到达不了，也无法
-                </q-item>
-                <q-item dense clickable>
-                  <q-item-section style="font-size: 12px">
-                    {{ props.item.hour }}小时前
-                  </q-item-section>
-                  <span>
+          <q-intersection
+            once
+            transition="scale">
+            <sc-shadow>
+              <q-card square bordered flat class="q-pb-sm">
+                <q-img :src="props.item.pictureSrc" :ratio="16 / 10" />
+                <q-list class="q-mt-md">
+                  <q-item dense class="text-body1">
+                    <strong>Alipay-{{ props.item.index }}</strong>
+                  </q-item>
+                  <q-item dense>
+                    那是一种内在的东西， 他们到达不了，也无法
+                  </q-item>
+                  <q-item dense clickable>
+                    <q-item-section style="font-size: 12px">
+                      {{ props.item.hour }}小时前
+                    </q-item-section>
+                    <span>
                         <q-img
                           src="~assets/head.png"
                           style="width: 28px; height: 28px"
@@ -178,10 +181,11 @@
                           <q-tooltip>乐乐</q-tooltip>
                         </q-img>
                       </span>
-                </q-item>
-              </q-list>
-            </q-card>
-          </sc-shadow>
+                  </q-item>
+                </q-list>
+              </q-card>
+            </sc-shadow>
+          </q-intersection>
         </template>
       </sc-page>
     </div>

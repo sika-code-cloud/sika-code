@@ -281,7 +281,6 @@
                       <q-icon
                         v-if="props.value === '通过'"
                         name="lens"
-                        size="8px"
                         color="positive"
                         class="q-mr-sm"
                       />
@@ -292,7 +291,6 @@
                     <span v-else-if="props.value === '驳回'">
                       <q-icon
                         name="lens"
-                        size="8px"
                         color="negative"
                         class="q-mr-sm"
                       />
@@ -361,7 +359,6 @@
                       <q-icon
                         v-if="props.value === '通过'"
                         name="lens"
-                        size="8px"
                         color="positive"
                         class="q-mr-sm"
                       />
@@ -372,7 +369,6 @@
                     <span v-else-if="props.value === '驳回'">
                       <q-icon
                         name="lens"
-                        size="8px"
                         color="negative"
                         class="q-mr-sm"
                       />
