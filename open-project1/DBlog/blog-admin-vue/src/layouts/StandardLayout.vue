@@ -35,9 +35,7 @@
             />
           </template>
         </q-input>
-
         <q-space />
-
         <div class="q-gutter-xs q-ml-sm row items-center no-wrap">
           <q-btn round dense flat size="sm" color="grey-7" icon="help_outline">
             <q-tooltip>帮助文档</q-tooltip>
@@ -123,57 +121,20 @@
               :offset="[0, 24]"
             >
               <q-list style="min-width: 120px" dense>
-                <q-item clickable v-close-popup>
+                <q-item
+                  clickable
+                  v-close-popup
+                  v-for="(item, index) in languageDatas"
+                  :key="index"
+                >
                   <q-item-section
                     avatar
                     class="q-mr-sm q-pa-none"
                     style="min-width: 20px"
                   >
-                    <q-img
-                      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604953153845&di=75a450709d07f093810061e3e8ae0a45&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F7af40ad162d9f2d3faac68ffa9ec8a136327cc65.jpg"
-                      :ratio="16 / 10"
-                    />
+                    <q-img :src="item.nationalFlag" :ratio="16 / 10" />
                   </q-item-section>
-                  <q-item-section>Us English</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section
-                    avatar
-                    class="q-mr-sm q-pa-none"
-                    style="min-width: 20px"
-                  >
-                    <q-img
-                      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604954286966&di=ac7db27213c991c1982adad09f02abbf&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fbaike%2Fs%3D220%2Fsign%3Db6ae7334978fa0ec7bc7630f1696594a%2Fb7003af33a87e950e154426b16385343fbf2b472.jpg"
-                      :ratio="16 / 10"
-                    />
-                  </q-item-section>
-                  <q-item-section>En English</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section
-                    avatar
-                    class="q-mr-sm q-pa-none"
-                    style="min-width: 20px"
-                  >
-                    <q-img
-                      src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3101918221,2000267634&fm=26&gp=0.jpg"
-                      :ratio="16 / 10"
-                    />
-                  </q-item-section>
-                  <q-item-section>CN 简体中文</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section
-                    avatar
-                    class="q-mr-sm q-pa-none"
-                    style="min-width: 20px"
-                  >
-                    <q-img
-                      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604953546889&di=4299987e8e6144411da56b8885a4ff73&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190331%2F1efebed7b2d948c2b3bbc3855651c120.jpeg"
-                      :ratio="16 / 10"
-                    />
-                  </q-item-section>
-                  <q-item-section>HK 繁体中文</q-item-section>
+                  <q-item-section>{{ item.label }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -181,15 +142,14 @@
         </div>
         <div>
           <q-menu
-            class="row"
             :offset="[0, 36]"
             transition-show="jump-down"
             transition-hide="jump-up"
-            content-style="width: 400px"
+            content-style="width: 400px;"
             max-height="800px"
             v-model="showMessage"
           >
-            <div class="q-gutter-y-md col">
+            <div>
               <q-card class="full-width">
                 <q-tabs
                   v-model="messageTab"
@@ -199,19 +159,19 @@
                   align="justify"
                   narrow-indicator
                 >
-                  <q-tab name="informs" >
+                  <q-tab name="informs">
                     <span v-if="informCount > 0">
                       通知({{ informCount }})
                     </span>
                     <span v-else>通知</span>
                   </q-tab>
-                  <q-tab name="notifies" v-if="notifiesCount > 0">
-                     <span v-if="notifiesCount > 0">
+                  <q-tab name="notifies">
+                    <span v-if="notifiesCount > 0">
                       消息({{ notifiesCount }})
                     </span>
                     <span v-else>消息</span>
                   </q-tab>
-                  <q-tab name="waitDeals" v-if="waitDealCount > 0">
+                  <q-tab name="waitDeals">
                     <span v-if="waitDealCount > 0">
                       待办({{ waitDealCount }})
                     </span>
@@ -247,7 +207,10 @@
                             </q-item-label>
                           </q-item-section>
                         </q-item>
-                        <q-separator inset="item" />
+                        <q-separator
+                          v-if="index < informs.length - 1"
+                          inset="item"
+                        />
                       </div>
                       <q-separator />
                       <q-item class="row q-pa-none text-center cursor-pointer">
@@ -300,7 +263,10 @@
                             </q-item-label>
                           </q-item-section>
                         </q-item>
-                        <q-separator inset="item" />
+                        <q-separator
+                          v-if="index < informs.length - 1"
+                          inset="item"
+                        />
                       </div>
                       <q-separator />
                       <q-item class="row q-pa-none text-center cursor-pointer">
@@ -353,7 +319,10 @@
                             </q-item-label>
                           </q-item-section>
                         </q-item>
-                        <q-separator inset="item" />
+                        <q-separator
+                          v-if="index < informs.length - 1"
+                          inset="item"
+                        />
                       </div>
                       <q-separator />
                       <q-item class="row q-pa-none text-center cursor-pointer">
@@ -402,15 +371,10 @@
       content-class="bg-white"
       :width="240"
     >
-      <div
-        class="absolute-top bg-white q-mt-sm"
-      >
+      <div class="absolute-top bg-white q-mt-sm">
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
-            <q-img
-              style="width: 40px"
-              src="~assets/sika-head.png"
-            />
+            <q-img style="width: 40px" src="~assets/sika-head.png" />
           </q-avatar>
           <div class="text-body1 inline-block text-primary">
             <strong>Sika Design Pro</strong>
@@ -420,9 +384,9 @@
       <div style="height: calc(100% - 55px); margin-top: 55px">
         <q-scroll-area
           class="fit"
-          :thumb-style="thumbStyle"
-          :content-style="contentStyle"
-          :content-active-style="contentActiveStyle"
+          :thumb-style="scrollStyleData.thumbStyle"
+          :content-style="scrollStyleData.contentStyle"
+          :content-active-style="scrollStyleData.contentActiveStyle"
         >
           <q-list class="rounded-borders text-black">
             <menu-tree :data="menuData" />
@@ -441,28 +405,35 @@
     >
       <q-scroll-area
         class="fit"
-        :thumb-style="thumbStyle"
-        :content-style="contentStyle"
-        :content-active-style="contentActiveStyle"
+        :thumb-style="scrollStyleData.thumbStyle"
+        :content-style="scrollStyleData.contentStyle"
+        :content-active-style="scrollStyleData.contentActiveStyle"
       >
         <div class="q-pa-sm">
           <q-list padding>
             <q-item>
               <q-item-section>
                 <q-item-label>整体风格设置</q-item-label>
-                <q-item-label caption>
-                  <div class="q-mt-sm q-gutter-x-md" style="height: 50px">
+                <q-item-label>
+                  <div class="q-mt-sm q-gutter-x-md row" style="height: 50px">
                     <div
-                      class="inline-block shadow-1 cursor-pointer"
+                      class="col-auto shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
                         background-color: white;
                         border-radius: 5px;
                       "
-                    ></div>
+                    >
+                      <q-icon
+                        size="sm"
+                        name="done"
+                        color="primary"
+                        style="margin-top: 15px; margin-left: 15px"
+                      />
+                    </div>
                     <div
-                      class="inline-block shadow-1 cursor-pointer"
+                      class="col-auto shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -482,7 +453,7 @@
                       ></div>
                     </div>
                     <div
-                      class="inline-block shadow-1 cursor-pointer"
+                      class="col-auto shadow-1 cursor-pointer"
                       style="
                         width: 50px;
                         height: 100%;
@@ -498,70 +469,32 @@
               <q-item-section>
                 <q-item-label>主题色</q-item-label>
                 <q-item-label class="q-gutter-sm">
-                  <q-btn
-                    style="background-color: rgb(24, 144, 255)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(245, 34, 45)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(250, 84, 28)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(250, 173, 20)"
-                    text-color="white"
-                    icon="done"
-                    flat
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(19, 194, 194)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(82, 196, 26)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(47, 84, 235)"
-                    text-color="white"
-                    icon="done"
-                    flat
-                    dense
-                    size="xs"
-                  />
-                  <q-btn
-                    style="background-color: rgb(114, 46, 209)"
-                    text-color="white"
-                    flat
-                    icon="done"
-                    dense
-                    size="xs"
-                  />
+                  <span
+                    style="width: 20px; height: 20px"
+                    :key="index"
+                    v-for="(item, index) in styleSettingsData.themeColorSetting"
+                    @click="changeThemeColor(index)"
+                  >
+                    <q-btn
+                      :style="item.style"
+                      text-color="white"
+                      flat
+                      icon="done"
+                      dense
+                      v-if="item.checked"
+                      style="width: 18px; height: 18px"
+                      size="xs"
+                    />
+                    <q-btn
+                      :style="item.style"
+                      text-color="white"
+                      flat
+                      dense
+                      v-else
+                      style="width: 18px; height: 18px"
+                      size="xs"
+                    />
+                  </span>
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -732,7 +665,6 @@
       </q-scroll-area>
     </q-drawer>
     <q-page-container>
-      <slot name="page-title"></slot>
       <q-page>
         <transition mode="out-in">
           <router-view />
@@ -743,6 +675,7 @@
           :offset="rightOffset"
         >
           <q-btn
+            ref="morphedElement2"
             unelevated
             padding="8px"
             @show="1"
@@ -750,7 +683,7 @@
             icon="settings"
             color="primary"
             square
-            @click="rightDrawerOpen = !rightDrawerOpen"
+            @click="triggerRightDrawer"
           />
         </q-page-sticky>
         <q-page-scroller
@@ -768,6 +701,7 @@
 <script>
 import MenuTree from 'components/tree/MenuTree'
 import LAYOUT_DATA from '@/mock/data/layout/layoutData'
+import { morph, colors } from 'quasar'
 
 export default {
   name: 'StandardLayout',
@@ -778,59 +712,39 @@ export default {
       notifies: LAYOUT_DATA.notifyDatas,
       menuData: LAYOUT_DATA.routeDatas,
       waitDeals: LAYOUT_DATA.waitDealDatas,
+      languageDatas: LAYOUT_DATA.languageDatas,
+      scrollStyleData: LAYOUT_DATA.scrollStyleData,
+      styleSettingsData: LAYOUT_DATA.styleSettingsData,
       showMessage: false,
       messageTab: 'informs',
-      link: 'inbox',
       leftDrawerOpen: false,
-      leftMini: true,
-      leftBehavior: 'default',
       rightDrawerOpen: false,
       rightDrawerSetting: false,
-      rightOffset: [5, 168],
+      rightOffset: LAYOUT_DATA.rightOffset.rightOffsetInit,
       rightSelect: '流式',
       search: '',
-      showAdvanced: false,
-      showDateOptions: false,
-      exactPhrase: '',
-      hasWords: '',
-      excludeWords: '',
-      byWebsite: '',
       gtSm: this.$q.screen.gt.sm,
-      byDate: 'Any time',
-      contentStyle: {},
-      contentActiveStyle: {},
-      thumbStyle: {
-        right: '2px',
-        borderRadius: '5px',
-        backgroundColor: '#027be3',
-        width: '0px',
-        opacity: 0.75
-      },
-
-      barStyle: {
-        right: '2px',
-        borderRadius: '9px',
-        backgroundColor: '#027be3',
-        width: '9px',
-        opacity: 0.2
-      },
-      check1: true,
-      check2: false,
-      check3: false,
-
-      notif1: true,
-      notif2: true,
-      notif3: false,
-
-      volume: 6,
-      brightness: 3,
-      mic: 8
+      notif2: true
     }
   },
   components: {
     MenuTree
   },
   methods: {
+    changeThemeColor(index) {
+      for (
+        let i = 0;
+        i < this.styleSettingsData.themeColorSetting.length;
+        ++i
+      ) {
+        this.styleSettingsData.themeColorSetting[i].checked = false
+      }
+      colors.setBrand(
+        'primary',
+        this.styleSettingsData.themeColorSetting[index].color
+      )
+      this.styleSettingsData.themeColorSetting[index].checked = true
+    },
     look(type, index) {
       if (type === 'inform') {
         this.informs[index].disable = true
@@ -852,16 +766,7 @@ export default {
       })
     },
     openMessage() {
-      console.log(this.showMessage)
       this.showMessage = !this.showMessage
-      console.log(this.showMessage)
-    },
-    onClear() {
-      this.exactPhrase = ''
-      this.hasWords = ''
-      this.excludeWords = ''
-      this.byWebsite = ''
-      this.byDate = 'Any time'
     },
     clearMessage(items) {
       if (items === 'informs') {
@@ -877,23 +782,29 @@ export default {
         items[i].disable = true
       }
     },
-    changeDate(option) {
-      this.byDate = option
-      this.showDateOptions = false
-    },
     onClick() {
       this.leftDrawerOpen = !this.leftDrawerOpen
     },
     rightHide() {
-      this.rightOffset = [5, 5]
+      this.rightOffset = LAYOUT_DATA.rightOffset.rightOffsetInit
       this.rightDrawerSetting = false
     },
     rightShow() {
-      this.rightOffset = [280, 5]
+      this.rightOffset = LAYOUT_DATA.rightOffset.rightOffsetShow
     },
     onResize(size) {
       // 监听容器大小变化
       console.log('----------' + JSON.stringify(size))
+    },
+    triggerRightDrawer() {
+      this.rightDrawerOpen = !this.rightDrawerOpen
+      morph({
+        from: this.$refs.morphedElement2.$el,
+        duration: 30,
+        tween: true,
+        tweenFromOpacity: 0.8,
+        tweenToOpacity: 0.4
+      })
     }
   },
   watch: {
@@ -921,15 +832,14 @@ export default {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function () {
-  }
+  mounted: function () {}
 }
 </script>
 
 <style lang="sass">
 .v-enter
   opacity: 0
-  transform: translate3d(0, -100px,0)
+  transform: translate3d(0, -100px, 0)
 
 .v-leave-to
   opacity: 0

@@ -329,6 +329,96 @@ const waitDealDatas = [
     disable: false
   }
 ]
+const languageDatas = [
+  {
+    nationalFlag:
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604953153845&di=75a450709d07f093810061e3e8ae0a45&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F7af40ad162d9f2d3faac68ffa9ec8a136327cc65.jpg',
+    label: 'Us English'
+  },
+  {
+    nationalFlag:
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604954286966&di=ac7db27213c991c1982adad09f02abbf&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fbaike%2Fs%3D220%2Fsign%3Db6ae7334978fa0ec7bc7630f1696594a%2Fb7003af33a87e950e154426b16385343fbf2b472.jpg',
+    label: 'En English'
+  },
+  {
+    nationalFlag:
+      'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3101918221,2000267634&fm=26&gp=0.jpg',
+    label: 'CN 简体中文'
+  },
+  {
+    nationalFlag:
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604953546889&di=4299987e8e6144411da56b8885a4ff73&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190331%2F1efebed7b2d948c2b3bbc3855651c120.jpeg',
+    label: 'HK 繁体中文'
+  }
+]
+const scrollStyleData = {
+  contentStyle: {},
+  contentActiveStyle: {},
+  thumbStyle: {
+    right: '2px',
+    borderRadius: '5px',
+    backgroundColor: '#027be3',
+    width: '0px',
+    opacity: 0.75
+  },
+  barStyle: {
+    right: '2px',
+    borderRadius: '9px',
+    backgroundColor: '#027be3',
+    width: '9px',
+    opacity: 0.2
+  }
+}
+
+const rightOffset = {
+  rightOffsetInit: [5, 168],
+  rightOffsetShow: [280, 168]
+}
+
+const styleSettingsData = {
+  themeColorSetting: [
+    {
+      style: 'background-color: rgb(24, 144, 255)',
+      color: 'rgb(24, 144, 255)',
+      checked: true
+    },
+    {
+      style: 'background-color: rgb(245, 34, 45)',
+      color: 'rgb(245, 34, 45)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(250, 84, 28)',
+      color: 'rgb(250, 84, 28)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(250, 173, 20)',
+      color: 'rgb(250, 173, 20)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(19, 194, 194)',
+      color: 'rgb(19, 194, 194)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(82, 196, 26)',
+      color: 'rgb(82, 196, 26)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(47, 84, 235)',
+      color: 'rgb(47, 84, 235)',
+      checked: false
+    },
+    {
+      style: 'background-color: rgb(114, 46, 209)',
+      color: 'rgb(114, 46, 209)',
+      checked: false
+    }
+  ]
+}
 
 // 获取可用的数量
 function getAvailableCount(datas) {
@@ -343,10 +433,15 @@ function getAvailableCount(datas) {
   }
   return count
 }
+
 export default {
   routeDatas,
   informsData,
   waitDealDatas,
   notifyDatas,
+  languageDatas,
+  scrollStyleData,
+  rightOffset,
+  styleSettingsData,
   getAvailableCount
 }
