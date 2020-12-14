@@ -48,7 +48,7 @@
             size="sm"
             color="grey-8"
             icon="notifications_none"
-            @click="showMessage = true"
+            @click="openMessage"
           >
             <q-badge
               color="negative"
@@ -192,29 +192,35 @@
             <div class="q-gutter-y-md col">
               <q-card class="full-width">
                 <q-tabs
-                  v-model="tab"
+                  v-model="messageTab"
                   class="text-grey"
                   active-color="primary"
                   indicator-color="primary"
                   align="justify"
                   narrow-indicator
                 >
-                  <q-tab name="mails" v-if="informCount > 0">
-                    通知({{ informCount }})
+                  <q-tab name="informs" >
+                    <span v-if="informCount > 0">
+                      通知({{ informCount }})
+                    </span>
+                    <span v-else>通知</span>
                   </q-tab>
-                  <q-tab name="mails" v-else>通知</q-tab>
-                  <q-tab name="alarms" v-if="notifiesCount > 0">
-                    消息({{ notifiesCount }})
+                  <q-tab name="notifies" v-if="notifiesCount > 0">
+                     <span v-if="notifiesCount > 0">
+                      消息({{ notifiesCount }})
+                    </span>
+                    <span v-else>消息</span>
                   </q-tab>
-                  <q-tab name="alarms" v-else>消息</q-tab>
-                  <q-tab name="movies" v-if="waitDealCount > 0">
-                    待办({{ waitDealCount }})
+                  <q-tab name="waitDeals" v-if="waitDealCount > 0">
+                    <span v-if="waitDealCount > 0">
+                      待办({{ waitDealCount }})
+                    </span>
+                    <span v-else>待办</span>
                   </q-tab>
-                  <q-tab name="movies" v-else>待办</q-tab>
                 </q-tabs>
                 <q-separator />
-                <q-tab-panels v-model="tab" animated>
-                  <q-tab-panel name="mails" class="q-pa-none">
+                <q-tab-panels v-model="messageTab" animated>
+                  <q-tab-panel name="informs" class="q-pa-none">
                     <q-list>
                       <div
                         v-for="(inform, index) in informs"
@@ -267,7 +273,7 @@
                       </q-item>
                     </q-list>
                   </q-tab-panel>
-                  <q-tab-panel name="alarms" class="q-pa-none">
+                  <q-tab-panel name="notifies" class="q-pa-none">
                     <q-list>
                       <div
                         v-for="(notify, index) in notifies"
@@ -320,7 +326,7 @@
                       </q-item>
                     </q-list>
                   </q-tab-panel>
-                  <q-tab-panel name="movies" class="q-pa-none">
+                  <q-tab-panel name="waitDeals" class="q-pa-none">
                     <q-list>
                       <div
                         v-for="(waitDeal, index) in waitDeals"
@@ -384,7 +390,7 @@
       <div class="q-my-lg">
         <div class="text-center q-mb-sm">
           <span class="inline-block">Sika Design Pro</span>
-          <q-icon name="ti-github  q-mx-md"></q-icon>
+          <q-icon name="ti-github q-mx-md"></q-icon>
           <span class="inline-block">Sika Design</span>
         </div>
         <div class="text-center">Copyright@2019 Sika 体验技术部出品</div>
@@ -395,18 +401,14 @@
       bordered
       content-class="bg-white"
       :width="240"
-      @hide="hide"
-      @show="show"
     >
       <div
-        class="absolute-top bg-white"
-        style="height: 50px; margin-bottom: 50px"
+        class="absolute-top bg-white q-mt-sm"
       >
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
             <q-img
               style="width: 40px"
-              :ratio="10 / 10"
               src="~assets/sika-head.png"
             />
           </q-avatar>
@@ -415,7 +417,7 @@
           </div>
         </div>
       </div>
-      <div style="height: calc(100% - 50px); margin-top: 50px">
+      <div style="height: calc(100% - 55px); margin-top: 55px">
         <q-scroll-area
           class="fit"
           :thumb-style="thumbStyle"
@@ -765,350 +767,19 @@
 
 <script>
 import MenuTree from 'components/tree/MenuTree'
-
-const myData = [
-  {
-    name: '仪表盘',
-    icon: 'dashboard',
-    group: '/dashboard',
-    groupName: 'first',
-    children: [
-      {
-        name: '分析页',
-        group: '/dashboard',
-        to: '/dashboard/analysis'
-      },
-      {
-        name: '监控页',
-        group: '/dashboard',
-        to: '/dashboard/monitor'
-      },
-      {
-        name: '工作台',
-        group: '/dashboard',
-        to: '/dashboard/workplace'
-      }
-    ]
-  },
-  {
-    name: '表单页',
-    icon: 'edit_road',
-    group: '/form',
-    groupName: 'first',
-    children: [
-      {
-        name: '基础表单',
-        group: '/form',
-        to: '/form/basic-form'
-      },
-      {
-        name: '分步表单',
-        group: '/form',
-        to: '/form/step-form'
-      },
-      {
-        name: '高级表单',
-        group: '/form',
-        to: '/form/advanced-form'
-      }
-    ]
-  },
-  {
-    name: '列表页',
-    icon: 'table_view',
-    group: '/list',
-    groupName: 'first',
-    children: [
-      {
-        name: '搜索列表',
-        group: '/list/search',
-        children: [
-          {
-            name: '搜索列表（文章）',
-            group: '/list/search',
-            to: '/list/search/articles'
-          },
-          {
-            name: '搜索列表（项目）',
-            group: '/list/search',
-            to: '/list/search/projects'
-          },
-          {
-            name: '搜索列表（应用）',
-            group: '/list/search',
-            to: '/list/search/applications'
-          }
-        ]
-      },
-      {
-        name: '用户列表',
-        group: '/list',
-        to: '/list/user-list'
-      },
-      {
-        name: '商品列表',
-        group: '/list',
-        to: '/list/goods-list'
-      },
-      {
-        name: '查询表格',
-        group: '/list',
-        to: '/list/table-list'
-      },
-      {
-        name: '标准列表',
-        group: '/list',
-        to: '/list/basic-list'
-      },
-      {
-        name: '卡片列表',
-        group: '/list',
-        to: '/list/card-list'
-      }
-    ]
-  },
-  {
-    name: '详情页',
-    icon: 'library_books',
-    group: '/profile',
-    groupName: 'first',
-    children: [
-      {
-        name: '基础详情页',
-        group: '/profile',
-        to: '/profile/basic'
-      },
-      {
-        name: '高级详情页',
-        group: '/profile',
-        to: '/profile/advanced'
-      }
-    ]
-  },
-  {
-    name: '结果页',
-    icon: 'check_circle_outline',
-    group: '/result',
-    groupName: 'first',
-    children: [
-      {
-        name: '成功页',
-        group: '/result',
-        to: '/result/success'
-      },
-      {
-        name: '失败页',
-        group: '/result',
-        to: '/result/fail'
-      }
-    ]
-  },
-  {
-    name: '异常页',
-    icon: 'error_outline',
-    group: '/exception',
-    groupName: 'first',
-    children: [
-      {
-        name: '403',
-        group: '/exception',
-        to: '/exception/403'
-      },
-      {
-        name: '404',
-        group: '/exception',
-        to: '/exception/404'
-      },
-      {
-        name: '500',
-        group: '/exception',
-        to: '/exception/500'
-      }
-    ]
-  },
-  {
-    name: '个人页',
-    icon: 'perm_identity',
-    group: '/account',
-    groupName: 'first',
-    children: [
-      {
-        name: '个人中心',
-        group: '/account',
-        to: '/account/center'
-      },
-      {
-        name: '个人设置',
-        group: '/account',
-        to: '/account/settings'
-      }
-    ]
-  },
-  {
-    name: '编辑器',
-    icon: 'text_fields',
-    group: '/editor',
-    groupName: 'first',
-    children: [
-      {
-        name: '自定义编辑器',
-        group: '/editor',
-        to: '/editor/customer'
-      },
-      {
-        name: 'Markdown编辑器',
-        group: '/editor',
-        to: '/editor/markdown'
-      }
-    ]
-  }
-]
-const informs = [
-  {
-    icon: 'email',
-    title: '你推荐的 曲妮妮 已通过第三轮面试',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'bluetooth',
-    title: '你收到了 14 份新周报',
-    desc: '3年前',
-    color: 'primary',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '这种模板可以区分多种通知类型',
-    desc: '3年前',
-    color: 'teal',
-    textColor: 'white',
-    disable: true
-  },
-  {
-    icon: 'email',
-    title: '左侧图标用于区分不同的类型',
-    desc: '3年前',
-    color: 'yellow-10',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '内容不要超过两行字，超出时自动截断',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  }
-]
-const notifies = [
-  {
-    icon: 'email',
-    title: '你推荐的 曲妮妮 已通过第三轮面试',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'bluetooth',
-    title: '你收到了 14 份新周报',
-    desc: '3年前',
-    color: 'primary',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '这种模板可以区分多种通知类型',
-    desc: '3年前',
-    color: 'teal',
-    textColor: 'white',
-    disable: true
-  },
-  {
-    icon: 'email',
-    title: '左侧图标用于区分不同的类型',
-    desc: '3年前',
-    color: 'yellow-10',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '内容不要超过两行字，超出时自动截断',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '内容不要超过两行字，超出时自动截断222',
-    desc: '3年前',
-    color: 'blue',
-    textColor: 'white',
-    disable: false
-  }
-]
-const waitDeals = [
-  {
-    icon: 'email',
-    title: '你推荐的 曲妮妮 已通过第三轮面试',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'bluetooth',
-    title: '你收到了 14 份新周报',
-    desc: '3年前',
-    color: 'primary',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '这种模板可以区分多种通知类型',
-    desc: '3年前',
-    color: 'teal',
-    textColor: 'white',
-    disable: true
-  },
-  {
-    icon: 'email',
-    title: '左侧图标用于区分不同的类型',
-    desc: '3年前',
-    color: 'yellow-10',
-    textColor: 'white',
-    disable: false
-  },
-  {
-    icon: 'email',
-    title: '内容不要超过两行字，超出时自动截断',
-    desc: '3年前',
-    color: 'orange',
-    textColor: 'white',
-    disable: false
-  }
-]
+import LAYOUT_DATA from '@/mock/data/layout/layoutData'
 
 export default {
-  name: 'GoogleNewsLayout',
+  name: 'StandardLayout',
   props: {},
   data() {
     return {
-      informs,
-      notifies,
-      waitDeals,
+      informs: LAYOUT_DATA.informsData,
+      notifies: LAYOUT_DATA.notifyDatas,
+      menuData: LAYOUT_DATA.routeDatas,
+      waitDeals: LAYOUT_DATA.waitDealDatas,
       showMessage: false,
-      tab: 'mails',
-      menuData: myData,
+      messageTab: 'informs',
       link: 'inbox',
       leftDrawerOpen: false,
       leftMini: true,
@@ -1162,11 +833,11 @@ export default {
   methods: {
     look(type, index) {
       if (type === 'inform') {
-        informs[index].disable = true
+        this.informs[index].disable = true
       } else if (type === 'notify') {
-        notifies[index].disable = true
+        this.notifies[index].disable = true
       } else {
-        waitDeals[index].disable = true
+        this.waitDeals[index].disable = true
       }
     },
     lookMore(message) {
@@ -1179,6 +850,11 @@ export default {
         timeout: 2000,
         message: message
       })
+    },
+    openMessage() {
+      console.log(this.showMessage)
+      this.showMessage = !this.showMessage
+      console.log(this.showMessage)
     },
     onClear() {
       this.exactPhrase = ''
@@ -1208,14 +884,6 @@ export default {
     onClick() {
       this.leftDrawerOpen = !this.leftDrawerOpen
     },
-    hide() {
-      console.log(this.leftDrawerOpen)
-      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
-    },
-    show() {
-      console.log(this.leftDrawerOpen)
-      this.$q.localStorage.set('leftDrawerOpen', this.leftDrawerOpen)
-    },
     rightHide() {
       this.rightOffset = [5, 5]
       this.rightDrawerSetting = false
@@ -1223,29 +891,9 @@ export default {
     rightShow() {
       this.rightOffset = [280, 5]
     },
-    menuHeadStyle(startWith) {
-      if (this.link.startsWith(startWith)) {
-        return { color: '#1890ff' }
-      }
-    },
     onResize(size) {
       // 监听容器大小变化
       console.log('----------' + JSON.stringify(size))
-      // if (this.$q.screen.gt.xs) {
-      //   this.rightOffset = [5, 88]
-      // }
-    },
-    onResizeForRight(size) {
-      console.log('-----onResizeForRight-----' + JSON.stringify(size))
-    },
-    getLeftDrawOpen() {
-      const leftDrawerOpenFromLocal = this.$q.localStorage.getItem(
-        'leftDrawerOpen'
-      )
-      if (leftDrawerOpenFromLocal) {
-        return leftDrawerOpenFromLocal
-      }
-      return false
     }
   },
   watch: {
@@ -1261,38 +909,19 @@ export default {
       return ''
     },
     informCount: function () {
-      let count = 0
-      for (let i = 0; i < this.informs.length; ++i) {
-        if (informs[i].disable === false) {
-          count++
-        }
-      }
-      return count
+      return LAYOUT_DATA.getAvailableCount(this.informs)
     },
     notifiesCount: function () {
-      let count = 0
-      for (let i = 0; i < this.notifies.length; ++i) {
-        if (notifies[i].disable === false) {
-          count++
-        }
-      }
-      return count
+      return LAYOUT_DATA.getAvailableCount(this.notifies)
     },
     waitDealCount: function () {
-      let count = 0
-      for (let i = 0; i < this.waitDeals.length; ++i) {
-        if (waitDeals[i].disable === false) {
-          count++
-        }
-      }
-      return count
+      return LAYOUT_DATA.getAvailableCount(this.waitDeals)
     },
     totalInformCount: function () {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
   mounted: function () {
-    this.leftDrawerOpen = this.getLeftDrawOpen()
   }
 }
 </script>

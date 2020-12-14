@@ -18,8 +18,8 @@
               style="font-size: x-large"
             >
               <strong>{{
-                monitorData.visitNumData.visitTotal | numeral('0.0a')
-              }}</strong>
+                  monitorData.visitNumData.visitTotal | numeral('0.0a')
+                }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm"> 总访问人数</q-item-label>
             <q-item-label>
@@ -28,29 +28,19 @@
                 :key="index"
               >
                 <q-avatar size="22px" v-if="index === 0">
-                  <q-img :src="user.head">
-                    <q-tooltip
-                      transition-show="flip-right"
-                      transition-hide="flip-left"
-                      content-class="bg-primary"
-                      content-style="font-size: 10px"
-                    >
-                      {{ user.name }}
-                    </q-tooltip>
-                  </q-img>
+                  <img :alt="user.name" :src="user.head" />
                 </q-avatar>
                 <q-avatar v-else size="22px" style="margin-left: -8px">
-                  <q-img :src="user.head"
-                    ><q-tooltip
-                      transition-show="flip-right"
-                      transition-hide="flip-left"
-                      content-class="bg-primary"
-                      content-style="font-size: 10px"
-                    >
-                      {{ user.name }}
-                    </q-tooltip>
-                  </q-img>
+                  <img :alt="user.name" :src="user.head" />
                 </q-avatar>
+                <q-tooltip
+                  transition-show="flip-right"
+                  transition-hide="flip-left"
+                  content-class="bg-primary"
+                  content-style="font-size: 10px"
+                >
+                      {{ user.name }}
+                </q-tooltip>
               </span>
             </q-item-label>
           </q-card>
@@ -87,8 +77,8 @@
                 icon="keyboard_arrow_up"
               ></q-avatar>
               <strong>{{
-                monitorData.pointNumData.upRate | numeral('(0.0 %)')
-              }}</strong>
+                  monitorData.pointNumData.upRate | numeral('(0.0 %)')
+                }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -110,8 +100,8 @@
               style="font-size: x-large"
             >
               <strong>{{
-                monitorData.arrivalNumData.arrivalTotalNum | numeral('0.0a')
-              }}</strong>
+                  monitorData.arrivalNumData.arrivalTotalNum | numeral('0.0a')
+                }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm">
               到达量（近30天）
@@ -124,8 +114,8 @@
                 icon="keyboard_arrow_down"
               ></q-avatar>
               <strong>{{
-                monitorData.arrivalNumData.upRate | numeral('(0.0 %)')
-              }}</strong>
+                  monitorData.arrivalNumData.upRate | numeral('(0.0 %)')
+                }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -147,8 +137,8 @@
               style="font-size: x-large"
             >
               <strong>{{
-                monitorData.conversionData.conversionRate | numeral('(0.0 %)')
-              }}</strong>
+                  monitorData.conversionData.conversionRate | numeral('(0.0 %)')
+                }}</strong>
             </q-item-label>
             <q-item-label caption class="q-mb-sm">
               转化率（近30天）
@@ -161,8 +151,8 @@
                 icon="keyboard_arrow_up"
               ></q-avatar>
               <strong>{{
-                monitorData.conversionData.upRate | numeral('(0.0 %)')
-              }}</strong>
+                  monitorData.conversionData.upRate | numeral('(0.0 %)')
+                }}</strong>
             </q-item-label>
           </q-card>
         </sc-shadow>
@@ -323,19 +313,19 @@
                     color="green"
                   />
                   <span style="font-size: small"
-                    >活跃率：{{ stepData[2] }}%</span
+                  >活跃率：{{ stepData[2] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="blue" />
                   <span style="font-size: small"
-                    >留存率：{{ stepData[1] }}%</span
+                  >留存率：{{ stepData[1] }}%</span
                   >
                 </q-item-label>
                 <q-item-label>
                   <q-icon size="1em" class="q-mr-sm" name="lens" color="red" />
                   <span style="font-size: small"
-                    >跳槽率：{{ stepData[0] }}%</span
+                  >跳槽率：{{ stepData[0] }}%</span
                   >
                 </q-item-label>
               </q-card-section>

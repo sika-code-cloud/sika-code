@@ -31,7 +31,7 @@ const tableListDatas = {
     check: true,
     name: 'callCount',
     align: 'left',
-    label: '调用次数',
+    label: '调用次数(万)',
     field: 'callCount',
     sortable: true,
     sort: (a, b) => a - b

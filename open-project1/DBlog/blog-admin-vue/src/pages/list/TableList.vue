@@ -157,7 +157,6 @@
                   color="primary"
                   class="q-mr-sm no-border-radius"
                   :loading="queryLoad"
-                  :style="queryBtnStyle"
                   @click="doQuery"
                 >
                   <template v-slot:loading>
@@ -226,8 +225,8 @@
                           clickable
                           :active="column.check"
                           @click="select(column)"
-                          v-bind:key="column.id"
-                          v-for="column in columns"
+                          :key="index"
+                          v-for="(column, index) in showColumns"
                         >
                           <q-item-section>{{ column.label }}</q-item-section>
                         </q-item>
@@ -337,7 +336,7 @@
                 <div>
                   已选择<span class="text-weight-bold text-blue-8 q-mx-xs"
                 >{{ selected.length }} </span
-                >项 服务调用次数总计<span class="q-mx-xs">{{ 567 }} </span>万
+                >项 服务调用次数总计<span class="q-mx-xs">{{ selectedTotal }} </span>万
                 </div>
               </div>
               <div class="text-right col-sm-6 col-xs-12 q-gutter-x-sm">
@@ -359,7 +358,6 @@
 
 <script>
 import { date, QSpinnerIos } from 'quasar'
-import _ from 'lodash'
 import TABLE_LIST_DATA from '@/mock/data/list/tableListData'
 
 export default {
@@ -369,18 +367,14 @@ export default {
       tableListData: TABLE_LIST_DATA,
       filterListData: [],
       queryCondition: TABLE_LIST_DATA.queryCondition,
-      queryBtnStyle: {},
       queryLoad: false,
+      ruleName: null,
       addData: false,
       queryDate: date.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
       showQuery: true,
-      queryStatus: '',
-      visible: false,
       seamless: false,
-      tableShow: true,
       loading: false,
       tableLabel: '展开',
-      ruleName: '',
       selected: [],
       pagination: {
         // sortBy: 'calories',
@@ -395,179 +389,6 @@ export default {
         'callCount',
         'callNextTime',
         'desc'
-      ],
-      columns: [
-        {
-          check: true,
-          name: 'desc',
-          required: true,
-          label: 'Dessert(100g serving)',
-          align: 'left',
-          field: (row) => row.name,
-          format: (val) => `${val}`,
-          sortable: true
-        },
-        {
-          check: true,
-          name: 'calories',
-          align: 'center',
-          label: 'Calories',
-          field: 'calories',
-          sortable: true
-        },
-        {
-          check: true,
-          name: 'fat',
-          label: 'Fat (g)',
-          field: 'fat',
-          sortable: true
-        },
-        {
-          check: true,
-          name: 'carbs',
-          label: 'Carbs (g)',
-          field: 'carbs'
-        },
-        {
-          check: true,
-          name: 'protein',
-          label: 'Protein (g)',
-          field: 'protein'
-        },
-        {
-          check: true,
-          name: 'sodium',
-          label: 'Sodium (mg)',
-          field: 'sodium'
-        },
-        {
-          check: true,
-          name: 'calcium',
-          label: 'Calcium (%)',
-          field: 'calcium',
-          sortable: true,
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        },
-        {
-          check: true,
-          name: 'iron',
-          label: 'Iron (%)',
-          field: 'iron',
-          sortable: true,
-          sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)
-        }
-      ],
-      data: [
-        {
-          id: 1,
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%'
-        },
-        {
-          id: 2,
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          sodium: 129,
-          calcium: '8%',
-          iron: '1%'
-        },
-        {
-          id: 3,
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%'
-        },
-        {
-          id: 4,
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          sodium: 413,
-          calcium: '3%',
-          iron: '8%'
-        },
-        {
-          id: 5,
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          sodium: 327,
-          calcium: '7%',
-          iron: '16%'
-        },
-        {
-          id: 6,
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          sodium: 50,
-          calcium: '0%',
-          iron: '0%'
-        },
-        {
-          id: 7,
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          sodium: 38,
-          calcium: '0%',
-          iron: '2%'
-        },
-        {
-          id: 8,
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          sodium: 562,
-          calcium: '0%',
-          iron: '45%'
-        },
-        {
-          id: 9,
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          sodium: 326,
-          calcium: '2%',
-          iron: '22%'
-        },
-        {
-          id: 10,
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          sodium: 54,
-          calcium: '12%',
-          iron: '6%'
-        }
       ]
     }
   },
@@ -588,6 +409,7 @@ export default {
       }
     },
     deleteDatas() {
+      console.log(JSON.stringify(this.selected))
       const spinner = QSpinnerIos
       this.$q.loading.show({
         spinner,
@@ -599,19 +421,30 @@ export default {
       })
 
       setTimeout(() => {
+        for (let i = 0; i < this.selected.length; ++i) {
+          console.log(JSON.stringify(this.selected[i]))
+          for (let j = 0; j < this.tableListData.tableListDatas.datas.length; ++j) {
+            if (this.selected[i].id === this.tableListData.tableListDatas.datas[j].id) {
+              this.tableListData.tableListDatas.datas.splice(j, 1)
+              break
+            }
+          }
+        }
         this.$q.loading.hide()
         this.$q.notify({
           color: 'white',
           textColor: 'positive',
           icon: 'check_circle',
           position: 'top',
-          message: '删除成功，即将刷新'
+          group: false,
+          message: '成功删除【' + this.selected.length + '】条数据，即将刷新'
         })
-      }, 2000)
+        this.selected = []
+      }, 1000)
     },
     select(columnFromClient) {
       this.visibleColumns = []
-      const columns = this.columns
+      const columns = this.tableListData.tableListDatas.columns
       for (let i = 0; i < columns.length; ++i) {
         if (columns[i].name === columnFromClient.name) {
           columns[i].check = !columns[i].check
@@ -646,7 +479,7 @@ export default {
           position: 'top',
           message: '添加成功'
         })
-      }, 2000)
+      }, 1000)
     },
 
     onReset() {
@@ -667,7 +500,7 @@ export default {
             this.filterListData.push(data)
           }
         }
-      }, 2000)
+      }, 500)
     },
     isMatchData(data) {
       const listQueryData = this.queryCondition
@@ -688,57 +521,51 @@ export default {
     },
     addRow() {
       this.addData = true
-      // this.loading = true
-      // setTimeout(() => {
-      //   // const index = Math.floor(Math.random() * (this.data.length + 1))
-      //   const row = this.data[Math.floor(Math.random() * this.data.length)]
-      //   if (this.data.length === 0) {
-      //     this.rowCount = 0
-      //   }
-      //   const addRow = { ...row } // extend({}, row, { name: `${row.name} (${row.__count})` })
-      //   this.data.unshift(addRow)
-      //   row.id = this.data.length
-      //   this.loading = false
-      // }, 500)
     }
   },
   computed: {
     pagesNumber() {
       return Math.ceil(this.data.length / this.pagination.rowsPerPage)
+    },
+    selectedTotal() {
+      let total = 0
+      if (!this.selected || this.selected.length === 0) {
+        return total
+      }
+      for (let i = 0; i < this.selected.length; ++i) {
+        total += this.selected[i].callCount
+      }
+      return total
+    },
+    showColumns() {
+      const showColumns = []
+      for (let i = 0; i < this.tableListData.tableListDatas.columns.length; ++i) {
+        const columnData = this.tableListData.tableListDatas.columns[i]
+        if (!columnData.required) {
+          showColumns.push(columnData)
+        }
+      }
+      return showColumns
     }
   },
   mounted() {
-    this.filterListData = _.cloneDeep(TABLE_LIST_DATA.tableListDatas.datas)
     this.showQuery = this.$q.screen.gt.xs
     this.tableLabel = this.$q.screen.gt.xs ? '收起' : '展开'
   },
   watch: {
     selected(newSelected, oldSelected) {
       this.seamless = newSelected.length > 0
+    },
+    tableListData: {
+      handler(newValue, oldValue) {
+        this.doQuery()
+      },
+      immediate: true,
+      deep: true
     }
   }
 }
 </script>
 
 <style lang="sass">
-.my-sticky-header-table
-  /* height or max-height is important */
-  max-height: 600px
-
-  .q-table__top,
-  .q-table__bottom
-    /* bg color is important for th; just specify one */
-    background-color: white
-
-  thead tr:first-child th
-    font-size: medium
-    font-weight: bolder
-    background-color: white
-
-  thead tr th
-    position: sticky
-    z-index: 1
-
-  thead tr:first-child th
-    top: 0
 </style>
