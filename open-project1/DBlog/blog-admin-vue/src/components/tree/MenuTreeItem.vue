@@ -43,6 +43,7 @@
 
 <script>
 import EventBus from 'components/tree/EventBus'
+import LAYOUT_DATA from '@/mock/data/layout/layoutData'
 
 const headerStyleDefault = { color: '#1890ff' }
 const itemStyleDefault = {
@@ -94,7 +95,8 @@ export default {
     },
     changeActiveHeaderStyle(currentItem) {
       this.activeItem(currentItem)
-      const isGroup = currentItem.group &&
+      const isGroup =
+        currentItem.group &&
         this.data.group &&
         currentItem.group.startsWith(this.data.group)
       if (!isGroup) {
@@ -130,6 +132,7 @@ export default {
   mounted() {
     this.onclick(this.buildActiveItem(this.$route.path))
     EventBus.$on('activeItem', (currentItem) => {
+      LAYOUT_DATA.addTab(this.$route.path)
       this.changeActiveItemStyle(currentItem)
       this.changeActiveHeaderStyle(currentItem)
     })
@@ -139,7 +142,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.onclick(this.buildActiveItem(val.path))
       },
       // 深度观察监听

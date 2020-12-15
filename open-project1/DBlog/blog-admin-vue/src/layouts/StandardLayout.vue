@@ -54,7 +54,7 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-            >{{ totalInformCount }}
+              >{{ totalInformCount }}
             </q-badge>
           </q-btn>
           <span class="inline-block">
@@ -70,7 +70,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-              >Emailseeeeee</span
+                >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -571,8 +571,12 @@
                 <q-item-label>固定Header</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="styleSettingsData.fixed.fixedHead" val="friend"
-                          @input="changeFixed" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.fixed.fixedHead"
+                  val="friend"
+                  @input="changeFixed"
+                />
               </q-item-section>
             </q-item>
 
@@ -581,8 +585,12 @@
                 <q-item-label>固定Footer</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="styleSettingsData.fixed.fixedFooter" val="friend"
-                          @input="changeFixed" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.fixed.fixedFooter"
+                  val="friend"
+                  @input="changeFixed"
+                />
               </q-item-section>
             </q-item>
 
@@ -668,7 +676,36 @@
       </q-scroll-area>
     </q-drawer>
     <q-page-container>
-      <q-page>
+      <q-page style="padding-top: 60px">
+        <q-page-sticky
+          expand
+          position="top"
+          style="z-index: 2000"
+          class="q-mt-xs"
+        >
+          <q-toolbar class="text-primary bg-white">
+            <q-tabs dense shrink inline-label class="text-primary bg-white">
+              <div
+                v-for="(tab, index) in tabs"
+                :key="index"
+                class="row q-mr-sm bg-green-1 q-px-sm items-center"
+              >
+                <q-route-tab
+                  :label="tab.name"
+                  :to="tab.to"
+                  exact
+                  style="padding: 0 8px"
+                >
+                </q-route-tab>
+                <q-icon
+                  size="18px"
+                  name="close"
+                  @click="removeTab(index)"
+                ></q-icon>
+              </div>
+            </q-tabs>
+          </q-toolbar>
+        </q-page-sticky>
         <transition mode="out-in">
           <router-view />
         </transition>
@@ -727,6 +764,7 @@ export default {
       rightSelect: '流式',
       search: '',
       gtSm: this.$q.screen.gt.sm,
+      tabs: LAYOUT_DATA.accessTabs,
       notif2: true
     }
   },
@@ -734,6 +772,16 @@ export default {
     MenuTree
   },
   methods: {
+    removeTab(index) {
+      this.tabs.splice(index, 1)
+      let location = '/'
+      if (this.tabs.length > 0) {
+        location = this.tabs[this.tabs.length - 1].to
+      }
+      this.$router.push(location).catch((err) => {
+        console.log(err)
+      })
+    },
     changeFixed() {
       const fixedData = this.styleSettingsData.fixed
       if (fixedData.fixedHead) {
@@ -827,36 +875,41 @@ export default {
     }
   },
   watch: {
-    gtSm: function() {
+    gtSm: function () {
       this.rightHide()
     }
   },
   computed: {
-    view: function() {
-      return this.styleSettingsData.fixed.viewHead + ' ' +
-        this.styleSettingsData.fixed.viewBody + ' ' +
+    view: function () {
+      return (
+        this.styleSettingsData.fixed.viewHead +
+        ' ' +
+        this.styleSettingsData.fixed.viewBody +
+        ' ' +
         this.styleSettingsData.fixed.viewFoot
+      )
     },
-    menuContentClass: function() {
+    menuContentClass: function () {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function() {
+    informCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.informs)
     },
-    notifiesCount: function() {
+    notifiesCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.notifies)
     },
-    waitDealCount: function() {
+    waitDealCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.waitDeals)
     },
-    totalInformCount: function() {
+    totalInformCount: function () {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function() {
+  mounted: function () {
+    LAYOUT_DATA.addTab(this.$route.path)
   }
 }
 </script>

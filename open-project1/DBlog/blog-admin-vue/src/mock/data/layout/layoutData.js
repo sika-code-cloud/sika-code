@@ -195,6 +195,23 @@ const routeDatas = [
     ]
   }
 ]
+
+function queryList(routeDatas, tabs) {
+  for (let i = 0; i < routeDatas.length; i++) {
+    const sonList = routeDatas[i].children
+    if (!sonList || sonList.length === 0) {
+      tabs.push(routeDatas[i])
+    } else {
+      queryList(sonList, tabs)
+    }
+  }
+  return tabs
+}
+
+const allTabs = []
+const accessTabs = []
+queryList(routeDatas, allTabs)
+
 const informsData = [
   {
     icon: 'email',
@@ -441,6 +458,29 @@ function getAvailableCount(datas) {
   return count
 }
 
+function selectTabByTo(to) {
+  for (let i = 0; i < allTabs.length; ++i) {
+    if (allTabs[i].to === to) {
+      return allTabs[i]
+    }
+  }
+}
+
+function addTab(to) {
+  if (!to || to === '/') {
+    to = '/dashboard/analysis'
+  }
+  let exist = false
+  for (let i = 0; i < accessTabs.length; ++i) {
+    if (accessTabs[i].to === to) {
+      exist = true
+    }
+  }
+  if (!exist) {
+    accessTabs.push(selectTabByTo(to))
+  }
+}
+
 export default {
   routeDatas,
   informsData,
@@ -450,5 +490,8 @@ export default {
   scrollStyleData,
   rightOffset,
   styleSettingsData,
-  getAvailableCount
+  accessTabs,
+  addTab,
+  getAvailableCount,
+  selectTabByTo
 }
