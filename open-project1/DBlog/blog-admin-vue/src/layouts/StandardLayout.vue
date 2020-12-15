@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lfr" class="bg-grey-2" style="font-family: 微软雅黑">
+  <q-layout :view="view" class="bg-grey-2" style="font-family: 微软雅黑">
     <q-resize-observer :debounce="300" @resize="onResize" />
     <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
       <q-toolbar class="GNL__toolbar">
@@ -54,7 +54,7 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-              >{{ totalInformCount }}
+            >{{ totalInformCount }}
             </q-badge>
           </q-btn>
           <span class="inline-block">
@@ -70,7 +70,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-                >Emailseeeeee</span
+              >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -411,7 +411,7 @@
       >
         <div class="q-pa-sm">
           <q-list padding>
-            <q-item>
+            <q-item v-if="false">
               <q-item-section>
                 <q-item-label>整体风格设置</q-item-label>
                 <q-item-label>
@@ -460,6 +460,7 @@
                         background-color: #1d1d1d;
                         border-radius: 5px;
                       "
+                      @click="changeOverallStyle('dark')"
                     ></div>
                   </div>
                 </q-item-label>
@@ -501,7 +502,7 @@
 
             <q-separator spaced="12px" />
 
-            <q-item>
+            <q-item v-if="false">
               <q-item-section>
                 <q-item-label>导航模式</q-item-label>
                 <q-item-label caption>
@@ -570,16 +571,18 @@
                 <q-item-label>固定Header</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
+                <q-toggle color="primary" v-model="styleSettingsData.fixed.fixedHead" val="friend"
+                          @input="changeFixed" />
               </q-item-section>
             </q-item>
 
             <q-item tag="label">
               <q-item-section>
-                <q-item-label>固定侧边菜单</q-item-label>
+                <q-item-label>固定Footer</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
+                <q-toggle color="primary" v-model="styleSettingsData.fixed.fixedFooter" val="friend"
+                          @input="changeFixed" />
               </q-item-section>
             </q-item>
 
@@ -731,6 +734,22 @@ export default {
     MenuTree
   },
   methods: {
+    changeFixed() {
+      const fixedData = this.styleSettingsData.fixed
+      if (fixedData.fixedHead) {
+        fixedData.viewHead = this.replaceView(fixedData.viewHead, 'H')
+      } else {
+        fixedData.viewHead = this.replaceView(fixedData.viewHead, 'h')
+      }
+      if (this.styleSettingsData.fixed.fixedFooter) {
+        fixedData.viewFoot = this.replaceView(fixedData.viewFoot, 'F')
+      } else {
+        fixedData.viewFoot = this.replaceView(fixedData.viewFoot, 'f')
+      }
+    },
+    replaceView(sourceStr, str) {
+      return sourceStr.substr(0, 1) + str + sourceStr.substr(2)
+    },
     changeThemeColor(index) {
       for (
         let i = 0;
@@ -808,31 +827,37 @@ export default {
     }
   },
   watch: {
-    gtSm: function () {
+    gtSm: function() {
       this.rightHide()
     }
   },
   computed: {
-    menuContentClass: function () {
+    view: function() {
+      return this.styleSettingsData.fixed.viewHead + ' ' +
+        this.styleSettingsData.fixed.viewBody + ' ' +
+        this.styleSettingsData.fixed.viewFoot
+    },
+    menuContentClass: function() {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function () {
+    informCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.informs)
     },
-    notifiesCount: function () {
+    notifiesCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.notifies)
     },
-    waitDealCount: function () {
+    waitDealCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.waitDeals)
     },
-    totalInformCount: function () {
+    totalInformCount: function() {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function () {}
+  mounted: function() {
+  }
 }
 </script>
 

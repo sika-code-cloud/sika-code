@@ -417,7 +417,14 @@ const styleSettingsData = {
       color: 'rgb(114, 46, 209)',
       checked: false
     }
-  ]
+  ],
+  fixed: {
+    viewHead: 'hHh',
+    viewBody: 'LpR',
+    viewFoot: 'lfr',
+    fixedHead: true,
+    fixedFooter: false
+  }
 }
 
 // 获取可用的数量
