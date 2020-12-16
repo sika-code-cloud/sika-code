@@ -1,13 +1,20 @@
 <template>
-  <div class="row q-px-sm q-mt-md">
+  <div class="row q-px-sm">
     <div class="col-md-4 col-xs-12 q-px-sm">
       <q-card flat class="bg-white no-border-radius">
         <q-card-section class="text-center">
-          <q-img :src="accountCenterData.introduceData.imgSrc" style="max-width: 140px"></q-img>
+          <q-img
+            :src="accountCenterData.introduceData.imgSrc"
+            style="max-width: 140px"
+          ></q-img>
           <q-item-label class="q-my-sm"
-          ><strong>{{ accountCenterData.introduceData.name }}</strong></q-item-label
+            ><strong>{{
+              accountCenterData.introduceData.name
+            }}</strong></q-item-label
           >
-          <q-item-label>{{ accountCenterData.introduceData.motto }}</q-item-label>
+          <q-item-label>{{
+            accountCenterData.introduceData.motto
+          }}</q-item-label>
           <div class="row text-left q-mt-lg q-ml-sm text-body2 text-grey-9">
             <q-item-label class="col-12">
               <q-icon
@@ -42,21 +49,24 @@
         <q-card-section>
           <q-item-label class="text-body1">标签</q-item-label>
           <q-item-label class="text-body1 q-gutter-y-sm">
-            <span :key="index" v-for="(item, index) in accountCenterData.labelDatas">
-                <q-chip
-                  v-if="item.outline"
-                  outline
-                  size="sm"
-                  :selected.sync="item.selected"
-                  :removable="item.removable"
-                  v-model="item.show"
-                  :color="item.color"
-                  :text-color="item.textColor"
-                  :icon="item.icon"
-                  :label="item.label"
-                  :square="item.square"
-                  :class="item.class"
-                />
+            <span
+              :key="index"
+              v-for="(item, index) in accountCenterData.labelDatas"
+            >
+              <q-chip
+                v-if="item.outline"
+                outline
+                size="sm"
+                :selected.sync="item.selected"
+                :removable="item.removable"
+                v-model="item.show"
+                :color="item.color"
+                :text-color="item.textColor"
+                :icon="item.icon"
+                :label="item.label"
+                :square="item.square"
+                :class="item.class"
+              />
               <q-chip
                 v-else
                 size="sm"
@@ -72,17 +82,12 @@
               />
             </span>
             <span>
-              <q-chip
-                size="sm"
-                removable
-                color="info"
-                text-color="white"
-              >
-              <q-avatar>
-                <q-img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-              </q-avatar>
-              John
-            </q-chip>
+              <q-chip size="sm" removable color="info" text-color="white">
+                <q-avatar>
+                  <q-img src="https://cdn.quasar.dev/img/avatar5.jpg" />
+                </q-avatar>
+                John
+              </q-chip>
             </span>
           </q-item-label>
         </q-card-section>
@@ -90,7 +95,12 @@
         <q-card-section>
           <q-item-label class="text-body1">团队</q-item-label>
           <q-item-label class="q-gutter-sm">
-            <q-chip size="16px" color="white" :key="index" v-for="(item, index) in accountCenterData.groupDatas">
+            <q-chip
+              size="16px"
+              color="white"
+              :key="index"
+              v-for="(item, index) in accountCenterData.groupDatas"
+            >
               <q-avatar size="sm">
                 <q-img :src="item.imgSrc" />
               </q-avatar>
@@ -117,14 +127,18 @@
           </span>
         </q-tab>
         <q-tab name="applications">
-           <span>
-            <q-icon name="settings_applications" size="sm" />应用({{ applicationsData.applicationsDatas.length }})
-           </span>
+          <span>
+            <q-icon name="settings_applications" size="sm" />应用({{
+              applicationsData.applicationsDatas.length
+            }})
+          </span>
         </q-tab>
         <q-tab name="projects">
-           <span>
-            <q-icon name="fact_check" size="sm" />项目({{ projectsData.projectDatas.length }})
-           </span>
+          <span>
+            <q-icon name="fact_check" size="sm" />项目({{
+              projectsData.projectDatas.length
+            }})
+          </span>
         </q-tab>
       </q-tabs>
       <q-separator />
@@ -141,9 +155,7 @@
                 <sc-shadow class="q-pa-sm">
                   <q-item-section>
                     <q-item-label class="text-body1 q-mb-sm">
-                      <strong>
-                        Alipay-{{ props.item.index }}
-                      </strong>
+                      <strong> Alipay-{{ props.item.index }} </strong>
                     </q-item-label>
                     <q-item-label class="q-mb-sm">
                       <q-chip
@@ -185,15 +197,13 @@
                         class="col-auto cursor-pointer"
                       >
                         <q-avatar size="18px">
-                          <img
-                            :src="props.item.imgSrc"
-                          />
+                          <img :src="props.item.imgSrc" />
                         </q-avatar>
                         姜宇
                       </q-chip>
                       <span class="col-auto q-ml-none">发布在</span>
                       <span class="col-auto text-primary cursor-pointer"
-                      >https://ant.design</span
+                        >https://ant.design</span
                       >
                       <span class="col-sm-auto col-xs-12 q-pl-xs">
                         {{ props.item.publishTime }}
@@ -246,15 +256,16 @@
             item-class="col-xl-3 col-sm-4 col-xs-12"
           >
             <template v-slot:item="props">
-              <q-intersection
-                once
-                transition="scale">
+              <q-intersection once transition="scale">
                 <sc-shadow>
                   <q-card square bordered flat>
                     <q-item>
                       <q-item-section avatar>
                         <q-avatar>
-                          <img style="width: 30px; height: 30px" :src="props.item.imgSrc" />
+                          <img
+                            style="width: 30px; height: 30px"
+                            :src="props.item.imgSrc"
+                          />
                         </q-avatar>
                       </q-item-section>
                       <q-item-section>
@@ -269,8 +280,13 @@
                         <span class="col">新增用户</span>
                       </q-item-label>
                       <q-item-label class="row text-body1 text-black">
-                        <span class="col"><strong>{{ props.item.activeUser }}</strong>万</span>
-                        <span class="col"><strong>{{ props.item.increaseUser }}</strong></span>
+                        <span class="col"
+                          ><strong>{{ props.item.activeUser }}</strong
+                          >万</span
+                        >
+                        <span class="col"
+                          ><strong>{{ props.item.increaseUser }}</strong></span
+                        >
                       </q-item-label>
                     </q-item>
                     <q-separator />
@@ -334,9 +350,7 @@
             item-class="col-xl-3 col-sm-4 col-xs-12"
           >
             <template v-slot:item="props">
-              <q-intersection
-                once
-                transition="scale">
+              <q-intersection once transition="scale">
                 <sc-shadow>
                   <q-card square bordered flat class="q-pb-sm">
                     <q-img :src="props.item.pictureSrc" :ratio="16 / 10" />
@@ -352,25 +366,33 @@
                           {{ props.item.hour }}小时前
                         </q-item-section>
                         <span>
-                        <q-img
-                          src="~assets/head.png"
-                          style="width: 28px; height: 28px"
-                        >
-                          <q-tooltip>张三</q-tooltip>
-                        </q-img>
-                        <q-img
-                          src="~assets/head_1.png"
-                          style="width: 28px; height: 28px; margin-left: -12px"
-                        >
-                          <q-tooltip>豆豆</q-tooltip>
-                        </q-img>
-                        <q-img
-                          src="~assets/head.png"
-                          style="width: 28px; height: 28px; margin-left: -12px"
-                        >
-                          <q-tooltip>乐乐</q-tooltip>
-                        </q-img>
-                      </span>
+                          <q-img
+                            src="~assets/head.png"
+                            style="width: 28px; height: 28px"
+                          >
+                            <q-tooltip>张三</q-tooltip>
+                          </q-img>
+                          <q-img
+                            src="~assets/head_1.png"
+                            style="
+                              width: 28px;
+                              height: 28px;
+                              margin-left: -12px;
+                            "
+                          >
+                            <q-tooltip>豆豆</q-tooltip>
+                          </q-img>
+                          <q-img
+                            src="~assets/head.png"
+                            style="
+                              width: 28px;
+                              height: 28px;
+                              margin-left: -12px;
+                            "
+                          >
+                            <q-tooltip>乐乐</q-tooltip>
+                          </q-img>
+                        </span>
                       </q-item>
                     </q-list>
                   </q-card>
@@ -412,5 +434,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

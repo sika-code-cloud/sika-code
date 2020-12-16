@@ -109,7 +109,12 @@
                       <q-icon name="event" />
                     </template>
                     <template v-slot:after>
-                      <q-btn glossy color="secondary" label="获取验证码" />
+                      <q-btn
+                        unelevated
+                        color="secondary"
+                        class="no-border-radius"
+                        label="获取验证码"
+                      />
                     </template>
                   </q-input>
                 </div>
@@ -235,7 +240,6 @@ export default {
       accept: false,
       isPwd: true,
       autoLogin: true,
-      dense: false,
       card: false,
       loginLogin: false,
       currentLogin: {
@@ -246,6 +250,16 @@ export default {
   },
   methods: {
     onSubmit() {
+      if (this.name !== 'admin' || this.password !== 'sika') {
+        this.$q.notify({
+          color: 'white',
+          textColor: 'negative',
+          icon: 'cancel',
+          position: 'top',
+          message: '用户名或密码不正确'
+        })
+        return
+      }
       this.loginLogin = true
       setTimeout(() => {
         // we're done, we reset loading state

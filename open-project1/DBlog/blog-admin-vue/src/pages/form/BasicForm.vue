@@ -10,9 +10,8 @@
     </div>
     <div class="q-px-md">
       <q-card square flat class="q-gutter-y-md q-my-md q-py-sm">
-        <q-form class="q-px-md full-width" @reset="onReset"
-                @submit="onSubmit">
-          <div class="row q-gutter-y-sm q-my-md items-center">
+        <q-form class="q-px-md full-width" @reset="onReset" @submit="onSubmit">
+          <div class="row q-gutter-y-sm items-center">
             <span
               class="col-sm-4 col-xs-12"
               :class="{ 'justify-end': $q.screen.gt.xs }"
@@ -20,18 +19,19 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >标题:</q-item-label
+                >标题:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
               <q-item-label>
                 <q-input
+                  class="q-pb-none"
                   outlined
                   v-model="basicFormData.inputData.title"
                   placeholder="给目标起个名字"
                   dense
                   square
-                  :rules="[ val => val && val.length > 0 || '请输入名字']"
+                  :rules="[(val) => (val && val.length > 0) || '请输入名字']"
                 >
                 </q-input>
               </q-item-label>
@@ -45,7 +45,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >起止日期:</q-item-label
+                >起止日期:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
@@ -62,19 +62,22 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >目标描述:</q-item-label
+                >目标描述:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
               <q-item-label>
                 <q-input
+                  class="q-pb-none"
                   outlined
                   type="textarea"
                   v-model="basicFormData.inputData.targetDesc"
                   placeholder="请输入你的阶段性工作目标"
                   dense
                   square
-                  :rules="[ val => val && val.length > 0 || '请输入阶段性工作目标']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入阶段性工作目标'
+                  ]"
                 >
                 </q-input>
               </q-item-label>
@@ -88,19 +91,22 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >衡量标准:</q-item-label
+                >衡量标准:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
               <q-item-label>
                 <q-input
+                  class="q-pb-none"
                   outlined
                   type="textarea"
                   v-model="basicFormData.inputData.measurementCriteria"
                   placeholder="请输入衡量标准"
                   dense
                   square
-                  :rules="[ val => val && val.length > 0 || '请输入衡量标准']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入衡量标准'
+                  ]"
                 >
                 </q-input>
               </q-item-label>
@@ -143,7 +149,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >邀评人<span class="text-grey-6">（选填）</span>:</q-item-label
+                >邀评人<span class="text-grey-6">（选填）</span>:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
@@ -167,7 +173,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >权重<span class="text-grey-6">（选填）</span>:</q-item-label
+                >权重<span class="text-grey-6">（选填）</span>:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12 sc-design">
@@ -196,7 +202,7 @@
               <q-item-label
                 class="q-pr-md"
                 :class="{ 'text-right': $q.screen.gt.xs }"
-              >目标公开:</q-item-label
+                >目标公开:</q-item-label
               >
             </span>
             <span class="col-xl-4 col-md-5 col-sm-6 col-xs-12">
@@ -211,14 +217,19 @@
               </q-item-label>
             </span>
             <span class="offset-sm-4 col-xl-4 col-md-5 col-sm-6 col-xs-12">
-              <q-item-label v-if="targetOption === 'partPublic'" class="q-mb-md sc-design">
+              <q-item-label
+                v-if="targetOption === 'partPublic'"
+                class="q-mb-md sc-design"
+              >
                 <q-input
                   outlined
                   v-model="basicFormData.inputData.publics"
                   placeholder="公开给"
                   dense
                   square
-                  :rules="[ val => val && val.length > 0 || '请输入公开人姓名']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入公开人姓名'
+                  ]"
                 >
                 </q-input>
               </q-item-label>
@@ -226,7 +237,9 @@
                 客户、邀评人默认被分享
               </q-item-label>
             </span>
-            <div class="q-pt-sm offset-sm-4 col-xl-4 col-md-5 col-sm-6 col-xs-12">
+            <div
+              class="q-pt-sm offset-sm-4 col-xl-4 col-md-5 col-sm-6 col-xs-12"
+            >
               <div class="row q-col-gutter-x-md">
                 <div class="col text-left">
                   <q-btn
@@ -298,11 +311,9 @@ export default {
     }
   },
   computed: {},
-  mounted() {
-  },
+  mounted() {},
   watch: {}
 }
 </script>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>

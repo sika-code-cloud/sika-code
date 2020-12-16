@@ -200,7 +200,9 @@ function queryList(routeDatas, tabs) {
   for (let i = 0; i < routeDatas.length; i++) {
     const sonList = routeDatas[i].children
     if (!sonList || sonList.length === 0) {
-      tabs.push(routeDatas[i])
+      const routeData = routeDatas[i]
+      routeData.active = false
+      tabs.push(routeData)
     } else {
       queryList(sonList, tabs)
     }
@@ -443,8 +445,11 @@ const styleSettingsData = {
     fixedFooter: false
   },
   contentSettings: {
+    header: true,
     topBar: true,
-    topBarGlossy: false
+    topBarGlossy: false,
+    footer: true,
+    leftMenuHeader: true
   }
 }
 
@@ -474,15 +479,24 @@ function addTab(to) {
   if (!to || to === '/') {
     to = '/dashboard/analysis'
   }
+
+  console.log(to + '0000000000')
   let exist = false
+  let currentTab = null
   for (let i = 0; i < accessTabs.length; ++i) {
     if (accessTabs[i].to === to) {
       exist = true
+      currentTab = accessTabs[i]
+    } else {
+      accessTabs[i].active = false
     }
   }
   if (!exist) {
-    accessTabs.push(selectTabByTo(to))
+    currentTab = selectTabByTo(to)
+    accessTabs.push(currentTab)
   }
+  currentTab.active = true
+  return currentTab
 }
 
 export default {

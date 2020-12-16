@@ -1,7 +1,11 @@
 <template>
   <q-layout :view="view" class="bg-grey-2" style="font-family: 微软雅黑">
     <q-resize-observer :debounce="300" @resize="onResize" />
-    <q-header class="bg-white title-grey-8 shadow-1 sc-design" height-hint="64">
+    <q-header
+      class="bg-white title-grey-8 shadow-1 sc-design"
+      height-hint="64"
+      v-if="styleSettingsData.contentSettings.header"
+    >
       <q-toolbar class="GNL__toolbar">
         <q-btn
           flat
@@ -54,7 +58,7 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-            >{{ totalInformCount }}
+              >{{ totalInformCount }}
             </q-badge>
           </q-btn>
           <span class="inline-block">
@@ -70,7 +74,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-              >Emailseeeeee</span
+                >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -355,7 +359,10 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-footer class="text-blue-grey-4 bg-grey-2">
+    <q-footer
+      class="text-blue-grey-4 bg-grey-2"
+      v-if="styleSettingsData.contentSettings.footer"
+    >
       <div class="q-my-lg">
         <div class="text-center q-mb-sm">
           <span class="inline-block">Sika Design Pro</span>
@@ -371,7 +378,10 @@
       content-class="bg-white"
       :width="240"
     >
-      <div class="absolute-top bg-white q-mt-sm">
+      <div
+        class="absolute-top bg-white q-mt-sm"
+        v-if="styleSettingsData.contentSettings.leftMenuHeader"
+      >
         <div class="bg-transparent q-px-sm q-gutter-x-sm">
           <q-avatar class="q-mb-sm">
             <q-img style="width: 40px" src="~assets/sika-head.png" />
@@ -381,7 +391,12 @@
           </div>
         </div>
       </div>
-      <div style="height: calc(100% - 55px); margin-top: 55px">
+      <div
+        :class="{
+          leftMenuHeader: styleSettingsData.contentSettings.leftMenuHeader,
+          leftMenuUnHeader: !styleSettingsData.contentSettings.leftMenuHeader
+        }"
+      >
         <q-scroll-area
           class="fit"
           :thumb-style="scrollStyleData.thumbStyle"
@@ -601,10 +616,24 @@
             </q-item>
             <q-item tag="label">
               <q-item-section>
-                <q-item-label>顶栏</q-item-label>
+                <q-item-label>页头</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="styleSettingsData.contentSettings.topBar" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.contentSettings.header"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>顶栏菜单</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.contentSettings.topBar"
+                />
               </q-item-section>
             </q-item>
             <q-item tag="label">
@@ -612,7 +641,10 @@
                 <q-item-label>顶栏光滑</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="styleSettingsData.contentSettings.topBarGlossy" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.contentSettings.topBarGlossy"
+                />
               </q-item-section>
             </q-item>
             <q-item tag="label">
@@ -620,15 +652,10 @@
                 <q-item-label>页脚</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
-              </q-item-section>
-            </q-item>
-            <q-item tag="label">
-              <q-item-section>
-                <q-item-label>菜单</q-item-label>
-              </q-item-section>
-              <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.contentSettings.footer"
+                />
               </q-item-section>
             </q-item>
             <q-item tag="label">
@@ -636,10 +663,12 @@
                 <q-item-label>菜单头</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
+                <q-toggle
+                  color="primary"
+                  v-model="styleSettingsData.contentSettings.leftMenuHeader"
+                />
               </q-item-section>
             </q-item>
-
             <q-separator spaced="“12px" />
             <q-item-label header>其他设置</q-item-label>
 
@@ -676,6 +705,7 @@
                 outline
                 color="secondary"
                 icon="lightbulb_outline"
+                @click="copy"
               ></q-btn>
             </q-item>
           </q-list>
@@ -683,35 +713,49 @@
       </q-scroll-area>
     </q-drawer>
     <q-page-container>
-      <q-page :class="{topBarClass: styleSettingsData.contentSettings.topBar}">
+      <q-page
+        :class="{
+          topBarClass: styleSettingsData.contentSettings.topBar,
+          'q-mt-sm': !styleSettingsData.contentSettings.topBar
+        }"
+      >
         <q-page-sticky
           v-if="styleSettingsData.contentSettings.topBar"
           expand
           position="top"
           style="z-index: 2000"
-          class="q-pt-sm bg-grey-2"
+          class="q-py-xs bg-grey-2"
         >
-          <q-toolbar class="bg-white q-pt-sm shadow-1" style="min-height: 0">
-            <q-tabs dense shrink inline-label
-                    indicator-color="transparent"
-                    active-bg-color="primary"
-                    active-color="white"
-                    v-model="currentPath">
+          <q-toolbar style="min-height: 40px">
+            <q-tabs
+              dense
+              shrink
+              inline-label
+              indicator-color="transparent"
+              active-bg-color="primary"
+              active-color="white"
+              v-model="currentPath"
+            >
               <div
                 v-for="(tab, index) in tabs"
                 :key="index"
-                class="q-mr-sm items-center "
+                class="q-mr-sm items-center"
               >
                 <q-tab
+                  :ripple="false"
                   :label="tab.name"
                   :name="tab.to"
                   @click="routeTo(tab.to)"
-                  class="shadow-up-3"
-                  :class="{glossy: styleSettingsData.contentSettings.topBarGlossy}"
+                  :class="{
+                    glossy: styleSettingsData.contentSettings.topBarGlossy,
+                    'bg-white': !tab.active,
+                    'text-grey-7': !tab.active
+                  }"
                   exact
-                  style="padding: 0 8px"
+                  style="padding: 0 8px; min-height: 24px; border-radius: 4px"
                 >
                   <q-icon
+                    v-if="tab.to !== '/dashboard/analysis'"
                     size="18px"
                     name="close"
                     @click.stop="removeTab(index)"
@@ -756,7 +800,7 @@
 <script>
 import MenuTree from 'components/tree/MenuTree'
 import LAYOUT_DATA from '@/mock/data/layout/layoutData'
-import { morph, colors } from 'quasar'
+import { morph, colors, copyToClipboard } from 'quasar'
 
 export default {
   name: 'StandardLayout',
@@ -789,8 +833,7 @@ export default {
   },
   methods: {
     buildTabRoute() {
-      this.currentPath = this.$route.path
-      LAYOUT_DATA.addTab(this.$route.path)
+      this.currentPath = LAYOUT_DATA.addTab(this.$route.path).to
     },
     routeTo(to) {
       this.$router.push(to).catch((err) => {
@@ -898,14 +941,29 @@ export default {
         tweenFromOpacity: 0.8,
         tweenToOpacity: 0.4
       })
+    },
+    copy() {
+      copyToClipboard(JSON.stringify(this.styleSettingsData))
+        .then(() => {
+          this.$q.notify({
+            color: 'white',
+            textColor: 'positive',
+            icon: 'check_circle',
+            position: 'top-right',
+            message: '成功复制样式'
+          })
+        })
+        .catch(() => {
+          // 失败
+        })
     }
   },
   watch: {
-    gtSm: function() {
+    gtSm: function () {
       this.rightHide()
     },
     $route: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.buildTabRoute()
       },
       // 深度观察监听
@@ -913,7 +971,7 @@ export default {
     }
   },
   computed: {
-    view: function() {
+    view: function () {
       return (
         this.styleSettingsData.fixed.viewHead +
         ' ' +
@@ -922,34 +980,42 @@ export default {
         this.styleSettingsData.fixed.viewFoot
       )
     },
-    menuContentClass: function() {
+    menuContentClass: function () {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function() {
+    informCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.informs)
     },
-    notifiesCount: function() {
+    notifiesCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.notifies)
     },
-    waitDealCount: function() {
+    waitDealCount: function () {
       return LAYOUT_DATA.getAvailableCount(this.waitDeals)
     },
-    totalInformCount: function() {
+    totalInformCount: function () {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.buildTabRoute()
   }
 }
 </script>
 
 <style lang="sass">
+.leftMenuHeader
+  height: calc(100% - 55px)
+  margin-top: 55px
+
+.leftMenuUnHeader
+  height: calc(100%)
+
 .topBarClass
-  padding-top: 60px
+  padding-top: 50px
+
 .v-enter
   opacity: 0
   transform: translate3d(0, -100px, 0)

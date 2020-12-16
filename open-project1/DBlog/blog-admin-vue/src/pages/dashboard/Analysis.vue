@@ -1,5 +1,5 @@
 <template>
-  <div class="sc-design q-my-md">
+  <div class="sc-design q-mb-md">
     <div class="row q-px-sm">
       <div class="col-md-3 col-sm-6 col-xs-12 q-px-sm q-mb-md">
         <sc-shadow>
@@ -39,7 +39,7 @@
                     <q-icon size="xs" name="arrow_drop_up" color="red" />
                   </span>
                   <span
-                  >周同比 {{ analysisData.visitData.weekForCompare }}
+                    >周同比 {{ analysisData.visitData.weekForCompare }}
                     <q-icon size="xs" name="arrow_drop_down" color="info" />
                   </span>
                 </q-item-label>
@@ -48,8 +48,8 @@
               <q-item-label>
                 <span>总访问量</span>
                 <span class="float-right">{{
-                    analysisData.visitData.visitTotal
-                  }}</span>
+                  analysisData.visitData.visitTotal
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -95,8 +95,8 @@
               <q-item-label>
                 <span>总销售额</span>
                 <span class="float-right">{{
-                    analysisData.saleData.saleTotal
-                  }}</span>
+                  analysisData.saleData.saleTotal
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -140,7 +140,7 @@
                     <q-icon size="xs" name="arrow_drop_up" color="red" />
                   </span>
                   <span
-                  >周同比 {{ analysisData.orderData.weekForCompare }}
+                    >周同比 {{ analysisData.orderData.weekForCompare }}
                     <q-icon size="xs" name="arrow_drop_down" color="info" />
                   </span>
                 </q-item-label>
@@ -149,8 +149,8 @@
               <q-item-label>
                 <span>转化率</span>
                 <span class="float-right">{{
-                    analysisData.orderData.conversionRate
-                  }}</span>
+                  analysisData.orderData.conversionRate
+                }}</span>
               </q-item-label>
             </q-card>
           </q-card>
@@ -227,7 +227,7 @@
               <q-item-label>
                 <span>总用户</span>
                 <span class="float-right"
-                >{{ analysisData.userData.userTotal }} 人</span
+                  >{{ analysisData.userData.userTotal }} 人</span
                 >
               </q-item-label>
             </q-card>
@@ -280,7 +280,11 @@
                     { label: '当年', value: 'currentYear' }
                   ]"
                 />
-                <sc-date-range class="float-right" ref="startEndDate" :field-style="{'min-width': '253px'}" />
+                <sc-date-range
+                  class="float-right"
+                  ref="startEndDate"
+                  :field-style="{ 'min-width': '253px' }"
+                />
               </q-item-label>
             </q-card-section>
             <q-separator />
@@ -299,7 +303,7 @@
               </q-item-label>
               <q-item-label class="col-md-4 col-xs-12">
                 <q-item-label class="text-weight-bold q-mb-sm"
-                >访问量排行
+                  >访问量排行
                 </q-item-label>
                 <q-list>
                   <q-item
@@ -332,7 +336,7 @@
                     </q-item-section>
                     <q-item-section>{{ item.desc }}</q-item-section>
                     <q-item-section side
-                    >{{ item.visitNum | numeral('0,0') }}
+                      >{{ item.visitNum | numeral('0,0') }}
                     </q-item-section>
                   </q-item>
                 </q-list>

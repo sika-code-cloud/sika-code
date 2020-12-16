@@ -1,10 +1,10 @@
 <template>
   <div>
     <q-layout view="hHh LpR fff" style="font-family: 微软雅黑">
-      <q-header elevated>
+      <q-header class="bg-white text-primary shadow-1">
         <q-toolbar>
-          <q-toolbar-title> Quasar App </q-toolbar-title>
-          <div>Quasar v{{ $q.version }}</div>
+          <q-toolbar-title> Sika Code Design </q-toolbar-title>
+          <div>Sika v1.0.0</div>
         </q-toolbar>
       </q-header>
       <q-footer class="bg-white text-blue-grey-4">
