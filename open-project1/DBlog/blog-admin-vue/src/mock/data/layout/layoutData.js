@@ -441,6 +441,10 @@ const styleSettingsData = {
     viewFoot: 'lfr',
     fixedHead: true,
     fixedFooter: false
+  },
+  contentSettings: {
+    topBar: true,
+    topBarGlossy: false
   }
 }
 

@@ -43,7 +43,6 @@
 
 <script>
 import EventBus from 'components/tree/EventBus'
-import LAYOUT_DATA from '@/mock/data/layout/layoutData'
 
 const headerStyleDefault = { color: '#1890ff' }
 const itemStyleDefault = {
@@ -132,7 +131,6 @@ export default {
   mounted() {
     this.onclick(this.buildActiveItem(this.$route.path))
     EventBus.$on('activeItem', (currentItem) => {
-      LAYOUT_DATA.addTab(this.$route.path)
       this.changeActiveItemStyle(currentItem)
       this.changeActiveHeaderStyle(currentItem)
     })

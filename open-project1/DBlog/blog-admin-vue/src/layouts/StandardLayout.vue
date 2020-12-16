@@ -54,7 +54,7 @@
               title-color="white"
               floating
               v-if="totalInformCount > 0"
-              >{{ totalInformCount }}
+            >{{ totalInformCount }}
             </q-badge>
           </q-btn>
           <span class="inline-block">
@@ -70,7 +70,7 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                 "
-                >Emailseeeeee</span
+              >Emailseeeeee</span
               >
               <q-menu
                 :offset="[0, 26]"
@@ -460,7 +460,6 @@
                         background-color: #1d1d1d;
                         border-radius: 5px;
                       "
-                      @click="changeOverallStyle('dark')"
                     ></div>
                   </div>
                 </q-item-label>
@@ -605,7 +604,15 @@
                 <q-item-label>顶栏</q-item-label>
               </q-item-section>
               <q-item-section side top>
-                <q-toggle color="primary" v-model="notif2" val="friend" />
+                <q-toggle color="primary" v-model="styleSettingsData.contentSettings.topBar" />
+              </q-item-section>
+            </q-item>
+            <q-item tag="label">
+              <q-item-section>
+                <q-item-label>顶栏光滑</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-toggle color="primary" v-model="styleSettingsData.contentSettings.topBarGlossy" />
               </q-item-section>
             </q-item>
             <q-item tag="label">
@@ -676,32 +683,40 @@
       </q-scroll-area>
     </q-drawer>
     <q-page-container>
-      <q-page style="padding-top: 60px">
+      <q-page :class="{topBarClass: styleSettingsData.contentSettings.topBar}">
         <q-page-sticky
+          v-if="styleSettingsData.contentSettings.topBar"
           expand
           position="top"
           style="z-index: 2000"
-          class="q-mt-xs"
+          class="q-pt-sm bg-grey-2"
         >
-          <q-toolbar class="text-primary bg-white">
-            <q-tabs dense shrink inline-label class="text-primary bg-white">
+          <q-toolbar class="bg-white q-pt-sm shadow-1" style="min-height: 0">
+            <q-tabs dense shrink inline-label
+                    indicator-color="transparent"
+                    active-bg-color="primary"
+                    active-color="white"
+                    v-model="currentPath">
               <div
                 v-for="(tab, index) in tabs"
                 :key="index"
-                class="row q-mr-sm bg-green-1 q-px-sm items-center"
+                class="q-mr-sm items-center "
               >
-                <q-route-tab
+                <q-tab
                   :label="tab.name"
-                  :to="tab.to"
+                  :name="tab.to"
+                  @click="routeTo(tab.to)"
+                  class="shadow-up-3"
+                  :class="{glossy: styleSettingsData.contentSettings.topBarGlossy}"
                   exact
                   style="padding: 0 8px"
                 >
-                </q-route-tab>
-                <q-icon
-                  size="18px"
-                  name="close"
-                  @click="removeTab(index)"
-                ></q-icon>
+                  <q-icon
+                    size="18px"
+                    name="close"
+                    @click.stop="removeTab(index)"
+                  ></q-icon>
+                </q-tab>
               </div>
             </q-tabs>
           </q-toolbar>
@@ -765,6 +780,7 @@ export default {
       search: '',
       gtSm: this.$q.screen.gt.sm,
       tabs: LAYOUT_DATA.accessTabs,
+      currentPath: null,
       notif2: true
     }
   },
@@ -772,13 +788,23 @@ export default {
     MenuTree
   },
   methods: {
+    buildTabRoute() {
+      this.currentPath = this.$route.path
+      LAYOUT_DATA.addTab(this.$route.path)
+    },
+    routeTo(to) {
+      this.$router.push(to).catch((err) => {
+        console.log(err)
+      })
+    },
     removeTab(index) {
       this.tabs.splice(index, 1)
-      let location = '/'
+      this.removeTabFlag = true
+      let to = '/'
       if (this.tabs.length > 0) {
-        location = this.tabs[this.tabs.length - 1].to
+        to = this.tabs[this.tabs.length - 1].to
       }
-      this.$router.push(location).catch((err) => {
+      this.$router.push(to).catch((err) => {
         console.log(err)
       })
     },
@@ -875,12 +901,19 @@ export default {
     }
   },
   watch: {
-    gtSm: function () {
+    gtSm: function() {
       this.rightHide()
+    },
+    $route: {
+      handler: function(val, oldVal) {
+        this.buildTabRoute()
+      },
+      // 深度观察监听
+      deep: true
     }
   },
   computed: {
-    view: function () {
+    view: function() {
       return (
         this.styleSettingsData.fixed.viewHead +
         ' ' +
@@ -889,32 +922,34 @@ export default {
         this.styleSettingsData.fixed.viewFoot
       )
     },
-    menuContentClass: function () {
+    menuContentClass: function() {
       if (this.$q.screen.lt.sm) {
         return 'q-mx-xs'
       }
       return ''
     },
-    informCount: function () {
+    informCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.informs)
     },
-    notifiesCount: function () {
+    notifiesCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.notifies)
     },
-    waitDealCount: function () {
+    waitDealCount: function() {
       return LAYOUT_DATA.getAvailableCount(this.waitDeals)
     },
-    totalInformCount: function () {
+    totalInformCount: function() {
       return this.informCount + this.notifiesCount + this.waitDealCount
     }
   },
-  mounted: function () {
-    LAYOUT_DATA.addTab(this.$route.path)
+  mounted: function() {
+    this.buildTabRoute()
   }
 }
 </script>
 
 <style lang="sass">
+.topBarClass
+  padding-top: 60px
 .v-enter
   opacity: 0
   transform: translate3d(0, -100px, 0)
