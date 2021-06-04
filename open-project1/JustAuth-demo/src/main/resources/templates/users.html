@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>JustAuth第三方登录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="/img/justauth@0,75x.png" width="30" height="30" alt="" loading="lazy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">用户</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron mt-2 p-4">
+        <h1 class="display-4">JustAuth</h1>
+        <p class="lead">JustAuth，如你所见，它仅仅是一个<strong>第三方授权登录</strong>的<strong>工具类库</strong>，它可以让我们脱离繁琐的第三方登录SDK，让登录变得 <strong>So easy!</strong></p>
+        <hr class="my-4">
+        <a class="btn btn-info" href="https://gitee.com/yadong.zhang/JustAuth" target="_blank" role="button">Gitee <img src="https://gitee.com/yadong.zhang/JustAuth/badge/star.svg?theme=gvp" alt="star"></a>
+        <a class="btn btn-info" href="https://github.com/zhangyd-c/JustAuth" target="_blank" role="button">Github <img src="https://img.shields.io/github/stars/zhangyd-c/JustAuth.svg?style=social" alt="github"></a>
+        <a class="btn btn-light" href="https://docs.justauth.whnb.wang" target="_blank" role="button">帮助文档</a>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col col-12">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width: 8%">编号</th>
+                    <th scope="col" style="width: 27%">UUID</th>
+                    <th scope="col" style="width: 15%">username</th>
+                    <th scope="col" style="width: 10%">来源</th>
+                    <th scope="col" style="width: 15%">accessToken</th>
+                    <th scope="col" style="width: 13%">rawUserInfo</th>
+                    <th scope="col" colspan="2" style="width: 10%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user,userStat: ${users}">
+                    <th scope="row" th:text="${userStat.index}">1</th>
+                    <td th:text="${user.uuid}" style="word-break: break-all;"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.source}"></td>
+                    <td><a href="javascript:;;" data-toggle="modal" data-target="#modal-show">查看详情</a><span th:text="${user.token.accessToken}" class="" style="display: none;"></span></td>
+                    <td><a href="javascript:;;" data-toggle="modal" data-target="#modal-show">查看详情</a><span th:text="${user.rawUserInfo}" class="rawUserInfo" style="display: none;"></span></td>
+                    <td><a href="javascript:;;" class="btn-refresh-token" th:data-uuid="${user.uuid}" th:data-source="${user.source}">refresh</a></td>
+                    <td><a href="javascript:;;" class="btn-revoke-token" th:data-uuid="${user.uuid}" th:data-source="${user.source}">revoke</a></td>
+                </tr>
+                <tr style="text-align: center" th:if="${users == null || users.size() == 0}">
+                    <td colspan="8" class="text-secondary">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="row mt-3 mb-4 justify-content-center">
+        <div class="col col-3 mr-4">
+            <div class="card" style="width: 18rem;">
+                <img src="https://gitee.com/yadong.zhang/static/raw/master/wx/wechat_account.jpg" class="card-img-top" alt="...">
+                <div class="card-body pt-2 pb-2">
+                    <p class="card-text">扫码关注公众号，优先获取最新资讯</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-3">
+            <div class="card" style="width: 18rem;">
+                <img src="/img/wechat.jpg" class="card-img-top" alt="...">
+                <div class="card-body pt-2 pb-2">
+                    <p class="card-text">扫码备注“<strong>JustAuth</strong>”，进专属开发者群</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-show" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modal-showLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-showLabel">第三方用户原始数据</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="word-break: break-all;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-live="polite" aria-atomic="true" style="position: fixed;min-height: 200px;top: 0;right: 0;">
+    <!-- Then put toasts within -->
+    <div class="toast" data-delay="30000" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/justauth@0,75x.png" style="width: 20px;" class="rounded mr-2" alt="...">
+            <strong class="mr-auto">欢迎光临！</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            JustAuth，如你所见，它仅仅是一个第三方授权登录的工具类库，它可以让我们脱离繁琐的第三方登录SDK，让登录变得 So easy!
+        </div>
+    </div>
+
+    <div class="toast" data-delay="30000" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/justauth@0,75x.png" style="width: 20px;" class="rounded mr-2" alt="...">
+            <strong class="mr-auto">须知！</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            如你已配置完成，则可以直接点击对应平台的标题进行登录认证。
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.11.1/dist/jquery.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<script>
+    $(function(){
+        $('.toast').toast('show');
+
+        $('#modal-show').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var rawUserInfo = button.parent().find('span');
+            var modal = $(this);
+            modal.find('.modal-body').html('').html(rawUserInfo.text());
+        });
+
+        $(".btn-refresh-token").click(function () {
+            var uuid = $(this).data('uuid');
+            var source = $(this).data('source');
+            $.post("/oauth/refresh/" + source + "/" + uuid, {}, function (json) {
+                alert(json.msg);
+            })
+        });
+
+        $(".btn-revoke-token").click(function () {
+            var uuid = $(this).data('uuid');
+            var source = $(this).data('source');
+            $.post("/oauth/revoke/" + source + "/" + uuid, {}, function (json) {
+                alert(json.msg);
+            })
+        })
+    })
+</script>
+</html>

@@ -78,7 +78,7 @@ public abstract class TreeRelationServiceImpl<M extends BaseStandardMapper<Entit
      *
      * @param parentNodeId
      * @param currentNodeId
-     * @return java.manager.List<com.sika.code.central.oauth.business.systemmenunoderelation.pojo.dto.DTO>
+     * @return java.manager.List<com.sika.code.central.oauth.business.systemmenunoderelation.pojo.pojo.DTO>
      * @author daiqi
      * @date 2018/12/23 22:24
      */
@@ -235,7 +235,7 @@ public abstract class TreeRelationServiceImpl<M extends BaseStandardMapper<Entit
      * </p>
      *
      * @param query
-     * @return java.manager.List<com.sika.code.central.oauth.business.systemmenunoderelation.pojo.dto.DTO>
+     * @return java.manager.List<com.sika.code.central.oauth.business.systemmenunoderelation.pojo.pojo.DTO>
      * @author daiqi
      * @date 2018/12/24 9:45
      */

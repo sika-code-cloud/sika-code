@@ -27,4 +27,8 @@ public class PropertiesConstant {
      * rabbitMq发送者前缀 --- sika.code.rabbit.sender
      */
     public static final String RABBIT_SENDER = "sika.code.rabbit.sender";
+    /**
+     * restTemplate信息 --- sika.code.rest.template
+     */
+    public static final String REST_TEMPLATE = "sika.code.rest.template";
 }

@@ -26,14 +26,7 @@ public class ClearThreadLocalFilter implements Filter , BaseDomain {
         try {
             chain.doFilter(request, response);
         } finally {
-            // 手动清理标志为true，则不清理
-            if (!ThreadLocalManager.getManualCleanFromThreadLocal()) {
-                ThreadLocalManager.removeThreadLocal();
-            }
-            // 手动清理标志为true，则不清理
-            if (!ThreadLocalManager.getManualCleanFromInheritable()) {
-                ThreadLocalManager.removeInheritable();
-            }
+            ThreadLocalManager.removeAuto();
         }
 
     }

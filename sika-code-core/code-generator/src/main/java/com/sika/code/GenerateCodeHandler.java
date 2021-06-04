@@ -272,10 +272,10 @@ public class GenerateCodeHandler {
     public void generateDTO() {
         // 自定义配置
         String templatePath = "/templates/dto.java.ftl";
-        String filePath = pathForCommon + "/" + moduleName + "/pojo/dto/";
+        String filePath = pathForCommon + "/" + moduleName + "/pojo/pojo/";
         String classBodySuffix = "DTO";
         String packageKey = "DTO";
-        String subPackage = "pojo.dto";
+        String subPackage = "pojo.pojo";
         buildFieldFlag = true;
         generateCodeCoreForCustomer(templatePath, filePath, classBodySuffix, packageKey, subPackage);
     }

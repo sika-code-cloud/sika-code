@@ -8,8 +8,9 @@
     <artifactId>sika-code-center</artifactId>
     <version>2.0.0</version>
     <modules>
-        <module>sika-code-gateway</module>
-        <module>sika-code-oauth</module>
+        <module>gateway</module>
+        <module>oauth</module>
+        <module>batch</module>
     </modules>
     <packaging>pom</packaging>
     <name>sika-code-center</name>
