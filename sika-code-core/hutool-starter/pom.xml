@@ -11,7 +11,7 @@
 
     <artifactId>hutool-starter</artifactId>
     <properties>
-        <hutool-version>4.1.21</hutool-version>
+        <hutool-version>5.7.19</hutool-version>
     </properties>
     <dependencies>
         <dependency>
