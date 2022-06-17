@@ -38,7 +38,7 @@
         <dep.commons-lang.version>2.6</dep.commons-lang.version>
         <dep.javax.servlet-api.version>3.1.0</dep.javax.servlet-api.version>
         <dep.spring-extension.version>4.1.5.RELEASE</dep.spring-extension.version>
-        <dep.fastjson.version>1.2.59</dep.fastjson.version>
+        <dep.fastjson.version>1.2.83</dep.fastjson.version>
         <dep.commons-collections.version>3.2.2</dep.commons-collections.version>
         <!-- jom依赖 -->
         <org.jdom.version>2.0.2</org.jdom.version>
