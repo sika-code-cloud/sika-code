@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" monitorInterval="30">
+    <properties>
+        <!--输出日志的格式-->
+        <!--<property name="pattern">[%d{yyyy-MM-dd HH:mm:ss:SSS}{GMT+8}][%5p][%20c][- %l - %m] %n</property>-->
+        <property name="pattern">%date{HH:mm:ss.SSS} %-5level [%thread] %logger{36} %TX{tl} - %tmsg%n</property>
+        <!--<property name="pattern">%d{HH:mm:ss.SSS} %-5level %class{36}.%M()/%L  - %msg%xEx%n</property>-->
+        <property name="filePath">./logs</property>
+        <!--<property name="filePath">C:\Users\Administrator\Desktop\log</property>-->
+    </properties>
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--控制台日志-->
+        <console name="Console" target="SYSTEM_OUT">
+            <!--输出日志的格式-->
+            <PatternLayout pattern="${pattern}"/>
+        </console>
+
+        <!--文件日志-->
+        <RollingFile name="RollingFileInfo" fileName="./logs/log4j2-async-rolling.log"
+                     filePattern="${filePath}/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="RollingFileWarn" fileName="${filePath}/warn.log"
+                     filePattern="${filePath}/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+            <!-- 该过滤器只将warn级别输入到文件-->
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="RollingFileError" fileName="${filePath}/error.log"
+                     filePattern="${filePath}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+            <!-- 该过滤器只将error级别输入到文件-->
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <!--异步日志：一 先声明同步文件-->
+        <File name="AsyncLogFile" fileName="${filePath}/log4j2-async.log" append="false">
+            <PatternLayout pattern="${pattern}"/>
+        </File>
+        <!--异步日志：二 使用Async配置异步 -->
+        <Async name="AsyncFile">
+            <AppenderRef ref="AsyncLogFile"/>
+        </Async>
+
+        <!--异步输出到控制台-->
+        <Async name="AsyncConsole">
+            <AppenderRef ref="Console"/>
+        </Async>
+
+        <!--异步输出到滚动日志-->
+        <Async name="AsyncRolling">
+            <AppenderRef ref="RollingFileInfo"/>
+        </Async>
+        <!--异步输出到滚动日志-->
+        <Async name="AsyncRollingFileWarn">
+            <AppenderRef ref="RollingFileWarn"/>
+        </Async>
+        <!--异步输出到滚动日志-->
+        <Async name="AsyncRollingFileError">
+            <AppenderRef ref="RollingFileError"/>
+        </Async>
+
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <root level="DEBUG">
+            <appender-ref ref="AsyncFile"/>
+            <appender-ref ref="AsyncConsole"/>
+            <appender-ref ref="AsyncRolling"/>
+            <appender-ref ref="AsyncRollingFileWarn"/>
+            <appender-ref ref="AsyncRollingFileError"/>
+        </root>
+        <logger name="com.meta.share.infrastructure.flow.core" level="off"/>
+        <logger name="com.meta.share.infrastructure.flow.entity.data.DataBus" level="off"/>
+    </loggers>
+</configuration>
