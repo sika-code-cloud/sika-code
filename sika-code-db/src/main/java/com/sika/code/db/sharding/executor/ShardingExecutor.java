@@ -117,6 +117,9 @@ public class ShardingExecutor {
     protected ShardingRuleConfig getShardingRuleConfig(MetaObject metaStatementHandler) {
         // 根据配置自动生成分表SQL
         ShardingRule shardingRule = getShardingRule(metaStatementHandler);
+        if (shardingRule == null) {
+            return null;
+        }
         return EnumUtil.find(shardingRule.shardingRuleConfigClass(), RULE_CONFIG_ENUM_NAME, shardingRule.ruleName());
     }
 
