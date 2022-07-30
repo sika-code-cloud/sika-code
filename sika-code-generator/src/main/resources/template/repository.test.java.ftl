@@ -6,8 +6,8 @@ import com.google.common.collect.Lists;
 import ${sikaPackage.Repository}.${sikaEntityBodyName}Repository;
 import ${sikaPackage.PO}.${sikaEntityBodyName}PO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
+import ${sikaApplicationClassName};
 import org.junit.Assert;
-import com.cat.reconciliation.platform.interfaces.CatReconciliationPlatformApplication;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
-@SpringBootTest(classes = CatReconciliationPlatformApplication.class)
+@SpringBootTest(classes = ${sikaApplicationSimpleName}.class)
 public class ${entity} extends BaseTestRepository {
     @Resource
     private ${sikaEntityBodyName}Repository ${sikaEntityBodyName?uncap_first}Repository;

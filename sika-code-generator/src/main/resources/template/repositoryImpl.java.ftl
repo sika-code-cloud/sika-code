@@ -3,7 +3,7 @@ package ${package.Entity};
 import ${sikaPackage.Entity}.${sikaEntityBodyName}PO;
 import ${sikaPackage.Mapper}.${sikaEntityBodyName}Mapper;
 import ${sikaPackage.Repository}.${sikaEntityBodyName}Repository;
-import com.cat.reconciliation.platform.infrastructure.db.repository.impl.BaseRepositoryMyBatisPlusImpl;
+import com.sika.code.db.repository.impl.BaseRepositoryMyBatisPlusImpl;
 import org.springframework.stereotype.Repository;
 import cn.hutool.core.lang.Assert;
 

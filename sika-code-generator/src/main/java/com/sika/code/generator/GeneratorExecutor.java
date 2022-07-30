@@ -379,6 +379,8 @@ public class GeneratorExecutor {
         map.put("extendPkg", extendPkg);
         map.put("sikaPrimaryType", generatorDTO.getPrimaryKeyClass().getSimpleName());
         map.put("sikaEntityBodyName", generateJavaParam.getEntityBodyName());
+        map.put("sikaApplicationClassName", generatorDTO.getApplicationClassName());
+        map.put("sikaApplicationSimpleName", generatorDTO.getApplicationSimpleName());
         return map;
     }
 

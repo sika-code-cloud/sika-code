@@ -53,6 +53,9 @@ public class GeneratorDTO {
     private Boolean generateController = true;
     private Boolean generateDomain = true;
 
+    private String applicationClassName;
+    private String applicationSimpleName;
+
     public String getTablePrefix() {
         if (tablePrefix == null) {
             return StrUtil.EMPTY;

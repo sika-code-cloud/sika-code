@@ -63,8 +63,10 @@ public class GeneratorCommander {
 
             generatorDTO.setGenerateController(clientDTO.isGenerateController());
             generatorDTO.setGenerateDomain(clientDTO.isGenerateDomain());
+            generatorDTO.setApplicationClassName(clientDTO.getApplicationClassName());
+            generatorDTO.setApplicationSimpleName(clientDTO.getApplicationSimpleName());
 
-            new com.sika.code.generator.GeneratorExecutor(generatorDTO).generator();
+            new GeneratorExecutor(generatorDTO).generator();
         }
     }
 
@@ -98,7 +100,7 @@ public class GeneratorCommander {
     }
 
     private static StringBuilder buildProjectPath(GeneratorClientDTO clientDTO, String basePackagePathPrefix, String... subModuleNames) {
-        StringBuilder stringBuilder = new StringBuilder(System.getProperty("user.dir")).append("/cat-reconciliation-platform");
+        StringBuilder stringBuilder = new StringBuilder(System.getProperty("user.dir")).append("/").append(clientDTO.getProjectPrefix());
         System.out.println("----" + stringBuilder.toString());
         if (ArrayUtil.isNotEmpty(subModuleNames)) {
             for (int i = 0; i < subModuleNames.length; ++i) {

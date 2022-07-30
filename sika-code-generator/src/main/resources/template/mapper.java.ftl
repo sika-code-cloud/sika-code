@@ -1,7 +1,7 @@
 package ${package.Entity};
 
 import ${sikaPackage.Entity}.${sikaEntityBodyName}PO;
-import com.cat.reconciliation.platform.infrastructure.db.mapper.BaseMapper;
+import com.sika.code.db.mapper.BaseMapper;
 
 /**
  * <p>

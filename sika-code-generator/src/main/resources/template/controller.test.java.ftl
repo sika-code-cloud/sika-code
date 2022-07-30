@@ -7,7 +7,7 @@ import com.sika.code.core.base.test.BaseTestController;
 import com.sika.code.core.result.Result;
 import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
-import com.cat.reconciliation.platform.interfaces.CatReconciliationPlatformApplication;
+import ${sikaApplicationClassName};
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
-@SpringBootTest(classes = CatReconciliationPlatformApplication.class)
+@SpringBootTest(classes = ${sikaApplicationSimpleName}.class)
 public class ${entity} extends BaseTestController {
 
     @Test

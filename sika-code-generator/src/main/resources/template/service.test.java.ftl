@@ -7,8 +7,8 @@ import com.google.common.collect.Lists;
 import ${sikaPackage.Service}.${sikaEntityBodyName}Service;
 import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
+import ${sikaApplicationClassName};
 import org.junit.Assert;
-import com.cat.reconciliation.platform.interfaces.CatReconciliationPlatformApplication;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
-@SpringBootTest(classes = CatReconciliationPlatformApplication.class)
+@SpringBootTest(classes = ${sikaApplicationSimpleName}.class)
 public class ${entity} extends BaseTestService {
     @Resource
     private ${sikaEntityBodyName}Service ${sikaEntityBodyName?uncap_first}Service;

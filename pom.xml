@@ -55,7 +55,6 @@
         <!-- sika版本-->
         <com.sika.code.version>3.0.0</com.sika.code.version>
         <tlog.version>1.3.6</tlog.version>
-        <log4j2.version>2.17.1</log4j2.version>
         <disruptor.version>3.4.4</disruptor.version>
         <liteflow.version>2.6.12</liteflow.version>
     </properties>
@@ -73,35 +72,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 引入log4j2依赖 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jul -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-jul</artifactId>
-            <version>${log4j2.version}</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j2.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <!--支持log4j2开启全异常-->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>

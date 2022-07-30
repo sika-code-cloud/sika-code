@@ -22,4 +22,7 @@ public class GeneratorClientDTO {
 
     private boolean generateDomain = true;
     private boolean generateController = true;
+
+    private String applicationClassName;
+    private String applicationSimpleName;
 }
