@@ -68,6 +68,11 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
         return MetaSpringUtil.getBean(tClass);
     }
 
+
+    public static <T> T getBean(String tClassName) {
+        return MetaSpringUtil.getBean(tClassName);
+    }
+
     /**
      * 校验节点类是否存在 - 此处若在多系统维度下需要调用目标机器的判定方法
      *

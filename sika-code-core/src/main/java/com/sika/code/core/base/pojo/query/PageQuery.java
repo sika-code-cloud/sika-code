@@ -10,12 +10,13 @@ import java.io.Serializable;
  * Time : 13:17
  */
 @Data
-public class PageQuery<PRIMARY extends Serializable> extends BaseQuery<PRIMARY>{
+public class PageQuery<PRIMARY extends Serializable> extends BaseQuery<PRIMARY> {
     private Integer pageNum;
     private Integer pageSize;
     private Integer start;
     private String sortColumn;
     private String sortType;
+    private PRIMARY startIndex;
 
     public PageQuery() {
         super();

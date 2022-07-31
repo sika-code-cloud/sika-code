@@ -143,17 +143,6 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-version}</version>
         </dependency>
-        <!-- 类映射工具类 -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${map-struct-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${map-struct-version}</version>
-        </dependency>
         <!-- 邮箱插件 -->
         <dependency>
             <groupId>javax.mail</groupId>

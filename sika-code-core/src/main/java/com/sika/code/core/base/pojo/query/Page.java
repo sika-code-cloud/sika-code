@@ -37,7 +37,7 @@ public class Page<T> implements Serializable {
     private int currentSize;
     private boolean isHasNextPage;
     private boolean isHasPreviousPage;
-    private List<T> list;
+    private List<T> records;
 
 
     public Page() {
@@ -64,7 +64,7 @@ public class Page<T> implements Serializable {
         } else {
             this.currentSize = list.size();
         }
-        this.list = list;
+        this.records = list;
         this.isHasPreviousPage = pageNum != 1;
         this.isHasNextPage = pageNum < pageCount;
     }
