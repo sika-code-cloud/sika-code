@@ -16,7 +16,7 @@ public class PageQuery<PRIMARY extends Serializable> extends BaseQuery<PRIMARY> 
     private Integer start;
     private String sortColumn;
     private String sortType;
-    private PRIMARY startIndex;
+    private Long startIndex;
 
     public PageQuery() {
         super();

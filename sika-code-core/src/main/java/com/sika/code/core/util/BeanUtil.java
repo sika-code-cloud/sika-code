@@ -5,8 +5,8 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.cglib.CglibUtil;
-import com.sika.code.core.base.pojo.domain.factory.MetaSpringUtil;
 import com.google.common.collect.Lists;
+import com.sika.code.core.base.pojo.domain.factory.MetaSpringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -35,21 +35,13 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
         if (source == null) {
             return null;
         }
+        if (source instanceof Map) {
+            return cn.hutool.core.bean.BeanUtil.toBean(source, targetClass);
+        }
+        if (Map.class.isAssignableFrom(targetClass)) {
+            return (TARGET) cn.hutool.core.bean.BeanUtil.beanToMap(source);
+        }
         return CglibUtil.copy(source, targetClass);
-    }
-
-    public static <T> T toBean(Map source, Class<T> beanClass) {
-        if (source == null) {
-            return null;
-        }
-        return CglibUtil.toBean(source, beanClass);
-    }
-
-    public static Map toMap(Object source) {
-        if (source == null) {
-            return null;
-        }
-        return CglibUtil.toMap(source);
     }
 
     public static <TARGET> List<TARGET> toBeans(List<?> sources, Class<TARGET> targetClass) {
@@ -69,8 +61,8 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
     }
 
 
-    public static <T> T getBean(String tClassName) {
-        return MetaSpringUtil.getBean(tClassName);
+    public static <T> T getBean(String beanName) {
+        return MetaSpringUtil.getBean(beanName);
     }
 
     /**
@@ -84,6 +76,14 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
             Class.forName(clazz);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(StrUtil.format("类名【{}】对应的类不存在，请立即核实", clazz));
+        }
+    }
+
+    public static <T> T getTClass(String className) {
+        try {
+            return (T) Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(StrUtil.format("类名【{}】对应的类不存在，请立即核实", className));
         }
     }
 }

@@ -37,7 +37,9 @@ public class BaseWriterBean {
         if (StrUtil.isBlank(writerDataBuilderClassName)) {
             this.writerDataBuilderClassName = DefaultWriterDataBuilder.class.getName();
         }
-        this.baseWriterDataBuilder = ((BaseWriterDataBuilder<Map<String, Object>>) BeanUtil.newInstance(writerDataBuilderClassName)).setBaseWriterBean(this);
+        this.baseWriterDataBuilder =
+                ((BaseWriterDataBuilder<Map<String, Object>>) BeanUtil.newInstance(writerDataBuilderClassName))
+                .setBaseWriterBean(BeanUtil.toBean(this, this.getClass()));
     }
 
     public final void build() {

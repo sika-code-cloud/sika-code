@@ -8,6 +8,7 @@ import com.sika.code.core.base.pojo.query.Page;
 import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 import java.io.Serializable;
@@ -28,8 +29,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @Data
 @Accessors(chain = true)
-public class MethodReaderSupport<PRIMARY extends Serializable> extends AbstractPagingItemReader<Map<String, Object>> {
-    private MethodReaderBean<PRIMARY> readerBean;
+@Slf4j
+public class MethodReaderSupport extends AbstractPagingItemReader<Map<String, Object>> {
+    private MethodReaderBean readerBean;
     private static final String INDEX_NAME = "id";
 
     @Override
@@ -46,7 +48,7 @@ public class MethodReaderSupport<PRIMARY extends Serializable> extends AbstractP
 
     protected Collection<? extends Map<String, Object>> getRecords() {
         Object obj = BeanUtil.getBean(readerBean.getClassName());
-        Object returnValue = ReflectUtil.invoke(obj, readerBean.getMethodName(), readerBean.getQuery());
+        Object returnValue = ReflectUtil.invoke(obj, readerBean.getMethodName(), readerBean.buildQuery());
         Collection<?> objects;
         if (returnValue instanceof List) {
             objects = BeanUtil.toBeans((List) returnValue, LinkedHashMap.class);
@@ -63,7 +65,10 @@ public class MethodReaderSupport<PRIMARY extends Serializable> extends AbstractP
         if (CharSequenceUtil.isBlank(indexName)) {
             indexName = INDEX_NAME;
         }
-        readerBean.getQuery().setStartIndex((PRIMARY) CollUtil.getLast(list).get(indexName));
+        if (CollUtil.isEmpty(list)) {
+            return;
+        }
+        readerBean.buildQuery().setStartIndex((Long) CollUtil.getLast(list).get(indexName)+1);
     }
 
     @Override

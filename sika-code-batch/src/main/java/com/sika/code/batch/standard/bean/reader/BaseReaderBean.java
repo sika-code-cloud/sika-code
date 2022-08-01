@@ -15,7 +15,6 @@ import java.util.LinkedHashSet;
  */
 @Data
 public class BaseReaderBean {
-    private Integer builderType;
     private String builderClassName;
     private LinkedHashSet<String> listenerClassNames;
 }

@@ -20,7 +20,7 @@ import java.util.Map;
  * @since 2022/6/3 18:00
  */
 @Setter
-public class StandardMethodReaderBuilder implements BaseItemReaderBuilder<Map<String, Object>> {
+public class StandardMethodItemReaderBuilder implements BaseItemReaderBuilder<Map<String, Object>> {
     @Override
     public ItemReader<Map<String, Object>> build(BatchBean batchBean) {
         ItemReaderBean<?> itemBean = batchBean.getItemReaderBean();
