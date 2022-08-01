@@ -6,7 +6,7 @@
 
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <name>sika-code</name>
     <packaging>pom</packaging>
     <description>企业级基础框架</description>
@@ -32,7 +32,7 @@
         <jm.build.jvmSize>1024m</jm.build.jvmSize>
         <jm.maven.version>3.0.5</jm.maven.version>
         <!-- sika版本-->
-        <io.github.sika-code-cloud.version>3.0.2</io.github.sika-code-cloud.version>
+        <io.github.sika-code-cloud.version>3.0.3</io.github.sika-code-cloud.version>
 
         <!--<dep.logback.version>1.0.13</dep.logback.version>-->
 
