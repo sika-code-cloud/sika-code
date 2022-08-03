@@ -4,7 +4,7 @@ import com.sika.code.batch.core.builder.BaseItemReaderBuilder;
 import com.sika.code.batch.standard.bean.common.BatchBean;
 import com.sika.code.batch.standard.bean.common.ItemReaderBean;
 import com.sika.code.batch.standard.bean.reader.MethodReaderBean;
-import com.sika.code.batch.standard.item.reader.MethodReaderSupport;
+import com.sika.code.batch.standard.item.reader.MethodReaderItemSupport;
 import lombok.Setter;
 import org.springframework.batch.item.ItemReader;
 
@@ -26,6 +26,8 @@ public class StandardMethodItemReaderBuilder implements BaseItemReaderBuilder<Ma
         ItemReaderBean<?> itemBean = batchBean.getItemReaderBean();
         MethodReaderBean readerBean = (MethodReaderBean) itemBean.buildBeanObj();
         // MethodReaderSupport是方法读取器
-        return new MethodReaderSupport().setReaderBean(readerBean);
+        MethodReaderItemSupport itemSupport = new MethodReaderItemSupport().setReaderBean(readerBean);
+        itemSupport.setPageSize(readerBean.getPageSize());
+        return itemSupport;
     }
 }

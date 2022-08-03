@@ -7,6 +7,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.fastjson.JSON;
 import com.dtflys.forest.Forest;
 import com.sika.code.batch.standard.bean.reader.RestReaderBean;
+import com.sika.code.batch.standard.util.BatchUtil;
 import com.sika.code.core.base.pojo.query.Page;
 import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
@@ -32,7 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Data
 @Accessors(chain = true)
 @Slf4j
-public class RestReaderSupport extends AbstractPagingItemReader<Map<String, Object>> {
+public class RestReaderItemSupport extends AbstractPagingItemReader<Map<String, Object>> {
     private RestReaderBean readerBean;
     private static final String INDEX_NAME = "id";
 
@@ -54,8 +55,9 @@ public class RestReaderSupport extends AbstractPagingItemReader<Map<String, Obje
                 .contentTypeJson()
                 .addBody(JSON.toJSONString(readerBean.buildQuery()))
                 .executeAsMap();
-        Collection<? extends Map<String, Object>> retData = (Collection<? extends Map<String, Object>>) retObj.get(readerBean.getDataName());
-        return retData;
+        // 校验状态码
+        BatchUtil.verifyResult(retObj, readerBean.getCodeName(), readerBean.getMsgName(), readerBean.getSuccessCodes());
+        return (Collection<? extends Map<String, Object>>) retObj.get(readerBean.getDataName());
     }
 
     protected void buildIndexValue(List<? extends Map<String, Object>> list) {

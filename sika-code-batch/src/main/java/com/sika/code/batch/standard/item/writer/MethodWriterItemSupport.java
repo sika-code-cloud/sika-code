@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
-public class MethodWriterSupport implements ItemWriter<Map<String, Object>> {
+public class MethodWriterItemSupport implements ItemWriter<Map<String, Object>> {
     private BaseWriterDataBuilder<Map<String, Object>> dataBuilder;
     private MethodWriterBean writerBean;
 

@@ -3,6 +3,7 @@ package com.sika.code.batch.standard.bean.reader;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
+import com.sika.code.batch.standard.constant.BatchConstant;
 import lombok.Data;
 
 import java.util.Map;
@@ -43,8 +44,14 @@ public class RestReaderBean extends BaseReaderBean {
         if (query == null) {
             query = Maps.newLinkedHashMap();
         }
-        query.put("pageSize", pageSize);
-        query.put("startIndex", startIndex);
+        if (startIndex == null) {
+            this.startIndex = BatchConstant.START_INDEX_INIT;
+        }
+        if (pageSize == null) {
+            this.pageSize = BatchConstant.PAGE_SIZE_INIT;
+        }
+        query.put(BatchConstant.PAGE_SIZE_KEY, pageSize);
+        query.put(BatchConstant.START_INDEX_KEY, startIndex);
         return query;
     }
 

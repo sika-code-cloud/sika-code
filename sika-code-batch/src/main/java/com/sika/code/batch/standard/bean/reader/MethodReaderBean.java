@@ -1,7 +1,7 @@
 package com.sika.code.batch.standard.bean.reader;
 
 import com.google.common.collect.Maps;
-import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.batch.standard.constant.BatchConstant;
 import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
 
@@ -31,10 +31,13 @@ public class MethodReaderBean extends BaseReaderBean {
             query = Maps.newLinkedHashMap();
         }
         if (pageSize == null) {
-            pageSize = 10;
+            pageSize = BatchConstant.PAGE_SIZE_INIT;
         }
-        query.put("pageSize", pageSize);
-        query.put("startIndex", startIndex);
+        if (startIndex == null) {
+            startIndex = BatchConstant.START_INDEX_INIT;
+        }
+        query.put(BatchConstant.PAGE_SIZE_KEY, pageSize);
+        query.put(BatchConstant.START_INDEX_KEY, startIndex);
         return BeanUtil.toBean(query, BeanUtil.getTClass(queryClassName));
     }
 

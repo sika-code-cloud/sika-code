@@ -3,10 +3,8 @@ package com.sika.code.batch.standard.builder.item.writer;
 import com.sika.code.batch.core.builder.BaseItemWriterBuilder;
 import com.sika.code.batch.standard.bean.common.BatchBean;
 import com.sika.code.batch.standard.bean.common.ItemWriterBean;
-import com.sika.code.batch.standard.bean.writer.MethodWriterBean;
 import com.sika.code.batch.standard.bean.writer.RestWriterBean;
-import com.sika.code.batch.standard.item.writer.MethodWriterSupport;
-import com.sika.code.batch.standard.item.writer.RestWriterSupport;
+import com.sika.code.batch.standard.item.writer.RestWriterItemSupport;
 import lombok.Data;
 import org.springframework.batch.item.ItemWriter;
 
@@ -29,7 +27,7 @@ public class StandardRestItemWriterBuilder implements BaseItemWriterBuilder<Map<
         ItemWriterBean<?> itemWriterBean = batchBean.getCurrentItemWriterBean();
         RestWriterBean restWriterBean = (RestWriterBean) itemWriterBean.buildBeanObj();
         // 获取标准的处理类，通过调用目标写入到数据库中
-        return new RestWriterSupport()
+        return new RestWriterItemSupport()
                 .setWriterBean(restWriterBean)
                 .setDataBuilder(restWriterBean.getBaseWriterDataBuilder());
     }

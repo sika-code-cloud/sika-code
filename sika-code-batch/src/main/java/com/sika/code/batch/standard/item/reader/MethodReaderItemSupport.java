@@ -31,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Data
 @Accessors(chain = true)
 @Slf4j
-public class MethodReaderSupport extends AbstractPagingItemReader<Map<String, Object>> {
+public class MethodReaderItemSupport extends AbstractPagingItemReader<Map<String, Object>> {
     private MethodReaderBean readerBean;
     private static final String INDEX_NAME = "id";
 
