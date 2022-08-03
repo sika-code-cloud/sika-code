@@ -1,6 +1,7 @@
 package com.sika.code.batch.standard.item.reader;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.sika.code.batch.standard.bean.reader.MethodReaderBean;
@@ -68,7 +69,7 @@ public class MethodReaderSupport extends AbstractPagingItemReader<Map<String, Ob
         if (CollUtil.isEmpty(list)) {
             return;
         }
-        readerBean.buildQuery().setStartIndex((Long) CollUtil.getLast(list).get(indexName)+1);
+        readerBean.setStartIndex(MapUtil.getLong(CollUtil.getLast(list), indexName));
     }
 
     @Override

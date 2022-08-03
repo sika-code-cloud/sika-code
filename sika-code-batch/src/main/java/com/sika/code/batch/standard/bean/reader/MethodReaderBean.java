@@ -1,5 +1,6 @@
 package com.sika.code.batch.standard.bean.reader;
 
+import com.google.common.collect.Maps;
 import com.sika.code.core.base.pojo.query.PageQuery;
 import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
@@ -16,19 +17,25 @@ import java.util.Map;
  * @since 2022/6/12 18:17
  */
 @Data
-public class MethodReaderBean<Query extends PageQuery<Long>> extends BaseReaderBean {
+public class MethodReaderBean extends BaseReaderBean {
     private String className;
     private String methodName;
     private String indexName;
+    private Long startIndex;
+    private Integer pageSize;
     private String queryClassName;
-    private Map<String, Object> queryParam;
-    private Query query;
+    private Map<String, Object> query;
 
-    public Query buildQuery() {
-        if (this.query == null) {
-            this.query = BeanUtil.toBean(queryParam, BeanUtil.getTClass(queryClassName));
+    public Object buildQuery() {
+        if (query == null) {
+            query = Maps.newLinkedHashMap();
         }
-        return this.query;
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        query.put("pageSize", pageSize);
+        query.put("startIndex", startIndex);
+        return BeanUtil.toBean(query, BeanUtil.getTClass(queryClassName));
     }
 
 }
