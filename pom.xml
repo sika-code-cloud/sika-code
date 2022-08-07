@@ -18,6 +18,7 @@
         <module>sika-code-generator</module>
         <module>sika-code-batch</module>
         <module>sika-code-db-sharding</module>
+        <module>sika-code-cache</module>
     </modules>
 
     <properties>
