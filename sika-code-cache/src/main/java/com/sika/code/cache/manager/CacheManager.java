@@ -96,9 +96,48 @@ public class CacheManager {
         return addRedisAndLocal(cacheDTO, cacheExecutor, redisCacheDTO, redisCacheExecutor, redisTemplate);
     }
 
-    private  <T> T getRedisAndAddLocal(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor, GetRedisCacheDTO<T> redisCacheDTO, RedisCacheExecutor<T> redisCacheExecutor, RedisTemplate<String, T> redisTemplate) {
+    /**
+     * <p>
+     * 获取并且添加到本地缓存
+     * </p>
+     *
+     * @param cacheDTO
+     * @param cacheExecutor
+     * @return T
+     * @author sikadai
+     * @since 2022/8/8 21:58
+     */
+    public <T> T getAndAddLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
+        T retValue = getLocalCache(cacheDTO, cacheExecutor);
+        if (retValue != null) {
+            return retValue;
+        }
+        return addLocalCache(cacheDTO, cacheExecutor);
+    }
+
+    /**
+     * <p>
+     * 获取并且添加到redis
+     * </p>
+     *
+     * @param cacheDTO
+     * @param cacheExecutor
+     * @param redisTemplate
+     * @return T
+     * @author sikadai
+     * @since 2022/8/8 21:58
+     */
+    public <T> T getAndAddRedisCache(GetRedisCacheDTO<T> cacheDTO, RedisCacheExecutor<T> cacheExecutor, RedisTemplate<String, T> redisTemplate) {
+        T retValue = getRedisCache(cacheDTO, cacheExecutor, redisTemplate);
+        if (retValue != null) {
+            return retValue;
+        }
+        return addRedisCache(cacheDTO, cacheExecutor, redisTemplate);
+    }
+
+    private <T> T getRedisAndAddLocal(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor, GetRedisCacheDTO<T> redisCacheDTO, RedisCacheExecutor<T> redisCacheExecutor, RedisTemplate<String, T> redisTemplate) {
         // 从redis中获取对象
-      T retObj = getRedisCache(redisCacheDTO, redisCacheExecutor, redisTemplate);
+        T retObj = getRedisCache(redisCacheDTO, redisCacheExecutor, redisTemplate);
         if (retObj != null) {
             // 执行本地缓存
             cacheDTO.setExecute(true);
@@ -119,14 +158,6 @@ public class CacheManager {
         return retObj;
     }
 
-    public <T> T getAndAddLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
-        T retValue = getLocalCache(cacheDTO, cacheExecutor);
-        if (retValue != null) {
-            return retValue;
-        }
-        return addLocalCache(cacheDTO, cacheExecutor);
-    }
-
     /**
      * <p>
      * 只提供内存级别的缓存
@@ -137,7 +168,7 @@ public class CacheManager {
      * @author sikadai
      * @since 2022/8/5 18:38
      */
-    public <T> T getLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
+    private <T> T getLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
         Assert.notNull(cacheDTO, "缓存的数据传输对象不能为空");
         // 构建
         cacheDTO.build();
@@ -154,7 +185,7 @@ public class CacheManager {
         return null;
     }
 
-    public <T> T addLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
+    private <T> T addLocalCache(GetLocalCacheDTO<T> cacheDTO, LocalCacheExecutor<T> cacheExecutor) {
         Cache<String, Object> cacheContainer = CACHE.get(cacheDTO.getType());
         if (cacheContainer == null) {
             cacheContainer = buildLocalCache(cacheDTO);
@@ -169,14 +200,6 @@ public class CacheManager {
         CACHE.put(cacheDTO.getType(), cacheContainer);
         // 返回本地缓存
         return object;
-    }
-
-    public <T> T getAndAddRedisCache(GetRedisCacheDTO<T> cacheDTO, RedisCacheExecutor<T> cacheExecutor, RedisTemplate<String, T> redisTemplate) {
-        T retValue = getRedisCache(cacheDTO, cacheExecutor, redisTemplate);
-        if (retValue != null) {
-            return retValue;
-        }
-        return addRedisCache(cacheDTO, cacheExecutor, redisTemplate);
     }
 
     /**
@@ -200,7 +223,7 @@ public class CacheManager {
     }
 
 
-    public <T> T addRedisCache(GetRedisCacheDTO<T> cacheDTO, RedisCacheExecutor<T> cacheExecutor, RedisTemplate<String, T> redisTemplate) {
+    private <T> T addRedisCache(GetRedisCacheDTO<T> cacheDTO, RedisCacheExecutor<T> cacheExecutor, RedisTemplate<String, T> redisTemplate) {
         // 执行方法
         Object objectForInvoke = invoke(cacheDTO, cacheDTO.getDefaultValue());
         if (objectForInvoke == null) {
@@ -231,7 +254,7 @@ public class CacheManager {
      * @param defaultValue : 默认值
      * @return : 返回目标对象
      */
-    public Object invoke(CacheDTO cacheDTO, Object defaultValue) {
+    private Object invoke(CacheDTO cacheDTO, Object defaultValue) {
         if (BooleanUtil.isTrue(cacheDTO.getExecute())) {
             return cacheDTO.getCacheResult();
         }
