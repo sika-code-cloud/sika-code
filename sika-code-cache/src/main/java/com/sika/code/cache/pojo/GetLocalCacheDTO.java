@@ -25,7 +25,7 @@ public class GetLocalCacheDTO<T> extends GetCacheDTO<T> {
     private String type;
 
     @Override
-    public void build() {
+    public void customerBuild() {
         Assert.notEmpty(type, "缓存的类型不能为空");
         if (initCacheSize == null || initCacheSize <= 0) {
             initCacheSize = CacheConstant.INIT_CACHE_SIZE_DEFAULT;

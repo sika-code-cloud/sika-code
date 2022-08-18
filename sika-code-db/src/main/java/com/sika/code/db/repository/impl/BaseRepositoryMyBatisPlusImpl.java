@@ -12,7 +12,6 @@ import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -23,7 +22,7 @@ import java.util.function.BiConsumer;
  * @author daiqi
  * @create 2021-10-19 15:21
  */
-public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> implements BaseRepositoryMybatisPlus<PO, PRIMARY,  Mapper> {
+public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> implements BaseRepositoryMybatisPlus<PO, PRIMARY, Mapper> {
     protected Log log = LogFactory.getLog(getClass());
 
     /**
@@ -61,23 +60,13 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
      * @return ignore
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public int insertBatch(List<PO> poList) {
-        boolean bool = saveBatch(poList, DEFAULT_BATCH_SIZE);
-        if (bool) {
-            return poList.size();
-        }
-        return 0;
+        return insertBatch(poList, DEFAULT_BATCH_SIZE);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public int updateBatchById(List<PO> poList) {
-        boolean bool = updateBatchById(poList, DEFAULT_BATCH_SIZE);
-        if (bool) {
-            return poList.size();
-        }
-        return 0;
+        return updateBatchById(poList, DEFAULT_BATCH_SIZE);
     }
 
     /**
@@ -88,21 +77,27 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
      * @return ignore
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean saveBatch(List<PO> poList, int batchSize) {
+    public int insertBatch(List<PO> poList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.INSERT_ONE);
-        return executeBatch(poList, batchSize, (sqlSession, po) -> sqlSession.insert(sqlStatement, po));
+        boolean result = executeBatch(poList, batchSize, (sqlSession, po) -> sqlSession.insert(sqlStatement, po));
+        if (result) {
+            return poList.size();
+        }
+        return 0;
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean updateBatchById(List<PO> poList, int batchSize) {
+    public int updateBatchById(List<PO> poList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.UPDATE_BY_ID);
-        return executeBatch(poList, batchSize, (sqlSession, po) -> {
+        boolean result = executeBatch(poList, batchSize, (sqlSession, po) -> {
             MapperMethod.ParamMap<PO> param = new MapperMethod.ParamMap<>();
             param.put(Constants.ENTITY, po);
             sqlSession.update(sqlStatement, param);
         });
+        if (result) {
+            return poList.size();
+        }
+        return 0;
     }
 
     /**

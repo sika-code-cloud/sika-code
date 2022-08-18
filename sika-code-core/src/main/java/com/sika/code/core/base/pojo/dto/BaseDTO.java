@@ -1,6 +1,7 @@
 package com.sika.code.core.base.pojo.dto;
 
 import com.sika.code.core.base.pojo.BasePoJo;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,5 +11,7 @@ import java.io.Serializable;
  * @author daiqi
  * @create 2021-10-13 23:27
  */
-public class BaseDTO<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
+@Data
+public abstract class BaseDTO<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
+    protected PRIMARY id;
 }

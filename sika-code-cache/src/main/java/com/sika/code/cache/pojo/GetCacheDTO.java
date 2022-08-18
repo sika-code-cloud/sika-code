@@ -25,10 +25,10 @@ public class GetCacheDTO<T> extends CacheDTO {
     private Long expire;
 
     @Override
-    public void build() {
+    public void customerBuild() {
         if (expire == null || expire <= 0) {
             expire = CacheConstant.EXPIRE_DEFAULT;
         }
-        super.build();
+        super.customerBuild();
     }
 }

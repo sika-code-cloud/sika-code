@@ -40,6 +40,42 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
      */
     int save(PO po);
 
+    /**
+     * <p>
+     * 传入PO进行保存|更新-根据id是否为空来判定是插入还是更新，成功返回1，否则返回
+     * </p>
+     *
+     * @param po : 需要进行保存的PO对象 为空的字段不保存
+     * @return int : 若插入失败返回0
+     * @author daiqi
+     * @date 2018/12/6 9:32
+     */
+    int insert(PO po);
+
+    /**
+     * <p>
+     * 传入PO进行保存，并且返回持久化后主键ID
+     * </p>
+     *
+     * @param po : 需要进行保存的PO对象
+     * @return PRIMARY : 返回插入后的主键
+     * @author daiqi
+     * @date 2018/12/6 9:32
+     */
+    PRIMARY insertRetId(PO po);
+
+    /**
+     * <p>
+     * 传入PO进行更新成功返回的值大于0
+     * </p>
+     *
+     * @param po : 需要进行保存的PO对象 为空的字段不保存
+     * @return int : 若插入失败返回0
+     * @author daiqi
+     * @date 2018/12/6 9:32
+     */
+    int updateById(PO po);
+
 
     /**
      * <p>
@@ -52,6 +88,8 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
      * @date 2019/6/16 13:41
      */
     int saveBatch(List<PO> pos);
+
+    int insertBatch(List<PO> pos, int batchSize);
 
     /**
      * 根据主键查询数据

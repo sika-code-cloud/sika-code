@@ -1,5 +1,6 @@
 package com.sika.code.cache.executor;
 
+import com.alibaba.fastjson.JSON;
 import com.sika.code.cache.pojo.GetRedisCacheDTO;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -28,5 +29,8 @@ public interface RedisCacheExecutor<T> {
      * @param value : 缓存的值
      * @return 缓存的值
      */
-    T doCache(GetRedisCacheDTO<T> cacheDTO, RedisTemplate redisTemplate, Object value);
+    default T doCache(GetRedisCacheDTO<T> cacheDTO, RedisTemplate redisTemplate, Object value) {
+        redisTemplate.opsForValue().set(cacheDTO.getKey(), JSON.toJSONString(value));
+        return (T) value;
+    }
 }

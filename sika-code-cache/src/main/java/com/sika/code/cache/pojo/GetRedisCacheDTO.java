@@ -22,7 +22,7 @@ public class GetRedisCacheDTO<T> extends GetCacheDTO<T> {
     private Class<T> valueClass;
 
     @Override
-    public void build() {
+    public void customerBuild() {
         super.build();
         Assert.notNull(valueClass, "缓存中的Class对象不能为空");
         if (randomExpire == null) {

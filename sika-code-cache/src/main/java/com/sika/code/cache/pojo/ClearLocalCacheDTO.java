@@ -20,8 +20,9 @@ public class ClearLocalCacheDTO extends ClearCacheDTO {
     private String type;
 
     @Override
-    public void build() {
+    protected void customerBuild() {
         Assert.notEmpty(type, "缓存的类型不能为空");
-        super.build();
+        super.customerBuild();
     }
+
 }

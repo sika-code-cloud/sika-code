@@ -1,13 +1,13 @@
 package com.sika.code.core.base.service;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.sika.code.core.base.pojo.dto.BaseDTO;
 import com.sika.code.core.base.pojo.po.BasePO;
+import com.sika.code.core.base.repository.BaseRepository;
+import com.sika.code.core.base.util.ScReflectUtil;
 import com.sika.code.core.base.pojo.query.BaseQuery;
 import com.sika.code.core.base.pojo.query.Page;
 import com.sika.code.core.base.pojo.query.PageQuery;
-import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.core.exception.BusinessException;
 import com.sika.code.core.util.BeanUtil;
 import com.google.common.collect.Lists;
@@ -34,7 +34,7 @@ public abstract class BaseServiceImpl<PRIMARY extends Serializable, PO extends B
     }
 
     private <T> Class<T> getSuperClassGenericType(int index) {
-        return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), BaseServiceImpl.class, index);
+        return (Class<T>) ScReflectUtil.getSuperClassGenericType(this.getClass(), BaseServiceImpl.class, index);
     }
 
     protected Repository currentRepository() {

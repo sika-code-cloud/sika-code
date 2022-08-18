@@ -22,11 +22,6 @@
             <version>${caffeine.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
-        </dependency>
         <!--@ConfigurationProperties注解 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

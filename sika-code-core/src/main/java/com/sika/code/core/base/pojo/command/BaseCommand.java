@@ -10,5 +10,6 @@ import java.io.Serializable;
  * @author daiqi
  * @create 2021-10-13 23:27
  */
-public class BaseCommand<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
+public abstract class BaseCommand<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
+    protected PRIMARY id;
 }

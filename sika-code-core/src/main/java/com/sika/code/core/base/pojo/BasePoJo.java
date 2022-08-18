@@ -10,10 +10,8 @@ import java.util.Date;
  * @create 2021-10-13 23:29
  */
 @Data
-public class BasePoJo<PRIMARY extends Serializable> implements Serializable {
+public abstract class BasePoJo<PRIMARY extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
-    /** 数据唯一标志 */
-    private PRIMARY id;
     /**
      * 创建日期
      */
@@ -38,4 +36,8 @@ public class BasePoJo<PRIMARY extends Serializable> implements Serializable {
      * 备注
      */
     private String remark;
+
+    public abstract PRIMARY getId() ;
+
+    public abstract void setId(PRIMARY id);
 }

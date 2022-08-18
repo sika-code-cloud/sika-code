@@ -9,6 +9,6 @@ import java.io.Serializable;
  *
  * @author daiqi
  */
-public class BaseVO<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
-
+public abstract class BaseVO<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
+    protected PRIMARY id;
 }

@@ -1,6 +1,8 @@
 package com.sika.code.cache.pojo;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.IdUtil;
 import lombok.Data;
 
 /**
@@ -44,9 +46,44 @@ public class CacheDTO {
      * 缓存结果
      */
     private Object cacheResult;
+    /**
+     * 是否开启缓存日志-默认不开启
+     */
+    private Boolean openLog;
+    /**
+     * 是否开启缓存 - 为true开启缓存-默认开启
+     */
+    private Boolean openCache;
+    /**
+     * 此次缓存的请求ID
+     */
+    private String requestId;
+    private boolean build = false;
 
-    public void build() {
+    public final void build() {
+        if (this.build) {
+            return;
+        }
+        buildData();
         verifyData();
+        customerBuild();
+        build = true;
+    }
+
+    protected void customerBuild() {
+
+    }
+
+    protected void buildData() {
+        if (this.openLog == null) {
+            this.openLog = false;
+        }
+        if (this.openCache == null) {
+            this.openCache = true;
+        }
+        if (CharSequenceUtil.isEmpty(this.requestId)) {
+            this.requestId = IdUtil.objectId();
+        }
     }
 
     protected void verifyData() {

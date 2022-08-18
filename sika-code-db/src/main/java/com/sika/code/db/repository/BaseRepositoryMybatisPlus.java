@@ -1,10 +1,10 @@
 package com.sika.code.db.repository;
 
 import cn.hutool.core.collection.CollUtil;
+import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;
 import com.sika.code.core.base.pojo.query.PageQuery;
-import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.db.mapper.BaseMapper;
 import org.assertj.core.util.Lists;
 
@@ -85,9 +85,26 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
 
     int updateBatchById(List<PO> pos);
 
-    boolean saveBatch(List<PO> poList, int batchSize);
+    int updateBatchById(List<PO> poList, int batchSize);
 
-    boolean updateBatchById(List<PO> poList, int batchSize);
+    @Override
+    default int insert(PO po) {
+        return getMapper().insert(po);
+    }
+
+    @Override
+    default PRIMARY insertRetId(PO po) {
+        int count = insert(po);
+        if (count > 0) {
+            return po.getId();
+        }
+        throw new RuntimeException("数据插入失败");
+    }
+
+    @Override
+    default int updateById(PO po) {
+        return getMapper().updateById(po);
+    }
 
     @Override
     default <QUERY extends BaseQuery<PRIMARY>> PO find(QUERY query) {

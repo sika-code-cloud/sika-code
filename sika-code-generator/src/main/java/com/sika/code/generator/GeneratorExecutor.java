@@ -127,7 +127,7 @@ public class GeneratorExecutor {
     private void generateDomain() {
         generatorRepository();
         generatorRepositoryImpl();
-        generatorConvert();
+//        generatorConvert();
 
         if (generatorDTO.getGenerateDomain()) {
             generateFactory();
