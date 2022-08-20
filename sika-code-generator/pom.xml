@@ -5,7 +5,7 @@
     <parent>
         <artifactId>sika-code</artifactId>
         <groupId>io.github.sika-code-cloud</groupId>
-        <version>3.0.8</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-core</artifactId>
-            <version>${io.github.sika-code-cloud.version}</version>
+            <version>${revision}</version>
         </dependency>
 
     </dependencies>

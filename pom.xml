@@ -6,7 +6,7 @@
 
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>3.0.8</version>
+    <version>${revision}</version>
     <name>sika-code</name>
     <packaging>pom</packaging>
     <description>企业级基础框架</description>
@@ -33,7 +33,7 @@
         <jm.build.jvmSize>1024m</jm.build.jvmSize>
         <jm.maven.version>3.0.7</jm.maven.version>
         <!-- sika版本-->
-        <io.github.sika-code-cloud.version>3.0.8</io.github.sika-code-cloud.version>
+        <revision>3.0.9</revision>
 
         <!--<dep.logback.version>1.0.13</dep.logback.version>-->
         <slf4j.version>1.7.32</slf4j.version>
@@ -185,6 +185,32 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                <!-- 自动替换${reversion}插件 -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                        <version>1.2.7</version>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>flatten</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>flatten</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>flatten.clean</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>clean</goal>
                                 </goals>
                             </execution>
                         </executions>
