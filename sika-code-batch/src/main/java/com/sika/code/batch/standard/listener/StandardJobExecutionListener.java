@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * <p>
@@ -22,6 +23,7 @@ import java.util.Date;
 @Slf4j
 public class StandardJobExecutionListener implements BaseJobExecutionListener {
     static final String BLANK = "\n\r";
+
     @Override
     public void beforeJob(JobExecution jobExecution) {
         log.info(BLANK);
@@ -33,10 +35,11 @@ public class StandardJobExecutionListener implements BaseJobExecutionListener {
 
     @Override
     public void afterJob(JobExecution jobExecution) {
-        log.info("任务id=【{}】执行完成，实例参数【{}】，JOB参数【{}】,  执行状态【{}】，结束于：【{}】，所用时间为：{}ms",
-                jobExecution.getJobId(), JSON.toJSONString(jobExecution.getJobInstance()),
+        log.info("任务id=【{}】执行完成，JOB参数【{}】,  执行状态【{}】，结束于：【{}】，所用时间为：{}ms，实例参数【{}】",
+                jobExecution.getJobId(),
                 JSON.toJSONString(jobExecution.getJobParameters()), jobExecution.getStatus(),
-                DateUtil.formatDateTime(new Date()), (System.currentTimeMillis() - jobExecution.getStartTime().getTime()));
+                DateUtil.formatDateTime(new Date()), (System.currentTimeMillis() - Objects.requireNonNull(jobExecution.getStartTime()).getTime()),
+                JSON.toJSONString(jobExecution.getJobInstance()));
         clearRepositoryData(jobExecution);
         log.info(BLANK);
     }

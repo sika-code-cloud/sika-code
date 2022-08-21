@@ -23,17 +23,19 @@ public class StandardStepExecutionListener implements BaseStepExecutionListener 
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        log.info("步骤id=【{}】开始执行，实例对象【{}】，JOB参数【{}】, 开始时间：{}",
+        log.info("步骤id=【{}】开始执行，实例对象【{}】, 开始时间：{}，JOB参数【{}】",
                 stepExecution.getId(), JSON.toJSONString(stepExecution.getJobExecution().getJobInstance()),
-                JSON.toJSONString(stepExecution.getJobParameters()), DateUtil.formatDateTime(stepExecution.getStartTime()));
+                DateUtil.formatDateTime(stepExecution.getStartTime()), JSON.toJSONString(stepExecution.getJobParameters()));
     }
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
-        log.info("步骤id=【{}】执行完成，实例参数【{}】，JOB参数【{}】, 执行状态【{}】，结束于：【{}】，所用时间为：{}ms",
-                stepExecution.getId(), JSON.toJSONString(stepExecution.getJobExecution().getJobInstance()),
-                JSON.toJSONString(stepExecution.getJobParameters()), stepExecution.getStatus(),
-                DateUtil.formatDateTime(new Date()), (System.currentTimeMillis()- stepExecution.getStartTime().getTime()));
+        log.info("步骤id=【{}】执行完成， 读取的条数【{}】，写入的条数【{}】，执行状态【{}】，结束于：【{}】，所用时间为：{}ms，JOB参数【{}】,实例参数【{}】，步骤详情参数：【{}】",
+                stepExecution.getId(), stepExecution.getReadCount(), stepExecution.getWriteCount(), stepExecution.getStatus(),
+                DateUtil.formatDateTime(new Date()), (System.currentTimeMillis() - stepExecution.getStartTime().getTime()),
+                JSON.toJSONString(stepExecution.getJobParameters()),
+                JSON.toJSONString(stepExecution.getJobExecution().getJobInstance()),
+                JSON.toJSONString(stepExecution));
         return null;
     }
 }

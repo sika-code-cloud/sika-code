@@ -4,6 +4,7 @@ import com.sika.code.batch.core.listener.BaseItemReadListener;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 @Slf4j
@@ -15,7 +16,6 @@ public class StandardStepReadListener implements BaseItemReadListener<Map<String
 
     @Override
     public void afterRead(Map<String, Object> t) {
-//        log.info("执行读后------");
     }
 
     @Override
