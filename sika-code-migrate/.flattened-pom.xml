@@ -8,7 +8,7 @@
     <version>3.1.0</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
-  <artifactId>sika-code-generator</artifactId>
+  <artifactId>sika-code-migrate</artifactId>
   <version>3.1.0</version>
   <licenses>
     <license>
@@ -16,28 +16,27 @@
       <url>http://www.opensource.org/licenses/mit-license.php</url>
     </license>
   </licenses>
-  <properties>
-    <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
-  </properties>
   <dependencies>
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-generator</artifactId>
-      <version>${mybatis-plus-generator.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.velocity</groupId>
-      <artifactId>velocity</artifactId>
-      <version>1.7</version>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-    </dependency>
     <dependency>
       <groupId>io.github.sika-code-cloud</groupId>
       <artifactId>sika-code-core</artifactId>
       <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dtflys.forest</groupId>
+      <artifactId>forest-spring-boot-starter</artifactId>
+      <version>${forest.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.yomahub</groupId>
+      <artifactId>liteflow-spring-boot-starter</artifactId>
+      <version>${liteflow.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>hutool-core</artifactId>
+          <groupId>cn.hutool</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 </project>

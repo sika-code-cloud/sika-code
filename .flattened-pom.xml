@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code</artifactId>
-  <version>3.0.9</version>
+  <version>3.1.0</version>
   <packaging>pom</packaging>
   <name>sika-code</name>
   <description>企业级基础框架</description>
@@ -29,6 +29,7 @@
     <module>sika-code-batch</module>
     <module>sika-code-db-sharding</module>
     <module>sika-code-cache</module>
+    <module>sika-code-migrate</module>
   </modules>
   <scm>
     <connection>https://github.com/sika-code-cloud/sika-code.git</connection>
@@ -47,7 +48,7 @@
     <tlog.version>1.3.6</tlog.version>
     <cglib.version>3.3.0</cglib.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <revision>3.0.9</revision>
+    <revision>3.1.0</revision>
     <fastjson.version>1.2.78</fastjson.version>
     <maven.compiler.source>8</maven.compiler.source>
     <jm.maven.version>3.0.7</jm.maven.version>
@@ -62,7 +63,9 @@
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <maven.compiler.target>8</maven.compiler.target>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <forest.version>1.5.25</forest.version>
     <spring-extension.version>4.1.5.RELEASE</spring-extension.version>
+    <liteflow.version>2.8.4</liteflow.version>
   </properties>
   <dependencyManagement>
     <dependencies>

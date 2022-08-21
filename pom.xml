@@ -19,6 +19,7 @@
         <module>sika-code-batch</module>
         <module>sika-code-db-sharding</module>
         <module>sika-code-cache</module>
+        <module>sika-code-migrate</module>
     </modules>
 
     <properties>
@@ -33,7 +34,7 @@
         <jm.build.jvmSize>1024m</jm.build.jvmSize>
         <jm.maven.version>3.0.7</jm.maven.version>
         <!-- sika版本-->
-        <revision>3.0.9</revision>
+        <revision>3.1.0</revision>
 
         <!--<dep.logback.version>1.0.13</dep.logback.version>-->
         <slf4j.version>1.7.32</slf4j.version>
@@ -52,6 +53,8 @@
         <cglib.version>3.3.0</cglib.version>
         <disruptor.version>3.4.4</disruptor.version>
         <caffeine.version>2.8.0</caffeine.version>
+        <forest.version>1.5.25</forest.version>
+        <liteflow.version>2.8.4</liteflow.version>
 
         <!-- spring-boot依赖版本号 -->
         <spring-boot-dependencies.version>2.7.0</spring-boot-dependencies.version>

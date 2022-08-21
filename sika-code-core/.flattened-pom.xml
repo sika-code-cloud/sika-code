@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>3.0.9</version>
+    <version>3.1.0</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code-core</artifactId>
-  <version>3.0.9</version>
+  <version>3.1.0</version>
   <licenses>
     <license>
       <name>MIT License</name>
