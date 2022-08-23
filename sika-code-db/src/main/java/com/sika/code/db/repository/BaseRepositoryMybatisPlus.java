@@ -83,9 +83,6 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
 
     int insertBatch(List<PO> pos);
 
-    int updateBatchById(List<PO> pos);
-
-    int updateBatchById(List<PO> poList, int batchSize);
 
     @Override
     default int insert(PO po) {

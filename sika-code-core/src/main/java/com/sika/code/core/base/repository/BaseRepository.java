@@ -171,4 +171,8 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
      * @date 2018/12/6 11:51
      */
     <Query extends BaseQuery<PRIMARY>> int count(Query query);
+
+    int updateBatchById(List<PO> pos);
+
+    int updateBatchById(List<PO> poList, int batchSize);
 }
