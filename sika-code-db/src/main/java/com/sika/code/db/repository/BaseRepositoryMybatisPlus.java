@@ -1,6 +1,7 @@
 package com.sika.code.db.repository;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;

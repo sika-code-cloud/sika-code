@@ -1,6 +1,8 @@
 package com.sika.code.db.mapper;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;
 import org.apache.ibatis.annotations.Param;
@@ -100,6 +102,10 @@ public interface BaseMapper<T extends BasePO<PRIMARY>, PRIMARY extends Serializa
      * @date 2018/12/6 11:51
      */
     <Query extends BaseQuery<PRIMARY>> int count(@Param(value = "query") Query query);
-
+    /**
+     * 自定义批量更新，条件为主键
+     * 如果要自动填充，@Param(xx) xx参数名必须是 list/collection/array 3个的其中之一
+     */
+    <Query extends BaseQuery<PRIMARY>> int updateBatchCaseWhen(@Param("list") List<T> list, @Param(Constants.WRAPPER) Wrapper<Query> updateWrapper);
 
 }

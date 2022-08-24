@@ -6,6 +6,7 @@ import com.sika.code.core.base.pojo.query.PageQuery;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * 基础存储接口
@@ -175,4 +176,30 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
     int updateBatchById(List<PO> pos);
 
     int updateBatchById(List<PO> poList, int batchSize);
+    /**
+     * <p>
+     * 批量更新-通过case-when
+     * </p>
+     *
+     * @param poList
+     * @param query
+     * @return
+     * @author sikadai
+     * @since 2022/8/24 22:48
+     */
+    <Query extends BaseQuery<PRIMARY>> int updateBatch(List<PO> poList, Query query);
+
+    /**
+     * <p>
+     * 批量更新-通过case-when
+     * </p>
+     *
+     * @param poList
+     * @param query
+     * @param batchSize
+     * @return
+     * @author sikadai
+     * @since 2022/8/24 22:48
+     */
+    <Query extends BaseQuery<PRIMARY>> int updateBatch(List<PO> poList, Query query, int batchSize);
 }
