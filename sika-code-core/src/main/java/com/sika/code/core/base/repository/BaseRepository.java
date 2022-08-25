@@ -176,6 +176,7 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
     int updateBatchById(List<PO> pos);
 
     int updateBatchById(List<PO> poList, int batchSize);
+
     /**
      * <p>
      * 批量更新-通过case-when
@@ -202,4 +203,5 @@ public interface BaseRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Seri
      * @since 2022/8/24 22:48
      */
     <Query extends BaseQuery<PRIMARY>> int updateBatch(List<PO> poList, Query query, int batchSize);
+
 }

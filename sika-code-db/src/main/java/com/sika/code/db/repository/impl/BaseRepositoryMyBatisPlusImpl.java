@@ -34,7 +34,6 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
      * 默认批次提交数量
      */
     protected final int DEFAULT_BATCH_SIZE = 1000;
-    protected final int DEFAULT_MIN_BATCH_SIZE = 10;
     /**
      * 只需要动态获取一次即可
      */
@@ -85,38 +84,10 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
         if (CollUtil.isEmpty(pos)) {
             return 0;
         }
-        int count = 0;
-        if (pos.size() < minBatchSize()) {
-            for (PO po : pos) {
-                UpdateWrapper updateWrapper = new UpdateWrapper<>();
-                updateWrapper.eq("id", po.getId());
-                buildUpdateWrapper(updateWrapper, query);
-                count += getMapper().update(po, updateWrapper);
-            }
-        } else {
-            count += updateBatchCaseWhen(pos, query, batchSize);
-        }
-        return count;
-    }
-
-    protected int minBatchSize() {
-        return DEFAULT_MIN_BATCH_SIZE;
-    }
-
-    protected <Query extends BaseQuery<PRIMARY>> int updateBatchCaseWhen(List<PO> pos, Query query, int batchSize) {
-        int count = 0;
-        List<List<PO>> waitUpdatePos = Lists.partition(pos, batchSize);
-        for (List<PO> updatePos : waitUpdatePos) {
-            List<PRIMARY> primaries = updatePos.stream().map(PO::getId).collect(Collectors.toList());
-            if (CollUtil.isEmpty(primaries)) {
-                continue;
-            }
-            UpdateWrapper<Query> queryUpdateWrapper = new UpdateWrapper<>();
-            queryUpdateWrapper.in("id", primaries);
-            buildUpdateWrapper(queryUpdateWrapper, query);
-            count += getMapper().updateBatchCaseWhen(updatePos, queryUpdateWrapper);
-        }
-        return count;
+        UpdateWrapper<Query> updateWrapper = new UpdateWrapper<>();
+        // 批量更新
+        buildUpdateWrapper(updateWrapper, query);
+        return updateBatch(pos, updateWrapper, batchSize);
     }
 
     protected <Query extends BaseQuery<PRIMARY>> void buildUpdateWrapper(UpdateWrapper<Query> updateWrapper, Query query) {

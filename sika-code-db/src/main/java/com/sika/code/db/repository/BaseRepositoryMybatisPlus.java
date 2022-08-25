@@ -2,6 +2,7 @@ package com.sika.code.db.repository;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;
@@ -12,6 +13,7 @@ import org.assertj.core.util.Lists;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * mybatis基础持久化接口
@@ -20,8 +22,7 @@ import java.util.List;
  * @create 2021-10-15 22:39
  */
 public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> extends BaseRepository<PO, PRIMARY> {
-
-
+    String ID_KEY = "id";
     Mapper getMapper();
 
     @Override
@@ -102,6 +103,37 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
     @Override
     default int updateById(PO po) {
         return getMapper().updateById(po);
+    }
+
+
+    /**
+     * <p>
+     * 根据条件批量删除数据
+     * </p>
+     *
+     * @return int
+     * @author sikadai
+     * @since 2022/8/25 22:54
+     */
+    default int logicDelete(Wrapper wrapper) {
+        return getMapper().logicDelete(wrapper);
+    }
+
+    default int updateBatch(List<PO> pos, UpdateWrapper wrapper, int batchSize) {
+        int count = 0;
+        List<List<PO>> waitUpdatePos = com.google.common.collect.Lists.partition(pos, batchSize);
+        for (List<PO> updatePos : waitUpdatePos) {
+            List<PRIMARY> primaries = updatePos.stream().map(PO::getId).collect(Collectors.toList());
+            if (CollUtil.isEmpty(primaries)) {
+                continue;
+            }
+            if (wrapper == null) {
+                wrapper = new UpdateWrapper<>();
+            }
+            wrapper.in(ID_KEY, primaries);
+            count += getMapper().updateBatchCaseWhen(updatePos, wrapper);
+        }
+        return count;
     }
 
     @Override
