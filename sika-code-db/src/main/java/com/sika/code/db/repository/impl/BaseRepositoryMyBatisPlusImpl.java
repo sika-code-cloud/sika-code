@@ -16,6 +16,7 @@ import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -84,10 +85,15 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
         if (CollUtil.isEmpty(pos)) {
             return 0;
         }
-        UpdateWrapper<Query> updateWrapper = new UpdateWrapper<>();
-        // 批量更新
-        buildUpdateWrapper(updateWrapper, query);
-        return updateBatch(pos, updateWrapper, batchSize);
+        List<List<PO>> waitPos = Lists.partition(pos, batchSize);
+        int count = 0;
+        for (List<PO> updatePos : waitPos) {
+            UpdateWrapper<Query> updateWrapper = new UpdateWrapper<>();
+            // 批量更新
+            buildUpdateWrapper(updateWrapper, query);
+            count += updateBatch(updatePos, updateWrapper);
+        }
+        return count;
     }
 
     protected <Query extends BaseQuery<PRIMARY>> void buildUpdateWrapper(UpdateWrapper<Query> updateWrapper, Query query) {
