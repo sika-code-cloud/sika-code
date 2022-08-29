@@ -122,14 +122,6 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
     }
 
     default int updateBatch(List<PO> updatePos, UpdateWrapper wrapper) {
-        List<PRIMARY> primaries = updatePos.stream().map(PO::getId).collect(Collectors.toList());
-        if (CollUtil.isEmpty(primaries)) {
-            return 0;
-        }
-        if (wrapper == null) {
-            wrapper = new UpdateWrapper<>();
-        }
-        wrapper.in(ID_KEY, primaries);
         for (PO po : updatePos) {
             if (po.getUpdateDate() == null) {
                 po.setUpdateDate(new Date());

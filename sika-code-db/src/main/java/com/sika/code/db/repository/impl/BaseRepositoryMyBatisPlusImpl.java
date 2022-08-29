@@ -88,7 +88,12 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
         List<List<PO>> waitPos = Lists.partition(pos, batchSize);
         int count = 0;
         for (List<PO> updatePos : waitPos) {
+            List<PRIMARY> primaries = updatePos.stream().map(PO::getId).distinct().collect(Collectors.toList());
+            if (CollUtil.isEmpty(primaries)) {
+              continue;
+            }
             UpdateWrapper<Query> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.in(ID_KEY, primaries);
             // 批量更新
             buildUpdateWrapper(updateWrapper, query);
             count += updateBatch(updatePos, updateWrapper);
