@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,6 +41,7 @@ public class BatchBean {
     // 跳过的异常和无须跳过的异常
     private String skipExceptionClassName;
     private String noSkipExceptionClassName;
+    private Map<String, Object> contextMap;
 
     public LinkedHashMap<String, String> readerProcessorMapper() {
         if (StandProcessorBean.class.equals(itemProcessorBean.getBeanClass())) {
