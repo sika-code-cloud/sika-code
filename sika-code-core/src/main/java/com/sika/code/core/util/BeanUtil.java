@@ -71,7 +71,14 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
 
     public static <T> T getBean(String beanName) {
-        return MetaSpringUtil.getBean(beanName);
+        T instance;
+        try {
+            Class<T> instanceClass = (Class<T>) Class.forName(beanName);
+            instance = getBean(instanceClass);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("从容器中获取执行器对象失败", e);
+        }
+        return instance;
     }
 
     /**

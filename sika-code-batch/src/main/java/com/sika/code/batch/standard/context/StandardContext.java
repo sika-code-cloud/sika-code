@@ -2,6 +2,7 @@ package com.sika.code.batch.standard.context;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Lists;
+import com.sika.code.batch.standard.listener.StandardStepWriteListener;
 import com.sika.code.core.util.BeanUtil;
 import com.sika.code.batch.core.context.BaseBatchContext;
 import com.sika.code.batch.core.factory.BatchFactory;
@@ -143,7 +144,9 @@ public class StandardContext extends BaseBatchContext {
     public void buildStepExecutionListeners() {
         if (stepExecutionListeners == null) {
             stepExecutionListeners = Lists.newArrayList();
-            stepExecutionListeners.add(new StandardStepExecutionListener());
+            StandardStepExecutionListener standardStepExecutionListener = new StandardStepExecutionListener();
+            standardStepExecutionListener.setContextMap(batchBean.getContextMap());
+            stepExecutionListeners.add(standardStepExecutionListener);
         }
         if (CollUtil.isEmpty(batchBean.getStepExecutionListenerClassNames())) {
             return;
@@ -198,7 +201,11 @@ public class StandardContext extends BaseBatchContext {
                 continue;
             }
             for (String writerListenerClassName : writerBean.getListenerClassNames()) {
-                itemWriteListeners.add(BeanUtil.newInstance(writerListenerClassName));
+                ItemWriteListener itemWriteListener = BeanUtil.newInstance(writerListenerClassName);
+                if (itemWriteListener instanceof StandardStepWriteListener) {
+                    ((StandardStepWriteListener) itemWriteListener).setContextMap(batchBean.getContextMap());
+                }
+                itemWriteListeners.add(itemWriteListener);
             }
         }
     }
