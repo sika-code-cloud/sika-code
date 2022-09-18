@@ -1,0 +1,1 @@
+create database temp_db_{} DEFAULT CHARACTER SET utf8mb4;
