@@ -13,6 +13,7 @@ import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 import java.util.Collection;
@@ -40,7 +41,7 @@ public class RestReaderItemSupport extends AbstractPagingItemReader<Map<String, 
     @Override
     protected void doReadPage() {
         if (results == null) {
-            results = new CopyOnWriteArrayList<>();
+            results = Lists.newArrayList();
         } else {
             results.clear();
         }

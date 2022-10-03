@@ -22,7 +22,6 @@ public class MethodReaderBean extends BaseReaderBean {
     private String methodName;
     private String indexName;
     private Long startIndex;
-    private Integer pageSize;
     private String queryClassName;
     private Map<String, Object> query;
 

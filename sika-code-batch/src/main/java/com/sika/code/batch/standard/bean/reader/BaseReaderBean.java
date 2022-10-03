@@ -1,5 +1,6 @@
 package com.sika.code.batch.standard.bean.reader;
 
+import com.sika.code.batch.standard.constant.BatchConstant;
 import lombok.Data;
 
 import java.util.LinkedHashSet;
@@ -17,4 +18,5 @@ import java.util.LinkedHashSet;
 public class BaseReaderBean {
     private String builderClassName;
     private LinkedHashSet<String> listenerClassNames;
+    protected Integer pageSize = BatchConstant.PAGE_SIZE_INIT;
 }

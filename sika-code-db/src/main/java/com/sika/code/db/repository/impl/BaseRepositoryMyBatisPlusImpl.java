@@ -2,12 +2,15 @@ package com.sika.code.db.repository.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.google.common.collect.Lists;
+import com.sika.code.core.base.constant.BaseConstant;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;
 import com.sika.code.db.mapper.BaseMapper;
@@ -16,7 +19,7 @@ import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -31,6 +34,9 @@ import java.util.stream.Collectors;
 public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> implements BaseRepositoryMybatisPlus<PO, PRIMARY, Mapper> {
     protected Log log = LogFactory.getLog(getClass());
 
+    protected static final String SET_VERSION_SQL = "version = version + 1";
+    protected static final String LOGIC_DELETED_SQL = "is_deleted = 1";
+    protected static final String IS_DELETED_KEY = "is_deleted";
     /**
      * 默认批次提交数量
      */
@@ -90,7 +96,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
         for (List<PO> updatePos : waitPos) {
             List<PRIMARY> primaries = updatePos.stream().map(PO::getId).distinct().collect(Collectors.toList());
             if (CollUtil.isEmpty(primaries)) {
-              continue;
+                continue;
             }
             UpdateWrapper<Query> updateWrapper = new UpdateWrapper<>();
             updateWrapper.in(ID_KEY, primaries);
@@ -173,6 +179,73 @@ public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, 
      */
     protected <E> boolean executeBatch(Collection<E> list, BiConsumer<SqlSession, E> consumer) {
         return executeBatch(list, DEFAULT_BATCH_SIZE, consumer);
+    }
+
+    @Override
+    public int update(Wrapper<PO> updateWrapper) {
+        buildIsDeletedNo(updateWrapper);
+        buildUpdateVersion(updateWrapper);
+        return getMapper().update(null, updateWrapper);
+    }
+
+    protected void buildUpdateVersion(Wrapper<PO> updateWrapper) {
+        if (updateWrapper instanceof UpdateWrapper) {
+            ((UpdateWrapper<PO>) updateWrapper).setSql(SET_VERSION_SQL);
+        } else if (updateWrapper instanceof LambdaUpdateWrapper) {
+            ((LambdaUpdateWrapper<PO>) updateWrapper).setSql(SET_VERSION_SQL);
+        }
+    }
+
+    @Override
+    public int update(PO po, Wrapper<PO> updateWrapper) {
+        buildIsDeletedNo(updateWrapper);
+        buildUpdateVersion(updateWrapper);
+        return getMapper().update(po, updateWrapper);
+    }
+
+    protected void buildIsDeletedNo(Wrapper<PO> updateWrapper) {
+        if (updateWrapper == null) {
+            return;
+        }
+        if (updateWrapper instanceof UpdateWrapper) {
+            ((UpdateWrapper<PO>) updateWrapper).eq(IS_DELETED_KEY, BaseConstant.IsDeletedEnum.NO.getType());
+        } else if (updateWrapper instanceof LambdaUpdateWrapper) {
+            ((LambdaUpdateWrapper<PO>) updateWrapper).eq(BasePO::getIsDeleted, BaseConstant.IsDeletedEnum.NO.getType());
+        }
+    }
+
+    /**
+     * <p>
+     * 批量插入-若唯一索引冲突-则忽略
+     * </p >
+     *
+     * @param pos
+     * @return int
+     * @author sikadai
+     * @since 2022/9/1 19:55
+     */
+    @Override
+    public int insertBatchAndDupIgnore(List<PO> pos) {
+        if (CollUtil.isEmpty(pos)) {
+            return 0;
+        }
+        int count = 0;
+        List<List<PO>> waitLists = Lists.partition(pos, DEFAULT_BATCH_SIZE);
+        for (List<PO> poList : waitLists) {
+            try {
+                count += insertBatch(poList);
+            } catch (DuplicateKeyException e) {
+                // 此处执行单条插入
+                for (PO po : poList) {
+                    try {
+                        count += insert(po);
+                    } catch (DuplicateKeyException de) {
+                        // 此处唯一索引则无需处理
+                    }
+                }
+            }
+        }
+        return count;
     }
 
     @Override

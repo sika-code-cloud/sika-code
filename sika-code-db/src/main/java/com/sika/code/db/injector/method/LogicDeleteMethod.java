@@ -15,7 +15,7 @@ import static com.baomidou.mybatisplus.core.enums.SqlMethod.LOGIC_DELETE;
 public class LogicDeleteMethod extends AbstractMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        String set = "SET data_version = " + tableInfo.getKeyColumn() + ", is_deleted = 1";
+        String set = "SET data_version = " + tableInfo.getKeyColumn() + ", is_deleted = 1, version = version + 1";
         String sql = String.format(LOGIC_DELETE.getSql(), tableInfo.getTableName(), set,
                 sqlWhereEntityWrapper(true, tableInfo),
                 sqlComment());
