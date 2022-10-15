@@ -10,6 +10,7 @@ import com.sika.code.core.util.BeanUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 import java.io.Serializable;
@@ -32,13 +33,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Accessors(chain = true)
 @Slf4j
 public class MethodReaderItemSupport extends AbstractPagingItemReader<Map<String, Object>> {
-    private MethodReaderBean readerBean;
+    protected MethodReaderBean readerBean;
     private static final String INDEX_NAME = "id";
 
     @Override
     protected void doReadPage() {
         if (results == null) {
-            results = new CopyOnWriteArrayList<>();
+            results = Lists.newArrayList();
         } else {
             results.clear();
         }

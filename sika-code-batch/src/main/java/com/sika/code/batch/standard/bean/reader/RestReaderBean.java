@@ -24,7 +24,6 @@ public class RestReaderBean extends BaseReaderBean {
     private String path;
     private String requestType;
     private String indexName;
-    private Integer pageSize;
     private Long startIndex;
     private Map<String, Object> query;
     private String fullUrl;

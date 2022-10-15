@@ -25,6 +25,4 @@ public class JdbcReaderBean extends BaseReaderBean {
     private LinkedHashMap<String, String> sortKeyType;
     // 结果集的映射
     private LinkedHashMap<String, String> resultSetKey;
-    // 每次分页读取的数量
-    private Integer pageSize = 1000;
 }

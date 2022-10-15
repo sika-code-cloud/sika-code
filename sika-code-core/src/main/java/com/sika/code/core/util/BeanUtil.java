@@ -4,9 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.cglib.CglibUtil;
 import com.google.common.collect.Lists;
 import com.sika.code.core.base.pojo.domain.factory.MetaSpringUtil;
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,13 @@ import java.util.Map;
  * 对象转化者工具类
  */
 public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
+    private static final MapperFacade mapperFacade;
+    private static final MapperFactory mapperFactory;
+
+    static {
+        mapperFactory = new DefaultMapperFactory.Builder().build();
+        mapperFacade = mapperFactory.getMapperFacade();
+    }
 
     public static <INSTANCE> INSTANCE newInstance(String className) {
         Assert.notNull(className, "className不能为空");
@@ -41,7 +50,7 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
         if (Map.class.isAssignableFrom(targetClass)) {
             return (TARGET) cn.hutool.core.bean.BeanUtil.beanToMap(source);
         }
-        return CglibUtil.copy(source, targetClass);
+        return mapperFacade.map(source, targetClass);
     }
 
     public static <TARGET> List<TARGET> toBeans(List<?> sources, Class<TARGET> targetClass) {
@@ -62,7 +71,14 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
 
     public static <T> T getBean(String beanName) {
-        return MetaSpringUtil.getBean(beanName);
+        T instance;
+        try {
+            Class<T> instanceClass = (Class<T>) Class.forName(beanName);
+            instance = getBean(instanceClass);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("从容器中获取执行器对象失败", e);
+        }
+        return instance;
     }
 
     /**

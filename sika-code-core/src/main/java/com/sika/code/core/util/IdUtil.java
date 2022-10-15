@@ -1,23 +1,21 @@
 package com.sika.code.core.util;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.SimpleCache;
-import cn.hutool.core.lang.Singleton;
 import cn.hutool.core.lang.Snowflake;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * <pre>
- *  唯一键Id工具类
- * </pre>
+ * <p>
+ *  拓展hutool的工具类
+ * </p>
  *
- * @author sikadai
+ * @author by sikadai
  * @version 1.0
- * @since 2022/9/4 20:57
+ * @since 2022/9/10 10:24
  */
 public class IdUtil extends cn.hutool.core.util.IdUtil {
+
     private static final SimpleCache<Class<?>, Snowflake> POOL = new SimpleCache<>(new HashMap<>());
 
     /**
@@ -31,7 +29,9 @@ public class IdUtil extends cn.hutool.core.util.IdUtil {
      * @since 2022/9/4 20:59
      */
     public static Snowflake getSnowflake(Class<?> tClazz) {
-        Assert.notNull(tClazz, "class对象不能为空");
+        if (tClazz == null) {
+            return getSnowflake();
+        }
         Snowflake snowflakeFromCache = POOL.get(tClazz);
         if (snowflakeFromCache != null) {
             return snowflakeFromCache;

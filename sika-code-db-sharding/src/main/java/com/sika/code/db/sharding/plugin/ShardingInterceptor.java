@@ -36,7 +36,9 @@ public class ShardingInterceptor implements Interceptor {
             // 传递给下一个拦截器处理
             return invocation.proceed();
         } finally {
-            ShardingContext.remove();
+            if (ShardingContext.isAutoClearFlag()) {
+                ShardingContext.remove();
+            }
         }
     }
 

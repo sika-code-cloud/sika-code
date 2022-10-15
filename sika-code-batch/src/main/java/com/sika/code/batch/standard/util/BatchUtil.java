@@ -21,14 +21,15 @@ import java.util.Set;
  */
 @Slf4j
 public class BatchUtil {
+
     /**
      * <p>
      * 校验结果
      * </p>
      *
-     * @param objectMap : 对象Map
-     * @param codeName : 编码名称
-     * @param msgName : 消息名称
+     * @param objectMap    : 对象Map
+     * @param codeName     : 编码名称
+     * @param msgName      : 消息名称
      * @param successCodes : 成功的响应码
      * @return void
      * @author sikadai

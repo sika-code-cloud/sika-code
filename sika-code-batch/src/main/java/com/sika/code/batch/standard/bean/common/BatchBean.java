@@ -3,9 +3,7 @@ package com.sika.code.batch.standard.bean.common;
 import com.sika.code.batch.standard.bean.processor.StandProcessorBean;
 import lombok.Data;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -22,7 +20,7 @@ public class BatchBean {
     private String jobName;
     private String stepName;
     private Integer skipLimit;
-    private Integer chunk = 15000;
+    private Integer chunk = 10000;
     // 是否开启多写源异步写、当不为空的时候为异步写、为空为同步写
     private Integer asynWrite;
 
@@ -40,6 +38,8 @@ public class BatchBean {
     // 跳过的异常和无须跳过的异常
     private String skipExceptionClassName;
     private String noSkipExceptionClassName;
+    private Set<String> chunkListenerClassNames;
+    private Map<String, Object> contextMap;
 
     public LinkedHashMap<String, String> readerProcessorMapper() {
         if (StandProcessorBean.class.equals(itemProcessorBean.getBeanClass())) {

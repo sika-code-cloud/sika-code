@@ -1,5 +1,8 @@
 package com.sika.code.db.sharding.executor;
 
+import com.sika.code.core.util.EnumUtil;
+import com.sika.code.db.sharding.annotation.ShardingRule;
+import com.sika.code.db.sharding.config.ShardingRuleConfig;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -14,4 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultShardingExecutor extends ShardingExecutor {
 
+    @Override
+    protected ShardingRuleConfig getShardingRuleConfig(ShardingRule shardingRule) {
+        return EnumUtil.find(shardingRule.shardingRuleConfigClass(), RULE_CONFIG_ENUM_NAME, shardingRule.ruleName());
+    }
 }

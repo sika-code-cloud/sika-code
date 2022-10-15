@@ -6,13 +6,13 @@ import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.toolkit.TableNameParser;
-import com.sika.code.core.util.EnumUtil;
 import com.sika.code.db.sharding.annotation.ShardingRule;
 import com.sika.code.db.sharding.config.ShardingRuleConfig;
 import com.sika.code.db.sharding.context.ShardingContext;
 import com.sika.code.db.sharding.manager.ShardingStrategyManager;
 import com.sika.code.db.sharding.strategy.Strategy;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.reflection.MetaObject;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @since 2022/7/9 15:42
  */
 @Slf4j
-public class ShardingExecutor {
+public abstract class ShardingExecutor {
 
     protected static final String SQL = "delegate.boundSql.sql";
     protected static final String MAPPED_STATEMENT = "delegate.mappedStatement";
@@ -59,6 +59,15 @@ public class ShardingExecutor {
         }
         // 校验分片规则校验
         verifyShardingConfig(shardingRuleConfig);
+        //获取完整的表名
+        String newTableName = getNewDbTableName(shardingRuleConfig, param);
+        // 替换原始的SQL
+        String convertedSql = buildNewSql(shardingRuleConfig, originalSql, newTableName);
+        log.info("分表后的SQL：{}", convertedSql);
+        metaStatementHandler.setValue(SQL, convertedSql);
+    }
+
+    protected String getNewDbTableName(ShardingRuleConfig shardingRuleConfig, Object param) {
         // 获取分片策略类
         Strategy strategy = getSharingStrategy(shardingRuleConfig);
         // 获取分库的值
@@ -68,12 +77,26 @@ public class ShardingExecutor {
         if (shardDbValue == null && shardTableValue == null) {
             throw new IllegalArgumentException(CharSequenceUtil.format("分片的库的值【{}】和分片的表的值【{}】同时为空，请立即核实", shardDbValue, shardTableValue));
         }
+        String dbName = getDbName(shardingRuleConfig);
+        String tableName = getTableName(shardingRuleConfig);
         //获取完整的表名
-        String newTableName = strategy.returnDbTableName(shardingRuleConfig.getDbName(), shardDbValue, shardingRuleConfig.getTableName(), shardTableValue);
-        // 替换原始的SQL
-        String convertedSql = buildNewSql(shardingRuleConfig, originalSql, newTableName);
-        log.info("分表后的SQL：{}", convertedSql);
-        metaStatementHandler.setValue(SQL, convertedSql);
+        return strategy.returnDbTableName(dbName, shardDbValue, tableName, shardTableValue);
+    }
+
+    protected String getDbName(ShardingRuleConfig shardingRuleConfig) {
+        String dbName = ShardingContext.getDbName();
+        if (StringUtils.isNotBlank(dbName)) {
+            return dbName;
+        }
+        return shardingRuleConfig.getDbName();
+    }
+
+    protected String getTableName(ShardingRuleConfig shardingRuleConfig) {
+        String tableName = ShardingContext.getTableName();
+        if (StringUtils.isNotBlank(tableName)) {
+            return tableName;
+        }
+        return shardingRuleConfig.getTableName();
     }
 
     protected String buildNewSql(ShardingRuleConfig shardingRuleConfig, String sql, String newTableName) {
@@ -119,8 +142,10 @@ public class ShardingExecutor {
         if (shardingRule == null) {
             return null;
         }
-        return EnumUtil.find(shardingRule.shardingRuleConfigClass(), RULE_CONFIG_ENUM_NAME, shardingRule.ruleName());
+        return getShardingRuleConfig(shardingRule);
     }
+
+    protected abstract ShardingRuleConfig getShardingRuleConfig(ShardingRule shardingRule);
 
     protected Object getShardValue(Object obj, String paramName, Integer shardType) {
         // 1. 从上下文里面获取

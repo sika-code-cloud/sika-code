@@ -159,4 +159,42 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
     default <Query extends BaseQuery<PRIMARY>> int count(Query query) {
         return getMapper().count(query);
     }
+
+    /**
+     * <p>
+     * 提供基于wrapper的模式进行更新-使用需要谨慎
+     * </p >
+     *
+     * @param updateWrapper
+     * @return int
+     * @author sikadai
+     * @since 2022/8/31 13:26
+     */
+    int update(Wrapper<PO> updateWrapper);
+
+    /**
+     * <p>
+     * 提供基于wrapper的模式进行更新-使用需要谨慎
+     * </p >
+     *
+     * @param po
+     * @param updateWrapper
+     * @return int
+     * @author sikadai
+     * @since 2022/8/31 13:26
+     */
+    int update(PO po, Wrapper<PO> updateWrapper);
+
+
+    /**
+     * <p>
+     * 批量插入-若唯一索引冲突-则忽略
+     * </p >
+     *
+     * @param pos
+     * @return int
+     * @author sikadai
+     * @since 2022/9/1 19:55
+     */
+    int insertBatchAndDupIgnore(List<PO> pos);
 }

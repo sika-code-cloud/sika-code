@@ -1,7 +1,6 @@
 package com.sika.code.db.sharding.strategy;
 
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.text.StrPool;
+import com.sika.code.db.sharding.util.ShardingUtil;
 
 /**
  * 分表策略服务接口
@@ -26,15 +25,7 @@ public interface Strategy {
     default String returnDbTableName(String dbName, Object shardingDbValue, String tableName, Object shardingTableValue) {
         String shardDbName = returnDbName(dbName, shardingDbValue);
         String shardTableName = returnTableName(tableName, shardingTableValue);
-        // 分片库名不为空-分片表名为空-则只分库不分表
-        if (CharSequenceUtil.isNotBlank(shardDbName) && CharSequenceUtil.isBlank(shardTableName)) {
-            shardTableName = tableName;
-        }
-        // 分片库名不为空-分片表名为空-则只分表不分库
-        if (CharSequenceUtil.isBlank(shardDbName) && CharSequenceUtil.isNotBlank(shardTableName)) {
-            shardDbName = dbName;
-        }
-        return CharSequenceUtil.join(StrPool.DOT, shardDbName, shardTableName);
+        return ShardingUtil.buildShardingDbTableName(dbName, shardDbName, tableName, shardTableName);
     }
 
     /**
@@ -42,13 +33,14 @@ public interface Strategy {
      * 返回分片的库名
      * </p >
      *
-     * @param dbName             : 数据库名称
-     * @param shardingDbValue    : 分片库的值
+     * @param dbName          : 数据库名称
+     * @param shardingDbValue : 分片库的值
      * @return java.lang.String
      * @author sikadai
      * @since 2022/7/9 15:07
      */
     String returnDbName(String dbName, Object shardingDbValue);
+
     /**
      * <p>
      * 返回分片的表名

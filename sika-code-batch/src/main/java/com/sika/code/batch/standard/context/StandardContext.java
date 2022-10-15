@@ -1,7 +1,10 @@
 package com.sika.code.batch.standard.context;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
 import com.google.common.collect.Lists;
+import com.sika.code.batch.standard.listener.StandChunkListener;
+import com.sika.code.batch.standard.listener.StandardStepWriteListener;
 import com.sika.code.core.util.BeanUtil;
 import com.sika.code.batch.core.context.BaseBatchContext;
 import com.sika.code.batch.core.factory.BatchFactory;
@@ -65,6 +68,7 @@ public class StandardContext extends BaseBatchContext {
     private List<ItemReadListener> itemReadListeners;
     private List<ItemProcessListener> itemProcessListeners;
     private List<ItemWriteListener> itemWriteListeners;
+    private List<StandChunkListener> chunkListeners;
 
     public StandardContext() {
 
@@ -88,7 +92,18 @@ public class StandardContext extends BaseBatchContext {
         StandardReader standardReader = new StandardReader();
         standardReader.setItemReader(itemReader);
         standardReader.setBatchBean(batchBean);
+
+        // 校验chunk与pageSize是否满足相关条件
+        verifyChunkForPageSize(readerBean);
         setStandardReader(standardReader);
+    }
+
+    protected void verifyChunkForPageSize(BaseReaderBean readerBean) {
+        Assert.notNull(readerBean.getPageSize(), "读取的分页大小【pageSize】不能为空");
+        Assert.notNull(batchBean.getChunk(), "每批写入【chunk】不能为空");
+        Assert.isTrue(readerBean.getPageSize() > 0, "读取的分页大小【pageSize】必须大于0");
+        Assert.isTrue(batchBean.getChunk() > readerBean.getPageSize(), "写入的【chunk】必须大于分页【pageSize】");
+        Assert.isTrue(batchBean.getChunk() % readerBean.getPageSize() == 0, "每批写入【chunk】必须为读取【pageSize】的整数倍");
     }
 
     public void buildStandardProcessor() {
@@ -117,14 +132,30 @@ public class StandardContext extends BaseBatchContext {
 
     protected void buildStandardParamContext() {
         this.standardParamContext = new StandardParamContext();
-        this.standardParamContext .setBatchBean(batchBean);
-        this.standardParamContext .build();
+        this.standardParamContext.setBatchBean(batchBean);
+        this.standardParamContext.build();
     }
 
     public void buildListeners() {
         buildJobExecutionListeners();
         buildStepExecutionListeners();
         buildItemListeners();
+        buildChunkListeners();
+    }
+
+    private void buildChunkListeners() {
+        if (chunkListeners == null) {
+            chunkListeners = Lists.newArrayList();
+            chunkListeners.add(new StandChunkListener(batchBean.getContextMap()));
+        }
+        if (CollUtil.isEmpty(batchBean.getChunkListenerClassNames())) {
+            return;
+        }
+        for (String chunkListenerClassName : batchBean.getChunkListenerClassNames()) {
+            StandChunkListener standChunkListener = BeanUtil.newInstance(chunkListenerClassName);
+            standChunkListener.setContextMap(batchBean.getContextMap());
+            chunkListeners.add(standChunkListener);
+        }
     }
 
     public void buildJobExecutionListeners() {
@@ -143,7 +174,9 @@ public class StandardContext extends BaseBatchContext {
     public void buildStepExecutionListeners() {
         if (stepExecutionListeners == null) {
             stepExecutionListeners = Lists.newArrayList();
-            stepExecutionListeners.add(new StandardStepExecutionListener());
+            StandardStepExecutionListener standardStepExecutionListener = new StandardStepExecutionListener();
+            standardStepExecutionListener.setContextMap(batchBean.getContextMap());
+            stepExecutionListeners.add(standardStepExecutionListener);
         }
         if (CollUtil.isEmpty(batchBean.getStepExecutionListenerClassNames())) {
             return;
@@ -198,7 +231,11 @@ public class StandardContext extends BaseBatchContext {
                 continue;
             }
             for (String writerListenerClassName : writerBean.getListenerClassNames()) {
-                itemWriteListeners.add(BeanUtil.newInstance(writerListenerClassName));
+                ItemWriteListener itemWriteListener = BeanUtil.newInstance(writerListenerClassName);
+                if (itemWriteListener instanceof StandardStepWriteListener) {
+                    ((StandardStepWriteListener) itemWriteListener).setContextMap(batchBean.getContextMap());
+                }
+                itemWriteListeners.add(itemWriteListener);
             }
         }
     }
@@ -276,6 +313,11 @@ public class StandardContext extends BaseBatchContext {
         if (CollUtil.isNotEmpty(getItemWriteListeners())) {
             for (ItemWriteListener itemWriteListener : getItemWriteListeners()) {
                 faultTolerantStepBuilder.listener(itemWriteListener);
+            }
+        }
+        if (CollUtil.isNotEmpty(getChunkListeners())) {
+            for (ChunkListener chunkListener : getChunkListeners()) {
+                faultTolerantStepBuilder.listener(chunkListener);
             }
         }
         return faultTolerantStepBuilder;
