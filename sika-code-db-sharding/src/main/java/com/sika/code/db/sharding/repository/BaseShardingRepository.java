@@ -1,6 +1,7 @@
 package com.sika.code.db.sharding.repository;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.db.mapper.BaseMapper;
@@ -156,6 +157,11 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
         } finally {
             ShardingContext.remove();
         }
+    }
+
+    default int updateSharding(Wrapper<PO> wrapper, Object shardingValue) {
+        ShardingContext.addShardDbValue(shardingValue);
+        return this.update(wrapper);
     }
 
     default void verifyDbName(String dbName) {

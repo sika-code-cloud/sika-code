@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import com.sika.code.core.base.constant.BaseConstant;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.core.base.pojo.query.BaseQuery;
+import com.sika.code.db.constant.DbConstant;
 import com.sika.code.db.mapper.BaseMapper;
 import com.sika.code.db.repository.BaseRepositoryMybatisPlus;
 import org.apache.ibatis.binding.MapperMethod;
@@ -34,9 +35,9 @@ import java.util.stream.Collectors;
 public abstract class BaseRepositoryMyBatisPlusImpl<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> implements BaseRepositoryMybatisPlus<PO, PRIMARY, Mapper> {
     protected Log log = LogFactory.getLog(getClass());
 
-    protected static final String SET_VERSION_SQL = "version = version + 1";
-    protected static final String LOGIC_DELETED_SQL = "is_deleted = 1";
-    protected static final String IS_DELETED_KEY = "is_deleted";
+    protected static final String SET_VERSION_SQL = DbConstant.SET_VERSION_SQL;
+    protected static final String LOGIC_DELETED_SQL = DbConstant.LOGIC_DELETED_SQL;
+    protected static final String IS_DELETED_KEY = DbConstant.IS_DELETED_KEY;
     /**
      * 默认批次提交数量
      */
