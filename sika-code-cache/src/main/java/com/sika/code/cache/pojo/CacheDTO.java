@@ -58,6 +58,11 @@ public class CacheDTO {
      * 此次缓存的请求ID
      */
     private String requestId;
+    /**
+     * 参数类型列表
+     */
+    private Class<?>[] paramTypes;
+
     private boolean build = false;
 
     public final void build() {
