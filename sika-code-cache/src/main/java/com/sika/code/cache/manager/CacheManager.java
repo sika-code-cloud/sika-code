@@ -1,7 +1,9 @@
 package com.sika.code.cache.manager;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.fastjson.JSON;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -357,7 +360,13 @@ public class CacheManager {
         Object target = BeanUtil.getBean(cacheDTO.getMethodClass());
         Assert.notNull(target, "targetClass对应的目标对象不能为空", cacheDTO.getMethodClass());
         // 通过反射执行目标对象方法
-        Object objectValue = ReflectUtil.invoke(target, cacheDTO.getMethodName(), cacheDTO.getMethodArgs());
+        Object objectValue;
+        if (ArrayUtil.isNotEmpty(cacheDTO.getParamTypes())) {
+            Method method = ReflectUtil.getMethod(cacheDTO.getMethodClass(), cacheDTO.getMethodName(), cacheDTO.getParamTypes());
+            objectValue = ReflectUtil.invoke(target, method, cacheDTO.getMethodArgs());
+        } else {
+            objectValue = ReflectUtil.invoke(target, cacheDTO.getMethodName(), cacheDTO.getMethodArgs());
+        }
         // 设置执行标志
         cacheDTO.setExecute(true);
         // 记录日志
