@@ -164,6 +164,12 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
         return this.update(wrapper);
     }
 
+    default int updateSharding(Wrapper<PO> wrapper, Object shardingValue, String dbName) {
+        ShardingContext.addShardDbValue(shardingValue);
+        ShardingContext.addDbName(dbName);
+        return this.update(wrapper);
+    }
+
     default void verifyDbName(String dbName) {
         Assert.notEmpty(dbName, "指定的库名不能为空");
     }
