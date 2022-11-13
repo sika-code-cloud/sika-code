@@ -179,6 +179,25 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
         }
     }
 
+
+    /**
+     * 批量插入-忽略重复值-分库分表
+     *
+     * @param pos    : 批量插入的对象列表
+     * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
+     * @return
+     */
+    default int insertBatchAndDupIgnoreDbName(List<PO> pos, Object shardingValue, String dbName) {
+        try {
+            verifyDbName(dbName);
+            ShardingContext.addShardValue(shardingValue, false);
+            ShardingContext.addDbName(dbName, false);
+            return insertBatchAndDupIgnore(pos);
+        } finally {
+            ShardingContext.remove();
+        }
+    }
+
     default void verifyDbName(String dbName) {
         Assert.notEmpty(dbName, "指定的库名不能为空");
     }

@@ -94,7 +94,7 @@ public class ShardingUtil {
      * @author sikadai
      * @since 2022/9/16 18:15
      */
-    public static int servenDayOfYear(Object shardingDbValue) {
+    public static int sevenDayOfYear(Object shardingDbValue) {
         Date waitComputeWeek = null;
         if (shardingDbValue instanceof Date) {
             waitComputeWeek = (Date) shardingDbValue;
