@@ -1,7 +1,6 @@
 package com.sika.code.core.base.pojo.domain.factory;
 
 import cn.hutool.core.util.ReflectUtil;
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -23,7 +22,6 @@ public interface BaseFactory {
      * @date 2018/7/28 9:02
      */
     @JsonIgnore
-    @JSONField(deserialize = false, serialize = false)
     default <T> T getBean(Class<T> tClass) {
         return getBeanObj(tClass);
     }
@@ -39,7 +37,6 @@ public interface BaseFactory {
      * @date 2018/7/28 9:02
      */
     @JsonIgnore
-    @JSONField(deserialize = false, serialize = false)
     default <T> T getBean(String name) {
         return getBeanObj(name);
     }
@@ -56,7 +53,6 @@ public interface BaseFactory {
      * @date 2018/7/28 9:02
      */
     @JsonIgnore
-    @JSONField(deserialize = false, serialize = false)
     default <T> T getBean(String name, Class<T> tClass) {
         return getBeanObj(name, tClass);
     }

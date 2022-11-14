@@ -1,7 +1,7 @@
 package com.sika.code.migrate.builder;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.migrate.pojo.MigrateRuleRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +77,7 @@ public class MigrateRequestRuleBuilder {
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line.trim());
             }
-            return JSON.parseObject(stringBuilder.toString());
+            return JSONUtil.parseObject(stringBuilder.toString(), LinkedHashMap.class);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);

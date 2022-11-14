@@ -1,12 +1,10 @@
 package com.sika.code.cache.manager;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.alibaba.fastjson.JSON;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.collect.Maps;
@@ -15,6 +13,7 @@ import com.sika.code.cache.executor.LocalCacheExecutor;
 import com.sika.code.cache.executor.RedisCacheDefaultExecutor;
 import com.sika.code.cache.executor.RedisCacheExecutor;
 import com.sika.code.cache.pojo.*;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.core.util.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -214,7 +213,7 @@ public class CacheManager {
         // 构建
         cacheDTO.build();
         if (notNeedCache(cacheDTO)) {
-            log.info("本地缓存开关关闭，不走缓存，缓存数据传输对象为：{}", JSON.toJSONString(cacheDTO));
+            log.info("本地缓存开关关闭，不走缓存，缓存数据传输对象为：{}", JSONUtil.toJSONString(cacheDTO));
             return null;
         }
         // 获取缓存容器
@@ -244,8 +243,8 @@ public class CacheManager {
     protected void log(CacheDTO cacheDTO, String template, Object... objects) {
         try {
             if (BooleanUtil.isTrue(cacheDTO.getOpenLog())) {
-                String msg = CharSequenceUtil.format(template, JSON.toJSONString(objects));
-                log.info("日志信息：【{}】,请求参数为【{}】", msg, JSON.toJSONString(cacheDTO));
+                String msg = CharSequenceUtil.format(template, JSONUtil.toJSONString(objects));
+                log.info("日志信息：【{}】,请求参数为【{}】", msg, JSONUtil.toJSONString(cacheDTO));
             }
         } catch (Exception e) {
             log.error("日志记录异常", e);
@@ -287,7 +286,7 @@ public class CacheManager {
         // 构建
         cacheDTO.build();
         if (notNeedCache(cacheDTO)) {
-            log.info("Redis缓存开关关闭，不走缓存，Redis缓存数据传输对象为：{}", JSON.toJSONString(cacheDTO));
+            log.info("Redis缓存开关关闭，不走缓存，Redis缓存数据传输对象为：{}", JSONUtil.toJSONString(cacheDTO));
             return null;
         }
         // 先从缓存中获取数据

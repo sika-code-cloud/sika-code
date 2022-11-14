@@ -6,9 +6,8 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ak.cloud.standard.frame.job.base.context.BaseJobContext;
 import com.ak.cloud.standard.frame.job.base.executor.BaseJobExecutor;
-import com.alibaba.fastjson.JSON;
-import com.sika.code.core.base.pojo.domain.entity.BaseEntity;
 import com.sika.code.core.base.pojo.domain.entity.BaseEntityImpl;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.core.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
@@ -102,7 +101,7 @@ public abstract class BaseJobTask<Context extends BaseJobContext> extends BaseEn
         } else {
             context = getContextFromParam(param, contextClass);
         }
-        logger().info("【{}】通过入参构建的上下文对象为：{}", getClass().getName(), JSON.toJSONString(context));
+        logger().info("【{}】通过入参构建的上下文对象为：{}", getClass().getName(), JSONUtil.toJSONString(context));
         // 构建上下文自定义的参数
         buildContextCustomer(context);
         return context;
@@ -116,7 +115,7 @@ public abstract class BaseJobTask<Context extends BaseJobContext> extends BaseEn
 
     protected Context getContextFromParam(String param, Class<Context> contextClass) {
         try {
-            return JSON.parseObject(param, contextClass);
+            return JSONUtil.parseObject(param, contextClass);
         } catch (Exception e) {
             logger().error("从参数转化为上下文对象有误-请合适参数是否不符合JSON格式", e);
             return getContextForEmpty(contextClass);

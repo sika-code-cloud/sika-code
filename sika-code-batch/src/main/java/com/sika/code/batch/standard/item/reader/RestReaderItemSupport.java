@@ -3,13 +3,10 @@ package com.sika.code.batch.standard.item.reader;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.ReflectUtil;
-import com.alibaba.fastjson.JSON;
 import com.dtflys.forest.Forest;
 import com.sika.code.batch.standard.bean.reader.RestReaderBean;
 import com.sika.code.batch.standard.util.BatchUtil;
-import com.sika.code.core.base.pojo.query.Page;
-import com.sika.code.core.util.BeanUtil;
+import com.sika.code.core.base.util.JSONUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +14,8 @@ import org.assertj.core.util.Lists;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <pre>
@@ -54,7 +49,7 @@ public class RestReaderItemSupport extends AbstractPagingItemReader<Map<String, 
         // 使用post请求
         Map<String, Object> retObj = Forest.post(readerBean.buildFullUrl())
                 .contentTypeJson()
-                .addBody(JSON.toJSONString(readerBean.buildQuery()))
+                .addBody(JSONUtil.toJSONString(readerBean.buildQuery()))
                 .executeAsMap();
         // 校验状态码
         BatchUtil.verifyResult(retObj, readerBean.getCodeName(), readerBean.getMsgName(), readerBean.getSuccessCodes());

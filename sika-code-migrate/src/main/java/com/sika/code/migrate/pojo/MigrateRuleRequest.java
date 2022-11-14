@@ -1,6 +1,6 @@
 package com.sika.code.migrate.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,12 +24,12 @@ public class MigrateRuleRequest {
     /**
      * 当前请求的request
      */
-    @JSONField(serialize = false, deserialize = false)
+    @JsonIgnore
     private HttpServletRequest request;
     /**
      * 当前请求的response
      */
-    @JSONField(serialize = false, deserialize = false)
+    @JsonIgnore
     private HttpServletResponse response;
     /**
      * 请求完整路径

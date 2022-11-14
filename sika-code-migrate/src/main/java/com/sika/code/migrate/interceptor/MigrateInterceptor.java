@@ -1,6 +1,6 @@
 package com.sika.code.migrate.interceptor;
 
-import com.alibaba.fastjson.JSON;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.migrate.executor.MigrateRequestExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class MigrateInterceptor implements HandlerInterceptor {
             log.info("进入拦截器{}", MigrateInterceptor.class.getName());
             log.info("进入拦截器的request为:{},请求方式为：{}，response:{}", request.getClass(), request.getMethod(), response.getClass());
             log.info("进入拦截器的requesthead为:{},请求方式为：{}，response:{}", request.getHeaderNames(), request.getMethod(), response.getClass());
-            log.info("进入拦截器的getParameterMap为:{}", JSON.toJSONString(request.getParameterMap()));
+            log.info("进入拦截器的getParameterMap为:{}", JSONUtil.toJSONString(request.getParameterMap()));
             return requestExecutor.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();

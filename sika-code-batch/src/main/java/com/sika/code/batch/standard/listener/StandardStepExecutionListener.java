@@ -1,8 +1,8 @@
 package com.sika.code.batch.standard.listener;
 
 import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSON;
 import com.sika.code.batch.core.listener.BaseStepExecutionListener;
+import com.sika.code.core.base.util.JSONUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
@@ -30,8 +30,8 @@ public class StandardStepExecutionListener implements BaseStepExecutionListener 
     @Override
     public void beforeStep(StepExecution stepExecution) {
         log.info("步骤id=【{}】开始执行，实例对象【{}】, 开始时间：{}，JOB参数【{}】",
-                stepExecution.getId(), JSON.toJSONString(stepExecution.getJobExecution().getJobInstance()),
-                DateUtil.formatDateTime(stepExecution.getStartTime()), JSON.toJSONString(stepExecution.getJobParameters()));
+                stepExecution.getId(), JSONUtil.toJSONString(stepExecution.getJobExecution().getJobInstance()),
+                DateUtil.formatDateTime(stepExecution.getStartTime()), JSONUtil.toJSONString(stepExecution.getJobParameters()));
     }
 
     @Override
@@ -39,9 +39,9 @@ public class StandardStepExecutionListener implements BaseStepExecutionListener 
         log.info("步骤id=【{}】执行完成， 读取的条数【{}】，写入的条数【{}】，执行状态【{}】，结束于：【{}】，所用时间为：{}ms，JOB参数【{}】,实例参数【{}】，步骤详情参数：【{}】",
                 stepExecution.getId(), stepExecution.getReadCount(), stepExecution.getWriteCount(), stepExecution.getStatus(),
                 DateUtil.formatDateTime(new Date()), (System.currentTimeMillis() - stepExecution.getStartTime().getTime()),
-                JSON.toJSONString(stepExecution.getJobParameters()),
-                JSON.toJSONString(stepExecution.getJobExecution().getJobInstance()),
-                JSON.toJSONString(stepExecution));
+                JSONUtil.toJSONString(stepExecution.getJobParameters()),
+                JSONUtil.toJSONString(stepExecution.getJobExecution().getJobInstance()),
+                JSONUtil.toJSONString(stepExecution));
         contextMap.put(STEP_EXIT_STATUS, stepExecution.getExitStatus());
         return stepExecution.getExitStatus();
     }

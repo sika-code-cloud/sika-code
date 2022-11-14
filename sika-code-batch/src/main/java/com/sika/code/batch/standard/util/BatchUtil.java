@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.CharSequenceUtil;
-import com.alibaba.fastjson.JSON;
+import com.sika.code.core.base.util.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -51,7 +51,7 @@ public class BatchUtil {
         }
         if (!successCodes.contains(code)) {
             throw new RuntimeException(CharSequenceUtil.format("codeName【{}】对应的响应码【{}】与配置的成功编码列表【{}】不匹配，异常消息为【{}】"
-                    , codeName, code, JSON.toJSONString(successCodes), msg));
+                    , codeName, code, JSONUtil.toJSONString(successCodes), msg));
         }
     }
 }

@@ -7,8 +7,8 @@ import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.core.util.BeanUtil;
 import com.sika.code.batch.standard.bean.writer.RedisWriterBean;
 import com.sika.code.batch.standard.builder.writerdata.BaseWriterDataBuilder;
@@ -99,10 +99,6 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
         }
 
         /**
-         * <p>
-         * 为了保证索引的随机性，长度建议使用2的整数幂
-         * </p>
-         *
          * @param key    : 编号
          * @param length : 长度
          * @return int
@@ -111,7 +107,7 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
          */
         private int computeIndex(Object key, int length) {
             int h = key.hashCode();
-            return (h ^ (h >>> 16)) & (length - 1);
+            return (h ^ (h >>> 16)) % length;
         }
 
         protected void addToListOrSet(List<? extends Map<String, Object>> maps) {
@@ -158,7 +154,7 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
                 if (listTempFromCache == null) {
                     listTempFromCache = Lists.newArrayList();
                 }
-                listTempFromCache.add(JSON.toJSONString(objectMap));
+                listTempFromCache.add(JSONUtil.toJSONString(objectMap));
                 groupMapList.put(keyIndex, listTempFromCache);
             }
             return groupMapList;
@@ -166,7 +162,7 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
 
         protected List<String> convertToJsonStr(List<? extends Map<String, Object>> mapLists) {
             List<String> list = Lists.newArrayList();
-            mapLists.forEach(item -> list.add(JSON.toJSONString(item)));
+            mapLists.forEach(item -> list.add(JSONUtil.toJSONString(item)));
             return list;
         }
     }
@@ -179,7 +175,7 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
             maps.forEach(item -> {
                 String fullKey = fullRedisKey(MapUtil.getStr(item, redisWriterBean.getKey()));
                 Assert.notBlank("KEY【{}】对应的值不能为空", redisWriterBean.getKey());
-                hashMap.put(fullKey, JSON.toJSONString(item));
+                hashMap.put(fullKey, JSONUtil.toJSONString(item));
             });
             stringRedisTemplate.opsForValue().multiSet(hashMap);
             stringRedisTemplate.executePipelined((RedisCallback<Object>) connection -> {
@@ -201,7 +197,7 @@ public class RedisBatchItemWriterSupport implements ItemWriter<Map<String, Objec
             maps.forEach(item -> {
                 String hashKey = MapUtil.getStr(item, redisWriterBean.getKey());
                 Assert.notBlank("KEY【{}】对应的值不能为空", redisWriterBean.getKey());
-                hashMap.put(hashKey, JSON.toJSONString(item));
+                hashMap.put(hashKey, JSONUtil.toJSONString(item));
             });
             stringRedisTemplate.opsForHash().putAll(redisKey, hashMap);
             expire(redisKey);

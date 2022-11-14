@@ -1,7 +1,6 @@
 package com.sika.code.core.base.test;
 
 import cn.hutool.core.util.CharsetUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.core.result.Result;
 import org.junit.After;
@@ -40,7 +39,7 @@ public class BaseTestController extends BaseTest {
      */
     protected Result postJson(String requestUrl, Object request) {
         //将参数转换成JSON对象
-        String json = JSONObject.toJSONString(request);
+        String json = JSONUtil.toJSONString(request);
         //执行请求（使用POST请求，传递对象参数）
         MvcResult mvcResult = null;
         String content;

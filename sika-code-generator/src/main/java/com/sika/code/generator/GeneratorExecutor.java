@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.generator.constant.GenerratorClassEnum;
 import com.sika.code.generator.dto.GeneratorDTO;
 import com.google.common.collect.Lists;
@@ -313,7 +313,7 @@ public class GeneratorExecutor {
                 .setEntity(entity)
                 .setOutDir(outDir)
                 .setParent(parent);
-        System.out.println("构建的java参数为：" + JSON.toJSONString(generateJavaParam));
+        System.out.println("构建的java参数为：" + JSONUtil.toJSONString(generateJavaParam));
         generateCoreNew(generateJavaParam);
     }
 

@@ -1,7 +1,7 @@
 package com.sika.code.cache.executor;
 
-import com.alibaba.fastjson.JSON;
 import com.sika.code.cache.pojo.GetRedisCacheDTO;
+import com.sika.code.core.base.util.JSONUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -16,6 +16,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class RedisCacheDefaultExecutor<T> implements RedisCacheExecutor<T> {
     @Override
     public T getCache(GetRedisCacheDTO<T> cacheDTO, RedisTemplate redisTemplate) {
-        return JSON.parseObject((String) redisTemplate.opsForValue().get(cacheDTO.getKey()), cacheDTO.getValueClass());
+        return JSONUtil.parseObject((String) redisTemplate.opsForValue().get(cacheDTO.getKey()), cacheDTO.getValueClass());
     }
 }

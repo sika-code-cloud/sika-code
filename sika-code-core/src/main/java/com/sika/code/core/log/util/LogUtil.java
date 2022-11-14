@@ -1,7 +1,7 @@
 package com.sika.code.core.log.util;
 
 import cn.hutool.core.date.DatePattern;
-import com.alibaba.fastjson.JSONObject;
+import com.sika.code.core.base.util.JSONUtil;
 import com.yomahub.tlog.context.TLogContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -227,7 +227,7 @@ public class LogUtil {
         if (logDetail instanceof String) {
             detail = (String) logDetail;
         } else {
-            detail = JSONObject.toJSONString(logDetail);
+            detail = JSONUtil.toJSONString(logDetail);
         }
         return detail;
     }

@@ -4,15 +4,10 @@ package com.sika.code.core.base.util;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -23,13 +18,14 @@ import java.util.Set;
 /**
  * @author daiqi
  * @ClassName : DqJSONUtil
- * @Description : Json工具类--封装了fastjson进行转换
+ * @Description : Json工具类--封装了OBJECT_MAPPER进行转换
  * @date 2017年12月5日 下午2:05:04
  */
 public class JSONUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // 忽略反序列化对象不存在的属性
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL);; // 属性为空不序列化
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    ; // 属性为空不序列化
 
     /**
      * 将Object对象转换为json字符串，若不能转换将String.valueOf(obj)
