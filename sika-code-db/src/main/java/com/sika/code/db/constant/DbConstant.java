@@ -1,13 +1,13 @@
 package com.sika.code.db.constant;
 
 /**
- * <pre>
+ * <p>
  *
- * </pre>
+ * </p>
  *
- * @author sikadai
+ * @author by sikadai
  * @version 1.0
- * @since 2022/10/15 15:27
+ * @since 2022/11/11 10:52
  */
 public class DbConstant {
 

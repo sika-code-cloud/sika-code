@@ -19,7 +19,7 @@ public class YearSevenDayStrategy extends BaseYearXxStrategy {
 
     @Override
     public String returnTableName(String tableName, Object shardingTableValue) {
-        int tableTemValue = ShardingUtil.servenDayOfYear(shardingTableValue);
+        int tableTemValue = ShardingUtil.sevenDayOfYear(shardingTableValue);
         return CharSequenceUtil.join(StrPool.UNDERLINE, tableName, tableTemValue);
     }
 }

@@ -168,7 +168,11 @@ public class ShardingContext {
     }
 
     public static boolean isAutoClearFlag() {
-        Object autoClearFlag = CONTEXT.get().get(AUTO_CLEAR_FLAG_KEY);
+        Map<String, Object> stringObjectMap = CONTEXT.get();
+        if (stringObjectMap == null) {
+            return false;
+        }
+        Object autoClearFlag = stringObjectMap.get(AUTO_CLEAR_FLAG_KEY);
         if (autoClearFlag == null) {
             return true;
         }
