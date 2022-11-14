@@ -7,10 +7,18 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author daiqi
@@ -19,6 +27,9 @@ import java.util.List;
  * @date 2017年12月5日 下午2:05:04
  */
 public class JSONUtil {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // 忽略反序列化对象不存在的属性
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL);; // 属性为空不序列化
 
     /**
      * 将Object对象转换为json字符串，若不能转换将String.valueOf(obj)
@@ -31,8 +42,8 @@ public class JSONUtil {
             return obj.toString();
         }
         try {
-            return JSONObject.toJSONString(obj);
-        } catch (JSONException | UnsupportedOperationException | IllegalStateException e) {
+            return OBJECT_MAPPER.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
             return String.valueOf(obj);
         }
     }
@@ -50,14 +61,28 @@ public class JSONUtil {
             return null;
         }
         try {
+            String jsonStr;
             if (obj instanceof String) {
-                obj = JSONObject.parse(obj.toString());
+                jsonStr = obj.toString();
+            } else {
+                jsonStr = toJSONString(obj);
             }
-            String jsonStr = toJSONString(obj);
-            return JSONObject.parseObject(jsonStr, clazz);
-        } catch (JSONException | UnsupportedOperationException | IllegalStateException e) {
+            return OBJECT_MAPPER.readValue(jsonStr, clazz);
+        } catch (JsonProcessingException e) {
             return (T) obj;
         }
+    }
+
+    /**
+     * 获取泛型的Collection Type
+     *
+     * @param collectionClass 泛型的Collection
+     * @param elementClasses  元素类
+     * @return JavaType Java类型
+     * @since 1.0
+     */
+    private static JavaType getCollectionType(ObjectMapper mapper, Class<?> collectionClass, Class<?>... elementClasses) {
+        return mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
     }
 
     /**
@@ -77,11 +102,12 @@ public class JSONUtil {
             return null;
         }
         try {
-            if (listOrJsonStr instanceof List) {
-                arrStr = JSONArray.toJSONString(listOrJsonStr);
+            if (listOrJsonStr instanceof List || listOrJsonStr instanceof Set) {
+                arrStr = toJSONString(listOrJsonStr);
             }
-            return JSONArray.parseArray(arrStr, clazz);
+            return OBJECT_MAPPER.readValue(arrStr, getCollectionType(OBJECT_MAPPER, List.class, clazz));
         } catch (Exception e) {
+            e.printStackTrace();
             List<T> retList = new ArrayList<>();
             retList.add((T) arrStr);
             return retList;
@@ -98,7 +124,7 @@ public class JSONUtil {
      * </pre>
      *
      * @param fromList : List : 任意泛型Collection
-     * @param clazz      : 泛型class
+     * @param clazz    : 泛型class
      * @return 泛型list
      * @author daiqi
      * @date 2017年12月11日 下午4:46:07
@@ -109,7 +135,7 @@ public class JSONUtil {
             return retList;
         }
         for (Object obj : fromList) {
-            retList.add(JSONUtil.parseObject(obj, clazz));
+            retList.add(parseObject(obj, clazz));
         }
         return retList;
     }
