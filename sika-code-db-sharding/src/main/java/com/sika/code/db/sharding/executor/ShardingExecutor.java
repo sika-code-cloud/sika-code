@@ -51,7 +51,7 @@ public abstract class ShardingExecutor {
             log.error("从metaStatementHandler获取的sql为空-请立即核实");
             return;
         }
-        log.info("分表前的SQL：{}", originalSql);
+//        log.info("分表前的SQL：{}", originalSql);
         // 获取分片规则配置-默认从枚举中获取
         ShardingRuleConfig shardingRuleConfig = getShardingRuleConfig(metaStatementHandler);
         if (shardingRuleConfig == null || !BooleanUtil.isTrue(shardingRuleConfig.getSharingFlag())) {
@@ -63,7 +63,7 @@ public abstract class ShardingExecutor {
         String newTableName = getNewDbTableName(shardingRuleConfig, param);
         // 替换原始的SQL
         String convertedSql = buildNewSql(shardingRuleConfig, originalSql, newTableName);
-        log.info("分表后的SQL：{}", convertedSql);
+//        log.info("分表后的SQL：{}", convertedSql);
         metaStatementHandler.setValue(SQL, convertedSql);
     }
 

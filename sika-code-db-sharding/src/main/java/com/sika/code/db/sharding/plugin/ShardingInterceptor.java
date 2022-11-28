@@ -27,12 +27,12 @@ public class ShardingInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         try {
-            log.info("进入分库分表拦截器：====================");
+//            log.info("进入分库分表拦截器：====================");
             StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
             MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, SystemMetaObject.DEFAULT_OBJECT_FACTORY, SystemMetaObject.DEFAULT_OBJECT_WRAPPER_FACTORY, new DefaultReflectorFactory());
             Object parameterObject = metaStatementHandler.getValue(PARAMETER_OBJECT);
             getShardingExecutor().doShardingDbTable(metaStatementHandler, parameterObject);
-            log.info("完成分库分表拦截器：====================");
+//            log.info("完成分库分表拦截器：====================");
             // 传递给下一个拦截器处理
             return invocation.proceed();
         } finally {
