@@ -51,7 +51,7 @@ public class GeneratorCommander {
             generatorDTO.setTestDomainOutDir(buildFullPathForJavaTest(clientDTO, clientDTO.getProjectPrefix(), join(clientDTO.getProjectPrefix(), "interfaces"), join(clientDTO.getProjectPrefix(), "interfaces", "rest")));
             generatorDTO.setTestDomainParent(buildModulePackage(clientDTO, "interfaces", "rest"));
 
-            generatorDTO.setTestRestOutDir(buildFullPathForJavaTest(clientDTO, clientDTO.getProjectPrefix(), join(clientDTO.getProjectPrefix(), "interfaces", "rest")));
+            generatorDTO.setTestRestOutDir(buildFullPathForJavaTest(clientDTO, clientDTO.getProjectPrefix(), join(clientDTO.getProjectPrefix(), "interfaces"), join(clientDTO.getProjectPrefix(), "interfaces", "rest")));
             generatorDTO.setTestRestParent(buildModulePackage(clientDTO, "interfaces", "rest"));
 
             generatorDTO.setAuthor(clientDTO.getAuthor());
