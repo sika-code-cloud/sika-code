@@ -1,20 +1,15 @@
 package com.sika.code.db.repository;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.google.common.collect.Lists;
-import com.sika.code.core.base.repository.BaseRepository;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sika.code.core.base.pojo.po.BasePO;
-import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.db.mapper.BaseMapper;
 
 import java.io.Serializable;
-import java.security.InvalidParameterException;
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 /**
  * mybatis基础持久化接口
@@ -22,169 +17,84 @@ import java.util.stream.Collectors;
  * @author daiqi
  * @create 2021-10-15 22:39
  */
-public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> extends BaseRepository<PO, PRIMARY> {
-    String ID_KEY = "id";
-
-    Mapper getMapper();
-
-    @Override
-    default PO findByPrimaryKey(PRIMARY primaryKey) {
-        return getMapper().selectById(primaryKey);
+public interface BaseRepositoryMybatisPlus<T extends BasePO, Mapper extends BaseMapper<T>> extends BaseRepository<T> {
+    default int insert(T entity) {
+        return getMapper().insert(entity);
     }
 
-    @Override
-    default PRIMARY saveRetId(PO po) {
-        if (po == null) {
-            throw new InvalidParameterException("持久化对象PO不能为空");
-        }
-        if (po.getId() == null) {
-            getMapper().insert(po);
-            return po.getId();
-        } else {
-            int count = getMapper().updateById(po);
-            if (count > 0) {
-                return po.getId();
-            }
-            throw new RuntimeException("数据更新失败");
-        }
+    default int deleteById(Serializable id) {
+        return getMapper().deleteById(id);
     }
 
-    @Override
-    default int save(PO po) {
-        if (po == null) {
-            throw new InvalidParameterException("持久化对象PO不能为空");
-        }
-        if (po.getId() == null) {
-            return getMapper().insert(po);
-        } else {
-            return getMapper().updateById(po);
-        }
+    default int deleteById(T entity) {
+        return getMapper().deleteById(entity);
     }
 
-    @Override
-    default int saveBatch(List<PO> pos) {
-        int count = 0;
-        if (CollUtil.isEmpty(pos)) {
-            return count;
-        }
-        List<PO> waitForInsert = Lists.newArrayList();
-        List<PO> waitForUpdate = Lists.newArrayList();
-        for (PO po : pos) {
-            if (po.getId() == null) {
-                waitForInsert.add(po);
-            } else {
-                waitForUpdate.add(po);
-            }
-        }
-        if (CollUtil.isNotEmpty(waitForInsert)) {
-            count += insertBatch(waitForInsert);
-        }
-        if (CollUtil.isNotEmpty(waitForUpdate)) {
-            count += updateBatchById(waitForUpdate);
-        }
-        return count;
+    default int deleteByMap(Map<String, Object> columnMap) {
+        return getMapper().deleteByMap(columnMap);
     }
 
-    int insertBatch(List<PO> pos);
-
-
-    @Override
-    default int insert(PO po) {
-        return getMapper().insert(po);
+    default int delete(Wrapper<T> queryWrapper) {
+        return getMapper().delete(queryWrapper);
     }
 
-    @Override
-    default PRIMARY insertRetId(PO po) {
-        int count = insert(po);
-        if (count > 0) {
-            return po.getId();
-        }
-        throw new RuntimeException("数据插入失败");
+    default int deleteBatchIds(Collection<? extends Serializable> idList) {
+        return getMapper().deleteBatchIds(idList);
     }
 
-    @Override
-    default int updateById(PO po) {
-        return getMapper().updateById(po);
+    default int updateById(T entity) {
+        return getMapper().updateById(entity);
+    }
+
+    default int update(T entity, Wrapper<T> updateWrapper) {
+        return getMapper().update(entity, updateWrapper);
+    }
+
+    default T selectById(Serializable id) {
+        return getMapper().selectById(id);
+    }
+
+    default List<T> selectBatchIds(Collection<? extends Serializable> idList) {
+        return getMapper().selectBatchIds(idList);
+    }
+
+    default List<T> selectByMap(Map<String, Object> columnMap) {
+        return getMapper().selectByMap(columnMap);
     }
 
 
-    /**
-     * <p>
-     * 根据条件批量删除数据
-     * </p>
-     *
-     * @return int
-     * @author sikadai
-     * @since 2022/8/25 22:54
-     */
-    default int logicDelete(Wrapper wrapper) {
-        return getMapper().logicDelete(wrapper);
+    default T selectOne(Wrapper<T> queryWrapper) {
+        return getMapper().selectOne(queryWrapper);
     }
 
-    default int updateBatch(List<PO> updatePos, UpdateWrapper wrapper) {
-        for (PO po : updatePos) {
-            if (po.getUpdateDate() == null) {
-                po.setUpdateDate(new Date());
-            }
-        }
-        return getMapper().updateBatchCaseWhen(updatePos, wrapper);
+    default Long selectCount(Wrapper<T> queryWrapper) {
+        return getMapper().selectCount(queryWrapper);
     }
 
-    @Override
-    default <QUERY extends BaseQuery<PRIMARY>> PO find(QUERY query) {
-        return getMapper().find(query);
+
+    default List<T> selectList(Wrapper<T> queryWrapper) {
+        return getMapper().selectList(queryWrapper);
     }
 
-    @Override
-    default <QUERY extends BaseQuery<PRIMARY>> PRIMARY findId(QUERY query) {
-        return getMapper().findId(query);
+    default List<Map<String, Object>> selectMaps(Wrapper<T> queryWrapper) {
+        return getMapper().selectMaps(queryWrapper);
     }
 
-    @Override
-    default <QUERY extends BaseQuery<PRIMARY>> List<PO> list(QUERY query) {
-        return getMapper().list(query);
+    default List<Object> selectObjs(Wrapper<T> queryWrapper) {
+        return getMapper().selectObjs(queryWrapper);
     }
 
-    @Override
-    default <QUERY extends BaseQuery<PRIMARY>> List<PRIMARY> listId(QUERY query) {
-        return getMapper().listId(query);
+    default <P extends IPage<T>> P selectPage(P page, Wrapper<T> queryWrapper) {
+        return getMapper().selectPage(page, queryWrapper);
     }
 
-    @Override
-    default <QUERY extends PageQuery<PRIMARY>> List<PO> page(QUERY query) {
-        return getMapper().page(query);
+    default <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, Wrapper<T> queryWrapper) {
+        return getMapper().selectMapsPage(page, queryWrapper);
     }
 
-    @Override
-    default <Query extends BaseQuery<PRIMARY>> int count(Query query) {
-        return getMapper().count(query);
-    }
+    boolean insertBatch(List<T> entityList);
 
-    /**
-     * <p>
-     * 提供基于wrapper的模式进行更新-使用需要谨慎
-     * </p >
-     *
-     * @param updateWrapper
-     * @return int
-     * @author sikadai
-     * @since 2022/8/31 13:26
-     */
-    int update(Wrapper<PO> updateWrapper);
-
-    /**
-     * <p>
-     * 提供基于wrapper的模式进行更新-使用需要谨慎
-     * </p >
-     *
-     * @param po
-     * @param updateWrapper
-     * @return int
-     * @author sikadai
-     * @since 2022/8/31 13:26
-     */
-    int update(PO po, Wrapper<PO> updateWrapper);
-
+    boolean updateBatchById(List<T> entityList);
 
     /**
      * <p>
@@ -196,5 +106,7 @@ public interface BaseRepositoryMybatisPlus<PO extends BasePO<PRIMARY>, PRIMARY e
      * @author sikadai
      * @since 2022/9/1 19:55
      */
-    int insertBatchAndDupIgnore(List<PO> pos);
+    boolean insertBatchAndDupIgnore(List<T> pos);
+
+    Mapper getMapper();
 }

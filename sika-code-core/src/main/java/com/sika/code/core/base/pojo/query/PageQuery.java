@@ -2,15 +2,13 @@ package com.sika.code.core.base.pojo.query;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * User : sikadai
  * Date : 2017/1/23
  * Time : 13:17
  */
 @Data
-public class PageQuery<PRIMARY extends Serializable> extends BaseQuery<PRIMARY> {
+public class PageQuery extends BaseQuery {
     private Integer pageNum;
     private Integer pageSize;
     private Integer start;
