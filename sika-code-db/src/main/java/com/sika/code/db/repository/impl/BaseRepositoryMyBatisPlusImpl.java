@@ -13,8 +13,6 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.google.common.collect.Lists;
-import com.sika.code.core.base.pojo.po.BasePO;
-import com.sika.code.db.constant.DbConstant;
 import com.sika.code.db.mapper.BaseMapper;
 import com.sika.code.db.repository.BaseRepositoryMybatisPlus;
 import org.apache.ibatis.binding.MapperMethod;
@@ -30,7 +28,7 @@ import java.util.Objects;
  * @author daiqi
  * @create 2021-10-19 15:21
  */
-public abstract class BaseRepositoryMyBatisPlusImpl<T extends BasePO, M extends BaseMapper<T>> implements BaseRepositoryMybatisPlus<T, M> {
+public abstract class BaseRepositoryMyBatisPlusImpl<T, M extends BaseMapper<T>> implements BaseRepositoryMybatisPlus<T, M> {
     protected Log log = LogFactory.getLog(getClass());
 
     /**
@@ -67,6 +65,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T extends BasePO, M extends 
     /**
      * 批量插入
      */
+    @Override
     public boolean insertBatch(List<T> entityList) {
         return insertBatch(entityList, public_BATCH_SIZE);
     }
@@ -74,6 +73,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T extends BasePO, M extends 
     /**
      * 批量更新
      */
+    @Override
     public boolean updateBatchById(List<T> entityList) {
         return updateBatchById(entityList, public_BATCH_SIZE);
     }

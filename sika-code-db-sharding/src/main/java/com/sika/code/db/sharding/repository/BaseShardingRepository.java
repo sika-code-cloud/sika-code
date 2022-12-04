@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  * @since 2022/10/3 19:34
  */
-public interface BaseShardingRepository<PO extends BasePO, Mapper extends BaseMapper<PO>> extends BaseRepositoryMybatisPlus<PO, Mapper> {
+public interface BaseShardingRepository<PO, Mapper extends BaseMapper<PO>> extends BaseRepositoryMybatisPlus<PO, Mapper> {
 
     /**
      * 批量插入-分库分表
@@ -132,7 +132,7 @@ public interface BaseShardingRepository<PO extends BasePO, Mapper extends BaseMa
      * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int insertBatchAndDupIgnoreDbName(List<PO> pos, String dbName) {
+    default boolean insertBatchAndDupIgnoreDbName(List<PO> pos, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addDbName(dbName, false);

@@ -23,7 +23,7 @@ import java.util.List;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<PRIMARY>> {
+public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO> {
     /**
      * <p>
      * 传入DTO进行保存，并且返回持久化后转化的DTO
@@ -34,7 +34,7 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2018/12/6 9:32
      */
-    DTO saveAndRet(DTO dto);
+    DTO insertAndRet(DTO dto);
 
     /**
      * <p>
@@ -46,7 +46,7 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2018/12/6 9:32
      */
-    boolean save(DTO dto);
+    boolean insert(DTO dto);
 
     /**
      * <p>
@@ -58,7 +58,7 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2019/6/16 13:40
      */
-    List<DTO> saveBatchAndRet(List<DTO> dtos);
+    List<DTO> insertBatchAndRet(List<DTO> dtos);
 
     /**
      * <p>
@@ -70,7 +70,7 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2019/6/16 13:41
      */
-    boolean saveBatch(List<DTO> dtos);
+    boolean insertBatch(List<DTO> dtos);
 
     /**
      * 根据主键查询数据
@@ -87,19 +87,8 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery<PRIMARY>> DTO find(QUERY query);
+    <QUERY extends BaseQuery> DTO find(QUERY query);
 
-    /**
-     * <p>
-     * 根据查询条件对象获取id
-     * </p>
-     *
-     * @param query : 查询对象
-     * @return DTO
-     * @author daiqi
-     * @date 2018/12/3 16:58
-     */
-    <QUERY extends BaseQuery<PRIMARY>> PRIMARY findId(QUERY query);
 
     /**
      * <p>
@@ -111,19 +100,7 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery<PRIMARY>> List<DTO> list(QUERY query);
-
-    /**
-     * <p>
-     * 获取id列表
-     * </p>
-     *
-     * @param query
-     * @return java.manager.List<java.lang.Long>
-     * @author daiqi
-     * @date 2019/6/16 13:45
-     */
-    <QUERY extends BaseQuery<PRIMARY>> List<PRIMARY> listId(QUERY query);
+    <QUERY extends BaseQuery> List<DTO> list(QUERY query);
 
     /**
      * <p>
@@ -135,5 +112,5 @@ public interface BaseService<PRIMARY extends Serializable, DTO extends BaseDTO<P
      * @author daiqi
      * @date 2018/12/6 13:36
      */
-    <QUERY extends PageQuery<PRIMARY>> Page<DTO> page(QUERY query);
+    <QUERY extends PageQuery> Page<DTO> page(QUERY query);
 }

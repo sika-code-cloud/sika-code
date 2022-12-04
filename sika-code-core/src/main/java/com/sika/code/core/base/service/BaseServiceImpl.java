@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class BaseServiceImpl<PRIMARY extends Serializable, PO extends BasePO<PRIMARY>, DTO extends BaseDTO<PRIMARY>, Repository extends BaseRepository<PO, PRIMARY>> implements BaseService<PRIMARY, DTO> {
+public abstract class BaseServiceImpl<PRIMARY extends Serializable, PO extends BasePO, DTO extends BaseDTO, Repository extends BaseRepository<PO>> implements BaseService<PRIMARY, DTO> {
     protected Class<PO> poClass = currentPoClass();
     protected Class<DTO> dtoClass = currentDtoClass();
     protected Class<Repository> repositoryClass = currentRepositoryClass();
@@ -71,65 +71,55 @@ public abstract class BaseServiceImpl<PRIMARY extends Serializable, PO extends B
 
     @Override
     public DTO findByPrimaryKey(PRIMARY primaryKey) {
-        PO po = getRepository().findByPrimaryKey(primaryKey);
+        PO po = getRepository().selectById(primaryKey);
         return convertToDto(po);
     }
 
     @Override
-    public DTO saveAndRet(DTO dto) {
+    public DTO insertAndRet(DTO dto) {
         PO po = convertToPo(dto);
-        getRepository().saveRetId(po);
+        getRepository().insert(po);
         return convertToDto(po);
     }
 
     @Override
-    public boolean save(DTO dto) {
+    public boolean insert(DTO dto) {
         PO po = convertToPo(dto);
-        int count = getRepository().save(po);
+        int count = getRepository().insert(po);
         return count > 0;
     }
 
     @Override
-    public List<DTO> saveBatchAndRet(List<DTO> dtos) {
+    public List<DTO> insertBatchAndRet(List<DTO> dtos) {
         List<PO> pos = convertToPos(dtos);
-        int count = getRepository().saveBatch(pos);
-        if (count == 0) {
+        boolean flag = getRepository().insertBatch(pos);
+        if (!flag) {
             throw new BusinessException("批量保存失败");
         }
         return convertToDtos(pos);
     }
 
     @Override
-    public boolean saveBatch(List<DTO> dtos) {
+    public boolean insertBatch(List<DTO> dtos) {
         List<PO> pos = convertToPos(dtos);
-        int count = getRepository().saveBatch(pos);
-        return count > 0;
+        return getRepository().insertBatch(pos);
     }
 
     @Override
-    public <QUERY extends BaseQuery<PRIMARY>> DTO find(QUERY query) {
+    public <QUERY extends BaseQuery> DTO find(QUERY query) {
         PO po = getRepository().find(query);
         return convertToDto(po);
     }
 
-    @Override
-    public <QUERY extends BaseQuery<PRIMARY>> PRIMARY findId(QUERY query) {
-        return getRepository().findId(query);
-    }
 
     @Override
-    public <QUERY extends BaseQuery<PRIMARY>> List<DTO> list(QUERY query) {
+    public <QUERY extends BaseQuery> List<DTO> list(QUERY query) {
         List<PO> pos = getRepository().list(query);
         return convertToDtos(pos);
     }
 
     @Override
-    public <QUERY extends BaseQuery<PRIMARY>> List<PRIMARY> listId(QUERY query) {
-        return getRepository().listId(query);
-    }
-
-    @Override
-    public <QUERY extends PageQuery<PRIMARY>> Page<DTO> page(QUERY query) {
+    public <QUERY extends PageQuery> Page<DTO> page(QUERY query) {
         int totalCount = getRepository().count(query);
         List<DTO> DTOS;
         if (totalCount == 0) {
