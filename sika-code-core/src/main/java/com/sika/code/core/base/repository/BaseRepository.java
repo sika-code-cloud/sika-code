@@ -1,7 +1,6 @@
 package com.sika.code.core.base.repository;
 
 import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.pojo.query.PageQuery;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -74,7 +73,7 @@ public interface BaseRepository<T> {
      * @author daiqi
      * @date 2018/12/6 13:36
      */
-    <QUERY extends PageQuery> List<T> page(QUERY query);
+    <QUERY extends BaseQuery> List<T> page(QUERY query);
 
     /**
      * <p>

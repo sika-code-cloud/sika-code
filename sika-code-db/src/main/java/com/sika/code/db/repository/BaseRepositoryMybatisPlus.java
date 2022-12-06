@@ -3,7 +3,6 @@ package com.sika.code.db.repository;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.pojo.query.PageQuery;
 import com.sika.code.core.base.repository.BaseRepository;
 import com.sika.code.db.mapper.BaseMapper;
 
@@ -113,7 +112,7 @@ public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> exte
     }
 
     @Override
-    default <QUERY extends PageQuery> List<T> page(QUERY query) {
+    default <QUERY extends BaseQuery> List<T> page(QUERY query) {
         return null;
     }
 
