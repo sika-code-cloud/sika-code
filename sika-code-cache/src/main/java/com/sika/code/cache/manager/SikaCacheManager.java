@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Slf4j
-public class CacheManager {
+public class SikaCacheManager {
     protected static final Map<String, Cache<String, Object>> CACHE = Maps.newConcurrentMap();
     private static final String CNAT_NULL_MESSAGE = "缓存的数据传输对象不能为空";
 

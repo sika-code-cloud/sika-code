@@ -15,7 +15,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <ak-base-starter-ak-job.version>${revision}</ak-base-starter-ak-job.version>
-        <redisson.version>3.9.1</redisson.version>
+        <redisson.version>3.17.7</redisson.version>
     </properties>
     <dependencies>
         <dependency>
