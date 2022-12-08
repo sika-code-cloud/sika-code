@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.log4j.helpers.DateTimeDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +25,8 @@ import java.util.Set;
  */
 public class JSONUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .setDateFormat(new DateTimeDateFormat())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // 忽略反序列化对象不存在的属性
             .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     ; // 属性为空不序列化
