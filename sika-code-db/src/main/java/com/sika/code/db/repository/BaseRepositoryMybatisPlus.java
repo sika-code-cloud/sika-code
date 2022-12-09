@@ -103,22 +103,22 @@ public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> exte
 
     @Override
     default <QUERY extends BaseQuery> T find(QUERY query) {
-        return null;
+        return getMapper().find(query);
     }
 
     @Override
     default <QUERY extends BaseQuery> List<T> list(QUERY query) {
-        return null;
+        return getMapper().list(query);
     }
 
     @Override
     default <QUERY extends BaseQuery> List<T> page(QUERY query) {
-        return null;
+        return getMapper().page(query);
     }
 
     @Override
     default <Query extends BaseQuery> int count(Query query) {
-        return 0;
+        return getMapper().count(query);
     }
 
     @Override

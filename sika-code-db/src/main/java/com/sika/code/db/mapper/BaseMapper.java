@@ -2,7 +2,7 @@ package com.sika.code.db.mapper;
 
 
 import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.pojo.query.PageQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> T find(QUERY query);
+    <QUERY extends BaseQuery> T find(@Param(value = "query") QUERY query);
 
 
     /**
@@ -46,7 +46,7 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> List<T> list(QUERY query);
+    <QUERY extends BaseQuery> List<T> list(@Param(value = "query") QUERY query);
 
     /**
      * <p>
@@ -58,7 +58,7 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/6 13:36
      */
-    <QUERY extends PageQuery> List<T> page(QUERY query);
+    <QUERY extends BaseQuery> List<T> page(@Param(value = "query") QUERY query);
 
     /**
      * <p>
@@ -74,5 +74,5 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/6 11:51
      */
-    <Query extends BaseQuery> int count(Query query);
+    <Query extends BaseQuery> int count(@Param(value = "query") Query query);
 }
