@@ -28,7 +28,7 @@ import java.util.Objects;
  * @author daiqi
  * @create 2021-10-19 15:21
  */
-public abstract class BaseRepositoryMyBatisPlusImpl<T, M extends BaseMapper<T>> implements BaseRepositoryMybatisPlus<T, M> {
+public abstract class BaseRepositoryMyBatisPlusImpl<T, Q, M extends BaseMapper<T, Q>> implements BaseRepositoryMybatisPlus<T, Q, M> {
     protected Log log = LogFactory.getLog(getClass());
 
     /**
@@ -47,7 +47,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T, M extends BaseMapper<T>> 
     }
 
     protected Class<M> currentMapperClass() {
-        return (Class<M>) getSuperClassGenericType(1);
+        return (Class<M>) getSuperClassGenericType(2);
     }
 
     protected Class<T> currentModelClass() {

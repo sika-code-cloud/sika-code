@@ -1,6 +1,7 @@
 package com.sika.code.core.base.pojo.query;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * User : sikadai
@@ -8,18 +9,33 @@ import lombok.Data;
  * Time : 13:17
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class PageQuery extends BaseQuery {
-    private Integer pageNum;
-    private Integer pageSize;
-    private Integer start;
-    private String sortColumn;
-    private String sortType;
-    private Long startIndex;
+    protected Integer pageNum;
+    protected Integer pageSize;
+    protected Integer start;
+    protected String sortColumn;
+    protected String sortType;
+    protected Long startIndex;
 
     public PageQuery() {
         super();
+        buildParam();
+    }
+
+    public PageQuery(Integer pageSize) {
+        this.pageSize = pageSize;
+        buildParam();
+    }
+    public PageQuery(Long startIndex) {
+        this.startIndex = startIndex;
+        buildParam();
+    }
+
+    protected void buildParam() {
         this.pageNum = (this.pageNum == null || this.pageNum <= 0) ? 1 : this.pageNum;
         this.pageSize = (this.pageSize == null || this.pageSize <= 0) ? 10 : this.pageSize;
+        this.startIndex = (this.startIndex == null || this.startIndex <= 0) ? 0 : this.startIndex;
     }
 
     public Integer getStart() {

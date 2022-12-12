@@ -11,5 +11,5 @@ import java.util.Date;
  */
 @Data
 public abstract class BasePoJo implements Serializable {
-
+    private static final long serialVersionUID = 1L;
 }

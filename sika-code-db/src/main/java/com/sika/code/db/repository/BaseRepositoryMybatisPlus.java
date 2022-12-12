@@ -2,8 +2,7 @@ package com.sika.code.db.repository;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.repository.BaseRepository;
+import com.sika.code.core.base.pojo.query.PageQuery;
 import com.sika.code.db.mapper.BaseMapper;
 
 import java.io.Serializable;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @author daiqi
  * @create 2021-10-15 22:39
  */
-public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> extends BaseRepository<T> {
+public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>> extends BaseRepository<T, Q> {
     @Override
     default int insert(T entity) {
         return getMapper().insert(entity);
@@ -102,22 +101,22 @@ public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> exte
     }
 
     @Override
-    default <QUERY extends BaseQuery> T find(QUERY query) {
+    default T find(Q query) {
         return getMapper().find(query);
     }
 
     @Override
-    default <QUERY extends BaseQuery> List<T> list(QUERY query) {
+    default List<T> list(Q query) {
         return getMapper().list(query);
     }
 
     @Override
-    default <QUERY extends BaseQuery> List<T> page(QUERY query) {
-        return getMapper().page(query);
+    default List<T> pageCursor(Q query, PageQuery pageQuery) {
+        return getMapper().listCursor(query, pageQuery);
     }
 
     @Override
-    default <Query extends BaseQuery> int count(Query query) {
+    default int count(Q query) {
         return getMapper().count(query);
     }
 

@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  * @since 2022/10/3 19:34
  */
-public interface BaseShardingRepository<PO, Mapper extends BaseMapper<PO>> extends BaseRepositoryMybatisPlus<PO, Mapper> {
+public interface BaseShardingRepository<PO, Q, Mapper extends BaseMapper<PO, Q>> extends BaseRepositoryMybatisPlus<PO, Q, Mapper> {
 
     /**
      * 批量插入-分库分表
