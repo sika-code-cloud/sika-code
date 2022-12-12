@@ -1,9 +1,10 @@
 package ${package.Entity};
 
-import com.sika.code.core.base.pojo.po.BasePO;
+import com.sika.check.infrastructure.db.common.po.BaseBizCheckPO;
 import lombok.Getter;
 import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.EqualsAndHashCode;
 /**
  * <p>
  * ${table.comment!} 持久化类
@@ -15,7 +16,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @Getter
 @Setter
 @TableName("${table.name}")
-public class ${entity} extends BasePO<${sikaPrimaryType}> {
+@EqualsAndHashCode(callSuper = true)
+public class ${entity} extends BaseBizCheckPO {
     private static final long serialVersionUID = 1L;
     <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>

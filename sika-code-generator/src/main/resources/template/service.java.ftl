@@ -4,7 +4,8 @@ import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
 import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.check.infrastructure.common.core.page.TableDataInfo;
-import com.sika.code.core.base.service.BaseService;
+import java.util.List;
+import java.util.Collection;
 
 /**
  * <p>
@@ -18,27 +19,27 @@ public interface ${entity} {
     /**
      * 根据ID查询数据
      */
-    ${sikaEntityBodyName} queryById(${sikaPrimaryType} id);
+    ${sikaEntityBodyName}DTO queryById(${sikaPrimaryType} id);
 
     /**
      * 查询分页列表数据
      */
-    TableDataInfo<${sikaEntityBodyName}> queryPageList(${sikaEntityBodyName}Query query, MpPageQuery pageQuery);
+    TableDataInfo<${sikaEntityBodyName}DTO> queryPageList(${sikaEntityBodyName}Query query, MpPageQuery pageQuery);
 
     /**
      * 查询列表数据
      */
-    List<${sikaEntityBodyName}> queryList(${sikaEntityBodyName}Query query);
+    List<${sikaEntityBodyName}DTO> queryList(${sikaEntityBodyName}Query query);
 
     /**
      * 新增数据
      */
-    Boolean insert(${sikaEntityBodyName} dto);
+    Boolean insert(${sikaEntityBodyName}DTO dto);
 
     /**
      * 修改数据
      */
-    Boolean updateById(${sikaEntityBodyName} dto);
+    Boolean update(${sikaEntityBodyName}DTO dto);
 
     /**
      * 批量删除数据

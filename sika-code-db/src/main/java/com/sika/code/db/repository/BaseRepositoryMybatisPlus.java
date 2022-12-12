@@ -1,5 +1,7 @@
 package com.sika.code.db.repository;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -98,23 +100,94 @@ public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>
         return getMapper().selectPage(page, queryWrapper);
     }
 
+    /**
+     * 分页查询VO
+     */
+    default <C, P extends IPage<C>> P selectPage(IPage<T> page, Wrapper<T> wrapper, Class<C> retClass) {
+        IPage<T> pageData = this.selectPage(page, wrapper);
+        IPage<C> voPage = new Page<>(pageData.getCurrent(), pageData.getSize(), pageData.getTotal());
+        if (CollUtil.isEmpty(pageData.getRecords())) {
+            return (P) voPage;
+        }
+        voPage.setRecords(BeanUtil.toBeans(pageData.getRecords(), retClass));
+        return (P) voPage;
+    }
+
+    /**
+     * <p>
+     * 分页查询数据
+     * </p>
+     *
+     * @param page   : 分页对象
+     * @param query  : 查询条件
+     * @param rClass : 返回的类型class
+     * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<R>
+     * @author sikadai
+     * @since 2022/12/12 23:37
+     */
     default <R, P extends IPage<T>> Page<R> selectPage(P page, Q query, Class<R> rClass) {
         Wrapper<T> wrapper = getMapper().buildQueryWrapper(query);
-        P pageFromDb = selectPage(page, wrapper);
-        // 构建返回的page对象
-        Page<R> rPage = Page.of(pageFromDb.getCurrent(), pageFromDb.getSize(), pageFromDb.getTotal(), pageFromDb.searchCount());
-        // 设置records
-        rPage.setRecords(BeanUtil.toBeans(pageFromDb.getRecords(), rClass));
-        rPage.setOrders(pageFromDb.orders());
-        rPage.setMaxLimit(pageFromDb.maxLimit());
-        rPage.setCountId(pageFromDb.countId());
-        rPage.setOptimizeCountSql(pageFromDb.optimizeCountSql());
-        rPage.setOptimizeJoinOfCountSql(pageFromDb.optimizeJoinOfCountSql());
-        return rPage;
+        return selectPage(page, wrapper, rClass);
     }
 
     default <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, Wrapper<T> queryWrapper) {
         return getMapper().selectMapsPage(page, queryWrapper);
+    }
+
+    /**
+     * 根据 ID 查询
+     */
+    default <C> C selectById(Serializable id, Class<C> retClass) {
+        T obj = this.selectById(id);
+        if (ObjectUtil.isNull(obj)) {
+            return null;
+        }
+        return BeanUtil.toBean(obj, retClass);
+    }
+
+
+    /**
+     * 查询（根据ID 批量查询）
+     */
+    default <C> List<C> selectBatchIds(Collection<? extends Serializable> idList, Class<C> retClass) {
+        List<T> list = this.selectBatchIds(idList);
+        if (CollUtil.isEmpty(list)) {
+            return CollUtil.newArrayList();
+        }
+        return BeanUtil.toBeans(list, retClass);
+    }
+
+    /**
+     * 查询（根据 columnMap 条件）
+     */
+    default <C> List<C> selectByMap(Map<String, Object> map, Class<C> retClass) {
+        List<T> list = this.selectByMap(map);
+        if (CollUtil.isEmpty(list)) {
+            return CollUtil.newArrayList();
+        }
+        return BeanUtil.toBeans(list, retClass);
+    }
+
+    /**
+     * 根据 entity 条件，查询一条记录
+     */
+    default <C> C selectOne(Wrapper<T> wrapper, Class<C> retClass) {
+        T obj = this.selectOne(wrapper);
+        if (ObjectUtil.isNull(obj)) {
+            return null;
+        }
+        return BeanUtil.toBean(obj, retClass);
+    }
+
+    /**
+     * 根据 entity 条件，查询全部记录
+     */
+    default <C> List<C> selectList(Wrapper<T> wrapper, Class<C> retClass) {
+        List<T> list = this.selectList(wrapper);
+        if (CollUtil.isEmpty(list)) {
+            return CollUtil.newArrayList();
+        }
+        return BeanUtil.toBeans(list, retClass);
     }
 
     @Override
