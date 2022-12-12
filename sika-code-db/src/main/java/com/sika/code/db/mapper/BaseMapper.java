@@ -1,7 +1,10 @@
 package com.sika.code.db.mapper;
 
 
-import com.sika.code.core.base.pojo.query.BaseQuery;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.sika.code.core.base.pojo.query.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,7 +24,7 @@ import java.util.List;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
+public interface BaseMapper<T, Q> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
 
     /**
      * <p>
@@ -33,7 +36,10 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> T find(@Param(value = "query") QUERY query);
+    default T find(Q query) {
+        Wrapper<T> wrapper = buildQueryWrapper(query);
+        return selectOne(wrapper);
+    }
 
 
     /**
@@ -46,11 +52,14 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> List<T> list(@Param(value = "query") QUERY query);
+    default List<T> list(Q query) {
+        Wrapper<T> wrapper = buildQueryWrapper(query);
+        return selectList(wrapper);
+    }
 
     /**
      * <p>
-     * 根据查询条件获取分页列表信息
+     * 根据查询条件获取按照游标分页列表信息
      * </p>
      *
      * @param query : 查询对象
@@ -58,7 +67,9 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/6 13:36
      */
-    <QUERY extends BaseQuery> List<T> page(@Param(value = "query") QUERY query);
+    default List<T> listCursor(Q query, PageQuery pageQuery) {
+        throw new RuntimeException("请实现游标分页列表查询");
+    }
 
     /**
      * <p>
@@ -74,5 +85,11 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
      * @author daiqi
      * @date 2018/12/6 11:51
      */
-    <Query extends BaseQuery> int count(@Param(value = "query") Query query);
+    int count(Q query);
+
+    Wrapper<T> buildQueryWrapper(Q q);
+
+    default String buildLimit(PageQuery pageQuery) {
+        return " limit " + pageQuery.getPageSize();
+    }
 }

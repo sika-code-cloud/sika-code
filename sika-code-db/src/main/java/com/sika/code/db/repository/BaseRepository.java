@@ -1,6 +1,9 @@
-package com.sika.code.core.base.repository;
+package com.sika.code.db.repository;
 
-import com.sika.code.core.base.pojo.query.BaseQuery;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.util.BeanUtil;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -13,7 +16,7 @@ import java.util.Map;
  * @author daiqi
  * @create 2021-10-13 22:39
  */
-public interface BaseRepository<T> {
+public interface BaseRepository<T, Q> {
     int insert(T entity);
 
     int deleteById(Serializable id);
@@ -48,7 +51,7 @@ public interface BaseRepository<T> {
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> T find(QUERY query);
+    T find(Q query);
 
 
     /**
@@ -61,7 +64,15 @@ public interface BaseRepository<T> {
      * @author daiqi
      * @date 2018/12/3 16:58
      */
-    <QUERY extends BaseQuery> List<T> list(QUERY query);
+    List<T> list(Q query);
+
+    default <R> R find(Q query, Class<R> rClass) {
+        return BeanUtil.toBean(find(query), rClass);
+    }
+
+    default <R> List<R> list(Q query, Class<R> rClass) {
+        return BeanUtil.toBeans(list(query), rClass);
+    }
 
     /**
      * <p>
@@ -73,7 +84,7 @@ public interface BaseRepository<T> {
      * @author daiqi
      * @date 2018/12/6 13:36
      */
-    <QUERY extends BaseQuery> List<T> page(QUERY query);
+    List<T> pageCursor(Q query, PageQuery pageQuery);
 
     /**
      * <p>
@@ -89,7 +100,7 @@ public interface BaseRepository<T> {
      * @author daiqi
      * @date 2018/12/6 11:51
      */
-    <Query extends BaseQuery> int count(Query query);
+    int count(Q query);
 
 
 }

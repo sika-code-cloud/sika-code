@@ -1,7 +1,7 @@
 package ${package.Entity};
 
 import ${sikaPackage.Entity}.${sikaEntityBodyName}PO;
-import com.sika.code.core.base.repository.BaseRepository;
+import com.sika.code.db.repository.BaseRepository;
 
 /**
  * <p>

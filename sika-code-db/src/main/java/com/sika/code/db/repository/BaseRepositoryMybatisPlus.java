@@ -2,8 +2,9 @@ package com.sika.code.db.repository;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.sika.code.core.base.pojo.query.BaseQuery;
-import com.sika.code.core.base.repository.BaseRepository;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.util.BeanUtil;
 import com.sika.code.db.mapper.BaseMapper;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.Map;
  * @author daiqi
  * @create 2021-10-15 22:39
  */
-public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> extends BaseRepository<T> {
+public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>> extends BaseRepository<T, Q> {
     @Override
     default int insert(T entity) {
         return getMapper().insert(entity);
@@ -97,27 +98,50 @@ public interface BaseRepositoryMybatisPlus<T, Mapper extends BaseMapper<T>> exte
         return getMapper().selectPage(page, queryWrapper);
     }
 
+    default <R, P extends IPage<T>> Page<R> selectPage(P page, Q query, Class<R> rClass) {
+        Wrapper<T> wrapper = getMapper().buildQueryWrapper(query);
+        P pageFromDb = selectPage(page, wrapper);
+        // 构建返回的page对象
+        Page<R> rPage = Page.of(pageFromDb.getCurrent(), pageFromDb.getSize(), pageFromDb.getTotal(), pageFromDb.searchCount());
+        // 设置records
+        rPage.setRecords(BeanUtil.toBeans(pageFromDb.getRecords(), rClass));
+        rPage.setOrders(pageFromDb.orders());
+        rPage.setMaxLimit(pageFromDb.maxLimit());
+        rPage.setCountId(pageFromDb.countId());
+        rPage.setOptimizeCountSql(pageFromDb.optimizeCountSql());
+        rPage.setOptimizeJoinOfCountSql(pageFromDb.optimizeJoinOfCountSql());
+        return rPage;
+    }
+
     default <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, Wrapper<T> queryWrapper) {
         return getMapper().selectMapsPage(page, queryWrapper);
     }
 
     @Override
-    default <QUERY extends BaseQuery> T find(QUERY query) {
+    default T find(Q query) {
         return getMapper().find(query);
     }
 
     @Override
-    default <QUERY extends BaseQuery> List<T> list(QUERY query) {
+    default List<T> list(Q query) {
         return getMapper().list(query);
     }
 
-    @Override
-    default <QUERY extends BaseQuery> List<T> page(QUERY query) {
-        return getMapper().page(query);
+    default <R> R findRet(Q query, Class<R> rClass) {
+        return BeanUtil.toBean(find(query), rClass);
+    }
+
+    default <R> List<R> listRet(Q query, Class<R> rClass) {
+        return BeanUtil.toBeans(list(query), rClass);
     }
 
     @Override
-    default <Query extends BaseQuery> int count(Query query) {
+    default List<T> pageCursor(Q query, PageQuery pageQuery) {
+        return getMapper().listCursor(query, pageQuery);
+    }
+
+    @Override
+    default int count(Q query) {
         return getMapper().count(query);
     }
 
