@@ -2,7 +2,9 @@ package com.sika.code.db.repository;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.util.BeanUtil;
 import com.sika.code.db.mapper.BaseMapper;
 
 import java.io.Serializable;
@@ -96,6 +98,21 @@ public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>
         return getMapper().selectPage(page, queryWrapper);
     }
 
+    default <R, P extends IPage<T>> Page<R> selectPage(P page, Q query, Class<R> rClass) {
+        Wrapper<T> wrapper = getMapper().buildQueryWrapper(query);
+        P pageFromDb = selectPage(page, wrapper);
+        // 构建返回的page对象
+        Page<R> rPage = Page.of(pageFromDb.getCurrent(), pageFromDb.getSize(), pageFromDb.getTotal(), pageFromDb.searchCount());
+        // 设置records
+        rPage.setRecords(BeanUtil.toBeans(pageFromDb.getRecords(), rClass));
+        rPage.setOrders(pageFromDb.orders());
+        rPage.setMaxLimit(pageFromDb.maxLimit());
+        rPage.setCountId(pageFromDb.countId());
+        rPage.setOptimizeCountSql(pageFromDb.optimizeCountSql());
+        rPage.setOptimizeJoinOfCountSql(pageFromDb.optimizeJoinOfCountSql());
+        return rPage;
+    }
+
     default <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, Wrapper<T> queryWrapper) {
         return getMapper().selectMapsPage(page, queryWrapper);
     }
@@ -108,6 +125,14 @@ public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>
     @Override
     default List<T> list(Q query) {
         return getMapper().list(query);
+    }
+
+    default <R> R findRet(Q query, Class<R> rClass) {
+        return BeanUtil.toBean(find(query), rClass);
+    }
+
+    default <R> List<R> listRet(Q query, Class<R> rClass) {
+        return BeanUtil.toBeans(list(query), rClass);
     }
 
     @Override

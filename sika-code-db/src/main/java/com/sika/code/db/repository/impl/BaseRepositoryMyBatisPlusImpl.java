@@ -43,7 +43,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T, Q, M extends BaseMapper<T
     protected Class<T> poClass = currentModelClass();
 
     protected M currentMapper() {
-        return SpringUtil.getBean(currentMapperClass());
+        return SpringUtil.getBean(mapperClass);
     }
 
     protected Class<M> currentMapperClass() {
@@ -112,9 +112,9 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T, Q, M extends BaseMapper<T
      */
     public boolean insertOrUpdateBatch(List<T> entityList, int batchSize) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(this.currentModelClass());
-        com.baomidou.mybatisplus.core.toolkit.Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!");
+        Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!");
         String keyProperty = tableInfo.getKeyProperty();
-        com.baomidou.mybatisplus.core.toolkit.Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!");
+        Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!");
         return SqlHelper.saveOrUpdateBatch(this.currentModelClass(), this.currentMapperClass(), log, entityList, batchSize, (sqlSession, entity) -> {
             Object idVal = tableInfo.getPropertyValue(entity, keyProperty);
             String sqlStatement = SqlHelper.getSqlStatement(this.currentMapperClass(), SqlMethod.SELECT_BY_ID);
@@ -134,7 +134,7 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T, Q, M extends BaseMapper<T
     public boolean insertOrUpdate(T entity) {
         if (null != entity) {
             TableInfo tableInfo = TableInfoHelper.getTableInfo(this.currentModelClass());
-            com.baomidou.mybatisplus.core.toolkit.Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!");
+            Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!");
             String keyProperty = tableInfo.getKeyProperty();
             Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!");
             Object idVal = tableInfo.getPropertyValue(entity, tableInfo.getKeyProperty());

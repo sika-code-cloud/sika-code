@@ -1,6 +1,9 @@
 package com.sika.code.db.repository;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.util.BeanUtil;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -62,6 +65,14 @@ public interface BaseRepository<T, Q> {
      * @date 2018/12/3 16:58
      */
     List<T> list(Q query);
+
+    default <R> R find(Q query, Class<R> rClass) {
+        return BeanUtil.toBean(find(query), rClass);
+    }
+
+    default <R> List<R> list(Q query, Class<R> rClass) {
+        return BeanUtil.toBeans(list(query), rClass);
+    }
 
     /**
      * <p>
