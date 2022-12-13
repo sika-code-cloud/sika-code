@@ -1,30 +1,26 @@
 package ${package.Entity};
 
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
 import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Service}.${sikaEntityBodyName}Service;
+
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.sika.check.infrastructure.common.annotation.Log;
 import com.sika.check.infrastructure.common.annotation.RepeatSubmit;
 import com.sika.check.infrastructure.common.core.controller.BaseController;
-import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.check.infrastructure.common.core.domain.R;
 import com.sika.check.infrastructure.common.core.page.TableDataInfo;
-import com.sika.check.infrastructure.common.core.validate.AddGroup;
-import com.sika.check.infrastructure.common.core.validate.EditGroup;
+import com.sika.check.infrastructure.common.core.validate.*;
 import com.sika.check.infrastructure.common.enums.BusinessType;
 import com.sika.check.infrastructure.common.utils.poi.ExcelUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,44 +39,45 @@ public class ${entity} extends BaseController {
 
     private final ${sikaEntityBodyName}Service ${sikaEntityBodyName?uncap_first}Service;
 
+
     /**
      * 查询${table.comment!}列表
      */
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:list")
-    @GetMapping("/list")
-    public TableDataInfo<${sikaEntityBodyName}DTO> list(${sikaEntityBodyName}Query query, MpPageQuery pageQuery) {
-        return ${sikaEntityBodyName?uncap_first}Service.queryPageList(query, pageQuery);
+    @SaCheckPermission("${sikaEntityBodyName}:page")
+    @PostMapping("/page")
+        public TableDataInfo<${sikaEntityBodyName}DTO> list(@Validated(PageGroup.class) @RequestBody ${sikaEntityBodyName}Query query) {
+        return ${sikaEntityBodyName?uncap_first}Service.queryPageList(query);
     }
 
     /**
      * 导出${table.comment!}列表
      */
     @Log(title = "${table.comment!}", businessType = BusinessType.EXPORT)
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:export")
+    @SaCheckPermission("${sikaEntityBodyName}:export")
     @PostMapping("/export")
-    public void export(${sikaEntityBodyName}Query query, HttpServletResponse response) {
-    List<${sikaEntityBodyName}DTO> list = ${sikaEntityBodyName?uncap_first}Service.queryList(query);
+    public void export(@RequestBody ${sikaEntityBodyName}Query query, HttpServletResponse response) {
+        List<${sikaEntityBodyName}DTO> list = ${sikaEntityBodyName?uncap_first}Service.queryList(query);
         ExcelUtil.exportExcel(list, "${table.comment!}", ${sikaEntityBodyName}DTO.class, response);
     }
 
     /**
      * 获取${table.comment!}详细信息
      *
-     * @param id 主键
+     * @param query 主键
      */
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:query")
-    @GetMapping("/{id}")
-    public R<${sikaEntityBodyName}DTO> getInfo(@NotNull(message = "主键不能为空") @PathVariable Long id) {
-        return R.ok(${sikaEntityBodyName?uncap_first}Service.queryById(id));
+    @SaCheckPermission("${sikaEntityBodyName}:get")
+    @PostMapping("/get")
+    public R<${sikaEntityBodyName}DTO> getInfo(@Validated(GetGroup.class) @RequestBody ${sikaEntityBodyName}Query query) {
+        return R.ok(${sikaEntityBodyName?uncap_first}Service.queryById(query.getId()));
     }
 
     /**
      * 新增${table.comment!}
      */
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:add")
+    @SaCheckPermission("${sikaEntityBodyName}:add")
     @Log(title = "${table.comment!}", businessType = BusinessType.INSERT)
     @RepeatSubmit()
-    @PostMapping()
+    @PostMapping("add")
     public R<Void> add(@Validated(AddGroup.class) @RequestBody ${sikaEntityBodyName}DTO dto) {
         return toAjax(${sikaEntityBodyName?uncap_first}Service.insert(dto) ? 1 : 0);
     }
@@ -88,23 +85,23 @@ public class ${entity} extends BaseController {
     /**
      * 修改${table.comment!}
      */
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:edit")
+    @SaCheckPermission("${sikaEntityBodyName}:edit")
     @Log(title = "${table.comment!}", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
-    @PutMapping()
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody ${sikaEntityBodyName}DTO bo) {
-        return toAjax(${sikaEntityBodyName?uncap_first}Service.update(bo) ? 1 : 0);
+    @PostMapping("edit")
+    public R<Void> edit(@Validated(EditGroup.class) @RequestBody ${sikaEntityBodyName}DTO dto) {
+        return toAjax(${sikaEntityBodyName?uncap_first}Service.update(dto) ? 1 : 0);
     }
 
     /**
      * 删除${table.comment!}
      *
-     * @param ids 主键串
+     * @param dto 主键串
      */
-    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:remove")
+    @SaCheckPermission("${sikaEntityBodyName}:remove")
     @Log(title = "${table.comment!}", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ids}")
-    public R<Void> remove(@NotEmpty(message = "主键不能为空") @PathVariable Long[] ids) {
-        return toAjax(${sikaEntityBodyName?uncap_first}Service.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
+    @PostMapping("/remove")
+    public R<Void> remove(@Validated(DeleteIdsGroup.class) @RequestBody ${sikaEntityBodyName}DTO dto) {
+        return toAjax(${sikaEntityBodyName?uncap_first}Service.deleteWithValidByIds(dto.getIds(), true) ? 1 : 0);
     }
 }

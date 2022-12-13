@@ -155,7 +155,7 @@ public class GeneratorExecutor {
         generateRepositoryTest();
         generateServiceTest();
         if (generatorDTO.getGenerateController()) {
-            generateControllerTest();
+//            generateControllerTest();
         }
     }
 

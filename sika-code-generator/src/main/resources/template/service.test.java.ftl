@@ -28,7 +28,6 @@ public class ${entity} extends BaseTestService {
     @Resource
     private ${sikaEntityBodyName}Service ${sikaEntityBodyName?uncap_first}Service;
 
-
     @Test
     public void testQueryById() {
         Long key = 1L;
@@ -39,8 +38,7 @@ public class ${entity} extends BaseTestService {
     @Test
     public void testQueryPageList() {
         ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
-        MpPageQuery pageQuery = new MpPageQuery();
-        TableDataInfo<${sikaEntityBodyName}DTO> tableDataInfo = ${sikaEntityBodyName?uncap_first}Service.queryPageList(${sikaEntityBodyName?uncap_first}Query, pageQuery);
+        TableDataInfo<${sikaEntityBodyName}DTO> tableDataInfo = ${sikaEntityBodyName?uncap_first}Service.queryPageList(${sikaEntityBodyName?uncap_first}Query, ${sikaEntityBodyName?uncap_first}Query.getPageQuery());
         Assert.assertNotNull(tableDataInfo);
     }
 
@@ -81,6 +79,8 @@ public class ${entity} extends BaseTestService {
         <#list table.fields as field>
         ${sikaEntityBodyName?uncap_first}Query.set${field.capitalName}(null);
         </#list>
+        MpPageQuery pageQuery = new MpPageQuery();
+        ${sikaEntityBodyName?uncap_first}Query.setPageQuery(pageQuery);
         return ${sikaEntityBodyName?uncap_first}Query;
     }
 }

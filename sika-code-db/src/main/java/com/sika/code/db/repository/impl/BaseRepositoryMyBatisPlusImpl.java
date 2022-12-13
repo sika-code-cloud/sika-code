@@ -38,12 +38,12 @@ public abstract class BaseRepositoryMyBatisPlusImpl<T, Q, M extends BaseMapper<T
     /**
      * 只需要动态获取一次即可
      */
-    protected M m = currentMapper();
     protected Class<M> mapperClass = currentMapperClass();
     protected Class<T> poClass = currentModelClass();
+    protected M m = currentMapper();
 
     protected M currentMapper() {
-        return SpringUtil.getBean(mapperClass);
+        return SpringUtil.getBean(currentMapperClass());
     }
 
     protected Class<M> currentMapperClass() {
