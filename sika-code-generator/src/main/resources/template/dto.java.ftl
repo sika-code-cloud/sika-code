@@ -4,7 +4,11 @@ import com.sika.check.infrastructure.common.pojo.dto.BaseCheckDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
-
+<#list table.importPackages as pkg>
+<#if pkg != 'com.baomidou.mybatisplus.annotation.TableName'>
+import ${pkg};
+</#if>
+</#list>
 /**
  * <p>
  * ${table.comment!} 更新命令类

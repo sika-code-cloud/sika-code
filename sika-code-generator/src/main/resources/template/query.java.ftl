@@ -4,7 +4,11 @@ import com.sika.check.infrastructure.common.pojo.query.BaseCheckQuery;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
-
+<#list table.importPackages as pkg>
+<#if pkg != 'com.baomidou.mybatisplus.annotation.TableName'>
+import ${pkg};
+</#if>
+</#list>
 import java.util.List;
 
 /**

@@ -125,6 +125,7 @@ public class GeneratorExecutor {
     private void generateInfrastructureDb() {
         generatorMapperNew();
         generatorPO();
+//        generatorVO();
     }
 
     private void generateDomain() {
@@ -270,6 +271,13 @@ public class GeneratorExecutor {
     private void generatorPO() {
         generatorCore("",
                 "po.java",
+                buildPackage(getEntityName(), "po"),
+                generatorDTO.getInfrastructureDbOutDir(),
+                generatorDTO.getInfrastructureDbParent());
+    }
+    private void generatorVO() {
+        generatorCore("VO",
+                "valueObject.java",
                 buildPackage(getEntityName(), "po"),
                 generatorDTO.getInfrastructureDbOutDir(),
                 generatorDTO.getInfrastructureDbParent());

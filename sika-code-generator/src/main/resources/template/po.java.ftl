@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.EqualsAndHashCode;
+<#list table.importPackages as pkg>
+<#if pkg != 'com.baomidou.mybatisplus.annotation.TableName'>
+import ${pkg};
+</#if>
+</#list>
 /**
  * <p>
  * ${table.comment!} 持久化类
