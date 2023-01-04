@@ -7,7 +7,6 @@ import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
 import ${sikaPackage.Entity}.${sikaEntityBodyName};
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.check.infrastructure.common.core.page.TableDataInfo;
 import com.sika.code.core.base.constant.BaseConstant;
 import com.sika.code.core.util.BeanUtil;
@@ -42,7 +41,7 @@ public class ${entity} implements ${sikaEntityBodyName}Service {
      * 查询对账核心配置列表
      */
     @Override
-    public TableDataInfo<${sikaEntityBodyName}DTO> queryPageList(${sikaEntityBodyName}Query query, MpPageQuery pageQuery) {
+    public TableDataInfo<${sikaEntityBodyName}DTO> queryPageList(${sikaEntityBodyName}Query query) {
         Page<${sikaEntityBodyName}DTO> result = ${sikaEntityBodyName ? uncap_first}Repository.selectPage(pageQuery.build(), query, ${sikaEntityBodyName}DTO.class);
         return TableDataInfo.build(result);
     }

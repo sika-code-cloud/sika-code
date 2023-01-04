@@ -2,7 +2,6 @@ package ${package.Entity};
 
 import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
-import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.check.infrastructure.common.core.page.TableDataInfo;
 import java.util.List;
 import java.util.Collection;
@@ -24,7 +23,7 @@ public interface ${entity} {
     /**
      * 查询分页列表数据
      */
-    TableDataInfo<${sikaEntityBodyName}DTO> queryPageList(${sikaEntityBodyName}Query query, MpPageQuery pageQuery);
+    TableDataInfo<${sikaEntityBodyName}DTO> queryPageList(${sikaEntityBodyName}Query query);
 
     /**
      * 查询列表数据

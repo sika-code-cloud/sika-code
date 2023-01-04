@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -43,9 +44,9 @@ public class ${entity} extends BaseController {
     /**
      * 查询${table.comment!}列表
      */
-    @SaCheckPermission("${sikaEntityBodyName}:page")
-    @PostMapping("/page")
-        public TableDataInfo<${sikaEntityBodyName}DTO> list(@Validated(PageGroup.class) @RequestBody ${sikaEntityBodyName}Query query) {
+    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:list")
+    @PostMapping("/list")
+    public TableDataInfo<${sikaEntityBodyName}DTO> list(@RequestBody ${sikaEntityBodyName}Query query) {
         return ${sikaEntityBodyName?uncap_first}Service.queryPageList(query);
     }
 
@@ -53,7 +54,7 @@ public class ${entity} extends BaseController {
      * 导出${table.comment!}列表
      */
     @Log(title = "${table.comment!}", businessType = BusinessType.EXPORT)
-    @SaCheckPermission("${sikaEntityBodyName}:export")
+    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:export")
     @PostMapping("/export")
     public void export(@RequestBody ${sikaEntityBodyName}Query query, HttpServletResponse response) {
         List<${sikaEntityBodyName}DTO> list = ${sikaEntityBodyName?uncap_first}Service.queryList(query);
@@ -74,7 +75,7 @@ public class ${entity} extends BaseController {
     /**
      * 新增${table.comment!}
      */
-    @SaCheckPermission("${sikaEntityBodyName}:add")
+    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:add")
     @Log(title = "${table.comment!}", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("add")
@@ -85,7 +86,7 @@ public class ${entity} extends BaseController {
     /**
      * 修改${table.comment!}
      */
-    @SaCheckPermission("${sikaEntityBodyName}:edit")
+    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:edit")
     @Log(title = "${table.comment!}", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("edit")
@@ -98,10 +99,10 @@ public class ${entity} extends BaseController {
      *
      * @param dto 主键串
      */
-    @SaCheckPermission("${sikaEntityBodyName}:remove")
+    @SaCheckPermission("${sikaEntityBodyName?uncap_first}:remove")
     @Log(title = "${table.comment!}", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@Validated(DeleteIdsGroup.class) @RequestBody ${sikaEntityBodyName}DTO dto) {
+    public R<Void> remove(@NotNull(message = "删除对象不能为空") @RequestBody ${sikaEntityBodyName}Query dto) {
         return toAjax(${sikaEntityBodyName?uncap_first}Service.deleteWithValidByIds(dto.getIds(), true) ? 1 : 0);
     }
 }

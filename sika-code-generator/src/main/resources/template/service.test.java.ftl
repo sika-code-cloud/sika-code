@@ -6,7 +6,6 @@ import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
 import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
 import ${sikaApplicationClassName};
 
-import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.check.infrastructure.common.core.page.TableDataInfo;
 import com.sika.code.core.base.test.BaseTestService;
 import org.junit.Assert;
@@ -79,8 +78,6 @@ public class ${entity} extends BaseTestService {
         <#list table.fields as field>
         ${sikaEntityBodyName?uncap_first}Query.set${field.capitalName}(null);
         </#list>
-        MpPageQuery pageQuery = new MpPageQuery();
-        ${sikaEntityBodyName?uncap_first}Query.setPageQuery(pageQuery);
         return ${sikaEntityBodyName?uncap_first}Query;
     }
 }
