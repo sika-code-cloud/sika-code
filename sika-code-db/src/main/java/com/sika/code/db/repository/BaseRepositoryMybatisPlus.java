@@ -55,6 +55,9 @@ public interface BaseRepositoryMybatisPlus<T, Q, Mapper extends BaseMapper<T, Q>
         return getMapper().updateById(entity);
     }
 
+    default int update(Wrapper<T> updateWrapper) {
+        return update(null, updateWrapper);
+    }
     default int update(T entity, Wrapper<T> updateWrapper) {
         return getMapper().update(entity, updateWrapper);
     }
