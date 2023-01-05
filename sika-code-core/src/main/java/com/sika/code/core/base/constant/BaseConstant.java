@@ -33,12 +33,12 @@ public class BaseConstant {
         /**
          * 删除状态---0---未删
          */
-        NO(0, "未删"),
+        NO("0", "未删"),
         /**
          * 删除状态---1---已删
          */
-        YES(1, "已删");
-        private Integer type;
+        YES("1", "已删");
+        private String type;
         private String desc;
 
     }
@@ -49,12 +49,12 @@ public class BaseConstant {
         /**
          * 可用状态---0---不可用
          */
-        NO(0, "不可用"),
+        NO("0", "不可用"),
         /**
          * 可用状态---1---可用
          */
-        YES(1, "可用");
-        private Integer type;
+        YES("1", "可用");
+        private String type;
         private String desc;
 
         public static boolean available(Integer available) {
