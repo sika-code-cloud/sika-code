@@ -29,7 +29,7 @@ public class BaseConstant {
      */
     @Getter
     @AllArgsConstructor
-    public enum IsDeletedEnum implements BaseTypeEnum {
+    public enum IsDeletedEnum implements BaseTypeEnum<String> {
         /**
          * 删除状态---0---未删
          */
@@ -45,7 +45,7 @@ public class BaseConstant {
 
     @Getter
     @AllArgsConstructor
-    public enum AvailableEnum implements BaseTypeEnum<Integer> {
+    public enum AvailableEnum implements BaseTypeEnum<String> {
         /**
          * 可用状态---0---不可用
          */
