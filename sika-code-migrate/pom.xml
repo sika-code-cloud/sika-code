@@ -15,13 +15,11 @@
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.dtflys.forest</groupId>
             <artifactId>forest-spring-boot-starter</artifactId>
-            <version>${forest.version}</version>
         </dependency>
 
     </dependencies>

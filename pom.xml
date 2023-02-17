@@ -55,6 +55,8 @@
         <disruptor.version>3.4.4</disruptor.version>
         <caffeine.version>2.8.0</caffeine.version>
         <forest.version>1.5.25</forest.version>
+        <shardingsphere.version>5.3.1</shardingsphere.version>
+        <redisson.version>3.17.7</redisson.version>
 
         <!-- spring-boot依赖版本号 -->
         <spring-boot-dependencies.version>2.7.5</spring-boot-dependencies.version>
@@ -65,6 +67,48 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--子模块依赖-->
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-db</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-generator</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-batch</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-db-sharding</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-migrate</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-job</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--子模块依赖-->
             <!-- 集成spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -72,6 +116,117 @@
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+            <!--redisson-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- lombok支持 这一款Java开发插件，1:简化冗余的JavaBean代码 2:大大提高JavaBean中方法的执行效率 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>tlog-all-spring-boot-starter</artifactId>
+                <version>${tlog.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sika-code-cloud</groupId>
+                <artifactId>sika-code-db</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -193,7 +348,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                <!-- 自动替换${reversion}插件 -->
+                    <!-- 自动替换${reversion}插件 -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>flatten-maven-plugin</artifactId>
