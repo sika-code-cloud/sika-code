@@ -36,18 +36,11 @@ public class IdUtil extends cn.hutool.core.util.IdUtil {
         if (snowflakeFromCache != null) {
             return snowflakeFromCache;
         }
-        return doGetSnowflake(tClazz);
-    }
-
-    private static synchronized Snowflake doGetSnowflake(Class<?> tClazz) {
-        Snowflake snowflakeFromCache = POOL.get(tClazz);
-        if (snowflakeFromCache != null) {
-            return snowflakeFromCache;
-        }
         snowflakeFromCache = new Snowflake();
         POOL.put(tClazz, snowflakeFromCache);
         return snowflakeFromCache;
     }
+
     /**
      * <p>
      * 根据实体的类名-生成对应的雪花算法对象-避免共用雪花对象-生成雪花ID

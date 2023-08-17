@@ -12,5 +12,5 @@ import java.io.Serializable;
  * @create 2021-10-13 0:42
  */
 @Data
-public abstract class BasePO extends BasePoJo {
+public abstract class BasePO<PRIMARY extends Serializable> extends BasePoJo<PRIMARY> {
 }

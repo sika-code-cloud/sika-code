@@ -1,14 +1,8 @@
 package ${package.Entity};
 
-import com.sika.check.infrastructure.common.pojo.query.BaseCheckQuery;
+import com.sika.code.core.base.pojo.query.PageQuery;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.EqualsAndHashCode;
-<#list table.importPackages as pkg>
-<#if pkg != 'com.baomidou.mybatisplus.annotation.TableName'>
-import ${pkg};
-</#if>
-</#list>
 import java.util.List;
 
 /**
@@ -21,8 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-public class ${entity} extends BaseCheckQuery {
+public class ${entity} extends PageQuery<${sikaPrimaryType}> {
     private static final long serialVersionUID = 1L;
     <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>

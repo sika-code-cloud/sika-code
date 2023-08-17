@@ -1,12 +1,11 @@
 package ${package.Entity};
 
-import ${sikaPackage.Entity}.${sikaEntityBodyName};
+import ${sikaPackage.Entity}.${sikaEntityBodyName}PO;
 import ${sikaPackage.Mapper}.${sikaEntityBodyName}Mapper;
-import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
 import ${sikaPackage.Repository}.${sikaEntityBodyName}Repository;
-import com.sika.check.domain.common.base.repository.impl.BaseCheckRepositoryImpl;
+import com.sika.code.db.repository.impl.BaseRepositoryMyBatisPlusImpl;
 import org.springframework.stereotype.Repository;
-import lombok.RequiredArgsConstructor;
+import cn.hutool.core.lang.Assert;
 
 /**
  * <p>
@@ -17,8 +16,13 @@ import lombok.RequiredArgsConstructor;
  * @since ${date}
  */
 @Repository
-@RequiredArgsConstructor
-public class ${entity} extends BaseCheckRepositoryImpl<${sikaEntityBodyName}${r","} ${sikaEntityBodyName}Query${r","} ${sikaEntityBodyName}Mapper> implements ${sikaEntityBodyName}Repository {
+public class ${entity} extends BaseRepositoryMyBatisPlusImpl<${sikaEntityBodyName}PO${r","} ${sikaPrimaryType}, ${sikaEntityBodyName}Mapper> implements ${sikaEntityBodyName}Repository {
 
+    @Override
+    public void verify${sikaEntityBodyName}UnExistById(${sikaPrimaryType} id) {
+        Assert.notNull(id, "${table.comment!}主键ID不能为空");
+        ${sikaEntityBodyName}PO po = findByPrimaryKey(id);
+        Assert.notNull(po, "主键【{}】对应的${table.comment!}数据不存在，请核实", id);
+    }
 }
 

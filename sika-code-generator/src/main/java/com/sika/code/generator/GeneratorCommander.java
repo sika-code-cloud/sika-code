@@ -25,7 +25,7 @@ public class GeneratorCommander {
     private final String BASE_PACKAGE_PATH_PREFIX_FOR_JAVA = "src/main/java";
     private final String BASE_PACKAGE_PATH_PREFIX_FOR_JAVA_TEST = "src/test/java";
     private final String BASE_PACKAGE_PATH_PREFIX_FOR_XML = "src/main/resources";
-    private final String MODULE_PACKAGE = "{}.{}.biz";
+    private final String MODULE_PACKAGE = "{}.{}.business";
     private final String DB_URL_TEMPLATE = "jdbc:mysql://{}:{}/{}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
 
     public void doGenerator(GeneratorClientDTO clientDTO) {
@@ -66,8 +66,6 @@ public class GeneratorCommander {
             generatorDTO.setGenerateDomain(clientDTO.isGenerateDomain());
             generatorDTO.setApplicationClassName(clientDTO.getApplicationClassName());
             generatorDTO.setApplicationSimpleName(clientDTO.getApplicationSimpleName());
-            generatorDTO.setIgnoreColumns(clientDTO.getIgnoreColumns());
-            generatorDTO.setPrimaryKeyClass(clientDTO.getPrimaryKeyClass());
 
             new GeneratorExecutor(generatorDTO).generator();
         }

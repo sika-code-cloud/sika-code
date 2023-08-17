@@ -19,6 +19,7 @@
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-db</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

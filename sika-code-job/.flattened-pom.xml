@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>4.0.0</version>
+    <version>3.1.2</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code-job</artifactId>
-  <version>4.0.0</version>
+  <version>3.1.2</version>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -18,7 +18,7 @@
   </licenses>
   <properties>
     <ak-base-starter-ak-job.version>${revision}</ak-base-starter-ak-job.version>
-    <redisson.version>3.17.7</redisson.version>
+    <redisson.version>3.9.1</redisson.version>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
   </properties>
@@ -26,6 +26,7 @@
     <dependency>
       <groupId>io.github.sika-code-cloud</groupId>
       <artifactId>sika-code-core</artifactId>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -35,10 +36,12 @@
     <dependency>
       <groupId>com.dtflys.forest</groupId>
       <artifactId>forest-spring-boot-starter</artifactId>
+      <version>${forest.version}</version>
     </dependency>
     <dependency>
       <groupId>org.redisson</groupId>
       <artifactId>redisson</artifactId>
+      <version>${redisson.version}</version>
     </dependency>
   </dependencies>
 </project>

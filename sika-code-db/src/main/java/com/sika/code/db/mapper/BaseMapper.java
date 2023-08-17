@@ -2,11 +2,13 @@ package com.sika.code.db.mapper;
 
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.sika.code.core.base.pojo.query.PageQuery;
+import com.sika.code.core.base.pojo.po.BasePO;
+import com.sika.code.core.base.pojo.query.BaseQuery;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -24,52 +26,67 @@ import java.util.List;
  * @author daiqi
  * 创建时间    2018年2月9日 下午5:24:24
  */
-public interface BaseMapper<T, Q> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
+public interface BaseMapper<T extends BasePO<PRIMARY>, PRIMARY extends Serializable> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
+    /**
+     * <p>
+     * 根据查询条件获取继承BaseEntity的实体列表数据
+     * </p>
+     *
+     * @param query
+     * @return java.manager.List<T>
+     * @author daiqi
+     * @date 2018/12/3 16:45
+     */
+    <Query extends BaseQuery<PRIMARY>> List<T> list(@Param(value = "query") Query query);
 
     /**
      * <p>
-     * 根据查询条件对象获取PO对象
+     * 根据查询条件获取id列表
+     * </p>dm
+     *
+     * @param query
+     * @return java.manager.List<T>
+     * @author daiqi
+     * @date 2019/6/16 12:23
+     */
+    <Query extends BaseQuery<PRIMARY>> List<PRIMARY> listId(@Param(value = "query") Query query);
+
+    /**
+     * <p>
+     * 根据查询条件获取id
      * </p>
      *
-     * @param query : 查询对象
-     * @return PO
+     * @param query
+     * @return java.lang.Long
      * @author daiqi
-     * @date 2018/12/3 16:58
+     * @date 2019/6/16 12:24
      */
-    default T find(Q query) {
-        Wrapper<T> wrapper = buildQueryWrapper(query);
-        return selectOne(wrapper);
-    }
+    <Query extends BaseQuery<PRIMARY>> PRIMARY findId(@Param(value = "query") Query query);
 
 
     /**
      * <p>
-     * 根据查询条件对象获取PO列表数据
+     * 根据查询条件获取继承BaseEntity的实体数据
      * </p>
      *
-     * @param query : 查询对象
-     * @return PO
+     * @param query
+     * @return T
      * @author daiqi
-     * @date 2018/12/3 16:58
+     * @date 2019/1/9 14:58
      */
-    default List<T> list(Q query) {
-        Wrapper<T> wrapper = buildQueryWrapper(query);
-        return selectList(wrapper);
-    }
+    <Query extends BaseQuery<PRIMARY>> T find(@Param(value = "query") Query query);
 
     /**
      * <p>
-     * 根据查询条件获取按照游标分页列表信息
+     * 根据查询条件获取分页数据
      * </p>
      *
-     * @param query : 查询对象
-     * @return Page<PageItem>
+     * @param query
+     * @return java.manager.List<T>
      * @author daiqi
-     * @date 2018/12/6 13:36
+     * @date 2018/12/6 11:50
      */
-    default List<T> listCursor(Q query, PageQuery pageQuery) {
-        throw new RuntimeException("请实现游标分页列表查询");
-    }
+    <Query extends BaseQuery<PRIMARY>> List<T> page(@Param(value = "query") Query query);
 
     /**
      * <p>
@@ -85,11 +102,24 @@ public interface BaseMapper<T, Q> extends com.baomidou.mybatisplus.core.mapper.B
      * @author daiqi
      * @date 2018/12/6 11:51
      */
-    int count(Q query);
+    <Query extends BaseQuery<PRIMARY>> int count(@Param(value = "query") Query query);
 
-    Wrapper<T> buildQueryWrapper(Q q);
+    /**
+     * 自定义批量更新，条件为主键
+     * 如果要自动填充，@Param(xx) xx参数名必须是 list/collection/array 3个的其中之一
+     */
+    int updateBatchCaseWhen(@Param("list") List<T> list, @Param(Constants.WRAPPER) UpdateWrapper updateWrapper);
 
-    default String buildLimit(PageQuery pageQuery) {
-        return " limit " + pageQuery.getPageSize();
-    }
+    /**
+     * <p>
+     * 逻辑删除
+     * </p>
+     *
+     * @param updateWrapper
+     * @return int
+     * @author sikadai
+     * @since 2022/8/25 23:08
+     */
+    int logicDelete(@Param(Constants.WRAPPER) Wrapper updateWrapper);
+
 }

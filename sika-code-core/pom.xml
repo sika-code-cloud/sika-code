@@ -99,21 +99,25 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
         <!-- lombok支持 这一款Java开发插件，1:简化冗余的JavaBean代码 2:大大提高JavaBean中方法的执行效率 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
+            <version>${hutool-version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.yomahub</groupId>
             <artifactId>tlog-all-spring-boot-starter</artifactId>
+            <version>${tlog.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>cn.hutool</groupId>
@@ -148,6 +152,7 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

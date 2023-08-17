@@ -1,24 +1,17 @@
 package ${package.Entity};
 
 
-import ${sikaPackage.Repository}.${sikaEntityBodyName}Repository;
-import ${sikaPackage.PO}.${sikaEntityBodyName};
-import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
-import ${sikaPackage.DTO}.${sikaEntityBodyName}DTO;
-import ${sikaApplicationClassName};
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
-import com.sika.check.infrastructure.common.core.domain.MpPageQuery;
 import com.sika.code.core.base.test.BaseTestRepository;
+import com.google.common.collect.Lists;
+import ${sikaPackage.Repository}.${sikaEntityBodyName}Repository;
+import ${sikaPackage.PO}.${sikaEntityBodyName}PO;
+import ${sikaPackage.Query}.${sikaEntityBodyName}Query;
+import ${sikaApplicationClassName};
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
-
-
 
 /**
  * <p>
@@ -34,69 +27,89 @@ public class ${entity} extends BaseTestRepository {
     private ${sikaEntityBodyName}Repository ${sikaEntityBodyName?uncap_first}Repository;
 
     @Test
-    public void testSelectById() {
-        Long primaryKey = 1L;
-        ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = ${sikaEntityBodyName?uncap_first}Repository.selectById(primaryKey);
+    public void testFindByPrimaryKey() {
+        ${sikaPrimaryType} primaryKey = 1L;
+        ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = ${sikaEntityBodyName?uncap_first}Repository.findByPrimaryKey(primaryKey);
         Assert.assertNotNull(${sikaEntityBodyName?uncap_first}PO);
     }
 
     @Test
+    public void testUpdateSelectiveByPrimaryKey() {
+        ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}PO();
+        ${sikaEntityBodyName?uncap_first}PO.setId(null);
+        int count = ${sikaEntityBodyName?uncap_first}Repository.save(${sikaEntityBodyName?uncap_first}PO);
+        Assert.assertTrue(count > 0);
+    }
+
+    @Test
     public void testInsertSelectiveRetPrimaryKey() {
-        ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}();
-        int count = ${sikaEntityBodyName?uncap_first}Repository.insert(${sikaEntityBodyName?uncap_first}PO);
+        ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}PO();
+        Long primaryKey = ${sikaEntityBodyName?uncap_first}Repository.saveRetId(${sikaEntityBodyName?uncap_first}PO);
+        Assert.assertTrue(primaryKey > 0);
+    }
+
+    @Test
+    public void testInsertSelective() {
+        ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}PO();
+        int count = ${sikaEntityBodyName?uncap_first}Repository.save(${sikaEntityBodyName?uncap_first}PO);
         Assert.assertTrue(count > 0);
     }
 
     @Test
-    public void testUpdateById() {
-        ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}();
-        ${sikaEntityBodyName?uncap_first}PO.setId(1L);
-        int count = ${sikaEntityBodyName?uncap_first}Repository.updateById(${sikaEntityBodyName?uncap_first}PO);
+    public void testInsertBatchSelective() {
+        List<${sikaEntityBodyName}PO> pos = Lists.newArrayList();
+        for (int i = 0; i < 10; ++i) {
+            ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}PO();
+            pos.add(${sikaEntityBodyName?uncap_first}PO);
+        }
+        int count = ${sikaEntityBodyName?uncap_first}Repository.saveBatch(pos);
         Assert.assertTrue(count > 0);
     }
 
+
     @Test
-    public void testInsertBatch() {
-        List<${sikaEntityBodyName}> pos = Lists.newArrayList();
+    public void testUpdateBatchSelectiveByPrimaryKey() {
+        List<${sikaEntityBodyName}PO> pos = Lists.newArrayList();
         for (int i = 0; i < 10; ++i) {
-            ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}();
+            ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}PO();
             pos.add(${sikaEntityBodyName?uncap_first}PO);
         }
-        boolean flag = ${sikaEntityBodyName?uncap_first}Repository.insertBatch(pos);
-        Assert.assertTrue(flag);
-    }
-
-
-    @Test
-    public void testUpdateBatchById() {
-        List<${sikaEntityBodyName}> pos = Lists.newArrayList();
-        for (int i = 0; i < 10; ++i) {
-            ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = build${sikaEntityBodyName}();
-            pos.add(${sikaEntityBodyName?uncap_first}PO);
-        }
-        boolean flag = ${sikaEntityBodyName?uncap_first}Repository.updateBatchById(pos);
-        Assert.assertTrue(flag);
-    }
-
-    @Test
-    public void testPage() {
-        ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
-        MpPageQuery pageQuery = new MpPageQuery();
-        Page<${sikaEntityBodyName}DTO> pos = ${sikaEntityBodyName?uncap_first}Repository.selectPage(pageQuery.build(), ${sikaEntityBodyName?uncap_first}Query, ${sikaEntityBodyName}DTO.class);
-        Assert.assertTrue(pos.getSize() > 0);
+        int count = ${sikaEntityBodyName?uncap_first}Repository.saveBatch(pos);
+        Assert.assertTrue(count > 0);
     }
 
     @Test
     public void testFind() {
         ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
-        ${sikaEntityBodyName} po = ${sikaEntityBodyName?uncap_first}Repository.find(${sikaEntityBodyName?uncap_first}Query);
+        ${sikaEntityBodyName}PO po = ${sikaEntityBodyName?uncap_first}Repository.find(${sikaEntityBodyName?uncap_first}Query);
         Assert.assertNotNull(po);
+    }
+
+    @Test
+    public void testFindId() {
+        ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
+        Long primaryKey = ${sikaEntityBodyName?uncap_first}Repository.findId(${sikaEntityBodyName?uncap_first}Query);
+        Assert.assertTrue(primaryKey > 0);
     }
 
     @Test
     public void testList() {
         ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
-        List<${sikaEntityBodyName}> pos = ${sikaEntityBodyName?uncap_first}Repository.list(${sikaEntityBodyName?uncap_first}Query);
+        List<${sikaEntityBodyName}PO> pos = ${sikaEntityBodyName?uncap_first}Repository.list(${sikaEntityBodyName?uncap_first}Query);
+        Assert.assertTrue(pos.size() > 0);
+    }
+
+    @Test
+    public void testListId() {
+        ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
+        List<Long> primarys = ${sikaEntityBodyName?uncap_first}Repository.listId(${sikaEntityBodyName?uncap_first}Query);
+        Assert.assertTrue(primarys.size() > 0);
+    }
+
+    @Test
+    public void testPage() {
+        ${sikaEntityBodyName}Query ${sikaEntityBodyName?uncap_first}Query = build${sikaEntityBodyName}Query();
+        List<${sikaEntityBodyName}PO> pos = ${sikaEntityBodyName?uncap_first}Repository.page(${sikaEntityBodyName?uncap_first}Query);
         Assert.assertTrue(pos.size() > 0);
     }
 
@@ -107,8 +120,9 @@ public class ${entity} extends BaseTestRepository {
         Assert.assertTrue(count > 0);
     }
 
-    private ${sikaEntityBodyName} build${sikaEntityBodyName}() {
-        ${sikaEntityBodyName} ${sikaEntityBodyName?uncap_first}PO = new ${sikaEntityBodyName}();
+
+    private ${sikaEntityBodyName}PO build${sikaEntityBodyName}PO() {
+        ${sikaEntityBodyName}PO ${sikaEntityBodyName?uncap_first}PO = new ${sikaEntityBodyName}PO();
         ${sikaEntityBodyName?uncap_first}PO.setId(null);
     <#list table.fields as field>
         ${sikaEntityBodyName?uncap_first}PO.set${field.capitalName}(null);

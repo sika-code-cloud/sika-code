@@ -55,8 +55,6 @@ public class GeneratorDTO {
 
     private String applicationClassName;
     private String applicationSimpleName;
-    private String [] ignoreColumns = {"id", "create_date", "update_date",
-            "version", "available", "is_deleted", "remark"};
 
     public String getTablePrefix() {
         if (tablePrefix == null) {
@@ -84,12 +82,5 @@ public class GeneratorDTO {
             ignoreClass = Lists.newArrayList();
         }
         return ignoreClass;
-    }
-
-    public void setIgnoreClass(List<GenerratorClassEnum> ignoreClass) {
-        if (ignoreClass == null) {
-            return;
-        }
-        this.ignoreClass = ignoreClass;
     }
 }

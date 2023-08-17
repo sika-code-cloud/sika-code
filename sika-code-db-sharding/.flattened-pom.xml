@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>4.0.0</version>
+    <version>3.1.2</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code-db-sharding</artifactId>
-  <version>4.0.0</version>
+  <version>3.1.2</version>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -24,6 +24,7 @@
     <dependency>
       <groupId>io.github.sika-code-cloud</groupId>
       <artifactId>sika-code-db</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 </project>
