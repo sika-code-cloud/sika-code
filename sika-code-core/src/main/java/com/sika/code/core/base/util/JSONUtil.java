@@ -2,6 +2,7 @@ package com.sika.code.core.base.util;
 
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,7 +10,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,10 +33,25 @@ import java.util.Set;
  * @date 2017年12月5日 下午2:05:04
  */
 public class JSONUtil {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // 忽略反序列化对象不存在的属性
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    ; // 属性为空不序列化
+
+    private static final ObjectMapper OBJECT_MAPPER;
+
+    static {
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN);
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(formatter));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(formatter));
+        OBJECT_MAPPER = JsonMapper.builder()
+                .defaultDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN))
+                .addModule(javaTimeModule)
+                .addModule(new Jdk8Module())
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // 忽略反序列化对象不存在的属性
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                .build();
+    }
+
 
     /**
      * 将Object对象转换为json字符串，若不能转换将String.valueOf(obj)

@@ -29,32 +29,32 @@ public class BaseConstant {
      */
     @Getter
     @AllArgsConstructor
-    public enum IsDeletedEnum implements BaseTypeEnum {
+    public enum IsDeletedEnum implements BaseTypeEnum<String> {
         /**
          * 删除状态---0---未删
          */
-        NO(0, "未删"),
+        NO("0", "未删"),
         /**
          * 删除状态---1---已删
          */
-        YES(1, "已删");
-        private Integer type;
+        YES("1", "已删");
+        private String type;
         private String desc;
 
     }
 
     @Getter
     @AllArgsConstructor
-    public enum AvailableEnum implements BaseTypeEnum<Integer> {
+    public enum AvailableEnum implements BaseTypeEnum<String> {
         /**
          * 可用状态---0---不可用
          */
-        NO(0, "不可用"),
+        NO("0", "不可用"),
         /**
          * 可用状态---1---可用
          */
-        YES(1, "可用");
-        private Integer type;
+        YES("1", "可用");
+        private String type;
         private String desc;
 
         public static boolean available(Integer available) {

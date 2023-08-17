@@ -10,16 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sika-code-batch</artifactId>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
@@ -34,7 +28,6 @@
         <dependency>
             <groupId>com.dtflys.forest</groupId>
             <artifactId>forest-spring-boot-starter</artifactId>
-            <version>${forest.version}</version>
         </dependency>
 
     </dependencies>

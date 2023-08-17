@@ -28,6 +28,7 @@ import java.time.LocalDate;
  */
 public abstract class BaseJobTask<Context extends BaseJobContext> extends BaseEntityImpl<String> {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     protected void doExecute(String param) {
         // 1. 根据JOB参数构建上下文对象
@@ -117,7 +118,7 @@ public abstract class BaseJobTask<Context extends BaseJobContext> extends BaseEn
         try {
             return JSONUtil.parseObject(param, contextClass);
         } catch (Exception e) {
-            logger().error("从参数转化为上下文对象有误-请合适参数是否不符合JSON格式", e);
+            logger().error("从参数转化为上下文对象【{}】有误-请合适参数是否不符合JSON格式", param, e);
             return getContextForEmpty(contextClass);
         }
     }

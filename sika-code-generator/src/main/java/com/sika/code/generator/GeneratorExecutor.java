@@ -8,11 +8,11 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sika.code.core.base.util.JSONUtil;
 import com.sika.code.generator.constant.GenerratorClassEnum;
 import com.sika.code.generator.dto.GeneratorDTO;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -29,10 +29,13 @@ import java.util.Map;
  * @author daiqi
  * @create 2021-10-29 0:57
  */
-@AllArgsConstructor
 @Slf4j
 public class GeneratorExecutor {
     private final GeneratorDTO generatorDTO;
+
+    public GeneratorExecutor(GeneratorDTO generatorDTO) {
+        this.generatorDTO = generatorDTO;
+    }
 
     private List<TemplateType> getDisableTypes(List<TemplateType> needGenerateTemplateTypes) {
         if (CollUtil.isEmpty(needGenerateTemplateTypes)) {
@@ -122,6 +125,7 @@ public class GeneratorExecutor {
     private void generateInfrastructureDb() {
         generatorMapperNew();
         generatorPO();
+//        generatorVO();
     }
 
     private void generateDomain() {
@@ -152,7 +156,7 @@ public class GeneratorExecutor {
         generateRepositoryTest();
         generateServiceTest();
         if (generatorDTO.getGenerateController()) {
-            generateControllerTest();
+//            generateControllerTest();
         }
     }
 
@@ -229,11 +233,15 @@ public class GeneratorExecutor {
     }
 
     private void generatorMapperNew() {
+        String [] ignoreColumns = generatorDTO.getIgnoreColumns();
+        String [] tempIg = {""};
+        generatorDTO.setIgnoreColumns(tempIg);
         generatorCore("Mapper",
                 "mapper.java",
                 buildPackage(getEntityName(), "mapper"),
                 generatorDTO.getInfrastructureDbOutDir(),
                 generatorDTO.getInfrastructureDbParent());
+        generatorDTO.setIgnoreColumns(ignoreColumns);
     }
 
     private void generatorConvert() {
@@ -261,8 +269,15 @@ public class GeneratorExecutor {
     }
 
     private void generatorPO() {
-        generatorCore("PO",
+        generatorCore("",
                 "po.java",
+                buildPackage(getEntityName(), "po"),
+                generatorDTO.getInfrastructureDbOutDir(),
+                generatorDTO.getInfrastructureDbParent());
+    }
+    private void generatorVO() {
+        generatorCore("VO",
+                "valueObject.java",
                 buildPackage(getEntityName(), "po"),
                 generatorDTO.getInfrastructureDbOutDir(),
                 generatorDTO.getInfrastructureDbParent());
@@ -354,8 +369,7 @@ public class GeneratorExecutor {
                 .formatFileName(objPrefix + "%s" + objSuffix)
                 .disableSerialVersionUID()
                 .superClass(superClass)
-                .addIgnoreColumns("id", "create_date", "update_date",
-                        "version", "available", "is_deleted", "remark").build(); // 基于数据库字段
+                .addIgnoreColumns(generatorDTO.getIgnoreColumns()).build(); // 基于数据库字段
         generator.strategy(strategyConfig);
 
         // 类模板信息配置
@@ -403,20 +417,20 @@ public class GeneratorExecutor {
         if (generatorDTO.getIgnoreClass().contains(GenerratorClassEnum.XML)) {
             return;
         }
+        String entityBodyName = getEntityName();
         String tablePrefix = generatorDTO.getTablePrefix();
         String infrastructureXmlOutDir = generatorDTO.getMapperXmlOutDir();
         List<TemplateType> templateTypes = getDisableTypes(Lists.newArrayList(TemplateType.XML));
         AutoGenerator generator = new AutoGenerator(getDataSourceConfig());
         StrategyConfig strategyConfig = strategyConfig().addTablePrefix(tablePrefix)
                 .mapperBuilder()
-                .formatXmlFileName(generatorDTO.getTableName())
+                .formatXmlFileName(entityBodyName)
                 .enableBaseResultMap()
                 .enableBaseColumnList().build(); // 基于数据库字段
         GlobalConfig globalConfig = globalConfig().outputDir(infrastructureXmlOutDir).build();
         generator.global(globalConfig);
         Map<OutputFile, String> pathInfo = Maps.newHashMap();
         pathInfo.put(OutputFile.mapperXml, infrastructureXmlOutDir + "/mapper");
-        String entityBodyName = getEntityName();
         String moduleName = entityBodyName.toLowerCase();
         log.info("moduleName:{}", moduleName);
 

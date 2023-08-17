@@ -19,13 +19,11 @@
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
 
         <!-- 移除tomcat-jdbc连接池 -->

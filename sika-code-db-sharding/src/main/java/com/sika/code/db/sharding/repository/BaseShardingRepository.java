@@ -2,13 +2,11 @@ package com.sika.code.db.sharding.repository;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sika.code.core.base.pojo.po.BasePO;
 import com.sika.code.db.mapper.BaseMapper;
 import com.sika.code.db.repository.BaseRepositoryMybatisPlus;
 import com.sika.code.db.sharding.context.ShardingContext;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,23 +18,7 @@ import java.util.List;
  * @version 1.0
  * @since 2022/10/3 19:34
  */
-public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY extends Serializable, Mapper extends BaseMapper<PO, PRIMARY>> extends BaseRepositoryMybatisPlus<PO, PRIMARY, Mapper> {
-    /**
-     * 批量保存-分库分表
-     *
-     * @param pos           ： 批量保存的对象列表
-     * @param shardingValue ： 分库分表的值
-     * @return
-     */
-    default int saveBatchSharding(List<PO> pos, Object shardingValue) {
-        try {
-            verifyShardingValue(shardingValue);
-            ShardingContext.addShardValue(shardingValue, false);
-            return saveBatch(pos);
-        } finally {
-            ShardingContext.remove();
-        }
-    }
+public interface BaseShardingRepository<PO, Q, Mapper extends BaseMapper<PO, Q>> extends BaseRepositoryMybatisPlus<PO, Q, Mapper> {
 
     /**
      * 批量插入-分库分表
@@ -45,7 +27,7 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * @param shardingValue : 分库分表的值
      * @return
      */
-    default int insertBatchSharding(List<PO> pos, Object shardingValue) {
+    default boolean insertBatchSharding(List<PO> pos, Object shardingValue) {
         try {
             verifyShardingValue(shardingValue);
             ShardingContext.addShardValue(shardingValue, false);
@@ -59,15 +41,14 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * 批量更新-分库分表
      *
      * @param updatePos     ： 批量更新的对象列表
-     * @param wrapper       : 更新的wrapper
      * @param shardingValue : 分库分表的值
      * @return
      */
-    default int updateBatchSharding(List<PO> updatePos, UpdateWrapper wrapper, Object shardingValue) {
+    default boolean updateBatchSharding(List<PO> updatePos, Object shardingValue) {
         try {
             verifyShardingValue(shardingValue);
             ShardingContext.addShardValue(shardingValue, false);
-            return updateBatch(updatePos, wrapper);
+            return updateBatchById(updatePos);
         } finally {
             ShardingContext.remove();
         }
@@ -80,28 +61,11 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int insertBatchAndDupIgnoreSharding(List<PO> pos, String dbName) {
+    default boolean insertBatchAndDupIgnoreSharding(List<PO> pos, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addDbName(dbName, false);
             return insertBatchAndDupIgnore(pos);
-        } finally {
-            ShardingContext.remove();
-        }
-    }
-
-    /**
-     * 批量保存-分库分表
-     *
-     * @param pos    ： 批量保存的对象列表
-     * @param dbName ： 原始的数据库名称-适用于同表不同主体的分库模式
-     * @return
-     */
-    default int saveBatchDbName(List<PO> pos, String dbName) {
-        try {
-            verifyDbName(dbName);
-            ShardingContext.addDbName(dbName, false);
-            return saveBatch(pos);
         } finally {
             ShardingContext.remove();
         }
@@ -114,7 +78,7 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int insertBatchDbName(List<PO> pos, String dbName) {
+    default boolean insertBatchDbName(List<PO> pos, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addDbName(dbName, false);
@@ -128,15 +92,14 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * 批量更新-分库分表
      *
      * @param updatePos ： 批量更新的对象列表
-     * @param wrapper   : 更新的wrapper
      * @param dbName    : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int updateBatchDbName(List<PO> updatePos, UpdateWrapper wrapper, String dbName) {
+    default boolean updateBatchDbName(List<PO> updatePos, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addDbName(dbName, false);
-            return updateBatch(updatePos, wrapper);
+            return updateBatchById(updatePos);
         } finally {
             ShardingContext.remove();
         }
@@ -156,7 +119,7 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
             verifyShardingValue(shardingValue);
             ShardingContext.addShardValue(shardingValue, false);
             ShardingContext.addDbName(dbName, false);
-            return update(wrapper);
+            return update(null, wrapper);
         } finally {
             ShardingContext.remove();
         }
@@ -169,7 +132,7 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int insertBatchAndDupIgnoreDbName(List<PO> pos, String dbName) {
+    default boolean insertBatchAndDupIgnoreDbName(List<PO> pos, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addDbName(dbName, false);
@@ -187,7 +150,7 @@ public interface BaseShardingRepository<PO extends BasePO<PRIMARY>, PRIMARY exte
      * @param dbName : 原始的数据库名称-适用于同表不同主体的分库模式
      * @return
      */
-    default int insertBatchAndDupIgnoreDbName(List<PO> pos, Object shardingValue, String dbName) {
+    default boolean insertBatchAndDupIgnoreDbName(List<PO> pos, Object shardingValue, String dbName) {
         try {
             verifyDbName(dbName);
             ShardingContext.addShardValue(shardingValue, false);
