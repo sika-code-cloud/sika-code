@@ -27,7 +27,7 @@ public abstract class BasePoJo<PRIMARY extends Serializable> implements Serializ
     /**
      * 数据版本号-若逻辑删除-则该数据与ID保持一致
      */
-    private PRIMARY dataVersion;
+//    private PRIMARY dataVersion;
     /**
      * 可用标志", remark = "1:可用,0:不可用
      */
