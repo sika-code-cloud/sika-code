@@ -21,6 +21,7 @@
         <module>sika-code-cache</module>
         <module>sika-code-migrate</module>
         <module>sika-code-job</module>
+        <module>sika-code-monitor</module>
     </modules>
 
     <properties>
