@@ -1,24 +1,18 @@
 package com.sika.code.monitor.core.http;
 
+import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
+import com.sika.code.monitor.core.common.util.MetricsUtil;
+import io.micrometer.core.instrument.Tags;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.TimeUnit;
 
 class HttpClientInvokeTimedMetricsTest {
 
     @Test
     public void testStartAndStop() throws InterruptedException {
-        HttpClientInvokeTimedMetrics invokeTimedMetrics =
-                new HttpClientInvokeTimedMetrics("111", "11", "22");
-        invokeTimedMetrics.start(null);
-        TimeUnit.SECONDS.sleep(1);
-        invokeTimedMetrics.stop(null);
+        InvokeTimedMetrics invokeTimedMetrics =
+                new InvokeTimedMetrics(null,"http.client.invoke.timed", "HTTP客户端方法执行耗时");
+        Tags tags = Tags.of("domain", "domain").and("uri", "uri").and("method", "method.toUpperCase()");
+        MetricsUtil.collectInvokeTimed( invokeTimedMetrics, tags, 10L);
     }
 
-    @Test
-    public void testStartAndStop1() {
-        HttpClientInvokeTimedMetrics invokeTimedMetrics =
-                new HttpClientInvokeTimedMetrics("111", "11", "22");
-        invokeTimedMetrics.record(null, 10L);
-    }
 }
