@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.sika.code.monitor.core.common.configuration.MonitorPluginAutoConfiguration
+

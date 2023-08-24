@@ -1,5 +1,7 @@
 package com.sika.code.monitor.core.common.metrics;
 
+import cn.hutool.core.text.StrPool;
+import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -53,7 +55,7 @@ public class ThreadPoolMetrics implements MeterBinder {
     private void registerThreadPoolMetrics(MeterRegistry meterRegistry) {
         // prometheus会将指标转为自己的命名风格：threadPoolType.thread.pool.core.size
         // 定义标签
-        Tags tags = Tags.of("thread.pool.name", threadPoolName).and("thread.pool.type", threadPoolType);
+        Tags tags = buildTags(threadPoolName, threadPoolType);
         Gauge.builder(metricName("core.size"), executor, ThreadPoolExecutor::getCorePoolSize).description("核心线程数")
             .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
@@ -102,8 +104,12 @@ public class ThreadPoolMetrics implements MeterBinder {
         atomicLong.incrementAndGet();
     }
 
-    private static String metricName(String name) {
-        return String.join(".", DTP_METRIC_NAME_PREFIX, name);
+    public static String metricName(String name) {
+        return String.join(StrPool.DOT, DTP_METRIC_NAME_PREFIX, name);
+    }
+
+    public static Tags buildTags(String threadPoolName, String threadPoolType) {
+        return Tags.of("thread.pool.name", threadPoolName).and("thread.pool.type", threadPoolType);
     }
 
 }
