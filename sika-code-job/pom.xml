@@ -21,7 +21,6 @@
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
             <artifactId>sika-code-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
