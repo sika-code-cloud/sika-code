@@ -45,7 +45,7 @@
         <spring-extension.version>4.1.5.RELEASE</spring-extension.version>
         <fastjson.version>1.2.78</fastjson.version>
         <!-- jom依赖 -->
-        <snakeyaml.version>1.29</snakeyaml.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
         <junit.version>4.13.2</junit.version>
         <lombok.version>1.18.22</lombok.version>
         <mybatis-plus-boot-starter.version>3.4.3.4</mybatis-plus-boot-starter.version>
@@ -60,11 +60,12 @@
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
 
         <!-- spring-boot依赖版本号 -->
-        <spring-boot-dependencies.version>2.7.5</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.7.15</spring-boot-dependencies.version>
 
         <tlog.version>1.3.6</tlog.version>
         <orika.version>1.5.4</orika.version>
         <redisson.version>3.9.1</redisson.version>
+        <mysql-connector-java.version>8.0.31</mysql-connector-java.version>
     </properties>
 
     <dependencyManagement>
@@ -230,6 +231,16 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

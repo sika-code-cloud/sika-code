@@ -27,6 +27,16 @@ public final class AlgorithmNameConstants {
      */
     public static final String TWICE_HASH_COMPLEX_TO_DATASOURCE_MAPPING = "TWICE_HASH_COMPLEX_TO_DATASOURCE_MAPPING";
 
+    /**
+     * 数据处理算法名称
+     */
+    public static final String C_SHARDING_VALUE_ALGORITHM_NAME = "CUST_ID_SPECIAL_HASH_ALGORITHM";
+
+    /**
+     * 数据处理算法名称
+     */
+    public static final String O_SHARDING_VALUE_ALGORITHM_NAME = "ORDER_NO_SPECIAL_HASH_ALGORITHM";
+
     private AlgorithmNameConstants() {
     }
 }
