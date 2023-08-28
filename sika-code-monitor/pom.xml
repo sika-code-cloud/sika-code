@@ -9,7 +9,6 @@
         <version>${revision}</version>
     </parent>
 
-    <groupId>com.ysepay.base</groupId>
     <artifactId>sika-code-monitor</artifactId>
     <packaging>pom</packaging>
     <modules>
