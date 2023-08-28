@@ -86,12 +86,11 @@ public class ThreadPoolMetrics implements MeterBinder {
     }
 
     private static AtomicLong bindAndRetRejectTaskCount(ThreadPoolExecutor executor) {
-        AtomicLong rejectTaskCount = EXECUTOR_TASK_REJECT_COUNT.get(executor);
-        if (rejectTaskCount == null) {
-            rejectTaskCount = new AtomicLong(0);
-            EXECUTOR_TASK_REJECT_COUNT.put(executor, rejectTaskCount);
-        }
-        return rejectTaskCount;
+        return EXECUTOR_TASK_REJECT_COUNT.computeIfAbsent(executor, ThreadPoolMetrics::initAtomicLong);
+    }
+
+    private static AtomicLong initAtomicLong(ThreadPoolExecutor threadPoolExecutor) {
+        return new AtomicLong(0);
     }
 
     /**

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>sika-code-monitor-core</module>
+        <module>sika-code-monitor-client</module>
     </modules>
 
     <properties>

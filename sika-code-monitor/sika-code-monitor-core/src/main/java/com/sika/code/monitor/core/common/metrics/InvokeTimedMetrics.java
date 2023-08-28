@@ -24,15 +24,15 @@ public class InvokeTimedMetrics {
      * @param mqType        : 目标类名
      * @param group         : 目标方法名称
      * @param topic         : 目标方法名称
-     * @param invokeTime    : 执行的耗时时长-单位ms
+     * @param invokeTimeNs    : 执行的耗时时长-单位ns
      */
     public static void collectMqConsumeInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic,
-        String group, Long invokeTime) {
+        String group, Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("group", group).and("topic", topic);
         String metricsName = "mq.consume.invoke.timed";
         String metricsDesc = "MQ消费处理耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -41,15 +41,15 @@ public class InvokeTimedMetrics {
      * @param meterRegistry : 指标注册器
      * @param mqType        : 目标类名
      * @param topic         : 目标方法名称
-     * @param invokeTime    : 执行的耗时时长-单位ms
+     * @param invokeTimeNs    : 执行的耗时时长-单位ns
      */
     public static void collectMqProduceInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic,
-        Long invokeTime) {
+        Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("topic", topic);
         String metricsName = "mq.produce.invoke.timed";
         String metricsDesc = "MQ生产发送耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -58,15 +58,15 @@ public class InvokeTimedMetrics {
      * @param meterRegistry  : 指标注册器
      * @param sqlCommandType : 目标类名
      * @param methodName     : 目标方法名称
-     * @param invokeTime     : 执行的耗时时长-单位ms
+     * @param invokeTimeNs     : 执行的耗时时长-单位ns
      */
     public static void collectDBClientInvokeTimed(MeterRegistry meterRegistry, String sqlCommandType, String methodName,
-        Long invokeTime) {
+        Long invokeTimeNs) {
         Tags tags = Tags.of("sqlCommandType", sqlCommandType).and("methodName", methodName);
         String metricsName = "db.client.invoke.timed";
         String metricsDesc = "DB客户端方法执行耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -76,15 +76,15 @@ public class InvokeTimedMetrics {
      * @param domain        : 目标类名
      * @param uri           : 目标方法名称
      * @param method        : 目标方法参数类型列表
-     * @param invokeTime    : 执行的耗时时长-单位ms
+     * @param invokeTimeNs    : 执行的耗时时长-单位ns
      */
     public static void collectHttpClientInvokeTimed(MeterRegistry meterRegistry, String domain, String uri,
-        String method, Long invokeTime) {
+        String method, Long invokeTimeNs) {
         Tags tags = Tags.of("domain", domain).and("uri", uri).and("method", method.toUpperCase());
         String metricsName = "http.client.invoke.timed";
         String metricsDesc = "HTTP客户端方法执行耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -93,15 +93,15 @@ public class InvokeTimedMetrics {
      * @param meterRegistry : 指标注册器
      * @param uri           : 目标方法名称
      * @param method        : 目标方法参数类型列表
-     * @param invokeTime    : 执行的耗时时长-单位ms
+     * @param invokeTimeNs    : 执行的耗时时长-单位ns
      */
     public static void collectHttpServerInvokeTimed(MeterRegistry meterRegistry, String uri, String method,
-        Long invokeTime) {
+        Long invokeTimeNs) {
         Tags tags = Tags.of("uri", uri).and("method", method.toUpperCase());
         String metricsName = "http.server.invoke.timed";
         String metricsDesc = "HTTP服务端方法执行耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -111,17 +111,17 @@ public class InvokeTimedMetrics {
      * @param className      : 目标类名
      * @param methodName     : 目标方法名称
      * @param parameterTypes : 目标方法参数类型列表
-     * @param invokeTime     : 执行的耗时时长-单位ms
+     * @param invokeTimeNs     : 执行的耗时时长-单位ns
      */
     public static void collectDubboClientInvokeTimed(MeterRegistry meterRegistry, Class<?> className, String methodName,
-        Class<?>[] parameterTypes, Long invokeTime) {
+        Class<?>[] parameterTypes, Long invokeTimeNs) {
         String parameterTypeStr = Arrays.toString(parameterTypes);
         Tags tags = Tags.of("serviceName", className.getSimpleName()).and("methodName", methodName)
             .and("parameterTypes", parameterTypeStr);
         String metricsName = "dubbo.client.invoke.timed";
         String metricsDesc = "DUBBO客户端方法执行耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
@@ -131,46 +131,37 @@ public class InvokeTimedMetrics {
      * @param className      : 目标类名
      * @param methodName     : 目标方法名称
      * @param parameterTypes : 目标方法参数类型列表
-     * @param invokeTime     : 执行的耗时时长-单位ms
+     * @param invokeTimeNs     : 执行的耗时时长-单位ns
      */
     public static void collectDubboServerInvokeTimed(MeterRegistry meterRegistry, Class<?> className, String methodName,
-        Class<?>[] parameterTypes, Long invokeTime) {
+        Class<?>[] parameterTypes, Long invokeTimeNs) {
         String parameterTypeStr = Arrays.toString(parameterTypes);
         Tags tags = Tags.of("serviceName", className.getSimpleName()).and("methodName", methodName)
             .and("parameterTypes", parameterTypeStr);
         String metricsName = "dubbo.server.invoke.timed";
         String metricsDesc = "DUBBO服务端方法执行耗时";
-        InvokeTimedConfig invokeTimedConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
-        InvokeTimedMetrics.collectInvokeTimed(invokeTimedConfig, tags, invokeTime);
+        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, metricsName, metricsDesc);
+        InvokeTimedMetrics.collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     /**
-     * 核心收集执行耗时方法
+     * 收集执行时间
      *
-     * @param invokeTimedConfig : 执行指标
-     * @param tags              : 标签
-     * @param invokeTime        : 执行耗时
+     * @param invokeTimeNsdConfig - 执行的配置
+     * @param tags              - tag
+     * @param invokeTimeNs      - 纳秒值
      */
-    public static void collectInvokeTimed(InvokeTimedConfig invokeTimedConfig, Tags tags, Long invokeTime) {
-        MockClock clock = new MockClock();
-        Timer.Sample sample = Timer.start(clock);
-        clock.add(invokeTime, TimeUnit.MILLISECONDS);
-        stop(sample, invokeTimedConfig, tags);
-    }
-
-    /**
-     * 停止
-     */
-    private static void stop(Timer.Sample sample, InvokeTimedConfig invokeTimedConfig, Tags tags) {
+    public static void collectInvokeTimed(InvokeTimedConfig invokeTimeNsdConfig, Tags tags, Long invokeTimeNs) {
         try {
-            String metricsName = invokeTimedConfig.getMetricsName();
-            String metricsDescription = invokeTimedConfig.getMetricsDescription();
-            sample.stop(Timer.builder(metricsName).tags(tags).description(metricsDescription)
-                .publishPercentileHistogram(invokeTimedConfig.isPublishPercentileHistogram())
-                .publishPercentiles(invokeTimedConfig.getPublishPercentiles())
-                .register(invokeTimedConfig.getMeterRegistry()));
+            String metricsName = invokeTimeNsdConfig.getMetricsName();
+            String metricsDescription = invokeTimeNsdConfig.getMetricsDescription();
+            Timer timer = Timer.builder(metricsName).tags(tags).description(metricsDescription)
+                .publishPercentileHistogram(invokeTimeNsdConfig.isPublishPercentileHistogram())
+                .publishPercentiles(invokeTimeNsdConfig.getPublishPercentiles())
+                .register(invokeTimeNsdConfig.getMeterRegistry());
+            timer.record(invokeTimeNs, TimeUnit.NANOSECONDS);
         } catch (Exception e) {
-            invokeTimedConfig.getLogger().error(e.getMessage(), e);
+            invokeTimeNsdConfig.getLogger().error(e.getMessage(), e);
         }
     }
 

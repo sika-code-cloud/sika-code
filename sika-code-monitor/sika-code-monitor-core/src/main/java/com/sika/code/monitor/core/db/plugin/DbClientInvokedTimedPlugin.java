@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db;
+package com.sika.code.monitor.core.db.plugin;
 
 import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -15,10 +15,6 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * DbClientInvokedTimedPlugin
@@ -48,12 +44,12 @@ public class DbClientInvokedTimedPlugin implements Interceptor {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("sqlCommandType:{},methodName：{}", sqlCommandType.name(), methodName);
         }
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         try {
             return invocation.proceed();
         } finally {
             InvokeTimedMetrics.collectDBClientInvokeTimed(meterRegistry, sqlCommandType.name(), methodName,
-                System.currentTimeMillis() - startTime);
+                System.nanoTime() - startTime);
         }
     }
 }

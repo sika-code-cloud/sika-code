@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class InvokeTimedConfig {
 
-    protected static double[] DEFAULT_PUBLISH_PERCENTILES = new double[]{0.50, 0.90, 0.95, 0.99};
+    protected static double[] DEFAULT_PUBLISH_PERCENTILES = new double[]{0.50, 0.90, 0.95, 0.99, 0.999};
     protected Logger logger = LoggerFactory.getLogger(getClass());
     protected double[] publishPercentiles = DEFAULT_PUBLISH_PERCENTILES;
     protected boolean publishPercentileHistogram = false;

@@ -1,3 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.sika.code.monitor.core.common.configuration.MonitorPluginAutoConfiguration
+com.sika.code.monitor.core.db.configuration.DbMonitorAutoConfiguration,\
+com.sika.code.monitor.core.redis.lettuce.configuration.LettuceMetricsAutoConfiguration,\
+com.sika.code.monitor.core.tomcat.configuration.TomcatMetricsAutoConfig,\
+com.sika.code.monitor.core.processor.configuration.ProcessorMetricsAutoConfig,\
 

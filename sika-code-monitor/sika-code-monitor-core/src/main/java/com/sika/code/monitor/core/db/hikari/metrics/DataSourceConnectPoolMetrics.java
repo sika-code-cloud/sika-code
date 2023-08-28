@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db;
+package com.sika.code.monitor.core.db.hikari.metrics;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.zaxxer.hikari.HikariConfig;
@@ -10,10 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.util.Map;
