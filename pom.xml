@@ -48,7 +48,7 @@
         <snakeyaml.version>1.33</snakeyaml.version>
         <junit.version>4.13.2</junit.version>
         <lombok.version>1.18.22</lombok.version>
-        <mybatis-plus-boot-starter.version>3.4.3.4</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.3.2</mybatis-plus-boot-starter.version>
         <guava.version>31.0.1-jre</guava.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <hutool-version>5.8.9</hutool-version>

@@ -13,6 +13,14 @@ import static com.baomidou.mybatisplus.core.enums.SqlMethod.LOGIC_DELETE;
  */
 @Slf4j
 public class LogicDeleteMethod extends AbstractMethod {
+    /**
+     * @param methodName 方法名
+     * @since 3.5.0
+     */
+    public LogicDeleteMethod(String methodName) {
+        super(methodName);
+    }
+
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String set = "SET data_version = " + tableInfo.getKeyColumn() + ", is_deleted = 1, version = version + 1";

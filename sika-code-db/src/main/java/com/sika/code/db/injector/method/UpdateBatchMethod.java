@@ -12,6 +12,10 @@ import org.apache.ibatis.mapping.SqlSource;
  */
 @Slf4j
 public class UpdateBatchMethod extends AbstractMethod {
+    public UpdateBatchMethod(String methodName) {
+        super(methodName);
+    }
+
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         StringBuilder sqlResult = new StringBuilder();
@@ -24,8 +28,8 @@ public class UpdateBatchMethod extends AbstractMethod {
         StringBuilder whereSqlBuilder = buildWhereSql(tableInfo);
         sqlResult.append(updateTableBuilder).append(caseWhenSqlBuild).append(whereSqlBuilder);
         sqlResult.append("</script>");
-        if (log.isDebugEnabled()) {
-            log.debug("组装后的sql为:{}", sqlResult);
+        if (logger.isDebugEnabled()) {
+            logger.debug("组装后的sql为:" + sqlResult);
         }
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sqlResult.toString(), modelClass);
         return this.addUpdateMappedStatement(mapperClass, modelClass, "updateBatchCaseWhen", sqlSource);
