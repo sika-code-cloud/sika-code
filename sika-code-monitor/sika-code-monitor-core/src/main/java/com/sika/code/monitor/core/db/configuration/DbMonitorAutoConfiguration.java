@@ -34,7 +34,8 @@ public class DbMonitorAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnBean({ShardingSphereAutoConfiguration.class, HikariDataSource.class})
+    @ConditionalOnClass({HikariDataSource.class})
+    @ConditionalOnBean({ShardingSphereAutoConfiguration.class})
     public DataSourceConnectPoolMetrics dataSourceConnectPoolMetrics(MeterRegistry meterRegistry,
         ShardingSphereAutoConfiguration shardingSphereAutoConfiguration) {
         DataSourceConnectPoolMetrics dataSourceConnectPoolMetrics = new DataSourceConnectPoolMetrics();
