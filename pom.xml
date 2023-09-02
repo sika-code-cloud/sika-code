@@ -42,7 +42,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <spring-extension.version>4.1.5.RELEASE</spring-extension.version>
-        <fastjson.version>1.2.78</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <!-- jom依赖 -->
         <snakeyaml.version>1.29</snakeyaml.version>
         <junit.version>4.13.2</junit.version>
