@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class})
 @ConditionalOnBean(MeterRegistry.class)
+@ConditionalOnClass(ShardingSphereAutoConfiguration.class)
 public class DbMonitorAutoConfiguration {
 
     @Bean
