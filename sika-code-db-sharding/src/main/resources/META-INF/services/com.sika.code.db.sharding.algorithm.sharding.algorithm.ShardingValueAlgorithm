@@ -1,0 +1,2 @@
+ com.sika.code.db.sharding.algorithm.sharding.algorithm.CShardingValueAlgorithm
+ com.sika.code.db.sharding.algorithm.sharding.algorithm.OShardingValueAlgorithm
