@@ -1,6 +1,6 @@
-package com.sika.code.monitor.core.db.connect.hikari.configuration;
+package com.sika.code.monitor.core.db.connector.hikari.configuration;
 
-import com.sika.code.monitor.core.db.connect.hikari.metrics.HikariConnectPoolMetrics;
+import com.sika.code.monitor.core.db.connector.hikari.metrics.HikariConnectPoolMetrics;
 import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;

@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db.connect.hikari.metrics;
+package com.sika.code.monitor.core.db.connector.hikari.metrics;
 
 import cn.hutool.core.util.StrUtil;
 import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
@@ -6,7 +6,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
 
-import javax.sql.DataSource;
 import java.lang.reflect.Field;
 
 /**

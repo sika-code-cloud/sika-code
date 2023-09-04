@@ -9,6 +9,7 @@ import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import io.micrometer.core.instrument.binder.MeterBinder;
 import io.micrometer.core.lang.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author : daiqi
  * @date : 2023-06-15
  */
+@Slf4j
 public class ThreadPoolMetrics implements MeterBinder {
     private static final String DTP_METRIC_NAME_PREFIX = "thread.pool";
     /** 线程池实例 */
@@ -49,7 +51,9 @@ public class ThreadPoolMetrics implements MeterBinder {
 
     @Override
     public void bindTo(@NonNull MeterRegistry registry) {
+        log.info("线程池类型【{}】线程池名称【{}】加入监控开始", threadPoolType, threadPoolName);
         registerThreadPoolMetrics(registry);
+        log.info("线程池类型【{}】线程池名称【{}】加入监控成功", threadPoolType, threadPoolName);
     }
 
     private void registerThreadPoolMetrics(MeterRegistry meterRegistry) {
@@ -83,6 +87,11 @@ public class ThreadPoolMetrics implements MeterBinder {
         AtomicLong rejectTaskCount = bindAndRetRejectTaskCount(executor);
         FunctionCounter.builder(metricName("reject.task.count"), rejectTaskCount, AtomicLong::get)
             .baseUnit(BaseUnits.THREADS).description("已拒绝的任务量").tags(tags).register(meterRegistry);
+
+    }
+
+    private void doRegister() {
+
     }
 
     private static AtomicLong bindAndRetRejectTaskCount(ThreadPoolExecutor executor) {
@@ -99,8 +108,7 @@ public class ThreadPoolMetrics implements MeterBinder {
      * @param executor - 线程池对象
      */
     public static void incrementRejectTaskCount(ThreadPoolExecutor executor) {
-        AtomicLong atomicLong = bindAndRetRejectTaskCount(executor);
-        atomicLong.incrementAndGet();
+        bindAndRetRejectTaskCount(executor).incrementAndGet();
     }
 
     public static String metricName(String name) {

@@ -1,6 +1,6 @@
 package com.sika.code.monitor.core.tomcat.configuration;
 
-import com.sika.code.monitor.core.tomcat.metrics.TomcatThreadPoolMetrics;
+import com.sika.code.monitor.core.tomcat.metrics.TomcatThreadPoolMetricsManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -23,11 +23,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class})
 @ConditionalOnClass(value = {WebServerApplicationContext.class, ThreadPoolExecutor.class})
-@ConditionalOnBean({MeterRegistry.class, WebServerApplicationContext.class})
+@ConditionalOnBean({MeterRegistry.class})
 public class TomcatMetricsAutoConfig {
     @Bean
-    TomcatThreadPoolMetrics tomcatThreadPoolMetrics(MeterRegistry meterRegistry,
+    TomcatThreadPoolMetricsManager tomcatThreadPoolMetricsManager(MeterRegistry meterRegistry,
         WebServerApplicationContext webServerApplicationContext) {
-        return new TomcatThreadPoolMetrics(meterRegistry, webServerApplicationContext);
+        return new TomcatThreadPoolMetricsManager(meterRegistry, webServerApplicationContext);
     }
 }

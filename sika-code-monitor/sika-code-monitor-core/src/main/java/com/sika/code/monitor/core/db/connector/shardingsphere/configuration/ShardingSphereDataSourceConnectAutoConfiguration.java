@@ -1,7 +1,7 @@
-package com.sika.code.monitor.core.db.connect.shardingsphere.configuration;
+package com.sika.code.monitor.core.db.connector.shardingsphere.configuration;
 
-import com.sika.code.monitor.core.db.connect.hikari.metrics.HikariConnectPoolMetrics;
-import com.sika.code.monitor.core.db.connect.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectPoolMetrics;
+import com.sika.code.monitor.core.db.connector.hikari.metrics.HikariConnectPoolMetrics;
+import com.sika.code.monitor.core.db.connector.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
 import org.apache.shardingsphere.spring.boot.ShardingSphereAutoConfiguration;

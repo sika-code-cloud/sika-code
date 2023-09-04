@@ -12,6 +12,7 @@ public enum ThreadPoolTypeEnum {
     MQ("mq", "MQ线程池"),
     TOMCAT("tomcat", "tomcat线程池"),
     BUSINESS("business", "业务线程池"),
+    BUSINESS_HIPPO4J("business-hippo4j", "hippo4j业务线程池"),
     ;
     private final String name;
     private final String desc;

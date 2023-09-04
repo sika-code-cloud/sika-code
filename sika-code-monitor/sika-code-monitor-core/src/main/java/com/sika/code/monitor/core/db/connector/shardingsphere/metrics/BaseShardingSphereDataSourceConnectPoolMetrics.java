@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db.connect.shardingsphere.metrics;
+package com.sika.code.monitor.core.db.connector.shardingsphere.metrics;
 
 import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;

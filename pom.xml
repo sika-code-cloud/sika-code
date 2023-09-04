@@ -67,6 +67,7 @@
         <redisson.version>3.9.1</redisson.version>
         <mysql-connector-java.version>8.0.31</mysql-connector-java.version>
         <druid.version>1.2.16</druid.version>
+        <hippo4j.version>1.5.0</hippo4j.version>
     </properties>
 
     <dependencyManagement>
@@ -252,6 +253,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hippo4j</groupId>
+                <artifactId>hippo4j-config-spring-boot-starter</artifactId>
+                <scope>provided</scope>
+                <version>${hippo4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

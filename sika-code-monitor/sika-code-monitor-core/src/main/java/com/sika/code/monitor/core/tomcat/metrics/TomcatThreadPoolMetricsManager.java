@@ -1,17 +1,19 @@
 package com.sika.code.monitor.core.tomcat.metrics;
 
 import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
+import com.sika.code.monitor.core.common.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.BaseUnits;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.context.WebServerApplicationContext;
 import org.springframework.boot.web.embedded.tomcat.TomcatWebServer;
-import org.springframework.context.ApplicationListener;
 
 /**
  * TomcatThreadPoolMetrics
@@ -20,22 +22,13 @@ import org.springframework.context.ApplicationListener;
  * @date : 2023-06-25
  */
 @AllArgsConstructor
-public class TomcatThreadPoolMetrics implements ApplicationListener<ApplicationReadyEvent> {
+@Slf4j
+public class TomcatThreadPoolMetricsManager implements BaseMetricsManager {
     private final MeterRegistry meterRegistry;
     private final WebServerApplicationContext webServerApplicationContext;
 
-    private static final String DTP_METRIC_NAME_PREFIX = "thread.pool";
     private static final String THREAD_POOL_NAME = "tomcat.thread.pool";
 
-
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
-        //获取webServer线程池 - 待实现
-        ThreadPoolExecutor executor =
-            (ThreadPoolExecutor)((TomcatWebServer)webServerApplicationContext.getWebServer()).getTomcat().getConnector()
-                .getProtocolHandler().getExecutor();
-        monitor(executor, ThreadPoolTypeEnum.TOMCAT.getName());
-    }
 
     private void monitor(ThreadPoolExecutor executor, String threadPoolType) {
         // prometheus会将指标转为自己的命名风格：threadPoolType.thread.pool.core.size
@@ -68,7 +61,17 @@ public class TomcatThreadPoolMetrics implements ApplicationListener<ApplicationR
     }
 
     private static String metricName(String name) {
-        return String.join(".", DTP_METRIC_NAME_PREFIX, name);
+        return ThreadPoolMetrics.metricName(name);
     }
 
+    @Override
+    public void registerMetrics() {
+        log.info("线程池类型【{}】线程池名称【{}】加入监控开始", ThreadPoolTypeEnum.TOMCAT.getName(), THREAD_POOL_NAME);
+        //获取webServer线程池 - 待实现
+        ThreadPoolExecutor executor =
+            (ThreadPoolExecutor)((TomcatWebServer)webServerApplicationContext.getWebServer()).getTomcat().getConnector()
+                .getProtocolHandler().getExecutor();
+        monitor(executor, ThreadPoolTypeEnum.TOMCAT.getName());
+        log.info("线程池类型【{}】线程池名称【{}】加入监控成功", ThreadPoolTypeEnum.TOMCAT.getName(), THREAD_POOL_NAME);
+    }
 }
