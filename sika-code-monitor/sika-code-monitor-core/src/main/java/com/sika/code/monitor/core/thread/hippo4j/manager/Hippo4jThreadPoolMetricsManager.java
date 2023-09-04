@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.thread.hippo4j.manager;
 
+import cn.hippo4j.common.executor.support.CustomRejectedExecutionHandler;
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Hippo4jThreadPoolManager
@@ -33,5 +35,20 @@ public class Hippo4jThreadPoolMetricsManager implements BaseMetricsManager {
         for (DynamicThreadPoolExecutor threadPoolExecutor : dynamicThreadPoolExecutorMap.values()) {
             ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, ThreadPoolTypeEnum.BUSINESS_HIPPO4J, threadPoolExecutor.getThreadPoolId());
         }
+    }
+
+    public static void monitorRejected(Runnable r, ThreadPoolExecutor e, Class<? extends CustomRejectedExecutionHandler> rClass) {
+        String threadPrefix = "default-prefix";
+        if (e instanceof DynamicThreadPoolExecutor) {
+            threadPrefix = ((DynamicThreadPoolExecutor) e).getThreadPoolId();
+        }
+        log.warn("触发拒绝策略!" +
+                        "executing {} reject policy" +
+                        " threadPrefix: {}, Pool Size: {} (active: {}, core: {}, max: {}, largest: {}), Task: {} (completed: ",
+                rClass.getClass(),
+                threadPrefix, e.getPoolSize(), e.getActiveCount(), e.getCorePoolSize(), e.getMaximumPoolSize(),
+                e.getLargestPoolSize(),
+                e.getTaskCount());
+        ThreadPoolMetrics.incrementRejectTaskCount(e);
     }
 }
