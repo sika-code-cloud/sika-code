@@ -32,8 +32,8 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -51,6 +51,10 @@
             <artifactId>HikariCP</artifactId>
             <!-- 版本号可以不用指定，Spring Boot会选用合适的版本 -->
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

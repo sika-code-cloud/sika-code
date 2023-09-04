@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db.shardingsphere.metrics;
+package com.sika.code.monitor.core.db.connect.shardingsphere.metrics;
 
 import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -21,11 +21,8 @@ import java.util.Map;
 @Data
 public abstract class BaseShardingSphereDataSourceConnectPoolMetrics<T extends DataSource> extends BaseDataSourceConnectPoolMetrics<ShardingSphereDataSource> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseShardingSphereDataSourceConnectPoolMetrics.class);
-
-
     private ShardingSphereAutoConfiguration shardingSphereAutoConfiguration;
     private BaseDataSourceConnectPoolMetrics<T> sourceConnectPoolMetrics;
-
 
     /**
      * 注册shardingSphere数据源
@@ -48,7 +45,6 @@ public abstract class BaseShardingSphereDataSourceConnectPoolMetrics<T extends D
             LOGGER.error("监听shardingSphereDataSource失败", e);
         }
     }
-
 
     @Override
     public void metricRegistry(MeterRegistry meterRegistry, ShardingSphereDataSource dataSource, String poolName) {

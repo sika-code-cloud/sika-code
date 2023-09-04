@@ -66,6 +66,7 @@
         <orika.version>1.5.4</orika.version>
         <redisson.version>3.9.1</redisson.version>
         <mysql-connector-java.version>8.0.31</mysql-connector-java.version>
+        <druid.version>1.2.16</druid.version>
     </properties>
 
     <dependencyManagement>
@@ -241,6 +242,16 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

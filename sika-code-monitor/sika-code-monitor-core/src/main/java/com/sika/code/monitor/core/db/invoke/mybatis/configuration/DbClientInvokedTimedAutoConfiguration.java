@@ -1,6 +1,6 @@
-package com.sika.code.monitor.core.db.invoke.configuration;
+package com.sika.code.monitor.core.db.invoke.mybatis.configuration;
 
-import com.sika.code.monitor.core.db.invoke.plugin.DbClientInvokedTimedPlugin;
+import com.sika.code.monitor.core.db.invoke.mybatis.plugin.DbClientInvokedTimedPlugin;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;

@@ -1,11 +1,8 @@
-package com.sika.code.monitor.core.db.shardingsphere.configuration;
+package com.sika.code.monitor.core.db.connect.shardingsphere.configuration;
 
-import com.sika.code.monitor.core.db.hikari.metrics.HikariConnectPoolMetrics;
-import com.sika.code.monitor.core.db.invoke.plugin.DbClientInvokedTimedPlugin;
-import com.sika.code.monitor.core.db.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectPoolMetrics;
-import com.zaxxer.hikari.HikariDataSource;
+import com.sika.code.monitor.core.db.connect.hikari.metrics.HikariConnectPoolMetrics;
+import com.sika.code.monitor.core.db.connect.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
 import org.apache.shardingsphere.spring.boot.ShardingSphereAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -29,9 +26,9 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass({ShardingSphereAutoConfiguration.class, ShardingSphereDataSource.class})
 public class ShardingSphereDataSourceConnectAutoConfiguration {
 
-
     @Bean
     @ConditionalOnMissingBean({ShardingSphereHikariDataSourceConnectPoolMetrics.class})
+    @ConditionalOnBean({HikariConnectPoolMetrics.class})
     public ShardingSphereHikariDataSourceConnectPoolMetrics shardingSphereHikariDataSourceConnectPoolMetrics(HikariConnectPoolMetrics hikariConnectPoolMetrics,
                                                                  ShardingSphereAutoConfiguration shardingSphereAutoConfiguration) {
         ShardingSphereHikariDataSourceConnectPoolMetrics hikariPoolMetrics = new ShardingSphereHikariDataSourceConnectPoolMetrics();

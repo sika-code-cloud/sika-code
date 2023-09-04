@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.db.invoke.plugin;
+package com.sika.code.monitor.core.db.invoke.mybatis.plugin;
 
 import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;

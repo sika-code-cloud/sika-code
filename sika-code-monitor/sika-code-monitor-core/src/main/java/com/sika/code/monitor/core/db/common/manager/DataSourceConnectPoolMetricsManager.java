@@ -34,12 +34,18 @@ public class DataSourceConnectPoolMetricsManager implements ApplicationListener<
             return;
         }
         for (DataSource dataSource : dataSources.values()) {
+            LOGGER.info("数据源连接监控-当前数据源类为【{}】", dataSource.getClass());
+            boolean match = false;
             Map<String, BaseDataSourceConnectPoolMetrics> metricsMap = SpringUtil.getBeansOfType(BaseDataSourceConnectPoolMetrics.class);
             for (BaseDataSourceConnectPoolMetrics metrics : metricsMap.values()) {
                 Class<?> metricsClass = ReflectionKit.getSuperClassGenericType(metrics.getClass(), BaseDataSourceConnectPoolMetrics.class, 0);
                 if (metricsClass.equals(dataSource.getClass())) {
                     metrics.metricRegistry(meterRegistry, dataSource, null);
+                    match = true;
                 }
+            }
+            if (!match) {
+                LOGGER.info("【{}】未匹配到数据-跳过监控", dataSource.getClass());
             }
         }
 
