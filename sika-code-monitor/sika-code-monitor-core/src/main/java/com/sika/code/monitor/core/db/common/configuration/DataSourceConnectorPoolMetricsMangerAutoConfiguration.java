@@ -1,6 +1,6 @@
-package com.sika.code.monitor.core.common.config;
+package com.sika.code.monitor.core.db.common.configuration;
 
-import com.sika.code.monitor.core.common.manager.UnifyMetricsManagerHandler;
+import com.sika.code.monitor.core.db.common.manager.DataSourceConnectorPoolMetricsManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
@@ -18,10 +18,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class})
 @ConditionalOnBean({MeterRegistry.class})
-public class UnifyMetricsMangerAutoConfiguration {
+public class DataSourceConnectorPoolMetricsMangerAutoConfiguration {
+
     @Bean
-    public UnifyMetricsManagerHandler unifyMetricsManagerHandler() {
-        return new UnifyMetricsManagerHandler();
+    public DataSourceConnectorPoolMetricsManager dataSourceConnectPoolMetricsManager(MeterRegistry meterRegistry) {
+        return new DataSourceConnectorPoolMetricsManager(meterRegistry);
     }
 
 }

@@ -12,7 +12,7 @@ import javax.sql.DataSource;
  * @author daiqi
  * @create 2023-09-04 0:04
  */
-public abstract class BaseDataSourceConnectPoolMetrics<T extends DataSource> {
+public abstract class BaseDataSourceConnectorPoolMetrics<T extends DataSource> {
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     /**

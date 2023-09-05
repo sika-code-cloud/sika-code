@@ -1,6 +1,6 @@
 package com.sika.code.monitor.core.db.connector.shardingsphere.metrics;
 
-import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
+import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Data;
 import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
@@ -19,10 +19,11 @@ import java.util.Map;
  * @date : 2023-06-25
  */
 @Data
-public abstract class BaseShardingSphereDataSourceConnectPoolMetrics<T extends DataSource> extends BaseDataSourceConnectPoolMetrics<ShardingSphereDataSource> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseShardingSphereDataSourceConnectPoolMetrics.class);
+public abstract class BaseShardingSphereDataSourceConnectorPoolMetrics<T extends DataSource> extends
+    BaseDataSourceConnectorPoolMetrics<ShardingSphereDataSource> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseShardingSphereDataSourceConnectorPoolMetrics.class);
     private ShardingSphereAutoConfiguration shardingSphereAutoConfiguration;
-    private BaseDataSourceConnectPoolMetrics<T> sourceConnectPoolMetrics;
+    private BaseDataSourceConnectorPoolMetrics<T> sourceConnectPoolMetrics;
 
     /**
      * 注册shardingSphere数据源

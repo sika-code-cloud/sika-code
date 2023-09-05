@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 
 /**
  * 线程监控工具类
@@ -95,11 +96,7 @@ public class ThreadPoolMetrics implements MeterBinder {
     }
 
     private static AtomicLong bindAndRetRejectTaskCount(ThreadPoolExecutor executor) {
-        return EXECUTOR_TASK_REJECT_COUNT.computeIfAbsent(executor, ThreadPoolMetrics::initAtomicLong);
-    }
-
-    private static AtomicLong initAtomicLong(ThreadPoolExecutor threadPoolExecutor) {
-        return new AtomicLong(0);
+        return EXECUTOR_TASK_REJECT_COUNT.computeIfAbsent(executor, threadPoolExecutor -> new AtomicLong(0));
     }
 
     /**

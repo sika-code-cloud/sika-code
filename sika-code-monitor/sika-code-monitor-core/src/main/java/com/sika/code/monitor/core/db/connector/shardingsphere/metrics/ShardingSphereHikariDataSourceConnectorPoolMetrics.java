@@ -10,6 +10,7 @@ import lombok.Data;
  * @date : 2023-06-25
  */
 @Data
-public class ShardingSphereHikariDataSourceConnectPoolMetrics extends BaseShardingSphereDataSourceConnectPoolMetrics<HikariDataSource> {
+public class ShardingSphereHikariDataSourceConnectorPoolMetrics extends
+    BaseShardingSphereDataSourceConnectorPoolMetrics<HikariDataSource> {
 
 }

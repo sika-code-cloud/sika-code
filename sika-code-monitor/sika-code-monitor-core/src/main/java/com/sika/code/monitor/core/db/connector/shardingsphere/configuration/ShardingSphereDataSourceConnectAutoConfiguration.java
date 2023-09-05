@@ -1,7 +1,7 @@
 package com.sika.code.monitor.core.db.connector.shardingsphere.configuration;
 
-import com.sika.code.monitor.core.db.connector.hikari.metrics.HikariConnectPoolMetrics;
-import com.sika.code.monitor.core.db.connector.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectPoolMetrics;
+import com.sika.code.monitor.core.db.connector.hikari.metrics.HikariConnectorPoolMetrics;
+import com.sika.code.monitor.core.db.connector.shardingsphere.metrics.ShardingSphereHikariDataSourceConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
 import org.apache.shardingsphere.spring.boot.ShardingSphereAutoConfiguration;
@@ -27,13 +27,15 @@ import org.springframework.context.annotation.Configuration;
 public class ShardingSphereDataSourceConnectAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean({ShardingSphereHikariDataSourceConnectPoolMetrics.class})
-    @ConditionalOnBean({HikariConnectPoolMetrics.class})
-    public ShardingSphereHikariDataSourceConnectPoolMetrics shardingSphereHikariDataSourceConnectPoolMetrics(HikariConnectPoolMetrics hikariConnectPoolMetrics,
+    @ConditionalOnMissingBean({ShardingSphereHikariDataSourceConnectorPoolMetrics.class})
+    @ConditionalOnBean({HikariConnectorPoolMetrics.class})
+    public ShardingSphereHikariDataSourceConnectorPoolMetrics shardingSphereHikariDataSourceConnectorPoolMetrics(
+        HikariConnectorPoolMetrics hikariConnectorPoolMetrics,
                                                                  ShardingSphereAutoConfiguration shardingSphereAutoConfiguration) {
-        ShardingSphereHikariDataSourceConnectPoolMetrics hikariPoolMetrics = new ShardingSphereHikariDataSourceConnectPoolMetrics();
+        ShardingSphereHikariDataSourceConnectorPoolMetrics
+            hikariPoolMetrics = new ShardingSphereHikariDataSourceConnectorPoolMetrics();
         hikariPoolMetrics.setShardingSphereAutoConfiguration(shardingSphereAutoConfiguration);
-        hikariPoolMetrics.setSourceConnectPoolMetrics(hikariConnectPoolMetrics);
+        hikariPoolMetrics.setSourceConnectPoolMetrics(hikariConnectorPoolMetrics);
         return hikariPoolMetrics;
     }
 

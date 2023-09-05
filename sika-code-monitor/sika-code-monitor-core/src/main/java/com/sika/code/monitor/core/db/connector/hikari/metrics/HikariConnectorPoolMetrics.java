@@ -1,7 +1,7 @@
 package com.sika.code.monitor.core.db.connector.hikari.metrics;
 
 import cn.hutool.core.util.StrUtil;
-import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
+import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectorPoolMetrics;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  * @author : daiqi
  * @date : 2023-06-25
  */
-public class HikariConnectPoolMetrics extends BaseDataSourceConnectPoolMetrics<HikariDataSource> {
+public class HikariConnectorPoolMetrics extends BaseDataSourceConnectorPoolMetrics<HikariDataSource> {
     /**
      * 指标注册
      *
@@ -32,9 +32,6 @@ public class HikariConnectPoolMetrics extends BaseDataSourceConnectPoolMetrics<H
             if (dataSource.getMetricsTrackerFactory() != null) {
                 return;
             }
-            Field pollNameField = HikariConfig.class.getDeclaredField("poolName");
-            pollNameField.setAccessible(true);
-            pollNameField.set(dataSource, poolName);
             dataSource.setMetricRegistry(meterRegistry);
         } catch (Exception e) {
             LOGGER.error("监听" + poolName + "失败", e);

@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @date : 2023-08-24
  */
 @Configuration
-@AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, HikariDataSource.class, MeterRegistry.class})
+@AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, MeterRegistry.class})
 @ConditionalOnClass(DynamicThreadPoolExecutor.class)
 @ConditionalOnBean({MeterRegistry.class})
 public class Hippo4jThreadPoolAutoConfiguration {

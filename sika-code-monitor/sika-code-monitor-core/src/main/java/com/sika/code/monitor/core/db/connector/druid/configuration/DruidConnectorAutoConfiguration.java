@@ -1,6 +1,7 @@
-package com.sika.code.monitor.core.db.connector.hikari.configuration;
+package com.sika.code.monitor.core.db.connector.druid.configuration;
 
-import com.sika.code.monitor.core.db.connector.hikari.metrics.HikariConnectPoolMetrics;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.sika.code.monitor.core.db.connector.druid.metrics.DruidConnectorPoolMetrics;
 import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -18,14 +19,15 @@ import org.springframework.context.annotation.Configuration;
  * @date : 2023-08-24
  */
 @Configuration
-@AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, HikariDataSource.class, MeterRegistry.class})
-@ConditionalOnClass(HikariDataSource.class)
+@ConditionalOnClass(DruidDataSource.class)
+@AutoConfiguration(
+    after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, MeterRegistry.class})
 @ConditionalOnBean({MeterRegistry.class})
-public class HikariConnectAutoConfiguration {
+public class DruidConnectorAutoConfiguration {
 
     @Bean
-    public HikariConnectPoolMetrics hikariConnectPoolMetrics() {
-        return new HikariConnectPoolMetrics();
+    public DruidConnectorPoolMetrics druidConnectorPoolMetrics() {
+        return new DruidConnectorPoolMetrics();
     }
 
 }

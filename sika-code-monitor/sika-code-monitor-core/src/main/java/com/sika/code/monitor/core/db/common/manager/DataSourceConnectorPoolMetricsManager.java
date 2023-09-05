@@ -3,13 +3,12 @@ package com.sika.code.monitor.core.db.common.manager;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
-import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectPoolMetrics;
+import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
@@ -21,7 +20,7 @@ import java.util.Map;
  */
 @AllArgsConstructor
 @Data
-public class DataSourceConnectPoolMetricsManager implements BaseMetricsManager {
+public class DataSourceConnectorPoolMetricsManager implements BaseMetricsManager {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private MeterRegistry meterRegistry;
@@ -36,13 +35,13 @@ public class DataSourceConnectPoolMetricsManager implements BaseMetricsManager {
         for (DataSource dataSource : dataSources.values()) {
             LOGGER.info("数据源连接监控-当前数据源类为【{}】", dataSource.getClass());
             boolean match = false;
-            Map<String, BaseDataSourceConnectPoolMetrics> metricsMap =
-                SpringUtil.getBeansOfType(BaseDataSourceConnectPoolMetrics.class);
-            for (BaseDataSourceConnectPoolMetrics metrics : metricsMap.values()) {
+            Map<String, BaseDataSourceConnectorPoolMetrics> metricsMap =
+                SpringUtil.getBeansOfType(BaseDataSourceConnectorPoolMetrics.class);
+            for (BaseDataSourceConnectorPoolMetrics metrics : metricsMap.values()) {
                 Class<?> metricsClass =
-                    ReflectionKit.getSuperClassGenericType(metrics.getClass(), BaseDataSourceConnectPoolMetrics.class,
+                    ReflectionKit.getSuperClassGenericType(metrics.getClass(), BaseDataSourceConnectorPoolMetrics.class,
                         0);
-                if (metricsClass.equals(dataSource.getClass())) {
+                if (metricsClass.isAssignableFrom(dataSource.getClass())) {
                     metrics.metricRegistry(meterRegistry, dataSource, null);
                     match = true;
                 }

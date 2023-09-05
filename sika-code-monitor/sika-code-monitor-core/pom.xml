@@ -62,5 +62,10 @@
             <artifactId>hippo4j-config-spring-boot-starter</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
