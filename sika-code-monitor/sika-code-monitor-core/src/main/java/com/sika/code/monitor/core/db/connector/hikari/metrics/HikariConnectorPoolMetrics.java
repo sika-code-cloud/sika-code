@@ -32,6 +32,9 @@ public class HikariConnectorPoolMetrics extends BaseDataSourceConnectorPoolMetri
             if (dataSource.getMetricsTrackerFactory() != null) {
                 return;
             }
+            Field pollNameField = HikariConfig.class.getDeclaredField("poolName");
+            pollNameField.setAccessible(true);
+            pollNameField.set(dataSource, poolName);
             dataSource.setMetricRegistry(meterRegistry);
         } catch (Exception e) {
             LOGGER.error("监听" + poolName + "失败", e);

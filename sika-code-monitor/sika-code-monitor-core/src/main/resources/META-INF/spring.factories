@@ -2,7 +2,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.sika.code.monitor.core.common.config.UnifyMetricsMangerAutoConfiguration,\
 com.sika.code.monitor.core.db.common.configuration.DataSourceConnectorPoolMetricsMangerAutoConfiguration,\
 com.sika.code.monitor.core.db.connector.hikari.configuration.HikariConnectorAutoConfiguration,\
-com.sika.code.monitor.core.db.connector.shardingsphere.configuration.ShardingSphereDataSourceConnectAutoConfiguration,\
+com.sika.code.monitor.core.db.connector.shardingsphere.configuration.ShardingSphereConnectAutoConfiguration,\
 com.sika.code.monitor.core.db.connector.druid.configuration.DruidConnectorAutoConfiguration,\
 com.sika.code.monitor.core.db.invoke.mybatis.configuration.DbClientInvokedTimedAutoConfiguration,\
 com.sika.code.monitor.core.redis.lettuce.configuration.LettuceMetricsAutoConfiguration,\

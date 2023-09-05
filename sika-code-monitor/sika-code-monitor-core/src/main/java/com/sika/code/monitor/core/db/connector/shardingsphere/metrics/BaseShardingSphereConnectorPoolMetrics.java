@@ -13,15 +13,15 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
- * DataSourceConnectPoolMetrics
+ * BaseShardingSphereConnectorPoolMetrics
  *
  * @author : daiqi
  * @date : 2023-06-25
  */
 @Data
-public abstract class BaseShardingSphereDataSourceConnectorPoolMetrics<T extends DataSource> extends
+public abstract class BaseShardingSphereConnectorPoolMetrics<T extends DataSource> extends
     BaseDataSourceConnectorPoolMetrics<ShardingSphereDataSource> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseShardingSphereDataSourceConnectorPoolMetrics.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseShardingSphereConnectorPoolMetrics.class);
     private ShardingSphereAutoConfiguration shardingSphereAutoConfiguration;
     private BaseDataSourceConnectorPoolMetrics<T> sourceConnectPoolMetrics;
 
