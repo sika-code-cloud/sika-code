@@ -2,7 +2,6 @@ package com.sika.code.monitor.core.thread.hippo4j.configuration;
 
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
 import com.sika.code.monitor.core.thread.hippo4j.manager.Hippo4jThreadPoolMetricsManager;
-import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
@@ -22,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, MeterRegistry.class})
 @ConditionalOnClass(DynamicThreadPoolExecutor.class)
 @ConditionalOnBean({MeterRegistry.class})
-public class Hippo4jThreadPoolAutoConfiguration {
+public class Hippo4jThreadPoolMetricsAutoConfiguration {
 
     @Bean
     public Hippo4jThreadPoolMetricsManager hippo4jThreadPoolMetricsManager(MeterRegistry meterRegistry) {

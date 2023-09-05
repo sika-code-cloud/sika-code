@@ -1,7 +1,6 @@
 package com.sika.code.monitor.core.thread.hippo4j.manager;
 
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
-import cn.hippo4j.core.plugin.impl.TaskRejectCountRecordPlugin;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
@@ -12,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Hippo4jThreadPoolManager
@@ -36,9 +34,7 @@ public class Hippo4jThreadPoolMetricsManager implements BaseMetricsManager {
         for (DynamicThreadPoolExecutor threadPoolExecutor : dynamicThreadPoolExecutorMap.values()) {
             ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, ThreadPoolTypeEnum.BUSINESS_HIPPO4J,
                 threadPoolExecutor.getThreadPoolId(),
-                value -> threadPoolExecutor.getPluginOfType(TaskRejectCountRecordPlugin.PLUGIN_NAME,
-                        TaskRejectCountRecordPlugin.class).map(TaskRejectCountRecordPlugin::getRejectCount)
-                    .orElse(new AtomicLong(0)).get());
+                value -> threadPoolExecutor.getRejectCount().get());
         }
     }
 

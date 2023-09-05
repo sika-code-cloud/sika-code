@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.tomcat.metrics;
+package com.sika.code.monitor.core.thread.tomcat.metrics;
 
 import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
