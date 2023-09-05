@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * 线程监控工具类
@@ -32,12 +33,22 @@ public class ThreadPoolMetrics implements MeterBinder {
     private final String threadPoolType;
     /** 线程池名称 */
     private final String threadPoolName;
+    /** 拒绝数量函数 */
+    private ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc;
     private static final Map<ThreadPoolExecutor, AtomicLong> EXECUTOR_TASK_REJECT_COUNT = new ConcurrentHashMap<>();
 
     public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolName) {
         this.executor = executor;
         this.threadPoolType = threadPoolType;
         this.threadPoolName = threadPoolName;
+    }
+
+    public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolName,
+        ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
+        this.executor = executor;
+        this.threadPoolType = threadPoolType;
+        this.threadPoolName = threadPoolName;
+        this.rejectCountFunc = rejectCountFunc;
     }
 
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
@@ -48,6 +59,18 @@ public class ThreadPoolMetrics implements MeterBinder {
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
         @NonNull String threadPoolType, @NonNull String threadPoolName) {
         new ThreadPoolMetrics(executor, threadPoolType, threadPoolName).bindTo(registry);
+    }
+
+    public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
+        @NonNull ThreadPoolTypeEnum threadPoolTypeEnum, @NonNull String threadPoolName,
+        ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
+        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getName(), threadPoolName, rejectCountFunc).bindTo(registry);
+    }
+
+    public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
+        @NonNull String threadPoolType, @NonNull String threadPoolName,
+        ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
+        new ThreadPoolMetrics(executor, threadPoolType, threadPoolName, rejectCountFunc).bindTo(registry);
     }
 
     @Override
@@ -85,14 +108,16 @@ public class ThreadPoolMetrics implements MeterBinder {
         FunctionCounter.builder(metricName("completed.task.count"), executor, ThreadPoolExecutor::getCompletedTaskCount)
             .baseUnit(BaseUnits.THREADS).description("已完成的任务量").tags(tags).register(meterRegistry);
 
-        AtomicLong rejectTaskCount = bindAndRetRejectTaskCount(executor);
-        FunctionCounter.builder(metricName("reject.task.count"), rejectTaskCount, AtomicLong::get)
+        buildRejectTaskCount(executor);
+        FunctionCounter.builder(metricName("reject.task.count"), executor, this.rejectCountFunc)
             .baseUnit(BaseUnits.THREADS).description("已拒绝的任务量").tags(tags).register(meterRegistry);
 
     }
 
-    private void doRegister() {
-
+    public void buildRejectTaskCount(ThreadPoolExecutor executor) {
+        if (this.rejectCountFunc == null) {
+            this.rejectCountFunc = value -> bindAndRetRejectTaskCount(executor).get();
+        }
     }
 
     private static AtomicLong bindAndRetRejectTaskCount(ThreadPoolExecutor executor) {

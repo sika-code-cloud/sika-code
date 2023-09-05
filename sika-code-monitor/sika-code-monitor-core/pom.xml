@@ -67,5 +67,10 @@
             <artifactId>druid</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.dromara.dynamictp</groupId>
+            <artifactId>dynamic-tp-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

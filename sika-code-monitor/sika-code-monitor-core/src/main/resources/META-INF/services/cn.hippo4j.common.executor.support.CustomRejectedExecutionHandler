@@ -1,1 +1,1 @@
-com.sika.code.monitor.core.thread.hippo4j.rejected.MonitorAbortPolicyRejectedExecutionHandler
+com.sika.code.monitor.core.thread.hippo4j.rejected.Hippo4jMonitorAbortPolicyRejectedExecutionHandler
