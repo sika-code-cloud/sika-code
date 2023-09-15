@@ -8,6 +8,7 @@ import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfigu
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 public class DbClientInvokedTimedAutoConfiguration {
 
     @Bean
+    @ConditionalOnProperty(name = "spring.monitor.db.mybatis.invoke.enabled", havingValue = "true", matchIfMissing = true)
     public DbClientInvokedTimedPlugin dbClientInvokedTimedPlugin(MeterRegistry meterRegistry) {
         DbClientInvokedTimedPlugin invokedTimedPlugin = new DbClientInvokedTimedPlugin();
         invokedTimedPlugin.setMeterRegistry(meterRegistry);

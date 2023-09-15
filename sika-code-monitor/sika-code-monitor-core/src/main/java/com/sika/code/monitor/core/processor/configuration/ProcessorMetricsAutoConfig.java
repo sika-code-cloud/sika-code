@@ -6,6 +6,7 @@ import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegi
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProcessorMetricsAutoConfig {
 
     @Bean
+    @ConditionalOnProperty(name = "spring.monitor.processor.enabled", havingValue = "true", matchIfMissing = true)
     CustProcessorMetrics custProcessorMetrics() {
         return new CustProcessorMetrics();
     }

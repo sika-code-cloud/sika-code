@@ -72,5 +72,11 @@
             <artifactId>dynamic-tp-core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!--dubbo依赖设置为provided-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

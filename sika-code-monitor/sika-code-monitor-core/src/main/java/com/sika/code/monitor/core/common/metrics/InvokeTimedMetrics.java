@@ -128,15 +128,15 @@ public class InvokeTimedMetrics {
      * 收集接口指标 - DUBBO服务端
      *
      * @param meterRegistry  : 指标注册器
-     * @param className      : 目标类名
+     * @param serviceClass      : 目标类名
      * @param methodName     : 目标方法名称
      * @param parameterTypes : 目标方法参数类型列表
      * @param invokeTimeNs     : 执行的耗时时长-单位ns
      */
-    public static void collectDubboServerInvokeTimed(MeterRegistry meterRegistry, Class<?> className, String methodName,
+    public static void collectDubboServerInvokeTimed(MeterRegistry meterRegistry, Class<?> serviceClass, String methodName,
         Class<?>[] parameterTypes, Long invokeTimeNs) {
         String parameterTypeStr = Arrays.toString(parameterTypes);
-        Tags tags = Tags.of("serviceName", className.getSimpleName()).and("methodName", methodName)
+        Tags tags = Tags.of("serviceName", serviceClass.getSimpleName()).and("methodName", methodName)
             .and("parameterTypes", parameterTypeStr);
         String metricsName = "dubbo.server.invoke.timed";
         String metricsDesc = "DUBBO服务端方法执行耗时";
