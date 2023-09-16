@@ -12,6 +12,9 @@ import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER_SIDE;
+import static org.apache.dubbo.common.constants.CommonConstants.SIDE_KEY;
+
 /**
  * microMeter统计dubbo consumer端耗时
  *
@@ -20,15 +23,15 @@ import org.slf4j.LoggerFactory;
  * @date 2023/7/17 下午3:55
  */
 @Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
-public class DubboInvokeMetrics implements Filter, Filter.Listener {
+public class DubboInvokeMetricsBinder implements Filter, Filter.Listener {
 
-    private static final Logger logger = LoggerFactory.getLogger(DubboInvokeMetrics.class);
+    private static final Logger logger = LoggerFactory.getLogger(DubboInvokeMetricsBinder.class);
 
     private static final String MONITOR_FILTER_START_TIME = "monitor_filter_start_time";
 
     private final MeterRegistry meterRegistry;
 
-    public DubboInvokeMetrics(MeterRegistry meterRegistry) {
+    public DubboInvokeMetricsBinder(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
     }
 
@@ -60,8 +63,13 @@ public class DubboInvokeMetrics implements Filter, Filter.Listener {
             String methodName = invocation.getMethodName();
             // 参数类型
             Class<?>[] parameterTypes = invocation.getParameterTypes();
-            InvokeTimedMetrics.collectDubboServerInvokeTimed(meterRegistry, serviceClass, methodName, parameterTypes,
-                elapsed);
+            if (CONSUMER_SIDE.equals(invoker.getUrl().getParameter(SIDE_KEY))) {
+                InvokeTimedMetrics.collectDubboClientInvokeTimed(meterRegistry, serviceClass, methodName,
+                    parameterTypes, elapsed);
+            } else {
+                InvokeTimedMetrics.collectDubboServerInvokeTimed(meterRegistry, serviceClass, methodName,
+                    parameterTypes, elapsed);
+            }
         }
     }
 }

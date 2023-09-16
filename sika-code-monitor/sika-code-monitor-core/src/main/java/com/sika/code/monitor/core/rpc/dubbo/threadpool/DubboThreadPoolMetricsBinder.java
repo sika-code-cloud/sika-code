@@ -35,22 +35,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date : 2023-06-17
  */
 @Activate
-public class DubboThreadPoolMetrics implements RegistryProtocolListener {
+public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
     private static final Map<Integer, DubboThreadPoolItem> DUBBO_THREAD_POOL_MAP = new ConcurrentHashMap<>();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DubboThreadPoolMetrics.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DubboThreadPoolMetricsBinder.class);
 
     private static double thresholdRate = 0.75;
 
     private final MeterRegistry meterRegistry;
 
-    public DubboThreadPoolMetrics(MeterRegistry meterRegistry) {
+    public DubboThreadPoolMetricsBinder(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
     }
 
-    public DubboThreadPoolMetrics(MeterRegistry meterRegistry, double thresholdRate) {
+    public DubboThreadPoolMetricsBinder(MeterRegistry meterRegistry, double thresholdRate) {
         this.meterRegistry = meterRegistry;
-        DubboThreadPoolMetrics.thresholdRate = thresholdRate;
+        DubboThreadPoolMetricsBinder.thresholdRate = thresholdRate;
     }
 
     public synchronized void init() {
@@ -94,7 +94,7 @@ public class DubboThreadPoolMetrics implements RegistryProtocolListener {
 
     public static void recordActiveThread() {
         try {
-            Map<Integer, DubboThreadPoolItem> executorServiceMap = DubboThreadPoolMetrics.getDubboThreadPoolMap();
+            Map<Integer, DubboThreadPoolItem> executorServiceMap = DubboThreadPoolMetricsBinder.getDubboThreadPoolMap();
             if (executorServiceMap == null || executorServiceMap.isEmpty()) {
                 return;
             }
