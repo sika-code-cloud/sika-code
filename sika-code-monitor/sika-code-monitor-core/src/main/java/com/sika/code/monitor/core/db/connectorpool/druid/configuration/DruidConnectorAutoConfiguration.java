@@ -1,6 +1,7 @@
 package com.sika.code.monitor.core.db.connectorpool.druid.configuration;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.db.connectorpool.druid.metrics.DruidConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class DruidConnectorAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "spring.monitor.db.druid.connectorPool.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = MonitorEnableConstant.DB_DRUID_CONNECTOR_POOL, havingValue = "true", matchIfMissing = true)
     public DruidConnectorPoolMetrics druidConnectorPoolMetrics() {
         return new DruidConnectorPoolMetrics();
     }

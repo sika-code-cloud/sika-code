@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.dubbo.threadpool;
+package com.sika.code.monitor.core.rpc.dubbo.threadpool;
 
 import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
 import com.sika.code.monitor.core.common.metrics.ThreadPoolMetrics;

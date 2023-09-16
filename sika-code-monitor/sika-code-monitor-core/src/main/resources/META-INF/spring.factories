@@ -9,7 +9,7 @@ com.sika.code.monitor.core.redis.lettuce.configuration.LettuceMetricsAutoConfigu
 com.sika.code.monitor.core.threadpool.tomcat.configuration.TomcatThreadPoolMetricsAutoConfig,\
 com.sika.code.monitor.core.threadpool.hippo4j.configuration.Hippo4jThreadPoolMetricsAutoConfiguration,\
 com.sika.code.monitor.core.threadpool.dynamictp.configuration.DynamicTpThreadPoolMetricsAutoConfiguration,\
-\com.sika.code.monitor.core.dubbo.configuration.DubboMetricsAutoConfiguration,\
+\com.sika.code.monitor.core.rpc.dubbo.configuration.DubboMetricsAutoConfiguration,\
   com.sika.code.monitor.core.processor.configuration.ProcessorMetricsAutoConfig
 
 

@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.dubbo.invoke;
+package com.sika.code.monitor.core.rpc.dubbo.invoke;
 
 import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;

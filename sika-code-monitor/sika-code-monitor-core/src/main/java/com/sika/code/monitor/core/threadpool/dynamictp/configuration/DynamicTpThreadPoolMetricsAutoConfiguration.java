@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.threadpool.dynamictp.configuration;
 
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.threadpool.dynamictp.manager.DynamicTpThreadPoolMetricsManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.dromara.dynamictp.core.thread.DtpExecutor;
@@ -25,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class DynamicTpThreadPoolMetricsAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "spring.monitor.dynamicTp.threadPool.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = MonitorEnableConstant.THREAD_POOL_DYNAMIC_TP, havingValue = "true", matchIfMissing = true)
     public DynamicTpThreadPoolMetricsManager dynamicTpThreadPoolMetricsManager(MeterRegistry meterRegistry) {
         return new DynamicTpThreadPoolMetricsManager(meterRegistry);
     }

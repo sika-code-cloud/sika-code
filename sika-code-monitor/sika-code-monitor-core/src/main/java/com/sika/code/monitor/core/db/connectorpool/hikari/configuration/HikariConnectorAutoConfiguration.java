@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.db.connectorpool.hikari.configuration;
 
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.db.connectorpool.hikari.metrics.HikariConnectorPoolMetrics;
 import com.zaxxer.hikari.HikariDataSource;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class HikariConnectorAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "spring.monitor.db.hikari.connectorPool.enabled", havingValue = "true",
+    @ConditionalOnProperty(name = MonitorEnableConstant.DB_HIKARI_CONNECTOR_POOL, havingValue = "true",
         matchIfMissing = true)
     public HikariConnectorPoolMetrics hikariConnectorPoolMetrics() {
         return new HikariConnectorPoolMetrics();

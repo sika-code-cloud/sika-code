@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.db.invoke.mybatis.configuration;
 
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.db.invoke.mybatis.plugin.DbClientInvokedTimedPlugin;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.ibatis.plugin.Interceptor;
@@ -25,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class DbClientInvokedTimedAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "spring.monitor.db.mybatis.invoke.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = MonitorEnableConstant.DB_MYBATIS_INVOKE, havingValue = "true", matchIfMissing = true)
     public DbClientInvokedTimedPlugin dbClientInvokedTimedPlugin(MeterRegistry meterRegistry) {
         DbClientInvokedTimedPlugin invokedTimedPlugin = new DbClientInvokedTimedPlugin();
         invokedTimedPlugin.setMeterRegistry(meterRegistry);

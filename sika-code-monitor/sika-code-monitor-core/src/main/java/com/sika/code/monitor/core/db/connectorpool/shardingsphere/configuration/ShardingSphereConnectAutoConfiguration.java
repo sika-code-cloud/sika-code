@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.db.connectorpool.shardingsphere.configuration;
 
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.db.connectorpool.druid.metrics.DruidConnectorPoolMetrics;
 import com.sika.code.monitor.core.db.connectorpool.hikari.metrics.HikariConnectorPoolMetrics;
 import com.sika.code.monitor.core.db.connectorpool.shardingsphere.metrics.ShardingSphereDruidConnectorPoolMetrics;
@@ -32,7 +33,7 @@ public class ShardingSphereConnectAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean({ShardingSphereHikariConnectorPoolMetrics.class})
     @ConditionalOnBean({HikariConnectorPoolMetrics.class})
-    @ConditionalOnProperty(name = "spring.monitor.db.shardingSphere.connectorPool.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = MonitorEnableConstant.DB_SHARDING_SPHERE_CONNECTOR_POOL, havingValue = "true", matchIfMissing = true)
     public ShardingSphereHikariConnectorPoolMetrics shardingSphereHikariDataSourceConnectorPoolMetrics(
         HikariConnectorPoolMetrics hikariConnectorPoolMetrics,
         ShardingSphereAutoConfiguration shardingSphereAutoConfiguration) {
@@ -46,7 +47,7 @@ public class ShardingSphereConnectAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean({ShardingSphereDruidConnectorPoolMetrics.class})
     @ConditionalOnBean({DruidConnectorPoolMetrics.class})
-    @ConditionalOnProperty(name = "spring.monitor.db.shardingSphere.connectorPool.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = MonitorEnableConstant.DB_SHARDING_SPHERE_CONNECTOR_POOL, havingValue = "true", matchIfMissing = true)
     public ShardingSphereDruidConnectorPoolMetrics shardingSphereDruidDataSourceConnectorPoolMetrics(
         DruidConnectorPoolMetrics druidConnectorPoolMetrics,
         ShardingSphereAutoConfiguration shardingSphereAutoConfiguration) {
