@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.sika.code.monitor.core.common.config.UnifyMetricsMangerAutoConfiguration,\
+com.sika.code.monitor.core.invoke.config.InvokeTimedAutoConfiguration,\
 com.sika.code.monitor.core.db.common.configuration.DataSourceConnectorPoolMetricsMangerAutoConfiguration,\
 com.sika.code.monitor.core.db.connectorpool.hikari.configuration.HikariConnectorAutoConfiguration,\
 com.sika.code.monitor.core.db.connectorpool.shardingsphere.configuration.ShardingSphereConnectAutoConfiguration,\
@@ -9,7 +10,7 @@ com.sika.code.monitor.core.redis.lettuce.configuration.LettuceMetricsAutoConfigu
 com.sika.code.monitor.core.threadpool.tomcat.configuration.TomcatThreadPoolMetricsAutoConfig,\
 com.sika.code.monitor.core.threadpool.hippo4j.configuration.Hippo4jThreadPoolMetricsAutoConfiguration,\
 com.sika.code.monitor.core.threadpool.dynamictp.configuration.DynamicTpThreadPoolMetricsAutoConfiguration,\
-\com.sika.code.monitor.core.rpc.dubbo.configuration.DubboMetricsAutoConfiguration,\
-  com.sika.code.monitor.core.processor.configuration.ProcessorMetricsAutoConfig
+com.sika.code.monitor.core.rpc.dubbo.configuration.DubboMetricsAutoConfiguration,\
+com.sika.code.monitor.core.processor.configuration.ProcessorMetricsAutoConfig
 
 

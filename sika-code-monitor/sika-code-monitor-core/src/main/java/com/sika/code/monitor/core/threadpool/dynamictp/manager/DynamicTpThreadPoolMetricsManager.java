@@ -2,9 +2,9 @@ package com.sika.code.monitor.core.threadpool.dynamictp.manager;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
-import com.sika.code.monitor.core.common.metrics.ThreadPoolMetrics;
+import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

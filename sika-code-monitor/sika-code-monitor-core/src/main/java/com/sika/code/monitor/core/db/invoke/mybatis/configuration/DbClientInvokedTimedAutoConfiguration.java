@@ -1,6 +1,7 @@
 package com.sika.code.monitor.core.db.invoke.mybatis.configuration;
 
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import com.sika.code.monitor.core.db.invoke.mybatis.plugin.DbClientInvokedTimedPlugin;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.ibatis.plugin.Interceptor;
@@ -27,10 +28,10 @@ public class DbClientInvokedTimedAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = MonitorEnableConstant.DB_MYBATIS_INVOKE, havingValue = "true", matchIfMissing = true)
-    public DbClientInvokedTimedPlugin dbClientInvokedTimedPlugin(MeterRegistry meterRegistry) {
-        DbClientInvokedTimedPlugin invokedTimedPlugin = new DbClientInvokedTimedPlugin();
-        invokedTimedPlugin.setMeterRegistry(meterRegistry);
-        return invokedTimedPlugin;
+    @ConditionalOnBean(InvokeTimedMetrics.class)
+    public DbClientInvokedTimedPlugin dbClientInvokedTimedPlugin(MeterRegistry meterRegistry,
+        InvokeTimedMetrics invokeTimedMetrics) {
+        return new DbClientInvokedTimedPlugin(meterRegistry, invokeTimedMetrics);
     }
 
 }

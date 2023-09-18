@@ -1,6 +1,6 @@
 package com.sika.code.monitor.core.db.invoke.mybatis.plugin;
 
-import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
@@ -30,10 +30,12 @@ import org.slf4j.LoggerFactory;
 public class DbClientInvokedTimedPlugin implements Interceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DbClientInvokedTimedPlugin.class);
 
-    private MeterRegistry meterRegistry;
+    private final MeterRegistry meterRegistry;
+    private final InvokeTimedMetrics invokeTimedMetrics;
 
-    public void setMeterRegistry(MeterRegistry meterRegistry) {
+    public DbClientInvokedTimedPlugin(MeterRegistry meterRegistry, InvokeTimedMetrics invokeTimedMetrics) {
         this.meterRegistry = meterRegistry;
+        this.invokeTimedMetrics = invokeTimedMetrics;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class DbClientInvokedTimedPlugin implements Interceptor {
         try {
             return invocation.proceed();
         } finally {
-            InvokeTimedMetrics.collectDBClientInvokeTimed(meterRegistry, sqlCommandType.name(), methodName,
+            invokeTimedMetrics.collectDBClientInvokeTimed(meterRegistry, sqlCommandType.name(), methodName,
                 System.nanoTime() - startTime);
         }
     }

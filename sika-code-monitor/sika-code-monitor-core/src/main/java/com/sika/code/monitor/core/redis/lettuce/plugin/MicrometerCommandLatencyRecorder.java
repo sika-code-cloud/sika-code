@@ -15,8 +15,9 @@
  */
 package com.sika.code.monitor.core.redis.lettuce.plugin;
 
-import com.sika.code.monitor.core.common.config.InvokeTimedConfig;
-import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
+import com.sika.code.monitor.core.invoke.config.InvokeTimedConfig;
+import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnums;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import io.lettuce.core.internal.LettuceAssert;
 import io.lettuce.core.metrics.CommandLatencyId;
 import io.lettuce.core.metrics.CommandLatencyRecorder;
@@ -42,13 +43,10 @@ public class MicrometerCommandLatencyRecorder implements CommandLatencyRecorder 
 
     static final String LABEL_REMOTE = "remote";
 
-    static final String METRIC_COMPLETION = "lettuce.command.completion";
-
-    static final String METRIC_FIRST_RESPONSE = "lettuce.command.firstresponse";
-
     private final MeterRegistry meterRegistry;
 
     private final MicrometerOptions options;
+    private final InvokeTimedMetrics invokeTimedMetrics;
 
     /**
      * Create a new {@link MicrometerCommandLatencyRecorder} instance given {@link MeterRegistry} and
@@ -57,13 +55,15 @@ public class MicrometerCommandLatencyRecorder implements CommandLatencyRecorder 
      * @param meterRegistry
      * @param options
      */
-    public MicrometerCommandLatencyRecorder(MeterRegistry meterRegistry, MicrometerOptions options) {
+    public MicrometerCommandLatencyRecorder(MeterRegistry meterRegistry, MicrometerOptions options,
+        InvokeTimedMetrics invokeTimedMetrics) {
 
         LettuceAssert.notNull(meterRegistry, "MeterRegistry must not be null");
         LettuceAssert.notNull(options, "MicrometerOptions must not be null");
 
         this.meterRegistry = meterRegistry;
         this.options = options;
+        this.invokeTimedMetrics = invokeTimedMetrics;
     }
 
     @Override
@@ -90,22 +90,22 @@ public class MicrometerCommandLatencyRecorder implements CommandLatencyRecorder 
     }
 
     protected void completionTimer(CommandLatencyId commandLatencyId, Long invokeTimeNs) {
-        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, METRIC_COMPLETION,
-            "Latency between command send and command completion (complete response received");
+        InvokeTimedConfig invokeTimeNsdConfig =
+            invokeTimedMetrics.getInstance(meterRegistry, InvokeTimedTypeEnums.REDIS_LETTUCE_COMPLETION);
         Tags tags = Tags.of(LABEL_COMMAND, commandLatencyId.commandType().name())
             .and(LABEL_LOCAL, commandLatencyId.localAddress().toString())
             .and(LABEL_REMOTE, commandLatencyId.remoteAddress().toString());
-        InvokeTimedMetrics.collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
+        invokeTimedMetrics.collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
     protected void firstResponseTimer(CommandLatencyId commandLatencyId, Long invokeTimeNs) {
 
-        InvokeTimedConfig invokeTimeNsdConfig = InvokeTimedConfig.getInstance(meterRegistry, METRIC_FIRST_RESPONSE,
-            "Latency between command send and first response (first response received)");
+        InvokeTimedConfig invokeTimeNsdConfig =
+            invokeTimedMetrics.getInstance(meterRegistry, InvokeTimedTypeEnums.REDIS_LETTUCE_FIRST_RESPONSE);
         Tags tags = Tags.of(LABEL_COMMAND, commandLatencyId.commandType().name())
             .and(LABEL_LOCAL, commandLatencyId.localAddress().toString())
             .and(LABEL_REMOTE, commandLatencyId.remoteAddress().toString());
-        InvokeTimedMetrics.collectInvokeTimed(invokeTimeNsdConfig, tags, invokeTimeNs);
+        invokeTimedMetrics.collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
 }

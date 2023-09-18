@@ -1,6 +1,7 @@
 package com.sika.code.monitor.core.rpc.dubbo.configuration;
 
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import com.sika.code.monitor.core.rpc.dubbo.invoke.DubboInvokeMetricsBinder;
 import com.sika.code.monitor.core.rpc.dubbo.threadpool.DubboThreadPoolMetricsBinder;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -33,7 +34,8 @@ public class DubboMetricsAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = MonitorEnableConstant.RPC_DUBBO_INVOKE, havingValue = "true", matchIfMissing = true)
-    DubboInvokeMetricsBinder dubboInvokeMetrics(MeterRegistry meterRegistry) {
-        return new DubboInvokeMetricsBinder(meterRegistry);
+    @ConditionalOnBean(InvokeTimedMetrics.class)
+    DubboInvokeMetricsBinder dubboInvokeMetrics(MeterRegistry meterRegistry, InvokeTimedMetrics invokeTimedMetrics) {
+        return new DubboInvokeMetricsBinder(meterRegistry, invokeTimedMetrics);
     }
 }

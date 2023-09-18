@@ -1,7 +1,7 @@
-package com.sika.code.monitor.core.common.metrics;
+package com.sika.code.monitor.core.threadpool.metrics;
 
 import cn.hutool.core.text.StrPool;
-import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 /**

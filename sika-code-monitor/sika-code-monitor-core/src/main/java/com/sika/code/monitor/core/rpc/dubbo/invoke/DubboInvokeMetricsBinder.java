@@ -1,6 +1,6 @@
 package com.sika.code.monitor.core.rpc.dubbo.invoke;
 
-import com.sika.code.monitor.core.common.metrics.InvokeTimedMetrics;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -30,9 +30,11 @@ public class DubboInvokeMetricsBinder implements Filter, Filter.Listener {
     private static final String MONITOR_FILTER_START_TIME = "monitor_filter_start_time";
 
     private final MeterRegistry meterRegistry;
+    private final InvokeTimedMetrics invokeTimedMetrics;
 
-    public DubboInvokeMetricsBinder(MeterRegistry meterRegistry) {
+    public DubboInvokeMetricsBinder(MeterRegistry meterRegistry, InvokeTimedMetrics invokeTimedMetrics) {
         this.meterRegistry = meterRegistry;
+        this.invokeTimedMetrics = invokeTimedMetrics;
     }
 
     @Override
@@ -64,10 +66,10 @@ public class DubboInvokeMetricsBinder implements Filter, Filter.Listener {
             // 参数类型
             Class<?>[] parameterTypes = invocation.getParameterTypes();
             if (CONSUMER_SIDE.equals(invoker.getUrl().getParameter(SIDE_KEY))) {
-                InvokeTimedMetrics.collectDubboClientInvokeTimed(meterRegistry, serviceClass, methodName,
+                invokeTimedMetrics.collectDubboClientInvokeTimed(meterRegistry, serviceClass, methodName,
                     parameterTypes, elapsed);
             } else {
-                InvokeTimedMetrics.collectDubboServerInvokeTimed(meterRegistry, serviceClass, methodName,
+                invokeTimedMetrics.collectDubboServerInvokeTimed(meterRegistry, serviceClass, methodName,
                     parameterTypes, elapsed);
             }
         }

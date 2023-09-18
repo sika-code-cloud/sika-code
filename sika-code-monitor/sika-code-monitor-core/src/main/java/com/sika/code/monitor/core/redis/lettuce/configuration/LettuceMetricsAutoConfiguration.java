@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.redis.lettuce.configuration;
 
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import com.sika.code.monitor.core.redis.lettuce.plugin.MicrometerCommandLatencyRecorder;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.metrics.MicrometerOptions;
@@ -28,8 +29,9 @@ import org.springframework.context.annotation.Configuration;
 public class LettuceMetricsAutoConfiguration {
 
     @Bean
-    ClientResourcesBuilderCustomizer customerLettuceMetrics(MeterRegistry meterRegistry, MicrometerOptions options) {
+    @ConditionalOnBean(InvokeTimedMetrics.class)
+    ClientResourcesBuilderCustomizer customerLettuceMetrics(MeterRegistry meterRegistry, MicrometerOptions options, InvokeTimedMetrics invokeTimedMetrics) {
         return (client) -> client.commandLatencyRecorder(
-            new MicrometerCommandLatencyRecorder(meterRegistry, options));
+            new MicrometerCommandLatencyRecorder(meterRegistry, options, invokeTimedMetrics));
     }
 }

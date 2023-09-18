@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * MonitorPluginAutoConfig
+ * UnifyMetricsMangerAutoConfiguration
  *
  * @author : daiqi
  * @date : 2023-08-24

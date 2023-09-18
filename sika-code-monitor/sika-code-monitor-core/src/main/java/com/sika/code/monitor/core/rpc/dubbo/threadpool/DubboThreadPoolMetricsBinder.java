@@ -1,7 +1,7 @@
 package com.sika.code.monitor.core.rpc.dubbo.threadpool;
 
-import com.sika.code.monitor.core.common.enums.ThreadPoolTypeEnum;
-import com.sika.code.monitor.core.common.metrics.ThreadPoolMetrics;
+import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
