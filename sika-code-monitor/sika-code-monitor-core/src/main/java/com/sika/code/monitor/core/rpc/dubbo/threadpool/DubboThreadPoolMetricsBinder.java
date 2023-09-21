@@ -83,7 +83,7 @@ public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
         // 将其注入至线程池指标中
         ThreadPoolMetrics.monitor(meterRegistry, executor, ThreadPoolTypeEnum.DUBBO, threadPoolNameFull);
         // 绑定线程阈值
-        Tags tags = ThreadPoolMetrics.buildTags(threadPoolNameFull, ThreadPoolTypeEnum.DUBBO.getName());
+        Tags tags = ThreadPoolMetrics.buildTags(threadPoolNameFull, ThreadPoolTypeEnum.DUBBO.getType());
         Gauge.builder(ThreadPoolMetrics.metricName("threshold.active.size"), executor,
                 value -> thresholdActive.get()).description("触发阈值的活跃线程数量")
             .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);

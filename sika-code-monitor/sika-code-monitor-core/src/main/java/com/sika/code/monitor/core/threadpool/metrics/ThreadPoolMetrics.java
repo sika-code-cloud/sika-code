@@ -52,7 +52,7 @@ public class ThreadPoolMetrics implements MeterBinder {
 
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
         @NonNull ThreadPoolTypeEnum threadPoolTypeEnum, @NonNull String threadPoolName) {
-        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getName(), threadPoolName).bindTo(registry);
+        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getType(), threadPoolName).bindTo(registry);
     }
 
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
@@ -63,7 +63,7 @@ public class ThreadPoolMetrics implements MeterBinder {
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
         @NonNull ThreadPoolTypeEnum threadPoolTypeEnum, @NonNull String threadPoolName,
         ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
-        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getName(), threadPoolName, rejectCountFunc).bindTo(registry);
+        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getType(), threadPoolName, rejectCountFunc).bindTo(registry);
     }
 
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,

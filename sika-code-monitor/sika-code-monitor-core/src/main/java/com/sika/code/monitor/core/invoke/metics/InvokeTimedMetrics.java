@@ -1,11 +1,9 @@
 package com.sika.code.monitor.core.invoke.metics;
 
-import cn.hutool.core.lang.Assert;
 import com.google.common.collect.Maps;
-import com.sika.code.core.base.constant.BaseTypeEnum;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedConfig;
-import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnums;
-import com.sika.code.monitor.core.invoke.properties.InvokeTimedProperties;
+import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.Timer;
@@ -13,7 +11,6 @@ import io.micrometer.core.instrument.Timer;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * MetricsUtil
@@ -22,11 +19,10 @@ import java.util.function.Function;
  * @date : 2023-08-23
  */
 public class InvokeTimedMetrics {
-    private final Map<String, InvokeTimedConfig> INVOKE_TIMED_METRICS_MAP = Maps.newConcurrentMap();
-    private final InvokeTimedProperties invokeTimedProperties;
+    private final LoadMetricsConfigManager loadMetricsConfigManager;
 
-    public InvokeTimedMetrics(InvokeTimedProperties invokeTimedProperties) {
-        this.invokeTimedProperties = invokeTimedProperties;
+    public InvokeTimedMetrics(LoadMetricsConfigManager loadMetricsConfigManager) {
+        this.loadMetricsConfigManager = loadMetricsConfigManager;
     }
 
     /**
@@ -41,7 +37,7 @@ public class InvokeTimedMetrics {
     public void collectMqConsumeInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic, String group,
         Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("group", group).and("topic", topic);
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.MQ_CONSUME);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.MQ_CONSUME);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -56,7 +52,7 @@ public class InvokeTimedMetrics {
     public void collectMqProduceInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic,
         Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("topic", topic);
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.MQ_PRODUCE);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.MQ_PRODUCE);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -71,7 +67,7 @@ public class InvokeTimedMetrics {
     public void collectDBClientInvokeTimed(MeterRegistry meterRegistry, String sqlCommandType, String methodName,
         Long invokeTimeNs) {
         Tags tags = Tags.of("sqlCommandType", sqlCommandType).and("methodName", methodName);
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.DB_CLIENT);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DB_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -87,7 +83,7 @@ public class InvokeTimedMetrics {
     public void collectHttpClientInvokeTimed(MeterRegistry meterRegistry, String domain, String uri, String method,
         Long invokeTimeNs) {
         Tags tags = Tags.of("domain", domain).and("uri", uri).and("method", method.toUpperCase());
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.HTTP_CLIENT);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.HTTP_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -105,7 +101,7 @@ public class InvokeTimedMetrics {
         String parameterTypeStr = Arrays.toString(parameterTypes);
         Tags tags = Tags.of("serviceName", className.getSimpleName()).and("methodName", methodName)
             .and("parameterTypes", parameterTypeStr);
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.DUBBO_CLIENT);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DUBBO_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -123,7 +119,7 @@ public class InvokeTimedMetrics {
         String parameterTypeStr = Arrays.toString(parameterTypes);
         Tags tags = Tags.of("serviceName", serviceClass.getSimpleName()).and("methodName", methodName)
             .and("parameterTypes", parameterTypeStr);
-        InvokeTimedConfig invokeTimeNsdConfig = getInstance(meterRegistry, InvokeTimedTypeEnums.DUBBO_SERVER);
+        InvokeTimedConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DUBBO_SERVER);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
 
@@ -152,47 +148,12 @@ public class InvokeTimedMetrics {
     /**
      * 获取监控实例
      *
-     * @param meterRegistry - 指标注册器
+     * @param invokeTimedTypeEnum - 执行枚举
      * @return 执行实现指标
      */
-    public InvokeTimedConfig getInstance(MeterRegistry meterRegistry, InvokeTimedTypeEnums invokeTimedTypeEnums) {
-        assert invokeTimedTypeEnums != null;
-        return getInstance(meterRegistry, invokeTimedTypeEnums.getType());
-    }
-
-    /**
-     * 获取监控实例
-     *
-     * @param meterRegistry - 指标注册器
-     * @return 执行实现指标
-     */
-    public InvokeTimedConfig getInstance(MeterRegistry meterRegistry, String invokeTimeType) {
-        return getInstance(meterRegistry, invokeTimeType, o -> {
-            InvokeTimedTypeEnums invokeTimedTypeEnums = BaseTypeEnum.find(invokeTimeType, InvokeTimedTypeEnums.class);
-            Assert.notNull(invokeTimeType, "invokeTimedType[{}]对应的枚举不存在，请核实配置", invokeTimeType);
-            return new InvokeTimedConfig(meterRegistry, invokeTimedTypeEnums.getName(), invokeTimedTypeEnums.getDesc());
-        });
-    }
-
-    private InvokeTimedConfig getInstance(MeterRegistry meterRegistry, String invokeTimeType,
-        Function<Object, InvokeTimedConfig> function) {
-        assert meterRegistry != null;
-        // 从缓存中获取数据
-        InvokeTimedConfig metricsCache = INVOKE_TIMED_METRICS_MAP.get(invokeTimeType);
-        if (metricsCache != null) {
-            return metricsCache;
-        }
-        // 从配置中获取
-        if (invokeTimedProperties != null) {
-            metricsCache = invokeTimedProperties.getInvoke().get(invokeTimeType);
-            if (metricsCache != null) {
-                INVOKE_TIMED_METRICS_MAP.putIfAbsent(invokeTimeType, metricsCache);
-                return metricsCache;
-            }
-        }
-        // 从自定义中获取
-        metricsCache = function.apply(invokeTimeType);
-        INVOKE_TIMED_METRICS_MAP.putIfAbsent(invokeTimeType, metricsCache);
-        return metricsCache;
+    public InvokeTimedConfig getInstance(InvokeTimedTypeEnum invokeTimedTypeEnum) {
+        assert invokeTimedTypeEnum != null;
+        return loadMetricsConfigManager.getMetricsConfigInstance(invokeTimedTypeEnum.getType(),
+            InvokeTimedConfig.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.sika.code.monitor.core.threadpool.tomcat.configuration;
 
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.threadpool.tomcat.metrics.TomcatThreadPoolMetricsManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
@@ -29,8 +30,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class TomcatThreadPoolMetricsAutoConfig {
     @Bean
     @ConditionalOnProperty(name = MonitorEnableConstant.THREAD_POOL_TOMCAT, havingValue = "true", matchIfMissing = true)
-    TomcatThreadPoolMetricsManager tomcatThreadPoolMetricsManager(MeterRegistry meterRegistry,
+    TomcatThreadPoolMetricsManager tomcatThreadPoolMetricsManager(
+        LoadMetricsConfigManager loadMetricsConfigManager, MeterRegistry meterRegistry,
         WebServerApplicationContext webServerApplicationContext) {
-        return new TomcatThreadPoolMetricsManager(meterRegistry, webServerApplicationContext);
+        return new TomcatThreadPoolMetricsManager(loadMetricsConfigManager, meterRegistry, webServerApplicationContext);
     }
 }

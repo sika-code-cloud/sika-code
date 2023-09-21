@@ -2,6 +2,7 @@ package com.sika.code.monitor.core.threadpool.hippo4j.configuration;
 
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.threadpool.hippo4j.manager.Hippo4jThreadPoolMetricsManager;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
@@ -20,15 +21,18 @@ import org.springframework.context.annotation.Configuration;
  * @date : 2023-08-24
  */
 @Configuration
-@AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, MeterRegistry.class})
+@AutoConfiguration(
+    after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class, MeterRegistry.class})
 @ConditionalOnClass(DynamicThreadPoolExecutor.class)
 @ConditionalOnBean({MeterRegistry.class})
 public class Hippo4jThreadPoolMetricsAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = MonitorEnableConstant.THREAD_POOL_HIPPO_4J, havingValue = "true", matchIfMissing = true)
-    public Hippo4jThreadPoolMetricsManager hippo4jThreadPoolMetricsManager(MeterRegistry meterRegistry) {
-        return new Hippo4jThreadPoolMetricsManager(meterRegistry);
+    @ConditionalOnProperty(name = MonitorEnableConstant.THREAD_POOL_HIPPO_4J, havingValue = "true",
+        matchIfMissing = true)
+    public Hippo4jThreadPoolMetricsManager hippo4jThreadPoolMetricsManager(
+        LoadMetricsConfigManager loadMetricsConfigManager, MeterRegistry meterRegistry) {
+        return new Hippo4jThreadPoolMetricsManager(loadMetricsConfigManager, meterRegistry);
     }
 
 }

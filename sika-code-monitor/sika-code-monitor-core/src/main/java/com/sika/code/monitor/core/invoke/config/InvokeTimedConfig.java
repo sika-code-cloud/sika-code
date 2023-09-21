@@ -1,8 +1,9 @@
 package com.sika.code.monitor.core.invoke.config;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
+import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
+import lombok.NoArgsConstructor;
 
 /**
  * 请求耗时指标
@@ -14,30 +15,17 @@ import org.slf4j.LoggerFactory;
  * @author : daiqi
  * @date : 2023-06-19
  */
-public class InvokeTimedConfig {
+@NoArgsConstructor
+public class InvokeTimedConfig extends BaseMetricsConfig {
 
     protected static double[] DEFAULT_PUBLISH_PERCENTILES = new double[] {0.50, 0.90, 0.95, 0.99, 0.999};
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+
     protected double[] percentiles = DEFAULT_PUBLISH_PERCENTILES;
     protected boolean percentilesHistogram = false;
-    protected String metricsName;
-    protected String metricsDesc;
 
-    protected MeterRegistry meterRegistry;
-
-    public InvokeTimedConfig(MeterRegistry meterRegistry, String metricsName, String metricsDesc) {
-        this.meterRegistry = meterRegistry;
+    public InvokeTimedConfig(String metricsName, String metricsDesc) {
         this.metricsName = metricsName;
         this.metricsDesc = metricsDesc;
-    }
-
-    public Logger getLogger() {
-        return logger;
-    }
-
-    public InvokeTimedConfig buildLogger(Logger logger) {
-        this.logger = logger;
-        return this;
     }
 
     public double[] getPercentiles() {
@@ -58,33 +46,6 @@ public class InvokeTimedConfig {
         return this;
     }
 
-    public String getMetricsName() {
-        return metricsName;
-    }
-
-    public InvokeTimedConfig buildMetricsName(String metricsName) {
-        this.metricsName = metricsName;
-        return this;
-    }
-
-    public String getMetricsDesc() {
-        return metricsDesc;
-    }
-
-    public InvokeTimedConfig buildMetricsDescription(String metricsDescription) {
-        this.metricsDesc = metricsDescription;
-        return this;
-    }
-
-    public MeterRegistry getMeterRegistry() {
-        return meterRegistry;
-    }
-
-    public InvokeTimedConfig buildMeterRegistry(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-        return this;
-    }
-
     public void setPercentiles(double[] percentiles) {
         this.percentiles = percentiles;
     }
@@ -93,12 +54,8 @@ public class InvokeTimedConfig {
         this.percentilesHistogram = percentilesHistogram;
     }
 
-    public void setMetricsName(String metricsName) {
-        this.metricsName = metricsName;
+    @Override
+    public Class<? extends BaseMetricsTypeEnum> getMetricsTypeEnumClass() {
+        return InvokeTimedTypeEnum.class;
     }
-
-    public void setMetricsDesc(String metricsDesc) {
-        this.metricsDesc = metricsDesc;
-    }
-
 }

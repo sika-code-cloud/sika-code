@@ -3,6 +3,8 @@ package com.sika.code.monitor.core.threadpool.hippo4j.manager;
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
@@ -19,10 +21,12 @@ import java.util.Map;
  * @date : 2023-09-04
  */
 @Slf4j
-@AllArgsConstructor
-public class Hippo4jThreadPoolMetricsManager implements BaseMetricsManager {
+public class Hippo4jThreadPoolMetricsManager extends BaseMetricsManager<ThreadPoolTypeEnum> {
 
-    private final MeterRegistry meterRegistry;
+    public Hippo4jThreadPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
+        MeterRegistry meterRegistry) {
+        super(loadMetricsConfigManager, meterRegistry);
+    }
 
     @Override
     public void registerMetrics() {
@@ -32,10 +36,15 @@ public class Hippo4jThreadPoolMetricsManager implements BaseMetricsManager {
             return;
         }
         for (DynamicThreadPoolExecutor threadPoolExecutor : dynamicThreadPoolExecutorMap.values()) {
-            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, ThreadPoolTypeEnum.BUSINESS_HIPPO4J,
+            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, getMetricsTypeEnum(),
                 threadPoolExecutor.getThreadPoolId(),
                 value -> threadPoolExecutor.getRejectCount().get());
         }
+    }
+
+    @Override
+    protected ThreadPoolTypeEnum getMetricsTypeEnum() {
+        return ThreadPoolTypeEnum.BUSINESS_HIPPO4J;
     }
 
 }

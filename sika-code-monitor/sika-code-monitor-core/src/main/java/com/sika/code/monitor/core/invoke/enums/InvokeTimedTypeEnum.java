@@ -1,6 +1,6 @@
 package com.sika.code.monitor.core.invoke.enums;
 
-import com.sika.code.core.base.constant.BaseTypeEnum;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum InvokeTimedTypeEnums implements BaseTypeEnum<String> {
+public enum InvokeTimedTypeEnum implements BaseMetricsTypeEnum {
     MQ_CONSUME("mqConsume", "mq.consume.invoke.timed", "MQ消费处理耗时"),
     MQ_PRODUCE("mqProduce", "mq.produce.invoke.timed", "MQ生产发送耗时"),
     DB_CLIENT("dbClient", "db.client.invoke.timed", "DB客户端方法执行耗时"),

@@ -1,10 +1,8 @@
-package com.sika.code.monitor.core.invoke.properties;
+package com.sika.code.monitor.core.common.properties;
 
+import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedConfig;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,16 +13,18 @@ import java.util.Map;
  * @author : sikadai
  * @date : 2023-09-18
  */
-@ConfigurationProperties("management.metrics")
-public class InvokeTimedProperties {
-    private String name1;
+@ConfigurationProperties("management.metrics.sika")
+public class MetricsProperties {
     private final Map<String, InvokeTimedConfig> invoke = new LinkedHashMap<>();
 
     public Map<String, InvokeTimedConfig> getInvoke() {
         return invoke;
     }
 
-    public void setName1(String name1) {
-        this.name1 = name1;
+    public BaseMetricsConfig getConfigByType(String type, Class<? extends BaseMetricsConfig> mClass) {
+        if (InvokeTimedConfig.class.equals(mClass)) {
+            return invoke.get(type);
+        }
+        return null;
     }
 }

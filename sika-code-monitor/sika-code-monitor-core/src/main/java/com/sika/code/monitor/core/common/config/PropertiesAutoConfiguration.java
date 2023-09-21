@@ -1,11 +1,10 @@
-package com.sika.code.monitor.core.invoke.config;
+package com.sika.code.monitor.core.common.config;
 
-import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
-import com.sika.code.monitor.core.invoke.properties.InvokeTimedProperties;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
+import com.sika.code.monitor.core.common.properties.MetricsProperties;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,16 +20,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class})
 @ConditionalOnBean({MeterRegistry.class})
-@EnableConfigurationProperties(InvokeTimedProperties.class)
-public class InvokeTimedAutoConfiguration {
-    private final InvokeTimedProperties invokeTimedProperties;
-
-    public InvokeTimedAutoConfiguration(InvokeTimedProperties invokeTimedProperties) {
-        this.invokeTimedProperties = invokeTimedProperties;
-    }
-
+@EnableConfigurationProperties(MetricsProperties.class)
+public class PropertiesAutoConfiguration {
     @Bean
-    public InvokeTimedMetrics invokeTimedMetrics() {
-        return new InvokeTimedMetrics(invokeTimedProperties);
+    public LoadMetricsConfigManager loadMetricsConfigManager(MetricsProperties metricsProperties) {
+        return new LoadMetricsConfigManager(metricsProperties);
     }
 }

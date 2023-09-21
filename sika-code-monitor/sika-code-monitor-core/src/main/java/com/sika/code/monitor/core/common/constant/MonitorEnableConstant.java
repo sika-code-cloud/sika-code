@@ -7,15 +7,18 @@ package com.sika.code.monitor.core.common.constant;
  * @date : 2023-09-16
  */
 public interface MonitorEnableConstant {
-    String DB_DRUID_CONNECTOR_POOL = "spring.monitor.connectorPool.db.druid.enabled";
-    String DB_HIKARI_CONNECTOR_POOL = "spring.monitor.connectorPool.db.hikari.enabled";
-    String DB_SHARDING_SPHERE_CONNECTOR_POOL = "spring.monitor.connectorPool.db.shardingSphere.enabled";
 
-    String DB_MYBATIS_INVOKE = "spring.monitor.invoke.db.mybatis.enabled";
-    String RPC_DUBBO_INVOKE = "spring.monitor.invoke.rpc.dubbo.enabled";
+    String METRICS_COMMON_PREFIX = "management.metrics.sika.";
 
-    String RPC_DUBBO_THREAD_POOL = "spring.monitor.threadPool.rpc.dubbo.enabled";
-    String THREAD_POOL_DYNAMIC_TP = "spring.monitor.threadPool.dynamicTp.enabled";
-    String THREAD_POOL_HIPPO_4J = "spring.monitor.threadPool.hippo4j.enabled";
-    String THREAD_POOL_TOMCAT = "spring.monitor.threadPool.tomcat.enabled";
+    String DB_DRUID_CONNECTOR_POOL = METRICS_COMMON_PREFIX + "connectorPool.db.druid.enabled";
+    String DB_HIKARI_CONNECTOR_POOL = METRICS_COMMON_PREFIX + "connectorPool.db.hikari.enabled";
+    String DB_SHARDING_SPHERE_CONNECTOR_POOL = METRICS_COMMON_PREFIX + "connectorPool.db.shardingSphere.enabled";
+
+    String DB_MYBATIS_INVOKE = METRICS_COMMON_PREFIX + "invoke.db.mybatis.enabled";
+    String RPC_DUBBO_INVOKE = METRICS_COMMON_PREFIX + "invoke.rpc.dubbo.enabled";
+
+    String RPC_DUBBO_THREAD_POOL = METRICS_COMMON_PREFIX + "threadPool.rpc.dubbo.enabled";
+    String THREAD_POOL_DYNAMIC_TP = METRICS_COMMON_PREFIX + "threadPool.dynamicTp.enabled";
+    String THREAD_POOL_HIPPO_4J = METRICS_COMMON_PREFIX + "threadPool.hippo4j.enabled";
+    String THREAD_POOL_TOMCAT = METRICS_COMMON_PREFIX + "threadPool.tomcat.enabled";
 }

@@ -2,7 +2,9 @@ package com.sika.code.monitor.core.db.common.manager;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
@@ -18,12 +20,12 @@ import java.util.Map;
  * @author daiqi
  * @create 2023-09-03 23:50
  */
-@AllArgsConstructor
-@Data
-public class DataSourceConnectorPoolMetricsManager implements BaseMetricsManager {
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<BaseMetricsTypeEnum> {
 
-    private MeterRegistry meterRegistry;
+    public DataSourceConnectorPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
+        MeterRegistry meterRegistry) {
+        super(loadMetricsConfigManager, meterRegistry);
+    }
 
     @Override
     public void registerMetrics() {
@@ -50,5 +52,10 @@ public class DataSourceConnectorPoolMetricsManager implements BaseMetricsManager
                 LOGGER.info("【{}】未匹配到数据-跳过监控", dataSource.getClass());
             }
         }
+    }
+
+    @Override
+    protected BaseMetricsTypeEnum getMetricsTypeEnum() {
+        return null;
     }
 }
