@@ -1,5 +1,9 @@
 package com.sika.code.monitor.core.rpc.dubbo.threadpool;
 
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
+import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
 import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.Gauge;
@@ -35,21 +39,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date : 2023-06-17
  */
 @Activate
-public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
+public class DubboThreadPoolMetricsBinder extends BaseMetricsManager<ThreadPoolTypeEnum>
+    implements RegistryProtocolListener {
     private static final Map<Integer, DubboThreadPoolItem> DUBBO_THREAD_POOL_MAP = new ConcurrentHashMap<>();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboThreadPoolMetricsBinder.class);
 
     private static double thresholdRate = 0.75;
 
-    private final MeterRegistry meterRegistry;
-
-    public DubboThreadPoolMetricsBinder(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
+    public DubboThreadPoolMetricsBinder(LoadMetricsConfigManager loadMetricsConfigManager,
+        MeterRegistry meterRegistry) {
+        super(loadMetricsConfigManager, meterRegistry);
     }
 
-    public DubboThreadPoolMetricsBinder(MeterRegistry meterRegistry, double thresholdRate) {
-        this.meterRegistry = meterRegistry;
+    public DubboThreadPoolMetricsBinder(LoadMetricsConfigManager loadMetricsConfigManager, MeterRegistry meterRegistry,
+        double thresholdRate) {
+        super(loadMetricsConfigManager, meterRegistry);
         DubboThreadPoolMetricsBinder.thresholdRate = thresholdRate;
     }
 
@@ -84,11 +89,11 @@ public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
         ThreadPoolMetrics.monitor(meterRegistry, executor, ThreadPoolTypeEnum.DUBBO, threadPoolNameFull);
         // 绑定线程阈值
         Tags tags = ThreadPoolMetrics.buildTags(threadPoolNameFull, ThreadPoolTypeEnum.DUBBO.getType());
-        Gauge.builder(ThreadPoolMetrics.metricName("threshold.active.size"), executor,
-                value -> thresholdActive.get()).description("触发阈值的活跃线程数量")
-            .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+        Gauge.builder(ThreadPoolMetrics.metricName("threshold.active.size"), executor, value -> thresholdActive.get())
+            .description(buildThreadPoolDesc("触发阈值的活跃线程数量")).baseUnit(BaseUnits.THREADS).tags(tags)
+            .register(meterRegistry);
         Gauge.builder(ThreadPoolMetrics.metricName("threshold.size"), executor,
-                value -> executor.getMaximumPoolSize() * thresholdRate).description("线程阈值")
+                value -> executor.getMaximumPoolSize() * thresholdRate).description(buildThreadPoolDesc("线程阈值"))
             .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
     }
 
@@ -120,8 +125,12 @@ public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
         }
     }
 
-    private static String buildThreadPoolNameFull(Integer port) {
-        return "dubbo.thread.pool" + "." + port;
+    private String buildThreadPoolDesc(String desc) {
+        return getThreadPoolMetricsConfig().getMetricsDesc() + desc;
+    }
+
+    private String buildThreadPoolNameFull(Integer port) {
+        return StrUtil.join(StrPool.DOT, getThreadPoolPrefix(), port);
     }
 
     public static Map<Integer, DubboThreadPoolItem> getDubboThreadPoolMap() {
@@ -154,6 +163,11 @@ public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
         return null;
     }
 
+    @Override
+    protected ThreadPoolTypeEnum getMetricsTypeEnum() {
+        return ThreadPoolTypeEnum.DUBBO;
+    }
+
     public static class DubboThreadPoolItem {
         private final ThreadPoolExecutor threadPoolExecutor;
         private final AtomicInteger thresholdActive;
@@ -172,11 +186,10 @@ public class DubboThreadPoolMetricsBinder implements RegistryProtocolListener {
         }
     }
 
-    //    @Override
-    //    public void onApplicationEvent(ServiceBeanExportedEvent event) {
-    //        // 等dubbo某一个service export操作完毕后，会通知到这里，此时dubbo的线程池肯定也就初始化好了
-    //        init();
-    //    }
+    @Override
+    public void registerMetrics() {
+        init();
+    }
 
     @Override
     public void onExport(RegistryProtocol registryProtocol, Exporter<?> exporter) {

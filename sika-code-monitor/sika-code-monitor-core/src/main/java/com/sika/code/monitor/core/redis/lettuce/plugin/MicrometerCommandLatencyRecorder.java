@@ -15,7 +15,7 @@
  */
 package com.sika.code.monitor.core.redis.lettuce.plugin;
 
-import com.sika.code.monitor.core.invoke.config.InvokeTimedConfig;
+import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
 import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import io.lettuce.core.internal.LettuceAssert;
@@ -90,7 +90,7 @@ public class MicrometerCommandLatencyRecorder implements CommandLatencyRecorder 
     }
 
     protected void completionTimer(CommandLatencyId commandLatencyId, Long invokeTimeNs) {
-        InvokeTimedConfig invokeTimeNsdConfig =
+        InvokeTimedMetricsConfig invokeTimeNsdConfig =
             invokeTimedMetrics.getInstance(InvokeTimedTypeEnum.REDIS_LETTUCE_COMPLETION);
         Tags tags = Tags.of(LABEL_COMMAND, commandLatencyId.commandType().name())
             .and(LABEL_LOCAL, commandLatencyId.localAddress().toString())
@@ -100,7 +100,7 @@ public class MicrometerCommandLatencyRecorder implements CommandLatencyRecorder 
 
     protected void firstResponseTimer(CommandLatencyId commandLatencyId, Long invokeTimeNs) {
 
-        InvokeTimedConfig invokeTimeNsdConfig =
+        InvokeTimedMetricsConfig invokeTimeNsdConfig =
             invokeTimedMetrics.getInstance(InvokeTimedTypeEnum.REDIS_LETTUCE_FIRST_RESPONSE);
         Tags tags = Tags.of(LABEL_COMMAND, commandLatencyId.commandType().name())
             .and(LABEL_LOCAL, commandLatencyId.localAddress().toString())

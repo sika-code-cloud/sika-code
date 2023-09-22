@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
  * @date : 2023-06-19
  */
 @NoArgsConstructor
-public class InvokeTimedConfig extends BaseMetricsConfig {
+public class InvokeTimedMetricsConfig extends BaseMetricsConfig {
 
     protected static double[] DEFAULT_PUBLISH_PERCENTILES = new double[] {0.50, 0.90, 0.95, 0.99, 0.999};
 
     protected double[] percentiles = DEFAULT_PUBLISH_PERCENTILES;
     protected boolean percentilesHistogram = false;
 
-    public InvokeTimedConfig(String metricsName, String metricsDesc) {
+    public InvokeTimedMetricsConfig(String metricsName, String metricsDesc) {
         this.metricsName = metricsName;
         this.metricsDesc = metricsDesc;
     }
@@ -32,7 +32,7 @@ public class InvokeTimedConfig extends BaseMetricsConfig {
         return percentiles;
     }
 
-    public InvokeTimedConfig buildPublishPercentiles(double[] publishPercentiles) {
+    public InvokeTimedMetricsConfig buildPublishPercentiles(double[] publishPercentiles) {
         this.percentiles = publishPercentiles;
         return this;
     }
@@ -41,7 +41,7 @@ public class InvokeTimedConfig extends BaseMetricsConfig {
         return percentilesHistogram;
     }
 
-    public InvokeTimedConfig buildPublishPercentileHistogram(boolean publishPercentileHistogram) {
+    public InvokeTimedMetricsConfig buildPublishPercentileHistogram(boolean publishPercentileHistogram) {
         this.percentilesHistogram = publishPercentileHistogram;
         return this;
     }

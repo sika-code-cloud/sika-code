@@ -1,7 +1,6 @@
 package com.sika.code.monitor.core.common.config;
 
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
-import com.sika.code.monitor.core.invoke.config.InvokeTimedConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

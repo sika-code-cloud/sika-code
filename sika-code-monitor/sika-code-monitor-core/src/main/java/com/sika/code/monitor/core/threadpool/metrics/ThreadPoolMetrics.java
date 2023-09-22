@@ -31,22 +31,22 @@ public class ThreadPoolMetrics implements MeterBinder {
     /** 线程池类型 */
     private final String threadPoolType;
     /** 线程池名称 */
-    private final String threadPoolName;
+    private final String threadPoolNamePrefix;
     /** 拒绝数量函数 */
     private ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc;
     private static final Map<ThreadPoolExecutor, AtomicLong> EXECUTOR_TASK_REJECT_COUNT = new ConcurrentHashMap<>();
 
-    public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolName) {
+    public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolNamePrefix) {
         this.executor = executor;
         this.threadPoolType = threadPoolType;
-        this.threadPoolName = threadPoolName;
+        this.threadPoolNamePrefix = threadPoolNamePrefix;
     }
 
-    public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolName,
+    public ThreadPoolMetrics(ThreadPoolExecutor executor, String threadPoolType, String threadPoolNamePrefix,
         ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
         this.executor = executor;
         this.threadPoolType = threadPoolType;
-        this.threadPoolName = threadPoolName;
+        this.threadPoolNamePrefix = threadPoolNamePrefix;
         this.rejectCountFunc = rejectCountFunc;
     }
 
@@ -63,54 +63,60 @@ public class ThreadPoolMetrics implements MeterBinder {
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
         @NonNull ThreadPoolTypeEnum threadPoolTypeEnum, @NonNull String threadPoolName,
         ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
-        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getType(), threadPoolName, rejectCountFunc).bindTo(registry);
+        new ThreadPoolMetrics(executor, threadPoolTypeEnum.getType(), threadPoolName,
+            rejectCountFunc).bindTo(registry);
     }
 
     public static void monitor(@NonNull MeterRegistry registry, @NonNull ThreadPoolExecutor executor,
         @NonNull String threadPoolType, @NonNull String threadPoolName,
         ToDoubleFunction<ThreadPoolExecutor> rejectCountFunc) {
-        new ThreadPoolMetrics(executor, threadPoolType, threadPoolName, rejectCountFunc).bindTo(registry);
+        new ThreadPoolMetrics(executor, threadPoolType, threadPoolName, rejectCountFunc).bindTo(
+            registry);
     }
 
     @Override
     public void bindTo(@NonNull MeterRegistry registry) {
-        log.info("线程池类型【{}】线程池名称【{}】加入监控开始", threadPoolType, threadPoolName);
+        log.info("线程池类型【{}】线程池名称【{}】加入监控开始", threadPoolType, threadPoolNamePrefix);
         registerThreadPoolMetrics(registry);
-        log.info("线程池类型【{}】线程池名称【{}】加入监控成功", threadPoolType, threadPoolName);
+        log.info("线程池类型【{}】线程池名称【{}】加入监控成功", threadPoolType, threadPoolNamePrefix);
     }
 
     private void registerThreadPoolMetrics(MeterRegistry meterRegistry) {
         // prometheus会将指标转为自己的命名风格：threadPoolType.thread.pool.core.size
         // 定义标签
-        Tags tags = buildTags(threadPoolName, threadPoolType);
-        Gauge.builder(metricName("core.size"), executor, ThreadPoolExecutor::getCorePoolSize).description("核心线程数")
-            .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+        Tags tags = buildTags(threadPoolNamePrefix, threadPoolType);
+        Gauge.builder(metricName("core.size"), executor, ThreadPoolExecutor::getCorePoolSize)
+            .description(buildDesc("核心线程数")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
         Gauge.builder(metricName("largest.size"), executor, ThreadPoolExecutor::getLargestPoolSize)
-            .description("历史最高线程数").baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+            .description(buildDesc("历史最高线程数")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
         Gauge.builder(metricName("max.size"), executor, ThreadPoolExecutor::getMaximumPoolSize)
-            .description("最大线程数").baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+            .description(buildDesc("最大线程数")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
-        Gauge.builder(metricName("active.size"), executor, ThreadPoolExecutor::getActiveCount).description("活跃线程数")
-            .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+        Gauge.builder(metricName("active.size"), executor, ThreadPoolExecutor::getActiveCount)
+            .description(buildDesc("活跃线程数")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
-        Gauge.builder(metricName("thread.count"), executor, ThreadPoolExecutor::getPoolSize).description("当前线程数")
-            .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+        Gauge.builder(metricName("thread.count"), executor, ThreadPoolExecutor::getPoolSize)
+            .description(buildDesc("当前线程数")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
-        Gauge.builder(metricName("queue.size"), executor, e -> e.getQueue().size()).description("任务队列大小")
-            .baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+        Gauge.builder(metricName("queue.size"), executor, e -> e.getQueue().size())
+            .description(buildDesc("任务队列大小")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
         FunctionCounter.builder(metricName("task.count"), executor, ThreadPoolExecutor::getTaskCount)
-            .description("任务总量").baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
+            .description(buildDesc("任务总量")).baseUnit(BaseUnits.THREADS).tags(tags).register(meterRegistry);
 
         FunctionCounter.builder(metricName("completed.task.count"), executor, ThreadPoolExecutor::getCompletedTaskCount)
-            .baseUnit(BaseUnits.THREADS).description("已完成的任务量").tags(tags).register(meterRegistry);
+            .baseUnit(BaseUnits.THREADS).description(buildDesc("已完成的任务量")).tags(tags).register(meterRegistry);
 
         buildRejectTaskCount(executor);
         FunctionCounter.builder(metricName("reject.task.count"), executor, this.rejectCountFunc)
-            .baseUnit(BaseUnits.THREADS).description("已拒绝的任务量").tags(tags).register(meterRegistry);
+            .baseUnit(BaseUnits.THREADS).description(buildDesc("已拒绝的任务量")).tags(tags).register(meterRegistry);
 
+    }
+
+    private String buildDesc(String desc) {
+        return desc;
     }
 
     public void buildRejectTaskCount(ThreadPoolExecutor executor) {

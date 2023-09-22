@@ -1,14 +1,14 @@
 package com.sika.code.monitor.core.threadpool.dynamictp.manager;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
+import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
-import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.dynamictp.core.thread.DtpExecutor;
 
@@ -35,8 +35,9 @@ public class DynamicTpThreadPoolMetricsManager extends BaseMetricsManager<Thread
             return;
         }
         for (DtpExecutor threadPoolExecutor : dtpExecutorMap.values()) {
-            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, getMetricsTypeEnum(),
-                threadPoolExecutor.getThreadPoolName(), value -> threadPoolExecutor.getRejectedTaskCount());
+            String poolName = StrUtil.join(StrPool.DOT, getThreadPoolPrefix(), threadPoolExecutor.getThreadPoolName());
+            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, getMetricsTypeEnum(), poolName,
+                value -> threadPoolExecutor.getRejectedTaskCount());
         }
     }
 

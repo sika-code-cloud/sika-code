@@ -2,6 +2,8 @@ package com.sika.code.monitor.core.threadpool.hippo4j.manager;
 
 import cn.hippo4j.core.executor.DynamicThreadPoolExecutor;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
@@ -36,9 +38,8 @@ public class Hippo4jThreadPoolMetricsManager extends BaseMetricsManager<ThreadPo
             return;
         }
         for (DynamicThreadPoolExecutor threadPoolExecutor : dynamicThreadPoolExecutorMap.values()) {
-            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, getMetricsTypeEnum(),
-                threadPoolExecutor.getThreadPoolId(),
-                value -> threadPoolExecutor.getRejectCount().get());
+            String poolName = StrUtil.join(StrPool.DOT, getThreadPoolPrefix(), threadPoolExecutor.getThreadPoolId());
+            ThreadPoolMetrics.monitor(meterRegistry, threadPoolExecutor, getMetricsTypeEnum(), poolName, value -> threadPoolExecutor.getRejectCount().get());
         }
     }
 

@@ -33,8 +33,7 @@ public class TomcatThreadPoolMetricsManager extends BaseMetricsManager<ThreadPoo
 
     private void monitor(ThreadPoolExecutor executor, String threadPoolType) {
         // prometheus会将指标转为自己的命名风格：threadPoolType.thread.pool.core.size
-        String threadPoolName = loadMetricsConfigManager.getMetricsConfigInstance(ThreadPoolTypeEnum.TOMCAT.getType(),
-            ThreadPoolMetricsConfig.class).getMetricsName();
+        String threadPoolName = getThreadPoolPrefix();
         // 定义标签
         Tags tags = Tags.of("thread.pool.name", threadPoolName).and("thread.pool.type", threadPoolType);
         Gauge.builder(metricName("core.size"), executor, ThreadPoolExecutor::getCorePoolSize).description("核心线程数")

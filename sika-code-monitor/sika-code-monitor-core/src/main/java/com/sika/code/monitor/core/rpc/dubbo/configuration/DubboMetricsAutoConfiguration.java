@@ -1,6 +1,7 @@
 package com.sika.code.monitor.core.rpc.dubbo.configuration;
 
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import com.sika.code.monitor.core.rpc.dubbo.invoke.DubboInvokeMetricsBinder;
 import com.sika.code.monitor.core.rpc.dubbo.threadpool.DubboThreadPoolMetricsBinder;
@@ -27,9 +28,11 @@ import org.springframework.context.annotation.Configuration;
 public class DubboMetricsAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = MonitorEnableConstant.RPC_DUBBO_THREAD_POOL, havingValue = "true", matchIfMissing = true)
-    DubboThreadPoolMetricsBinder dubboThreadPoolMetrics(MeterRegistry meterRegistry) {
-        return new DubboThreadPoolMetricsBinder(meterRegistry);
+    @ConditionalOnProperty(name = MonitorEnableConstant.RPC_DUBBO_THREAD_POOL, havingValue = "true",
+        matchIfMissing = true)
+    DubboThreadPoolMetricsBinder dubboThreadPoolMetrics(LoadMetricsConfigManager loadMetricsConfigManager,
+        MeterRegistry meterRegistry) {
+        return new DubboThreadPoolMetricsBinder(loadMetricsConfigManager, meterRegistry);
     }
 
     @Bean

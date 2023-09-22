@@ -25,10 +25,12 @@ public abstract class BaseMetricsManager<T extends BaseMetricsTypeEnum> {
     public abstract void registerMetrics();
 
     protected String getThreadPoolPrefix() {
-        ThreadPoolMetricsConfig config =
-            loadMetricsConfigManager.getMetricsConfigInstance(getMetricsTypeEnum().getType(),
-                ThreadPoolMetricsConfig.class);
-        return config.getMetricsName();
+        return getThreadPoolMetricsConfig().getMetricsName();
+    }
+
+    protected ThreadPoolMetricsConfig getThreadPoolMetricsConfig() {
+        return loadMetricsConfigManager.getMetricsConfigInstance(getMetricsTypeEnum().getType(),
+            ThreadPoolMetricsConfig.class);
     }
 
     protected abstract T getMetricsTypeEnum();
