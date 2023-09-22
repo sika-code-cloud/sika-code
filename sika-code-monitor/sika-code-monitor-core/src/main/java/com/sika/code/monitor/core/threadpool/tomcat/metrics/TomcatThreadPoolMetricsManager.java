@@ -2,9 +2,9 @@ package com.sika.code.monitor.core.threadpool.tomcat.metrics;
 
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
-import com.sika.code.monitor.core.threadpool.config.ThreadPoolMetricsConfig;
-import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
-import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
+import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.common.manager.BaseThreadPoolMetricsManager;
+import com.sika.code.monitor.core.threadpool.common.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -22,7 +22,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatWebServer;
  * @date : 2023-06-25
  */
 @Slf4j
-public class TomcatThreadPoolMetricsManager extends BaseMetricsManager<ThreadPoolTypeEnum> {
+public class TomcatThreadPoolMetricsManager extends BaseThreadPoolMetricsManager {
     private final WebServerApplicationContext webServerApplicationContext;
 
     public TomcatThreadPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
@@ -66,14 +66,9 @@ public class TomcatThreadPoolMetricsManager extends BaseMetricsManager<ThreadPoo
         return ThreadPoolMetrics.metricName(metricsName);
     }
 
-    private String getThreadPoolName() {
-        return loadMetricsConfigManager.getMetricsConfigInstance(ThreadPoolTypeEnum.TOMCAT.getType(),
-            ThreadPoolMetricsConfig.class).getMetricsName();
-    }
-
     @Override
-    public void registerMetrics() {
-        String poolName = getThreadPoolName();
+    public void doRegisterMetrics() {
+        String poolName = getThreadPoolPrefix();
         log.info("线程池类型【{}】线程池名称【{}】加入监控开始", ThreadPoolTypeEnum.TOMCAT.getType(), poolName);
         //获取webServer线程池 - 待实现
         ThreadPoolExecutor executor =

@@ -17,8 +17,4 @@ public interface MonitorEnableConstant {
     String DB_MYBATIS_INVOKE = METRICS_COMMON_PREFIX + "invoke.db.mybatis.enabled";
     String RPC_DUBBO_INVOKE = METRICS_COMMON_PREFIX + "invoke.rpc.dubbo.enabled";
 
-    String RPC_DUBBO_THREAD_POOL = METRICS_COMMON_PREFIX + "threadPool.rpc.dubbo.enabled";
-    String THREAD_POOL_DYNAMIC_TP = METRICS_COMMON_PREFIX + "threadPool.dynamicTp.enabled";
-    String THREAD_POOL_HIPPO_4J = METRICS_COMMON_PREFIX + "threadPool.hippo4j.enabled";
-    String THREAD_POOL_TOMCAT = METRICS_COMMON_PREFIX + "threadPool.tomcat.enabled";
 }

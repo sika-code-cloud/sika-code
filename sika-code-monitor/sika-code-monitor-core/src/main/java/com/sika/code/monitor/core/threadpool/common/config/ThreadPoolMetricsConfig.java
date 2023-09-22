@@ -1,8 +1,8 @@
-package com.sika.code.monitor.core.threadpool.config;
+package com.sika.code.monitor.core.threadpool.common.config;
 
 import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
-import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
 
 /**
  * ThreadPoolMetricsConfig

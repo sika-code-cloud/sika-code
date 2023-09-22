@@ -2,10 +2,10 @@ package com.sika.code.monitor.core.rpc.dubbo.threadpool;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
-import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
-import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
-import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
+import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.common.manager.BaseThreadPoolMetricsManager;
+import com.sika.code.monitor.core.threadpool.common.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
@@ -39,8 +39,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date : 2023-06-17
  */
 @Activate
-public class DubboThreadPoolMetricsBinder extends BaseMetricsManager<ThreadPoolTypeEnum>
-    implements RegistryProtocolListener {
+public class DubboThreadPoolMetricsBinder extends BaseThreadPoolMetricsManager implements RegistryProtocolListener {
     private static final Map<Integer, DubboThreadPoolItem> DUBBO_THREAD_POOL_MAP = new ConcurrentHashMap<>();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboThreadPoolMetricsBinder.class);
@@ -126,7 +125,7 @@ public class DubboThreadPoolMetricsBinder extends BaseMetricsManager<ThreadPoolT
     }
 
     private String buildThreadPoolDesc(String desc) {
-        return getThreadPoolMetricsConfig().getMetricsDesc() + desc;
+        return desc;
     }
 
     private String buildThreadPoolNameFull(Integer port) {
@@ -187,7 +186,7 @@ public class DubboThreadPoolMetricsBinder extends BaseMetricsManager<ThreadPoolT
     }
 
     @Override
-    public void registerMetrics() {
+    public void doRegisterMetrics() {
         init();
     }
 

@@ -2,7 +2,7 @@ package com.sika.code.monitor.core.common.properties;
 
 import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
-import com.sika.code.monitor.core.threadpool.config.ThreadPoolMetricsConfig;
+import com.sika.code.monitor.core.threadpool.common.config.ThreadPoolMetricsConfig;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

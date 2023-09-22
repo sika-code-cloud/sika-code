@@ -4,10 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
-import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
-import com.sika.code.monitor.core.threadpool.metrics.ThreadPoolMetrics;
+import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.common.manager.BaseThreadPoolMetricsManager;
+import com.sika.code.monitor.core.threadpool.common.metrics.ThreadPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.dynamictp.core.thread.DtpExecutor;
@@ -21,7 +23,7 @@ import java.util.Map;
  * @date : 2023-09-04
  */
 @Slf4j
-public class DynamicTpThreadPoolMetricsManager extends BaseMetricsManager<ThreadPoolTypeEnum> {
+public class DynamicTpThreadPoolMetricsManager extends BaseThreadPoolMetricsManager {
 
     public DynamicTpThreadPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
         MeterRegistry meterRegistry) {
@@ -29,7 +31,7 @@ public class DynamicTpThreadPoolMetricsManager extends BaseMetricsManager<Thread
     }
 
     @Override
-    public void registerMetrics() {
+    public void doRegisterMetrics() {
         Map<String, DtpExecutor> dtpExecutorMap = SpringUtil.getBeansOfType(DtpExecutor.class);
         if (CollUtil.isEmpty(dtpExecutorMap)) {
             return;

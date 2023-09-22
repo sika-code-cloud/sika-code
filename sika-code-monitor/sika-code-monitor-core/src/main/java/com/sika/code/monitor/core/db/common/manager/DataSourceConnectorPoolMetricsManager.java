@@ -2,6 +2,7 @@ package com.sika.code.monitor.core.db.common.manager;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @author daiqi
  * @create 2023-09-03 23:50
  */
-public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<BaseMetricsTypeEnum> {
+public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<BaseMetricsConfig, BaseMetricsTypeEnum> {
 
     public DataSourceConnectorPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
         MeterRegistry meterRegistry) {
@@ -28,7 +29,7 @@ public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<Ba
     }
 
     @Override
-    public void registerMetrics() {
+    public void doRegisterMetrics() {
         Map<String, DataSource> dataSources = SpringUtil.getBeansOfType(DataSource.class);
         LOGGER.info("数据源连接监控-加载的数据源【{}】", dataSources);
         if (CollectionUtils.isEmpty(dataSources)) {
@@ -52,6 +53,11 @@ public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<Ba
                 LOGGER.info("【{}】未匹配到数据-跳过监控", dataSource.getClass());
             }
         }
+    }
+
+    @Override
+    protected Class<BaseMetricsConfig> getConfigClass() {
+        return null;
     }
 
     @Override

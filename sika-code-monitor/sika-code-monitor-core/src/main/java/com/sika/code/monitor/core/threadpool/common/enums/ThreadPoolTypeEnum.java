@@ -1,4 +1,4 @@
-package com.sika.code.monitor.core.threadpool.enums;
+package com.sika.code.monitor.core.threadpool.common.enums;
 
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import lombok.AllArgsConstructor;

@@ -28,8 +28,6 @@ import org.springframework.context.annotation.Configuration;
 public class DubboMetricsAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = MonitorEnableConstant.RPC_DUBBO_THREAD_POOL, havingValue = "true",
-        matchIfMissing = true)
     DubboThreadPoolMetricsBinder dubboThreadPoolMetrics(LoadMetricsConfigManager loadMetricsConfigManager,
         MeterRegistry meterRegistry) {
         return new DubboThreadPoolMetricsBinder(loadMetricsConfigManager, meterRegistry);

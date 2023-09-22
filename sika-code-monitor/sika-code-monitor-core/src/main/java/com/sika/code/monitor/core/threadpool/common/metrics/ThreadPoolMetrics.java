@@ -1,7 +1,7 @@
-package com.sika.code.monitor.core.threadpool.metrics;
+package com.sika.code.monitor.core.threadpool.common.metrics;
 
 import cn.hutool.core.text.StrPool;
-import com.sika.code.monitor.core.threadpool.enums.ThreadPoolTypeEnum;
+import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
