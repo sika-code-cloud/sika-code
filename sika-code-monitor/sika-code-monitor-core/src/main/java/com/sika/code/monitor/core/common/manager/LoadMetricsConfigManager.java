@@ -26,33 +26,37 @@ public class LoadMetricsConfigManager {
     private final Map<String, BaseMetricsConfig> METRICS_CONFIG_MAP = Maps.newConcurrentMap();
 
     public <T extends BaseMetricsConfig> T getMetricsConfigInstance(String metricsType, Class<T> metricsConfigClass) {
-        String key = buildKey(metricsType, metricsConfigClass);
-        // 从缓存中获取数据
-        T metricsCache = (T)METRICS_CONFIG_MAP.get(key);
-        if (metricsCache != null) {
-            return metricsCache;
-        }
-        // 从配置中获取
+        T metricsCache = null;
+        // 从配置中获取 - 配置优先
         if (metricsProperties != null) {
             metricsCache = (T)metricsProperties.getConfigByType(metricsType, metricsConfigClass);
             if (metricsCache != null) {
-                METRICS_CONFIG_MAP.putIfAbsent(key, metricsCache);
+                metricsCache.setMetricsType(metricsType);
                 return metricsCache;
             }
         }
+
+        // 从缓存中获取数据
+        String key = buildKey(metricsType, metricsConfigClass);
+        metricsCache = (T)METRICS_CONFIG_MAP.get(key);
+        if (metricsCache != null) {
+            return metricsCache;
+        }
+
         // 从自定义中获取
         metricsCache = getConfigInstanceDefault(metricsType, metricsConfigClass);
         METRICS_CONFIG_MAP.putIfAbsent(key, metricsCache);
         return metricsCache;
     }
 
-    protected <T extends BaseMetricsConfig> T getConfigInstanceDefault(String metricsType, Class<T> metricsConfigClass) {
+    protected <T extends BaseMetricsConfig> T getConfigInstanceDefault(String metricsTypeValue, Class<T> metricsConfigClass) {
         T metricsConfig = ReflectUtil.newInstance(metricsConfigClass);
-        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(metricsType, metricsConfig.getMetricsTypeEnumClass());
-        Assert.notNull(metricsType, "invokeTimedType[{}]对应的枚举不存在，请核实配置", metricsType);
+        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(metricsTypeValue, metricsConfig.getMetricsTypeEnumClass());
+        Assert.notNull(metricsTypeValue, "invokeTimedType[{}]对应的枚举不存在，请核实配置", metricsTypeValue);
 
         metricsConfig.setMetricsDesc(metricsConfigTypeEnum.getDesc());
         metricsConfig.setMetricsName(metricsConfigTypeEnum.getName());
+        metricsConfig.setMetricsType(metricsTypeValue);
         return metricsConfig;
     }
     protected String buildKey(String metricsType, Class<?> metricsConfigClass) {

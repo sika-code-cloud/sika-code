@@ -19,6 +19,7 @@ public abstract class BaseMetricsConfig {
     protected String metricsDesc;
 
     protected Boolean enabled = true;
+    protected String metricsType;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 

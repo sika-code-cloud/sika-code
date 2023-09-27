@@ -1,14 +1,15 @@
 package com.sika.code.monitor.core.invoke.metics;
 
+import cn.hutool.core.util.ReUtil;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Tags;
-import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * MetricsUtil
@@ -33,7 +34,7 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs  : 执行的耗时时长-单位ns
      */
     public void collectMqConsumeInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic, String group,
-        Long invokeTimeNs) {
+                                            Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("group", group).and("topic", topic);
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.MQ_CONSUME);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
@@ -48,7 +49,7 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs  : 执行的耗时时长-单位ns
      */
     public void collectMqProduceInvokeTimed(MeterRegistry meterRegistry, String mqType, String topic,
-        Long invokeTimeNs) {
+                                            Long invokeTimeNs) {
         Tags tags = Tags.of("mqType", mqType).and("topic", topic);
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.MQ_PRODUCE);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
@@ -63,7 +64,7 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs   : 执行的耗时时长-单位ns
      */
     public void collectDBClientInvokeTimed(MeterRegistry meterRegistry, String sqlCommandType, String methodName,
-        Long invokeTimeNs) {
+                                           Long invokeTimeNs) {
         Tags tags = Tags.of("sqlCommandType", sqlCommandType).and("methodName", methodName);
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DB_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
@@ -79,7 +80,7 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs  : 执行的耗时时长-单位ns
      */
     public void collectHttpClientInvokeTimed(MeterRegistry meterRegistry, String domain, String uri, String method,
-        Long invokeTimeNs) {
+                                             Long invokeTimeNs) {
         Tags tags = Tags.of("domain", domain).and("uri", uri).and("method", method.toUpperCase());
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.HTTP_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
@@ -95,10 +96,10 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs   : 执行的耗时时长-单位ns
      */
     public void collectDubboClientInvokeTimed(MeterRegistry meterRegistry, Class<?> className, String methodName,
-        Class<?>[] parameterTypes, Long invokeTimeNs) {
+                                              Class<?>[] parameterTypes, Long invokeTimeNs) {
         String parameterTypeStr = Arrays.toString(parameterTypes);
         Tags tags = Tags.of("serviceName", className.getSimpleName()).and("methodName", methodName)
-            .and("parameterTypes", parameterTypeStr);
+                .and("parameterTypes", parameterTypeStr);
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DUBBO_CLIENT);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
@@ -113,10 +114,10 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs   : 执行的耗时时长-单位ns
      */
     public void collectDubboServerInvokeTimed(MeterRegistry meterRegistry, Class<?> serviceClass, String methodName,
-        Class<?>[] parameterTypes, Long invokeTimeNs) {
+                                              Class<?>[] parameterTypes, Long invokeTimeNs) {
         String parameterTypeStr = Arrays.toString(parameterTypes);
-        Tags tags = Tags.of("serviceName", serviceClass.getSimpleName()).and("methodName", methodName)
-            .and("parameterTypes", parameterTypeStr);
+        Tags tags = Tags.of("serviceName", serviceClass.getName()).and("methodName", methodName)
+                .and("parameterTypes", parameterTypeStr);
         InvokeTimedMetricsConfig invokeTimeNsdConfig = getInstance(InvokeTimedTypeEnum.DUBBO_SERVER);
         collectInvokeTimed(meterRegistry, invokeTimeNsdConfig, tags, invokeTimeNs);
     }
@@ -130,14 +131,17 @@ public class InvokeTimedMetrics {
      * @param invokeTimeNs        - 纳秒值
      */
     public void collectInvokeTimed(MeterRegistry meterRegistry, InvokeTimedMetricsConfig invokeTimeNsdConfig, Tags tags,
-        Long invokeTimeNs) {
+                                   Long invokeTimeNs) {
         try {
+
             String metricsName = invokeTimeNsdConfig.getMetricsName();
             String metricsDescription = invokeTimeNsdConfig.getMetricsDesc();
             Timer timer = Timer.builder(metricsName).tags(tags).description(metricsDescription)
-                .publishPercentileHistogram(invokeTimeNsdConfig.isPercentilesHistogram())
-                .publishPercentiles(invokeTimeNsdConfig.getPercentiles()).register(meterRegistry);
+                    .publishPercentileHistogram(invokeTimeNsdConfig.isPercentilesHistogram())
+                    .publishPercentiles(invokeTimeNsdConfig.getPercentiles()).register(meterRegistry);
             timer.record(invokeTimeNs, TimeUnit.NANOSECONDS);
+            // 注册告警指标
+            registryAlert(meterRegistry, invokeTimeNsdConfig, tags);
         } catch (Exception e) {
             invokeTimeNsdConfig.getLogger().error(e.getMessage(), e);
         }
@@ -152,6 +156,22 @@ public class InvokeTimedMetrics {
     public InvokeTimedMetricsConfig getInstance(InvokeTimedTypeEnum invokeTimedTypeEnum) {
         assert invokeTimedTypeEnum != null;
         return loadMetricsConfigManager.getMetricsConfigInstance(invokeTimedTypeEnum.getType(),
-            InvokeTimedMetricsConfig.class);
+                InvokeTimedMetricsConfig.class);
     }
+
+    private void registryAlert(MeterRegistry meterRegistry, InvokeTimedMetricsConfig invokeTimeNsdConfig, Tags tags, String... tasArrs) {
+        if (tags == null) {
+            return;
+        }
+        List<String> tagValues = tags.stream().map(Tag::getValue).collect(Collectors.toList());
+        InvokeTimedMetricsConfig.InvokeAlertConfig alertConfig = invokeTimeNsdConfig.match(tagValues);
+        if (alertConfig == null) {
+            return;
+        }
+        tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
+        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert",
+                        tags, value -> alertConfig.getTimeUnit().toMillis(alertConfig.getThreshold()))
+                .register(meterRegistry);
+    }
+
 }
