@@ -5,14 +5,22 @@ import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.threadpool.common.enums.ThreadPoolTypeEnum;
 
 /**
- * ThreadPoolMetricsConfig
+ * <p>
+ * 线程池配置类
+ * </p>
  *
- * @author : daiqi
- * @date : 2023-09-21
+ * @author by sikadai
+ * @version 1.0
+ * @since 2023/9/28 8:29
  */
-public class ThreadPoolMetricsConfig extends BaseMetricsConfig {
+public class ThreadPoolMetricsConfig extends BaseMetricsConfig<ThreadPoolMetricsItemItemConfig> {
     @Override
     public Class<? extends BaseMetricsTypeEnum> getMetricsTypeEnumClass() {
         return ThreadPoolTypeEnum.class;
+    }
+
+    @Override
+    public Class<ThreadPoolMetricsItemItemConfig> getMetricsItemConfigClass() {
+        return ThreadPoolMetricsItemItemConfig.class;
     }
 }

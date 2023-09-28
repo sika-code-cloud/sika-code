@@ -6,9 +6,6 @@ import com.sika.code.monitor.core.threadpool.common.config.ThreadPoolMetricsConf
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /**
  * InvokeTimedProperties
  *
@@ -18,14 +15,15 @@ import java.util.Map;
 @ConfigurationProperties("management.metrics.sika")
 @Getter
 public class MetricsProperties {
-    private final Map<String, InvokeTimedMetricsConfig> invoke = new LinkedHashMap<>();
-    private final Map<String, ThreadPoolMetricsConfig> threadPool = new LinkedHashMap<>();
 
-    public BaseMetricsConfig getConfigByType(String type, Class<? extends BaseMetricsConfig> mClass) {
+    private final InvokeTimedMetricsConfig invoke = new InvokeTimedMetricsConfig();
+    private final ThreadPoolMetricsConfig threadPool = new ThreadPoolMetricsConfig();
+
+    public BaseMetricsConfig getConfigByType(Class<? extends BaseMetricsConfig> mClass) {
         if (InvokeTimedMetricsConfig.class.equals(mClass)) {
-            return invoke.get(type);
+            return invoke;
         } else if (ThreadPoolMetricsConfig.class.equals(mClass)) {
-            return threadPool.get(type);
+            return threadPool;
         }
         return null;
     }

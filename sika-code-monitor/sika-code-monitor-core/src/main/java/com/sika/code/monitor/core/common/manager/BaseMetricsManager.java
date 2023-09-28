@@ -1,12 +1,11 @@
 package com.sika.code.monitor.core.common.manager;
 
 import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
+import com.sika.code.monitor.core.common.config.BaseMetricsItemConfig;
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
-import com.sika.code.monitor.core.threadpool.common.config.ThreadPoolMetricsConfig;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.BooleanUtils;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @date : 2023-09-04
  */
 @AllArgsConstructor
-public abstract class BaseMetricsManager<C extends BaseMetricsConfig, M extends BaseMetricsTypeEnum> {
+public abstract class BaseMetricsManager<C extends BaseMetricsConfig<?>, M extends BaseMetricsTypeEnum> {
     protected final LoadMetricsConfigManager loadMetricsConfigManager;
 
     protected final MeterRegistry meterRegistry;
@@ -25,7 +24,7 @@ public abstract class BaseMetricsManager<C extends BaseMetricsConfig, M extends 
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     public void registerMetrics() {
-        C config = getMetricsConfig();
+        BaseMetricsItemConfig config = getMetricsConfig();
         if (config == null) {
             return;
         }
@@ -37,7 +36,7 @@ public abstract class BaseMetricsManager<C extends BaseMetricsConfig, M extends 
 
     public abstract void doRegisterMetrics();
 
-    protected C getMetricsConfig() {
+    protected BaseMetricsItemConfig<?> getMetricsConfig() {
         M metricsTypeEnum = getMetricsTypeEnum();
         if (metricsTypeEnum == null) {
             return null;
@@ -46,7 +45,7 @@ public abstract class BaseMetricsManager<C extends BaseMetricsConfig, M extends 
         if (cClass == null) {
             return null;
         }
-        return loadMetricsConfigManager.getMetricsConfigInstance(metricsTypeEnum.getType(), cClass);
+        return loadMetricsConfigManager.getMetricsItemConfigInstance(metricsTypeEnum.getType(), cClass);
     }
 
     protected abstract Class<C> getConfigClass();

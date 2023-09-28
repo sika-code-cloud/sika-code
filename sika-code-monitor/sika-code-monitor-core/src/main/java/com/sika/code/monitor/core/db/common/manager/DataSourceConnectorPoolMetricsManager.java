@@ -8,10 +8,6 @@ import com.sika.code.monitor.core.common.manager.BaseMetricsManager;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.db.common.metrics.BaseDataSourceConnectorPoolMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
@@ -21,10 +17,10 @@ import java.util.Map;
  * @author daiqi
  * @create 2023-09-03 23:50
  */
-public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<BaseMetricsConfig, BaseMetricsTypeEnum> {
+public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<BaseMetricsConfig<?>, BaseMetricsTypeEnum> {
 
     public DataSourceConnectorPoolMetricsManager(LoadMetricsConfigManager loadMetricsConfigManager,
-        MeterRegistry meterRegistry) {
+                                                 MeterRegistry meterRegistry) {
         super(loadMetricsConfigManager, meterRegistry);
     }
 
@@ -39,11 +35,11 @@ public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<Ba
             LOGGER.info("数据源连接监控-当前数据源类为【{}】", dataSource.getClass());
             boolean match = false;
             Map<String, BaseDataSourceConnectorPoolMetrics> metricsMap =
-                SpringUtil.getBeansOfType(BaseDataSourceConnectorPoolMetrics.class);
+                    SpringUtil.getBeansOfType(BaseDataSourceConnectorPoolMetrics.class);
             for (BaseDataSourceConnectorPoolMetrics metrics : metricsMap.values()) {
                 Class<?> metricsClass =
-                    ReflectionKit.getSuperClassGenericType(metrics.getClass(), BaseDataSourceConnectorPoolMetrics.class,
-                        0);
+                        ReflectionKit.getSuperClassGenericType(metrics.getClass(), BaseDataSourceConnectorPoolMetrics.class,
+                                0);
                 if (metricsClass.isAssignableFrom(dataSource.getClass())) {
                     metrics.metricRegistry(meterRegistry, dataSource, null);
                     match = true;
@@ -56,7 +52,7 @@ public class DataSourceConnectorPoolMetricsManager extends BaseMetricsManager<Ba
     }
 
     @Override
-    protected Class<BaseMetricsConfig> getConfigClass() {
+    protected Class<BaseMetricsConfig<?>> getConfigClass() {
         return null;
     }
 

@@ -7,12 +7,12 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.sika.code.core.base.constant.BaseTypeEnum;
 import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
+import com.sika.code.monitor.core.common.config.BaseMetricsItemConfig;
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.common.properties.MetricsProperties;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * LoadMetricsConfigManager
@@ -23,42 +23,54 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class LoadMetricsConfigManager {
     private MetricsProperties metricsProperties;
-    private final Map<String, BaseMetricsConfig> METRICS_CONFIG_MAP = Maps.newConcurrentMap();
+    private final Map<String, BaseMetricsItemConfig<BaseMetricsConfig<?>>> METRICS_CONFIG_MAP = Maps.newConcurrentMap();
 
-    public <T extends BaseMetricsConfig> T getMetricsConfigInstance(String metricsType, Class<T> metricsConfigClass) {
-        T metricsCache = null;
+    public BaseMetricsItemConfig<?> getMetricsItemConfigInstance(String metricsType, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
+        BaseMetricsConfig<?> metricsConfig = getMetricConfigInstance(metricsConfigClass);
+        BaseMetricsItemConfig<BaseMetricsConfig<?>> metricsCache = metricsConfig.getItem().get(metricsType);
         // 从配置中获取 - 配置优先
-        if (metricsProperties != null) {
-            metricsCache = (T)metricsProperties.getConfigByType(metricsType, metricsConfigClass);
-            if (metricsCache != null) {
-                metricsCache.setMetricsType(metricsType);
-                return metricsCache;
-            }
+        if (metricsCache != null) {
+            metricsCache.buildMetricsType(metricsType);
+            metricsCache.buildMetricsConfig(metricsConfig);
+            return metricsCache;
         }
 
         // 从缓存中获取数据
         String key = buildKey(metricsType, metricsConfigClass);
-        metricsCache = (T)METRICS_CONFIG_MAP.get(key);
+        metricsCache = METRICS_CONFIG_MAP.get(key);
         if (metricsCache != null) {
             return metricsCache;
         }
 
         // 从自定义中获取
-        metricsCache = getConfigInstanceDefault(metricsType, metricsConfigClass);
+        metricsCache = getItemConfigInstanceDefault(metricsType, metricsConfig);
         METRICS_CONFIG_MAP.putIfAbsent(key, metricsCache);
         return metricsCache;
     }
 
-    protected <T extends BaseMetricsConfig> T getConfigInstanceDefault(String metricsTypeValue, Class<T> metricsConfigClass) {
-        T metricsConfig = ReflectUtil.newInstance(metricsConfigClass);
-        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(metricsTypeValue, metricsConfig.getMetricsTypeEnumClass());
+    protected BaseMetricsItemConfig<BaseMetricsConfig<?>> getItemConfigInstanceDefault(String metricsTypeValue, BaseMetricsConfig<?> metricsItemConfig) {
+        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(metricsTypeValue, metricsItemConfig.getMetricsTypeEnumClass());
         Assert.notNull(metricsTypeValue, "invokeTimedType[{}]对应的枚举不存在，请核实配置", metricsTypeValue);
 
-        metricsConfig.setMetricsDesc(metricsConfigTypeEnum.getDesc());
-        metricsConfig.setMetricsName(metricsConfigTypeEnum.getName());
-        metricsConfig.setMetricsType(metricsTypeValue);
-        return metricsConfig;
+        Class<? extends BaseMetricsItemConfig> metricsItemConfigClass = metricsItemConfig.getMetricsItemConfigClass();
+        assert metricsItemConfigClass != null;
+        BaseMetricsItemConfig<BaseMetricsConfig<?>> itemConfig = ReflectUtil.newInstance(metricsItemConfigClass);
+        itemConfig.setMetricsDesc(metricsConfigTypeEnum.getDesc());
+        itemConfig.setMetricsName(metricsConfigTypeEnum.getName());
+        itemConfig.buildMetricsType(metricsTypeValue);
+        itemConfig.buildMetricsConfig(metricsItemConfig);
+        return itemConfig;
     }
+
+    private BaseMetricsConfig<?> getMetricConfigInstance(Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
+        // 从配置中获取 - 配置优先
+        if (metricsProperties != null) {
+            return metricsProperties.getConfigByType(metricsConfigClass);
+        } else {
+            return ReflectUtil.newInstance(metricsConfigClass);
+        }
+    }
+
     protected String buildKey(String metricsType, Class<?> metricsConfigClass) {
         return StrUtil.join(StrPool.COLON, metricsConfigClass.getName(), metricsType);
     }
