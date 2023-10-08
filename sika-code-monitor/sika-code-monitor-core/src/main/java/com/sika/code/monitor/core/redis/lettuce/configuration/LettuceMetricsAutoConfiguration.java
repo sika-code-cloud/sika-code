@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Configuration;
 public class LettuceMetricsAutoConfiguration {
 
     @Bean
-    @ConditionalOnBean(InvokeTimedMetrics.class)
     ClientResourcesBuilderCustomizer customerLettuceMetrics(MeterRegistry meterRegistry, MicrometerOptions options, InvokeTimedMetrics invokeTimedMetrics) {
         return (client) -> client.commandLatencyRecorder(
             new MicrometerCommandLatencyRecorder(meterRegistry, options, invokeTimedMetrics));

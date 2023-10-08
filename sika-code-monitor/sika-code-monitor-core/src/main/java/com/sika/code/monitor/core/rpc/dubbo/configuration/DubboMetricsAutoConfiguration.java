@@ -35,7 +35,6 @@ public class DubboMetricsAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = MonitorEnableConstant.RPC_DUBBO_INVOKE, havingValue = "true", matchIfMissing = true)
-    @ConditionalOnBean(InvokeTimedMetrics.class)
     DubboInvokeMetricsBinder dubboInvokeMetrics(MeterRegistry meterRegistry, InvokeTimedMetrics invokeTimedMetrics) {
         return new DubboInvokeMetricsBinder(meterRegistry, invokeTimedMetrics);
     }
