@@ -32,6 +32,7 @@ public class LoadMetricsConfigManager {
         if (metricsCache != null) {
             metricsCache.buildMetricsType(metricsType);
             metricsCache.buildMetricsConfig(metricsConfig);
+            metricsCache.buildMetricsNameAndDesc();
             return metricsCache;
         }
 

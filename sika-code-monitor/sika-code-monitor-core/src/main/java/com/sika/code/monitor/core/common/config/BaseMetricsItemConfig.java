@@ -1,5 +1,7 @@
 package com.sika.code.monitor.core.common.config;
 
+import com.sika.code.core.base.constant.BaseTypeEnum;
+import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +46,15 @@ public abstract class BaseMetricsItemConfig<T extends BaseMetricsConfig<?>> {
             return;
         }
         setMetricsConfig(metricsConfig);
+    }
+
+    public void buildMetricsNameAndDesc() {
+        if (this.metricsName != null && this.metricsDesc != null) {
+            return;
+        }
+        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(getMetricsType(), getMetricsConfig().getMetricsTypeEnumClass());
+        setMetricsName(metricsConfigTypeEnum.getType());
+        setMetricsDesc(metricsConfigTypeEnum.getDesc());
     }
 
 }
