@@ -18,5 +18,9 @@ public class InvokeAlertRuleConfig extends BaseAlertRuleConfig {
      */
     private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 
+    public long toMillis() {
+        System.out.println(this + "--------" + threshold);
+        return getTimeUnit().toMillis(getThreshold());
+    }
 
 }

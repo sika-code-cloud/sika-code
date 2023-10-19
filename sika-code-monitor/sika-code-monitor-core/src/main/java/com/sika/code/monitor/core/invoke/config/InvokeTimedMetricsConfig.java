@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 public class InvokeTimedMetricsConfig extends BaseMetricsConfig<InvokeTimedMetricsItemConfig> {
-    private List<InvokeAlertRuleConfig> alertRules = Lists.newCopyOnWriteArrayList();
+    private List<InvokeAlertRuleConfig> alertRules = Lists.newArrayList();
 
     @Override
     public Class<? extends BaseMetricsTypeEnum> getMetricsTypeEnumClass() {

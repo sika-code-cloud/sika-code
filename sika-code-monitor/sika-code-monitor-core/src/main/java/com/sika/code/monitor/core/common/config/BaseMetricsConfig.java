@@ -1,7 +1,6 @@
 package com.sika.code.monitor.core.common.config;
 
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
-import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsItemConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -16,15 +15,13 @@ import java.util.Map;
  * @author : daiqi
  * @date : 2023-09-21
  */
-@Setter
-@Getter
 public abstract class BaseMetricsConfig<T extends BaseMetricsItemConfig> {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected final Map<String, T> item = new LinkedHashMap<>();
 
-    public Logger getLogger() {
+    public Logger logger() {
         return logger;
     }
 
@@ -35,4 +32,8 @@ public abstract class BaseMetricsConfig<T extends BaseMetricsItemConfig> {
     public abstract Class<? extends BaseMetricsTypeEnum> getMetricsTypeEnumClass();
 
     public abstract Class<T> getMetricsItemConfigClass();
+
+    public Map<String, T> getItem() {
+        return item;
+    }
 }

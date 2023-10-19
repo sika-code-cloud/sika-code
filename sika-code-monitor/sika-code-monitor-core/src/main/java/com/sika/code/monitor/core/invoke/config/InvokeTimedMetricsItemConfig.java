@@ -31,7 +31,7 @@ public class InvokeTimedMetricsItemConfig extends BaseMetricsItemConfig<InvokeTi
      */
     protected boolean percentilesHistogram = false;
 
-    private List<InvokeAlertRuleConfig> alertRules = Lists.newCopyOnWriteArrayList();
+    private List<InvokeAlertRuleConfig> alertRules = Lists.newArrayList();
 
     public InvokeTimedMetricsItemConfig(String metricsName, String metricsDesc) {
         this.metricsName = metricsName;

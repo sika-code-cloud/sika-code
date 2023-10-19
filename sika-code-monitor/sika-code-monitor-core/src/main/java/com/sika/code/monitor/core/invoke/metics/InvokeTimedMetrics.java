@@ -1,5 +1,6 @@
 package com.sika.code.monitor.core.invoke.metics;
 
+import com.google.common.collect.Maps;
 import com.sika.code.monitor.core.alert.matcher.AlertMatcher;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
 import com.sika.code.monitor.core.invoke.config.InvokeAlertRuleConfig;
@@ -7,10 +8,15 @@ import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsItemConfig;
 import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
 import io.micrometer.core.instrument.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -19,8 +25,10 @@ import java.util.stream.Collectors;
  * @author : daiqi
  * @date : 2023-08-23
  */
+@Slf4j
 public class InvokeTimedMetrics {
     private final LoadMetricsConfigManager loadMetricsConfigManager;
+    public static Map<Meter.Id, InvokeAlertRuleConfig> idInvokeAlertRuleConfigMap = Maps.newConcurrentMap();
 
     public InvokeTimedMetrics(LoadMetricsConfigManager loadMetricsConfigManager) {
         this.loadMetricsConfigManager = loadMetricsConfigManager;
@@ -157,7 +165,7 @@ public class InvokeTimedMetrics {
      */
     public InvokeTimedMetricsItemConfig getInstance(InvokeTimedTypeEnum invokeTimedTypeEnum) {
         assert invokeTimedTypeEnum != null;
-        return  (InvokeTimedMetricsItemConfig)loadMetricsConfigManager.getMetricsItemConfigInstance(invokeTimedTypeEnum.getType(),
+        return (InvokeTimedMetricsItemConfig) loadMetricsConfigManager.getMetricsItemConfigInstance(invokeTimedTypeEnum.getType(),
                 InvokeTimedMetricsConfig.class);
     }
 
@@ -171,9 +179,18 @@ public class InvokeTimedMetrics {
             return;
         }
         tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
-        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert",
-                        tags, value -> alertConfig.getTimeUnit().toMillis(alertConfig.getThreshold()))
+        System.out.println(alertConfig);
+        String metricsName = invokeTimeNsdConfig.getMetricsName() + ".alert";
+        Meter.Id id = new Meter.Id(metricsName, tags, null, null, Meter.Type.GAUGE);
+        InvokeAlertRuleConfig config = idInvokeAlertRuleConfigMap.putIfAbsent(id, alertConfig);
+        log.info("newConfig:{}, cacheConfig:{}", alertConfig, config);
+        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert", this, value -> millis(alertConfig))
+                .tags(tags)
                 .register(meterRegistry);
+    }
+
+    private Long millis(InvokeAlertRuleConfig alertConfig) {
+        return alertConfig.toMillis();
     }
 
 }
