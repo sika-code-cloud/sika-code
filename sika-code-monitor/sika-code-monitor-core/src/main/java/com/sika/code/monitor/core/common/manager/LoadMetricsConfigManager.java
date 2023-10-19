@@ -75,4 +75,8 @@ public class LoadMetricsConfigManager {
     protected String buildKey(String metricsType, Class<?> metricsConfigClass) {
         return StrUtil.join(StrPool.COLON, metricsConfigClass.getName(), metricsType);
     }
+
+    public Map<String, BaseMetricsItemConfig<BaseMetricsConfig<?>>> getConfigMap() {
+        return METRICS_CONFIG_MAP;
+    }
 }

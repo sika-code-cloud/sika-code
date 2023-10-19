@@ -29,17 +29,17 @@ public class AlertMatcher {
     protected static final InvokeAlertRuleConfig DEFAULT_CONFIG = new InvokeAlertRuleConfig();
 
     public static InvokeAlertRuleConfig matchInvokedTime(InvokeTimedMetricsItemConfig itemConfig,
-                                                         List<String> waitMatchArrays) {
+                                                         List<String> waitMatchTagValues) {
         String metricsType = itemConfig.getMetricsType();
         List<InvokeAlertRuleConfig> alertRules = itemConfig.getAlertRules();
         // 优先匹配自定义
-        InvokeAlertRuleConfig alertRuleConfig = matchInvokedTime(alertRules, waitMatchArrays, metricsType);
+        InvokeAlertRuleConfig alertRuleConfig = matchInvokedTime(alertRules, waitMatchTagValues, metricsType);
         if (alertRuleConfig != null) {
             return alertRuleConfig;
         }
         // 若为空匹配全局
         List<InvokeAlertRuleConfig> globalAlertRuleConfigs = itemConfig.getMetricsConfig().getAlertRules();
-        InvokeAlertRuleConfig globalAlertRuleConfig = matchInvokedTime(globalAlertRuleConfigs, waitMatchArrays, metricsType);
+        InvokeAlertRuleConfig globalAlertRuleConfig = matchInvokedTime(globalAlertRuleConfigs, waitMatchTagValues, metricsType);
         if (globalAlertRuleConfig != null) {
             return globalAlertRuleConfig;
         }
@@ -47,11 +47,11 @@ public class AlertMatcher {
     }
 
     private static InvokeAlertRuleConfig matchInvokedTime(List<InvokeAlertRuleConfig> alertRuleConfigs,
-                                                          List<String> waitMatchArrays, String metricsType) {
-        if (ArrayUtil.isEmpty(waitMatchArrays)) {
+                                                          List<String> waitMatchTagValues, String metricsType) {
+        if (ArrayUtil.isEmpty(waitMatchTagValues)) {
             return null;
         }
-        String waitMatchStr = CollUtil.join(waitMatchArrays, StrPool.COLON);
+        String waitMatchStr = CollUtil.join(waitMatchTagValues, StrPool.COLON);
         if (StrUtil.isBlank(waitMatchStr)) {
             return null;
         }
