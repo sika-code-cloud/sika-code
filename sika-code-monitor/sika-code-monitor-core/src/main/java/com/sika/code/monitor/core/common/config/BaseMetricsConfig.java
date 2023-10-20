@@ -1,8 +1,6 @@
 package com.sika.code.monitor.core.common.config;
 
 import com.sika.code.monitor.core.common.enums.BaseMetricsTypeEnum;
-import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +25,7 @@ public abstract class BaseMetricsConfig<T extends BaseMetricsItemConfig> {
 
     /**
      * 获取指标类型枚举的class
+     *
      * @return
      */
     public abstract Class<? extends BaseMetricsTypeEnum> getMetricsTypeEnumClass();

@@ -1,0 +1,78 @@
+package com.sika.code.monitor.client.config;
+
+import cn.hutool.extra.spring.SpringUtil;
+import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.cloud.nacos.NacosConfigProperties;
+import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.config.listener.Listener;
+import com.alibaba.nacos.api.exception.NacosException;
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
+import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
+import com.sika.code.monitor.core.common.properties.MetricsProperties;
+import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.context.properties.source.ConfigurationPropertySource;
+import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.concurrent.Executor;
+
+@AllArgsConstructor
+public class NacosCloudMonitorRefresher extends AbstractConfigMonitorRefresh {
+    private static final Logger log = LoggerFactory.getLogger(NacosCloudMonitorRefresher.class);
+
+    private final ConfigService configService;
+    private final MeterRegistry meterRegistry;
+    private final InvokeTimedMetrics invokeTimedMetrics;
+
+    public void initRegisterListener() throws NacosException {
+        MetricsProperties propertiesBeforeUpdate = SpringUtil.getBean(MetricsProperties.class);
+        String dataId = propertiesBeforeUpdate.getDataId();
+        String group = propertiesBeforeUpdate.getGroup();
+        configService.addListener(dataId, group, new Listener() {
+            @Override
+            public Executor getExecutor() {
+                return null;
+            }
+
+            @Override
+            public void receiveConfigInfo(String configInfo) {
+                try {
+                    MetricsProperties propertiesYetUpdate = getNewMetricsProperties(configInfo);
+                    invokeTimedMetrics.refreshRegistryAlert(propertiesYetUpdate, meterRegistry);
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
+        });
+
+    }
+
+    private MetricsProperties getNewMetricsProperties(String configInfo) {
+        YamlPropertiesFactoryBean yamlPropertiesFactoryBean = new YamlPropertiesFactoryBean();
+        yamlPropertiesFactoryBean.setResources(new ByteArrayResource(configInfo.getBytes()));
+        Map<Object, Object> map = yamlPropertiesFactoryBean.getObject();
+        ConfigurationPropertySource sources = new MapConfigurationPropertySource(map);
+        Binder binder = new Binder(sources);
+        return binder.bind(MonitorEnableConstant.METRICS_COMMON_PREFIX, MetricsProperties.class).get();
+    }
+
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initRegisterListener();
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+
+    }
+}

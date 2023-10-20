@@ -16,10 +16,9 @@ public class InvokeAlertRuleConfig extends BaseAlertRuleConfig {
     /**
      * 告警阈值的单位-毫秒|秒等等
      */
-    private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
+    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
 
     public long toMillis() {
-        System.out.println(this + "--------" + threshold);
         return getTimeUnit().toMillis(getThreshold());
     }
 

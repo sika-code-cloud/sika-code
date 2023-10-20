@@ -28,8 +28,9 @@ public class LoadMetricsConfigManager {
     public BaseMetricsItemConfig<?> getMetricsItemConfigInstance(String metricsType, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
         return getMetricsItemConfigInstance(this.metricsProperties, metricsType, metricsConfigClass);
     }
+
     public BaseMetricsItemConfig<?> getMetricsItemConfigInstance(MetricsProperties metricsProperties, String metricsType, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
-        BaseMetricsConfig<?> metricsConfig = getMetricConfigInstance(metricsConfigClass);
+        BaseMetricsConfig<?> metricsConfig = getMetricConfigInstance(metricsProperties, metricsConfigClass);
         BaseMetricsItemConfig<BaseMetricsConfig<?>> metricsCache = metricsConfig.getItem().get(metricsType);
         // 从配置中获取 - 配置优先
         if (metricsCache != null) {
@@ -66,7 +67,7 @@ public class LoadMetricsConfigManager {
         return itemConfig;
     }
 
-    public BaseMetricsConfig<?> getMetricConfigInstance(Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
+    public BaseMetricsConfig<?> getMetricConfigInstance(MetricsProperties metricsProperties, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
         // 从配置中获取 - 配置优先
         if (metricsProperties != null) {
             return metricsProperties.getConfigByType(metricsConfigClass);

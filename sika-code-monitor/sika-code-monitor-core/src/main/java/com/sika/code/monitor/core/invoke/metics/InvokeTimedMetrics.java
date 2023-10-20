@@ -3,6 +3,7 @@ package com.sika.code.monitor.core.invoke.metics;
 import com.google.common.collect.Maps;
 import com.sika.code.monitor.core.alert.matcher.AlertMatcher;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
+import com.sika.code.monitor.core.common.properties.MetricsProperties;
 import com.sika.code.monitor.core.invoke.config.InvokeAlertRuleConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsItemConfig;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class InvokeTimedMetrics {
     private final LoadMetricsConfigManager loadMetricsConfigManager;
-    public static Map<ID, InvokeTimedMetricsItemConfig> idInvokeAlertRuleConfigMap = Maps.newConcurrentMap();
+    private final static Map<ID, InvokeTimedMetricsItemConfig> ID_INVOKE_ALERT_RULE_CONFIG_MAP = Maps.newConcurrentMap();
 
     public InvokeTimedMetrics(LoadMetricsConfigManager loadMetricsConfigManager) {
         this.loadMetricsConfigManager = loadMetricsConfigManager;
@@ -153,7 +154,8 @@ public class InvokeTimedMetrics {
                     .publishPercentiles(invokeTimeNsdConfig.getPercentiles()).register(meterRegistry);
             timer.record(invokeTimeNs, TimeUnit.NANOSECONDS);
             // 注册告警指标
-            registryAlert(meterRegistry, invokeTimeNsdConfig, tags);
+            tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
+            registryAlert(meterRegistry, invokeTimeNsdConfig, tags, false);
         } catch (Exception e) {
             invokeTimeNsdConfig.getLogger().error(e.getMessage(), e);
         }
@@ -171,7 +173,22 @@ public class InvokeTimedMetrics {
                 InvokeTimedMetricsConfig.class);
     }
 
-    private void registryAlert(MeterRegistry meterRegistry, InvokeTimedMetricsItemConfig invokeTimeNsdConfig, Tags tags, String... tasArrs) {
+    public void refreshRegistryAlert(MetricsProperties propertiesYetUpdate, MeterRegistry meterRegistry) {
+        for (Map.Entry<InvokeTimedMetrics.ID, InvokeTimedMetricsItemConfig> entry : getIdInvokeAlertRuleConfigMap().entrySet()) {
+            InvokeTimedMetrics.ID id = entry.getKey();
+            InvokeTimedMetricsItemConfig configOld = entry.getValue();
+            InvokeTimedMetricsItemConfig configNew = (InvokeTimedMetricsItemConfig) loadMetricsConfigManager
+                    .getMetricsItemConfigInstance(propertiesYetUpdate, configOld.getMetricsType(), InvokeTimedMetricsConfig.class);
+            // 根据缓存的配置构建MeterId
+            Meter.Id oldMeterId = new Meter.Id(id.getName(), id.getTags(), null, null, Meter.Type.GAUGE);
+            // 移除原来监控的值
+            meterRegistry.remove(oldMeterId);
+            // 构建新的告警指标
+            registryAlert(meterRegistry, configNew, id.getTags(), true);
+        }
+    }
+
+    private void registryAlert(MeterRegistry meterRegistry, InvokeTimedMetricsItemConfig invokeTimeNsdConfig, Tags tags, boolean write) {
         if (tags == null) {
             return;
         }
@@ -180,26 +197,20 @@ public class InvokeTimedMetrics {
         if (alertConfig == null) {
             return;
         }
-        tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
-        System.out.println(alertConfig);
         String metricsName = invokeTimeNsdConfig.getMetricsName() + ".alert";
-
         ID idCache = new ID(metricsName, tagValues, tags);
-        Meter.Id id = new Meter.Id(metricsName, tags, null, null, Meter.Type.GAUGE);
-        InvokeTimedMetricsItemConfig config = idInvokeAlertRuleConfigMap.putIfAbsent(idCache, invokeTimeNsdConfig);
-        log.info("newConfig:{}, cacheConfig:{}", invokeTimeNsdConfig, config);
-        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert", alertConfig, InvokeAlertRuleConfig::toMillis)
+
+        if (!write && ID_INVOKE_ALERT_RULE_CONFIG_MAP.containsKey(idCache)) {
+            return;
+        }
+        ID_INVOKE_ALERT_RULE_CONFIG_MAP.put(idCache, invokeTimeNsdConfig);
+        Gauge.builder(metricsName, alertConfig, InvokeAlertRuleConfig::toMillis)
                 .tags(tags)
                 .register(meterRegistry);
     }
 
-    private String buildKey(String name, List<String> tagValues) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name).append(":");
-        for (String tag : tagValues) {
-            stringBuilder.append(tag).append("-");
-        }
-        return stringBuilder.toString();
+    public static Map<ID, InvokeTimedMetricsItemConfig> getIdInvokeAlertRuleConfigMap() {
+        return ID_INVOKE_ALERT_RULE_CONFIG_MAP;
     }
 
     @Getter
@@ -229,8 +240,5 @@ public class InvokeTimedMetrics {
         }
     }
 
-    private Long millis(InvokeAlertRuleConfig alertConfig) {
-        return alertConfig.toMillis();
-    }
 
 }

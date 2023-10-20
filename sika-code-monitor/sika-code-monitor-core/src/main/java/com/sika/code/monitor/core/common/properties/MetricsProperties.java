@@ -1,10 +1,13 @@
 package com.sika.code.monitor.core.common.properties;
 
 import com.sika.code.monitor.core.common.config.BaseMetricsConfig;
+import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.threadpool.common.config.ThreadPoolMetricsConfig;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
 
 /**
  * InvokeTimedProperties
@@ -12,9 +15,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author : sikadai
  * @date : 2023-09-18
  */
-@ConfigurationProperties("management.metrics.sika")
+@ConfigurationProperties(MonitorEnableConstant.METRICS_COMMON_PREFIX)
 @Getter
+@Setter
 public class MetricsProperties {
+
+    protected String dataId;
+    private String group;
 
     private final InvokeTimedMetricsConfig invoke = new InvokeTimedMetricsConfig();
     private final ThreadPoolMetricsConfig threadPool = new ThreadPoolMetricsConfig();
