@@ -53,7 +53,7 @@ public abstract class BaseMetricsItemConfig<T extends BaseMetricsConfig<?>> {
             return;
         }
         BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(getMetricsType(), getMetricsConfig().getMetricsTypeEnumClass());
-        setMetricsName(metricsConfigTypeEnum.getType());
+        setMetricsName(metricsConfigTypeEnum.getName());
         setMetricsDesc(metricsConfigTypeEnum.getDesc());
     }
 

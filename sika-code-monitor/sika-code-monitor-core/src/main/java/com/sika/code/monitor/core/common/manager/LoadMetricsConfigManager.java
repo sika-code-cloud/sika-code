@@ -26,6 +26,9 @@ public class LoadMetricsConfigManager {
     private final Map<String, BaseMetricsItemConfig<BaseMetricsConfig<?>>> METRICS_CONFIG_MAP = Maps.newConcurrentMap();
 
     public BaseMetricsItemConfig<?> getMetricsItemConfigInstance(String metricsType, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
+        return getMetricsItemConfigInstance(this.metricsProperties, metricsType, metricsConfigClass);
+    }
+    public BaseMetricsItemConfig<?> getMetricsItemConfigInstance(MetricsProperties metricsProperties, String metricsType, Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
         BaseMetricsConfig<?> metricsConfig = getMetricConfigInstance(metricsConfigClass);
         BaseMetricsItemConfig<BaseMetricsConfig<?>> metricsCache = metricsConfig.getItem().get(metricsType);
         // 从配置中获取 - 配置优先
@@ -63,7 +66,7 @@ public class LoadMetricsConfigManager {
         return itemConfig;
     }
 
-    private BaseMetricsConfig<?> getMetricConfigInstance(Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
+    public BaseMetricsConfig<?> getMetricConfigInstance(Class<? extends BaseMetricsConfig<?>> metricsConfigClass) {
         // 从配置中获取 - 配置优先
         if (metricsProperties != null) {
             return metricsProperties.getConfigByType(metricsConfigClass);

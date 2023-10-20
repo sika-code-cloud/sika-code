@@ -8,11 +8,16 @@ import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsItemConfig;
 import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
 import io.micrometer.core.instrument.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -25,7 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class InvokeTimedMetrics {
     private final LoadMetricsConfigManager loadMetricsConfigManager;
-    public static Map<List<String>, InvokeTimedMetricsItemConfig> idInvokeAlertRuleConfigMap = Maps.newConcurrentMap();
+    public static Map<ID, InvokeTimedMetricsItemConfig> idInvokeAlertRuleConfigMap = Maps.newConcurrentMap();
 
     public InvokeTimedMetrics(LoadMetricsConfigManager loadMetricsConfigManager) {
         this.loadMetricsConfigManager = loadMetricsConfigManager;
@@ -178,12 +183,50 @@ public class InvokeTimedMetrics {
         tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
         System.out.println(alertConfig);
         String metricsName = invokeTimeNsdConfig.getMetricsName() + ".alert";
+
+        ID idCache = new ID(metricsName, tagValues, tags);
         Meter.Id id = new Meter.Id(metricsName, tags, null, null, Meter.Type.GAUGE);
-        InvokeTimedMetricsItemConfig config = idInvokeAlertRuleConfigMap.putIfAbsent(tagValues, invokeTimeNsdConfig);
+        InvokeTimedMetricsItemConfig config = idInvokeAlertRuleConfigMap.putIfAbsent(idCache, invokeTimeNsdConfig);
         log.info("newConfig:{}, cacheConfig:{}", invokeTimeNsdConfig, config);
-        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert", this, value -> millis(alertConfig))
+        Gauge.builder(invokeTimeNsdConfig.getMetricsName() + ".alert", alertConfig, InvokeAlertRuleConfig::toMillis)
                 .tags(tags)
                 .register(meterRegistry);
+    }
+
+    private String buildKey(String name, List<String> tagValues) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(name).append(":");
+        for (String tag : tagValues) {
+            stringBuilder.append(tag).append("-");
+        }
+        return stringBuilder.toString();
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ID {
+        private String name;
+        private List<String> tasValues;
+        private Tags tags;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            ID id = (ID) o;
+            return Objects.equals(name, id.name) && Objects.equals(tasValues, id.tasValues);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, tasValues);
+        }
     }
 
     private Long millis(InvokeAlertRuleConfig alertConfig) {
