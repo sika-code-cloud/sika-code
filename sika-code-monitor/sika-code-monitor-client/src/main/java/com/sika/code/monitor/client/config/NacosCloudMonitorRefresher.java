@@ -1,5 +1,6 @@
 package com.sika.code.monitor.client.config;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
@@ -35,8 +36,12 @@ public class NacosCloudMonitorRefresher extends AbstractConfigMonitorRefresh {
 
     public void initRegisterListener() throws NacosException {
         MetricsProperties propertiesBeforeUpdate = SpringUtil.getBean(MetricsProperties.class);
-        String dataId = propertiesBeforeUpdate.getDataId();
-        String group = propertiesBeforeUpdate.getGroup();
+        String dataId = propertiesBeforeUpdate.getNacos().getDataId();
+        String group = propertiesBeforeUpdate.getNacos().getGroup();
+        if (StrUtil.isBlank(dataId) || StrUtil.isBlank(group)) {
+            log.error("注册的data或group为空");
+            return;
+        }
         configService.addListener(dataId, group, new Listener() {
             @Override
             public Executor getExecutor() {
