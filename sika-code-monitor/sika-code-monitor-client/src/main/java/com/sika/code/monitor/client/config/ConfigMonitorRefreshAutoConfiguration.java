@@ -24,21 +24,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfiguration(after = {MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class})
 @ConditionalOnBean({MeterRegistry.class})
+@ConditionalOnClass({ConfigService.class})
 public class ConfigMonitorRefreshAutoConfiguration {
 
     @ConditionalOnMissingBean
-    @ConditionalOnClass(NacosConfigProperties.class)
+    @ConditionalOnBean(NacosConfigProperties.class)
     @Bean
     public ConfigService configService() {
         return new NacosConfigManager(SpringUtil.getBean(NacosConfigProperties.class)).getConfigService();
     }
 
     @Bean
-    @ConditionalOnClass(NacosConfigProperties.class)
+    @ConditionalOnBean(ConfigService.class)
     @ConditionalOnProperty(prefix = MonitorEnableConstant.METRICS_COMMON_PREFIX, name = "nacos.data-id")
     public NacosCloudMonitorRefresher nacosCloudMonitorRefresher(MeterRegistry meterRegistry,
                                                                  InvokeTimedMetrics invokeTimedMetrics,
                                                                  ConfigService configService) {
         return new NacosCloudMonitorRefresher(configService, meterRegistry, invokeTimedMetrics);
+    }
+
+    @Bean
+    public ApolloMonitorRefresher apolloMonitorRefresher() {
+        return new ApolloMonitorRefresher();
     }
 }
