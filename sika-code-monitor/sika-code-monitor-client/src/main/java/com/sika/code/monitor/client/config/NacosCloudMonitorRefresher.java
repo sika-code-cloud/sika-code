@@ -1,5 +1,6 @@
 package com.sika.code.monitor.client.config;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.cloud.nacos.NacosConfigManager;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySource;
 import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
@@ -24,6 +26,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 
 @AllArgsConstructor
@@ -51,7 +54,7 @@ public class NacosCloudMonitorRefresher extends AbstractConfigMonitorRefresh {
             @Override
             public void receiveConfigInfo(String configInfo) {
                 try {
-                    MetricsProperties propertiesYetUpdate = getNewMetricsProperties(configInfo);
+                    MetricsProperties propertiesYetUpdate = getNewMetricsProperties(configInfo, null);
                     invokeTimedMetrics.refreshRegistryAlert(propertiesYetUpdate, meterRegistry);
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
@@ -61,23 +64,9 @@ public class NacosCloudMonitorRefresher extends AbstractConfigMonitorRefresh {
 
     }
 
-    private MetricsProperties getNewMetricsProperties(String configInfo) {
-        YamlPropertiesFactoryBean yamlPropertiesFactoryBean = new YamlPropertiesFactoryBean();
-        yamlPropertiesFactoryBean.setResources(new ByteArrayResource(configInfo.getBytes()));
-        Map<Object, Object> map = yamlPropertiesFactoryBean.getObject();
-        ConfigurationPropertySource sources = new MapConfigurationPropertySource(map);
-        Binder binder = new Binder(sources);
-        return binder.bind(MonitorEnableConstant.METRICS_COMMON_PREFIX, MetricsProperties.class).get();
-    }
-
-
     @Override
     public void afterPropertiesSet() throws Exception {
         initRegisterListener();
     }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-
-    }
 }
