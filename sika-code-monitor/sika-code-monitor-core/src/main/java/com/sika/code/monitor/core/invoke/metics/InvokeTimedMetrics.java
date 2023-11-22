@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 public class InvokeTimedMetrics {
     private final LoadMetricsConfigManager loadMetricsConfigManager;
     private final static Map<ID, InvokeTimedMetricsItemConfig> ID_INVOKE_ALERT_RULE_CONFIG_MAP = Maps.newConcurrentMap();
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public InvokeTimedMetrics(LoadMetricsConfigManager loadMetricsConfigManager) {
         this.loadMetricsConfigManager = loadMetricsConfigManager;
@@ -174,6 +177,7 @@ public class InvokeTimedMetrics {
     }
 
     public void refreshRegistryAlert(MetricsProperties propertiesYetUpdate, MeterRegistry meterRegistry) {
+        logger.info("刷新监控告警信息-开始");
         for (Map.Entry<InvokeTimedMetrics.ID, InvokeTimedMetricsItemConfig> entry : getIdInvokeAlertRuleConfigMap().entrySet()) {
             InvokeTimedMetrics.ID id = entry.getKey();
             InvokeTimedMetricsItemConfig configOld = entry.getValue();
@@ -186,6 +190,7 @@ public class InvokeTimedMetrics {
             // 构建新的告警指标
             registryAlert(meterRegistry, configNew, id.getTags(), true);
         }
+        logger.info("刷新监控告警信息-完成");
     }
 
     private void registryAlert(MeterRegistry meterRegistry, InvokeTimedMetricsItemConfig invokeTimeNsdConfig, Tags tags, boolean write) {

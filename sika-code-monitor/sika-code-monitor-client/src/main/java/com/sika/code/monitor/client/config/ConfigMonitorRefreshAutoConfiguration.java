@@ -4,7 +4,6 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
-import com.ctrip.framework.apollo.core.dto.ApolloConfig;
 import com.sika.code.monitor.core.common.constant.MonitorEnableConstant;
 import com.sika.code.monitor.core.invoke.metics.InvokeTimedMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -41,11 +40,12 @@ public class ConfigMonitorRefreshAutoConfiguration {
     public NacosCloudMonitorRefresher nacosCloudMonitorRefresher(MeterRegistry meterRegistry,
                                                                  InvokeTimedMetrics invokeTimedMetrics,
                                                                  ConfigService configService) {
-        return new NacosCloudMonitorRefresher(configService, meterRegistry, invokeTimedMetrics);
+        return new NacosCloudMonitorRefresher(meterRegistry, invokeTimedMetrics, configService);
     }
 
     @Bean
     @ConditionalOnClass(com.ctrip.framework.apollo.ConfigService.class)
+    @ConditionalOnProperty(prefix = MonitorEnableConstant.METRICS_COMMON_PREFIX, name = "apollo.namespace")
     public ApolloMonitorRefresher apolloMonitorRefresher(MeterRegistry meterRegistry,
                                                          InvokeTimedMetrics invokeTimedMetrics) {
         return new ApolloMonitorRefresher(meterRegistry, invokeTimedMetrics);
