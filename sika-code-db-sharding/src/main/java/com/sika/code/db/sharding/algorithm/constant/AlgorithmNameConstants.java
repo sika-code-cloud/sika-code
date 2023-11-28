@@ -30,12 +30,12 @@ public final class AlgorithmNameConstants {
     /**
      * 数据处理算法名称
      */
-    public static final String C_SHARDING_VALUE_ALGORITHM_NAME = "CUST_ID_SPECIAL_HASH_ALGORITHM";
+    public static final String C_SHARDING_VALUE_ALGORITHM_NAME = "C_SPECIAL_HASH_ALGORITHM";
 
     /**
      * 数据处理算法名称
      */
-    public static final String O_SHARDING_VALUE_ALGORITHM_NAME = "ORDER_NO_SPECIAL_HASH_ALGORITHM";
+    public static final String O_SHARDING_VALUE_ALGORITHM_NAME = "O_SPECIAL_HASH_ALGORITHM";
 
     private AlgorithmNameConstants() {
     }
