@@ -31,6 +31,8 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      */
     protected Map<String, String> hotKeyToDataSourceMap = new HashMap<>();
 
+    public static String dataSourceName = "";
+
     /**
      * 获取表序号的取模数
      */
