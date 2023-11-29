@@ -1,6 +1,5 @@
 package com.sika.code.db.sharding.algorithm.sharding;
 
-
 import com.sika.code.db.sharding.utils.ShardingUtils;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      */
     protected Map<String, String> hotKeyToDataSourceMap = new HashMap<>();
 
-    public static String dataSourceName = "";
+    public static String dataSourceName;
 
     /**
      * 获取表序号的取模数

@@ -2,6 +2,7 @@ package com.sika.code.db.sharding.algorithm.sharding.standard;
 
 import com.sika.code.db.sharding.algorithm.constant.AlgorithmNameConstants;
 import com.sika.code.db.sharding.algorithm.sharding.BaseTableToDataSourceMappingShardingAlgorithm;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
@@ -27,6 +28,9 @@ public class TableToDataSourceMappingShardingAlgorithm extends BaseTableToDataSo
      */
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
+        if (StringUtils.isNotBlank(dataSourceName)) {
+            return dataSourceName;
+        }
         String target = super.doSharding(availableTargetNames, shardingValue.getValue());
         if (target != null) {
             return target;

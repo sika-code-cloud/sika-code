@@ -32,6 +32,7 @@ public class BaseTwiceHashModMappingShardingAlgorithm {
      * 获取表序号的取模数
      */
     protected int tableModNumber = -1;
+    public static String tableName;
 
     /**
      * Sharding.

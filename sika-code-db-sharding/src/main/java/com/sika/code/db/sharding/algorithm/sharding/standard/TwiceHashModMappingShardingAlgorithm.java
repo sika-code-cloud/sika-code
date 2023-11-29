@@ -2,9 +2,11 @@ package com.sika.code.db.sharding.algorithm.sharding.standard;
 
 import com.sika.code.db.sharding.algorithm.constant.AlgorithmNameConstants;
 import com.sika.code.db.sharding.algorithm.sharding.BaseTwiceHashModMappingShardingAlgorithm;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
+import org.assertj.core.util.Lists;
 
 import java.util.Collection;
 import java.util.Properties;
@@ -27,6 +29,9 @@ public class TwiceHashModMappingShardingAlgorithm extends BaseTwiceHashModMappin
      */
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
+        if (StringUtils.isNotBlank(tableName)) {
+            return tableName;
+        }
         String target =
             super.doSharding(availableTargetNames, shardingValue.getValue(), shardingValue.getDataNodeInfo());
         if (target != null) {
