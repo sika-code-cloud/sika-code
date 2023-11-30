@@ -1,9 +1,11 @@
 package com.sika.code.db.sharding.algorithm.sharding.complex;
 
+import cn.hutool.core.collection.CollUtil;
 import com.sika.code.db.sharding.algorithm.sharding.BaseTableToDataSourceMappingShardingAlgorithm;
 import com.sika.code.db.sharding.algorithm.sharding.algorithm.ShardingValueAlgorithm;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shardingsphere.infra.hint.HintManager;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 import org.assertj.core.util.Lists;
@@ -38,8 +40,10 @@ public class TableMultiComplexToDataSourceShardingAlgorithm extends BaseTableToD
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
         ComplexKeysShardingValue<String> complexKeysShardingValue) {
-        if (StringUtils.isNotBlank(dataSourceName)) {
-            return Lists.newArrayList(dataSourceName);
+        Collection<Comparable<?>> comparables = HintManager.getDatabaseShardingValues(complexKeysShardingValue.getLogicTableName());
+        if (CollUtil.isNotEmpty(comparables)) {
+            Comparable<?> comparable = comparables.stream().iterator().next();
+            return Collections.singletonList(tableToDataSourceSharding(availableTargetNames, (Integer)comparable));
         }
         Map.Entry<String, Collection<String>> columnAndValue =
             ShardingUtils.getComplexColumnAndValue(complexKeysShardingValue);

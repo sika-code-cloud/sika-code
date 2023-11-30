@@ -1,10 +1,12 @@
 package com.sika.code.db.sharding.algorithm.sharding.complex;
 
+import cn.hutool.core.collection.CollUtil;
 import com.sika.code.db.sharding.algorithm.sharding.BaseTwiceHashModMappingShardingAlgorithm;
 import com.sika.code.db.sharding.algorithm.sharding.algorithm.ShardingValueAlgorithm;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.infra.datanode.DataNodeInfo;
+import org.apache.shardingsphere.infra.hint.HintManager;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 import org.assertj.core.util.Lists;
@@ -39,9 +41,14 @@ public class TwiceHashModForMultiComplexKeysShardingAlgorithm extends BaseTwiceH
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
         ComplexKeysShardingValue<String> complexKeysShardingValue) {
-        if (StringUtils.isNotBlank(tableName)) {
-            return Lists.newArrayList(tableName);
+        Collection<Comparable<?>> comparables =
+            HintManager.getDatabaseShardingValues(complexKeysShardingValue.getLogicTableName());
+        if (CollUtil.isNotEmpty(comparables)) {
+            Comparable<?> comparable = comparables.stream().iterator().next();
+            return Collections.singletonList(
+                get(availableTargetNames, complexKeysShardingValue.getLogicTableName(), comparable));
         }
+
         Map.Entry<String, Collection<String>> columnAndValue =
             ShardingUtils.getComplexColumnAndValue(complexKeysShardingValue);
 
@@ -55,6 +62,16 @@ public class TwiceHashModForMultiComplexKeysShardingAlgorithm extends BaseTwiceH
             return Collections.singletonList(target);
         }
         throw new RuntimeException("配置有误，路由不到数据源," + availableTargetNames + "，" + complexKeysShardingValue);
+    }
+
+    public String get(Collection<String> availableTargetNames, String logicName, Comparable<?> comparable) {
+        for (String s : availableTargetNames) {
+            if (s.equalsIgnoreCase(logicName + "_" + comparable)) {
+                logger.info("TwiceHashModForHintShardingAlgorithm-hint-[{}]", s);
+                return s;
+            }
+        }
+        return null;
     }
 
     @Override

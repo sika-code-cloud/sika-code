@@ -3,6 +3,8 @@ package com.sika.code.db.sharding.algorithm.sharding;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.apache.shardingsphere.infra.datanode.DataNodeInfo;
 import org.apache.shardingsphere.sharding.algorithm.sharding.ShardingAutoTableAlgorithmUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +18,7 @@ import java.util.Properties;
  * @date 2023/1/18
  */
 public class BaseTwiceHashModMappingShardingAlgorithm {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     protected Properties props;
 
     /**

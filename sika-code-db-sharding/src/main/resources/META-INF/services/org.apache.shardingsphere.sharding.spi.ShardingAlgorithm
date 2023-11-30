@@ -2,3 +2,5 @@ com.sika.code.db.sharding.algorithm.sharding.standard.TableToDataSourceMappingSh
 com.sika.code.db.sharding.algorithm.sharding.standard.TwiceHashModMappingShardingAlgorithm
 com.sika.code.db.sharding.algorithm.sharding.complex.TableMultiComplexToDataSourceShardingAlgorithm
 com.sika.code.db.sharding.algorithm.sharding.complex.TwiceHashModForMultiComplexKeysShardingAlgorithm
+com.sika.code.db.sharding.algorithm.sharding.hint.TableToDataSourceHintShardingAlgorithm
+com.sika.code.db.sharding.algorithm.sharding.hint.TwiceHashModForHintShardingAlgorithm

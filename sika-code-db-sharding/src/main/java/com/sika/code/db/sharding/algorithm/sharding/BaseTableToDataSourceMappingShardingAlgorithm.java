@@ -1,6 +1,8 @@
 package com.sika.code.db.sharding.algorithm.sharding;
 
 import com.sika.code.db.sharding.utils.ShardingUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +18,7 @@ import java.util.Properties;
  * @date 2023/8/15
  */
 public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * 表库映射
      * <p>key: 表序号</p>
@@ -81,6 +84,10 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      */
     private String tableToDataSourceSharding(Collection<String> availableTargetNames, String shardingValue) {
         int tableSequence = ShardingUtils.twiceHashMod(shardingValue, this.tableModNumber, this.allTableSequences);
+        return tableToDataSourceSharding(availableTargetNames, tableSequence);
+    }
+
+    protected String tableToDataSourceSharding(Collection<String> availableTargetNames, int tableSequence) {
         String dataSourceName = this.tableToDataSourceMap.get(tableSequence);
         if (availableTargetNames.contains(dataSourceName)) {
             return dataSourceName;
