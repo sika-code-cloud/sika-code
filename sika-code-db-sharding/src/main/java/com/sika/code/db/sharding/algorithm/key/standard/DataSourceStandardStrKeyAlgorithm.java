@@ -1,7 +1,7 @@
-package com.sika.code.db.sharding.algorithm.sharding.standard;
+package com.sika.code.db.sharding.algorithm.key.standard;
 
-import com.sika.code.db.sharding.algorithm.constant.AlgorithmNameConstants;
-import com.sika.code.db.sharding.algorithm.sharding.BaseTableToDataSourceMappingShardingAlgorithm;
+import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
+import com.sika.code.db.sharding.algorithm.key.BaseDataSourceShardingAlgorithm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
@@ -16,8 +16,8 @@ import java.util.Properties;
  * @author daiqi
  * @date 2023/8/15
  */
-public class TableToDataSourceMappingShardingAlgorithm extends BaseTableToDataSourceMappingShardingAlgorithm
-    implements StandardShardingAlgorithm<String> {
+public class DataSourceStandardStrKeyAlgorithm extends BaseDataSourceShardingAlgorithm
+    implements StandardShardingAlgorithm<Comparable<?>> {
 
     /**
      * Sharding.
@@ -27,10 +27,9 @@ public class TableToDataSourceMappingShardingAlgorithm extends BaseTableToDataSo
      * @return sharding result for data source
      */
     @Override
-    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
-        if (StringUtils.isNotBlank(dataSourceName)) {
-            return dataSourceName;
-        }
+    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Comparable<?>> shardingValue) {
+        Comparable<?> value = shardingValue.getValue();
+
         String target = super.doSharding(availableTargetNames, shardingValue.getValue());
         if (target != null) {
             return target;
@@ -53,7 +52,7 @@ public class TableToDataSourceMappingShardingAlgorithm extends BaseTableToDataSo
      */
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        RangeShardingValue<String> rangeShardingValue) {
+        RangeShardingValue<Comparable<?>> rangeShardingValue) {
         throw new RuntimeException("不支持Range查询," + availableTargetNames + "，" + rangeShardingValue);
     }
 

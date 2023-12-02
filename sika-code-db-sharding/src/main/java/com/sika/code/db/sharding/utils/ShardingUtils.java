@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sika.code.db.sharding.algorithm.constant.AlgorithmPropertiesConstants;
-import com.sika.code.db.sharding.algorithm.sharding.algorithm.ShardingValueAlgorithm;
+import com.sika.code.db.sharding.constant.AlgorithmPropertiesConstants;
+import com.sika.code.db.sharding.algorithm.value.temp.ShardingValueAlgorithm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.infra.datanode.DataNode;
 import org.apache.shardingsphere.infra.datanode.DataNodeInfo;
@@ -56,7 +56,7 @@ public final class ShardingUtils {
      *
      * @return 取模后的值
      */
-    public static int twiceHashMod(String shardingValue, int modNumber, Collection<Integer> availableTargetSequences) {
+    public static int twiceHashMod(Comparable<?> shardingValue, int modNumber, Collection<Integer> availableTargetSequences) {
         int remainder = Math.abs(shardingValue.hashCode()) % modNumber;
         if (availableTargetSequences.contains(remainder)) {
             return remainder;
@@ -124,7 +124,7 @@ public final class ShardingUtils {
         throw new RuntimeException("配置不合法,非数字类型");
     }
 
-    public static Map<String, String> getHotCustomerDatasource(Properties props) {
+    public static Map<Comparable<?>, String> getHotCustomerDatasource(Properties props) {
         String hotCustomers = props.getProperty(AlgorithmPropertiesConstants.HOT_CUSTOMER_DATASOURCE);
         if (Strings.isNullOrEmpty(hotCustomers)) {
             return Maps.newHashMap();
@@ -143,7 +143,7 @@ public final class ShardingUtils {
     }
 
     public static DataNodeInfo getTableDataNode(Collection<String> availableTargetNames,
-        ComplexKeysShardingValue<String> complexKeysShardingValue) {
+        ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
         String tableName = availableTargetNames.iterator().next();
         String logicTable = complexKeysShardingValue.getLogicTableName();
         String prefix = tableName.startsWith(logicTable) ? logicTable + DATA_NODE_SUFFIX_PATTERN.matcher(
@@ -187,20 +187,20 @@ public final class ShardingUtils {
             .collect(Collectors.toMap(i -> i[0].trim(), i -> i[1]));
     }
 
-    public static Map.Entry<String, Collection<String>> getComplexColumnAndValue(
-        ComplexKeysShardingValue<String> complexKeysShardingValue) {
-        Map<String, Collection<String>> columnNameAndShardingValuesMap =
+    public static Map.Entry<String, Collection<Comparable<?>>> getComplexColumnAndValue(
+        ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
+        Map<String, Collection<Comparable<?>>> columnNameAndShardingValuesMap =
             complexKeysShardingValue.getColumnNameAndShardingValuesMap();
 
         // 取第一个分片列名和值
-        Optional<Map.Entry<String, Collection<String>>> columnAndValueOption =
+        Optional<Map.Entry<String, Collection<Comparable<?>>>> columnAndValueOption =
             columnNameAndShardingValuesMap.entrySet().stream().findFirst();
 
         if (!columnAndValueOption.isPresent()) {
             throw new RuntimeException("复合分片键分片键值不存在");
         }
 
-        Map.Entry<String, Collection<String>> columnAndValue = columnAndValueOption.get();
+        Map.Entry<String, Collection<Comparable<?>>> columnAndValue = columnAndValueOption.get();
         if (columnAndValue.getValue().size() > 1) {
             throw new RuntimeException("不支持in查询");
         }

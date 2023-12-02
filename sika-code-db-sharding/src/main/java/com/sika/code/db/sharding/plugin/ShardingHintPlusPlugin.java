@@ -29,6 +29,7 @@ import org.apache.shardingsphere.sharding.spi.ShardingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -90,10 +91,13 @@ public class ShardingHintPlusPlugin implements Interceptor {
         if (StrUtil.isBlank(tableName)) {
             return null;
         }
-        ShardingSphereDataSource dataSource =
-            (ShardingSphereDataSource)mappedStatement.getConfiguration().getEnvironment().getDataSource();
-        ContextManager contextManager = (ContextManager)ReflectUtil.getFieldValue(dataSource, "contextManager");
-        String databaseName = (String)ReflectUtil.getFieldValue(dataSource, "databaseName");
+        DataSource dataSource = mappedStatement.getConfiguration().getEnvironment().getDataSource();
+        if (!(dataSource instanceof ShardingSphereDataSource)) {
+            return null;
+        }
+        ShardingSphereDataSource shardingSphereDataSource = (ShardingSphereDataSource) dataSource;
+        ContextManager contextManager = (ContextManager)ReflectUtil.getFieldValue(shardingSphereDataSource, "contextManager");
+        String databaseName = (String)ReflectUtil.getFieldValue(shardingSphereDataSource, "databaseName");
         Collection<ShardingSphereRule> rules =
             contextManager.getMetaDataContexts().getMetaData().getDatabase(databaseName).getRuleMetaData().getRules();
         // 轮询获取分表分片算法-主要目的是为了拿到表的序列即可

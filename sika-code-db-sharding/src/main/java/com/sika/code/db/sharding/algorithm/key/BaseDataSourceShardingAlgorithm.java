@@ -1,4 +1,4 @@
-package com.sika.code.db.sharding.algorithm.sharding;
+package com.sika.code.db.sharding.algorithm.key;
 
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author daiqi
  * @date 2023/8/15
  */
-public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
+public abstract class BaseDataSourceShardingAlgorithm {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * 表库映射
@@ -31,9 +31,7 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      * <p>key: 热点客户标识</p>
      * <p>value: 数据源名称</p>
      */
-    protected Map<String, String> hotKeyToDataSourceMap = new HashMap<>();
-
-    public static String dataSourceName;
+    protected Map<Comparable<?>, String> hotKeyToDataSourceMap = new HashMap<>();
 
     /**
      * 获取表序号的取模数
@@ -53,7 +51,7 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      * @param shardingValue        sharding value
      * @return sharding result for data source
      */
-    public String doSharding(Collection<String> availableTargetNames, String shardingValue) {
+    public String doSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue) {
         if (this.hotKeyToDataSourceMap.containsKey(shardingValue)) {
             return this.hotSharding(availableTargetNames, shardingValue);
         }
@@ -67,7 +65,7 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      * @param shardingValue        sharding value
      * @return sharding result for data source
      */
-    private String hotSharding(Collection<String> availableTargetNames, String shardingValue) {
+    private String hotSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue) {
         String dataSourceName = this.hotKeyToDataSourceMap.get(shardingValue);
         if (availableTargetNames.contains(dataSourceName)) {
             return dataSourceName;
@@ -82,7 +80,7 @@ public abstract class BaseTableToDataSourceMappingShardingAlgorithm {
      * @param shardingValue        sharding value
      * @return sharding result for data source
      */
-    private String tableToDataSourceSharding(Collection<String> availableTargetNames, String shardingValue) {
+    private String tableToDataSourceSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue) {
         int tableSequence = ShardingUtils.twiceHashMod(shardingValue, this.tableModNumber, this.allTableSequences);
         return tableToDataSourceSharding(availableTargetNames, tableSequence);
     }

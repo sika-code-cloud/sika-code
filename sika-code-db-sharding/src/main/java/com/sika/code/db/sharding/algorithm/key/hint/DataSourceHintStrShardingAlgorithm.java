@@ -1,10 +1,10 @@
-package com.sika.code.db.sharding.algorithm.sharding.hint;
+package com.sika.code.db.sharding.algorithm.key.hint;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.sika.code.db.sharding.algorithm.constant.AlgorithmNameConstants;
-import com.sika.code.db.sharding.algorithm.sharding.BaseTableToDataSourceMappingShardingAlgorithm;
-import com.sika.code.db.sharding.algorithm.sharding.complex.TableMultiComplexToDataSourceShardingAlgorithm;
-import com.sika.code.db.sharding.algorithm.sharding.standard.TableToDataSourceMappingShardingAlgorithm;
+import com.sika.code.db.sharding.algorithm.key.standard.DataSourceStandardStrKeyAlgorithm;
+import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
+import com.sika.code.db.sharding.algorithm.key.BaseDataSourceShardingAlgorithm;
+import com.sika.code.db.sharding.algorithm.key.complex.DataSourceComplexStrKeyShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
@@ -23,9 +23,9 @@ import java.util.Properties;
  * @author : daiqi
  * @date : 2023-11-30
  */
-public class TableToDataSourceHintShardingAlgorithm extends BaseTableToDataSourceMappingShardingAlgorithm
-    implements HintShardingAlgorithm<Integer>, StandardShardingAlgorithm<String>,
-    ComplexKeysShardingAlgorithm<String> {
+public class DataSourceHintStrShardingAlgorithm extends BaseDataSourceShardingAlgorithm
+    implements HintShardingAlgorithm<Integer>, StandardShardingAlgorithm<Comparable<?>>,
+    ComplexKeysShardingAlgorithm<Comparable<?>> {
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
         HintShardingValue<Integer> shardingValue) {
@@ -58,18 +58,18 @@ public class TableToDataSourceHintShardingAlgorithm extends BaseTableToDataSourc
 
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        ComplexKeysShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TableMultiComplexToDataSourceShardingAlgorithm.class).doSharding(availableTargetNames, shardingValue);
+        ComplexKeysShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(DataSourceComplexStrKeyShardingAlgorithm.class).doSharding(availableTargetNames, shardingValue);
     }
 
     @Override
-    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TableToDataSourceMappingShardingAlgorithm.class).doSharding(availableTargetNames, shardingValue);
+    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(DataSourceStandardStrKeyAlgorithm.class).doSharding(availableTargetNames, shardingValue);
     }
 
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        RangeShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TableToDataSourceMappingShardingAlgorithm.class).doSharding(availableTargetNames, shardingValue);
+        RangeShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(DataSourceStandardStrKeyAlgorithm.class).doSharding(availableTargetNames, shardingValue);
     }
 }

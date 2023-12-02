@@ -1,4 +1,4 @@
-package com.sika.code.db.sharding.algorithm.constant;
+package com.sika.code.db.sharding.constant;
 
 /**
  * 算法配置属性的key

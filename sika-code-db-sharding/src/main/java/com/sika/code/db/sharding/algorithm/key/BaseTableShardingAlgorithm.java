@@ -1,4 +1,4 @@
-package com.sika.code.db.sharding.algorithm.sharding;
+package com.sika.code.db.sharding.algorithm.key;
 
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.apache.shardingsphere.infra.datanode.DataNodeInfo;
@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author daiqi
  * @date 2023/1/18
  */
-public class BaseTwiceHashModMappingShardingAlgorithm {
+public class BaseTableShardingAlgorithm {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     protected Properties props;
 
@@ -46,7 +46,7 @@ public class BaseTwiceHashModMappingShardingAlgorithm {
      * @return sharding result for table name
      */
 
-    public String doSharding(Collection<String> availableTargetNames, String shardingValue, DataNodeInfo dataNodeInfo) {
+    public String doSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue, DataNodeInfo dataNodeInfo) {
         if (this.hotKeyList.contains(shardingValue)) {
             return this.hotSharding(availableTargetNames, shardingValue, dataNodeInfo);
         }
@@ -61,7 +61,7 @@ public class BaseTwiceHashModMappingShardingAlgorithm {
      * @param dataNodeInfo         数据节点信息
      * @return sharding result for table name
      */
-    private String hotSharding(Collection<String> availableTargetNames, String shardingValue, DataNodeInfo dataNodeInfo) {
+    private String hotSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue, DataNodeInfo dataNodeInfo) {
         String targetName = dataNodeInfo.getPrefix() + shardingValue;
         if (availableTargetNames.contains(targetName)) {
             return targetName;
@@ -77,7 +77,7 @@ public class BaseTwiceHashModMappingShardingAlgorithm {
      * @param dataNodeInfo         数据节点信息
      * @return sharding result for table name
      */
-    private String twiceHashModSharding(Collection<String> availableTargetNames, String shardingValue, DataNodeInfo dataNodeInfo) {
+    private String twiceHashModSharding(Collection<String> availableTargetNames, Comparable<?> shardingValue, DataNodeInfo dataNodeInfo) {
         String suffix = String.valueOf(ShardingUtils.twiceHashMod(shardingValue, this.tableModNumber, this.allTableSequences));
         return ShardingAutoTableAlgorithmUtil.findMatchedTargetName(availableTargetNames, suffix, dataNodeInfo)
                 .orElse(null);

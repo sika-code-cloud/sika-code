@@ -1,10 +1,10 @@
-package com.sika.code.db.sharding.algorithm.sharding.hint;
+package com.sika.code.db.sharding.algorithm.key.hint;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.sika.code.db.sharding.algorithm.constant.AlgorithmNameConstants;
-import com.sika.code.db.sharding.algorithm.sharding.BaseTwiceHashModMappingShardingAlgorithm;
-import com.sika.code.db.sharding.algorithm.sharding.complex.TwiceHashModForMultiComplexKeysShardingAlgorithm;
-import com.sika.code.db.sharding.algorithm.sharding.standard.TwiceHashModMappingShardingAlgorithm;
+import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
+import com.sika.code.db.sharding.algorithm.key.BaseTableShardingAlgorithm;
+import com.sika.code.db.sharding.algorithm.key.complex.TableComplexStrKeyShardingAlgorithm;
+import com.sika.code.db.sharding.algorithm.key.standard.TableStandardStrKeyAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
@@ -23,11 +23,11 @@ import java.util.Properties;
  * @author : daiqi
  * @date : 2023-11-30
  */
-public class TwiceHashModForHintShardingAlgorithm extends BaseTwiceHashModMappingShardingAlgorithm
-    implements HintShardingAlgorithm<Integer>, StandardShardingAlgorithm<String>, ComplexKeysShardingAlgorithm<String> {
+public class TableHintStrKeyAlgorithm extends BaseTableShardingAlgorithm
+        implements HintShardingAlgorithm<Integer>, StandardShardingAlgorithm<Comparable<?>>, ComplexKeysShardingAlgorithm<Comparable<?>> {
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        HintShardingValue<Integer> shardingValue) {
+                                         HintShardingValue<Integer> shardingValue) {
         // 添加分库分表逻辑
         Collection<String> collection1 = new ArrayList<>();
         for (String s : availableTargetNames) {
@@ -58,21 +58,21 @@ public class TwiceHashModForHintShardingAlgorithm extends BaseTwiceHashModMappin
 
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        ComplexKeysShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TwiceHashModForMultiComplexKeysShardingAlgorithm.class)
-            .doSharding(availableTargetNames, shardingValue);
+                                         ComplexKeysShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(TableComplexStrKeyShardingAlgorithm.class)
+                .doSharding(availableTargetNames, shardingValue);
     }
 
     @Override
-    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TwiceHashModMappingShardingAlgorithm.class)
-            .doSharding(availableTargetNames, shardingValue);
+    public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(TableStandardStrKeyAlgorithm.class)
+                .doSharding(availableTargetNames, shardingValue);
     }
 
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        RangeShardingValue<String> shardingValue) {
-        return SpringUtil.getBean(TwiceHashModMappingShardingAlgorithm.class)
-            .doSharding(availableTargetNames, shardingValue);
+                                         RangeShardingValue<Comparable<?>> shardingValue) {
+        return SpringUtil.getBean(TableStandardStrKeyAlgorithm.class)
+                .doSharding(availableTargetNames, shardingValue);
     }
 }

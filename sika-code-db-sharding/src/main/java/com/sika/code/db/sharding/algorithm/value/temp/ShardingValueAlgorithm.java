@@ -1,4 +1,4 @@
-package com.sika.code.db.sharding.algorithm.sharding.algorithm;
+package com.sika.code.db.sharding.algorithm.value.temp;
 
 import org.apache.shardingsphere.infra.util.spi.type.typed.TypedSPI;
 
@@ -15,5 +15,5 @@ public interface ShardingValueAlgorithm extends TypedSPI {
      * @param shardingValue 分片键值
      * @return 解析后的值
      */
-    String parseValue(String shardingValue);
+    String parseValue(Comparable<?> shardingValue);
 }
