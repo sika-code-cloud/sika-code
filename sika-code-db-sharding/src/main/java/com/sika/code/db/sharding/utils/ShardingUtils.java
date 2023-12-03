@@ -1,9 +1,12 @@
 package com.sika.code.db.sharding.utils;
 
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sika.code.db.sharding.algorithm.value.BaseValueAlgorithm;
 import com.sika.code.db.sharding.constant.AlgorithmPropertiesConstants;
 import com.sika.code.db.sharding.algorithm.value.temp.ShardingValueAlgorithm;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +46,8 @@ public final class ShardingUtils {
      */
     private static final Pattern DATA_NODE_SUFFIX_PATTERN = Pattern.compile("(\\d+[\\-_])*(\\d+$)");
     private static final char DEFAULT_PADDING_CHAR = '0';
+
+    private static final Map<String, BaseValueAlgorithm> ALGORITHM_NAME_TO_VALUE_ALGORITHM_OBJ = Maps.newConcurrentMap();
 
     static {
         ShardingSphereServiceLoader.register(ShardingValueAlgorithm.class);
@@ -89,32 +94,32 @@ public final class ShardingUtils {
     public static int getTableModNumber(Properties props) {
         String property = props.getProperty(AlgorithmPropertiesConstants.TABLE_MOD_NUMBER);
         Preconditions.checkNotNull(property, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.TABLE_MOD_NUMBER);
+                AlgorithmPropertiesConstants.TABLE_MOD_NUMBER);
         return strToInt(property);
     }
 
     public static int getDatasourceModNumber(Properties props) {
         String property = props.getProperty(AlgorithmPropertiesConstants.DATASOURCE_MOD_NUMBER);
         Preconditions.checkNotNull(property, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.DATASOURCE_MOD_NUMBER);
+                AlgorithmPropertiesConstants.DATASOURCE_MOD_NUMBER);
         return strToInt(property);
     }
 
     public static List<Integer> getAllTableSequences(Properties props) {
         String property = props.getProperty(AlgorithmPropertiesConstants.ALL_TABLE_SEQUENCES);
         Preconditions.checkNotNull(property, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.ALL_TABLE_SEQUENCES);
+                AlgorithmPropertiesConstants.ALL_TABLE_SEQUENCES);
         return new InlineExpressionParser(property).splitAndEvaluate().stream().map(ShardingUtils::strToInt)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     public static Map<Integer, String> getTableToDatasourceMapping(Properties props) {
         String property = props.getProperty(AlgorithmPropertiesConstants.TABLE_TO_DATASOURCE_MAPPING);
         Preconditions.checkNotNull(property, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.TABLE_TO_DATASOURCE_MAPPING);
+                AlgorithmPropertiesConstants.TABLE_TO_DATASOURCE_MAPPING);
         List<String> dataNodes = new InlineExpressionParser(property).splitAndEvaluate();
         return dataNodes.stream().map(DataNode::new)
-            .collect(Collectors.toMap(node -> strToInt(node.getTableName()), DataNode::getDataSourceName));
+                .collect(Collectors.toMap(node -> strToInt(node.getTableName()), DataNode::getDataSourceName));
     }
 
     private static int strToInt(String str) {
@@ -124,6 +129,29 @@ public final class ShardingUtils {
         throw new RuntimeException("配置不合法,非数字类型");
     }
 
+    public static Map<String, String> getValueAlgorithm(Properties props) {
+        // TODO 待构建列名对应值的算法类名
+        return Maps.newHashMap();
+    }
+
+    public static Map<String, DataNode> getDataNodeMap(Properties props) {
+        return null;
+    }
+
+    public static BaseValueAlgorithm getValueAlgorithm(String classNameStr) {
+        if (StrUtil.isBlank(classNameStr)) {
+            return null;
+        }
+        BaseValueAlgorithm valueAlgorithm = ALGORITHM_NAME_TO_VALUE_ALGORITHM_OBJ.get(classNameStr);
+        if (valueAlgorithm != null) {
+            return valueAlgorithm;
+        }
+        valueAlgorithm = ReflectUtil.newInstance(classNameStr);
+        ALGORITHM_NAME_TO_VALUE_ALGORITHM_OBJ.put(classNameStr, valueAlgorithm);
+        return valueAlgorithm;
+    }
+
+
     public static Map<Comparable<?>, String> getHotCustomerDatasource(Properties props) {
         String hotCustomers = props.getProperty(AlgorithmPropertiesConstants.HOT_CUSTOMER_DATASOURCE);
         if (Strings.isNullOrEmpty(hotCustomers)) {
@@ -131,7 +159,7 @@ public final class ShardingUtils {
         }
         List<String> hotCustomerList = new InlineExpressionParser(hotCustomers).splitAndEvaluate();
         return hotCustomerList.stream().map(DataNode::new)
-            .collect(Collectors.toMap(DataNode::getTableName, DataNode::getDataSourceName));
+                .collect(Collectors.toMap(DataNode::getTableName, DataNode::getDataSourceName));
     }
 
     public static List<String> getHotCustomerTable(Properties props) {
@@ -143,31 +171,31 @@ public final class ShardingUtils {
     }
 
     public static DataNodeInfo getTableDataNode(Collection<String> availableTargetNames,
-        ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
+                                                ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
         String tableName = availableTargetNames.iterator().next();
         String logicTable = complexKeysShardingValue.getLogicTableName();
         String prefix = tableName.startsWith(logicTable) ? logicTable + DATA_NODE_SUFFIX_PATTERN.matcher(
-            tableName.substring(logicTable.length())).replaceAll("")
-            : DATA_NODE_SUFFIX_PATTERN.matcher(tableName).replaceAll("");
+                tableName.substring(logicTable.length())).replaceAll("")
+                : DATA_NODE_SUFFIX_PATTERN.matcher(tableName).replaceAll("");
         int suffixMinLength = availableTargetNames.stream().map(each -> each.length() - prefix.length())
-            .min(Comparator.comparing(Integer::intValue)).orElse(1);
+                .min(Comparator.comparing(Integer::intValue)).orElse(1);
         return new DataNodeInfo(prefix, suffixMinLength, DEFAULT_PADDING_CHAR);
     }
 
     public static Map<String, ShardingValueAlgorithm> getShardingValueAlgorithm(Properties props) {
         String valueAlgorithmsProp = props.getProperty(AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
         Preconditions.checkNotNull(valueAlgorithmsProp, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
+                AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
 
         Map<String, String> valueAlgorithmMap = valueAlgorithmsPropToMap(valueAlgorithmsProp);
 
         Map<String, ShardingValueAlgorithm> algorithmMap = new HashMap<>(10);
         for (Map.Entry<String, String> entry : valueAlgorithmMap.entrySet()) {
             Optional<ShardingValueAlgorithm> shardingValueAlgorithm =
-                TypedSPIRegistry.findRegisteredService(ShardingValueAlgorithm.class, entry.getValue());
+                    TypedSPIRegistry.findRegisteredService(ShardingValueAlgorithm.class, entry.getValue());
             if (!shardingValueAlgorithm.isPresent()) {
                 throw new RuntimeException(
-                    "复合分片,分片键值的策略处理配置错误,无法找到具体处理类,algorithmType:" + entry.getValue());
+                        "复合分片,分片键值的策略处理配置错误,无法找到具体处理类,algorithmType:" + entry.getValue());
             }
             algorithmMap.put(entry.getKey(), shardingValueAlgorithm.get());
         }
@@ -182,19 +210,19 @@ public final class ShardingUtils {
      */
     private static Map<String, String> valueAlgorithmsPropToMap(String valueAlgorithmsProp) {
         return Arrays.stream(
-                StringUtils.strip(valueAlgorithmsProp, SHARDING_VALUE_CONFIG_PREFIX).split(SHARDING_VALUE_CONFIG_SEPARATOR))
-            .map(item -> item.split(SHARDING_VALUE_CONFIG_KEY_VALUE_SEPARATOR))
-            .collect(Collectors.toMap(i -> i[0].trim(), i -> i[1]));
+                        StringUtils.strip(valueAlgorithmsProp, SHARDING_VALUE_CONFIG_PREFIX).split(SHARDING_VALUE_CONFIG_SEPARATOR))
+                .map(item -> item.split(SHARDING_VALUE_CONFIG_KEY_VALUE_SEPARATOR))
+                .collect(Collectors.toMap(i -> i[0].trim(), i -> i[1]));
     }
 
     public static Map.Entry<String, Collection<Comparable<?>>> getComplexColumnAndValue(
-        ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
+            ComplexKeysShardingValue<Comparable<?>> complexKeysShardingValue) {
         Map<String, Collection<Comparable<?>>> columnNameAndShardingValuesMap =
-            complexKeysShardingValue.getColumnNameAndShardingValuesMap();
+                complexKeysShardingValue.getColumnNameAndShardingValuesMap();
 
         // 取第一个分片列名和值
         Optional<Map.Entry<String, Collection<Comparable<?>>>> columnAndValueOption =
-            columnNameAndShardingValuesMap.entrySet().stream().findFirst();
+                columnNameAndShardingValuesMap.entrySet().stream().findFirst();
 
         if (!columnAndValueOption.isPresent()) {
             throw new RuntimeException("复合分片键分片键值不存在");

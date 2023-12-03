@@ -1,12 +1,16 @@
 package com.sika.code.db.sharding.algorithm.key;
 
+import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Maps;
+import com.sika.code.db.sharding.algorithm.value.BaseValueAlgorithm;
+import com.sika.code.db.sharding.algorithm.value.bo.DataBaseValueAlgorithmBO;
 import com.sika.code.db.sharding.utils.ShardingUtils;
+import org.apache.shardingsphere.infra.datanode.DataNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -24,25 +28,46 @@ public abstract class BaseDataSourceShardingAlgorithm {
      * <p>key: 表序号</p>
      * <p>value: 数据源名称</p>
      */
-    protected Map<Integer, String> tableToDataSourceMap = new HashMap<>();
+    protected Map<Integer, String> tableToDataSourceMap = Maps.newHashMap();
+    protected Map<String, DataNode> dataSourceNameToNodeMap = Maps.newHashMap();
 
     /**
      * 热点商户配置
-     * <p>key: 热点客户标识</p>
+     * <p>key: 热点KEY</p>
      * <p>value: 数据源名称</p>
      */
-    protected Map<Comparable<?>, String> hotKeyToDataSourceMap = new HashMap<>();
+    protected Map<Comparable<?>, String> hotKeyToDataSourceMap = Maps.newHashMap();
 
     /**
      * 获取表序号的取模数
      */
     protected int tableModNumber = -1;
 
+    protected Map<String, String> columnToValueAlgorithmMap = Maps.newHashMap();
+
     /**
      * 所有表序号
      */
     protected List<Integer> allTableSequences = new ArrayList<>();
     protected Properties props;
+
+    /**
+     * Sharding.
+     *
+     * @param algorithmBO available data sources
+     * @return sharding result for data source
+     */
+    public String doSharding(DataBaseValueAlgorithmBO algorithmBO) {
+        String classNameStr = columnToValueAlgorithmMap.get(algorithmBO.getPreciseShardingValue().getColumnName());
+        if (StrUtil.isBlank(classNameStr)) {
+            return null;
+        }
+        BaseValueAlgorithm valueAlgorithm = ShardingUtils.getValueAlgorithm(classNameStr);
+        if (valueAlgorithm == null) {
+            return null;
+        }
+        return valueAlgorithm.getDataBaseName(algorithmBO);
+    }
 
     /**
      * Sharding.
@@ -99,5 +124,31 @@ public abstract class BaseDataSourceShardingAlgorithm {
         this.allTableSequences = ShardingUtils.getAllTableSequences(properties);
         this.tableToDataSourceMap = ShardingUtils.getTableToDatasourceMapping(properties);
         this.hotKeyToDataSourceMap = ShardingUtils.getHotCustomerDatasource(properties);
+        this.columnToValueAlgorithmMap = ShardingUtils.getValueAlgorithm(properties);
+        this.dataSourceNameToNodeMap = ShardingUtils.getDataNodeMap(properties);
+    }
+
+    public Map<Integer, String> getTableToDataSourceMap() {
+        return tableToDataSourceMap;
+    }
+
+    public Map<Comparable<?>, String> getHotKeyToDataSourceMap() {
+        return hotKeyToDataSourceMap;
+    }
+
+    public int getTableModNumber() {
+        return tableModNumber;
+    }
+
+    public Map<String, String> getColumnToValueAlgorithmMap() {
+        return columnToValueAlgorithmMap;
+    }
+
+    public List<Integer> getAllTableSequences() {
+        return allTableSequences;
+    }
+
+    public Properties getProps() {
+        return props;
     }
 }

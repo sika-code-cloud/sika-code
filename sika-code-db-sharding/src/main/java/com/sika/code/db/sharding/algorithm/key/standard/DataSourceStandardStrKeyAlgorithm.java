@@ -1,8 +1,9 @@
 package com.sika.code.db.sharding.algorithm.key.standard;
 
-import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
 import com.sika.code.db.sharding.algorithm.key.BaseDataSourceShardingAlgorithm;
-import org.apache.commons.lang3.StringUtils;
+import com.sika.code.db.sharding.algorithm.value.bo.DataBaseValueAlgorithmBO;
+import com.sika.code.db.sharding.algorithm.value.bo.TableValueAlgorithmBO;
+import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
@@ -17,7 +18,7 @@ import java.util.Properties;
  * @date 2023/8/15
  */
 public class DataSourceStandardStrKeyAlgorithm extends BaseDataSourceShardingAlgorithm
-    implements StandardShardingAlgorithm<Comparable<?>> {
+        implements StandardShardingAlgorithm<Comparable<?>> {
 
     /**
      * Sharding.
@@ -28,9 +29,13 @@ public class DataSourceStandardStrKeyAlgorithm extends BaseDataSourceShardingAlg
      */
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Comparable<?>> shardingValue) {
-        Comparable<?> value = shardingValue.getValue();
-
-        String target = super.doSharding(availableTargetNames, shardingValue.getValue());
+        DataBaseValueAlgorithmBO valueAlgorithmBO = new DataBaseValueAlgorithmBO()
+                .setShardingAlgorithm(this)
+                .setPreciseShardingValue(shardingValue)
+                .setAvailableTargetNames(availableTargetNames);
+        String target = super.doSharding(valueAlgorithmBO);
+        // 判断配置的
+//        String target = super.doSharding(availableTargetNames, shardingValue.getValue());
         if (target != null) {
             return target;
         }
@@ -52,7 +57,7 @@ public class DataSourceStandardStrKeyAlgorithm extends BaseDataSourceShardingAlg
      */
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        RangeShardingValue<Comparable<?>> rangeShardingValue) {
+                                         RangeShardingValue<Comparable<?>> rangeShardingValue) {
         throw new RuntimeException("不支持Range查询," + availableTargetNames + "，" + rangeShardingValue);
     }
 

@@ -1,15 +1,17 @@
 package com.sika.code.db.sharding.algorithm.key;
 
+import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Maps;
+import com.sika.code.db.sharding.algorithm.value.BaseValueAlgorithm;
+import com.sika.code.db.sharding.algorithm.value.bo.DataBaseValueAlgorithmBO;
+import com.sika.code.db.sharding.algorithm.value.bo.TableValueAlgorithmBO;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import org.apache.shardingsphere.infra.datanode.DataNodeInfo;
 import org.apache.shardingsphere.sharding.algorithm.sharding.ShardingAutoTableAlgorithmUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Hash取模后，不命中目标数据节点再次半数取模的分片算法
@@ -31,11 +33,28 @@ public class BaseTableShardingAlgorithm {
      */
     protected List<Integer> allTableSequences = new ArrayList<>();
 
+    protected Map<String, String> columnToValueAlgorithmMap = Maps.newHashMap();
     /**
      * 获取表序号的取模数
      */
     protected int tableModNumber = -1;
-    public static String tableName;
+    /**
+     * Sharding.
+     *
+     * @param algorithmBO available data sources
+     * @return sharding result for data source
+     */
+    public String doSharding(TableValueAlgorithmBO algorithmBO) {
+        String classNameStr = columnToValueAlgorithmMap.get(algorithmBO.getPreciseShardingValue().getColumnName());
+        if (StrUtil.isBlank(classNameStr)) {
+            return null;
+        }
+        BaseValueAlgorithm valueAlgorithm = ShardingUtils.getValueAlgorithm(classNameStr);
+        if (valueAlgorithm == null) {
+            return null;
+        }
+        return valueAlgorithm.getTableName(algorithmBO);
+    }
 
     /**
      * Sharding.
@@ -88,5 +107,26 @@ public class BaseTableShardingAlgorithm {
         this.tableModNumber = ShardingUtils.getTableModNumber(properties);
         this.allTableSequences = ShardingUtils.getAllTableSequences(properties);
         this.hotKeyList = ShardingUtils.getHotCustomerTable(properties);
+        this.columnToValueAlgorithmMap = ShardingUtils.getValueAlgorithm(properties);
+    }
+
+    public Properties getProps() {
+        return props;
+    }
+
+    public List<String> getHotKeyList() {
+        return hotKeyList;
+    }
+
+    public List<Integer> getAllTableSequences() {
+        return allTableSequences;
+    }
+
+    public Map<String, String> getColumnToValueAlgorithmMap() {
+        return columnToValueAlgorithmMap;
+    }
+
+    public int getTableModNumber() {
+        return tableModNumber;
     }
 }

@@ -1,5 +1,6 @@
 package com.sika.code.db.sharding.algorithm.key.standard;
 
+import com.sika.code.db.sharding.algorithm.value.bo.TableValueAlgorithmBO;
 import com.sika.code.db.sharding.constant.AlgorithmNameConstants;
 import com.sika.code.db.sharding.algorithm.key.BaseTableShardingAlgorithm;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,7 @@ import java.util.Properties;
  * @date 2023/1/18
  */
 public class TableStandardStrKeyAlgorithm extends BaseTableShardingAlgorithm
-    implements StandardShardingAlgorithm<Comparable<?>> {
+        implements StandardShardingAlgorithm<Comparable<?>> {
 
     /**
      * Sharding.
@@ -28,11 +29,12 @@ public class TableStandardStrKeyAlgorithm extends BaseTableShardingAlgorithm
      */
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Comparable<?>> shardingValue) {
-        if (StringUtils.isNotBlank(tableName)) {
-            return tableName;
-        }
+        TableValueAlgorithmBO valueAlgorithmBO = new TableValueAlgorithmBO()
+                .setShardingAlgorithm(this)
+                .setPreciseShardingValue(shardingValue)
+                .setAvailableTargetNames(availableTargetNames);
         String target =
-            super.doSharding(availableTargetNames, shardingValue.getValue(), shardingValue.getDataNodeInfo());
+                super.doSharding(valueAlgorithmBO);
         if (target != null) {
             return target;
         }
@@ -48,7 +50,7 @@ public class TableStandardStrKeyAlgorithm extends BaseTableShardingAlgorithm
      */
     @Override
     public Collection<String> doSharding(Collection<String> availableTargetNames,
-        RangeShardingValue<Comparable<?>> rangeShardingValue) {
+                                         RangeShardingValue<Comparable<?>> rangeShardingValue) {
         throw new RuntimeException("不支持Range查询," + availableTargetNames + "，" + rangeShardingValue);
     }
 
