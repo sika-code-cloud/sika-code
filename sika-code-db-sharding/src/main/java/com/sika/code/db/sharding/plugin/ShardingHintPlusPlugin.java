@@ -23,6 +23,7 @@ import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataS
 import org.apache.shardingsphere.infra.hint.HintManager;
 import org.apache.shardingsphere.infra.rule.ShardingSphereRule;
 import org.apache.shardingsphere.mode.manager.ContextManager;
+import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
 import org.apache.shardingsphere.sharding.rule.ShardingRule;
 import org.apache.shardingsphere.sharding.rule.TableRule;
 import org.apache.shardingsphere.sharding.spi.ShardingAlgorithm;
@@ -105,8 +106,12 @@ public class ShardingHintPlusPlugin implements Interceptor {
             if (shardingSphereRule instanceof ShardingRule) {
                 ShardingRule shardingRule = (ShardingRule)shardingSphereRule;
                 TableRule tableRule = shardingRule.getTableRule(tableName);
-                return new ShardingAlgorithmRule(shardingRule.getShardingAlgorithms()
-                    .get(tableRule.getDatabaseShardingStrategyConfig().getShardingAlgorithmName()), tableName);
+                ShardingAlgorithm shardingAlgorithm = shardingRule.getShardingAlgorithms()
+                    .get(tableRule.getDatabaseShardingStrategyConfig().getShardingAlgorithmName());
+                if (!(shardingAlgorithm instanceof HintShardingAlgorithm)){
+                    continue;
+                }
+                return new ShardingAlgorithmRule(shardingAlgorithm, tableName);
             }
         }
         return null;
@@ -175,4 +180,5 @@ public class ShardingHintPlusPlugin implements Interceptor {
             return shardingAlgorithm;
         }
     }
+
 }
