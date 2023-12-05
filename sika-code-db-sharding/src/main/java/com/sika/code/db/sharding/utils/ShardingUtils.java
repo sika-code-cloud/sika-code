@@ -187,7 +187,7 @@ public final class ShardingUtils {
         Preconditions.checkNotNull(valueAlgorithmsProp, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
                 AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
 
-        Map<String, String> valueAlgorithmMap = valueAlgorithmsPropToMap(valueAlgorithmsProp);
+        Map<String, String> valueAlgorithmMap = yamlMapPropToMap(valueAlgorithmsProp);
 
         Map<String, ShardingValueAlgorithm> algorithmMap = new HashMap<>(10);
         for (Map.Entry<String, String> entry : valueAlgorithmMap.entrySet()) {
@@ -205,12 +205,12 @@ public final class ShardingUtils {
     /**
      * 分片键值策略处理类配置解析
      *
-     * @param valueAlgorithmsProp 分片键值策略配置
+     * @param yamlMap 分片键值策略配置
      * @return 分片键, 分片策略类类型
      */
-    private static Map<String, String> valueAlgorithmsPropToMap(String valueAlgorithmsProp) {
+    public static Map<String, String> yamlMapPropToMap(String yamlMap) {
         return Arrays.stream(
-                        StringUtils.strip(valueAlgorithmsProp, SHARDING_VALUE_CONFIG_PREFIX).split(SHARDING_VALUE_CONFIG_SEPARATOR))
+                        StringUtils.strip(yamlMap, SHARDING_VALUE_CONFIG_PREFIX).split(SHARDING_VALUE_CONFIG_SEPARATOR))
                 .map(item -> item.split(SHARDING_VALUE_CONFIG_KEY_VALUE_SEPARATOR))
                 .collect(Collectors.toMap(i -> i[0].trim(), i -> i[1]));
     }
