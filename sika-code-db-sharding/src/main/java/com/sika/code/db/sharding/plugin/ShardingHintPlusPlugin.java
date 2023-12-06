@@ -83,11 +83,11 @@ public class ShardingHintPlusPlugin implements Interceptor {
 
     private void hintPlusTable(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
         HintManager hintManager) {
-        TableRule tableRule = shardingAlgorithmRule.getTableRule();
-        Collection<String> availableTableNames =
-            tableRule.getActualDataNodes().stream().map(DataNode::getTableName).distinct().collect(Collectors.toList());
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetTableShardingAlgorithm();
-        if (shardingAlgorithm != null) {
+        if (shardingAlgorithm instanceof HintShardingAlgorithm) {
+            TableRule tableRule = shardingAlgorithmRule.getTableRule();
+            Collection<String> availableTableNames =
+                tableRule.getActualDataNodes().stream().map(DataNode::getTableName).distinct().collect(Collectors.toList());
             Map<String, Collection<Comparable<?>>> tableShardingValuesMap =
                 getShardingValues(invocation, shardingAlgorithm);
             String tableShardingName = getFullShardingName(tableRule, tableShardingValuesMap,
@@ -98,9 +98,9 @@ public class ShardingHintPlusPlugin implements Interceptor {
 
     private void hintPlusDatasource(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
         HintManager hintManager) {
-        TableRule tableRule = shardingAlgorithmRule.getTableRule();
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetDatasourceShardingAlgorithm();
         if (shardingAlgorithm instanceof HintShardingAlgorithm) {
+            TableRule tableRule = shardingAlgorithmRule.getTableRule();
             Map<String, Collection<Comparable<?>>> databaseShardingValuesMap =
                 getShardingValues(invocation, shardingAlgorithm);
             String datasourceName = getFullShardingName(shardingAlgorithmRule.getTableRule(), databaseShardingValuesMap,
