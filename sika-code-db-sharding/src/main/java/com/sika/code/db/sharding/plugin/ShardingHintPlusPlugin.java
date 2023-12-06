@@ -22,6 +22,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
+import org.apache.shardingsphere.infra.datanode.DataNode;
 import org.apache.shardingsphere.infra.hint.HintManager;
 import org.apache.shardingsphere.infra.rule.ShardingSphereRule;
 import org.apache.shardingsphere.mode.manager.ContextManager;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  * ShardingHintPlusPlugin hint分片策略增强插件 - 支持按照
@@ -52,10 +54,10 @@ import java.util.Properties;
  * @date : 2023-06-19
  */
 @Intercepts(value = {@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
-        @Signature(type = Executor.class, method = "query",
-                args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-                        BoundSql.class}), @Signature(type = Executor.class, method = "query",
-        args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
+    @Signature(type = Executor.class, method = "query",
+        args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
+            BoundSql.class}), @Signature(type = Executor.class, method = "query",
+    args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class ShardingHintPlusPlugin implements Interceptor {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -70,86 +72,62 @@ public class ShardingHintPlusPlugin implements Interceptor {
         if (shardingAlgorithmRule == null) {
             return invocation.proceed();
         }
-        HintManager hintManager = HintManager.getInstance();
-        try {
+        try (HintManager hintManager = HintManager.getInstance()) {
             // 加强datasource
-            String datasourceName = hintPlusDatasourceAndRetSourceName(invocation, shardingAlgorithmRule, hintManager);
+            hintPlusDatasource(invocation, shardingAlgorithmRule, hintManager);
             // 加强table
-            hintPlusTable(invocation, shardingAlgorithmRule, hintManager, datasourceName);
+            hintPlusTable(invocation, shardingAlgorithmRule, hintManager);
             return invocation.proceed();
-        } finally {
-            hintManager.close();
         }
     }
 
-
-    private void hintPlusTable(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule, HintManager hintManager, String datasourceName) {
+    private void hintPlusTable(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
+        HintManager hintManager) {
         TableRule tableRule = shardingAlgorithmRule.getTableRule();
+        Collection<String> availableTableNames =
+            tableRule.getActualDataNodes().stream().map(DataNode::getTableName).distinct().collect(Collectors.toList());
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetTableShardingAlgorithm();
         if (shardingAlgorithm != null) {
             Map<String, Collection<Comparable<?>>> tableShardingValuesMap =
-                    getShardingValues(invocation, shardingAlgorithm);
+                getShardingValues(invocation, shardingAlgorithm);
             String tableShardingName = getFullShardingName(tableRule, tableShardingValuesMap,
-                    shardingAlgorithmRule.getPlusTableShardingAlgorithm(),
-                    shardingAlgorithmRule.getTableRule().getActualTableNames(datasourceName));
+                shardingAlgorithmRule.getPlusTableShardingAlgorithm(), availableTableNames);
             hintManager.addTableShardingValue(tableRule.getLogicTable(), tableShardingName);
         }
     }
 
-    private String hintPlusDatasourceAndRetSourceName(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule, HintManager hintManager) {
+    private void hintPlusDatasource(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
+        HintManager hintManager) {
         TableRule tableRule = shardingAlgorithmRule.getTableRule();
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetDatasourceShardingAlgorithm();
-        if (shardingAlgorithm == null) {
-            return tableRule.getActualDataSourceNames().iterator().next();
-        }
-
-        Map<String, Collection<Comparable<?>>> databaseShardingValuesMap = null;
-        if (shardingAlgorithm instanceof StandardShardingAlgorithm) {
-            databaseShardingValuesMap =
-                    getShardingValues(invocation, shardingAlgorithm);
-            return getFullShardingName(tableRule, databaseShardingValuesMap,
-                    shardingAlgorithm,
-                    shardingAlgorithmRule.getTableRule().getActualDataSourceNames());
-        }
-        if (shardingAlgorithm instanceof ComplexKeysShardingAlgorithm) {
-            databaseShardingValuesMap =
-                    getShardingValues(invocation, shardingAlgorithm);
-            return getFullShardingName(tableRule, databaseShardingValuesMap,
-                    shardingAlgorithm,
-                    shardingAlgorithmRule.getTableRule().getActualDataSourceNames());
-        }
         if (shardingAlgorithm instanceof HintShardingAlgorithm) {
-            databaseShardingValuesMap =
-                    getShardingValues(invocation, shardingAlgorithm);
+            Map<String, Collection<Comparable<?>>> databaseShardingValuesMap =
+                getShardingValues(invocation, shardingAlgorithm);
             String datasourceName = getFullShardingName(shardingAlgorithmRule.getTableRule(), databaseShardingValuesMap,
-                    shardingAlgorithmRule.getPlusDatasourceShardingAlgorithm(),
-                    tableRule.getActualDataSourceNames());
+                shardingAlgorithmRule.getPlusDatasourceShardingAlgorithm(), tableRule.getActualDataSourceNames());
             hintManager.addDatabaseShardingValue(tableRule.getLogicTable(), datasourceName);
-            return datasourceName;
         }
-        return null;
     }
 
-    private String getFullShardingName(TableRule tableRule,
-                                       Map<String, Collection<Comparable<?>>> shardingValueMaps, ShardingAlgorithm plusShardingAlgorithm,
-                                       Collection<String> availableTargetNames) {
+    private String getFullShardingName(TableRule tableRule, Map<String, Collection<Comparable<?>>> shardingValueMaps,
+        ShardingAlgorithm plusShardingAlgorithm, Collection<String> availableTargetNames) {
         if (plusShardingAlgorithm == null) {
             return null;
         }
         if (plusShardingAlgorithm instanceof StandardShardingAlgorithm) {
             StandardShardingAlgorithm<?> standardShardingAlgorithm =
-                    (StandardShardingAlgorithm<?>) plusShardingAlgorithm;
+                (StandardShardingAlgorithm<?>)plusShardingAlgorithm;
             PreciseShardingValue preciseShardingValue =
-                    new PreciseShardingValue<>(tableRule.getLogicTable(), shardingValueMaps.keySet().iterator().next(),
-                            tableRule.getTableDataNode(), shardingValueMaps.values().iterator().next().iterator().next());
+                new PreciseShardingValue<>(tableRule.getLogicTable(), shardingValueMaps.keySet().iterator().next(),
+                    tableRule.getTableDataNode(), shardingValueMaps.values().iterator().next().iterator().next());
             return standardShardingAlgorithm.doSharding(availableTargetNames, preciseShardingValue);
         } else if (plusShardingAlgorithm instanceof ComplexKeysShardingAlgorithm) {
             ComplexKeysShardingAlgorithm<?> complexKeysShardingAlgorithm =
-                    (ComplexKeysShardingAlgorithm<?>) plusShardingAlgorithm;
+                (ComplexKeysShardingAlgorithm<?>)plusShardingAlgorithm;
             ComplexKeysShardingValue comparableComplexKeysShardingValue =
-                    new ComplexKeysShardingValue<>(tableRule.getLogicTable(), shardingValueMaps, null);
-            return (String) complexKeysShardingAlgorithm.doSharding(availableTargetNames,
-                    comparableComplexKeysShardingValue).iterator().next();
+                new ComplexKeysShardingValue<>(tableRule.getLogicTable(), shardingValueMaps, null);
+            return (String)complexKeysShardingAlgorithm.doSharding(availableTargetNames,
+                comparableComplexKeysShardingValue).iterator().next();
         } else {
             throw new RuntimeException("不支持的分片算法类型");
         }
@@ -157,7 +135,7 @@ public class ShardingHintPlusPlugin implements Interceptor {
     }
 
     private ShardingAlgorithmRule getShardingAlgorithm(Invocation invocation) {
-        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+        MappedStatement mappedStatement = (MappedStatement)invocation.getArgs()[0];
         String originalSql = mappedStatement.getBoundSql(invocation.getArgs()[1]).getSql();
 
         TableNameParser parser = new TableNameParser(originalSql);
@@ -171,15 +149,16 @@ public class ShardingHintPlusPlugin implements Interceptor {
             return null;
         }
         // 获取shardingSphereRule列表
-        ShardingSphereDataSource shardingSphereDataSource = (ShardingSphereDataSource) dataSource;
+        ShardingSphereDataSource shardingSphereDataSource = (ShardingSphereDataSource)dataSource;
         ContextManager contextManager =
-                (ContextManager) ReflectUtil.getFieldValue(shardingSphereDataSource, "contextManager");
-        String databaseName = (String) ReflectUtil.getFieldValue(shardingSphereDataSource, "databaseName");
+            (ContextManager)ReflectUtil.getFieldValue(shardingSphereDataSource, "contextManager");
+        String databaseName = (String)ReflectUtil.getFieldValue(shardingSphereDataSource, "databaseName");
         Collection<ShardingSphereRule> rules =
-                contextManager.getMetaDataContexts().getMetaData().getDatabase(databaseName).getRuleMetaData().getRules();
+            contextManager.getMetaDataContexts().getMetaData().getDatabase(databaseName).getRuleMetaData().getRules();
         // 轮询获取分表分片算法-构建分片规则
         for (ShardingSphereRule shardingSphereRule : rules) {
-            ShardingAlgorithmRule shardingAlgorithmRule = getShardingAlgorithmRuleFromRule(shardingSphereRule, tableName);
+            ShardingAlgorithmRule shardingAlgorithmRule =
+                getShardingAlgorithmRuleFromRule(shardingSphereRule, tableName);
             if (shardingAlgorithmRule != null) {
                 return shardingAlgorithmRule;
             }
@@ -187,9 +166,10 @@ public class ShardingHintPlusPlugin implements Interceptor {
         return null;
     }
 
-    private ShardingAlgorithmRule getShardingAlgorithmRuleFromRule(ShardingSphereRule shardingSphereRule, String tableName) {
+    private ShardingAlgorithmRule getShardingAlgorithmRuleFromRule(ShardingSphereRule shardingSphereRule,
+        String tableName) {
         if (shardingSphereRule instanceof ShardingRule) {
-            ShardingRule shardingRule = (ShardingRule) shardingSphereRule;
+            ShardingRule shardingRule = (ShardingRule)shardingSphereRule;
             TableRule tableRule = shardingRule.getTableRule(tableName);
             if (tableRule == null) {
                 return null;
@@ -198,20 +178,20 @@ public class ShardingHintPlusPlugin implements Interceptor {
             ShardingAlgorithmRule shardingAlgorithmRule = new ShardingAlgorithmRule().setTableRule(tableRule);
             if (tableRule.getDatabaseShardingStrategyConfig() != null) {
                 ShardingAlgorithm dataSourceShardingAlgorithm =
-                        shardingAlgorithmMap.get(tableRule.getDatabaseShardingStrategyConfig().getShardingAlgorithmName());
+                    shardingAlgorithmMap.get(tableRule.getDatabaseShardingStrategyConfig().getShardingAlgorithmName());
                 ShardingAlgorithm plusDatasourceShardingAlgorithm =
-                        shardingAlgorithmMap.get(dataSourceShardingAlgorithm.getProps().getProperty("sharding-algorithm"));
+                    shardingAlgorithmMap.get(dataSourceShardingAlgorithm.getProps().getProperty("sharding-algorithm"));
                 shardingAlgorithmRule.setTargetDatasourceShardingAlgorithm(dataSourceShardingAlgorithm)
-                        .setPlusDatasourceShardingAlgorithm(plusDatasourceShardingAlgorithm);
+                    .setPlusDatasourceShardingAlgorithm(plusDatasourceShardingAlgorithm);
             }
 
             if (tableRule.getTableShardingStrategyConfig() != null) {
                 ShardingAlgorithm tableShardingAlgorithm =
-                        shardingAlgorithmMap.get(tableRule.getTableShardingStrategyConfig().getShardingAlgorithmName());
+                    shardingAlgorithmMap.get(tableRule.getTableShardingStrategyConfig().getShardingAlgorithmName());
                 ShardingAlgorithm plusTableShardingAlgorithm =
-                        shardingAlgorithmMap.get(tableShardingAlgorithm.getProps().getProperty("sharding-algorithm"));
+                    shardingAlgorithmMap.get(tableShardingAlgorithm.getProps().getProperty("sharding-algorithm"));
                 shardingAlgorithmRule.setTargetTableShardingAlgorithm(tableShardingAlgorithm)
-                        .setPlusTableShardingAlgorithm(plusTableShardingAlgorithm);
+                    .setPlusTableShardingAlgorithm(plusTableShardingAlgorithm);
             }
 
             return shardingAlgorithmRule;
@@ -220,8 +200,8 @@ public class ShardingHintPlusPlugin implements Interceptor {
     }
 
     private Map<String, Collection<Comparable<?>>> getShardingValues(Invocation invocation,
-                                                                     ShardingAlgorithm shardingAlgorithm) {
-        MapperMethod.ParamMap<?> paramMap = (MapperMethod.ParamMap<?>) invocation.getArgs()[1];
+        ShardingAlgorithm shardingAlgorithm) {
+        MapperMethod.ParamMap<?> paramMap = (MapperMethod.ParamMap<?>)invocation.getArgs()[1];
         Object param = paramMap.get("param1");
         // 集合不支持加强
         if (param instanceof Collection) {
@@ -229,22 +209,24 @@ public class ShardingHintPlusPlugin implements Interceptor {
         }
         // 解析分片列名
         Properties properties = shardingAlgorithm.getProps();
-        Map<String, String> shardingColumnsMap = ShardingUtils.yamlMapPropToMap(properties.getProperty("sharding-columns"));
+        Map<String, String> shardingColumnsMap =
+            ShardingUtils.yamlMapPropToMap(properties.getProperty("sharding-columns"));
         if (CollUtil.isEmpty(shardingColumnsMap)) {
             return null;
         }
         // 如果参数为map
         if (param instanceof Map) {
-            return getShardingValuesFromMap((Map<?, ?>) param, shardingColumnsMap);
+            return getShardingValuesFromMap((Map<?, ?>)param, shardingColumnsMap);
         }
         // 普通的POJO对象 - 先从属性中获取对应的值
         return getShardingValuesFromField(param, shardingColumnsMap);
     }
 
-    private Map<String, Collection<Comparable<?>>> getShardingValuesFromMap(Map<?, ?> paramMap, Map<String, String> shardingColumnsMap) {
+    private Map<String, Collection<Comparable<?>>> getShardingValuesFromMap(Map<?, ?> paramMap,
+        Map<String, String> shardingColumnsMap) {
         Map<String, Collection<Comparable<?>>> shardingValues = Maps.newHashMap();
         for (Map.Entry<String, String> entry : shardingColumnsMap.entrySet()) {
-            Comparable<?> sharingValue = (Comparable<?>) (paramMap).get(entry.getValue());
+            Comparable<?> sharingValue = (Comparable<?>)(paramMap).get(entry.getValue());
             if (sharingValue == null) {
                 continue;
             }
@@ -254,7 +236,7 @@ public class ShardingHintPlusPlugin implements Interceptor {
     }
 
     private Map<String, Collection<Comparable<?>>> getShardingValuesFromField(Object param,
-                                                                              Map<String, String> shardingColumnsMap) {
+        Map<String, String> shardingColumnsMap) {
         // 普通的POJO对象 - 先从属性中获取对应的值
         Field[] fields = ReflectUtil.getFields(param.getClass());
         Map<String, Collection<Comparable<?>>> shardingValues = Maps.newHashMap();
@@ -268,7 +250,7 @@ public class ShardingHintPlusPlugin implements Interceptor {
             if (StrUtil.isBlank(columnName)) {
                 continue;
             }
-            Comparable<?> value = (Comparable<?>) ReflectUtil.getFieldValue(param, field);
+            Comparable<?> value = (Comparable<?>)ReflectUtil.getFieldValue(param, field);
             if (value == null) {
                 continue;
             }
@@ -286,7 +268,7 @@ public class ShardingHintPlusPlugin implements Interceptor {
             }
             Object value = ReflectUtil.invoke(param, method);
             if (value instanceof String) {
-                return (String) value;
+                return (String)value;
             }
         }
         return null;
