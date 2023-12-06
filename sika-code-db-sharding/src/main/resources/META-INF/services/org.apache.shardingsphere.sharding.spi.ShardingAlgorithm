@@ -4,3 +4,4 @@ com.sika.code.db.sharding.algorithm.key.complex.DataSourceComplexStrKeyShardingA
 com.sika.code.db.sharding.algorithm.key.complex.TableComplexStrKeyShardingAlgorithm
 com.sika.code.db.sharding.algorithm.key.hint.DataSourceHintStrShardingAlgorithm
 com.sika.code.db.sharding.algorithm.key.hint.TableHintStrKeyAlgorithm
+com.sika.code.db.sharding.algorithm.key.hint.HintInlinePlusShardingAlgorithm
