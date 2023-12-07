@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.sika.code.db.sharding.configuration.ShardingHintAutoConfiguration
+com.sika.code.db.sharding.configuration.ShardingHintAutoConfiguration,\
+com.sika.code.db.sharding.configuration.ShardingDatasourceAutoConfiguration
 
