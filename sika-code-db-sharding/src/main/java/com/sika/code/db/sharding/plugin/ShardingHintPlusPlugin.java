@@ -1,12 +1,11 @@
 package com.sika.code.db.sharding.plugin;
 
-import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.TableNameParser;
 import com.google.common.collect.Maps;
-import com.sika.code.db.sharding.annotation.Sharding;
+import com.sika.code.db.sharding.algorithm.key.hint.HintInlinePlusShardingAlgorithm;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -28,7 +27,6 @@ import org.apache.shardingsphere.infra.rule.ShardingSphereRule;
 import org.apache.shardingsphere.mode.manager.ContextManager;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
-import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
 import org.apache.shardingsphere.sharding.rule.ShardingRule;
@@ -40,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -84,10 +81,11 @@ public class ShardingHintPlusPlugin implements Interceptor {
     private void hintPlusTable(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
         HintManager hintManager) {
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetTableShardingAlgorithm();
-        if (shardingAlgorithm instanceof HintShardingAlgorithm) {
+        if (shardingAlgorithm instanceof HintInlinePlusShardingAlgorithm) {
             TableRule tableRule = shardingAlgorithmRule.getTableRule();
             Collection<String> availableTableNames =
-                tableRule.getActualDataNodes().stream().map(DataNode::getTableName).distinct().collect(Collectors.toList());
+                tableRule.getActualDataNodes().stream().map(DataNode::getTableName).distinct()
+                    .collect(Collectors.toList());
             Map<String, Collection<Comparable<?>>> tableShardingValuesMap =
                 getShardingValues(invocation, shardingAlgorithm);
             String tableShardingName = getFullShardingName(tableRule, tableShardingValuesMap,
@@ -99,7 +97,7 @@ public class ShardingHintPlusPlugin implements Interceptor {
     private void hintPlusDatasource(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
         HintManager hintManager) {
         ShardingAlgorithm shardingAlgorithm = shardingAlgorithmRule.getTargetDatasourceShardingAlgorithm();
-        if (shardingAlgorithm instanceof HintShardingAlgorithm) {
+        if (shardingAlgorithm instanceof HintInlinePlusShardingAlgorithm) {
             TableRule tableRule = shardingAlgorithmRule.getTableRule();
             Map<String, Collection<Comparable<?>>> databaseShardingValuesMap =
                 getShardingValues(invocation, shardingAlgorithm);
@@ -257,21 +255,6 @@ public class ShardingHintPlusPlugin implements Interceptor {
             shardingValues.put(columnName, Lists.newArrayList(value));
         }
         return shardingValues;
-    }
-
-    private String getShardingValueFromMethod(Object param) {
-        // 普通的POJO对象 - 先从属性中获取对应的值
-        Method[] methods = ReflectUtil.getMethods(param.getClass());
-        for (Method method : methods) {
-            if (!AnnotationUtil.hasAnnotation(method, Sharding.class)) {
-                continue;
-            }
-            Object value = ReflectUtil.invoke(param, method);
-            if (value instanceof String) {
-                return (String)value;
-            }
-        }
-        return null;
     }
 
     @Data
