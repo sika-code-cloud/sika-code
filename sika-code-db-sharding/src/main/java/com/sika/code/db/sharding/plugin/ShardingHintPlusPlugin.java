@@ -5,7 +5,6 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.TableNameParser;
 import com.google.common.collect.Maps;
-import com.sika.code.db.sharding.algorithm.key.hint.HintInlinePlusShardingAlgorithm;
 import com.sika.code.db.sharding.utils.ShardingUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -28,6 +27,7 @@ import org.apache.shardingsphere.infra.rule.ShardingSphereRule;
 import org.apache.shardingsphere.mode.manager.ContextManager;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
 import org.apache.shardingsphere.sharding.rule.ShardingRule;
@@ -117,23 +117,19 @@ public class ShardingHintPlusPlugin implements Interceptor {
     public void hintPlusDataSourceOrTable(Invocation invocation, TableRule tableRule,
         ShardingAlgorithm plusShardingAlgorithm, ShardingAlgorithm targetColumnShardingAlgorithm,
         Collection<String> availableTargetNames, Consumer<String> hintInvoke) {
-        // 分片算法为非hintPlus无需加强
-        if (!(plusShardingAlgorithm instanceof HintInlinePlusShardingAlgorithm)) {
-            return;
-        }
         if (targetColumnShardingAlgorithm == null) {
             return;
         }
         // 获取执行参数
         Object param = getParam(invocation);
 
-        String sharindFullName =
+        String shardingFullName =
             getFullShardingName(param, tableRule, plusShardingAlgorithm, targetColumnShardingAlgorithm,
                 availableTargetNames);
-        if (StrUtil.isBlank(sharindFullName)) {
+        if (StrUtil.isBlank(shardingFullName)) {
             return;
         }
-        hintInvoke.accept(sharindFullName);
+        hintInvoke.accept(shardingFullName);
     }
 
     private void hintPlusDatasource(Invocation invocation, ShardingAlgorithmRule shardingAlgorithmRule,
@@ -186,6 +182,9 @@ public class ShardingHintPlusPlugin implements Interceptor {
                 new ComplexKeysShardingValue<>(tableRule.getLogicTable(), datasourceShardingValuesMap, null);
             return (String)complexKeysShardingAlgorithm.doSharding(availableTargetNames,
                 comparableComplexKeysShardingValue).iterator().next();
+        } else if (targetColumnShardingAlgorithm instanceof HintShardingAlgorithm) {
+            // 不支持hint算法进行分片
+            return null;
         } else {
             throw new RuntimeException("不支持的分片算法类型");
         }
