@@ -22,11 +22,11 @@ public final class AlgorithmPropertiesConstants {
     /**
      * 表算法的热点商户配置
      */
-    public static final String HOT_CUSTOMER_TABLE = "hot-customer-table";
+    public static final String HOT_KEY_FOR_TABLE = "hot-key-table";
     /**
      * 库算法的热点商户配置
      */
-    public static final String HOT_CUSTOMER_DATASOURCE = "hot-customer-datasource";
+    public static final String HOT_KEY_DATASOURCE = "hot-key-datasource";
     /**
      * 表库映射配置
      */
