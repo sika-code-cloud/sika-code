@@ -1,14 +1,13 @@
 package com.sika.code.monitor.core.invoke.metics;
 
 import com.google.common.collect.Maps;
-import com.sika.code.monitor.core.alert.matcher.AlertMatcher;
 import com.sika.code.monitor.core.common.manager.LoadMetricsConfigManager;
-import com.sika.code.monitor.core.common.properties.MetricsProperties;
-import com.sika.code.monitor.core.invoke.config.InvokeAlertRuleConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsConfig;
 import com.sika.code.monitor.core.invoke.config.InvokeTimedMetricsItemConfig;
 import com.sika.code.monitor.core.invoke.enums.InvokeTimedTypeEnum;
-import io.micrometer.core.instrument.*;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tags;
+import io.micrometer.core.instrument.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * MetricsUtil
@@ -158,7 +156,6 @@ public class InvokeTimedMetrics {
             timer.record(invokeTimeNs, TimeUnit.NANOSECONDS);
             // 注册告警指标
             tags.and("metricsType", invokeTimeNsdConfig.getMetricsType());
-            registryAlert(meterRegistry, invokeTimeNsdConfig, tags, false);
         } catch (Exception e) {
             invokeTimeNsdConfig.getLogger().error(e.getMessage(), e);
         }
@@ -176,43 +173,7 @@ public class InvokeTimedMetrics {
                 InvokeTimedMetricsConfig.class);
     }
 
-    public void refreshRegistryAlert(MetricsProperties propertiesYetUpdate, MeterRegistry meterRegistry) {
-        logger.info("刷新监控告警信息-开始");
-        for (Map.Entry<InvokeTimedMetrics.ID, InvokeTimedMetricsItemConfig> entry : getIdInvokeAlertRuleConfigMap().entrySet()) {
-            InvokeTimedMetrics.ID id = entry.getKey();
-            InvokeTimedMetricsItemConfig configOld = entry.getValue();
-            InvokeTimedMetricsItemConfig configNew = (InvokeTimedMetricsItemConfig) loadMetricsConfigManager
-                    .getMetricsItemConfigInstance(propertiesYetUpdate, configOld.getMetricsType(), InvokeTimedMetricsConfig.class);
-            // 根据缓存的配置构建MeterId
-            Meter.Id oldMeterId = new Meter.Id(id.getName(), id.getTags(), null, null, Meter.Type.GAUGE);
-            // 移除原来监控的值
-            meterRegistry.remove(oldMeterId);
-            // 构建新的告警指标
-            registryAlert(meterRegistry, configNew, id.getTags(), true);
-        }
-        logger.info("刷新监控告警信息-完成");
-    }
 
-    private void registryAlert(MeterRegistry meterRegistry, InvokeTimedMetricsItemConfig invokeTimeNsdConfig, Tags tags, boolean write) {
-        if (tags == null) {
-            return;
-        }
-        List<String> tagValues = tags.stream().map(Tag::getValue).collect(Collectors.toList());
-        InvokeAlertRuleConfig alertConfig = AlertMatcher.matchInvokedTime(invokeTimeNsdConfig, tagValues);
-        if (alertConfig == null) {
-            return;
-        }
-        String metricsName = invokeTimeNsdConfig.getMetricsName() + ".alert";
-        ID idCache = new ID(metricsName, tagValues, tags);
-
-        if (!write && ID_INVOKE_ALERT_RULE_CONFIG_MAP.containsKey(idCache)) {
-            return;
-        }
-        ID_INVOKE_ALERT_RULE_CONFIG_MAP.put(idCache, invokeTimeNsdConfig);
-        Gauge.builder(metricsName, alertConfig, InvokeAlertRuleConfig::toMillis)
-                .tags(tags)
-                .register(meterRegistry);
-    }
 
     public static Map<ID, InvokeTimedMetricsItemConfig> getIdInvokeAlertRuleConfigMap() {
         return ID_INVOKE_ALERT_RULE_CONFIG_MAP;

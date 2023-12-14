@@ -1,12 +1,9 @@
 package com.sika.code.monitor.core.invoke.config;
 
-import com.google.common.collect.Lists;
 import com.sika.code.monitor.core.common.config.BaseMetricsItemConfig;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 /**
  * 请求耗时指标
@@ -21,7 +18,6 @@ public class InvokeTimedMetricsItemConfig extends BaseMetricsItemConfig<InvokeTi
 
     protected static final double[] DEFAULT_PUBLISH_PERCENTILES = new double[]{0.50, 0.90, 0.95, 0.99, 0.999};
 
-    protected static final InvokeAlertRuleConfig DEFAULT_CONFIG = new InvokeAlertRuleConfig();
     /**
      * 95线等指标
      */
@@ -31,7 +27,6 @@ public class InvokeTimedMetricsItemConfig extends BaseMetricsItemConfig<InvokeTi
      */
     protected boolean percentilesHistogram = false;
 
-    private List<InvokeAlertRuleConfig> alertRules = Lists.newArrayList();
 
     public InvokeTimedMetricsItemConfig(String metricsName, String metricsDesc) {
         this.metricsName = metricsName;

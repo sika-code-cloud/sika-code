@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.sika.code.monitor.client.config.ConfigMonitorRefreshAutoConfiguration
