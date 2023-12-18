@@ -49,12 +49,14 @@ public abstract class BaseMetricsItemConfig<T extends BaseMetricsConfig<?>> {
     }
 
     public void buildMetricsNameAndDesc() {
-        if (this.metricsName != null && this.metricsDesc != null) {
-            return;
+        BaseMetricsTypeEnum metricsConfigTypeEnum =
+            BaseTypeEnum.find(getMetricsType(), getMetricsConfig().getMetricsTypeEnumClass());
+        if (this.metricsName == null && metricsConfigTypeEnum != null) {
+            setMetricsName(metricsConfigTypeEnum.getName());
         }
-        BaseMetricsTypeEnum metricsConfigTypeEnum = BaseTypeEnum.find(getMetricsType(), getMetricsConfig().getMetricsTypeEnumClass());
-        setMetricsName(metricsConfigTypeEnum.getName());
-        setMetricsDesc(metricsConfigTypeEnum.getDesc());
+        if (this.metricsDesc == null && metricsConfigTypeEnum != null) {
+            setMetricsDesc(metricsConfigTypeEnum.getDesc());
+        }
     }
 
 }
