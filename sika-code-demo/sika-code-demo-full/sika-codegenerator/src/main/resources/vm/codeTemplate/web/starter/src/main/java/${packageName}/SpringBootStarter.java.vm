@@ -1,0 +1,21 @@
+package ${packageName};
+
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubboConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@EnableDubbo
+@EnableDubboConfig
+@MapperScan("${packageName}.dao")
+public class SpringBootStarter {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootStarter.class, args);
+    }
+
+}

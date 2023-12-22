@@ -1,0 +1,21 @@
+package ${packageName}.manager.convert;
+
+import ${packageName}.manager.${className}.bo.${ClassName}BO;
+import ${packageName}.dao.entity.${ClassName};
+import com.sika.common.core.convert.CommonBoEntityMapper;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+import java.io.Serializable;
+import java.util.List;
+
+
+/**
+* mapper struct 统一处理entity到Bo的转换
+* 外部的dto转bo可能需要额外的校验赋值处理，可以在Converter中处理
+*/
+@Mapper
+public interface ${ClassName}BeanMapper extends CommonBoEntityMapper<${ClassName}BO,${ClassName}> {
+
+    ${ClassName}BeanMapper mapper = Mappers.getMapper( ${ClassName}BeanMapper.class );
+}

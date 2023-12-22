@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ${starter.projName}
+  config:
+    import: apollo://application.yaml

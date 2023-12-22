@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.demo.infrastructure.db.business.order.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.demo.infrastructure.db.business.order.po.OrderPO">
+        <result property="id" column="id"/>
+        <result property="custId" column="cust_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="payeeCustId" column="payee_cust_id"/>
+        <result property="payeeUserCode" column="payee_user_code"/>
+        <result property="payeeOrgNo" column="payee_org_no"/>
+        <result property="originatorCustId" column="originator_cust_id"/>
+        <result property="originatorUserCode" column="originator_user_code"/>
+        <result property="originatorOrgNo" column="originator_org_no"/>
+        <result property="agentNo" column="agent_no"/>
+        <result property="sysCallerId" column="sys_caller_id"/>
+        <result property="sysCallerIp" column="sys_caller_ip"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="outTradeNo" column="out_trade_no"/>
+        <result property="payReqNo" column="pay_req_no"/>
+        <result property="orderType" column="order_type"/>
+        <result property="signProduct" column="sign_product"/>
+        <result property="bizCode" column="biz_code"/>
+        <result property="transType" column="trans_type"/>
+        <result property="payMode" column="pay_mode"/>
+        <result property="payProduct" column="pay_product"/>
+        <result property="currency" column="currency"/>
+        <result property="orderAmount" column="order_amount"/>
+        <result property="allowRepeatPay" column="allow_repeat_pay"/>
+        <result property="closeSource" column="close_source"/>
+        <result property="state" column="state"/>
+        <result property="settleState" column="settle_state"/>
+        <result property="stateDesc" column="state_desc"/>
+        <result property="timeExpire" column="time_expire"/>
+        <result property="accountDate" column="account_date"/>
+        <result property="completeTime" column="complete_time"/>
+        <result property="refundState" column="refund_state"/>
+        <result property="settleCycle" column="settle_cycle"/>
+        <result property="clearingSettleFlag" column="clearing_settle_flag"/>
+        <result property="transactionId" column="transaction_id"/>
+        <result property="settleId" column="settle_id"/>
+        <result property="subMchIp" column="sub_mch_ip"/>
+        <result property="orderSource" column="order_source"/>
+        <result property="mchAttach" column="mch_attach"/>
+        <result property="orderSubject" column="order_subject"/>
+        <result property="feeFlag" column="fee_flag"/>
+        <result property="feeSyncFlag" column="fee_sync_flag"/>
+        <result property="preSettleOriginatorFeeInfo" column="pre_settle_originator_fee_info"/>
+        <result property="preSettlePayeeFeeInfo" column="pre_settle_payee_fee_info"/>
+        <result property="preSettlePayerFeeInfo" column="pre_settle_payer_fee_info"/>
+        <result property="extOriginatorInfo" column="ext_originator_info"/>
+        <result property="extPayeeInfo" column="ext_payee_info"/>
+        <result property="terminalInfo" column="terminal_info"/>
+        <result property="qrCodeInfo" column="qr_code_info"/>
+        <result property="mchStoreInfo" column="mch_store_info"/>
+        <result property="notifyInfo" column="notify_info"/>
+        <result property="subMerInfo" column="sub_mer_info"/>
+        <result property="physicalState" column="physical_state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="reserved1" column="reserved1"/>
+        <result property="reserved2" column="reserved2"/>
+        <result property="reserved3" column="reserved3"/>
+        <result property="reserved4" column="reserved4"/>
+        <result property="reserved5" column="reserved5"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Column_List">
+        id,
+        cust_id,
+        user_code,
+        payee_cust_id,
+        payee_user_code,
+        payee_org_no,
+        originator_cust_id,
+        originator_user_code,
+        originator_org_no,
+        agent_no,
+        sys_caller_id,
+        sys_caller_ip,
+        order_no,
+        out_trade_no,
+        pay_req_no,
+        order_type,
+        sign_product,
+        biz_code,
+        trans_type,
+        pay_mode,
+        pay_product,
+        currency,
+        order_amount,
+        allow_repeat_pay,
+        close_source,
+        state,
+        settle_state,
+        state_desc,
+        time_expire,
+        account_date,
+        complete_time,
+        refund_state,
+        settle_cycle,
+        clearing_settle_flag,
+        transaction_id,
+        settle_id,
+        sub_mch_ip,
+        order_source,
+        mch_attach,
+        order_subject,
+        fee_flag,
+        fee_sync_flag,
+        pre_settle_originator_fee_info,
+        pre_settle_payee_fee_info,
+        pre_settle_payer_fee_info,
+        ext_originator_info,
+        ext_payee_info,
+        terminal_info,
+        qr_code_info,
+        mch_store_info,
+        notify_info,
+        sub_mer_info,
+        physical_state,
+        create_time,
+        update_time,
+        reserved1,
+        reserved2,
+        reserved3,
+        reserved4,
+        reserved5
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="list" resultMap="ResultMap"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT
+        <include refid="Column_List"/>
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取Id列表信息 -->
+    <select id="listId" resultType="java.lang.Long"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT id
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="find" resultMap="ResultMap"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT
+        <include refid="Column_List"/>
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取表id -->
+    <select id="findId" resultType="java.lang.Long"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT id
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="page" resultMap="ResultMap"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT
+        <include refid="Column_List"/>
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+        <include refid="order_by_sql"/>
+        LIMIT #{query.pageSize}
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="count" resultType="Integer"
+            parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.OrderQuery">
+        SELECT count(*)
+        FROM t_mch_order
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql">
+        <if test="query.id != null">AND id = #{query.id}</if>
+        <if test="query.orderNo != null">AND order_no = #{query.orderNo}</if>
+        <if test="query.createTime != null">AND create_time = #{query.createTime}</if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null">
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'nodeId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

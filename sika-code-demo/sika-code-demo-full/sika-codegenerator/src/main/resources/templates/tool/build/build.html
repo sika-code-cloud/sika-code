@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <th:block th:include="include :: header('代码生成')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<style>
+    .droppable-active {
+        background-color: #ffe !important
+    }
+
+    .tools a {
+        cursor: pointer;
+        font-size: 80%
+    }
+
+    .form-body .col-md-6, .form-body .col-md-12 {
+        min-height: 400px
+    }
+
+    .draggable {
+        cursor: move
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content" id="jar-mgr">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>sika脚手架</h5>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" class="form-horizontal m-t was-validated" id="form">
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目类型：
+                            </label>
+
+                            <div class="col-sm-9">
+                                <label class="form-check-label" @click="changeProjType('dubbo')">
+                                    <input type="radio" class="form-check-input" checked="" value="dubbo"
+                                           name="projType" v-model="projType">dubbo项目
+                                </label>
+                                <label class="form-check-input" @click="changeProjType('gateway')">
+                                    <input type="radio" value="gateway" name="projType" v-model="projType">gateway项目
+                                </label>
+
+                                <label class="form-check-input" @click="changeProjType('web')">
+                                    <input type="radio" value="web" name="projType" v-model="projType">web项目
+                                </label>
+
+                                <!--                                <label class="form-check-input" @click="changeProjType('web')">-->
+                                <!--                                    <input type="radio" value="web" name="projType" v-model="projType">CRUD-->
+                                <!--                                </label>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目名称：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="projName" class="form-control" placeholder="请输入文本" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目描述：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="projDesc" class="form-control" placeholder="请输入文本" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">Group：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="groupId" class="form-control" placeholder="com.sika">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">Artifact：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="artifactId" class="form-control" placeholder="请输入文本" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">version：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="version" class="form-control" placeholder="1.0.0" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">author：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="author" class="form-control" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable" v-if="projType!='gateway'">
+                            <label class="col-sm-3 control-label">db类型：
+                            </label>
+
+                            <div class="col-sm-9">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" checked="" value="postgres"
+                                           name="dbtype" v-model="dbtype">postgres
+                                </label>
+                                <label class="form-check-input">
+                                    <input type="radio" value="mysql" name="dbtype" v-model="dbtype">mysql
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group draggable" v-if="projType!='gateway'">
+                            <label class="col-sm-3 control-label">ddl：</label>
+                            <div class="col-sm-9" v-if="dbtype==='mysql'">
+                                <textarea name="ddl" class="form-control" rows="10" cols="50"
+                                          placeholder="
+create table sys_demo
+(
+    demo_id           int auto_increment comment '示例Id' primary key,
+    demo_name    varchar(128) not null comment '示例name',
+    create_time  datetime     not null comment '创建时间'
+)
+    comment '示例表' charset = utf8;
+                                    "
+                                          style="height: 200px"></textarea>
+                            </div>
+
+
+                            <div class="col-sm-9" v-if="dbtype==='postgres'">
+                                <textarea name="ddl" class="form-control" rows="10" cols="50"
+                                          placeholder="
+create table sys_demo (
+demo_id           bigserial      not null primary key  ,
+demo_name         varchar(30)     default ''  ,
+create_time 	    time
+) ;
+
+comment on table sys_demo is '示例表';
+comment on column sys_demo.demo_id is '示例Id';
+comment on column sys_demo.demo_name is '示例name';
+comment on column sys_demo.create_time is '创建时间';
+                            "
+                                          style="height: 200px"></textarea>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">忽略表前缀：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="ignorePrefix" class="form-control" placeholder="列如表t_order忽略前缀t_,生成类名为order，否则为tOrder"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group draggable">
+                            <div class="col-sm-12 col-sm-offset-3">
+                                <button type="button" class="btn btn-primary" @click="(event) => gencode( event)">生成代码
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-7">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>依赖jar包</h5>
+                </div>
+
+                <div class="col-sm-12 select-table table-striped">
+                    <div class="bootstrap-table bootstrap3">
+
+                        <div class="fixed-table-toolbar">
+                            <div class="columns columns-right btn-group pull-right">
+                                <a class="btn btn-success" data-toggle="modal" @click="forceUpdate()"
+                                   data-target="#myModal">
+                                    <i class="fa fa-plus"></i> 添加依赖
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-header" style="display: none;">
+                                <table></table>
+                            </div>
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading table table-bordered table-hover"
+                                     style="top: 35.0703px;">
+                                </div>
+                                <table id="bootstrap-table" class="table table-bordered table-hover">
+                                    <thead class="">
+                                    <tr>
+                                        <th style="">
+                                            <div class="th-inner">groupId</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner ">artifactId</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner">version</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner ">desc</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner ">操作</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(jar,key) in jarsByType">
+                                        <td>{{jar.groupId}}</td>
+                                        <td>{{jar.artifactId}}</td>
+                                        <td>{{jar.version}}</td>
+                                        <td>{{jar.desc}}</td>
+                                        <td style="text-align: center; ">
+                                            <a :class="jar.fromParent?'btn btn-danger btn-xs danger disabled':'btn btn-danger btn-xs danger' " href="#" @click="rmJar(key)"><i
+                                                    class="fa fa-remove"></i>删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="fixed-table-footer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>项目结构说明</h5>
+            </div>
+            <pre v-if="projType==='dubbo'">
+
+结构说明:
+com.sika.demo
+com.yspay.demo
+├─api   // 对外提供服务的依赖, 无外部依赖, 可以单独打包
+│    ├─com.yspay.demo.api.xxx.dto                   // 服务对外的DTO,  xxx代表业务子模块, 下同
+│    ├─com.yspay.demo.api.xxx.api                   // 服务对外透出的API
+│    └─README.md                                       // 说明使用此依赖对应的注册中心, 应用名等信息, 方便依赖方快速接入
+├─app      // 对service进行编排,对外服务的实际提供者, 依赖service和api
+│    ├─com.yspay.demo.app.xxx.executor                 // 处理dubbo请求
+│    ├─com.yspay.demo.app.xxx.consumer                 // 处理消息消费
+│    ├─com.yspay.demo.app.xxx.scheduler                // 处理任务调度
+│    └─com.yspay.demo.app.xxx.convert                  // DTO 与 BO之间的转换
+├─common      // 公共类文件（util,enum,etc...）
+│    ├─com.yspay.demo.common.util                 // common util
+│    ├─com.yspay.demo.common.enum                 // common enum
+├─service // 按模块划分的核心业务处理, 依赖manager, 可以根据需要是否依赖dao
+│    ├─com.yspay.demo.service.xxx.service              // 业务逻辑接口
+│    └─com.yspay.demo.service.xxx.service.impl         // 业务逻辑实现
+├─manager // 对外部服务, 中间件, 数据库依赖的封装, 依赖dao, 外部的client
+│    ├─com.yspay.demo.manager.xxx.bo                    // 业务对象, 其中bo,
+│    ├─com.yspay.demo.manager.facade                    // 对外RPC调用(dubbo/http)封装的接口
+│    ├─com.yspay.demo.manager.facade.impl               // 对外RPC调用的实现
+│    ├─com.yspay.demo.manager.xxx.repository            // 对数据库调用封装的接口
+│    ├─com.yspay.demo.manager.xxx.repository.impl       // 对数据库调用封装的实现, 多dao复合组装, 事务管理
+│    ├─com.yspay.demo.manager.convert                   // 外部DTO与BO之间的转换, DO(entity) 与BO之间的转换
+│    ├─com.yspay.demo.manager.middlware.message         // 对外消息发送
+│    └─com.yspay.demo.manager.middlware.xxx             // 其他中间件的相关操作  xxx代表不同的中间件
+└─dao    // 数据库操作, 依赖数据库
+|    ├─com.yspay.demo.dao.entity                        // 数据库表映射对象
+|    └─com.yspay.demo.dao.mapper
+|                  // ORM数据表操作对象
+└─starter    // springboot main函数
+
+                
+                    </pre>
+
+            <pre v-if="projType==='gateway'">
+结构说明:
+
+com.yspay.demo
+|-- app
+|   `-- com.yspay.demo.app.xxx.domain //实体类
+|   `-- com.yspay.demo.app.xxx.remote //提供对外网关接口
+|   `-- com.yspay.demo.app.xxx.service //业务接口定义
+|   `-- com.yspay.demo.app.xxx.service.impl //业务接口实现
+|-- manager  //外部rpc mq请求 通知做integration处理
+|   `-- com.yspay.demo.manager.xxx.convert //转换
+|   `-- com.yspay.demo.manager.xxx.middleware // 中间件
+|
+`-- starter
+    `-- com.yspay.demo.starter //springboot main函数
+
+                    </pre>
+
+            <pre v-if="projType==='web'">
+
+结构说明:
+com.yspay.demo
+├─app      // 对service进行编排,对外服务的实际提供者, 依赖service和client
+│    ├─com.yspay.demo.app.xxx.executor                 // 处理dubbo请求
+│    ├─com.yspay.demo.app.xxx.consumer                 // 处理消息消费
+│    ├─com.yspay.demo.app.xxx.scheduler                // 处理任务调度
+│    └─com.yspay.demo.app.xxx.convert                  // DTO 与 BO之间的转换
+├─service // 按模块划分的核心业务处理, 依赖manager, 可以根据需要是否依赖dao
+│    ├─com.yspay.demo.service.xxx.service              // 业务逻辑接口
+│    └─com.yspay.demo.service.xxx.service.impl         // 业务逻辑实现
+├─manager // 对外部服务, 中间件, 数据库依赖的封装, 依赖dao, 外部的client
+│    ├─com.yspay.demo.manager.xxx.bo                    // 业务对象, 其中bo,
+│    ├─com.yspay.demo.manager.xxx.factory               // 业务对象工厂
+│    ├─com.yspay.demo.manager.remote                    // 对外RPC调用(dubbo/http)封装的接口
+│    ├─com.yspay.demo.manager.remote.impl               // 对外RPC调用的实现
+│    ├─com.yspay.demo.manager.xxx.repository            // 对数据库调用封装的接口
+│    ├─com.yspay.demo.manager.xxx.repository.impl       // 对数据库调用封装的实现, 多dao复合组装, 事务管理
+│    ├─com.yspay.demo.manager.convert                   // 外部DTO与BO之间的转换, DO(entity) 与BO之间的转换
+│    ├─com.yspay.demo.manager.middlware.message         // 对外消息发送
+│    └─com.yspay.demo.manager.middlware.xxx             // 其他中间件的相关操作  xxx代表不同的中间件
+└─dao    // 数据库操作, 依赖数据库
+|    ├─com.yspay.demo.dao.entity                        // 数据库表映射对象
+|    └─com.yspay.demo.dao.mapper
+|                  // ORM数据表操作对象
+└─starter  // springboot main函数
+                    </pre>
+        </div>
+    </div>
+
+    <div class="modal fade large" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="">
+        <div class="modal-dialog  modal-dialog-scrollable" role="document">
+            <div class="modal-content" style="width: 700px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加依赖
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                        <div class="fixed-table-header" style="display: none;">
+                            <table></table>
+                        </div>
+                        <div class="fixed-table-body">
+                            <!-- 查询-->
+                            <div class="form-outline mb-4">
+                                <input type="search" class="form-control" id="datatable-search-input"
+                                       v-model="searchText">
+                            </div>
+
+                            <div class="fixed-table-loading table table-bordered table-hover"
+                                 style="top: 35.0703px;">
+                            </div>
+                            <table class="table table-bordered table-hover">
+                                <thead class="">
+                                <tr>
+                                    <th style="">
+                                        <div class="th-inner">groupId</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
+                                        <div class="th-inner ">artifactId</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
+                                        <div class="th-inner">version</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
+                                        <div class="th-inner ">desc</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
+                                        <div class="th-inner ">操作</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(jar,key) in validBomJars">
+                                    <td>{{jar.groupId}}</td>
+                                    <td>{{jar.artifactId}}</td>
+                                    <td>{{jar.version}}</td>
+                                    <td>{{jar.desc}}</td>
+                                    <td style="text-align: center; ">
+                                        <a class="btn btn-success btn-xs " href="#" @click="addJar(jar)"><i
+                                                class="fa fa-plus-circle"></i>添加</a>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fixed-table-footer"></div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:inline="javascript">
+
+
+    // now we have access to the native event
+    $("form").on('submit', function (e) {
+        e.preventDefault();
+        //ajax code here
+    });
+
+    var prefix = "";
+
+    // 创建一个新的 Vue 实例
+    var gen = new Vue({
+        // DOM 元素，挂载视图模型
+        el: '#jar-mgr',
+
+        // 定义属性，并设置初始值
+        data: {
+            bomJars: [],
+            jars: {},
+            searchText: '',
+            projType: 'dubbo', //default value
+            dbtype: 'postgres' //default to pg
+        },
+
+        computed: {
+            //如果在
+            validBomJars() {
+                let _self = this;
+
+                //check if jar is in targetJars
+                function contains(jar, targetJars) {
+
+                    var found = false;
+                    for (var i = 0; i < targetJars.length; i++) {
+                        let j = targetJars[i]
+                        if (j.groupId == jar.groupId && jar.artifactId === j.artifactId && j.version === jar.version) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    return found
+                }
+
+                let validJars = []
+
+                for (let jar of this.bomJars) {
+                    if (
+                        ((jar.artifactId.toLowerCase().includes(this.searchText.toLowerCase()))
+                            || (jar.groupId.toLowerCase().includes(this.searchText.toLowerCase())))
+                        && !contains(jar, _self.jars[_self.projType])
+                    ) {
+                        validJars.push(jar)
+                    }
+                }
+                return validJars
+            },
+
+            jarsByType() {
+                return this.jars[this.projType]
+            }
+        },
+        created: function () {
+            let _self = this;
+            axios
+                .get(prefix + "/tool/jars")
+                .then(response => {
+                    _self.jars = response.data;
+                })
+
+
+            axios
+                .get(prefix + "/tool/bomJars")
+                .then(response => {
+                    _self.bomJars = response.data;
+                })
+        },
+
+        watch: {
+            projType: function (v1, v2) {
+                // alert(v2)
+            }
+
+        },
+        // 点击菜单使用的函数
+        methods: {
+
+            forceUpdate: function () {
+                this.$forceUpdate()
+            },
+
+            changeProjType: function (val) {
+                this.projType = val
+            },
+
+            gencode: function (event) {
+                // now we have access to the native event
+                if (event) {
+                    event.preventDefault()
+                }
+
+                var paramObj = {};
+                $.each($('#form').serializeArray(), function (_, kv) {
+                    if (paramObj.hasOwnProperty(kv.name)) {
+                        paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+                        paramObj[kv.name].push(kv.value);
+                    } else {
+                        paramObj[kv.name] = kv.value;
+                    }
+                });
+
+                if (paramObj.projName == '') {
+                    alert('项目名称必填')
+                    return
+                }
+
+                if (paramObj.groupId == '') {
+                    alert('groupId必填')
+                    return
+                }
+
+                if (paramObj.artifactId == '') {
+                    alert('artifactId必填')
+                    return
+                }
+
+                if (paramObj.author == '') {
+                    alert('author必填')
+                    return
+                }
+
+                if (paramObj.ddl === '') {
+                    paramObj.ddl = $("textarea[name='ddl'] ").attr('placeholder')
+                }
+
+
+                paramObj['jars'] = this.jars[this.projType]
+
+                axios.post(prefix + "/tool/genCode", paramObj, {responseType: 'blob'})
+                    .then((res) => {
+
+                        if (res.code == 500) {
+                            alert(res.msg)
+                            return
+                        }
+
+                        const {data, headers} = res
+                        const fileName = 'code.zip'
+                        const blob = new Blob([data], {type: headers['content-type']})
+                        if (headers['content-type'] === 'application/json;charset=UTF-8') {
+                            blob.text().then(text => {
+                                alert(text);
+                            })
+                            return;
+                        }
+
+                        let dom = document.createElement('a')
+                        let url = window.URL.createObjectURL(blob)
+                        dom.href = url
+                        dom.download = decodeURI(fileName)
+                        dom.style.display = 'none'
+                        document.body.appendChild(dom)
+                        dom.click()
+                        dom.parentNode.removeChild(dom)
+                        window.URL.revokeObjectURL(url)
+                    }).catch((err) => {
+                })
+
+            },
+
+            rmJar: function (index) {
+                Vue.delete(this.jars[this.projType], index);
+            },
+
+            //从bom清单jar中加到具体的jar列表中
+            addJar: function (jar) {
+
+                var found = false;
+                for (var i = 0; i < this.jars[this.projType].length; i++) {
+
+                    let j = this.jars[this.projType][i]
+                    if (j.groupId == jar.groupId && jar.artifactId === j.artifactId && j.version === jar.version) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    this.jars[this.projType].push(jar)
+                }
+            },
+
+            contains: function (jar) {
+
+                var found = false;
+                for (var i = 0; i < this.jars.length; i++) {
+
+                    let j = jars[i]
+                    if (j.groupId == jar.groupId && jar.artifactId === j.artifactId && j.version === jar.version) {
+                        found = true;
+                        break;
+                    }
+                }
+                return found
+            }
+        },
+
+        filters: {
+            search: function (jars) {
+                if (this.searchText == '') {
+                    return jars;
+                }
+
+                return jars.filter(function (jar) {
+                    jar.groupId === this.searchText || jar.artifactId === this.searchText
+                })
+            }
+        }
+    });
+
+
+    function aaa() {
+        gen.$emit('projType', 'zz')
+    }
+
+</script>
+</body>
+</html>

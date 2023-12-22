@@ -1,0 +1,12 @@
+package ${packageName}.service.${className}.service;
+
+
+/**
+ * ${className}Service接口
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface I${ClassName}Service
+{
+}

@@ -1,0 +1,545 @@
+server:
+  port: 8080
+  tomcat:
+    accept-count: 1024
+debug: false
+headImagePath: E:\project\sika-design\quasar-sika-design-admin\quasar-sika-design\public\imgs\head\
+spring:
+  test:
+    database:
+      replace: none
+  shardingsphere:
+    datasource:
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan1.dev.pgsql.db.com:5001/db_paycore_order_0?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan1.dev.pgsql.db.com:5001/db_paycore_order_1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan1.dev.pgsql.db.com:5001/db_paycore_order_2?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds3:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan1.dev.pgsql.db.com:5001/db_paycore_order_3?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds4:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan2.dev.pgsql.db.com:5001/db_paycore_order_4?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds5:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan2.dev.pgsql.db.com:5001/db_paycore_order_5?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds6:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan2.dev.pgsql.db.com:5001/db_paycore_order_6?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      ds7:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: 'jdbc:postgresql://paychan2.dev.pgsql.db.com:5001/db_paycore_order_7?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&prepareThreshold=0&stringtype=unspecified'
+        password: 5r4fBnCv7Xly3GSV
+        username: order_
+        idle-timeout: '30000'
+        connection-timeout: '3000'
+        max-lifetime: '1800000'
+        minimum-idle: '18'
+        maximum-pool-size: '40'
+      names: 'ds0,ds1,ds2,ds3,ds4,ds5,ds6,ds7'
+    rules:
+      sharding:
+        auditors:
+          sharding_key_required_auditor:
+            type: DML_SHARDING_CONDITIONS
+        default-audit-strategy:
+          auditor-names:
+            - sharding_key_required_auditor
+          allow-hint-disable: 'true'
+        sharding-algorithms:
+          tb-to-ds-mapping:
+            type: TWICE_HASH_COMPLEX_TO_DATASOURCE_MAPPING
+            props:
+              table-to-datasource-mapping: 'ds0.${0..511},ds1.${512..1023},ds2.${1024..1535},ds3.${1536..2047},ds4.${2048..2559},ds5.${2560..3071},ds6.${3072..3583},ds7.${3584..4095}'
+              hot-customer-datasource: ''
+              all-table-sequences: '${0..4095}'
+              datasource-mod-number: '4096'
+              table-mod-number: '4096'
+              sharding-value-algorithms:
+                cust_id: CUST_ID_SPECIAL_HASH_ALGORITHM
+                order_no: ORDER_NO_SPECIAL_HASH_ALGORITHM
+                refund_order_no: ORDER_NO_SPECIAL_HASH_ALGORITHM
+          t-twice-hash-mod-cmplx:
+            type: TWICE_HASH_COMPLEX_MULTI
+            props:
+              hot-customer-table: ''
+              all-table-sequences: '${0..4095}'
+              table-mod-number: '4096'
+              sharding-value-algorithms:
+                cust_id: CUST_ID_SPECIAL_HASH_ALGORITHM
+                order_no: ORDER_NO_SPECIAL_HASH_ALGORITHM
+                refund_order_no: ORDER_NO_SPECIAL_HASH_ALGORITHM
+          t-twice-hash-mod:
+            type: TWICE_HASH_MOD
+            props:
+              hot-customer-table: ''
+              all-table-sequences: '${0..4095}'
+              table-mod-number: '4096'
+          db-table-to-datasource-mapping:
+            type: TABLE_TO_DATASOURCE_MAPPING
+            props:
+              table-to-datasource-mapping: 'ds0.${0..511},ds1.${512..1023},ds2.${1024..1535},ds3.${1536..2047},ds4.${2048..2559},ds5.${2560..3071},ds6.${3072..3583},ds7.${3584..4095}'
+              hot-customer-datasource: ''
+              all-table-sequences: '${0..4095}'
+              datasource-mod-number: '4096'
+              table-mod-number: '4096'
+        tables:
+          t_order_mapping:
+            actual-data-nodes: 'ds0.t_order_mapping_${0..511},ds1.t_order_mapping_${512..1023},ds2.t_order_mapping_${1024..1535},ds3.t_order_mapping_${1536..2047},ds4.t_order_mapping_${2048..2559},ds5.t_order_mapping_${2560..3071},ds6.t_order_mapping_${3072..3583},ds7.t_order_mapping_${3584..4095}'
+            table-strategy:
+              standard:
+                sharding-algorithm-name: t-twice-hash-mod
+                sharding-column: out_trade_no
+            database-strategy:
+              standard:
+                sharding-algorithm-name: db-table-to-datasource-mapping
+                sharding-column: out_trade_no
+          t_mch_order:
+            actual-data-nodes: 'ds0.t_mch_order_${0..511},ds1.t_mch_order_${512..1023},ds2.t_mch_order_${1024..1535},ds3.t_mch_order_${1536..2047},ds4.t_mch_order_${2048..2559},ds5.t_mch_order_${2560..3071},ds6.t_mch_order_${3072..3583},ds7.t_mch_order_${3584..4095}'
+            table-strategy:
+              complex:
+                sharding-algorithm-name: t-twice-hash-mod-cmplx
+                sharding-columns: 'cust_id,order_no'
+            database-strategy:
+              complex:
+                sharding-algorithm-name: tb-to-ds-mapping
+                sharding-columns: 'cust_id,order_no'
+    props:
+      sql-show: 'true'
+
+
+    ################### mysq end ##########################
+    ################### redis 单机版 start ##########################
+  redis:
+    #    host: 121.89.202.68
+    #    port: 6379
+    host: localhost
+    port: 6379
+    timeout: 3000
+    #    password: SikaDesignAdmin20201225
+    ################### redis 单机版 end ##########################
+    #    cluster:
+    #      nodes: localhost:6379
+    #    nodes: 134.224.249.36:7000,134.224.249.37:7000,134.224.249.38:7000,134.224.249.36:7001,134.224.249.37:7001,134.224.249.38:7001
+    ###        #130.75.131.237:7000,130.75.131.238:7000,130.75.131.239:7000,130.75.131.237:7001,130.75.131.238:7001,130.75.131.239:7001
+    ##        #192.168.3.157:7000,192.168.3.158:7000,192.168.3.159:7000,192.168.3.157:7001,192.168.3.158:7001,192.168.3.159:7001
+
+
+  #    timeout: 1000 # 连接超时时间（毫秒）
+  #    pool:
+  #      max-active: 2000  # 连接池最大连接数（使用负值表示没有限制）
+  #      max-idle: 500     # 连接池中的最大空闲连接
+  #      min-idle: 50     # 连接池中的最小空闲连接
+  #      max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  redisson:
+    mode: single
+    single:
+    address: 121.89.202.68:6379
+    password: SikaDesignAdmin20201225
+  dynamic:
+    thread-pool:
+      # 是否开启动态线程池
+      enable: true
+      # 是否打印 banner
+      banner: true
+      # 是否开启线程池数据采集，对接 Micrometer、ES、Log 等
+      collect: false
+      # 检查线程池状态，是否达到报警条件，单位毫秒
+      check-state-interval: 3000
+      # 通知报警平台，请替换为自己创建的群机器人
+      notify-platforms:
+        - platform: 'WECHAT'
+          token: xxx
+        - platform: 'DING'
+          token: xxx
+          secret: xxx  # 加签专属
+        - platform: 'LARK'
+          token: xxx
+      # Nacos、Apollo、Zookeeper、ETCD、Polaris、Consul 任选其一
+      nacos:
+        data-id: xxx
+        group: xxx
+      apollo:
+        namespace: xxxx
+      # 配置中心文件格式
+      config-file-type: yml
+      # 支持 tomcat、undertow、jetty 三种容器线程池
+      web:
+        core-pool-size: 100
+        maximum-pool-size: 200
+        keep-alive-time: 1000
+      # 全局通知配置-是否报警
+      alarm: true
+      # 活跃度报警阈值；假设线程池最大线程数 10，当线程数达到 8 发起报警
+      active-alarm: 80
+      # 容量报警阈值；假设阻塞队列容量 100，当容量达到 80 发起报警
+      capacity-alarm: 80
+      # 报警间隔，同一线程池下同一报警纬度，在 interval 时间内只会报警一次，单位秒
+      alarm-interval: 8
+      # 企业微信填写用户 ID（填写其它将无法达到 @ 效果）、钉钉填手机号、飞书填 ou_ 开头唯一 ID
+      receives: xxx
+      # 动态线程池列表
+      executors:
+        - thread-pool-id: 'message-consume'
+          # 核心线程数
+          core-pool-size: 1
+          # 最大线程数
+          maximum-pool-size: 1
+          # 阻塞队列名称，参考 BlockingQueueTypeEnum，支持 SPI
+          blocking-queue: 'LinkedBlockingQueue'
+          # 阻塞队列大小
+          queue-capacity: 1
+          # 执行超时时间，超过此时间发起报警，单位毫秒
+          execute-time-out: 1000
+          # 拒绝策略名称，参考 RejectedPolicyTypeEnum，支持 SPI
+          rejected-handler: 'AbortPolicy'
+          # 线程存活时间，单位秒
+          keep-alive-time: 1024
+          # 是否允许核心线程超时
+          allow-core-thread-time-out: true
+          # 线程工厂名称前缀
+          thread-name-prefix: 'message-consume'
+          # 是否报警
+          alarm: true
+          # 活跃度报警阈值；假设线程池最大线程数 10，当线程数达到 8 发起报警
+          active-alarm: 80
+          # 容量报警阈值；假设阻塞队列容量 100，当容量达到 80 发起报警
+          capacity-alarm: 80
+          # 通知配置，线程池中通知配置如果存在，则会覆盖全局通知配置
+          notify:
+            # 报警间隔，同一线程池下同一报警纬度，在 interval 时间内只会报警一次，单位分钟
+            interval: 8
+            # 企业微信填写用户 ID（填写其它将无法达到 @ 效果）、钉钉填手机号、飞书填 ou_ 开头唯一 ID
+            receives: xxx
+        - thread-pool-id: 'message-produce'
+          core-pool-size: 1
+          maximum-pool-size: 1
+          queue-capacity: 1
+          execute-time-out: 1000
+          blocking-queue: 'LinkedBlockingQueue'
+          rejected-handler: 'AbortPolicy'
+          keep-alive-time: 1024
+          allow-core-thread-time-out: true
+          thread-name-prefix: 'message-consume'
+          alarm: true
+          active-alarm: 80
+          capacity-alarm: 80
+          notify:
+            interval: 8
+            receives: xxx
+    tp:
+      enabled: true
+      enabledCollect: false                    # 是否开启监控指标采集，默认false
+      collectorTypes: micrometer,logging      # 监控数据采集器类型（logging | micrometer | internal_logging），默认micrometer
+      logPath: /home/logs                     # 监控日志数据路径，默认 ${user.home}/logs，采集类型非logging不用配置
+      monitorInterval: 5                      # 监控时间间隔（报警检测、指标采集），默认5s
+      platforms:                              # 通知报警平台配置
+        - platform: wechat
+          platformId: 1                            # 平台id
+          urlKey: 3a700-127-4bd-a798-c53d8b69c     # 替换
+          receivers: test1,test2                   # 接受人企微名称
+        - platform: ding
+          platformId: 2                            # 平台id
+          urlKey: f80dad441fcd655438f4a08dcd6a     # 替换
+          secret: SECb5441fa6f375d5b9d21           # 替换，非sign模式可以没有此值
+          receivers: 18888888888                   # 钉钉账号手机号
+        - platform: lark
+          platformId: 3
+          urlKey: 0d944ae7-b24a-40                 # 替换
+          receivers: test1,test2                   # 接受人飞书名称/openid
+        - platform: email
+          platformId: 4
+          receivers: 123456@qq.com,789789@qq.com   # 收件人
+      executors:                                   # 动态线程池配置，都有默认值，采用默认值的可以不配置该项，减少配置量
+        - threadPoolName: dtpExecutor1
+          threadPoolAliasName: 测试线程池             # 线程池别名
+          executorType: common                     # 线程池类型common、eager：适用于io密集型
+          corePoolSize: 1
+          maximumPoolSize: 1
+          queueCapacity: 1
+          queueType: VariableLinkedBlockingQueue   # 任务队列，查看源码QueueTypeEnum枚举类
+          rejectedHandlerType: CallerRunsPolicy    # 拒绝策略，查看RejectedTypeEnum枚举类
+          keepAliveTime: 50
+          allowCoreThreadTimeOut: false                  # 是否允许核心线程池超时
+          threadNamePrefix: test                         # 线程名前缀
+          waitForTasksToCompleteOnShutdown: false        # 参考spring线程池设计，优雅关闭线程池
+          awaitTerminationSeconds: 5                     # 单位（s）
+          preStartAllCoreThreads: false                  # 是否预热所有核心线程，默认false
+          runTimeout: 200                                # 任务执行超时阈值，目前只做告警用，单位（ms）
+          queueTimeout: 100                              # 任务在队列等待超时阈值，目前只做告警用，单位（ms）
+          taskWrapperNames: ["ttl", "mdc"]               # 任务包装器名称，继承TaskWrapper接口
+          notifyEnabled: true                            # 是否开启报警，默认true
+          notifyItems:                     # 报警项，不配置自动会按默认值配置（变更通知、容量报警、活性报警、拒绝报警、任务超时报警）
+            - type: capacity               # 报警项类型，查看源码 NotifyTypeEnum枚举类
+              enabled: true
+              threshold: 80                # 报警阈值
+              platforms: [ding,wechat]     # 可选配置，不配置默认拿上层platforms配置的所以平台
+              interval: 120                # 报警间隔（单位：s）
+            - type: change
+              enabled: true
+            - type: liveness
+              enabled: true
+              threshold: 80
+            - type: reject
+              enabled: true
+              threshold: 1
+            - type: run_timeout
+              enabled: true
+              threshold: 1
+            - type: queue_timeout
+              enabled: true
+              threshold: 1
+
+sika:
+  code:
+    workspace:
+      worker-id: 2
+      data-center-id: 1
+    rabbit:
+      sender:
+        log-fire: true
+        ack: true
+    ## ==========================restTemplate配置begin=====================================
+    rest:
+      template:
+        maxTotal: 1500
+        defaultMaxPerRoute: 1500
+        connectTimeout: 12000
+        readTimeout: 90000
+        connectionRequestTimeout: 200
+        bufferRequestBody: false
+    ## ==========================restTemplate配置end=====================================
+    auth:
+      # jwt秘钥
+      jwt-secret: ETZZN3KX194HXI82
+      server-name: risk-system-server
+    thirdparty:
+      url:
+        erpRequestDomain: http://erp-service
+        erpRequestDomainHttps: https://api-gateway.52rental.com/oauth-server
+        sjmhRequestDomainHttps: https://api.shujumohe.com/octopus
+      erp:
+        appId: 201801010001
+        appSecret: cDieLmT10edZYU9diLmFMpMkZLLb1WaSk58wCuK7Nmwnmzz3wDwdYkmzzJNLgiCU
+      sjmh:
+        partnerCode: lxzp_mohe
+        partnerKey: 18063e6db59948ce8ce301062e351fb3
+    ################### 异常通知 begin ############################
+    exception:
+      inform:
+        defaultWebHookForDingding:
+      ################### 异常通知 end ############################
+
+#设置最大超时时间
+ribbon:
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: false
+# 服务ribbon的负载配置
+erp-service: # ERP服务
+  ribbon:
+    listOfServers: advance-new-api-gateway.52rental.com/oauth-server
+
+
+##feign参数优化
+feign:
+  compression:
+    request:
+      enabled: true
+      mine-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+logging:
+  level:
+    root: INFO
+    com.netflix: OFF
+    com.central: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+
+me:
+  zhyd:
+    oauth:
+      timeout: 15000
+      oauthConfig:
+        gitee:
+          requestClassName: me.zhyd.oauth.request.AuthGiteeRequest
+          clientId: 427f193cd6a3319e8f84570a21cecc563ed80c4cd4d46e647312306fa7d74329
+          clientSecret: 4ec7e3ab06fbda68414bc250a28858ec51f6e6e888f692760db3c1cc578e0900
+          redirectUri: http://127.0.0.1:8101/auth/callback/gitee/anon
+        github:
+          requestClassName: me.zhyd.oauth.request.AuthGithubRequest
+          clientId: a60f78e6b3f5dcd39510
+          clientSecret: a952fb6de66b6d96fd1719d53d03a6d6b03d0113
+          redirectUri: http://localhost:8101/auth/callback/github/anon
+        weibo:
+          clientId:
+          clientSecret:
+          redirectUri:
+        dingtalk:
+          clientId:
+          clientSecret:
+          redirectUri:
+        baidu:
+          requestClassName: me.zhyd.oauth.request.AuthBaiduRequest
+          clientId: VCgfYwoGjvtdiWe60qWwbLSk
+          clientSecret: OhGKutO24BUGP7i46085bQWC9KdreExm
+          redirectUri: http://localhost:8101/auth/callback/baidu/anon
+        coding:
+          clientId:
+          clientSecret:
+          redirectUri:
+        tencentCloud:
+          clientId:
+          clientSecret:
+          redirectUri:
+        oschina:
+          clientId:
+          clientSecret:
+          redirectUri:
+        alipay:
+          clientId:
+          clientSecret:
+          redirectUri:
+          alipayPublicKey:
+        qq:
+          requestClassName: me.zhyd.oauth.request.AuthQqRequest
+          clientId: 101931120
+          clientSecret: d73650b6f64203a45bd3c503a4afa644
+          redirectUri: http://quasar.admin.sikacode.com/api/auth/callback/qq/anon
+        wechat:
+          clientId:
+          clientSecret:
+          redirectUri:
+        taobao:
+          clientId:
+          clientSecret:
+          redirectUri:
+        google:
+          clientId:
+          clientSecret:
+          redirectUri:
+        facebook:
+          clientId:
+          clientSecret:
+          redirectUri:
+        douyin:
+          clientId:
+          clientSecret:
+          redirectUri:
+        linkedin:
+          clientId:
+          clientSecret:
+          redirectUri:
+        microsoft:
+          clientId:
+          clientSecret:
+          redirectUri:
+        mi:
+          clientId:
+          clientSecret:
+          redirectUri:
+        toutiao:
+          clientId:
+          clientSecret:
+          redirectUri:
+        teambition:
+          clientId:
+          clientSecret:
+          redirectUri:
+        renren:
+          clientId:
+          clientSecret:
+          redirectUri:
+        pinterest:
+          clientId:
+          clientSecret:
+          redirectUri:
+        stackoverflow:
+          clientId:
+          clientSecret:
+          redirectUri:
+          stackOverflowKey:
+        huawei:
+          clientId:
+          clientSecret:
+          redirectUri:
+        wechatEnterprise:
+          clientId:
+          clientSecret:
+          redirectUri:
+          agentId:
+

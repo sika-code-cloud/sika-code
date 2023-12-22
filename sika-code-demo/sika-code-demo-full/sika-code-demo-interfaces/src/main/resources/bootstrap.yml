@@ -1,0 +1,15 @@
+apollo:
+  bootstrap:
+    enabled: true
+    namespaces: application.properties,application1.yaml,sharding_one.yaml,test1.yaml
+server:
+  port: 8000
+spring:
+  application:
+    name: sika-code-demo
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false

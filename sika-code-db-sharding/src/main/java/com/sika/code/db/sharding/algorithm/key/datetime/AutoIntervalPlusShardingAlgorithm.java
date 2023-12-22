@@ -1,20 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.sika.code.db.sharding.algorithm.key.datetime;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
@@ -32,10 +15,12 @@ import org.apache.shardingsphere.sharding.exception.data.InvalidDatetimeFormatEx
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 
@@ -43,10 +28,11 @@ import java.util.Properties;
  * Auto interval sharding algorithm.
  */
 public final class AutoIntervalPlusShardingAlgorithm
-    implements StandardShardingAlgorithm<Comparable<?>>, ShardingAutoTableAlgorithm {
+        implements StandardShardingAlgorithm<Comparable<?>>, ShardingAutoTableAlgorithm {
 
     private static final String DATE_TIME_LOWER_KEY = "datetime-lower";
     private static final String DATE_TIME_LOWER_MODE_KEY = "datetime-lower-mode";
+    private static final String START_INDEX_KEY = "start-index";
 
     private static final String DATE_TIME_UPPER_KEY = "datetime-upper";
 
@@ -66,15 +52,19 @@ public final class AutoIntervalPlusShardingAlgorithm
     @Getter
     private int autoTablesAmount;
 
+    private int startIndex;
+
     @Override
     public void init(final Properties props) {
         this.props = props;
         dateTimeLower = getDateTime(props);
         shardingSeconds = getShardingSeconds(props);
         autoTablesAmount =
-            (int)(Math.ceil((double)(parseDate(props.getProperty(DATE_TIME_UPPER_KEY)) / shardingSeconds)) + 2);
+                (int) (Math.ceil((double) (parseDate(props.getProperty(DATE_TIME_UPPER_KEY)) / shardingSeconds)) + 2);
         lowerMode =
-            Integer.valueOf(this.props.getProperty(DATE_TIME_LOWER_MODE_KEY, LowerModeEnum.ORG.getType().toString()));
+                Integer.parseInt(this.props.getProperty(DATE_TIME_LOWER_MODE_KEY, LowerModeEnum.ORG.getType().toString()));
+        startIndex =
+                Integer.parseInt(this.props.getProperty(START_INDEX_KEY, "0"));
     }
 
     private LocalDateTime getDateTime(final Properties props) {
@@ -89,35 +79,35 @@ public final class AutoIntervalPlusShardingAlgorithm
 
     private long getShardingSeconds(final Properties props) {
         Preconditions.checkArgument(props.containsKey(SHARDING_SECONDS_KEY), "%s cannot be null.",
-            SHARDING_SECONDS_KEY);
+                SHARDING_SECONDS_KEY);
         return Long.parseLong(props.getProperty(SHARDING_SECONDS_KEY));
     }
 
     @Override
     public String doSharding(final Collection<String> availableTargetNames,
-        final PreciseShardingValue<Comparable<?>> shardingValue) {
+                             final PreciseShardingValue<Comparable<?>> shardingValue) {
         String tableNameSuffix = String.valueOf(doSharding(parseDate(shardingValue.getValue())));
         return ShardingAutoTableAlgorithmUtil.findMatchedTargetName(availableTargetNames, tableNameSuffix,
-            shardingValue.getDataNodeInfo()).orElse(null);
+                shardingValue.getDataNodeInfo()).orElse(null);
     }
 
     @Override
     public Collection<String> doSharding(final Collection<String> availableTargetNames,
-        final RangeShardingValue<Comparable<?>> shardingValue) {
+                                         final RangeShardingValue<Comparable<?>> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
         int firstPartition = getFirstPartition(shardingValue.getValueRange());
         int lastPartition = getLastPartition(shardingValue.getValueRange());
         for (int i = firstPartition; i <= lastPartition; i++) {
             String suffix = String.valueOf(i);
             ShardingAutoTableAlgorithmUtil.findMatchedTargetName(availableTargetNames, suffix,
-                shardingValue.getDataNodeInfo()).ifPresent(result::add);
+                    shardingValue.getDataNodeInfo()).ifPresent(result::add);
         }
         return result;
     }
 
     private int doSharding(final long shardingValue) {
-        String position = new DecimalFormat("0.00").format((double)shardingValue / shardingSeconds);
-        return Math.min(Math.max(0, (int)Math.ceil(Double.parseDouble(position))), autoTablesAmount - 1);
+        String position = new DecimalFormat("0.00").format((double) shardingValue / shardingSeconds);
+        return Math.min(Math.max(0, (int) Math.ceil(Double.parseDouble(position) + startIndex)), autoTablesAmount - 1 + startIndex);
     }
 
     private int getFirstPartition(final Range<Comparable<?>> valueRange) {
@@ -125,21 +115,26 @@ public final class AutoIntervalPlusShardingAlgorithm
     }
 
     private int getLastPartition(final Range<Comparable<?>> valueRange) {
-        return valueRange.hasUpperBound() ? doSharding(parseDate(valueRange.upperEndpoint())) : autoTablesAmount - 1;
+        return valueRange.hasUpperBound() ? doSharding(parseDate(valueRange.upperEndpoint())) : autoTablesAmount - 1 + startIndex;
     }
 
     private long parseDate(final Comparable<?> shardingValue) {
         LocalDateTime dateValue;
         if (shardingValue instanceof LocalDateTime) {
-            dateValue = (LocalDateTime)shardingValue;
-        } else {
+            dateValue = (LocalDateTime) shardingValue;
+        } else if (shardingValue instanceof LocalDate){
+            dateValue = LocalDateTimeUtil.of((LocalDate)shardingValue);
+        } else if (shardingValue instanceof Date){
+            dateValue = LocalDateTimeUtil.of((Date)shardingValue);
+        }
+        else{
             dateValue = LocalDateTime.from(DATE_TIME_FORMAT.parse(shardingValue.toString(), new ParsePosition(0)));
         }
         LocalDateTime lower = dateTimeLower;
         if (!LowerModeEnum.ORG.getType().equals(lowerMode)) {
             lower = LocalDateTime.of(dateValue.getYear(), 1, 1, 0, 0, 0);
         }
-        return Duration.between(lower, dateValue).toMillis() / 1000;
+        return Duration.between(lower, dateValue).toMillis() / 1000 ;
     }
 
     @Override

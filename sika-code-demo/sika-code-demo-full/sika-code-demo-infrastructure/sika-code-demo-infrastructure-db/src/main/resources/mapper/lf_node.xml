@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.demo.infrastructure.db.business.node.mapper.NodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.demo.infrastructure.db.business.node.po.NodePO">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="version" property="version" />
+        <result column="available" property="available" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="node_no" property="nodeNo" />
+        <result column="node_name" property="nodeName" />
+        <result column="node_clazz" property="nodeClazz" />
+        <result column="node_type" property="nodeType" />
+        <result column="node_script" property="nodeScript" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="application_id" property="applicationId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Column_List">
+        id, create_by, update_by, create_date, update_date, version, available, is_deleted, remark, node_no, node_name, node_clazz, node_type, node_script, tenant_id, application_id
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="list" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT <include refid="Column_List" />
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取Id列表信息 -->
+    <select id="listId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT id
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="find" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT <include refid="Column_List" />
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取表id -->
+    <select id="findId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT id
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="page" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT <include refid="Column_List" />
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        <include refid="order_by_sql"/>
+        LIMIT #{query.pageSize}
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="count" resultType="Integer" parameterType="com.sika.code.demo.infrastructure.business.node.pojo.query.NodeQuery" >
+        SELECT count(*)
+        FROM sk_node
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql" >
+        <if test="query.id != null">AND id = #{query.id}</if>
+        <if test="query.createBy != null">AND create_by = #{query.createBy}</if>
+        <if test="query.updateBy != null">AND update_by = #{query.updateBy}</if>
+        <if test="query.createDate != null">AND create_date = #{query.createDate}</if>
+        <if test="query.updateDate != null">AND update_date = #{query.updateDate}</if>
+        <if test="query.version != null">AND version = #{query.version}</if>
+        <if test="query.available != null">AND available = #{query.available}</if>
+        <if test="query.isDeleted != null">AND is_deleted = #{query.isDeleted}</if>
+        <if test="query.remark != null">AND remark = #{query.remark}</if>
+        <if test="query.nodeNo != null">AND node_no = #{query.nodeNo}</if>
+        <if test="query.nodeName != null">AND node_name = #{query.nodeName}</if>
+        <if test="query.nodeClazz != null">AND node_clazz = #{query.nodeClazz}</if>
+        <if test="query.nodeType != null">AND node_type = #{query.nodeType}</if>
+        <if test="query.nodeScript != null">AND node_script = #{query.nodeScript}</if>
+        <if test="query.tenantId != null">AND tenant_id = #{query.tenantId}</if>
+        <if test="query.applicationId != null">AND application_id = #{query.applicationId}</if>
+        <if test="query.startIndex != null">AND id > #{query.startIndex}</if>
+        <if test="query.ids != null and query.ids.size() > 0">
+            AND id in
+            <foreach item="item" collection="query.ids" separator="," open="(" close=")" index="">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null" >
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'nodeId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

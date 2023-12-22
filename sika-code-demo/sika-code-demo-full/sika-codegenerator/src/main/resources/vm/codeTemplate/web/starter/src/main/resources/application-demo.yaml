@@ -1,0 +1,63 @@
+#这是可以本地跑的demo配置，根据实际情况修改配置 启用application-demo.yaml,可设置spring active profile = demo,
+#启用application-demo.yaml,可设置spring active profile = demo,
+# 生产环境跑application.yaml，从appollo中读取配置
+spring:
+  application:
+    name: ${starter.projName}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: postgres
+    password: postgres
+    # 指定类型为我们自己的
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    redisson:
+      config: |
+        clusterServersConfig:
+            nodeAddresses:
+            - "redis://10.213.33.235:7000"
+            - "redis://10.213.33.240:7000"
+            - "redis://10.213.33.237:7000"
+            - "redis://10.213.33.233:7000"
+            - "redis://10.213.33.239:7000"
+            - "redis://10.213.33.227:7000"
+# dubbo 配置
+dubbo:
+  application:
+    name: sika-demo
+  registry:
+    address: zookeeper://localhost:2181
+  protocols:
+    rest:
+      name: rest
+      port: 2018
+    namespace: elastic-job-spring-boot-stater-demo
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: ${packageName}.dao
+
+elasticjob:
+  zookeeper:
+    server-lists: 127.0.0.1:2181
+    namespace: elastic-job-spring-boot-stater-demo
+  #简单作业配置
+  simples:
+    #spring简单作业示例配置
+    spring-simple-job:
+      #配置简单作业，必须实现com.dangdang.ddframe.job.api.simple.SimpleJob
+      job-class: com.sika.demo.app.order.scheduler.MySimpleJob
+      cron: 0/2 * * * * ?
+      sharding-total-count: 3
+      sharding-item-parameters: 0=Beijing,1=Shanghai,2=Guangzhou
+      #配置监听器
+      listener:
+        #配置每台作业节点均执行的监听，必须实现com.dangdang.ddframe.job.lite.api.listener.ElasticJobListener
+        listener-class: com.sika.demo.app.order.scheduler.MyJobListener
+
+rocketmq:
+  name-server: 10.213.32.41:9876;10.213.32.42:9876 # RocketMQ Namesrv
+  producer:
+    group: demo-producer-group # 生产者分组
+    send-message-timeout: 3000 # 发送消息超时时间，单位：毫秒。默认为 3000 。

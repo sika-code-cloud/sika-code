@@ -1,0 +1,4 @@
+com.sika.code.db.sharding.core.algorithm.key.twicehash.DataSourceTwiceHashShardingAlgorithm
+com.sika.code.db.sharding.core.algorithm.key.twicehash.TableTwiceHashShardingAlgorithm
+com.sika.code.db.sharding.core.algorithm.key.hint.HintInlinePlusShardingAlgorithm
+com.sika.code.db.sharding.core.algorithm.key.datetime.AutoIntervalPlusShardingAlgorithm

@@ -1,0 +1,16 @@
+package ${packageName}.manager.${className}.repository;
+
+import com.sika.common.dao.repository.IBaseRepository;
+import ${packageName}.manager.${className}.bo.${ClassName}BO;
+
+
+/**
+ * ${className}Service接口
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface I${ClassName}Repository extends IBaseRepository<${ClassName}BO,${pkColumn.javaType}>
+{
+
+}

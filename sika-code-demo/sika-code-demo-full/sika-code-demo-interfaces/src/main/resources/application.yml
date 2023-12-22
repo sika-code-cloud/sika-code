@@ -1,0 +1,165 @@
+#spring:
+#  application:
+#    name: sika-code-demo
+#    # Base packages to scan Dubbo Component: @org.apache.dubbo.config.annotation.Service
+## Spring boot application
+#nacos:
+#  config:
+#    bootstrap:
+#      #开启系统启动时预读取nacos的配置，用于满足@Value注入数据的场景
+#      enable: true
+#    #      logEnable: true
+#    # 配置所属命名空间的id,此处我们配置名称为dev的id，可以在命名空间列表查看id的值
+#    namespace: 79346132-2155-4d98-a3b4-ccd85e59ba61
+#    ext-config: # 配置多个配置文件 数组形式
+#      - data-id: application # 配置 id，必须要加文件后缀
+#        group: DEFAULT_GROUP # 组别
+#        auto-refresh: true # 是否支持刷新
+#        type: yaml
+#      - data-id: sharding
+#        group: DEFAULT_GROUP
+#        auto-refresh: true
+#        type: yaml
+##      - data-id: test1
+##        group: DEFAULT_GROUP
+##        auto-refresh: true
+##        type: yaml
+#    # 配置所属分组
+#    group: DEFAULT_GROUP
+#    # 配置ID
+##    data-ids: test1,sharding,application
+#    data-id: test1
+#    # 配置文件类型,对应nacos配置页面的配置格式，默认是properties
+#    type: yaml
+#    # nacos服务器地址
+#    server-addr: nacos.sikacode.com
+#    username: nacos
+#    password: daiqi123
+#    # 开启自动刷新nacos配置
+#    auto-refresh: true
+#    # 针对配置项同名的情况，是否允许nacos的配置覆盖本地的配置
+#    remote-first: true
+#  batch:
+#    job:
+#      # 禁止Spring Batch自动执行,既需要用户触发才能执行
+#      enabled: false
+#      names: parentjob
+#    # spring batch相关表前缀, 默认为 batch_
+#    table-prefix: BATCH_
+#  id-generator: com.sika.code.core.log.config.TraceIdGenerator
+#  enable-invoke-time-print: true
+#  pattern: '[$preApp][$preIp][$spanId][$traceId]'
+#
+#
+#liteflow:
+#  rule-source: config/flow.el.xml
+#  #-----------------以下非必须-----------------
+#  #liteflow是否开启，默认为true
+#  enable: true
+#  #liteflow的banner是否开启，默认为true
+#  print-banner: false
+#  #zkNode的节点，只有使用zk作为配置源的时候才起作用
+#  zk-node: /lite-flow/flow
+#  #slot的数量，默认值为1024
+#  slot-size: 1024
+#  #异步线程最长的等待时间秒(只用于when)，默认值为15
+#  when-max-wait-seconds: 15
+#  #异步线程池最大线程数，默认为16
+#  when-max-workers: 16
+#  #异步线程池等待队列数，默认为512
+#  when-queue-limit: 512
+#  #是否在启动的时候就解析规则，默认为true
+#  parse-on-start: false
+#  #全局重试次数，默认为0
+#  retry-count: 0
+#  #是否支持不同类型的加载方式混用，默认为false
+#  support-multiple-type: false
+#  #是否开启监控log打印，默认值为false
+#  monitor:
+#    enable-log: false
+#    #监控队列存储大小，默认值为200
+#    queue-limit: 300
+#    #监控一开始延迟多少执行，默认值为300000毫秒，也就是5分钟
+#    delay: 10000
+#    #监控日志打印每过多少时间执行一次，默认值为300000毫秒，也就是5分钟
+#    period: 10000
+#
+### =====================switch必须为true=============================
+### jdbc开关key---sika.code.jdbc.switch
+#
+#sika:
+#  code:
+#    jdbc:
+#      fire: true
+#    redis:
+#      fire: true
+#    log:
+#      controller:
+#        fire: true
+#      sql:
+#        fire: false
+### =====================switch必须为true=============================
+### ==========================开关配置=====================================
+#
+#mybatis:
+#  mapper-locations: classpath*:mapper/*.xml
+##
+##mybatis-plus:
+##  configuration:
+##    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#management:
+#  server:
+#    port: 9090
+#  endpoints:
+#    web:
+#      exposure:
+#        include: prometheus,health
+#      base-path: /actuator
+#  metrics:
+#    web:
+#      server:
+#        request:
+#          autotime:
+#            percentilesHistogram: false
+#            percentiles: 0.50, 0.90, 0.95, 0.99
+#    tags:
+#      application: ${spring.application.name}
+#    enable:
+#      'system.cpu.count': true
+#      'lettuce.command.completion': true
+#      'http.server.requests': true
+#    sika:
+#      threadPool:
+#        item:
+#          dynamicTp:
+#            enabled: true
+#          tomcat:
+#            metricsName: "tomcat.temp"
+#          businessHippo4j:
+#            enabled: true
+#            metricsName: "businessHippo4j.temp"
+#      invoke:
+#        alertRules:
+#          - timeunit: SECONDS
+#            threshold: 300
+#        item:
+#          redisLettuceCompletion:
+#            metricsName: 'lettuce.command.completion.temp'
+#            metricsDesc: 'lettuce.desc'
+#            percentiles: 0.50, 0.90, 0.95, 0.99, 0.999
+#            alertRules:
+#              - timeunit: MINUTES
+#                threshold: 1
+#              - timeunit: MINUTES
+#                threshold: 5
+#          dbClient:
+#            percentiles: 0.50, 0.90, 0.95, 0.99, 0.999
+#            alertRules:
+#              - timeunit: MINUTES
+#                threshold: 2
+#              - timeunit: MINUTES
+#                threshold: 5
+#  endpoint:
+#    health:
+#      probes:
+#        enabled: true
