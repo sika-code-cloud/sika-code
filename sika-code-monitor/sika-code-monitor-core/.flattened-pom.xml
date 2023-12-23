@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code-monitor</artifactId>
-    <version>3.1.5</version>
+    <version>3.1.6</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code-monitor-core</artifactId>
-  <version>3.1.5</version>
+  <version>3.1.6</version>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -17,9 +17,9 @@
     </license>
   </licenses>
   <properties>
-    <maven.compiler.target>8</maven.compiler.target>
-    <maven.compiler.source>8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>

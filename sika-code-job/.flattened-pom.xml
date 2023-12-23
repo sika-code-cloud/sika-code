@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code</artifactId>
-    <version>3.1.5</version>
+    <version>3.1.6</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
   <artifactId>sika-code-job</artifactId>
-  <version>3.1.5</version>
+  <version>3.1.6</version>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -17,10 +17,10 @@
     </license>
   </licenses>
   <properties>
-    <maven.compiler.target>8</maven.compiler.target>
-    <maven.compiler.source>8</maven.compiler.source>
     <ak-base-starter-ak-job.version>${revision}</ak-base-starter-ak-job.version>
     <redisson.version>3.9.1</redisson.version>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>

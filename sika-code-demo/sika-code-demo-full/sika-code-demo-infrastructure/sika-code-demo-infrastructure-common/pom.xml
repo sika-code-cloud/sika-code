@@ -44,7 +44,7 @@
         </dependency>
         <dependency>
             <groupId>io.github.sika-code-cloud</groupId>
-            <artifactId>sika-code-db-sharding</artifactId>
+            <artifactId>sika-code-db-sharding-core</artifactId>
             <version>${sika-code.version}</version>
         </dependency>
     </dependencies>

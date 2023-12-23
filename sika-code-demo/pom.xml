@@ -2,17 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sika-code</artifactId>
+        <groupId>io.github.sika-code-cloud</groupId>
+        <version>${revision}</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.sika-code-cloud</groupId>
     <artifactId>sika-code-demo</artifactId>
-    <version>${revision}</version>
     <modules>
         <module>sika-code-demo-full</module>
         <module>sika-code-demo-sharding</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
-        <revision>1.0.0</revision>
         <!--设置字符编码及java版本 -->
         <project.build.targetJdk>1.8</project.build.targetJdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,7 +37,7 @@
         <mybatis-plus-boot-starter.version>3.5.3.2</mybatis-plus-boot-starter.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <sika-code.version>3.1.5</sika-code.version>
+        <sika-code.version>3.1.6</sika-code.version>
     </properties>
     <dependencyManagement>
         <dependencies>

@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
-    <artifactId>sika-code</artifactId>
+    <artifactId>sika-code-demo-full</artifactId>
     <version>3.1.6</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
-  <artifactId>sika-code-migrate</artifactId>
+  <artifactId>sika-code-demo-domain</artifactId>
   <version>3.1.6</version>
   <licenses>
     <license>
@@ -19,11 +19,12 @@
   <dependencies>
     <dependency>
       <groupId>io.github.sika-code-cloud</groupId>
-      <artifactId>sika-code-core</artifactId>
+      <artifactId>sika-code-demo-infrastructure-db</artifactId>
+      <version>${revision}</version>
     </dependency>
     <dependency>
-      <groupId>com.dtflys.forest</groupId>
-      <artifactId>forest-spring-boot-starter</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
   </dependencies>
 </project>

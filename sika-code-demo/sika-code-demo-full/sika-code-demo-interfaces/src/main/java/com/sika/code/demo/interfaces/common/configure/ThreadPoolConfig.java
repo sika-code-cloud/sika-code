@@ -1,12 +1,11 @@
 package com.sika.code.demo.interfaces.common.configure;
 
-import cn.hippo4j.core.executor.DynamicThreadPool;
-import cn.hippo4j.core.executor.support.ThreadPoolBuilder;
 import io.micrometer.core.instrument.Clock;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exemplars.ExemplarSampler;
+import org.dromara.dynamictp.core.support.ThreadPoolBuilder;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,22 +31,20 @@ public class ThreadPoolConfig {
         return registry;
     }
 
-    @Bean
-    @DynamicThreadPool
-    public ThreadPoolExecutor messageConsumeDynamicExecutor() {
-        String threadPoolId = "message-consume";
-        ThreadPoolExecutor messageConsumeDynamicExecutor =
-            ThreadPoolBuilder.builder().threadFactory(threadPoolId).threadPoolId(threadPoolId).dynamicPool().build();
-        return messageConsumeDynamicExecutor;
-    }
-
-    @Bean
-    @DynamicThreadPool
-    public ThreadPoolExecutor messageProduceDynamicExecutor() {
-        String threadPoolId = "message-produce";
-        ThreadPoolExecutor messageProduceDynamicExecutor =
-            ThreadPoolBuilder.builder().threadFactory(threadPoolId).threadPoolId(threadPoolId).dynamicPool().build();
-        return messageProduceDynamicExecutor;
-    }
+//    @Bean
+//    public ThreadPoolExecutor messageConsumeDynamicExecutor() {
+//        String threadPoolId = "message-consume";
+//        ThreadPoolExecutor messageConsumeDynamicExecutor =
+//            ThreadPoolBuilder.builder().threadFactory(threadPoolId).threadPoolId(threadPoolId).dynamicPool().build();
+//        return messageConsumeDynamicExecutor;
+//    }
+//
+//    @Bean
+//    public ThreadPoolExecutor messageProduceDynamicExecutor() {
+//        String threadPoolId = "message-produce";
+//        ThreadPoolExecutor messageProduceDynamicExecutor =
+//            ThreadPoolBuilder.builder().threadFactory(threadPoolId).threadPoolId(threadPoolId).dynamicPool().build();
+//        return messageProduceDynamicExecutor;
+//    }
 
 }

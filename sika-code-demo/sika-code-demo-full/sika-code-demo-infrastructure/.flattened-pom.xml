@@ -4,26 +4,21 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.github.sika-code-cloud</groupId>
-    <artifactId>sika-code</artifactId>
+    <artifactId>sika-code-demo-full</artifactId>
     <version>3.1.6</version>
   </parent>
   <groupId>io.github.sika-code-cloud</groupId>
-  <artifactId>sika-code-migrate</artifactId>
+  <artifactId>sika-code-demo-infrastructure</artifactId>
   <version>3.1.6</version>
+  <packaging>pom</packaging>
   <licenses>
     <license>
       <name>MIT License</name>
       <url>http://www.opensource.org/licenses/mit-license.php</url>
     </license>
   </licenses>
-  <dependencies>
-    <dependency>
-      <groupId>io.github.sika-code-cloud</groupId>
-      <artifactId>sika-code-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.dtflys.forest</groupId>
-      <artifactId>forest-spring-boot-starter</artifactId>
-    </dependency>
-  </dependencies>
+  <modules>
+    <module>sika-code-demo-infrastructure-common</module>
+    <module>sika-code-demo-infrastructure-db</module>
+  </modules>
 </project>

@@ -1,6 +1,5 @@
 package com.sika.code.demo.interfaces;
 
-import cn.hippo4j.core.enable.EnableDynamicThreadPool;
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.dynamictp.core.spring.EnableDynamicTp;
@@ -20,7 +19,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication(scanBasePackages = {"com.sika.code.demo", "com.sika.code"})
 @MapperScan({"com.sika.code.demo.**.mapper"})
 @Slf4j
-@EnableDynamicThreadPool
 @EnableDynamicTp
 @EnableDiscoveryClient
 @EnableApolloConfig
