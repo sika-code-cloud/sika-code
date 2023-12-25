@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <th:block th:include="include :: header('表单构建器')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<style>
+    .droppable-active {
+        background-color: #ffe !important
+    }
+
+    .tools a {
+        cursor: pointer;
+        font-size: 80%
+    }
+
+    .form-body .col-md-6, .form-body .col-md-12 {
+        min-height: 400px
+    }
+
+    .draggable {
+        cursor: move
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>sika脚手架</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" class="form-horizontal m-t">
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目类型：
+                            </label>
+
+                            <div class="col-sm-9">
+                                <label class="radio-box"><input type="radio" checked="" value="option1" id="dubbo"
+                                                                name="optionsRadios">dubbo项目</label>
+                                <label class="radio-box"><input type="radio" value="gateway" id="gateway"
+                                                                name="optionsRadios">gateway项目</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目名称：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="projectName" class="form-control" placeholder="请输入文本">
+                            </div>
+                        </div>
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">项目描述：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="projectDesc" class="form-control" placeholder="请输入文本">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">Group：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="group" class="form-control" placeholder="com.sika">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">Artifact：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="artifact" class="form-control" placeholder="请输入文本">
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group draggable">
+                            <div class="col-sm-12 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">获取代码</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-7" id="jar-mgr">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>依赖jar包</h5>
+                </div>
+
+                <div class="col-sm-12 select-table table-striped">
+                    <div class="bootstrap-table bootstrap3">
+
+                        <div class="fixed-table-toolbar">
+<!--                            <input class="mdb-select md-form" searchable="Search here.." type="text"/>-->
+                            <div class="columns columns-right btn-group pull-right">
+
+<!--                                <button class="btn btn-default btn-outline" type="button" name="search"-->
+<!--                                        aria-label="隐藏/显示搜索" title="隐藏/显示搜索"><i class="glyphicon glyphicon-search"></i>-->
+<!--                                </button>-->
+                            </div>
+                        </div>
+
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-header" style="display: none;">
+                                <table></table>
+                            </div>
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading table table-bordered table-hover"
+                                     style="top: 35.0703px;">
+                                </div>
+                                <table id="bootstrap-table" class="table table-bordered table-hover">
+                                    <thead class="">
+                                    <tr>
+                                        <th style="" >
+                                            <div class="th-inner">groupId</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" >
+                                            <div class="th-inner ">artifactId</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" >
+                                            <div class="th-inner">version</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner ">desc</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="">
+                                            <div class="th-inner ">操作</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(jar,key) in jars" >
+                                        <td>{{jar.groupId}}</td>
+                                        <td>{{jar.artifactId}}</td>
+                                        <td>{{jar.version}}</td>
+                                        <td>{{jar.desc}}</td>
+                                        <td style="text-align: center; ">
+                                            <a class="btn btn-danger btn-xs " href="#" @click="rmJar(key)"><i class="fa fa-remove"></i>删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="fixed-table-footer"></div>
+                        </div>
+                        <div class="fixed-table-pagination" style="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:inline="javascript">
+
+    var prefix =   "";
+
+    // 创建一个新的 Vue 实例
+    var gen = new Vue({
+        // DOM 元素，挂载视图模型
+        el: '#jar-mgr',
+
+        // 定义属性，并设置初始值
+        data: {
+            jars:[]
+        },
+        created: function () {
+            let _self=this;
+            axios
+                .get(prefix+"/tool/jars")
+                .then(response =>{
+                    _self.jars=response.data;
+                })
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+        },
+
+        // 点击菜单使用的函数
+        methods: {
+            rmJar: function(index){
+                Vue.delete(this.jars, index);
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>

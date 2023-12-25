@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${packageName}.dao.mapper.${ClassName}Mapper">
+
+    <resultMap type="${packageName}.dao.entity.${ClassName}" id="${ClassName}Result">
+        #foreach ($column in $columns)
+            <result property="${column.javaField}"    column="${column.columnName}"    />
+        #end
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        #foreach($column in $columns) $column.columnName#if($foreach.count != $columns.size()),#end#end
+    </sql>
+
+    <sql id="select${ClassName}Vo">
+        select#foreach($column in $columns) $column.columnName#if($foreach.count != $columns.size()),#end#end from ${tableName}
+    </sql>
+
+
+    #foreach($column in $indexColumns)
+    <select id="selectBy${column.columnName}" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where #foreach($indexColumn in ${column.genTableColumns}) ${indexColumn.columnName} = #{$indexColumn.javaField}#if($indexColumn.columnType == 'jsonb')::jsonb #end #if( $foreach.hasNext ) and #end #end
+    </select>
+    #end
+
+
+    <select id="selectBatchIds" parameterType="java.util.Collection" resultMap="${ClassName}Result">
+            <include refid="select${ClassName}Vo"/>
+            where ${pkColumn.columnName} in
+            <foreach item="${pkColumn.javaField}" collection="ids" open="(" separator="," close=")">
+                #{${pkColumn.javaField}}
+            </foreach>
+    </select>
+
+
+    <insert id="insert" parameterType="${packageName}.dao.entity.${ClassName}"#if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #foreach($column in $columns)
+                #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                    <if test="$column.javaField != null#if($column.javaType == 'String' && $column.required) and $column.javaField != ''#end">
+                        $column.columnName,
+                    </if>
+                #end
+            #end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #foreach($column in $columns)
+                #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                    <if test="$column.javaField != null#if($column.javaType == 'String' && $column.required) and $column.javaField != ''#end">
+                        #{$column.javaField}#if($column.columnType == 'jsonb')::jsonb #end,
+                    </if>
+                #end
+            #end
+        </trim>
+    </insert>
+
+
+    <insert id="insertList" parameterType="java.util.Collection">
+        <foreach item="el" collection="records" open="(" separator="," close=")">
+            insert into ${tableName}
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #foreach($column in $columns)
+                    #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                        <if test="el.$column.javaField != null#if($column.javaType == 'String' && $column.required) and $el.column.javaField != ''#end">
+                            $column.columnName,
+                        </if>
+                    #end
+                #end
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #foreach($column in $columns)
+                    #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                        <if test="el.$column.javaField != null#if($column.javaType == 'String' && $column.required) and el.$column.javaField != ''#end">
+                            #{el.$column.javaField}#if($column.columnType == 'jsonb')::jsonb #end,
+                        </if>
+                    #end
+                #end
+            </trim>
+        </foreach>
+
+    </insert>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.io.Serializable">
+        delete from ${tableName}
+        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+
+    </delete>
+
+    <delete id="deleteByPrimaryKeyList" parameterType="java.util.Collection">
+        delete from ${tableName} where ${pkColumn.columnName} in
+        <foreach item="${pkColumn.javaField}" collection="ids" open="(" separator="," close=")">
+            #{${pkColumn.javaField}}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,422 @@
+<update>
+    UPDATE lf_test_temp SET create_by CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.createBy}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN create_by
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    update_by CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.updateBy}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN update_by
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    test_no CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.testNo}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN test_no
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    test_name CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.testName}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN test_name
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    record_date CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.recordDate}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN record_date
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    create_date CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.createDate}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN create_date
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    update_date CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.updateDate}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN update_date
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    version CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.version}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN version
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    available CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.available}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN available
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    is_deleted CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.isDeleted}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN is_deleted
+            </otherwise>
+        </choose>
+    </foreach>
+    END,
+    remark CASE id
+    <foreach collection="list" item="item" index="index">
+        <choose>
+            <when test="item.id != null">
+                WHEN #{item.id} THEN #{item.remark}
+            </when>
+            <otherwise>
+                WHEN #{item.id} THEN remark
+            </otherwise>
+        </choose>
+    </foreach>
+    END
+    <where>id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </where>
+</script>
+        2022-08-24 21:48:52.973 [main] INFO  com.sika.code.demo.interfaces.common.batch.UpdateBatchMethod - 组装后的sql为:<script>
+UPDATE lf_user SET create_by CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.createBy}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN create_by
+        </otherwise>
+    </choose>
+</foreach>
+END,
+update_by CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.updateBy}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN update_by
+        </otherwise>
+    </choose>
+</foreach>
+END,
+username CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.username}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN username
+        </otherwise>
+    </choose>
+</foreach>
+END,
+password CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.password}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN password
+        </otherwise>
+    </choose>
+</foreach>
+END,
+oauth_pwd CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.oauthPwd}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN oauth_pwd
+        </otherwise>
+    </choose>
+</foreach>
+END,
+nickname CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.nickname}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN nickname
+        </otherwise>
+    </choose>
+</foreach>
+END,
+sex CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.sex}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN sex
+        </otherwise>
+    </choose>
+</foreach>
+END,
+phone CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.phone}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN phone
+        </otherwise>
+    </choose>
+</foreach>
+END,
+email CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.email}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN email
+        </otherwise>
+    </choose>
+</foreach>
+END,
+avatar CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.avatar}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN avatar
+        </otherwise>
+    </choose>
+</foreach>
+END,
+province_code CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.provinceCode}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN province_code
+        </otherwise>
+    </choose>
+</foreach>
+END,
+token CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.token}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN token
+        </otherwise>
+    </choose>
+</foreach>
+END,
+type CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.type}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN type
+        </otherwise>
+    </choose>
+</foreach>
+END,
+city_code CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.cityCode}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN city_code
+        </otherwise>
+    </choose>
+</foreach>
+END,
+county_code CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.countyCode}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN county_code
+        </otherwise>
+    </choose>
+</foreach>
+END,
+address CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.address}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN address
+        </otherwise>
+    </choose>
+</foreach>
+END,
+deleted CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.deleted}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN deleted
+        </otherwise>
+    </choose>
+</foreach>
+END,
+create_date CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.createDate}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN create_date
+        </otherwise>
+    </choose>
+</foreach>
+END,
+update_date CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.updateDate}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN update_date
+        </otherwise>
+    </choose>
+</foreach>
+END,
+version CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.version}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN version
+        </otherwise>
+    </choose>
+</foreach>
+END,
+available CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.available}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN available
+        </otherwise>
+    </choose>
+</foreach>
+END,
+is_deleted CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.isDeleted}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN is_deleted
+        </otherwise>
+    </choose>
+</foreach>
+END,
+remark CASE id
+<foreach collection="list" item="item" index="index">
+    <choose>
+        <when test="item.id != null">
+            WHEN #{item.id} THEN #{item.remark}
+        </when>
+        <otherwise>
+            WHEN #{item.id} THEN remark
+        </otherwise>
+    </choose>
+</foreach>
+END
+<where>id IN
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+        #{item.id}
+    </foreach>
+</where>
+</update>

@@ -1,0 +1,3 @@
+#if( $starter.projName && $!starter.projName != '' )
+app.id=$starter.projName
+#end

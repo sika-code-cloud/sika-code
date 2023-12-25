@@ -1,0 +1,48 @@
+package ${packageName}.dao.mapper;
+
+import ${packageName}.dao.entity.${ClassName};
+import ${packageName}.dao.mapper.${ClassName}Mapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import com.sika.base.test.testng.MapperTest;
+import java.util.List;
+
+import static org.testng.Assert.*;
+
+@ContextConfiguration(classes = BaseMockTestConfig.class)
+@MapperScan(basePackages = "${packageName}.dao")
+@Sql(scripts = "/ddl/ddl.sql")
+public class ${ClassName}MapperTest extends MapperTest {
+
+    @Autowired
+    ${ClassName}Mapper ${className}Mapper;
+
+    @BeforeTest
+    public void start(){
+    }
+
+    @Test
+    void testInsert(){
+
+        ${ClassName} ${className} = new ${ClassName}();
+        #foreach ($column in $columns)
+        #if( $column.javaType == "String" )
+            #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+                #set($AttrName=$column.javaField)
+            #else
+                #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+            #end
+        ${className}.set${AttrName}("demoValue");
+            #break
+        #end
+        #end
+        ${className}Mapper.insert(${className});
+    }
+}

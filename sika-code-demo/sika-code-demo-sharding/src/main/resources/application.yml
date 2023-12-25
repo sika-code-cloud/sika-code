@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: sika-sharding-sphere-plus-demo
+  profiles:
+    active: develop
+management:
+  server:
+    port: 39090
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health
+      base-path: /actuator
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            percentilesHistogram: false
+            percentiles: 0.50, 0.90, 0.95, 0.99
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      probes:
+        enabled: true

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sika-code-demo-infrastructure</artifactId>
+        <groupId>io.github.sika-code-cloud</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sika-code-demo-infrastructure-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.sika-code-cloud</groupId>
+            <artifactId>sika-code-core</artifactId>
+            <version>${sika-code.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-spring-boot-starter</artifactId>
+            <version>${liteflow.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hutool-core</artifactId>
+                    <groupId>cn.hutool</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.sika-code-cloud</groupId>
+            <artifactId>sika-code-monitor-starter</artifactId>
+            <version>${sika-code.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hippo4j</groupId>
+            <artifactId>hippo4j-config-spring-boot-starter</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dromara.dynamictp</groupId>
+            <artifactId>dynamic-tp-core</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.sika-code-cloud</groupId>
+            <artifactId>sika-code-db-sharding-core</artifactId>
+            <version>${sika-code.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

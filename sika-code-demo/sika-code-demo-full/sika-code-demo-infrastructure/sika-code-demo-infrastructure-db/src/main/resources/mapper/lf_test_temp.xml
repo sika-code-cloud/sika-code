@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.demo.infrastructure.db.business.testtemp.mapper.TestTempMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.demo.infrastructure.db.business.testtemp.po.TestTempPO">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="version" property="version" />
+        <result column="available" property="available" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="test_no" property="testNo" />
+        <result column="test_name" property="testName" />
+        <result column="record_date" property="recordDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Column_List">
+        id, create_by, update_by, create_date, update_date, version, available, is_deleted, remark, test_no, test_name, record_date
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="list" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取Id列表信息 -->
+    <select id="listId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT id
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="find" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取表id -->
+    <select id="findId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT id
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="page" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        <include refid="order_by_sql"/>
+        LIMIT #{query.start}, #{query.pageSize}
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="count" resultType="Integer" parameterType="com.sika.code.demo.infrastructure.business.testtemp.pojo.query.TestTempQuery" >
+        SELECT count(*)
+        FROM lf_test_temp
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql" >
+        <if test="query.id != null">AND id = #{query.id}</if>
+        <if test="query.createBy != null">AND create_by = #{query.createBy}</if>
+        <if test="query.updateBy != null">AND update_by = #{query.updateBy}</if>
+        <if test="query.createDate != null">AND create_date = #{query.createDate}</if>
+        <if test="query.updateDate != null">AND update_date = #{query.updateDate}</if>
+        <if test="query.version != null">AND version = #{query.version}</if>
+        <if test="query.available != null">AND available = #{query.available}</if>
+        <if test="query.isDeleted != null">AND is_deleted = #{query.isDeleted}</if>
+        <if test="query.remark != null">AND remark = #{query.remark}</if>
+        <if test="query.testNo != null">AND test_no = #{query.testNo}</if>
+        <if test="query.testName != null">AND test_name = #{query.testName}</if>
+        <if test="query.recordDate != null">AND record_date = #{query.recordDate}</if>
+        <if test="query.ids != null and query.ids.size() > 0">
+            AND id in
+            <foreach item="item" collection="query.ids" separator="," open="(" close=")" index="">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null" >
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'testTempId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

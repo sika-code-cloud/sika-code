@@ -1,0 +1,37 @@
+package ${packageName}.manager.${className};
+
+import ${packageName}.manager.${className}.bo.${ClassName}BO;
+import ${packageName}.manager.${className}.repository.I${ClassName}Repository;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.stereotype.Repository;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import com.sika.base.test.testng.MapperTest;
+
+import static org.testng.Assert.*;
+
+@ContextConfiguration(classes = BaseMockTestConfig.class)
+@MapperScan(basePackages = "${packageName}.dao")
+@Sql(scripts = "/ddl/ddl.sql")
+public class ${ClassName}RepositoryTest extends MapperTest {
+
+    @Autowired
+    I${ClassName}Repository ${className}Repository;
+
+    @BeforeTest
+    public void start(){
+    }
+
+    @Test
+    void testInsert(){
+        ${ClassName}BO ${className} = new ${ClassName}BO();
+        ${className}Repository.insert(${className});
+    }
+}

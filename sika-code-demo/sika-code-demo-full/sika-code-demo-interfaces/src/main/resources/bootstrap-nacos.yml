@@ -1,0 +1,85 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: sika-code-demo
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: nacos.sikacode.com:80
+        username: nacos
+        password: daiqi123
+        namespace: test
+      config:
+        # 配置所属命名空间的id,此处我们配置名称为dev的id，可以在命名空间列表查看id的值
+        namespace: cf24c49b-f0c0-4034-9531-3c158f6493fc
+        # 配置所属分组
+#        group: DEFAULT_GROUP
+        # 配置ID
+        #    data-ids: sharding.yaml,test.yaml,sharding.yaml
+#        name: tempdev
+        # 配置文件类型,对应nacos配置页面的配置格式，默认是properties
+        # nacos服务器地址
+        server-addr: nacos.sikacode.com:80
+        username: nacos
+        password: daiqi123
+        # 开启自动刷新nacos配置
+        # 针对配置项同名的情况，是否允许nacos的配置覆盖本地的配置
+        file-extension: yaml
+        refresh-enabled: true
+        enable-remote-sync-config: true
+      #        cluster-name: test1,application,sharding
+        extension-configs: # 配置多个配置文件 数组形式
+          - data-id: test1.yaml # 配置 id，必须要加文件后缀
+            group: DEFAULT_GROUP # 组别
+            refresh: true # 是否支持刷新
+          - data-id: sharding-temp.yaml # 配置 id，必须要加文件后缀
+            group: DEFAULT_GROUP # 组别
+            refresh: true # 是否支持刷新
+#          - data-id: sharding
+#            group: DEFAULT_GROUP
+#            refresh: true
+          - data-id: application.yaml # 配置 id，必须要加文件后缀
+            group: DEFAULT_GROUP # 组别
+            refresh: true # 是否支持刷新
+
+
+
+#nacos:
+#  config:
+#    bootstrap:
+#      #开启系统启动时预读取nacos的配置，用于满足@Value注入数据的场景
+#      enable: true
+#    #      logEnable: true
+#    # 配置所属命名空间的id,此处我们配置名称为dev的id，可以在命名空间列表查看id的值
+#    namespace: 79346132-2155-4d98-a3b4-ccd85e59ba61
+#    ext-config: # 配置多个配置文件 数组形式
+#      - data-id: application.yml # 配置 id，必须要加文件后缀
+#        group: DEFAULT_GROUP # 组别
+#        auto-refresh: true # 是否支持刷新
+#        type: yaml
+#      - data-id: test.yaml # 配置 id，必须要加文件后缀
+#        group: DEFAULT_GROUP # 组别
+#        auto-refresh: true # 是否支持刷新
+#        type: yaml
+#      - data-id: sharding.yaml
+#        group: DEFAULT_GROUP
+#        auto-refresh: true
+#        type: yaml
+#    # 配置所属分组
+#    group: DEFAULT_GROUP
+#    # 配置ID
+#    #    data-ids: sharding.yaml,test.yaml,sharding.yaml
+#    data-id: test
+#    # 配置文件类型,对应nacos配置页面的配置格式，默认是properties
+#    type: yaml
+#    # nacos服务器地址
+#    server-addr: nacos.sikacode.com
+#    username: nacos
+#    password: daiqi123
+#    # 开启自动刷新nacos配置
+#    auto-refresh: true
+#    # 针对配置项同名的情况，是否允许nacos的配置覆盖本地的配置
+#    remote-first: true

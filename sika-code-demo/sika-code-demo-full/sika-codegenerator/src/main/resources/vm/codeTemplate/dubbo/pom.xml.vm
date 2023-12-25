@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.sika.base</groupId>
+        <artifactId>sika-service-framework</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>$starter.groupId</groupId>
+    <artifactId>$starter.artifactId</artifactId>
+    <version>$starter.version</version>
+    <description>$starter.projDesc</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>api</module>
+        <module>common</module>
+        <module>app</module>
+        <module>service</module>
+        <module>manager</module>
+        <module>dao</module>
+        <module>starter</module>
+    </modules>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>${starter.artifactId}-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>$starter.groupId</groupId>
+                <artifactId>manager</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <dependencies>
+        #foreach ($jar in $starter.jars)
+           #if( !$jar.fromParent )
+               <dependency>
+                   <groupId>$jar.groupId</groupId>
+                   <artifactId>$jar.artifactId</artifactId>
+               </dependency>
+           #end
+        #end
+    </dependencies>
+
+
+</project>

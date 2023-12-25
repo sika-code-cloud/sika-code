@@ -1,0 +1,49 @@
+package ${packageName}.manager.${className}.repository.impl;
+
+    #if($table.tree)
+    import java.util.ArrayList;
+    import common.core.domain.Ztree;
+    #end
+    #foreach ($column in $columns)
+        #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
+            #break
+        #end
+    #end
+
+import com.sika.common.dao.mapper.BaseMapper;
+import ${packageName}.dao.entity.${ClassName};
+import ${packageName}.manager.convert.${ClassName}BeanMapper;
+import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import ${packageName}.dao.mapper.${ClassName}Mapper;
+import ${packageName}.manager.${className}.bo.${ClassName}BO;
+import ${packageName}.manager.${className}.repository.I${ClassName}Repository;
+import com.sika.common.dao.repository.AbstractBaseRepository;
+import com.sika.common.core.convert.CommonBoEntityMapper;
+
+/**
+ * ${className}Repository业务层处理
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+
+@Repository
+public class ${ClassName}RepositoryImpl extends AbstractBaseRepository<${ClassName}BO,${ClassName},${pkColumn.javaType}> implements I${ClassName}Repository
+{
+
+    @Autowired
+    ${ClassName}Mapper ${className}Mapper;
+
+    @Override
+    public CommonBoEntityMapper<${ClassName}BO, ${ClassName}> getCommonBoEntityMapper() {
+        return Mappers.getMapper(${ClassName}BeanMapper.class);
+    }
+
+    @Override
+    public BaseMapper<${ClassName}, ${pkColumn.javaType}> getMapper() {
+        return  ${className}Mapper;
+    }
+}

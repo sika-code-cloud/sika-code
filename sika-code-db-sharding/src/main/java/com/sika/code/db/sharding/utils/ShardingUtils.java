@@ -1,6 +1,7 @@
 package com.sika.code.db.sharding.utils;
 
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -14,14 +15,7 @@ import org.apache.shardingsphere.infra.util.expr.InlineExpressionParser;
 import org.apache.shardingsphere.sharding.api.sharding.ShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -121,8 +115,9 @@ public final class ShardingUtils {
 
     public static Map<String, BaseShardingValueAlgorithm> getColumnValueAlgorithmMap(Properties props) {
         String valueAlgorithmsProp = props.getProperty(AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
-        Preconditions.checkNotNull(valueAlgorithmsProp, ShardingUtils.NOT_NULL_MESSAGE_TEMPLATE,
-            AlgorithmPropertiesConstants.SHARDING_VALUE_ALGORITHM);
+        if (StrUtil.isBlank(valueAlgorithmsProp)) {
+            return Maps.newHashMap();
+        }
 
         Map<String, String> valueAlgorithmMap = yamlMapPropToMap(valueAlgorithmsProp);
 

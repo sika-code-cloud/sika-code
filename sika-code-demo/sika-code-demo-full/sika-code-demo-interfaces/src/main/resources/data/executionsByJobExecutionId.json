@@ -1,0 +1,329 @@
+{
+  0: {
+    1: {
+      "commitCount": 7,
+      "endTime": 1654316462426,
+      "executionContext": {
+        "dirty": true,
+        "empty": false
+      },
+      "exitStatus": {
+        "exitCode": "COMPLETED",
+        "exitDescription": "",
+        "running": false
+      },
+      "filterCount": 0,
+      "id": 1,
+      "jobExecution": {
+        "allFailureExceptions": [],
+        "createTime": 1654316460510,
+        "endTime": 1654316462439,
+        "executionContext": {
+          "dirty": false,
+          "empty": true
+        },
+        "exitStatus": {
+          "$ref": "$.0.1.exitStatus"
+        },
+        "id": 0,
+        "jobId": 0,
+        "jobInstance": {
+          "id": 0,
+          "instanceId": 0,
+          "jobName": "testJob",
+          "version": 0
+        },
+        "jobParameters": {
+          "empty": false,
+          "parameters": {
+            "jobDate": {
+              "identifying": true,
+              "type": "DATE",
+              "value": 1654316459467
+            },
+            "jobId": {
+              "identifying": true,
+              "type": "STRING",
+              "value": "629addac802d211f5b442b94"
+            }
+          }
+        },
+        "lastUpdated": 1654316462464,
+        "running": false,
+        "startTime": 1654316460590,
+        "status": "COMPLETED",
+        "stepExecutions": [{
+          "commitCount": 7,
+          "endTime": 1654316462426,
+          "executionContext": {
+            "$ref": "$.0.1.executionContext"
+          },
+          "exitStatus": {
+            "$ref": "$.0.1.exitStatus"
+          },
+          "filterCount": 0,
+          "id": 1,
+          "jobExecution": {
+            "$ref": "$.0.1.jobExecution"
+          },
+          "jobExecutionId": 0,
+          "jobParameters": {
+            "$ref": "$.0.1.jobExecution.jobParameters"
+          },
+          "lastUpdated": 1654316462436,
+          "processSkipCount": 0,
+          "readCount": 100000,
+          "readSkipCount": 0,
+          "rollbackCount": 0,
+          "skipCount": 0,
+          "startTime": 1654316460937,
+          "status": "COMPLETED",
+          "stepName": "testStep",
+          "summary": "StepExecution: id=1, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+          "terminateOnly": false,
+          "version": 9,
+          "writeCount": 100000,
+          "writeSkipCount": 0
+        }],
+        "stopping": false,
+        "version": 2
+      },
+      "jobExecutionId": 0,
+      "jobParameters": {
+        "$ref": "$.0.1.jobExecution.jobParameters"
+      },
+      "lastUpdated": 1654316462436,
+      "processSkipCount": 0,
+      "readCount": 100000,
+      "readSkipCount": 0,
+      "rollbackCount": 0,
+      "skipCount": 0,
+      "startTime": 1654316460937,
+      "status": "COMPLETED",
+      "stepName": "testStep",
+      "summary": "StepExecution: id=1, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+      "terminateOnly": false,
+      "version": 9,
+      "writeCount": 100000,
+      "writeSkipCount": 0
+    }
+  },
+  1: {
+    2: {
+      "commitCount": 7,
+      "endTime": 1654316567373,
+      "executionContext": {
+        "dirty": true,
+        "empty": false
+      },
+      "exitStatus": {
+        "exitCode": "COMPLETED",
+        "exitDescription": "",
+        "running": false
+      },
+      "filterCount": 0,
+      "id": 2,
+      "jobExecution": {
+        "allFailureExceptions": [],
+        "createTime": 1654316560391,
+        "endTime": 1654316567375,
+        "executionContext": {
+          "dirty": false,
+          "empty": true
+        },
+        "exitStatus": {
+          "$ref": "$.1.2.exitStatus"
+        },
+        "id": 1,
+        "jobId": 1,
+        "jobInstance": {
+          "id": 1,
+          "instanceId": 1,
+          "jobName": "testJob",
+          "version": 0
+        },
+        "jobParameters": {
+          "empty": false,
+          "parameters": {
+            "jobDate": {
+              "identifying": true,
+              "type": "DATE",
+              "value": 1654316560390
+            },
+            "jobId": {
+              "identifying": true,
+              "type": "STRING",
+              "value": "629ade10802d211f5b442b95"
+            }
+          }
+        },
+        "lastUpdated": 1654316567379,
+        "running": false,
+        "startTime": 1654316560393,
+        "status": "COMPLETED",
+        "stepExecutions": [{
+          "commitCount": 7,
+          "endTime": 1654316567373,
+          "executionContext": {
+            "$ref": "$.1.2.executionContext"
+          },
+          "exitStatus": {
+            "$ref": "$.1.2.exitStatus"
+          },
+          "filterCount": 0,
+          "id": 2,
+          "jobExecution": {
+            "$ref": "$.1.2.jobExecution"
+          },
+          "jobExecutionId": 1,
+          "jobParameters": {
+            "$ref": "$.1.2.jobExecution.jobParameters"
+          },
+          "lastUpdated": 1654316567374,
+          "processSkipCount": 0,
+          "readCount": 100000,
+          "readSkipCount": 0,
+          "rollbackCount": 0,
+          "skipCount": 0,
+          "startTime": 1654316560396,
+          "status": "COMPLETED",
+          "stepName": "testStep",
+          "summary": "StepExecution: id=2, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+          "terminateOnly": false,
+          "version": 9,
+          "writeCount": 100000,
+          "writeSkipCount": 0
+        }],
+        "stopping": false,
+        "version": 2
+      },
+      "jobExecutionId": 1,
+      "jobParameters": {
+        "$ref": "$.1.2.jobExecution.jobParameters"
+      },
+      "lastUpdated": 1654316567374,
+      "processSkipCount": 0,
+      "readCount": 100000,
+      "readSkipCount": 0,
+      "rollbackCount": 0,
+      "skipCount": 0,
+      "startTime": 1654316560396,
+      "status": "COMPLETED",
+      "stepName": "testStep",
+      "summary": "StepExecution: id=2, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+      "terminateOnly": false,
+      "version": 9,
+      "writeCount": 100000,
+      "writeSkipCount": 0
+    }
+  },
+  2: {
+    3: {
+      "commitCount": 7,
+      "endTime": 1654316595471,
+      "executionContext": {
+        "dirty": true,
+        "empty": false
+      },
+      "exitStatus": {
+        "exitCode": "COMPLETED",
+        "exitDescription": "",
+        "running": false
+      },
+      "filterCount": 0,
+      "id": 3,
+      "jobExecution": {
+        "allFailureExceptions": [],
+        "createTime": 1654316580946,
+        "endTime": 1654316595472,
+        "executionContext": {
+          "dirty": false,
+          "empty": true
+        },
+        "exitStatus": {
+          "$ref": "$.2.3.exitStatus"
+        },
+        "id": 2,
+        "jobId": 2,
+        "jobInstance": {
+          "id": 2,
+          "instanceId": 2,
+          "jobName": "testJob",
+          "version": 0
+        },
+        "jobParameters": {
+          "empty": false,
+          "parameters": {
+            "jobDate": {
+              "identifying": true,
+              "type": "DATE",
+              "value": 1654316580945
+            },
+            "jobId": {
+              "identifying": true,
+              "type": "STRING",
+              "value": "629ade24802d211f5b442b96"
+            }
+          }
+        },
+        "lastUpdated": 1654316580948,
+        "running": false,
+        "startTime": 1654316580947,
+        "status": "COMPLETED",
+        "stepExecutions": [{
+          "commitCount": 7,
+          "endTime": 1654316595471,
+          "executionContext": {
+            "$ref": "$.2.3.executionContext"
+          },
+          "exitStatus": {
+            "$ref": "$.2.3.exitStatus"
+          },
+          "filterCount": 0,
+          "id": 3,
+          "jobExecution": {
+            "$ref": "$.2.3.jobExecution"
+          },
+          "jobExecutionId": 2,
+          "jobParameters": {
+            "$ref": "$.2.3.jobExecution.jobParameters"
+          },
+          "lastUpdated": 1654316595471,
+          "processSkipCount": 0,
+          "readCount": 100000,
+          "readSkipCount": 0,
+          "rollbackCount": 0,
+          "skipCount": 0,
+          "startTime": 1654316580952,
+          "status": "COMPLETED",
+          "stepName": "testStep",
+          "summary": "StepExecution: id=3, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+          "terminateOnly": false,
+          "version": 9,
+          "writeCount": 100000,
+          "writeSkipCount": 0
+        }],
+        "stopping": false,
+        "version": 1
+      },
+      "jobExecutionId": 2,
+      "jobParameters": {
+        "$ref": "$.2.3.jobExecution.jobParameters"
+      },
+      "lastUpdated": 1654316595471,
+      "processSkipCount": 0,
+      "readCount": 100000,
+      "readSkipCount": 0,
+      "rollbackCount": 0,
+      "skipCount": 0,
+      "startTime": 1654316580952,
+      "status": "COMPLETED",
+      "stepName": "testStep",
+      "summary": "StepExecution: id=3, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+      "terminateOnly": false,
+      "version": 9,
+      "writeCount": 100000,
+      "writeSkipCount": 0
+    }
+  }
+}

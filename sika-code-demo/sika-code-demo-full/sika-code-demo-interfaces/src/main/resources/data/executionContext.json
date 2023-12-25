@@ -1,0 +1,176 @@
+{
+{}: {
+"dirty": false,
+"empty": true
+}, {}: {
+"dirty": true,
+"empty": false
+}, {}: {
+"dirty": false,
+"empty": true
+}, {}: {
+"dirty": true,
+"empty": false
+}, {}: {
+"dirty": false,
+"empty": true
+}, {}: {
+"dirty": true,
+"empty": false
+}
+}
+[{
+"commitCount": 7,
+"endTime": 1654317665291,
+"executionContext": {
+"dirty": true,
+"empty": false
+},
+"exitStatus": {
+"exitCode": "COMPLETED",
+"exitDescription": "",
+"running": false
+},
+"filterCount": 0,
+"id": 1,
+"jobExecution": {
+"allFailureExceptions": [],
+"createTime": 1654317658489,
+"endTime": 1654317665302,
+"executionContext": {
+"dirty": false,
+"empty": true
+},
+"exitStatus": {
+"$ref": "$[0].exitStatus"
+},
+"id": 0,
+"jobId": 0,
+"jobInstance": {
+"id": 0,
+"instanceId": 0,
+"jobName": "testJob",
+"version": 0
+},
+"jobParameters": {
+"empty": false,
+"parameters": {
+"jobDate": {
+"identifying": true,
+"type": "DATE",
+"value": 1654317657786
+},
+"jobId": {
+"identifying": true,
+"type": "STRING",
+"value": "629ae25a802dfe83c2c1c816"
+}
+}
+},
+"lastUpdated": 1654317658563,
+"running": false,
+"startTime": 1654317658563,
+"status": "COMPLETED",
+"stepExecutions": [{
+"$ref": "$[0]"
+}],
+"stopping": false,
+"version": 1
+},
+"jobExecutionId": 0,
+"jobParameters": {
+"$ref": "$[0].jobExecution.jobParameters"
+},
+"lastUpdated": 1654317665299,
+"processSkipCount": 0,
+"readCount": 100000,
+"readSkipCount": 0,
+"rollbackCount": 0,
+"skipCount": 0,
+"startTime": 1654317658859,
+"status": "COMPLETED",
+"stepName": "testStep",
+"summary": "StepExecution: id=1, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+"terminateOnly": false,
+"version": 9,
+"writeCount": 100000,
+"writeSkipCount": 0
+}]
+
+[{
+"commitCount": 7,
+"endTime": 1654317699023,
+"executionContext": {
+"dirty": true,
+"empty": false
+},
+"exitStatus": {
+"exitCode": "COMPLETED",
+"exitDescription": "",
+"running": false
+},
+"filterCount": 0,
+"id": 2,
+"jobExecution": {
+"allFailureExceptions": [],
+"createTime": 1654317690409,
+"endTime": 1654317699024,
+"executionContext": {
+"dirty": false,
+"empty": true
+},
+"exitStatus": {
+"$ref": "$[0].exitStatus"
+},
+"id": 1,
+"jobId": 1,
+"jobInstance": {
+"id": 1,
+"instanceId": 1,
+"jobName": "testJob",
+"version": 0
+},
+"jobParameters": {
+"empty": false,
+"parameters": {
+"jobDate": {
+"identifying": true,
+"type": "DATE",
+"value": 1654317690409
+},
+"jobId": {
+"identifying": true,
+"type": "STRING",
+"value": "629ae27a802dfe83c2c1c817"
+}
+}
+},
+"lastUpdated": 1654317690412,
+"running": false,
+"startTime": 1654317690412,
+"status": "COMPLETED",
+"stepExecutions": [{
+"$ref": "$[0]"
+}],
+"stopping": false,
+"version": 1
+},
+"jobExecutionId": 1,
+"jobParameters": {
+"$ref": "$[0].jobExecution.jobParameters"
+},
+"lastUpdated": 1654317699023,
+"processSkipCount": 0,
+"readCount": 100000,
+"readSkipCount": 0,
+"rollbackCount": 0,
+"skipCount": 0,
+"startTime": 1654317690415,
+"status": "COMPLETED",
+"stepName": "testStep",
+"summary": "StepExecution: id=2, version=9, name=testStep, status=COMPLETED, exitStatus=COMPLETED, readCount=100000, filterCount=0, writeCount=100000 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=7, rollbackCount=0",
+"terminateOnly": false,
+"version": 9,
+"writeCount": 100000,
+"writeSkipCount": 0
+}]

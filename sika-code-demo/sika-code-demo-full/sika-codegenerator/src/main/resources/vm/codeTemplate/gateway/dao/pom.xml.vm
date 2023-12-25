@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>$starter.groupId</groupId>
+        <artifactId>$starter.artifactId</artifactId>
+        <version>$starter.version</version>
+    </parent>
+
+    <version>$starter.version</version>
+    <artifactId>dao</artifactId>
+    <packaging>jar</packaging>
+    <description>数据库操作</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>$starter.groupId</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

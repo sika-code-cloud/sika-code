@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sika.base</groupId>
+    <artifactId>sika-base</artifactId>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+
+    <name>${project.artifactId}</name>
+    <url>https://git.eptok.com/sika_base_frame/sika-base.git</url>
+    <description>系统重构基础框架</description>
+
+    <modules>
+        <module>sika-base-common</module>
+        <module>sika-api-framework</module>
+        <module>sika-service-framework</module>
+        <module>sika-web-framework</module>
+        <module>sika-base-common/sika-common-sharding</module>
+    </modules>
+
+    <properties>
+        <revision>1.0-SNAPSHOT</revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-surefire-com.sika.code.db.sharding.core.plugin.version>3.0.0-M5</maven-surefire-com.sika.code.db.sharding.core.plugin.version>
+        <maven-compiler-com.sika.code.db.sharding.core.plugin.version>3.8.1</maven-compiler-com.sika.code.db.sharding.core.plugin.version>
+        <flatten-maven-com.sika.code.db.sharding.core.plugin.version>1.3.0</flatten-maven-com.sika.code.db.sharding.core.plugin.version>
+        <spring-boot.version>2.6.11</spring-boot.version>
+        <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
+        <mybatis-test.version>2.2.2</mybatis-test.version>
+        <mybatis.pagehelper.version>5.3.2</mybatis.pagehelper.version>
+        <postgresql.version>42.2.22</postgresql.version>
+        <druid.version>1.2.8</druid.version>
+        <shardingsphere.version>5.2.1</shardingsphere.version>
+        <redisson.version>3.17.1</redisson.version>
+        <lock4j.version>2.2.2</lock4j.version>
+        <dubbo.version>2.7.18</dubbo.version>
+        <!--dubbo rest 需要依赖的ws相关jar version -->
+        <dubbo.rest.version>3.15.1.Final</dubbo.rest.version>
+        <jetty.version>9.4.43.v20210629</jetty.version>
+        <zookeeper.version>3.4.9</zookeeper.version>
+        <!-- zookeeper 客户端 -->
+        <curator.version>2.10.0</curator.version>
+        <curator.framework.version>2.10.0</curator.framework.version>
+        <curator.recipes.version>2.10.0</curator.recipes.version>
+        <!-- rocketmq springstater 2.2.0依赖roceketmq 4.8.0-->
+        <spring-boot.rocketmq>2.2.0</spring-boot.rocketmq>
+        <rocketmq.version>4.8.0</rocketmq.version>
+        <apollo-client.version>1.9.0</apollo-client.version>
+        <httpclient.version>5.1.3</httpclient.version>
+        <jackson.version>2.13.4</jackson.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <bouncycastle.version>1.70</bouncycastle.version>
+        <guava.version>19.0</guava.version>
+        <caffeine.version>2.9.3</caffeine.version>
+        <mockito-inline.version>4.8.0</mockito-inline.version>
+        <springdoc.version>1.6.11</springdoc.version>
+        <transmittable.version>2.14.2</transmittable.version>
+        <sentinel.version>1.8.6</sentinel.version>
+        <org.apache.commons.version>3.8.1</org.apache.commons.version>
+        <apache-common-net.version>3.6</apache-common-net.version>
+        <apache-common-codec.version>1.15</apache-common-codec.version>
+        <cglib.version>3.3.0</cglib.version>
+        <disruptor.version>3.4.2</disruptor.version>
+        <jwt.version>4.0.0</jwt.version>
+        <poi.version>5.2.0</poi.version>
+        <netty.version>4.1.84.Final</netty.version>
+
+        <!-- 定时任务 -->
+        <elasticjob.starter.version>3.0.0</elasticjob.starter.version>
+        <elastic-job-lite.version>2.1.5</elastic-job-lite.version>
+
+        <!-- 监控 -->
+        <cat-client.version>3.0.0</cat-client.version>
+
+        <!--test 相关-->
+        <testng.version>6.9.10</testng.version>
+        <powermock-testng-module.version>2.0.9</powermock-testng-module.version>
+        <h2.version>2.0.202</h2.version>
+        <commons.crypto.version>1.1.0</commons.crypto.version>
+
+        <com.sika.code.db.sharding.core.plugin.smart-doc.version>2.2.7</com.sika.code.db.sharding.core.plugin.smart-doc.version>
+        <com.sika.code.db.sharding.core.plugin.source.version>3.0.0</com.sika.code.db.sharding.core.plugin.source.version>
+        <com.sika.code.db.sharding.core.plugin.compiler.version>3.6.0</com.sika.code.db.sharding.core.plugin.compiler.version>
+        <com.sika.code.db.sharding.core.plugin.jacoco.version>0.8.6</com.sika.code.db.sharding.core.plugin.jacoco.version>
+        <hikari.version>4.0.3</hikari.version>
+    </properties>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <!-- region spring-boot 配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!-- logging 相关配置,全局排除后引入 log4j2-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+                <version>${spring-boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- endregion spring-boot 配置 -->
+
+            <!-- region common -->
+            <!-- common core -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common config -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-config</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-validation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common util -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-com.sika.code.db.sharding.core.utils</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common dao -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-dao</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common log -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common cache -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common monitor -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-monitor</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- common job -->
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-job</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-limit</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-validation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.sika.base</groupId>
+                <artifactId>sika-common-test</artifactId>
+                <version>${revision}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- endregion common -->
+
+            <!-- 定时任务elastic job 2.1.5-->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-core</artifactId>
+                <version>${elastic-job-lite.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.curator</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-spring</artifactId>
+                <version>${elastic-job-lite.version}</version>
+            </dependency>
+
+            <!-- log2j4 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!-- log4j2 异步日志依赖 disruptor 实现-->
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
+
+            <!-- region 数据库 -->
+            <!-- postgresql 相关配置 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring-boot.mybatis}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.zaxxer</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- mybatis 分页查询-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${mybatis.pagehelper.version}</version>
+            </dependency>
+
+            <!-- mybatis test-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter-test</artifactId>
+                <version>${mybatis-test.version}</version>
+            </dependency>
+
+            <!-- postgresql 相关配置 -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- sharding jdbc -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-cluster-mode-repository-etcd</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+                <version>${shardingsphere.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.shardingsphere</groupId>
+                        <artifactId>shardingsphere-db-discovery-spring-boot-starter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.shardingsphere</groupId>
+                        <artifactId>shardingsphere-db-discovery-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.shardingsphere</groupId>
+                        <artifactId>shardingsphere-data-pipeline-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikari.version}</version>
+            </dependency>
+
+
+            <!-- endregion 数据库 -->
+
+            <!-- redisson 配置 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
+            </dependency>
+
+            <!-- Dubbo 配置 -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <!--      zk注册中心，采用curator客户端-->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-rpc-rest</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-reload4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.recipes.version}</version>
+            </dependency>
+
+            <!-- Rocketmq 配置 -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${spring-boot.rocketmq}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable.version}</version>
+            </dependency>
+
+
+            <!-- 本地缓存 配置 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>guava</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- mapstruct 配置 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- apollo 配置 -->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client-config-data</artifactId>
+                <version>${apollo-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${apollo-client.version}</version>
+            </dependency>
+
+            <!-- sentinel 配置 -->
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-apache-dubbo-adapter</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-datasource-apollo</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <!--流控控制台核心jar -->
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba</groupId>
+                        <artifactId>fastjson</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--com.sika.component.sentinel.sentinel Annotation AspectJ  扩展-->
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-parameter-flow-control</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <!-- api doc 配置 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!--org.apache.commons-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${org.apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>${apache-common-net.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${apache-common-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-crypto</artifactId>
+                <version>${commons.crypto.version}</version>
+            </dependency>
+
+            <!-- aop -->
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+
+            <!--cat-->
+            <dependency>
+                <groupId>com.dianping.cat</groupId>
+                <artifactId>cat-client</artifactId>
+                <version>${cat-client.version}</version>
+            </dependency>
+            <!-- excel 相关-->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!-- Test 配置 -->
+            <!-- testng-->
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-inline</artifactId>
+                <version>${mockito-inline.version}</version>
+            </dependency>
+
+            <!-- powermock -->
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-testng</artifactId>
+                <version>${powermock-testng-module.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- JSON Web Token Support -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>asm</artifactId>
+                        <groupId>org.ow2.asm</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-core</artifactId>
+                    </exclusion>
+
+                    <!-- 排除 junit -->
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <com.sika.code.db.sharding.core.plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-com.sika.code.db.sharding.core.plugin</artifactId>
+                <version>${com.sika.code.db.sharding.core.plugin.jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </com.sika.code.db.sharding.core.plugin>
+
+            <com.sika.code.db.sharding.core.plugin>
+                <groupId>com.github.shalousun</groupId>
+                <artifactId>smart-doc-maven-com.sika.code.db.sharding.core.plugin</artifactId>
+                <version>${com.sika.code.db.sharding.core.plugin.smart-doc.version}</version>
+                <configuration>
+                    <configFile>./src/main/resources/smart-doc.json</configFile>
+                </configuration>
+            </com.sika.code.db.sharding.core.plugin>
+
+
+            <com.sika.code.db.sharding.core.plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-com.sika.code.db.sharding.core.plugin</artifactId>
+                <version>${com.sika.code.db.sharding.core.plugin.source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </com.sika.code.db.sharding.core.plugin>
+
+            <com.sika.code.db.sharding.core.plugin>
+                <artifactId>maven-compiler-com.sika.code.db.sharding.core.plugin</artifactId>
+                <version>${com.sika.code.db.sharding.core.plugin.compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <source>${java.version}</source>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </com.sika.code.db.sharding.core.plugin>
+
+
+            <com.sika.code.db.sharding.core.plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-com.sika.code.db.sharding.core.plugin</artifactId>
+                <version>${flatten-maven-com.sika.code.db.sharding.core.plugin.version}</version>
+                <configuration>
+                    <flattenedPomFilename>pom-xml-flattened</flattenedPomFilename>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </com.sika.code.db.sharding.core.plugin>
+        </plugins>
+    </build>
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://10.213.32.58:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://10.213.32.58:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
+
+</project>

@@ -1,0 +1,262 @@
+spring:
+  test:
+    database:
+      replace: none
+  shardingsphere:
+    datasource:
+      ds_0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: 'jdbc:mysql://121.89.202.68:3306/test_db_00?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true'
+        username: root
+        password: SikaDesignAdmin20201225
+        idle-timeout: 300000 # 该值建议小于max-lifetime
+        max-lifetime: 600000 # 该值建议小于数据库的连接关闭等待时间，详细的看下面分析
+        connection-timeout: 30000 # 默认30s，连接超时会报异常
+        # Connection is not avaitabte, request timed out after 59089ms
+        validation-timeout: 5000 # 支持JDBC4的是isValid超时时间，不支持的是testQuery超时时间
+        connection-test-query: 'SELECT 1' # 支持JDBC4的不建议使用，因为JDBC4的isValid方法效率更高
+        minimum-idle: 1
+        maximum-pool-size: '40'
+      ds_1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: 'jdbc:mysql://121.89.202.68:3306/test_db_01?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true'
+        username: root
+        password: SikaDesignAdmin20201225
+        idle-timeout: 300000 # 该值建议小于max-lifetime
+        max-lifetime: 600000 # 该值建议小于数据库的连接关闭等待时间，详细的看下面分析
+        connection-timeout: 30000 # 默认30s，连接超时会报异常
+        # Connection is not avaitabte, request timed out after 59089ms
+        validation-timeout: 5000 # 支持JDBC4的是isValid超时时间，不支持的是testQuery超时时间
+        connection-test-query: 'SELECT 1' # 支持JDBC4的不建议使用，因为JDBC4的isValid方法效率更高
+        minimum-idle: 1
+        maximum-pool-size: '40'
+      ds_2020:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: 'jdbc:mysql://121.89.202.68:3306/test_db_2020?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true'
+        username: root
+        password: SikaDesignAdmin20201225
+        idle-timeout: 300000 # 该值建议小于max-lifetime
+        max-lifetime: 600000 # 该值建议小于数据库的连接关闭等待时间，详细的看下面分析
+        connection-timeout: 30000 # 默认30s，连接超时会报异常
+        # Connection is not avaitabte, request timed out after 59089ms
+        validation-timeout: 5000 # 支持JDBC4的是isValid超时时间，不支持的是testQuery超时时间
+        connection-test-query: 'SELECT 1' # 支持JDBC4的不建议使用，因为JDBC4的isValid方法效率更高
+        minimum-idle: 1
+        maximum-pool-size: '40'
+      ds_2021:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: 'jdbc:mysql://121.89.202.68:3306/test_db_2021?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true'
+        username: root
+        password: SikaDesignAdmin20201225
+        idle-timeout: 300000 # 该值建议小于max-lifetime
+        max-lifetime: 600000 # 该值建议小于数据库的连接关闭等待时间，详细的看下面分析
+        connection-timeout: 30000 # 默认30s，连接超时会报异常
+        # Connection is not avaitabte, request timed out after 59089ms
+        validation-timeout: 5000 # 支持JDBC4的是isValid超时时间，不支持的是testQuery超时时间
+        connection-test-query: 'SELECT 1' # 支持JDBC4的不建议使用，因为JDBC4的isValid方法效率更高        minimum-idle: 1
+        maximum-pool-size: '40'
+      ds_2022:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: 'jdbc:mysql://121.89.202.68:3306/test_db_2022?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true'
+        username: root
+        password: SikaDesignAdmin20201225
+        idle-timeout: 300000 # 该值建议小于max-lifetime
+        max-lifetime: 600000 # 该值建议小于数据库的连接关闭等待时间，详细的看下面分析
+        connection-timeout: 30000 # 默认30s，连接超时会报异常
+        # Connection is not avaitabte, request timed out after 59089ms
+        validation-timeout: 5000 # 支持JDBC4的是isValid超时时间，不支持的是testQuery超时时间
+        connection-test-query: 'SELECT 1' # 支持JDBC4的不建议使用，因为JDBC4的isValid方法效率更高
+        minimum-idle: 1
+        maximum-pool-size: '40'
+      names: 'ds_${0..1},ds_${2020..2022}'
+    rules:
+      sharding:
+        auditors:
+          sharding_key_required_auditor:
+            type: DML_SHARDING_CONDITIONS
+        sharding-algorithms:
+          t-interval-year:
+            type: INTERVAL
+            props:
+              datetime-pattern: 'yyyy'  # 分片字段格式
+              datetime-lower: '2020'  # 范围下限
+              datetime-upper: '2022'  # 范围上限
+              sharding-suffix-pattern: 'yyyy'  # 分片名后缀，可以是yyyy等。
+              datetime-interval-amount: 1  # 分片间隔，这里指一年
+              datetime-interval-unit: 'YEARS' # 分片间隔单位
+          t-interval-year-month:
+            type: INTERVAL
+            props:
+              datetime-pattern: 'yyyyMM'  # 分片字段格式
+              datetime-lower: '202001'  # 范围下限
+              datetime-upper: '202212'  # 范围上限
+              sharding-suffix-pattern: 'MM'  # 分片名后缀，可以是MM等。
+              datetime-interval-amount: 1  # 分片间隔，这里指一个月
+              datetime-interval-unit: 'MONTHS' # 分片间隔单位
+          t-interval-year-week:
+            type: AUTO_INTERVAL_PLUS
+            props:
+              sharding-seconds: '604800'  # 分片的秒数
+              datetime-lower: '2020-01-01 00:00:00'  # 范围下限
+              datetime-upper: '2022-12-31 00:00:00'  # 范围上限
+              datetime-lower-mode: 20
+              start-index: 1
+          t-interval-year-day:
+            type: INTERVAL
+            props:
+              datetime-pattern: 'yyyyMMdd'  # 分片字段格式
+              datetime-lower: '20200101'  # 范围下限
+              datetime-upper: '20221231'  # 范围上限
+              sharding-suffix-pattern: 'MMdd'  # 分片名后缀，可以是MM等。
+              datetime-interval-amount: 1  # 分片间隔，这里指一天
+              datetime-interval-unit: 'DAYS' # 分片间隔单位-天
+          t-twice-hash-cmpx-mod-datasource:
+            type: TWICE_HASH_MOD_DATASOURCE
+            props:
+              #              table-to-datasource-mapping: 'ds0.${0..4095}'
+              table-to-datasource-mapping: 'ds_${0}.${0..7},ds_${1}.${8..15}'
+              hot-customer-datasource: ''
+              all-table-sequences: '${0..15}'
+              datasource-mod-number: '16'
+              table-mod-number: '16'
+              sharding-value-algorithms:
+                twice_hash_cmpx_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxNoAlgorithm
+                twice_hash_cmpx_r_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxRNoAlgorithm
+          t-twice-hash-cmpx-mod-table:
+            type: TWICE_HASH_MOD_TABLE
+            props:
+              hot-customer-table: ''
+              all-table-sequences: '${0..15}'
+              table-mod-number: '16'
+              sharding-value-algorithms:
+                twice_hash_cmpx_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxNoAlgorithm
+                twice_hash_cmpx_r_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxRNoAlgorithm
+          t-hint-plus-database:
+            type: HINT_INLINE_PLUS
+            props:
+              algorithm-expression: 'ds_${value}' # 指定表达式
+              sharding-columns: 'hint_plus_no'
+              sharding-algorithm: t-inline-hash-mod-database
+          t-hint-plus-table:
+            type: HINT_INLINE_PLUS
+            props:
+              algorithm-expression: 'sika_hint_plus_${value}' # 指定表达式
+              sharding-columns: 'hint_plus_no'
+              sharding-algorithm: t-inline-hash-mod-table
+          t-inline-hash-mod-database:
+            type: HASH_MOD
+            props:
+              sharding-count: '2'
+          t-inline-hash-mod-table:
+            type: HASH_MOD
+            props:
+              sharding-count: '16'
+          t-twice-hash-mod-table:
+            type: TWICE_HASH_MOD_TABLE
+            props:
+              hot-customer-table: ''
+              all-table-sequences: '${0..15}'
+              table-mod-number: '16'
+              sharding-value-algorithms:
+                twice_hash_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxNoAlgorithm
+          t-twice-hash-mod-datasource:
+            type: TWICE_HASH_MOD_DATASOURCE
+            props:
+              table-to-datasource-mapping: 'ds_${0}.${0..7},ds_${1}.${8..15}'
+              hot-customer-datasource: ''
+              all-table-sequences: '${0..15}'
+              datasource-mod-number: '16'
+              table-mod-number: '16'
+              sharding-value-algorithms:
+                twice_hash_no: com.sika.code.demo.sharding.algorithm.TwiceHashCmpxNoAlgorithm
+        tables:
+          sika_hint_plus:
+            actual-data-nodes: 'ds_${0..1}.sika_hint_plus_${0..7}'
+            table-strategy:
+              hint:
+                sharding-algorithm-name: t-hint-plus-table
+                sharding-column: hint_plus_no
+            database-strategy:
+              hint:
+                sharding-algorithm-name: t-hint-plus-database
+                sharding-column: hint_plus_no
+          sika_twice_hash_cmpx:
+            actual-data-nodes: 'ds_0.sika_twice_hash_cmpx_${0..7},ds_1.sika_twice_hash_cmpx_${8..15}'
+            table-strategy:
+              complex:
+                sharding-algorithm-name: t-twice-hash-cmpx-mod-table
+                sharding-columns: twice_hash_cmpx_no,twice_hash_cmpx_r_no
+            database-strategy:
+              complex:
+                sharding-algorithm-name: t-twice-hash-cmpx-mod-datasource
+                sharding-columns: twice_hash_cmpx_no,twice_hash_cmpx_r_no
+            audit-strategy:
+              auditor-names:
+                - sharding_key_required_auditor
+              allow-hint-disable: true
+          sika_twice_hash:
+            actual-data-nodes: 'ds_0.sika_twice_hash_${0..7},ds_1.sika_twice_hash_${8..15}'
+            table-strategy:
+              standard:
+                sharding-algorithm-name: t-twice-hash-mod-table
+                sharding-column: twice_hash_no
+            database-strategy:
+              standard:
+                sharding-algorithm-name: t-twice-hash-mod-datasource
+                sharding-column: twice_hash_no
+            audit-strategy:
+              auditor-names:
+                - sharding_key_required_auditor
+              allow-hint-disable: true
+          sika_year_day:
+            actualDataNodes: ds_${2020..2022}.sika_year_day_0${1..9}0${1..9},ds_${2020..2022}.sika_year_day_0${1..9}${10..31},ds_${2020..2022}.sika_year_day_${10..12}0${1..9},ds_${2020..2022}.sika_year_day_${10..12}${10..31}
+#            actualDataNodes: 'ds_${2020..2022}.sika_year_day_${2020..2022}0${1..9}0${1..9},ds_${2020..2022}.sika_year_day_${2020..2022}0${1..9}${10..31},ds_${2020..2022}.sika_year_day_${2020..2022}${10..12}0${1..9},ds_${2020..2022}.sika_year_day_${2020..2022}${10..12}${10..31}'
+            table-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year-day
+                sharding-column: year_day_date
+            database-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year
+                sharding-column: year_day_date
+            audit-strategy:
+              auditor-names:
+                - sharding_key_required_auditor
+              allow-hint-disable: true
+          sika_year_week:
+            actualDataNodes: ds_${2020..2022}.sika_year_week_${1..53}
+            table-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year-week
+                sharding-column: year_week_date
+            database-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year
+                sharding-column: year_week_date
+            audit-strategy:
+              auditor-names:
+                - sharding_key_required_auditor
+              allow-hint-disable: true
+          sika_year_month:
+            actualDataNodes: ds_${2020..2022}.sika_year_month_0${1..9},ds_${2020..2022}.sika_year_month_${10..12}
+            table-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year-month
+                sharding-column: year_month_date
+            database-strategy:
+              standard:
+                sharding-algorithm-name: t-interval-year
+                sharding-column: year_month_date
+            audit-strategy:
+              auditor-names:
+                - sharding_key_required_auditor
+              allow-hint-disable: true
+
+    props:
+      sql-show: 'true'
+

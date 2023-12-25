@@ -1,0 +1,19 @@
+spring:
+  test:
+    database:
+      replace: none
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: ${packageName}.dao
+
+dubbo:
+  enabled: false

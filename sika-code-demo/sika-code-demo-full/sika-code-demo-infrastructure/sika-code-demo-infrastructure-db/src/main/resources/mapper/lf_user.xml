@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sika.code.demo.infrastructure.db.business.user.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.sika.code.demo.infrastructure.db.business.user.po.UserPO">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="version" property="version" />
+        <result column="available" property="available" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="oauth_pwd" property="oauthPwd" />
+        <result column="nickname" property="nickname" />
+        <result column="sex" property="sex" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="avatar" property="avatar" />
+        <result column="province_code" property="provinceCode" />
+        <result column="token" property="token" />
+        <result column="type" property="type" />
+        <result column="city_code" property="cityCode" />
+        <result column="county_code" property="countyCode" />
+        <result column="address" property="address" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Column_List">
+        id, create_by, update_by, create_date, update_date, version, available, is_deleted, remark, username, password, oauth_pwd, nickname, sex, phone, email, avatar, province_code, token, type, city_code, county_code, address, deleted
+    </sql>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="list" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取列表信息 -->
+    <select id="listAsc" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+            <if test="query.pageSize != null"> LIMIT #{query.pageSize}</if>
+        </where>
+        <include refid="order_by_sql"/>
+    </select>
+
+    <!-- 根据查询条件获取Id列表信息 -->
+    <select id="listId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT id
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+
+    <!-- 根据查询条件获取实体信息 -->
+    <select id="find" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取表id -->
+    <select id="findId" resultType="java.lang.Long" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT id
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据查询条件获取分页信息 -->
+    <select id="page" resultMap="ResultMap" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT <include refid="Column_List" />
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+        <include refid="order_by_sql"/>
+        LIMIT #{query.start}, #{query.pageSize}
+    </select>
+
+    <!-- 根据查询条件获取总数量信息 -->
+    <select id="count" resultType="Integer" parameterType="com.sika.code.demo.infrastructure.business.user.pojo.query.UserQuery" >
+        SELECT count(*)
+        FROM lf_user
+        <where>
+            is_deleted = 0
+            <include refid="query_sql" />
+        </where>
+    </select>
+    <update id="batchUpdateCorporation" parameterType="java.util.List">
+<!--        <foreach collection="list" item="item" index="index" separator=";">-->
+<!--            update lf_user set-->
+<!--            <if test="item.address != null and item.address !=''">-->
+<!--                address = #{item.address},-->
+<!--            </if>-->
+<!--            update_date = now()-->
+<!--            where id = #{item.id}-->
+<!--        </foreach>-->
+        UPDATE lf_user SET
+        address = CASE id
+        <foreach collection="list" item="item" index="index">
+            <choose>
+                <when test="item.address != null">
+                    WHEN #{item.id} THEN #{item.address}
+                </when>
+                <otherwise>
+                    WHEN #{item.id} THEN address
+                </otherwise>
+            </choose>
+        </foreach>
+        END,
+        username = CASE id
+        <foreach collection="list" item="item" index="index">
+            <choose>
+                <when test="item.username != null">
+                    WHEN #{item.id} THEN #{item.username}
+                </when>
+                <otherwise>
+                    WHEN #{item.id} THEN username
+                </otherwise>
+            </choose>
+        </foreach>
+        END,
+        nickname = CASE id
+        <foreach collection="list" item="item" index="index">
+            <choose>
+                <when test="item.nickname != null">
+                    WHEN #{item.id} THEN #{item.nickname}
+                </when>
+                <otherwise>
+                    WHEN #{item.id} THEN nickname
+                </otherwise>
+            </choose>
+        </foreach>
+        END
+        WHERE id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+    <!-- 根据查询条件SQL -->
+    <sql id="query_sql" >
+        <if test="query.id != null">AND id = #{query.id}</if>
+        <if test="query.createBy != null">AND create_by = #{query.createBy}</if>
+        <if test="query.updateBy != null">AND update_by = #{query.updateBy}</if>
+        <if test="query.createDate != null">AND create_date = #{query.createDate}</if>
+        <if test="query.updateDate != null">AND update_date = #{query.updateDate}</if>
+        <if test="query.version != null">AND version = #{query.version}</if>
+        <if test="query.available != null">AND available = #{query.available}</if>
+        <if test="query.isDeleted != null">AND is_deleted = #{query.isDeleted}</if>
+        <if test="query.remark != null">AND remark = #{query.remark}</if>
+        <if test="query.username != null">AND username = #{query.username}</if>
+        <if test="query.password != null">AND password = #{query.password}</if>
+        <if test="query.oauthPwd != null">AND oauth_pwd = #{query.oauthPwd}</if>
+        <if test="query.nickname != null">AND nickname = #{query.nickname}</if>
+        <if test="query.sex != null">AND sex = #{query.sex}</if>
+        <if test="query.phone != null">AND phone = #{query.phone}</if>
+        <if test="query.email != null">AND email = #{query.email}</if>
+        <if test="query.avatar != null">AND avatar = #{query.avatar}</if>
+        <if test="query.provinceCode != null">AND province_code = #{query.provinceCode}</if>
+        <if test="query.token != null">AND token = #{query.token}</if>
+        <if test="query.type != null">AND type = #{query.type}</if>
+        <if test="query.cityCode != null">AND city_code = #{query.cityCode}</if>
+        <if test="query.countyCode != null">AND county_code = #{query.countyCode}</if>
+        <if test="query.address != null">AND address = #{query.address}</if>
+        <if test="query.deleted != null">AND deleted = #{query.deleted}</if>
+        <if test="query.ids != null and query.ids.size() > 0">
+            AND id in
+            <foreach item="item" collection="query.ids" separator="," open="(" close=")" index="">
+                #{item}
+            </foreach>
+        </if>
+        <if test="query.startDate != null">AND update_date > #{query.startDate}</if>
+        <if test="query.startIndex != null">AND id > #{query.startIndex}</if>
+    </sql>
+
+    <!-- 排序的sql -->
+    <sql id="order_by_sql">
+        <if test="query.sortColumn != null and query.sortType != null" >
+            ORDER BY
+            <include refid="order_by_column_sql"/>
+            <include refid="order_by_type_sql"/>
+        </if>
+    </sql>
+
+    <!-- 排序列名的sql -->
+    <sql id="order_by_column_sql">
+        <choose>
+            <when test="query.sortColumn == 'userId'">
+                id
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 排序类型的sql -->
+    <sql id="order_by_type_sql">
+        <choose>
+            <when test="query.sortType == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>
