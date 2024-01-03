@@ -417,7 +417,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- 自动替换${reversion}插件 -->
+                    <!-- 自动替换${revision}插件 -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>flatten-maven-plugin</artifactId>
