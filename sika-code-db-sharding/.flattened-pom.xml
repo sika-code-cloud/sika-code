@@ -63,16 +63,16 @@
         <version>${shardingsphere.version}</version>
         <exclusions>
           <exclusion>
+            <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-db-discovery-spring-boot-starter</artifactId>
-            <groupId>org.apache.shardingsphere</groupId>
           </exclusion>
           <exclusion>
+            <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-db-discovery-core</artifactId>
-            <groupId>org.apache.shardingsphere</groupId>
           </exclusion>
           <exclusion>
-            <artifactId>shardingsphere-data-pipeline-core</artifactId>
             <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-data-pipeline-core</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

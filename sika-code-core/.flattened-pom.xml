@@ -34,8 +34,8 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <exclusions>
         <exclusion>
-          <artifactId>spring-boot-starter-logging</artifactId>
           <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -99,32 +99,32 @@
       <artifactId>tlog-all-spring-boot-starter</artifactId>
       <exclusions>
         <exclusion>
+          <groupId>cn.hutool</groupId>
           <artifactId>hutool-core</artifactId>
-          <groupId>cn.hutool</groupId>
         </exclusion>
         <exclusion>
+          <groupId>cn.hutool</groupId>
           <artifactId>hutool-json</artifactId>
-          <groupId>cn.hutool</groupId>
         </exclusion>
         <exclusion>
+          <groupId>cn.hutool</groupId>
           <artifactId>hutool-cache</artifactId>
-          <groupId>cn.hutool</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-lang3</artifactId>
           <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>fastjson</artifactId>
           <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>guava</artifactId>
           <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>tlog-dubbox</artifactId>
           <groupId>com.yomahub</groupId>
+          <artifactId>tlog-dubbox</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

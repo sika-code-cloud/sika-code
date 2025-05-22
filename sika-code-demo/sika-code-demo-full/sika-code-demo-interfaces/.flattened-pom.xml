@@ -68,8 +68,8 @@
       <version>${sa-token.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>hutool-all</artifactId>
           <groupId>cn.hutool</groupId>
+          <artifactId>hutool-all</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -79,8 +79,8 @@
       <version>${sa-token.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>hutool-all</artifactId>
           <groupId>cn.hutool</groupId>
+          <artifactId>hutool-all</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -90,8 +90,8 @@
       <version>${sa-token.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>hutool-all</artifactId>
           <groupId>cn.hutool</groupId>
+          <artifactId>hutool-all</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

@@ -30,8 +30,8 @@
       <artifactId>spring-boot-starter-batch</artifactId>
       <exclusions>
         <exclusion>
-          <artifactId>HikariCP</artifactId>
           <groupId>com.zaxxer</groupId>
+          <artifactId>HikariCP</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
