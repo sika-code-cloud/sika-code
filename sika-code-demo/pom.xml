@@ -32,7 +32,7 @@
         <bytebuddy.version>1.12.19</bytebuddy.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <shardingsphere.version>5.2.1</shardingsphere.version>
-        <lombok.version>1.18.22</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <hutool-version>5.8.9</hutool-version>
         <mybatis-plus-boot-starter.version>3.5.3.2</mybatis-plus-boot-starter.version>
         <commons-collections4.version>4.4</commons-collections4.version>
